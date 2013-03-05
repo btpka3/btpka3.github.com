@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Test Dojo AMD</title>
+
+<script type="text/javascript">
+/*
+dojo AMD
+  http://dojotoolkit.org/reference-guide/releasenotes/1.7.html
+  http://dojotoolkit.org/features/1.6/async-modules
+  http://dojotoolkit.org/blog/learn-more-about-amd
+
+dojoConfig
+  http://dojotoolkit.org/reference-guide/dojo/config.html
+  http://dojotoolkit.org/documentation/tutorials/1.7/dojo_config/
+
+crossDomain
+  http://dojotoolkit.org/reference-guide/quickstart/cross-domain.html
+
+AMD
+  http://wiki.commonjs.org/wiki/Modules/AsynchronousDefinition
+  https://github.com/amdjs/amdjs-api/wiki/AMD
+*/
+var dojoConfig = {
+    async:true,
+    isDebug: true,
+    debugAtAllCosts:true,
+    //parseOnLoad: true,
+    //debugContainerId: "c",
+    //baseUrl: "./",
+    packages: [{name: "my", location: "/svn/trunk/js/dojo/my/amd"}]};
+</script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dojo/dojo.js" ></script>
+<script type="text/javascript">
+
+
+require(["my/a"], function(a){
+  alert(a.a);
+  alert("a.say = " + a.say('zhang3'));
+  alert("a.isGlobalVar = " + typeof (a.isGlobalVar));
+});
+
+alert("isGlobalVar = " + typeof (isGlobalVar));
+
+require(["my/b"], function(b){
+  alert(b.b);
+});
+require(["my/c"], function(c){
+  alert(c.c);
+  alert("c.say = " + c.say("li4"));
+
+});
+require(["my/d"], function(d){
+  alert(d.d);
+});
+require(["my/e"], function(e){
+  alert(e.e);
+});
+
+</script>
+<style type="text/css">
+</style>
+</head>
+<body>
+<div id="b">BBB</div>
+<div>
+<pre>
+最佳实践？—— 定义一个组件
+xxx/myModule.js
+--------------------- 定义可重复使用的组件。回调函数只是定义，而不执行。
+define([
+    "exports",
+    "dojo/dom",
+    "dojo/parser",
+    ...
+],
+function(exports, dom, parser, ...) {
+  var unExportedVar = ...;
+  function unExportedFunction(){ ... }
+
+  // --------------Exported properties
+  exports.exportedVar = ...;
+  exports.exportedFunction = ...;
+});
+
+yyy/myCode.js
+--------------------- 使用--一般来说不具备可重复使用。回调函数会立即执行。
+require([
+    "dojo/dom",
+    "xxx/myModule",
+    ...
+],
+function(dom, myModule, ...) {
+  myModule.exportedFunction(...)
+  ...
+});
+--------------------- 加载 （尽量做到 W3C 在线验证通过）
+&lt;script type="text/javascript" &gt;
+var dojoConfig = {
+    async:true,
+    parseOnLoad: true,
+    packages: [{name: "yyy", location: "/js/yyy"}]};
+&lt;/script&gt;
+&lt;script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dojo/dojo.js" &gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="yyy/myCode.js" &gt;&lt;/script&gt;
+
+</pre>
+</div>
+ </body>
+</html>

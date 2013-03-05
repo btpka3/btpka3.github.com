@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- ======================================================================
+   - 工程的 ant 编译脚本
+     ====================================================================== -->
+<project name="myJarProj" default="deploy" basedir="..">
+
+  <!-- 读入配置文件 -->
+  <property file="./ant/build.properties" />
+
+  <!-- 设定classpath -->
+  <path id="classpath.lib">
+    <fileset dir="${lib.dir}">
+      <include name="*.jar"/>
+    </fileset>
+    <fileset dir="${webSrv.lib.dir}">
+      <include name="*.jar"/>
+    </fileset>
+  </path>
+
+  <!-- =================================
+     - 清空工作目录
+       ================================= -->
+  <target name="clean" description="清空工作目录">
+    <delete dir="${deploy.dir}" />
+    <mkdir dir="${deploy.dir}/${context.name}/lib" />
+    <mkdir dir="${classes.dir}" />
+    <delete includeEmptyDirs="true" >
+      <fileset dir="${classes.dir}" includes="**/*" />
+    </delete>
+  </target>
+
+  <!-- =================================
+     - 编译、打包
+       ================================= -->
+  <target name="compile" depends="clean" description="编译、打包">
+
+    <!-- *.java -> *.class -->
+    <javac srcdir="${sources.dir}"
+           destdir="${classes.dir}"
+           classpathref="classpath.lib"
+           debug="on"
+           encoding="UTF-8"
+           source="1.6"
+           target="1.6" />
+
+    <!-- native2ascii -->
+    <native2ascii src="${sources.dir}"
+                  dest="./classes"
+                  includes="*.properties"
+                  ext=".properties"
+                  encoding="UTF-8" />
+
+    <!-- 复制其他资源文件 -->
+    <copy todir="${classes.dir}">
+      <fileset dir="${sources.dir}">
+        <exclude name="**/*.java"/>
+        <exclude name="**/*.properties"/>
+      </fileset>
+    </copy>
+
+
+    <!-- 打包 -->
+    <jar jarfile="${deploy.dir}/${context.name}/${context.name}.jar"
+         basedir="${classes.dir}" >
+      <manifest>
+        <!-- TODO add library -->
+        <attribute name="Main-Class" value="me.test.Main" />
+      </manifest>
+    </jar>
+  </target>
+
+  <!-- =================================
+     - 部署
+       ================================= -->
+  <target name="deploy" depends="compile" description="部署">
+
+    <!-- 类库 -->
+    <copy todir="${deploy.dir}/${context.name}/lib" >
+      <fileset dir="${lib.dir}"/>
+    </copy>
+
+    <!-- jar包中的配置文件 -->
+    <copy todir="${deploy.dir}/${context.name}" includeEmptyDirs="false">
+      <fileset dir=".">
+        <include name="*"/>
+        <exclude name=".*"/>
+      </fileset>
+    </copy>
+
+    <!-- jar包外的配置文件 -->
+    <copy todir="${deploy.dir}/${context.name}/conf" includeEmptyDirs="false">
+      <fileset dir="conf">
+      </fileset>
+    </copy>
+
+    <!-- 执行脚本 -->
+    <copy todir="${deploy.dir}/${context.name}" includeEmptyDirs="false">
+      <fileset dir="bin">
+      </fileset>
+    </copy>
+
+    <zip destfile="${deploy.dir}/${context.name}.zip"
+         basedir="${deploy.dir}/${context.name}" />
+
+    <zip destfile="${deploy.dir}/${context.name}.zip"
+         basedir="${deploy.dir}/${context.name}" />
+  </target>
+
+  <!-- =================================
+     - 生成JavaDoc
+       ================================= -->
+  <target name="javadoc" description="生成JavaDoc">
+    <delete dir="${deploy.dir}/javadoc" />
+    <mkdir dir="${deploy.dir}/javadoc" />
+    <javadoc classpathref="classpath.lib"
+             sourcepath="${sources.dir}"
+             destdir="${deploy.dir}/javadoc"
+             doctitle="${context.name}"
+             windowtitle="${context.name}"
+             use="true"
+             splitindex="true"
+             encoding="UTF-8"
+             private="false"
+             packagenames="**/*">
+    </javadoc>
+  </target>
+</project>

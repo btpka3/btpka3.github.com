@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>使用图片作圆角</title>
+<style type="text/css">
+*{
+  margin:0;
+  padding:0;
+}
+.errContainer{
+  margin:20px;
+  width:690px;
+}
+.errContainer ul.menu{
+  list-style-type:none;
+}
+.errContainer ul.menu li{
+  float:left;
+  height: 100%;
+}
+.errContainer .left{
+  width:17px;
+}
+.errContainer .middle{
+  width:650px;
+}
+.errContainer .right{
+  width:18px;
+}
+
+.errContainer .top, .errContainer .top li{
+  height: 19px;
+}
+.errContainer .content, .errContainer .content li{
+  height: 260px;
+}
+.errContainer .bottom, .errContainer .bottom li{
+  height: 19px;
+}
+
+.errContainer .top .left{
+  background: url(./img/sysErrTopLeft.jpg) no-repeat left top;
+}
+.errContainer .top .middle{
+  background: url(./img/sysErrTopMiddle.jpg) repeat-x left top;
+}
+.errContainer .top .right{
+  background: url(./img/sysErrTopRight.jpg) no-repeat left top;
+}
+
+.errContainer .content .left{
+  background: url(./img/sysErrLeft.jpg) repeat-y left top;
+}
+.errContainer .content .middle{
+  background-color: #F1F3F2;
+}
+.errContainer .content .right{
+  background: url(./img/sysErrRight.jpg) repeat-y left top;
+}
+
+.errContainer .bottom .left{
+  background: url(./img/sysErrBottomLeft.jpg) no-repeat left top;
+}
+.errContainer .bottom .middle{
+  background: url(./img/sysErrBottomMiddle.jpg) repeat-x left top;
+}
+.errContainer .bottom .right{
+  background: url(./img/sysErrBottomRight.jpg) no-repeat left top;
+}
+</style>
+</head>
+<body>
+
+<div class="errContainer">
+  <ul class="menu top">
+    <li class="left"></li>
+    <li class="middle"></li>
+    <li class="right"></li>
+  </ul>
+
+  <ul class="menu content">
+    <li class="left"></li>
+    <li class="middle">
+<p>图片应该使用PNG，且圆角外部要设为透明。现在应该使用CSS作圆角，既然IE不支持，就让它显示直角好了————把大把精力花费在跨浏览器表现一致性上，是否值当？</p>
+<p>FIXME: 如何做到百分比高度、宽度？</p>
+    </li>
+    <li class="right"></li>
+  </ul>
+
+  <ul class="menu bottom">
+    <li class="left"></li>
+    <li class="middle"></li>
+    <li class="right"></li>
+  </ul>
+</div>
+
+</body>
+</html>

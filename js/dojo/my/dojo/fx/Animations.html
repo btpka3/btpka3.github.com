@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Insert title here</title>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dijit/themes/claro/claro.css" />
+<script type="text/javascript">
+var dojoConfig = {
+    async:true
+};
+</script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dojo/dojo.js" ></script>
+<script type="text/javascript" >
+
+// http://dojotoolkit.org/reference-guide/1.7/quickstart/Animation.html
+
+require([
+   "dojo/ready",
+   "dijit/form/Button",
+   "dojo/_base/fx",
+   "dojo/fx",
+   "dojox/fx",
+   "dojo/fx/easing"
+], function(ready, Button, fx, coreFx, extFx, easing){
+  ready(function() {
+
+    // "dojo/_base/fx",
+    new Button({
+      label: "Fade Out",
+      onClick: function(){
+        var animation = fx.fadeOut({
+          node : "d1",
+          delay : 100, // ms
+          duration : 1000, // ms
+          easing: easing.expoOut
+        });
+        animation.play();
+      }}, "btnFadeOut");
+
+    new Button({
+      label: "Fade In",
+      onClick: function(){
+        var animation = fx.fadeIn({
+          node : "d1",
+          delay : 100, // ms
+          duration : 1000, // ms
+          easing: easing.expoOut
+        });
+        animation.play();
+      }}, "btnFadeIn");
+
+    // "dojo/fx",
+    new Button({
+      label: "Wipe Out",
+      onClick: function(){
+        var animation = coreFx.wipeOut({
+          node : "d1",
+          delay : 100, // ms
+          duration : 1000, // ms
+          easing: easing.expoOut
+        });
+        animation.play();
+      }}, "btnWipeOut");
+
+    new Button({
+      label: "Wipe In",
+      onClick: function(){
+        var animation = coreFx.wipeIn({
+          node : "d1",
+          delay : 100, // ms
+          duration : 1000, // ms
+          easing: easing.expoOut
+        });
+        animation.play();
+      }}, "btnWipeIn");
+
+    new Button({
+      label: "Slide To",
+      onClick: function(){
+        var animation = coreFx.slideTo({
+          node : "d1",
+          delay : 100, // ms
+          duration : 1000, // ms
+          easing: easing.expoOut,
+          left: 40,
+          top: 50,
+          units: "px"
+        });
+        animation.play();
+      }}, "btnSlideTo");
+
+    // chain, combine, Toggler
+
+    // "dojox/fx"
+    // addClass
+    // animateTimeline
+    // blockFadeIn
+    // blockFadeOut
+    // wipeTo
+    // crossFade
+    // disintegrate
+    // explode
+    // fadeOut
+    // fadeTo
+    // flip
+    // flipCube
+    // flipGrid
+    // flipPage
+    // highlight
+    // pinwheel
+    // shear
+    // sizeTo
+    // slideBy
+    // dojox.fx.smoothScroll
+    // unPinwheel
+    // wipeIn
+    // wipeOut
+    // wipeTo
+
+  });
+});
+</script>
+</head>
+<body class="claro">
+<div>
+  <div style="display:inline-block; width:100px;">dojo/_base/fx</div>
+  <div id="btnFadeOut"></div>
+  <div id="btnFadeIn"></div>
+</div>
+<div>
+  <div style="display:inline-block; width:100px;">dojo/fx</div>
+  <div id="btnWipeOut"></div>
+  <div id="btnWipeIn"></div>
+  <div id="btnSlideTo"></div>
+</div>
+
+<div id="d1" style="width:200px; height:100px; background-color: #66CD00; border:10px solid #FF7F24;">
+a<br/>
+b<br/>
+c<br/>
+d<br/>
+e<br/>
+</div>
+<div>22222222222</div>
+</body>
+</html>

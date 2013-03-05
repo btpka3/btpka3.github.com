@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Insert title here</title>
+<style type="text/css">
+div.container{
+  border: 1px solid blue;
+}
+p.center {
+  border: 1px dotted grey;
+  text-align: center;
+}
+h2.center {
+  border: 1px dotted grey;
+  text-align: center;
+}
+p.blocktext {
+  border: 1px dotted grey;
+  margin-left: auto;
+  margin-right: auto;
+  width: 6em
+}
+
+img.displayed {
+  border: 1px dotted grey;
+  display: block;
+  margin-left: auto;
+  margin-right: auto
+}
+
+</style>
+</head>
+<body>
+<!--
+http://www.w3.org/Style/Examples/007/center.en.html
+http://www.jakpsatweb.cz/css/css-vertical-center-solution.html
+ -->
+<div>
+<div class="container">
+  <p class="center">Centering lines of text</p>
+</div>
+<br />
+<br />
+
+<div class="container">
+  <h2 class="center">Centering lines of text</h2>
+</div>
+<br />
+<br />
+
+<div class="container">
+  <p class="blocktext">Centering a block. aa aa aaa aaa aaa aaa aa aa aaa aa a a a aaa aaa aaa aa</p>
+</div>
+<br />
+<br />
+
+<div class="container" style="height:200px;">
+  <img class="displayed" src="http://www.w3.org/Style/Woolly/woolly-mc.png" alt="Centering a image" />
+</div>
+<br />
+<br />
+
+
+<br />
+<br />
+
+<div style="display:table; width:100%;">
+<div class="container" style="display:table-cell; height:200px; vertical-align: middle;">
+  <img class="displayed" src="http://www.w3.org/Style/Woolly/woolly-mc.png" alt="Centering a image" />
+</div>
+</div>
+<br />
+<br />
+
+<div class="container" style="display: table; height: 400px; #position: relative; overflow: hidden;">
+  <div style=" #position: absolute; #top: 50%;display: table-cell; vertical-align: middle;">
+    <div class="container" style=" #position: relative; #top: -50%; ">
+      any text<br />
+      any height<br />
+      any content, for example generated from DB<br />
+      everything is vertically centered
+    </div>
+  </div>
+</div>
+<br />
+<br />
+
+<div class="container" style="display: table; height: 400px; #position: relative; overflow: hidden; width:100%;">
+  <div style=" #position: absolute; #top: 50%; display: table-cell; vertical-align:middle; width:100%;">
+    <div class="container" style="#position: relative; #top: -50%; text-align: center;">
+      <div style="text-align:left;">
+      any text<br />
+      any height<br />
+      any content, for example generated from DB<br />
+      everything is vertically centered
+      </div>
+      <img class="displayed" src="http://www.w3.org/Style/Woolly/woolly-mc.png" alt="Centering a image" />
+    </div>
+  </div>
+</div>
+<br />
+<br />
+
+
+
+
+</div>
+
+</body>
+</html>

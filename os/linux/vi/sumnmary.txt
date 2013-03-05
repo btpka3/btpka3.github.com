@@ -1,0 +1,109 @@
+1.
+x 删除当前字符
+p   粘贴
+yy  复制当前行
+nyy 复制 n 行
+yw  复制一个单词
+yl
+:n1,n2 co n3  拷贝n1 ~ n2行，并粘贴至n3行
+:n1,n2 m n3   剪切n1 ~ n2行，并粘贴至n3行
+:m n1 +1   将指定的行下移一行
+
+剪切
+  v
+  选中要剪切的内容
+  x  剪切
+  p  粘贴
+w 将光标跳至下一个word的开始。
+
+r ?  将当前字符替换为给定的字符
+
+
+:sp a3    打开文件 a3
+Ctrl + ww 在打开的文件之间进行切换
+
+
+/xxx        查找“xxx”,
+n           查找下一个
+N           查找上一个
+
+
+1G 跳转到第一行
+G 跳转到文件末尾
+
+:1 跳转到第一行
+:$ 跳转到文件末尾
+
+
+:s/vivian/sky/g     替换当前行所有 vivian 为 sky
+:n,$s/vivian/sky/g  替换第 n 行开始到最后一行中每一行所有 vivian 为 sky
+:.,$s/vivian/sky/g  替换当前行开始到最后一行中每一行所有 vivian 为 sky
+:%s/vivian/sky/g    替换整个文件每一行所有 vivian 为 sky
+
+http://blog.csdn.net/lanxinju/article/details/5731843
+:s/str1/str2/          #用字符串 str2 替换行中首次出现的字符串 str1
+:s/str1/str2/g         #用字符串 str2 替换行中所有出现的字符串 str1
+:.,$ s/str1/str2/g     #用字符串 str2 替换正文当前行到末尾所有出现的字符串 str1
+:1,$ s/str1/str2/g     #用字符串 str2 替换正文中所有出现的字符串 str1
+:g/str1/s//str2/g      #功能同上
+g 放在命令末尾，表示对指定行的搜索字符串的每次出现进行替换；不加 g，表示只对指定行的搜索字符串的首次出现进行替换；
+g 放在命令开头，表示对正文中所有包含搜索字符串的行进行替换操作。
+也就是说命令的开始可以添加影响的行，如果为g表示对所有行；命令的结尾可以使用g来表示是否对每一行的所有字符串都有影响。
+
+在vim中有四种表达式规则：
+magic(/m)：除了$.*^之外其他元字符都要加反斜杠
+nomagic(/M)：除了$^之外其他元字符都要加反斜杠
+/v（即 very magic 之意）：任何元字符都不用加反斜杠
+/V（即 very nomagic 之意）：任何元字符都必须加反斜杠
+
+删除文本中的^M
+对于换行，window下用回车换行（0A0D）来表示，linux下是回车（0A）来表示。
+使用命令：cat filename1 | tr -d “^V^M” > newfile;
+使用命令：sed -e “s/^V^M//” filename > outputfilename
+
+:%s/^V^M//
+:%s/^M$//g
+
+
+:set syntax=java    设置着色语法为java
+
+:set number       显示行号
+:set nonumber     取消显示行号
+
+-------------------- Color Schema
+http://linux.chinaunix.net/techdoc/desktop/2006/10/20/942562.shtml
+http://www.cnblogs.com/softwaretesting/archive/2012/01/10/2317820.html
+http://if.ustc.edu.cn/~xbzhou/blog/archives/vimmanual/syntax.html
+http://www.vim.org/scripts/script.php?script_id=625
+1. 下载 ColorSamplerPack.zip
+2. 创建目录 ~/.vim
+3. # unzip -d ~/.vim ColorSamplerPack.zip
+4. vi ~/.vim/vimrc
+# 追加
+colorscheme <scheme_name>
+5. 临时改变
+:colors <scheme_name>
+
+
+if &t_Co > 1
+  syntax enable
+endif
+set nocompatible
+set autoindent
+set ruler
+set showcmd
+set backspace=indent,eol,start
+colorscheme slate
+set number              " Show line number
+syntax on
+if &term =~ "xterm"
+  if has("terminfo")
+    set t_Co=8
+    set t_Sf=^[[3%p1%dm
+    set t_Sb=^[[4%p1%dm
+  else
+    set t_Co=8
+    set t_Sf=^[[3%dm
+    set t_Sb=^[[4%dm
+  endif
+endif

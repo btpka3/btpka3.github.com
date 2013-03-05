@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Css Float: Self-clear test </title>
+<style type="text/css">
+.c{
+  border:1px solid blue;
+}
+.f{
+  float:left;
+  border:1px solid red;
+  width: 100px;
+}
+.c_minHeight{
+  min-height:20px;
+}
+.f_minHeight{
+  min-height:18px;
+}
+
+.group:before,
+.group:after {
+    content:"";
+    display:table;
+}
+.group:after {
+    clear:both;
+}
+.group {
+    zoom:1; /* For IE 6/7 (trigger hasLayout) */
+}
+
+
+</style>
+</head>
+<body>
+<div>
+<!--
+http://www.quirksmode.org/css/clearing.html
+http://css-tricks.com/snippets/css/clear-fix/
+ -->
+
+<div>1. container and item are empty</div>
+<div class="c">
+<span class="f"></span>
+<span class="f"></span>
+<span class="f"></span>
+</div>
+<div class="c">
+<span class="f"></span>
+<span class="f"></span>
+<span class="f"></span>
+</div>
+
+
+<br />
+<br />
+<br />
+<div>2. container and item are empty, with min-height.</div>
+<div class="c c_minHeight">
+<span class="f f_minHeight"></span>
+<span class="f f_minHeight"></span>
+<span class="f f_minHeight"></span>
+</div>
+<div class="c c_minHeight">
+<span class="f f_minHeight"></span>
+<span class="f f_minHeight"></span>
+<span class="f f_minHeight"></span>
+</div>
+
+
+
+<br />
+<br />
+<br />
+<div>3. container is empty, item isn't.</div>
+<div class="c">
+<span class="f">&nbsp;</span>
+<span class="f">&nbsp;</span>
+<span class="f">&nbsp;</span>
+</div>
+<div class="c">
+<span class="f">&nbsp;</span>
+<span class="f">&nbsp;</span>
+<span class="f">&nbsp;</span>
+</div>
+
+
+<br />
+<br />
+<br />
+<div>4. container is empty, item isn't, container has a not displayed "clear:both;" div.</div>
+<div class="c">
+<span class="f">&nbsp;</span>
+<span class="f">&nbsp;</span>
+<span class="f">&nbsp;</span>
+<div style="clear:both; height:0;"></div>
+</div>
+<div class="c">
+<span class="f">&nbsp;</span>
+<span class="f">&nbsp;</span>
+<span class="f">&nbsp;</span>
+<div style="clear:both; height:0;"></div>
+</div>
+
+
+
+<br />
+<br />
+<br />
+<div>5. container is empty and item is not empty ("&amp;nbsp;")</div>
+<div class="c">
+<span class="f">&nbsp;</span>
+<span class="f">&nbsp;</span>
+<span class="f">&nbsp;</span>
+&nbsp;
+</div>
+<div class="c">
+<span class="f">&nbsp;</span>
+<span class="f">&nbsp;</span>
+<span class="f">&nbsp;</span>
+&nbsp;
+</div>
+
+<br />
+<br />
+<br />
+<div><span style="font:18px; color:green; font-weight: bold;" title="Recommanded!">6.</span> container is empty, item isn't. Container is self-cleared following <a href="http://css-tricks.com/snippets/css/clear-fix/">this</a>.</div>
+<div class="c group">
+<span class="f">&nbsp;</span>
+<span class="f">&nbsp;</span>
+<span class="f">&nbsp;</span>
+&nbsp;
+</div>
+<div class="c group">
+<span class="f">&nbsp;</span>
+<span class="f">&nbsp;</span>
+<span class="f">&nbsp;</span>
+&nbsp;
+</div>
+
+
+
+</div>
+</body>
+</html>

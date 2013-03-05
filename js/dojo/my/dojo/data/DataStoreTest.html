@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Test Dojo Data</title>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dijit/themes/claro/claro.css" />
+<script type="text/javascript">
+var dojoConfig = {
+    async:true
+};
+</script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dojo/dojo.js"></script>
+<script type="text/javascript">
+require(["dojo/ready",
+         "dojo/store/Memory",
+         "dijit/form/FilteringSelect",
+         "dojo/data/ItemFileReadStore",
+         "dijit/form/Button",
+         "dojo/dom"
+         ], function(
+             ready,
+             Memory,
+             FilteringSelect,
+             ItemFileReadStore,
+             Button,
+             dom
+         ){
+  ready(function(){
+
+    //var abcStore = new ItemFileReadStore({url: "abc.js", typeMap: {'Color': Color}});
+    var store = new ItemFileReadStore({data: { identifier: "uniqueId",
+          items: [ {uniqueId: 1, status:"CLOSED"},
+              {uniqueId: 2,  status:"OPEN"},
+              {uniqueId: 3,  status:"PENDING"},
+              {uniqueId: 4,  status:"BLOCKED"},
+              {uniqueId: 5,  status:"CLOSED"},
+              {uniqueId: 6,  status:"OPEN"},
+              {uniqueId: 7,  status:"PENDING"},
+              {uniqueId: 8,  status:"PENDING"},
+              {uniqueId: 10, status:"BLOCKED"},
+              {uniqueId: 12, status:"BLOCKED"},
+              {uniqueId: 11, status:"OPEN"},
+              {uniqueId: 9,  status:"CLOSED"}
+          ]
+    }});
+
+    // Define the comparator function for status.
+    store.comparatorMap = {};
+    store.comparatorMap["status"] = function(a, b){
+        var ret = 0;
+        // We want to map these by what the priority of these items are, not by alphabetical.
+        // So, custom comparator.
+        var enumMap = { OPEN: 3, BLOCKED: 2, PENDING: 1, CLOSED: 0};
+        if(enumMap[a] > enumMap[b]){
+            ret = 1;
+        }
+        if(enumMap[a] < enumMap[b]){
+            ret = -1;
+        }
+        return ret;
+    };
+
+    function display(items, request){
+        dom.byId("out").innerHTML = "";
+        for(var i = 0; i < items.length; i++){
+          dom.byId("out").innerHTML += "uniqueId : " + items[i].uniqueId +", status : " + items[i].status + "\r\n";
+        }
+    }
+
+    new Button({
+        label: "Show",
+        onClick: function(){
+          store.fetch({onComplete: display});
+        }}, "showBtn");
+
+    new Button({
+        label: "Sort by Id",
+        onClick: function(){
+          var sortAttributes = [{ attribute: "uniqueId"}];
+          store.fetch({onComplete: display, sort: sortAttributes});
+        }}, "sortIdBtn");
+
+    new Button({
+        label: "Sort by status",
+        onClick: function(){
+          var sortAttributes = [{attribute: "status", descending: true},
+                                { attribute: "uniqueId", descending: true}];
+          store.fetch({onComplete: display, sort: sortAttributes});
+        }}, "sortStatusBtn");
+
+
+    // could not apply complex query equivalent to "<=", ">", "!=" in SQL.
+    new Button({
+        label: "Query",
+        onClick: function(){
+            var sortAttributes = [{ attribute: "uniqueId"}];
+            store.fetch({
+              onComplete: display,
+              sort: sortAttributes,
+              query: { uniqueId: /^1/},
+              queryOptions: { ignoreCase: true },
+            });
+        }}, "queryBtn");
+  });
+});
+</script>
+</head>
+<body class="claro">
+<!--
+http://livedocs.dojotoolkit.org/dojo/store
+http://livedocs.dojotoolkit.org/dojo/data/api/Read
+http://livedocs.dojotoolkit.org/dojo/data/ItemFileReadStore
+ -->
+<div>
+  <div id="showBtn"></div>
+  <div id="sortIdBtn"></div>
+  <div id="sortStatusBtn"></div>
+  <div id="queryBtn"></div>
+</div>
+<textarea id="out" rows="20" cols="100"></textarea>
+</body>
+</html>

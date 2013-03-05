@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- ======================================================================
+   - 工程的 ant 编译脚本
+     ====================================================================== -->
+<project name="the-common" default="run" basedir=".">
+
+  <!-- 读入配置文件 -->
+  <property name="context.name" value="TestJAAS" />
+  <property name="sources.dir.plathform" location="./PlatformSrc" />
+  <property name="sources.dir.provider.a" location="./ProviderASrc" />
+  <property name="sources.dir.provider.b" location="./ProviderBSrc" />
+  <property name="sources.dir.provider.c" location="./ProviderCSrc" />
+  <property name="classes.dir" location="./classes" />
+  <property name="lib.dir" location="./lib" />
+  <property name="deploy.dir" location="./deploy" />
+
+  <!-- 设定classpath -->
+  <path id="classpath.lib">
+  </path>
+
+  <!-- =================================
+     - 清空工作目录
+       ================================= -->
+  <target name="clean" description="清空工作目录">
+    <delete dir="${deploy.dir}" />
+    <mkdir dir="${deploy.dir}" />
+  </target>
+
+  <!-- =================================
+     - 编译、打包
+       ================================= -->
+  <target name="compile" description="编译、打包">
+    <delete includeEmptyDirs="true">
+      <fileset dir="${classes.dir}" includes="**/*" />
+    </delete>
+
+    <!-- *.java -> *.class -->
+    <javac srcdir="${sources.dir}" destdir="${classes.dir}" classpathref="classpath.lib" debug="on" encoding="UTF-8" source="1.6" target="1.6">
+      <classpath>
+        <pathelement location="${deploy.dir}/platform.jar" />
+        <pathelement location="${deploy.dir}/provider_a.jar" />
+      </classpath>
+    </javac>
+
+    <!-- 打包 -->
+    <jar jarfile="${deploy.dir}/${jar.name}" basedir="${classes.dir}" />
+  </target>
+
+  <!-- =================================
+     - 部署
+       ================================= -->
+  <target name="deploy" depends="clean" description="部署">
+
+    <antcall target="compile">
+      <param name="sources.dir" value="${sources.dir.plathform}" />
+      <param name="jar.name" value="platform.jar" />
+    </antcall>
+
+    <antcall target="compile">
+      <param name="sources.dir" value="${sources.dir.provider.a}" />
+      <param name="jar.name" value="provider_a.jar" />
+    </antcall>
+
+    <antcall target="compile">
+      <param name="sources.dir" value="${sources.dir.provider.b}" />
+      <param name="jar.name" value="provider_b.jar" />
+    </antcall>
+    
+    <echo file="${deploy.dir}/run.bat">@echo off
+cd ..
+java -cp ./deploy/platform.jar me.test.jaas.platform.Main
+cd deploy
+pause
+@echo on</echo>
+  </target>
+
+  <!-- =================================
+     - 运行
+       ================================= -->
+  <target name="run" depends="deploy" description="运行">
+    <java classname="me.test.jaas.platform.Main" fork="true" newenvironment="true">
+      <classpath>
+        <pathelement location="${deploy.dir}/platform.jar" />
+      </classpath>
+    </java>
+  </target>
+</project>

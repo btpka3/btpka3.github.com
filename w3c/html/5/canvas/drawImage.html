@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Draw Image</title>
+<script type="text/javascript">
+function draw() {
+  var canvas = document.getElementById('canvas');
+  var ctx = canvas.getContext('2d');
+  var img = new Image();
+  img.onload = function(){
+    ctx.drawImage(img,0,0);
+    alert(canvas.toDataURL("image/png"));
+  }
+  img.src = document.getElementById('srcImg').src;
+}
+</script>
+</head>
+<body>
+<img id="srcImg" width="160"  height="50" alt="captcha" style="border:1px solid #c3c3c3;" src="http://reg.163.com/services/getimg?v=1328771998433&id=6870635083c4fc5aff944522eaef17fac19dceb2"  />
+<canvas id="canvas" width="160" height="50" style="border:1px solid #c3c3c3;">
+Your browser does not support the canvas element.
+</canvas>
+<a href="#" onclick="draw()">draw</a>
+</body>
+</html>

@@ -1,0 +1,12 @@
+1. URL上禁止出现个人凭证信息：
+    > 用户名
+    > 密码
+    > session ID
+
+http://randomcoder.org/articles/jsessionid-considered-harmful
+
+<%
+response.setHeader("Cache-Control","no-cache"); //HTTP 1.1
+response.setHeader("Pragma","no-cache"); //HTTP 1.0
+response.setDateHeader ("Expires", 0); //prevent caching at the proxy server
+%>

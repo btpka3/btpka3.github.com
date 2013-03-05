@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>background image collections</title>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript">
+$(function(){
+  var imgs = [
+     "http://cdn.css-tricks.com/wp-content/themes/CSS-Tricks-9/images/brushed_alu.png",
+     "http://cdn.css-tricks.com/wp-content/themes/CSS-Tricks-9/images/bglines.png"];
+  var s = $("#s");
+  var b = $("body");
+  for (var i=0; i<imgs.length; i++){
+    s.append("<option value=\""+imgs[i]+"\" >"+i+"</option>");
+    new Image().src = imgs[i];
+  }
+  var f = function() {
+    var imgUrl = s[0].options[s[0].selectedIndex].value;
+    b.css({background:  "url("+imgUrl + ") repeat"});
+  };
+  s.bind('change', f);
+
+  s.bind('keyup', function(event){ // NOTICE: using 'keyup', not 'keydown'
+    // http://www.javascripter.net/faq/keycodes.htm
+    if (event.which == 37 // Left arrow
+        || event.which == 38 // Up arrow
+        || event.which == 39 // Right arrow
+        || event.which == 40 ) { // Down arrow
+      if(console){ // when using Firefox with firebug
+        console.log(this.selectedIndex);
+      }
+      s.trigger('change');
+    }
+  });
+  s.focus();
+  s.trigger('change');
+
+});
+</script>
+</head>
+<body style=" ">
+<div> <select id="s"></select>
+  </div>
+</body>
+</html>

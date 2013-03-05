@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>1px Border</title>
+<!-- http://stackoverflow.com/questions/339923/how-to-set-cellpadding-cellspacing-in-css -->
+<style type="text/css">
+table{
+  border-collapse:collapse; /* 'cellspacing' equivalent */
+  border-spacing:0;
+}
+th,td{
+  border: 1px solid black;
+  padding: 0; /* 'cellpadding' equivalent */
+}
+</style>
+</head>
+<body>
+  <table>
+    <tr><th>col1</th><th>col2</th><th>col3</th></tr>
+    <tr><td>AAAA</td><td>BBBB</td><td>CCCC</td></tr>
+  </table>
+</body>
+</html>

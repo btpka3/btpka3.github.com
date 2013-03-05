@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Test Dojo AMD</title>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dijit/themes/claro/claro.css" />
+<script type="text/javascript">
+var dojoConfig = {
+    async:true,
+    isDebug: true,
+    debugAtAllCosts:true,
+    packages: [{name: "my", location: "/js/dojo/ds"}]};
+</script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dojo/dojo.js" ></script>
+<script type="text/javascript">
+
+require([
+         "dojo/ready", "dojo/store/Memory", "dijit/form/FilteringSelect"
+], function(ready, Memory, FilteringSelect){
+  var stateStore = new Memory({
+    data: [
+        {name:"Alabama", id:"AL"},
+        {name:"Alaska", id:"AK"},
+        {name:"American Samoa", id:"AS"},
+        {name:"Arizona", id:"AZ"},
+        {name:"Arkansas", id:"AR"},
+        {name:"Armed Forces Europe", id:"AE"},
+        {name:"Armed Forces Pacific", id:"AP"},
+        {name:"Armed Forces the Americas", id:"AA"},
+        {name:"California", id:"CA"},
+        {name:"Colorado", id:"CO"},
+        {name:"Connecticut", id:"CT"},
+        {name:"Delaware", id:"DE"},
+
+
+        {name:"Alabama1", id:"AL1"},
+        {name:"Alaska1", id:"AK1"},
+        {name:"American Samoa1", id:"AS1"},
+        {name:"Arizona1", id:"AZ1"},
+        {name:"Arkansas1", id:"AR1"},
+        {name:"Armed Forces Europe1", id:"AE1"},
+        {name:"Armed Forces Pacific1", id:"AP1"},
+        {name:"Armed Forces the Americas1", id:"AA1"},
+        {name:"California1", id:"CA1"},
+        {name:"Colorado1", id:"CO1"},
+        {name:"Connecticut1", id:"CT1"},
+        {name:"Delaware1", id:"DE1"}
+    ]
+  });
+
+  ready(function(){
+    var filteringSelect = new FilteringSelect({
+        id: "stateSelect",
+        name: "state",
+        value: "California",
+        store: stateStore,
+        searchAttr: "name"
+    }, "stateSelect");
+  });
+});
+</script>
+<style type="text/css">
+</style>
+</head>
+<body class="claro">
+<input id="stateSelect" />
+<p><button onclick="alert(document.getElementById('stateSelect').value);">Get value</button></p>
+<div id="b">BBB</div>
+<div>
+<pre>
+最佳实践？—— 定义一个组件
+
+</pre>
+</div>
+ </body>
+</html>

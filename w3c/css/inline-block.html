@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>inline-block</title>
+<style type="text/css">
+
+* {
+  margin:0;
+  padding:0;
+  border-width:0;
+}
+
+/* ====================================== horizontal list using "div" and "span" */
+.h_list_div_span span{          /* REQUIRED */
+  display:inline-block;
+}
+.h_list_div_span span{          /* OPTIONAL */
+  border:1px solid red;
+  width:100px;
+  height:50px;
+  vertical-align: top;
+}
+
+/* ====================================== horizontal list using "ul" and "li" */
+.h_list_ul{                     /* REQUIRED */
+  margin:0;
+  padding:0;
+  border-width:0;
+  list-style:none outside none;
+}
+.h_list_ul li {                 /* REQUIRED */
+  display: -moz-inline-stack;
+  display: inline-block;
+  zoom: 1;
+  *display: inline;
+  vertical-align: top;
+}
+.h_list_ul li {                 /* OPTIONAL */
+  border: 1px solid #000;
+  width: 100px;
+  height:50px;
+}
+
+/* ====================================== horizontal list using "div" and "div" */
+.h_list_div_div div{            /* REQUIRED */
+  display: -moz-inline-stack;
+  display: inline-block;
+  zoom: 1;
+  *display: inline;
+  vertical-align: top;
+}
+.h_list_div_div div{            /* OPTIONAL */
+  border:1px solid red;
+  width:100px;
+  height:50px;
+}
+</style>
+
+</head>
+<body style="border:1px solid #000;">
+<div class="h_list_div_span">
+  <span>div span01</span
+ ><span>div span02</span
+ ><span>div span03</span
+ ><span>div span04</span
+ ><span>div span05</span
+ ><span>div span06</span
+ ><span>div span07</span
+ ><span>div span08</span
+ ><span>div span09</span
+ ><span>div span10</span
+ ><span>div span11</span
+ ><span style="height:25px;">div span12</span>
+</div>
+<br />
+
+<ul class="h_list_ul">
+  <li>ul li01</li
+ ><li>ul li02</li
+ ><li>ul li03</li
+ ><li>ul li04</li
+ ><li>ul li05</li
+ ><li>ul li06</li
+ ><li>ul li07</li
+ ><li>ul li08</li
+ ><li>ul li09</li
+ ><li>ul li10</li
+ ><li>ul li11</li
+ ><li style="height:25px;">ul li12</li>
+</ul>
+<br />
+
+<div class="h_list_div_div">
+  <div>div div01</div
+ ><div>div div02</div
+ ><div>div div03</div
+ ><div>div div04</div
+ ><div>div div05</div
+ ><div>div div06</div
+ ><div>div div07</div
+ ><div>div div08</div
+ ><div>div div09</div
+ ><div>div div10</div
+ ><div>div div11</div
+ ><div style="height:25px;">div div12</div>
+</div>
+
+</body>
+</html>

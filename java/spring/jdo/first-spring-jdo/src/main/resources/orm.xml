@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<orm xmlns="http://java.sun.com/xml/ns/jdo/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/jdo/orm
+        http://java.sun.com/xml/ns/jdo/orm_3_0.xsd">
+    <!-- 
+    http://www.datanucleus.org/products/accessplatform/guides/jdo/tutorial.html
+    docs.oracle.com/javase/1.3/docs/guide/jdbc/getstart/mapping.html
+     -->
+  <package name="me.test.first.spring.jdo.entity">
+    <class name="Person" table="PERSON">
+      <inheritance strategy="new-table" />
+      <field name="id">
+        <column name="ID" jdbc-type="BIGINT" />
+      </field>
+      <field name="name">
+        <column name="NAME" length="255" jdbc-type="VARCHAR" />
+      </field>
+      <field name="age">
+        <column name="AGE" jdbc-type="INTEGER" />
+      </field>
+      <field name="male">
+        <column name="MALE" jdbc-type="BOOLEAN" />
+      </field>
+      <field name="birthday">
+        <column name="BIRTHDAY" jdbc-type="DATE" />
+      </field>
+      <field name="imgData">
+        <column name="IMG_DATA" jdbc-type="BINARY" />
+      </field>
+    </class>
+
+  </package>
+</orm>

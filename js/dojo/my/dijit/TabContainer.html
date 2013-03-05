@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Test Dojo AMD</title>
+
+<!--
+http://css-tricks.com/removing-the-dotted-outline/
+ -->
+<style type="text/css">
+*:focus {
+ outline:none;
+}
+</style>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dijit/themes/claro/claro.css" />
+
+<script type="text/javascript">
+var dojoConfig = {
+    async:true
+};
+</script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dojo/dojo.js" ></script>
+<script type="text/javascript" src="TabContainer.js"></script>
+<style type="text/css">
+</style>
+</head>
+<body class="claro">
+<div id="b">BBB</div>
+<div style="width: 350px; height: 290px">
+  <div id="tc1-prog"></div>
+</div>
+</body>
+</html>

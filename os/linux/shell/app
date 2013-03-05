@@ -1,0 +1,74 @@
+#!/bin/bash
+
+NAME="$(basename $0)"
+
+WORK_DIR="$(cd "$(dirname "$0")" && pwd)"
+cd "${WORK_DIR}"
+
+JAVA_OPTS="
+  -XX:PermSize=512M
+  -XX:MaxPermSize=512M
+  -Xms1024M
+  -Xmx2048M
+  -Xss1024K
+"
+
+MAIN_CLASS=me.test.SampleMain
+XX_DIR=
+
+# resolv CLASSPATH
+for jar in lib/*.jar
+do
+  CLASSPATH=${CLASSPATH}:"${WORK_DIR}/${jar}"
+done
+CLASSPATH=.:./conf:${CLASSPATH}
+CLASSPATH="${WORK_DIR}/another.jar":${CLASSPATH}
+CLASSPATH="${XX_DIR}":${CLASSPATH}
+export CLASSPATH
+#echo "Using classpath: ${CLASSPATH}"
+
+# giving a default pid
+if [ -z "${PID_FILE}" ]; then
+  PID_FILE="${WORK_DIR}/${NAME}.pid"
+fi
+
+function start() {
+  #java ${JAVA_OPTS} ${MAIN_CLASS} &
+  sleep 1000&
+  PID=$!
+  echo ${PID} > ${PID_FILE}
+}
+
+function stop() {
+  #return;
+  if [[ -f "${PID_FILE}" ]]; then
+    read kpid < "${PID_FILE}"
+    if [ -n "${kpid}" ] && [ -d "/proc/${kpid}" ]; then
+      kill ${kpid}
+    fi
+    rm -f "${PID_FILE}"
+  fi
+}
+
+function usage() {
+  echo "Usage: $0 {start|stop}"
+}
+
+
+case "$1" in
+  start)
+    start
+    ;;
+  stop)
+    stop
+    ;;
+  restart)
+    stop
+    start
+    ;;
+  *)
+    usage
+    ;;
+esac
+
+

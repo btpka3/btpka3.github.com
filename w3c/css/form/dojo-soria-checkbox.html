@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>css-sprites</title>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dijit/themes/soria/soria.css" />
+</head>
+<body class="soria">
+<div> <input type="checkbox" /> 原本的样子 </div>
+<div><span style="border: 1px solid red;">
+<input type="checkbox" class="dijitReset dijitCheckBoxInput" onclick="alert('checked = '+this.checked);"/></span>
+隐藏后的样子
+</div>
+
+<div>
+<div class="dijitReset dijitInline dijitCheckBox">
+  <input type="checkbox" class="dijitReset dijitCheckBoxInput" />
+</div> 正常 - 未选中
+</div>
+
+<div>
+<div class="dijitReset dijitInline dijitCheckBox dijitCheckBoxChecked">
+  <input type="checkbox" class="dijitReset dijitCheckBoxInput" />
+</div> 正常 - 选中
+</div>
+
+<div>
+<div class="dijitReset dijitInline dijitCheckBox dijitCheckBoxDisabled">
+  <input type="checkbox" class="dijitReset dijitCheckBoxInput" />
+</div> 禁用 - 未选中
+</div>
+
+<div>
+<div class="dijitReset dijitInline dijitCheckBox dijitCheckBoxCheckedDisabled">
+  <input type="checkbox" class="dijitReset dijitCheckBoxInput" />
+</div> 禁用 - 选中
+</div>
+
+<div>
+<div class="dijitReset dijitInline dijitCheckBox dijitCheckBoxHover">
+  <input type="checkbox" class="dijitReset dijitCheckBoxInput" />
+</div> 悬停 - 未选中
+</div>
+
+
+<div>
+<div class="dijitReset dijitInline dijitCheckBox dijitCheckBoxCheckedHover">
+  <input type="checkbox" class="dijitReset dijitCheckBoxInput" />
+</div> 悬停 - 选中
+</div>
+
+
+<!--
+<div role="presentation" class="dijit dijitReset dijitInline dijitCheckBox dijitCheckBoxDisabled dijitDisabled"
+     widgetid="check3">
+<input type="checkbox" dojoattachevent="onclick:_onClick" dojoattachpoint="focusNode"
+     class="dijitReset dijitCheckBoxInput" style="-moz-user-select: none;" value="on"
+     id="check3" tabindex="-1" disabled="" aria-disabled="true">
+</div>
+ -->
+
+</body>
+</html>

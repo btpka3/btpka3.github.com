@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>captcha list</title>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.8.0/dijit/themes/claro/claro.css" />
+<style type="text/css">
+@import "http://ajax.googleapis.com/ajax/libs/dojo/1.8.0/dojox/grid/resources/claroGrid.css";
+
+/*Grid needs an explicit height by default*/
+#grid {
+    width: 65em;
+    height: 25em;
+    padding: 1px;
+}
+</style>
+<script type="text/javascript">
+var dojoConfig = {
+    async:true
+};
+</script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.8.0/dojo/dojo.js" ></script>
+<script type="text/javascript">
+require( [
+    "dojo/ready",
+    "dijit/registry",
+    "dojox/grid/DataGrid",
+    "dojo/data/ItemFileWriteStore"
+], function(
+    ready,
+    registry,
+    DataGrid,
+    ItemFileWriteStore
+) {
+  ready(function(){
+    /*set up data store*/
+    var data = {
+      identifier: 'id',
+      items: [
+              { id:1, col1: "normal", col2: false, col3: 'But are not followed by two hexadecimal', col4: 29.91},
+              { id:2, col1: "important", col2: false, col3: 'Because a % sign always indicates', col4: 9.33},
+              { id:3, col1: "important", col2: false, col3: 'Signs can be selectively', col4: 19.34}
+      ]
+    };
+    var store = new dojo.data.ItemFileWriteStore({data: data});
+
+    /*set up layout*/
+    var layout = [[
+      {'name': 'Column 1', 'field': 'id', 'width': '100px'},
+      {'name': 'Column 2', 'field': 'col2', 'width': '100px'},
+      {'name': 'Column 3', 'field': 'col3', 'width': '200px'},
+      {'name': 'Column 4', 'field': 'col4', 'width': '150px'}
+    ]];
+
+    /*create a new grid:*/
+    var grid = new dojox.grid.DataGrid({
+        id: 'grid',
+        store: store,
+        structure: layout,
+        rowSelector: '20px'},
+      document.createElement('div'));
+
+    /*append the new grid to the div*/
+    dojo.byId("gridDiv").appendChild(grid.domNode);
+
+    /*Call startup() to render the grid*/
+    grid.startup();
+    });
+});
+</script>
+</head>
+<body class="claro">
+<div id="gridDiv"></div>
+</body>
+</html>

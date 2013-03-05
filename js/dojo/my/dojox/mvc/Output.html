@@ -1,0 +1,98 @@
+<html>
+<head>
+<title>test dojox.mvc</title>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dijit/themes/claro/claro.css" />
+
+<script type="text/javascript">
+var dojoConfig = {
+  async:true
+};
+</script>
+
+<script type="text/javascript"
+        src="http://ajax.googleapis.com/ajax/libs/dojo/1.7.2/dojo/dojo.js" ></script>
+<!--
+<script type="text/javascript"
+        src="http://localhost/dojo-1.7.3-src/dojo/dojo.js" ></script>
+ -->
+<script type="text/javascript">
+var i=0;
+var src;
+var li2;
+require([
+    "dojo/parser",
+    "dojo/ready",
+    "dojox/mvc",
+    "dojox/mvc/Group",
+    "dojox/mvc/Output",
+    "dijit/form/Button",
+    "dojo/dom"
+], function(
+    parser,
+    ready,
+    mvc,
+    Group,
+    Output,
+    Button,
+    dom){
+  ready(function(){
+    src = {
+        "name" : "li2",
+        "age"  : "24",
+        "Email" : "li2@xxx.com",
+        "Gender" : "male",
+        "value": 111
+    };
+    li2 = mvc.newStatefulModel({ data : src});
+
+    // declare style
+    parser.parse();
+
+    // program style
+    var output = new Output({
+      ref: li2.name
+    }, "person");
+    output.startup();
+
+    new Button({
+      label: "Change Name",
+      title: "Change Name auto add index",
+      onClick: function(){
+        i++;
+        li2.name.set("value", "li2_"+i);
+      }}, "changeName");
+
+    new Button({
+      label: "Change Name",
+      title: "Change Name from text field",
+      onClick: function(){
+        li2.name.set("value", dom.byId("helloInput").value);
+      }}, "changeNameTxt");
+  });
+});
+</script>
+</head>
+<body class="claro">
+<!--
+https://www.ibm.com/developerworks/mydeveloperworks/blogs/94e7fded-7162-445e-8ceb-97a2140866a9/entry/using_the_new_dojox_mvc_support_available_in_dojo_1_73?lang=zh
+http://dojotoolkit.org/reference-guide/1.7/dojox/mvc.html
+ -->
+
+<div id="changeName"></div>
+
+<div><input id="helloInput" data-dojo-type="dijit.form.TextBox" data-dojo-props="ref: 'li2.name'"><div id="changeNameTxt"></div></div>
+
+<div data-dojo-type="dojox.mvc.Output" ref="li2.name">
+name: ${this.value} [dojox.mvc.Output src=StatefulModel]
+</div>
+
+<div data-dojo-type="dojox.mvc.Group" data-dojo-props="ref: li2">
+<span data-dojo-type="dojox.mvc.Output" data-dojo-props="ref: 'name'">
+name: ${this.value} [dojox.mvc.Group/dojox.mvc.output src=String]
+</span>
+</div>
+
+<div id="person">name: ${this.value} [program style]</div>
+
+</body>
+</html>

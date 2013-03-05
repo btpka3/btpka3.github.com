@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>CSS Triangles</title>
+<style type="text/css">
+.triangle-topleft { width: 0; height: 0; border-top: 20px solid red; border-right: 20px solid transparent; }
+.triangle-topright { width: 0; height: 0; border-top: 20px solid red; border-left: 20px solid transparent; }
+.triangle-bottomleft { width: 0; height: 0; border-bottom: 20px solid red; border-right: 20px solid transparent; }
+.triangle-bottomright { width: 0; height: 0; border-bottom: 20px solid red; border-left: 20px solid transparent; }
+
+/* create an arrow that points up */
+div.arrow-up {
+  width:0px;
+  height:0px;
+  border-left:20px solid transparent;  /* left arrow slant */
+  border-right:20px solid transparent; /* right arrow slant */
+  border-bottom:20px solid #2f2f2f; /* bottom, add background color here */
+  font-size:0px;
+  line-height:0px;
+}
+
+/* create an arrow that points down */
+div.arrow-down {
+  width:0px;
+  height:0px;
+  border-left:20px solid transparent;
+  border-right:20px solid transparent;
+  border-top:20px solid #2f2f2f;
+  font-size:0px;
+  line-height:0px;
+}
+
+/* create an arrow that points left */
+div.arrow-left {
+  width:0px;
+  height:0px;
+  border-bottom:20px solid transparent;  /* left arrow slant */
+  border-top:20px solid transparent; /* right arrow slant */
+  border-right:20px solid #2f2f2f; /* bottom, add background color here */
+  font-size:0px;
+  line-height:0px;
+}
+
+/* create an arrow that points right */
+div.arrow-right {
+  width:0px;
+  height:0px;
+  border-bottom:20px solid transparent;  /* left arrow slant */
+  border-top:20px solid transparent; /* right arrow slant */
+  border-left:20px solid #2f2f2f; /* bottom, add background color here */
+  font-size:0px;
+  line-height:0px;
+}
+
+.css-arrow-multicolor {
+  border-color: red green blue orange;
+  border-style:solid;
+  border-width:20px;
+  width:0;
+  height:0;
+}
+
+.css-arrow-acute {
+  border-color: red green blue orange;
+  border-style:solid;
+  border-width:25px 10px 15px 30px;
+  width:0;
+  height:0;
+}
+
+.chat-bubble {
+  background-color:#EDEDED;
+  border:2px solid #666666;
+  font-size:35px;
+  line-height:1.3em;
+  margin:10px auto;
+  padding:10px;
+  position:relative;
+  text-align:center;
+  width:300px;
+  -moz-border-radius:10px;
+  -webkit-border-radius:10px;
+  -moz-box-shadow:0 0 5px #888888;
+  -webkit-box-shadow:0 0 5px #888888;
+}
+.chat-bubble-arrow-border {
+  border-color: #666666 transparent transparent transparent;
+  border-style: solid;
+  border-width: 10px;
+  height:0;
+  width:0;
+  position:absolute;
+  bottom:-22px;
+  left:30px;
+}
+.chat-bubble-arrow {
+  border-color: #EDEDED transparent transparent transparent;
+  border-style: solid;
+  border-width: 10px;
+  height:0;
+  width:0;
+  position:absolute;
+  bottom:-19px;
+  left:30px;
+}
+
+/* IE6 */
+.chat-bubble-arrow {
+    _border-left-color: pink;
+    _border-bottom-color: pink;
+    _border-right-color: pink;
+    _filter: chroma(color=pink);
+}
+
+.heart {
+    border-color:red;
+    border-style:dotted;
+    border-width:0 150px 150px 0;
+    height:0;
+    margin-left:90px;
+    margin-top:90px;
+    width:0;
+}
+ol.list li{margin: 5px 0 5px 0;}
+</style>
+</head>
+
+<!--
+  http://jsfiddle.net/HerrSerker/NUAXk/
+  http://css-tricks.com/examples/ShapesOfCSS/
+  http://jonrohan.me/guide/css/creating-triangles-in-css/
+ -->
+<body>
+<div >
+<ol class="list">
+  <li><div class="triangle-topleft" ></div></li>
+  <li><div class="triangle-topright" ></div></li>
+  <li><div class="triangle-bottomleft" ></div></li>
+  <li><div class="triangle-bottomright" ></div></li>
+</ol>
+
+<hr />
+<ol class="list">
+  <li><div class="arrow-up" ></div></li>
+  <li><div class="arrow-down" ></div></li>
+  <li><div class="arrow-left" ></div></li>
+  <li><div class="arrow-right" ></div></li>
+</ol>
+
+<hr />
+<ol class="list">
+  <li><div class="css-arrow-multicolor" ></div></li>
+  <li><div class="css-arrow-acute" ></div></li>
+  <li><div class="css-arrow-multicolor" style="border-style:dotted;"></div></li>
+  <li><div class="css-arrow-multicolor" style="border-style:dashed;"></div></li>
+  <li><div class="css-arrow-multicolor" style="border-style:outset;"></div></li>
+  <li><div class="css-arrow-multicolor" style="border-style:inset;"></div></li>
+  <li><div class="css-arrow-multicolor" style="border-style:ridge;"></div></li>
+  <li><div class="css-arrow-multicolor" style="border-style:groove;"></div></li>
+  <li><div class="css-arrow-multicolor" style="border-style:double;"></div></li>
+</ol>
+
+
+    <div class="chat-bubble">
+      Buongiorno!
+      <div class="chat-bubble-arrow-border"></div>
+      <div class="chat-bubble-arrow"></div>
+    </div>
+    <br />
+
+    <div class="heart"></div>
+    <br />
+
+  </div>
+</body>
+</html>

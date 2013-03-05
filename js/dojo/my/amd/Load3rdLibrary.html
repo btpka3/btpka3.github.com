@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>test load third library</title>
+<link href="http://alexgorbatchev.com/pub/sh/current/styles/shCore.css" rel="stylesheet" type="text/css" />
+<link href="http://alexgorbatchev.com/pub/sh/current/styles/shThemeDefault.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="http://alexgorbatchev.com/pub/sh/current/scripts/shCore.js"></script>
+<script type="text/javascript" src="http://alexgorbatchev.com/pub/sh/current/scripts/shBrushJScript.js"></script>
+<script type="text/javascript">
+// https://www.ibm.com/developerworks/mydeveloperworks/blogs/94e7fded-7162-445e-8ceb-97a2140866a9/entry/loading_jquery_with_dojo_1_7_amd_loader2?lang=en
+// http://dojotoolkit.org/documentation/tutorials/1.7/modules/
+var dojoConfig = {
+  async:true,
+  isDebug: true,
+  debugAtAllCosts:true,
+
+  // load AMD modules
+  packages: [
+    {name: 'jquery', location: 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1', main: 'jquery' }
+  ],
+
+  // load non-AMD JS code
+  aliases: [
+    [ "shCore", "http://alexgorbatchev.com/pub/sh/current/scripts/shCore.js" ],
+    [ "shAutoloader", "http://alexgorbatchev.com/pub/sh/current/scripts/shAutoloader.js" ],
+    [ "shBrushJScript", "http://alexgorbatchev.com/pub/sh/current/scripts/shBrushJScript.js" ]
+  ]
+};
+</script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dojo/dojo.js" ></script>
+<script type="text/javascript">
+  define.amd.jQuery = true;
+/*
+  require(["jquery",
+           "dojo/ready",
+           "shCore",
+           "shBrushJScript"], function($, ready){
+    $(SyntaxHighlighter.all);
+  });
+*/
+require(["jquery","dojo/ready"], function($,ready){
+  //alert($.isArray([]));  // true;
+  //alert(SyntaxHighlighter);
+  //$(function(){alert(123456);}); // OK
+  //$(SyntaxHighlighter.all);  // FIXME Not OK.
+  //$(document).ready(SyntaxHighlighter.all); // FIXME Not OK.
+  ready(SyntaxHighlighter.all);
+});
+</script>
+</head>
+<body>
+<pre class="brush: js">
+    /**
+     * SyntaxHighlighter
+     */
+    function foo()
+    {
+        if (counter <= 10)
+            return;
+        // it works!
+    }
+</pre>
+<div>-----------</div>
+<script type="syntaxhighlighter" class="brush: js"><![CDATA[
+  /**
+   * SyntaxHighlighter
+   */
+  function foo()
+  {
+      if (counter <= 10)
+          return;
+      // it works!
+  }
+]]></script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Round Corner</title>
+<style type="text/css">
+table.r1 {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+table.r1, table.r1 td {
+    border: 1px solid black;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    padding: 5px;
+}
+
+
+/******************************/
+
+table.r2 {
+    border-collapse:separate;
+    border:solid black 1px;
+    border-radius:6px;
+    -moz-border-radius:6px;
+}
+
+table.r2 td, table.r2 th {
+    border-left:solid black 1px;
+    border-top:solid black 1px;
+}
+
+table.r2 th {
+    background-color: blue;
+    border-top: none;
+}
+
+table.r2 td:first-child {
+     border-left: none;
+}
+
+/******************************/
+table.rounded-corners tr:first-child td:first-child {
+  border-top-left-radius: 5px;
+}
+table.rounded-corners tr:first-child td:last-child {
+  border-top-right-radius: 5px;
+}
+table.rounded-corners tr:last-child td:first-child {
+  border-bottom-left-radius: 5px;
+}
+table.rounded-corners tr:last-child td:last-child {
+  border-bottom-right-radius: 5px;
+}
+
+
+</style>
+</head>
+<body>
+<!--
+http://stackoverflow.com/questions/4932181/rounded-table-corners-css-only
+http://jsfiddle.net/7veZQ/3/
+http://jsfiddle.net/MuZzz/1/
+
+ -->
+
+<div>
+<table class="r1">
+    <tr><td>A</td><td>B</td></tr>
+    <tr><td>C</td><td>D</td></tr>
+</table>
+<br/>
+
+
+<table class="r2">
+    <thead>
+    <tr>
+        <th>blah</th>
+        <th>fwee</th>
+        <th>spoon</th>
+    </tr>
+    </thead>
+    <tr>
+        <td>blah</td>
+        <td>fwee</td>
+        <td>spoon</td>
+    </tr>
+    <tr>
+        <td>blah</td>
+        <td>fwee</td>
+        <td>spoon</td>
+    </tr>
+</table>
+<br/>
+
+
+<table class="rounded-corners" border="1px" style="border: 0;
+      border-collapse: separate;
+      border-spacing: 0;">
+    <tr>
+        <td>blah</td>
+        <td>fwee</td>
+        <td>spoon</td>
+    </tr>
+    <tr>
+        <td>blah</td>
+        <td>fwee</td>
+        <td>spoon</td>
+    </tr>
+</table>
+</div>
+</body>
+</html>

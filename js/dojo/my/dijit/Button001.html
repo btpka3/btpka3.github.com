@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Test Dojo AMD</title>
+
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.8.0/dijit/themes/claro/claro.css" />
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.8.0/dijit/themes/tundra/tundra.css" />
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.8.0/dijit/themes/soria/soria.css" />
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.8.0/dijit/themes/nihilo/nihilo.css" />
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.8.0/dojo/resources/dojo.css" />
+<style type="text/css">
+
+.myButton .dijitButtonNode {
+  background: rgb(96,96,96) !important;
+  color: white !important;
+  padding: 10px !important;
+  font-size: x-large !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+  border: 2px inset rgb(96,96,96);
+}
+.myButtonHover .dijitButtonNode {
+  background-color: rgb(89,94,111) !important;
+  color: cyan !important;
+}
+.myButtonFocused .dijitButtonNode {
+  border: yellow inset 2px;
+}
+.myButtonActive .dijitButtonNode {
+  background-color: white !important;
+  color: black !important;
+  border: 2px solid black !important;
+}
+</style>
+
+<script type="text/javascript">
+var dojoConfig = {
+    async:true,
+    parseOnLoad:true
+};
+</script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.8.0/dojo/dojo.js" ></script>
+<script type="text/javascript">
+require( [
+    "dojo/parser",
+
+    "dijit/form/Button",
+    "dojo/_base/window",
+    "dojo/dom-style",
+    "dojo/dom-construct",
+    "dojo/dom-class",
+    "dojo/domReady!"
+], function(
+    parser,
+    Button,
+    win,
+    style,
+    ctr,
+    domClass
+) {
+  var themes = ["", "claro", "soria", "tundra", "nihilo"];
+
+  var changeThemeBtn = new Button({
+    i:-1,
+    onClick: function(){
+      this.i++;
+      domClass.remove(win.body(), themes);
+      var nextTheme = themes[this.i % themes.length];
+      domClass.add(win.body(), nextTheme);
+      this.set("label" , "Change Theme ： " + nextTheme);
+  }}, "changeThemeBtn");
+
+  changeThemeBtn.onClick();
+
+  /////////////////////////////////////////////
+
+  new Button({}, "defaultBtn");
+  new Button({"class": "claro"}, "claroBtn");
+  new Button({"class": "soria"}, "soriaBtn");
+  new Button({"class": "tundra"}, "tundraBtn");
+  new Button({"class": "nihilo"}, "nihiloBtn");
+  new Button({"baseClass":"myButton"}, "myBtn");
+
+  /////////////////////////////////////////////
+  new Button({
+    "class": "claro",
+    onClick: function(){
+      if(!this.i){
+          this.i = 0;
+      }
+      this.i++;
+      var classNames = ["dijitButton","myButton"] ;
+      this.baseClass = classNames[this.i % classNames.length];
+      console.log(this.baseClass + "  " + this["class"] + " : " + this);
+    }}, "btn");
+});
+</script>
+</head>
+<body >
+  <div>
+    <span id="changeThemeBtn">Change Theme</span>
+    <hr/>
+
+    <span id="defaultBtn">Default Button</span>
+    <span class="claro"> <!-- FIXME: Why need this container?  -->
+      <span id="claroBtn">Claro Button</span>
+    </span>
+    <span id="tundraBtn">Tundra Button</span>
+    <span id="soriaBtn" >Soria Button</span>
+    <span id="nihiloBtn">Nihilo Button</span>
+    <span id="myBtn">My Button</span>
+    <hr/>
+
+    <span id="btn" class="claro">No Imgage Customer Button</span>
+    <hr/>
+
+    TODO: Using background image.
+    <hr/>
+
+    TODO: Add animition
+    <hr/>
+
+    TODO: CSS3 effect
+    <hr/>
+  </div>
+
+</body>
+</html>

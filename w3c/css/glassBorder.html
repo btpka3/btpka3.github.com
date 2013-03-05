@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>glass border</title>
+<style type="text/css">
+*{
+  margin: 0;
+  padding: 0;
+}
+html {
+  background:
+    url("http://cdn.css-tricks.com/wp-content/themes/CSS-Tricks-9/images/bglines.png")
+    repeat scroll 0 0 transparent;
+}
+*{
+  behavior: url(htc/PIE.htc);
+}
+
+div.box {
+  border: 8px solid transparent;
+  border: 8px solid rgba(0, 0, 0, 0.0);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  background: #E6E2DF no-repeat scroll 0 0 ;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  color: #B2AAA4;
+}
+</style>
+</head>
+<body>
+<!--
+http://css-tricks.com/transparent-borders-with-background-clip/
+http://css-tricks.com/rgba-browser-support/
+http://lea.verou.me/2009/02/bulletproof-cross-browser-rgba-backgrounds/
+ -->
+<div class="box"
+  style="width: 200px; height: 100px; position: relative; top: 116px; left: 134px;">
+Hello world! #E6E2DF
+</div>
+
+<div class="box"
+  style="width: 200px; height: 100px; position: relative; left: 400px; border: 8px solid rgba(0, 0, 0, 0.1);">
+Hello world!
+</div>
+</body>
+</html>

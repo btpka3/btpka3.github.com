@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Close Button</title>
+<style type="text/css">
+
+body { behavior: url("../htc/csshover3.htc"); }
+
+.closeButton{
+  position:relative;
+  width:100px;
+  height:100px;
+  display: table;
+  #position: relative;
+  overflow: hidden;
+  font-family: "Arial";
+  color : #FFBBFF;
+}
+.closeButtonTopLeft{
+  position:absolute;
+  top:0;
+  left:0;
+  width:30px;
+  height:30px;
+  border-top-left-radius:20px;
+  border-top:8px solid #D1EEEE;
+  border-left:8px solid #D1EEEE;
+}
+.closeButtonTopRight{
+  position:absolute;
+  top:0;
+  right:0;
+  width:30px;
+  height:30px;
+  border-top-right-radius:20px;
+  border-top:8px solid #D1EEEE;
+  border-right:8px solid #D1EEEE;
+}
+.closeButtonBottomLeft{
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:30px;
+  height:30px;
+  border-bottom-left-radius:20px;
+  border-bottom:8px solid #D1EEEE;
+  border-left:8px solid #D1EEEE;
+}
+.closeButtonBottomRight{
+  position:absolute;
+  bottom:0;
+  right:0;
+  width:30px;
+  height:30px;
+  border-bottom-right-radius:20px;
+  border-bottom:8px solid #D1EEEE;
+  border-right:8px solid #D1EEEE;
+}
+.closeButtonContent1{
+  font-size: 88px;
+  #position: absolute;
+  #top: 50%;
+  display: table-cell;
+  vertical-align:middle;
+  width:100%;
+}
+.closeButtonContent2{
+  #position: relative;
+  #top: -50%;
+  text-align: center;
+}
+.container{
+  outline: 1px solid blue;
+}
+
+.closeButton:hover{
+  color : #E066FF;
+}
+.closeButton:hover .closeButtonTopLeft{
+  border-top:8px solid #BFEFFF;
+  border-left:8px solid #BFEFFF;
+}
+.closeButton:hover .closeButtonTopRight{
+  border-top:8px solid #BFEFFF;
+  border-right:8px solid #BFEFFF;
+}
+.closeButton:hover .closeButtonBottomLeft{
+  border-bottom:8px solid #BFEFFF;
+  border-left:8px solid #BFEFFF;
+}
+.closeButton:hover .closeButtonBottomRight{
+  border-bottom:8px solid #BFEFFF;
+  border-right:8px solid #BFEFFF;
+
+}
+</style>
+</head>
+<body>
+
+<div class="closeButton">
+  <div class="closeButtonTopLeft">&nbsp;</div>
+  <div class="closeButtonTopRight"></div>
+  <div class="closeButtonBottomLeft"></div>
+  <div class="closeButtonBottomRight"></div>
+  <div class="closeButtonContent1"><div class="closeButtonContent2">X</div></div>
+</div>
+</body>
+</html>

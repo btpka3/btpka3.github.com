@@ -1,0 +1,34 @@
+<html>
+<head>
+<title>Fun with Moveables!</title>
+<script type="text/javascript">
+var dojoConfig = {
+  async:true,
+  packages: [{name: "my", location: "/js/dojo/amd"}]
+};
+</script>
+<script type="text/javascript"
+        src="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dojo/dojo.js" ></script>
+
+<script type="text/javascript">
+require([
+  "my/IdNo"
+], function(IdNo){
+  var idNo = new IdNo("510683197212030726");
+  alert(idNo.isValid());
+
+  /**
+   alert(IdNo.S0); // "S0"
+   alert(idNo.S0); // undefined
+   alert(IdNo.S1); // undefined
+   alert(idNo.S1); // "S1"
+   alert(IdNo.S2); // undefined
+   alert(idNo.S2); // "S2"
+  */
+  alert(IdNo.calcCheckCode("11010120120101625"));
+});
+</script>
+</head>
+<body>
+</body>
+</html>

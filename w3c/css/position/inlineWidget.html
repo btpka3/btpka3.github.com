@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>CSS : position</title>
+<style type="text/css">
+*{
+  margin: 0;
+  padding: 0;
+}
+#myBar{
+  line-height:18px;
+  display:inline-block;
+  position: relative;
+}
+.ftop{
+  text-align:center;
+  background-color:#FFB7DD;
+  width:150px;
+  position: absolute;
+  top: -18px;
+  left: -50px;
+  z-index: 1;
+}
+.fright{
+  text-align:center;
+  background-color:#FFEE99;
+  position: absolute;
+  width:50px;
+  right: -50px;
+  z-index: 1;
+    line-height:18px;
+}
+.fbottom{
+  text-align:center;
+  background-color:#CCFF99;
+  width:150px;
+  position: absolute;
+  bottom: -18px;
+  left: -50px;
+  z-index: 1;
+}
+.fleft{
+  text-align:center;
+  background-color:#99FFFF;
+  width:50px;
+  position: absolute;
+  left: -50px;
+  z-index: 1;
+}
+.fcontent{
+  display:inline-block;
+  width:50px;
+}
+.f1{
+  visibility:hidden;
+}
+.f1 .ftop, .f1 .fright, .f1 .fbottom, .f1 .fleft{
+  display:none;
+}
+.f2{
+  visibility:inherit;
+  outline: #E9E9E9 solid 10px;
+}
+.f2 .ftop, .f2 .fright, .f2 .fbottom, .f2 .fleft{
+  display:inline-block;
+}
+</style>
+<script type="text/javascript">
+function ss(){
+  var myBar = document.getElementById('myBar');
+  if(myBar.className=='f2'){
+    myBar.className='f1';
+  }else{
+    myBar.className='f2';
+  }
+}
+</script>
+</head>
+<body>
+<div>11111111111111111111111111111111111111111111111111</div>
+<div>11111111111111111111111111111111111111111111111111</div>
+<div>1111111111111111111112<div id="myBar" class="f1"
+
+><div class="ftop">TOP</div
+
+><div
+  ><div class="fleft">LEFT</div
+
+  ><div class="fcontent"><input type="text" value="ClickMe" onblur="ss();"  onfocus="ss();"
+    style="visibility:visible; border-width:0; padding:0; color:red; width:50px; "/></div
+
+  ><div class="fright">RIGHT</div></div
+
+><div class="fbottom">BOTTOM</div
+
+></div>2111111111111111111111</div>
+<div>11111111111111111111111111111111111111111111111111</div>
+<div>11111111111111111111111111111111111111111111111111</div>
+<div>11111111111111111111111111111111111111111111111111</div>
+<!--
+1.
+这个行高、宽度都明确的情况下好处理，如果会根据变化，该如何处理？
+若使用Dojo创建自定义Widget，如何处理？
+2.
+如何使包围四周呈现一个完整的边框？等。
+ -->
+</body>
+</html>

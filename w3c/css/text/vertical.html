@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<!--
+http://scottgale.com/blog/css-vertical-text/2010/03/01/
+
+ -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>vertical text</title>
+
+<style type="text/css">
+  span {float:right; width:1em; text-align:center; word-wrap:break-word; color:#fff; background:#777; margin:0 5px;}
+p.css-vertical-text {
+  color:#333;
+  border:0px solid red;
+  white-space:nowrap;
+  display:block;
+  bottom:0;
+  width:20px;
+  height:20px;
+  font-family: ‘Trebuchet MS’, Helvetica, sans-serif;
+  font-size:24px;
+  font-weight:normal;
+  text-shadow: 0px 0px 1px #333;
+}
+p.rotate{
+  -webkit-transform:rotate(90deg);
+  -moz-transform:rotate(90deg);
+  -o-transform: rotate(90deg);
+  writing-mode:tb-rl;
+}
+</style>
+<script type="text/javascript">
+function verticalLines(id) {
+  var p = document.getElementById(id);
+  var str = p.innerHTML.replace(/<[^>]+>/gi,"");
+  var arr = str.replace(/(.{1,10})/g, "<span>$1</span>");  //把10改成需要的字数
+  p.innerHTML = arr;
+}
+window.onload = function() {
+  verticalLines("test");
+}
+</script>
+</head>
+<body>
+<p id="test">天之道，其犹张弓与？高者抑下，下者举之，有余者损之，不足者补之。天之道，损有余而补不足。人之道①，则不然，损不足以奉有余。孰能有余以奉天下，唯有道者。是以圣人为而不恃，功成而不处，其不欲见贤②。 </p>
+
+<p class="css-vertical-text rotate">CSS 中文 123456</p>
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+<p class="css-vertical-text">CSS 中文 123456</p>
+
+</body>
+</html>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>framePage</title>
+<style type="text/css">
+html, body{margin:0;padding:0;border-width:0px;height:100%;background-color:grey;}
+/* NOTICE: content should not use percent height and width while having border-width!=0, 
+    otherwise scoll bar will appeared.  Using fixed height and width. */
+</style>
+<script type="text/javascript">
+  function initValue(){
+    if( 
+        typeof(parent.dialogArguments)!='undefined' && parent.dialogArguments != null 
+        && typeof(parent.dialogArguments.name)!= 'undefined' && parent.dialogArguments.name != null ){
+      // FIXME should be set only when this dialog is first opened by parent,
+      //       not after submited.
+      // var isFromSubmit = ${params["isFromSubmit"]};
+      // if (isFromSubmit) {
+      document.getElementsByName("name")[0].value = parent.dialogArguments.name;
+      // }
+    }
+  }
+  function rtnValue(){
+    parent.returnValue = "Hello " + document.getElementsByName("name")[0].value;
+  }
+</script>
+</head>
+<body onload="initValue();" onunload="rtnValue();" >
+<div style="background-color:#FFBBFF;/*border:1px solid #FFF000;*/height:100%;">
+<form action="#">
+<input type="hidden" name="isFromSubmit" value="true"/>
+<div><label for="name">name</label> : <input id="name" type="text" name="name"/></div>
+<div><input type="submit" value="submit"/>&nbsp;<input type="button" value="close" onclick="parent.close();" /></div>
+</form>
+</div>
+</body>
+</html>
