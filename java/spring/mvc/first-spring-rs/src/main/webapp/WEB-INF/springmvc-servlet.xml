@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans default-autowire="byName"
+  xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
+  xmlns:util="http://www.springframework.org/schema/util"
+  xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+
+  <context:component-scan base-package="me.test" />
+
+  <bean id="messageSource"
+        class="org.springframework.context.support.ResourceBundleMessageSource">
+    <property name="basenames">
+      <list>
+        <value>messageSource</value>
+      </list>
+    </property>
+  </bean>
+
+  <!-- ============================================== 定义一个ExceptionResolver -->
+  <!--
+  <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerExceptionResolver">
+    <property name="order" value="2" />
+  </bean>
+  <bean class="org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver">
+    <property name="order" value="3" />
+  </bean>
+  <bean class="org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver">
+    <property name="order" value="4" />
+  </bean>
+  <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+    <property name="order" value="1" />
+    <property name="exceptionMappings">
+      <props>
+        <prop key="BusinessException">forward:/app/error/4XX</prop>
+        <prop key="SystemException">forward:/app/error/5XX</prop>
+      </props>
+    </property>
+    <property name="defaultErrorView" value="/error/5XX"/>
+  </bean>
+   -->
+  <bean class="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver">
+    <property name="order" value="1" />
+  </bean>
+  <bean class="me.test.first.spring.rs.MyExceptionResolver">
+    <property name="order" value="2" />
+  </bean>
+
+  <!-- ============================================== 定义一个HandlerMapping
+  <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
+  -->
+  <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />
+
+  <!-- ============================================== 定义一个HandlerAdapter
+  <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+    <property name="messageConverters">
+      <util:list id="beanList">
+        <!- - 原有的 - ->
+        <ref bean="byteArrayHttpMessageConverter" />
+        <ref bean="stringHttpMessageConverter"/>
+        <ref bean="sourceHttpMessageConverter"/>
+        <ref bean="xmlAwareFormHttpMessageConverter"/>
+
+        <!- - 追加的 - ->
+        <ref bean="mappingJacksonHttpMessageConverter"/>
+      </util:list>
+    </property>
+  </bean>
+   -->
+
+  <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+  </bean>
+  <!-- MarshallingHttpMessageConverter  -->
+
+
+  <!--
+    - 通过对 HttpMessageConverter 接口的 read()、write() 方法 Open Call Hierarchy，
+    - write(): 当 controler 的方法被 @ResponseBody 标注、或返回值是 HttpEntity 时，
+    - 则会直接调用 HttpMessageConverter 进行输出，使用顺序是使用按照  HTTP Header 中
+    - Accept 头部一次进行尝试输出。
+    - 此时返回的 ModelAndView 为 null，所以不会走 ContentNegotiatingViewResolver。
+    - read()：而对于请求的解析，则是根据HTTP Header 中 Content-Type 来找到相应的解析器。
+    - 结论：对于请求的解析只能使用 HttpMessageConverter，而对于输出，则应尽量避免使用
+    - 它（也即：不要使用 HttpEntity 或   @ResponseBody）。否则无法使用 ContentNegotiatingViewResolver
+    - 根据路径后缀来使用不同 ViewResolver 的功能。
+   -->
+  <bean id="byteArrayHttpMessageConverter"
+        class="org.springframework.http.converter.ByteArrayHttpMessageConverter" />
+
+  <!-- Sting MessageConverter -->
+  <bean id="stringHttpMessageConverter"
+        class="org.springframework.http.converter.StringHttpMessageConverter"/>
+
+  <bean id="sourceHttpMessageConverter"
+        class="org.springframework.http.converter.xml.SourceHttpMessageConverter"/>
+
+  <bean id="xmlAwareFormHttpMessageConverter"
+        class="org.springframework.http.converter.xml.XmlAwareFormHttpMessageConverter"/>
+
+  <!-- JSON MessageConverter -->
+  <bean id="jacksonObjectMapper"
+        class="org.codehaus.jackson.map.ObjectMapper" />
+  <bean id="mappingJacksonHttpMessageConverter"
+        class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+     <property name="objectMapper" ref="jacksonObjectMapper"/>
+  </bean>
+
+  <!-- FORM MessageConverter
+  <bean id="formHttpMessageConverter"
+        class="org.springframework.http.converter.FormHttpMessageConverter">
+     <property name="charset" value="UTF-8"/>
+  </bean> -->
+
+
+
+  <!-- ============================================== 定义两个ViewResolver -->
+
+  <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver" >
+    <property name="order" value="0" />
+    <property name="defaultContentType" value="application/json" /> <!-- 内容协商失败时使用 -->
+    <property name="mediaTypes">
+      <map>
+        <entry key="atom" value="application/atom+xml"/>
+        <entry key="xml" value="application/xml" />
+        <entry key="json" value="application/json" />
+      </map>
+    </property>
+
+    <property name="defaultViews">
+      <list>
+        <ref bean="mappingJacksonJsonView" />
+      </list>
+    </property>
+  </bean>
+  <!--
+  <bean id="internalResourceviewResolver"
+        class="org.springframework.web.servlet.view.InternalResourceViewResolver"  >
+    <property name="prefix" value="/WEB-INF/jsp/" />
+    <property name="suffix" value=".jsp" />
+    <property name="order" value="2" />
+  </bean>
+   -->
+
+  <!-- JSON View -->
+  <bean id="mappingJacksonJsonView"
+        class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" >
+        <property name="objectMapper" ref="jacksonObjectMapper"/>
+  </bean>
+
+  <!-- 为了方便直接在Spring容器中构造几个Student对象（含有日期属性），定义一个自定义的配置器 -->
+  <bean id="customEditorConfigurer"
+        class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+    <property name="customEditors">
+      <map>
+        <entry key="java.util.Date">
+          <bean class="org.springframework.beans.propertyeditors.CustomDateEditor">
+            <constructor-arg index="0">
+              <bean class="java.text.SimpleDateFormat">
+                <constructor-arg value="yyyy/MM/dd HH:mm:ss"/>
+              </bean>
+            </constructor-arg>
+            <constructor-arg index="1" value="false"/>
+          </bean>
+        </entry>
+      </map>
+    </property>
+  </bean>
+
+  <!-- =================================================== 数据源定义 -->
+
+  <!-- H2 数据库的 web GUI，以方便验证数据库 -->
+  <bean id="org.h2.tools.Server-WebServer"
+        class="org.h2.tools.Server"
+        scope="singleton"
+        factory-method="createWebServer"
+        init-method="start">
+    <constructor-arg value="-web,-webAllowOthers,true,-webPort,8082" />
+  </bean>
+
+  <!-- H2 数据库 -->
+  <bean id="org.h2.tools.Server"
+        class="org.h2.tools.Server"
+        factory-method="createTcpServer"
+        init-method="start"
+        destroy-method="stop"
+        depends-on="org.h2.tools.Server-WebServer">
+    <constructor-arg value="-tcp,-tcpAllowOthers,true,-tcpPort,9092" />
+  </bean>
+
+  <bean id="dataSource"
+        class="org.apache.commons.dbcp.BasicDataSource"
+        destroy-method="close"
+        depends-on="org.h2.tools.Server"
+
+        p:driverClassName="org.h2.Driver"
+        p:url="jdbc:h2:tcp://localhost/mem:first-spring-rs;DB_CLOSE_DELAY=-1"
+        p:username="zhang3"
+        p:password="zhang3">
+  </bean>
+  <!--
+  p:url="jdbc:h2:tcp://localhost:9092/~/first-spring-jdo"
+   -->
+
+  <jdbc:initialize-database data-source="dataSource">
+    <jdbc:script location="classpath:schema.sql" />
+  </jdbc:initialize-database>
+
+
+  <bean id="jdoPmf"
+        class="org.datanucleus.api.jdo.JDOPersistenceManagerFactory"
+        destroy-method="close"
+        p:connectionFactory-ref="dataSource"
+        p:nontransactionalRead="true" />
+
+  <bean id="pmf"
+        class="org.springframework.orm.jdo.TransactionAwarePersistenceManagerFactoryProxy"
+        p:targetPersistenceManagerFactory-ref="jdoPmf" />
+
+  <bean id="txManager"
+        class="org.springframework.orm.jdo.JdoTransactionManager"
+        p:persistenceManagerFactory-ref="pmf" />
+
+  <tx:advice id="txAdvice" transaction-manager="txManager">
+    <tx:attributes>
+      <tx:method name="create*" propagation="REQUIRED" />
+      <tx:method name="retrieve*" propagation="SUPPORTS" read-only="true" />
+      <tx:method name="update*" propagation="REQUIRED" />
+      <tx:method name="delete*" propagation="REQUIRED" />
+    </tx:attributes>
+  </tx:advice>
+
+  <aop:config>
+    <aop:pointcut id="controllerPointcut" expression="bean(*Controller)
+        &amp;&amp; ( execution(public * create*(..))
+                  || execution(public * retrieve*(..))
+                  || execution(public * update*(..))
+                  || execution(public * delete*(..)))" />
+    <aop:advisor advice-ref="txAdvice" pointcut-ref="controllerPointcut" />
+  </aop:config>
+
+
+</beans>

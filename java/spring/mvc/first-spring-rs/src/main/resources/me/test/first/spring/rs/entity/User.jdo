@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jdo xmlns="http://java.sun.com/xml/ns/jdo/jdo" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/jdo/jdo
+        http://java.sun.com/xml/ns/jdo/jdo_3_0.xsd">
+  <package name="me.test.first.spring.rs.entity">
+    <class name="User" table="USER">
+      <inheritance strategy="new-table" />
+
+      <primary-key name="PERSION_PK" >
+        <column name="ID" jdbc-type="BIGINT"/>
+      </primary-key>
+
+      <version strategy="version-number">
+        <extension vendor-name="datanucleus" key="field-name" value="version" />
+      </version>
+
+      <field name="id" primary-key="true">
+        <column name="ID" jdbc-type="BIGINT"  />
+      </field>
+
+      <field name="name">
+        <column name="NAME" jdbc-type="VARCHAR" />
+      </field>
+
+
+      <!--
+      <field name="gender" column="GENDER" />
+      - 为什么其他字段可以使用上述方式，而该字段不可以？
+       -->
+      <field name="gender">
+        <column name="GENDER" jdbc-type="BOOLEAN" />
+      </field>
+
+      <field name="birthday">
+        <column name="BIRTHDAY" jdbc-type="DATE" />
+      </field>
+
+      <field name="idCardNo">
+        <column name="ID_CARD_NO" jdbc-type="VARCHAR" />
+      </field>
+
+      <field name="email">
+        <column name="EMAIL" jdbc-type="VARCHAR" />
+      </field>
+
+      <field name="height">
+        <column name="HEIGHT" jdbc-type="INTEGER" />
+      </field>
+
+      <field name="avatar">
+        <column name="AVATAR" jdbc-type="VARBINARY" />
+      </field>
+
+      <field name="version">
+        <column name="VERSION" jdbc-type="BIGINT" />
+      </field>
+
+      <query name="xx" language="JDOQL">
+
+      </query>
+    </class>
+  </package>
+</jdo>

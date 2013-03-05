@@ -1,0 +1,57 @@
+Spring 3.0 MVC
+
+如果POST请求的内容为  Content-Type:application/x-www-form-urlencoded 类型，
+则:
+一旦调用了 request.getParameter(String) 等与参数相关的方法之后，
+或以前已经 调用 request.getInputStream() 方法并从其中读取了所有内容，
+则之后再 调用 request.getInputStream() 方法，将无法从中读取任何内容。
+(至少我测试的Tomcat 7.0 中是这样，你可以自己写个Filter试一试)
+
+所以，在使用 FormHttpMessageConverter的时候：
+（即 使用有 @RequestBody MultiValueMap<String, String> 类型参数的Controller方法时）
+    1、 不能使用HiddenHttpMethodFilter
+    2、在@RequestMapping中不能使用 params 属性
+    3、 @RequestParam 不能在 @RequestBody 参数之前，只能在其之后
+    4、@RequestParam 只能从POST的数据体中获取参数，而不能从URL路径上获取参数，否则400
+    5、@RequestBody MultiValueMap 只能获取POST数据体中数据，不能获取URL路径上的参数。
+    6、在生成 @RequestBody MultiValueMap参数之前的任何地方都不能从request中获取参数，或读取request.getInputStream()
+
+如果POST请求的内容为  application/xml 等其他 类型时，
+不能同时使用 @RequestParam 和 @RequestBody
+（即 有 @RequestBody MultiValueMap<String, String> 类型参数的Controller方法）
+
+不能同时使用 HiddenHttpMethodFilter 和 formHttpMessageConverter
+（即 有 @RequestBody MultiValueMap<String, String> 类型参数的Controller方法）
+
+
+
+但是，如果POST请求的内容为  Content-Type:application/x-www-form-urlencoded以外的 类型
+比如 application/xml, application/json等，
+除了无法连续读取  request.getInputStream()以外， request.getParameter(String) 对  request.getInputStream()无影响。
+    1、 可以使用HiddenHttpMethodFilter
+    2、 @RequestParam 和 @RequestBody 不能一起使用，不管谁前谁后，否则400
+    5、在生成 @RequestBody 参数之前的任何地方都不能读取request.getInputStream()
+
+
+即，可以理解为，如果请求是POST提交的表单，Tomcat会将所有的参数（POST数据体内的和URL路径上参数）都统一解析到parameterMap中，
+然后就无法使用 request.getInputStream()，因为已经读完了。
+但是如果是POST提交的其他格式的数据，Tomcat则仅仅把URL路径上的参数放置到parameterMap中，
+request.getInputStream()仍然可以读取一次。
+
+本以为Spring 3.0 的MVC挺不错的呢，哎，好像还需要很多继续改进的地方呢。
+还是改天试试CXF等框架吧，做RESTFul Web Service。
+
+PS：但是，既然发现了问题，如果你是Spring的维护者，你该该如何对应呢？
+
+
+
+
+
+Maven ==========================
+问题：
+  [WARN] Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+对应：
+  POM中追加：
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
