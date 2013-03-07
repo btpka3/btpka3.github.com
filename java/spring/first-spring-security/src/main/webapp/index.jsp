@@ -40,12 +40,8 @@
       </table>
     </div>
 
-    <c:if test="${not empty param.login_error}">
-      <font color="red"> Your login attempt was not successful, try again.<br /> <br /> Reason: <c:out
-          value="${SPRING_SECURITY_LAST_EXCEPTION.message}" />.
-      </font>
-    </c:if>
-
+    <hr />
+    <div>请登录：</div>
     <form name="f" action="<c:url value='j_spring_security_check'/>" method="POST">
       <table>
         <tr>
