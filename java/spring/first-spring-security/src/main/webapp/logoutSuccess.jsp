@@ -6,16 +6,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>预约列表</title>
+<title>Insert title here</title>
 </head>
 <body>
-  <div>
-    <h6>预约列表</h6>
-    <ul>
-      <li>10:15 小明</li>
-      <li>11:00 小红</li>
-      <li>14:30 小小</li>
-    </ul>
-  </div>
+  <div style="text-align: center;">您已经成功退出登录！</div>
+  <div style="text-align: center;"><a href="<c:url value="/"/>">返回主页</a></div>
 </body>
 </html>
