@@ -2,4 +2,5 @@ target
 .project
 .springBeans
 .classpath
-/java/spring/first-spring-security/.settings
+.settings
+bin

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+  xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util" xmlns:sec="http://www.springframework.org/schema/security"
+  xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+
+  <!--
+    - 自定义的一个Filter，禁止访问指定的后缀的URL，若访问，则返回404。
+    -->
+  <sec:http realm="Sample" auto-config="true" use-expressions="true">
+      <sec:custom-filter before="CHANNEL_FILTER" ref="extensionFilter"/>
+  </sec:http>
+  <bean id="extensionFilter" class="me.test.ExtensionFilter">
+    <property name="prohibitedUris">
+      <list>
+        <value>.jsp</value>
+      </list>
+    </property>
+  </bean>
+
+  <sec:authentication-manager>
+    <sec:authentication-provider>
+      <sec:user-service>
+        <sec:user name="dddfdf" disabled="true" authorities=""/>
+      </sec:user-service>
+    </sec:authentication-provider>
+  </sec:authentication-manager>
+
+</beans>
