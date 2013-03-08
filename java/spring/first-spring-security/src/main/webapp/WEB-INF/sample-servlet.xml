@@ -10,7 +10,7 @@
 
   <!--
     - 该配置允许根据方法声明的 @PreAuthorize 等注解的设定、对该方法进行权限控制
-    - 如果Controller不是基于接口设计的，则需要配置 proxy-target-class="true"
+    - 注意：该配置一定要放在 servlet 级别的Spring配置文件中，而不能是root ApplicationContext 中
     -->
   <sec:global-method-security pre-post-annotations="enabled" />
 
