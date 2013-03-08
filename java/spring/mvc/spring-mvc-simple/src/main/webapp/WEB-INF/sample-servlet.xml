@@ -32,6 +32,7 @@
         <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
           <property name="prefix" value="/" />
           <property name="suffix" value=".jsp" />
+          <property name="order" value="999"/>
         </bean>
       </list>
     </property>

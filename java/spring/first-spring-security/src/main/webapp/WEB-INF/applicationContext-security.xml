@@ -9,7 +9,8 @@
                       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
                       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-  <sec:http realm="TC HIS 2.0" use-expressions="true">
+  <sec:http realm="TC HIS 2.0" use-expressions="true" disable-url-rewriting="true" >
+    <sec:access-denied-handler error-page="/denied.jsp"/>
     <sec:form-login login-page="/index.jsp"  />
     <sec:logout logout-success-url="/logoutSuccess.jsp" />
     <sec:intercept-url pattern="/appointment.jsp" access="hasAnyRole('ROLE_READ_APPOINTMENT')" />

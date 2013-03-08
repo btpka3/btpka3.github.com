@@ -6,10 +6,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>退出成功</title>
+<title>无访问权限</title>
 </head>
 <body>
-  <div style="text-align: center;">您已经成功退出登录！</div>
+  <div style="text-align: center; color: red;">抱歉，您无所需的权限！</div>
   <div style="text-align: center;"><a href="<c:url value="/"/>">返回主页</a></div>
 </body>
 </html>

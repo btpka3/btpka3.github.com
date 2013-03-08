@@ -66,19 +66,32 @@
       <sec:authentication property="principal.username" />。
       【<a href="<c:url value="/j_spring_security_logout"/>">退出</a>】
     </div>
+    <br/>
 
     <div style="border: 1px solid red;">
       以下是功能区，只有相应权限的人可以看到相应的内容：
 
       <sec:authorize url="/appointment.jsp">
         <div>
-          <a href="<c:url value="/appointment.jsp"/>">预约列表</a>
+          <a href="<c:url value="/appointment.jsp"/>">预约列表 (根据URL与权限的映射)</a>
         </div>
       </sec:authorize>
 
       <sec:authorize url="/staff.jsp">
         <div>
-          <a href="<c:url value="/staff.jsp"/>">员工列表</a>
+          <a href="<c:url value="/staff.jsp"/>">员工列表 (根据URL与权限的映射)</a>
+        </div>
+      </sec:authorize>
+
+      <sec:authorize access="hasAnyRole('ROLE_READ_APPOINTMENT')">
+        <div>
+          <a href="<c:url value="/appointment.jsp"/>">预约列表 (直接检测权限)</a>
+        </div>
+      </sec:authorize>
+
+      <sec:authorize access="hasAnyRole('ROLE_READ_STAFF')">
+        <div>
+          <a href="<c:url value="/staff.jsp"/>">员工列表 (直接检测权限)</a>
         </div>
       </sec:authorize>
     </div>
@@ -87,12 +100,31 @@
     <div style="border: 1px solid blue;">
       以下是测试区域，测试URL拦截功能：
       <div>
-        <a href="<c:url value="/appointment.jsp"/>">预约列表</a>
+        <a href="<c:url value="/appointment.jsp"/>">预约列表 (URL权限配置)</a>
       </div>
       <div>
-        <a href="<c:url value="/staff.jsp"/>">员工列表</a>
+        <a href="<c:url value="/staff.jsp"/>">员工列表 (URL权限配置)</a>
       </div>
     </div>
+    <br/>
+
+    <div style="border: 1px solid green;">
+      以下是测试区域，测试Controller中的权限设定：
+      <div>
+        <a href="<c:url value="/appointment1.do"/>">预约列表 (Controller 注解配置)</a>
+      </div>
+      <div>
+        <a href="<c:url value="/staff1.do"/>">员工列表 (Controller 注解配置)</a>
+      </div>
+      <div>
+        <a href="<c:url value="/appointment2.do"/>">预约列表 (Controller 编码实现)</a>
+      </div>
+      <div>
+        <a href="<c:url value="/staff2.do"/>">员工列表 (Controller 编码实现)</a>
+      </div>
+    </div>
+
+
   </sec:authorize>
 
 </body>
