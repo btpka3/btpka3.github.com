@@ -16,14 +16,35 @@
   <bean id="defaultHandler" class="org.springframework.web.servlet.mvc.UrlFilenameViewController">
   </bean>
 
+
   <!--
     - 该ViewResolver始终都返回一个View，而不管实际的资源（JSP文件）是否存在。
     - 所以必须是最后一个ViewResolver
     -->
+  <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+    <property name="mediaTypes">
+      <map>
+        <entry key="html" value="text/html" />
+      </map>
+    </property>
+    <property name="viewResolvers">
+      <list>
+        <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+          <property name="prefix" value="/" />
+          <property name="suffix" value=".jsp" />
+        </bean>
+      </list>
+    </property>
+    <property name="order" value="9999" />
+  </bean>
+
+  <!--
+    - 该ViewResolver始终都返回一个View，而不管实际的资源（JSP文件）是否存在。
+    - 所以必须是最后一个ViewResolver
   <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
     <property name="prefix" value="/" />
     <property name="suffix" value=".jsp" />
     <property name="order" value="99" />
   </bean>
-
+ -->
 </beans>
