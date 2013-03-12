@@ -29,7 +29,7 @@ public class MyUserDetailsService implements UserDetailsService {
             accountNonExpired = true;
             credentialsNonExpired = true;
             accountNonLocked = true;
-            authorities.add(MyAuthority.ROLE_READ_APPOINTMENT);
+            authorities.add(MyAuthority.XROLE_READ_APPOINTMENT);
 
         } else if ("li4".equals(username)) {
             password = "123";
@@ -37,7 +37,7 @@ public class MyUserDetailsService implements UserDetailsService {
             accountNonExpired = true;
             credentialsNonExpired = true;
             accountNonLocked = true;
-            authorities.add(MyAuthority.ROLE_READ_STAFF);
+            authorities.add(MyAuthority.XROLE_READ_STAFF);
 
         } else if ("wang5".equals(username)) {
             password = "123";
@@ -45,8 +45,8 @@ public class MyUserDetailsService implements UserDetailsService {
             accountNonExpired = true;
             credentialsNonExpired = true;
             accountNonLocked = true;
-            authorities.add(MyAuthority.ROLE_READ_APPOINTMENT);
-            authorities.add(MyAuthority.ROLE_READ_STAFF);
+            authorities.add(MyAuthority.XROLE_READ_APPOINTMENT);
+            authorities.add(MyAuthority.XROLE_READ_STAFF);
         }
 
         //  User这个类是Spring提供的，如果需要附带更多信息，可以扩展它。

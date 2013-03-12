@@ -17,14 +17,14 @@ public class MyController {
 
     // 示例：通过注解在方法入口处进行权限控制
     @RequestMapping("/appointment1")
-    @PreAuthorize("hasRole('ROLE_READ_APPOINTMENT')") // 这些权限控制的注解也可以应用到接口上
+    @PreAuthorize("hasRole('XROLE_READ_APPOINTMENT')") // 这些权限控制的注解也可以应用到接口上
     public String appointment1() {
         logger.debug("====== MyController#appointment1()");
         return "appointment";
     }
 
     @RequestMapping("/staff1")
-    @PreAuthorize("hasRole('ROLE_READ_STAFF')")
+    @PreAuthorize("hasRole('XROLE_READ_STAFF')")
     public String staff1() {
         logger.debug("====== MyController#staff1()");
         return "staff";
@@ -40,7 +40,7 @@ public class MyController {
         Authentication auth = secContext.getAuthentication();
 
         // 有权限
-        if (auth.getAuthorities().contains(MyAuthority.ROLE_READ_APPOINTMENT)) {
+        if (auth.getAuthorities().contains(MyAuthority.XROLE_READ_APPOINTMENT)) {
             return "appointment";
         }
 
@@ -58,7 +58,7 @@ public class MyController {
         Authentication auth = secContext.getAuthentication();
 
         // 有权限
-        if (auth.getAuthorities().contains(MyAuthority.ROLE_READ_STAFF)) {
+        if (auth.getAuthorities().contains(MyAuthority.XROLE_READ_STAFF)) {
             return "staff";
         }
 
