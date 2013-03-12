@@ -9,10 +9,6 @@
                       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
                       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-  <bean class="org.springframework.security.access.vote.RoleVoter">
-    <property name="rolePrefix" value="" /> <!-- 默认权限代码的前缀都以 "ROLE_" 开头，这里的设置可以忽略前缀 -->
-  </bean>
-
   <sec:http realm="TC HIS 2.0" use-expressions="true" disable-url-rewriting="true" >
     <sec:access-denied-handler error-page="/denied.jsp"/>
     <sec:form-login login-page="/index.jsp"  />
