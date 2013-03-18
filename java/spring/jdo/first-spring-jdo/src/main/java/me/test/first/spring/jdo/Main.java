@@ -74,10 +74,21 @@ public class Main {
             br.readLine();
 
             System.out.println();
-            System.out.println("==================== TEST 4 : delete");
+            System.out.println("==================== TEST 5 : delete");
             personDAO.delete(3L);
             System.out.println("press enter to continue...");
             br.readLine();
+
+            System.out.println();
+            System.out.println("==================== TEST 6 : DSL Query");
+            list = personDAO.dslQuery();
+            System.out.println(list.size());
+            for (Person p1 : list) {
+                printPerson(p1);
+            }
+            System.out.println("press enter to continue...");
+            br.readLine();
+
 
         } catch (Throwable e) {
 
