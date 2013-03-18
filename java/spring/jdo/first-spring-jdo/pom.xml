@@ -4,6 +4,9 @@
   <groupId>me.test.spring.jdo</groupId>
   <artifactId>first-spring-jdo</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
   <dependencies>
     <dependency>
       <groupId>com.h2database</groupId>
@@ -13,27 +16,22 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-jdbc</artifactId>
-      <version>3.0.5.RELEASE</version>
+      <version>3.2.2.RELEASE</version>
     </dependency>
     <dependency>
       <groupId>org.datanucleus</groupId>
       <artifactId>datanucleus-api-jdo</artifactId>
-      <version>3.0.4</version>
-    </dependency>
-    <dependency>
-      <groupId>org.datanucleus</groupId>
-      <artifactId>datanucleus-core</artifactId>
-      <version>3.0.4</version>
+      <version>3.2.0-release</version>
     </dependency>
     <dependency>
       <groupId>org.datanucleus</groupId>
       <artifactId>datanucleus-rdbms</artifactId>
-      <version>3.0.4</version>
+      <version>3.2.0-release</version>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-orm</artifactId>
-      <version>3.0.5.RELEASE</version>
+      <version>3.2.2.RELEASE</version>
     </dependency>
     <dependency>
       <groupId>commons-dbcp</groupId>
@@ -57,8 +55,8 @@
     </dependency>
     <dependency>
       <groupId>javax.jdo</groupId>
-      <artifactId>jdo2-api</artifactId>
-      <version>2.3-eb</version>
+      <artifactId>jdo-api</artifactId>
+      <version>3.0</version>
     </dependency>
     <dependency>
       <groupId>commons-codec</groupId>
@@ -93,16 +91,30 @@
       <artifactId>commons-lang3</artifactId>
       <version>3.1</version>
     </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-aop</artifactId>
+      <version>3.2.0.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>3.2.0.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context-support</artifactId>
+      <version>3.2.0.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>org.datanucleus</groupId>
+      <artifactId>datanucleus-core</artifactId>
+      <version>3.2.0-release</version>
+    </dependency>
   </dependencies>
   <build>
+
     <plugins>
-      <plugin>
-        <artifactId>maven-resources-plugin</artifactId>
-        <version>2.5</version>
-        <configuration>
-          <encoding>UTF-8</encoding>
-        </configuration>
-      </plugin>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
@@ -110,10 +122,21 @@
           <target>1.5</target>
         </configuration>
       </plugin>
+
       <plugin>
         <groupId>org.datanucleus</groupId>
-        <artifactId>maven-datanucleus-plugin</artifactId>
+        <artifactId>datanucleus-maven-plugin</artifactId>
+        <version>3.2.0-release</version>
+        <dependencies>
+          <dependency>
+          <artifactId>datanucleus-core</artifactId>
+            <groupId>org.datanucleus</groupId>
+            <version>3.2.0-release</version>
+          </dependency>
+        </dependencies>
         <configuration>
+          <api>JDO</api>
+          <props>${basedir}/datanucleus.properties</props>
           <log4jConfiguration>${basedir}/log4j.xml</log4jConfiguration>
           <verbose>true</verbose>
         </configuration>
@@ -147,5 +170,35 @@
         </executions>
       </plugin>
     </plugins>
+    <pluginManagement>
+      <plugins>
+        <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build
+          itself. -->
+        <plugin>
+          <groupId>org.eclipse.m2e</groupId>
+          <artifactId>lifecycle-mapping</artifactId>
+          <version>1.0.0</version>
+          <configuration>
+            <lifecycleMappingMetadata>
+              <pluginExecutions>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.datanucleus</groupId>
+                    <artifactId>datanucleus-maven-plugin</artifactId>
+                    <versionRange>[3.2.0-release,)</versionRange>
+                    <goals>
+                      <goal>enhance</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <execute />
+                  </action>
+                </pluginExecution>
+              </pluginExecutions>
+            </lifecycleMappingMetadata>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
   </build>
 </project>
