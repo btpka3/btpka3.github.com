@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Test Dojo Data</title>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dijit/themes/claro/claro.css" />
+<script type="text/javascript">
+var dojoConfig = {
+    async:true
+};
+</script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dojo/dojo.js"></script>
+<script type="text/javascript">
+// http://livedocs.dojotoolkit.org/dojo/store
+require(["dojo/ready",
+         "dojo/store/Memory",
+         "dijit/form/FilteringSelect"
+         ], function(
+             ready,
+             Memory,
+             FilteringSelect
+         ){
+  var stateStore = new Memory({
+        data: [
+            {name:"Alabama", id:"AL"},
+            {name:"Alaska", id:"AK"},
+            {name:"American Samoa", id:"AS"},
+            {name:"Arizona", id:"AZ"},
+            {name:"Arkansas", id:"AR"},
+            {name:"Armed Forces Europe", id:"AE"},
+            {name:"Armed Forces Pacific", id:"AP"},
+            {name:"Armed Forces the Americas", id:"AA"},
+            {name:"California", id:"CA"},
+            {name:"Colorado", id:"CO"},
+            {name:"Connecticut", id:"CT"},
+            {name:"Delaware", id:"DE"}
+        ]
+    });
+  ready(function(){
+    var stateFilteringSelect = new FilteringSelect({
+            id: "stateFilteringSelect",
+            name: "state",
+            value: "CA",
+            store: stateStore,
+            searchAttr: "name"
+    }, "stateFilteringSelect");
+  });
+});
+</script>
+</head>
+<body class="claro">
+<div>FilteringSelect : <input id="stateFilteringSelect" /></div>
+</body>
+</html>
