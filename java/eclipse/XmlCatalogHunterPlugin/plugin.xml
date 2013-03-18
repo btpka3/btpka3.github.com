@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+  <extension point="org.eclipse.wst.xml.core.catalogContributions">
+    <catalogContribution id="default">
+      <system
+            id="log4j_system_dtd"
+            systemId="log4j.dtd"
+            uri="dtdsAndSchemas/log4j.dtd">
+      </system>
+    </catalogContribution>
+  </extension>
+</plugin>
