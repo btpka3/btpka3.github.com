@@ -4,6 +4,9 @@
   <groupId>me.test.spring.jdo</groupId>
   <artifactId>first-spring-jdo</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
   <dependencies>
     <dependency>
       <groupId>com.h2database</groupId>
@@ -13,52 +16,33 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-jdbc</artifactId>
-      <version>3.0.5.RELEASE</version>
+      <version>3.2.2.RELEASE</version>
     </dependency>
     <dependency>
       <groupId>org.datanucleus</groupId>
       <artifactId>datanucleus-api-jdo</artifactId>
-      <version>3.0.4</version>
-    </dependency>
-    <dependency>
-      <groupId>org.datanucleus</groupId>
-      <artifactId>datanucleus-core</artifactId>
-      <version>3.0.4</version>
+      <version>3.2.0-release</version>
     </dependency>
     <dependency>
       <groupId>org.datanucleus</groupId>
       <artifactId>datanucleus-rdbms</artifactId>
-      <version>3.0.4</version>
+      <version>3.2.0-release</version>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-orm</artifactId>
-      <version>3.0.5.RELEASE</version>
+      <version>3.2.2.RELEASE</version>
     </dependency>
     <dependency>
       <groupId>commons-dbcp</groupId>
       <artifactId>commons-dbcp</artifactId>
       <version>1.4</version>
     </dependency>
-    <dependency>
-      <groupId>aspectj</groupId>
-      <artifactId>aspectjweaver</artifactId>
-      <version>1.5.4</version>
-    </dependency>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-      <version>1.6.1</version>
-    </dependency>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-jdk14</artifactId>
-      <version>1.5.6</version>
-    </dependency>
+
     <dependency>
       <groupId>javax.jdo</groupId>
-      <artifactId>jdo2-api</artifactId>
-      <version>2.3-eb</version>
+      <artifactId>jdo-api</artifactId>
+      <version>3.0</version>
     </dependency>
     <dependency>
       <groupId>commons-codec</groupId>
@@ -66,55 +50,97 @@
       <version>1.4</version>
     </dependency>
     <dependency>
-      <groupId>log4j</groupId>
-      <artifactId>log4j</artifactId>
-      <version>1.2.15</version>
-      <exclusions>
-        <exclusion>
-          <groupId>javax.mail</groupId>
-          <artifactId>mail</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>javax.jms</groupId>
-          <artifactId>jms</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>com.sun.jdmk</groupId>
-          <artifactId>jmxtools</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>com.sun.jmx</groupId>
-          <artifactId>jmxri</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
       <version>3.1</version>
     </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-aop</artifactId>
+      <version>3.2.0.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>3.2.0.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context-support</artifactId>
+      <version>3.2.0.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>org.datanucleus</groupId>
+      <artifactId>datanucleus-core</artifactId>
+      <version>3.2.0-release</version>
+    </dependency>
+    <dependency>
+      <groupId>com.mysema.querydsl</groupId>
+      <artifactId>querydsl-apt</artifactId>
+      <version>2.9.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.mysema.querydsl</groupId>
+      <artifactId>querydsl-jdo</artifactId>
+      <version>2.9.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.3</version>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>1.0.10</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jcl-over-slf4j</artifactId>
+      <version>1.7.3</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>log4j-over-slf4j</artifactId>
+      <version>1.7.3</version>
+    </dependency>
+    <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjweaver</artifactId>
+      <version>1.7.2</version>
+    </dependency>
   </dependencies>
   <build>
+
     <plugins>
+
       <plugin>
-        <artifactId>maven-resources-plugin</artifactId>
-        <version>2.5</version>
-        <configuration>
-          <encoding>UTF-8</encoding>
-        </configuration>
-      </plugin>
-      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.0</version>
         <configuration>
           <source>1.5</source>
           <target>1.5</target>
+          <encoding>UTF8</encoding>
         </configuration>
       </plugin>
+
       <plugin>
         <groupId>org.datanucleus</groupId>
-        <artifactId>maven-datanucleus-plugin</artifactId>
+        <artifactId>datanucleus-maven-plugin</artifactId>
+        <version>3.2.0-release</version>
+        <dependencies>
+          <dependency>
+            <artifactId>datanucleus-core</artifactId>
+            <groupId>org.datanucleus</groupId>
+            <version>3.2.0-release</version>
+          </dependency>
+        </dependencies>
         <configuration>
-          <log4jConfiguration>${basedir}/log4j.xml</log4jConfiguration>
+          <api>JDO</api>
+          <props>${basedir}/datanucleus.properties</props>
+          <!-- <log4jConfiguration>${basedir}/log4j.xml</log4jConfiguration> -->
           <verbose>true</verbose>
         </configuration>
         <executions>
@@ -126,26 +152,82 @@
           </execution>
         </executions>
       </plugin>
+
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
-        <artifactId>exec-maven-plugin</artifactId>
-        <version>1.2</version>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>1.7</version>
         <executions>
           <execution>
-            <phase>test</phase>
+            <phase>generate-sources</phase>
             <goals>
-              <goal>java</goal>
+              <goal>add-source</goal>
             </goals>
             <configuration>
-              <mainClass>me.test.first.spring.jdo.Main</mainClass>
-              <arguments>
-                <argument>1</argument>
-                <argument>2</argument>
-              </arguments>
+              <sources>
+                <source>${project.build.directory}/generated-sources/java</source>
+              </sources>
             </configuration>
           </execution>
         </executions>
       </plugin>
+
+      <plugin>
+        <groupId>com.mysema.querydsl</groupId>
+        <artifactId>querydsl-maven-plugin</artifactId>
+        <version>2.9.0</version>
+        <executions>
+          <execution>
+            <id>genQueryBean</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>jdo-export</goal>
+            </goals>
+            <configuration>
+              <targetFolder>${project.build.directory}/generated-sources/java</targetFolder>
+              <packages>
+                <package>me.test.first.spring.jdo.entity</package>
+              </packages>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>exec-maven-plugin</artifactId> <version>1.2</version>
+        <executions> <execution> <phase>test</phase> <goals> <goal>java</goal> </goals> <configuration> <mainClass>me.test.first.spring.jdo.Main</mainClass>
+        <arguments> <argument>1</argument> <argument>2</argument> </arguments> </configuration> </execution> </executions> </plugin> -->
+
     </plugins>
+    <pluginManagement>
+      <plugins>
+        <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build
+          itself. -->
+        <plugin>
+          <groupId>org.eclipse.m2e</groupId>
+          <artifactId>lifecycle-mapping</artifactId>
+          <version>1.0.0</version>
+          <configuration>
+            <lifecycleMappingMetadata>
+              <pluginExecutions>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.datanucleus</groupId>
+                    <artifactId>datanucleus-maven-plugin</artifactId>
+                    <versionRange>[3.2.0-release,)</versionRange>
+                    <goals>
+                      <goal>enhance</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <execute />
+                  </action>
+                </pluginExecution>
+              </pluginExecutions>
+            </lifecycleMappingMetadata>
+          </configuration>
+        </plugin>
+
+      </plugins>
+    </pluginManagement>
   </build>
 </project>
