@@ -7,6 +7,15 @@
 <title>Test Dojo AMD</title>
 
 <script type="text/javascript">
+if (typeof console == "undefined") {
+  console = {
+      log: function (msg) { },
+      info: function (msg) { },
+      warn: function (msg) { },
+      error: function (msg) { },
+      assert: function (condition, msg) { }
+  };
+}
 /*
 dojo AMD
   http://dojotoolkit.org/reference-guide/releasenotes/1.7.html
@@ -38,26 +47,27 @@ var dojoConfig = {
 
 
 require(["my/a"], function(a){
-  alert(a.a);
-  alert("a.say = " + a.say('zhang3'));
-  alert("a.isGlobalVar = " + typeof (a.isGlobalVar));
+  console.log("a.a = "+a.a);
+  console.log("a.say = " + a.say('zhang3'));
+  console.log("a.isGlobalVar = " + typeof (a.isGlobalVar));
 });
 
-alert("isGlobalVar = " + typeof (isGlobalVar));
+// 定义在amd模块中的变量外部是看不到的
+console.log("isGlobalVar = " + typeof (isGlobalVar));
 
 require(["my/b"], function(b){
-  alert(b.b);
+  console.log("b.b = "+b.b);
 });
 require(["my/c"], function(c){
-  alert(c.c);
-  alert("c.say = " + c.say("li4"));
+  console.log("c.c = "+c.c);
+  console.log("c.say = " + c.say("li4"));
 
 });
 require(["my/d"], function(d){
-  alert(d.d);
+  console.log("d.d = "+d.d);
 });
 require(["my/e"], function(e){
-  alert(e.e);
+  console.log("e.e = "+e.e);
 });
 
 </script>
