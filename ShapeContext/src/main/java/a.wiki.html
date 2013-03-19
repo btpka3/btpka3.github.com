@@ -1,0 +1,293 @@
+= Installing Modules =
+Nginx modules must be selected during compile, run-time selection of modules is not currently supported.
+
+A full summary of the compile-time options, including optional modules, can be found in the provided configure script by running <code>./configure --help</code>
+
+= Nginx core modules =
+These modules are required.
+
+{| class="modules-index-table"
+! Name !! Description
+|-
+| [[CoreModule|Main]]
+| Configure error logging, processes, permissions, etc.
+|-
+| [[EventsModule|Events]]
+| Configure epoll, kqueue, select, poll, etc.
+|-
+|}
+
+= Standard HTTP modules =
+These modules are automatically compiled in unless explicitly disabled with <code>configure</code>.
+
+{| class="modules-index-table"
+! Name
+! Description
+! Version
+! configure argument to disable
+|-
+| [[HttpCoreModule|Core]]
+| Control ports, locations, error pages, aliases, and other essentials.
+|
+| --without-http
+|-
+| [[HttpAccessModule|Access]]
+| Allow/deny based on IP address.
+|
+| --without-http_access_module
+|-
+| [[HttpAuthBasicModule|Auth Basic]]
+| Basic HTTP authentication.
+|
+| --without-http_auth_basic_module
+|-
+| [[HttpAutoindexModule|Auto Index]]
+| Generates automatic directory listings.
+|
+| --without-http_autoindex_module
+|-
+| [[HttpBrowserModule|Browser]]
+| Interpret "User-Agent" string.
+| 0.4.3
+| --without-http_browser_module
+|-
+| [[HttpCharsetModule|Charset]]
+| Recode web pages.
+|
+| --without-http_charset_module
+|-
+| [[HttpEmptyGifModule|Empty GIF]]
+| Serve a 1x1 image from memory.
+| 0.3.10
+| --without-http_empty_gif_module
+|-
+| [[HttpFastcgiModule|FastCGI]]
+| FastCGI Support.
+|
+| --without-http_fastcgi_module
+|-
+| [[HttpGeoModule|Geo]]
+| Set config variables using key/value pairs of IP addresses.
+| 0.1.17
+| --without-http_geo_module
+|-
+| [[HttpGzipModule|Gzip]]
+| Gzip responses.
+|
+| --without-http_gzip_module
+|-
+| [[HttpHeadersModule|Headers]]
+| Set arbitrary HTTP response headers.
+|
+|-
+| [[HttpIndexModule|Index]]
+| Controls which files are to be used as index.
+|
+|-
+| [[HttpLimitReqModule|Limit Requests]]
+| Limit frequency of connections from a client.
+| 0.7.20
+| --without-http_limit_req_module
+|-
+| [[HttpLimitZoneModule|Limit Zone]]
+| Limit simultaneous connections from a client. Deprecated in 1.1.8, use Limit Conn Instead.
+| 0.5.6
+| --without-http_limit_zone_module
+|-
+| [[HttpLimitConnModule|Limit Conn]]
+| Limit concurrent connections based on a variable.
+|
+| --without-http_limit_conn_module
+|-
+| [[HttpLogModule|Log]]
+| Customize access logs.
+|
+|-
+| [[HttpMapModule|Map]]
+| Set config variables using arbitrary key/value pairs.
+| 0.3.16
+| --without-http_map_module
+|-
+| [[HttpMemcachedModule|Memcached]]
+| Memcached support.
+|
+| --without-http_memcached_module
+|-
+| [[HttpProxyModule|Proxy]]
+| Proxy to upstream servers.
+|
+| --without-http_proxy_module
+|-
+| [[HttpRefererModule|Referer]]
+| Filter requests based on <code>Referer</code> header.
+|
+| --without-http_referer_module
+|-
+| [[HttpRewriteModule|Rewrite]]
+| Request rewriting using regular expressions.
+|
+| --without-http_rewrite_module
+|-
+| [[HttpScgiModule|SCGI]]
+| SCGI protocol support.
+| 0.8.42
+| --without-http_scgi_module
+|-
+| [[HttpSplitClientsModule|Split Clients]]
+| Splits clients based on some conditions
+| 0.8.37
+| --without-http_split_clients_module
+|-
+| [[HttpSsiModule|SSI]]
+| Server-side includes.
+|
+| --without-http_ssi_module
+|-
+| [[HttpUpstreamModule|Upstream]]
+| For load-balancing.
+|
+| --without-http_upstream_ip_hash_module (ip_hash directive only)
+|-
+| [[HttpUseridModule|User ID]]
+| Issue identifying cookies.
+|
+| --without-http_userid_module
+|-
+| [[HttpUwsgiModule|uWSGI]]
+| uWSGI protocol support.
+| 0.8.40
+| --without-http_uwsgi_module
+|-
+| [[X-accel|X-Accel]]
+| X-Sendfile-like module.
+|
+|
+|}
+
+= Optional HTTP modules =
+The following modules must be enabled at compile-time with the specified option to <code>configure</code>.
+
+{| class="modules-index-table"
+! Name
+! Description
+! Version
+! configure argument to enable
+|-
+| [[HttpAdditionModule|Addition]]
+| Append text to pages.
+|
+| --with-http_addition_module
+|-
+| [[HttpDegradationModule|Degradation]]
+| Allow to return 204 or 444 code for some locations on low memory condition.
+| 0.8.25
+| --with-http_degradation_module
+|-
+| [[HttpPerlModule|Embedded Perl]]
+| Use Perl in Nginx config files.
+| 0.3.21
+| --with-http_perl_module
+|-
+| [[HttpFlvModule|FLV]]
+| Flash Streaming Video
+| 0.4.7
+| --with-http_flv_module
+|-
+| [[HttpGeoipModule|GeoIP]]
+| Creates variables with information from the [http://www.maxmind.com/ MaxMind] GeoIP binary files.
+| 0.8.6, 0.7.63
+| --with-http_geoip_module
+|-
+| [[GooglePerftoolsModule|Google Perftools]]
+| Google Performance Tools support.
+| 0.6.29
+| --with-google_perftools_module
+|-
+| [[HttpGzipStaticModule|Gzip Precompression]]
+| Serves precompressed versions of static files.
+| 0.6.23
+| --with-http_gzip_static_module
+|-
+| [[HttpImageFilterModule|Image Filter]]
+| Transform images with Libgd
+| 0.7.54
+| --with-http_image_filter_module
+|-
+| [[HttpMp4Module|MP4]]
+| Enables mp4 streaming with seeking ability.
+| 1.1.3, 1.0.7
+| --with-http_mp4_module
+|-
+| [[HttpRandomIndexModule|Random Index]]
+| Randomize directory indexes.
+| 0.7.15
+| --with-http_random_index_module
+|-
+| [[HttpRealipModule|Real IP]]
+| For using nginx as backend
+| 0.3.8
+| --with-http_realip_module
+|-
+| [[HttpSecureLinkModule|Secure Link]]
+| Protect pages with a secret key.
+| 0.7.18
+| --with-http_secure_link_module
+|-
+| [[HttpSslModule|SSL]]
+| HTTPS/SSL support.
+|
+| --with-http_ssl_module
+|-
+| [[HttpStubStatusModule|Stub Status]]
+| View server statistics.
+| 0.1.18
+| --with-http_stub_status_module
+|-
+| [[HttpSubModule|Substitution]]
+| Replace text in pages
+|
+| --with-http_sub_module
+|-
+| [[HttpDavModule|WebDAV]]
+| WebDAV pass-through support.
+| 0.3.38
+| --with-http_dav_module
+|-
+| [[HttpXsltModule|XSLT]]
+| Post-process pages with XSLT.
+| 0.7.8
+| --with-http_xslt_module
+|}
+
+= Mail modules =
+{| class="modules-index-table"
+! Name
+! Description
+! configure argument
+|-
+| [[MailCoreModule|Core]]
+| Nginx is able to handle and proxy the IMAP, POP3, SMTP protocols.
+| --with-mail<br>--without-mail_pop3_module<br>--without-mail_imap_module<br>--without-mail_smtp_module
+|-
+| [[MailAuthModule|Auth]]
+| Use Nginx to authenticate mail services.
+|-
+| [[MailProxyModule|Proxy]]
+| Nginx can proxy IMAP, POP3, and SMTP protocols.
+|-
+| [[MailSslModule|SSL]]
+| This module ensures SSL/TLS support for POP3/IMAP/SMTP.
+| --with-mail_ssl_module
+|}
+
+= Third party modules and Patches =
+Please see the catalog of [[3rdPartyModules|3rd party modules]].
+
+= References =
+* [[ModulesByExample|Module index by example]]
+* [[ConfigNotation| Configuration Notation Reference]]
+* [[ModuleComparisonMatrix| Module comparison matrix with other servers]]
+* [http://trac.nginx.org/nginx Feature Requests and bug reports]
+* [[GettingStarted| Getting Started]]
+* [[Configuration| Configuration Cookbook]]
+* [[DirectiveIndex| Index of all Directives]]

@@ -1,0 +1,150 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>me.test</groupId>
+  <artifactId>my-cas-server-webapp</artifactId>
+  <packaging>war</packaging>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>my-cas-server-webapp Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jasig.cas</groupId>
+      <artifactId>cas-server-webapp</artifactId>
+      <version>3.4.9</version>
+      <type>war</type>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jasig.cas</groupId>
+      <artifactId>cas-server-support-jdbc</artifactId>
+      <version>3.4.5</version>
+      <type>jar</type>
+      <scope>compile</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>org.opensaml</groupId>
+          <artifactId>opensaml</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <version>1.3.162</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>commons-dbcp</groupId>
+      <artifactId>commons-dbcp</artifactId>
+      <version>1.4</version>
+      <type>jar</type>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mortbay.jetty</groupId>
+      <artifactId>jetty-maven-plugin</artifactId>
+      <version>8.0.0.M2</version>
+      <type>maven-plugin</type>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.opensaml</groupId>
+      <artifactId>opensaml</artifactId>
+      <version>1.1</version>
+    </dependency>
+  </dependencies>
+  <build>
+    <finalName>my-cas-server-webapp</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.mortbay.jetty</groupId>
+        <artifactId>jetty-maven-plugin</artifactId>
+        <version>8.0.0.M2</version>
+        <configuration>
+          <!-- ========= Container Configuration ========= -->
+          <connectors>
+            <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+              <port>10000</port>
+              <maxIdleTime>60000</maxIdleTime>
+            </connector>
+            <connector implementation="org.eclipse.jetty.server.ssl.SslSocketConnector">
+              <port>10001</port>
+              <keystore>src/main/resources/jetty.jks</keystore>
+              <keyPassword>123456</keyPassword>
+              <password>123456</password>
+            </connector>
+          </connectors>
+          <!-- <jettyConfig />  -->
+          <scanIntervalSeconds>0</scanIntervalSeconds>
+          <!-- 
+          <systemProperties>
+            <systemProperty>
+              <name>org.apache.commons.logging.Log</name>
+              <value>org.apache.commons.logging.impl.SimpleLog</value>
+            </systemProperty>
+          </systemProperties>
+           -->
+          <!-- <systemPropertiesFile />  -->
+          <!-- <userRealms  />  -->
+          <!-- <requestLog  />  -->
+
+          <stopKey>foo</stopKey>
+          <stopPort>10009</stopPort>
+
+          <!-- ========= Webapp Configuration ========= -->
+          <webAppConfig>
+            <contextPath>/</contextPath>
+            <!-- 
+            <tempDirectory>${project.build.directory}/work</tempDirectory>
+            <defaultsDescriptor>src/main/resources/webdefault.xml</defaultsDescriptor>
+            <overrideDescriptor>src/main/resources/override-web.xml</overrideDescriptor>
+             -->
+          </webAppConfig>
+
+          <!-- ========= Configuration for the jetty:run  ========= -->
+          <!-- <classesDirectory   />  -->
+          <!-- <webAppSourceDirectory   />  -->
+          <!-- <webXml   />  -->
+          <!-- <jettyEnvXml   />  -->
+          <!-- <scanTargets    />  -->
+          <!-- <scanTargetPatterns    />  -->
+          
+          <!-- ========= Configuration for the jetty:run  ========= -->
+          <!-- <webApp>${project.build.directory}/${project.build.finalName}.war</webApp> -->
+        </configuration>
+        <executions>
+          <execution>
+            <id>start-jetty</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <scanIntervalSeconds>0</scanIntervalSeconds>
+              <daemon>true</daemon>
+            </configuration>
+          </execution>
+          <execution>
+            <id>stop-jetty</id>
+            <phase>post-integration-test</phase>
+            <goals>
+              <goal>stop</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>2.1.1</version>
+      </plugin>
+    </plugins>
+  </build>
+</project>

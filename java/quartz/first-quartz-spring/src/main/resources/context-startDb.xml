@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:aop="http://www.springframework.org/schema/aop"
+  xmlns:tx="http://www.springframework.org/schema/tx" xmlns:p="http://www.springframework.org/schema/p"
+  xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+  <!--
+   - valid arguments : http://www.h2database.com/javadoc/org/h2/tools/Server.html  #main(String...)
+   - http://localhost:8082/
+   - Driver Class: org.h2.Driver
+   - JDBC URL: jdbc:h2:tcp://localhost:9092/~/first-quartz-spring
+   - User Name: zhang3
+   - Password: zhang3
+   -->
+  <bean id="org.h2.tools.Server-WebServer"
+        class="org.h2.tools.Server"
+        scope="singleton"
+        factory-method="createWebServer"
+        init-method="start">
+    <constructor-arg value="-web,-webAllowOthers,-webPort,8082" />
+  </bean>
+
+  <bean id="org.h2.tools.Server"
+        class="org.h2.tools.Server"
+        factory-method="createTcpServer"
+        init-method="start"
+        destroy-method="stop"
+        depends-on="org.h2.tools.Server-WebServer">
+    <constructor-arg value="-tcp,-tcpAllowOthers,-tcpPort,9092" />
+  </bean>
+
+  <bean id="dataSource"
+        class="org.apache.commons.dbcp.BasicDataSource"
+        destroy-method="close">
+    <property name="driverClassName" value="org.h2.Driver" />
+    <property name="url" value="jdbc:h2:tcp://localhost:9092/~/first-quartz-spring" />
+    <property name="username" value="zhang3" />
+    <property name="password" value="zhang3" />
+  </bean>
+
+  <jdbc:initialize-database data-source="dataSource">
+    <jdbc:script location="classpath:tables_h2-drop.sql" />
+    <jdbc:script location="classpath:tables_h2.sql" />
+  </jdbc:initialize-database>
+
+</beans>

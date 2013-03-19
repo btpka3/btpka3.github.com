@@ -1,0 +1,8 @@
+Quartz 集群的例子请参考
+quartz-x.x..tar.gz
+  |- examples/example13
+
+
+<<Spring Framework Reference Manual>> 中给出的使用 Quartz 的例子比较适用于：
+1. 要调度的 job 个数比较明确
+2. 不会动态增加、停用

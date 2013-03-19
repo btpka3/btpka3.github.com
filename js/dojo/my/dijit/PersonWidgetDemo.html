@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Test Dojo AMD</title>
+
+<!--
+http://css-tricks.com/removing-the-dotted-outline/
+ -->
+<style type="text/css">
+*:focus {
+ outline:none;
+}
+</style>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.8.0/dijit/themes/claro/claro.css" />
+
+<script type="text/javascript">
+var dojoConfig = {
+    async:true,
+    isDebug: true,
+    baseUrl: './',
+    parseOnLoad:true,
+   // modulePaths: {
+   //     'custom': 'custom'
+   // }
+    packages: [{name: "my", location: "/js/dojo/my"}]
+};
+</script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.8.0/dojo/dojo.js" ></script>
+<script type="text/javascript" src="PersonWidgetDemo.js"></script>
+</head>
+<body class="claro">
+  <div id="editContainer"></div>
+  <div data-dojo-type="my.dijit.PersonWidget">11</div>
+  <hr/>
+  <div id="listContainer"></div>
+</body>
+</html>

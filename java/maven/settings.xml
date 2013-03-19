@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ |  该文件是Maven的配置文件，它可以通过以下两个级别配置。
+ |
+ |  1. 用户级别：可以为每个用户进行不同的配置。
+ |              默认文件路径为： ${user.home}/.m2/settings.xml.
+ |              注意：如果不使用默认路径，可以在命令行追加以下参数中：
+ |                  -s /path/to/user/settings.xml
+ |
+ |  2. 全局级别：该文件为每台电脑上所有的用户所共享。
+ |              默认文件路径：${MAVEN_HOME}/conf/settings.xml.
+ |              注意：该   NOTE: This location can be overridden with the CLI option:
+ |                  -gs /path/to/global/settings.xml
+ |-->
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+  <!-- 本地仓库
+   |  不管从远程仓库，还是镜像仓库、还是公司内部自己搭建的内部仓库，
+   |  项目所需的类库都会下载到这里。
+   |  默认路径：  ~/.m2/repository
+   |-->
+  <localRepository>E:/maven/repository</localRepository>
+
+  <!-- 是否交互模式
+   |  这将使Maven在需要输入的时候是否提示你。
+   |  如果设置为false，Maven将使用一个合理的默认值。
+   |  默认值：true
+   |-->
+  <interactiveMode>true</interactiveMode>
+
+  <!-- 是否离线模式
+   |  设定在build工程时，mavan是否尝试链接网络。
+   |  通常在软件类库下载、工程部署等环节使用。
+   |  默认值：false
+   |-->
+  <offline>false</offline>
+
+  <!-- 插件组列表
+   |  这是Maven在通过前缀解决插件的时候，将会查找的一个额外的插件组的标识符列表。
+   |  比如：当使用类似于 "mvn prefix:goal"的命令行 时，如果
+   |  "org.apache.maven.plugins" 和 "org.codehaus.mojo" 不存在于该列表中时，
+   |  Maven将自动加入这两项。（也即，这两项为默认值）
+   |-->
+  <pluginGroups>
+    <pluginGroup>org.apache.maven.plugins</pluginGroup>
+    <pluginGroup>org.codehaus.mojo</pluginGroup>
+  </pluginGroups>
+
+  <!-- 设置联网的代理信息
+   |  这是一个当前电脑能连接的网络的代理服务器设置列表。
+   |  除非通过别的地方指定（比如系统属性或命令行开关），
+   |  将使用该list中第一个被激活（active="true"）的设定。
+   |-->
+  <proxies>
+    <!-- proxy
+     | Specification for one proxy, to be used in connecting to the network.
+     |
+    <proxy>
+      <id>optional</id>
+      <active>false</active>
+      <protocol>http</protocol>
+      <username>proxyuser</username>
+      <password>proxypass</password>
+      <host>proxy.host.net</host>
+      <port>80</port>
+      <nonProxyHosts>local.net|some.host.com</nonProxyHosts>
+    </proxy>
+    -->
+  </proxies>
+
+  <!-- 服务器
+   |  这里列出认证信息。通过server/id与软件仓库服务器进行关联。
+   |  无论何时maven必须连接一个远程的服务器。
+   |  注意：你必须成对儿的指定 username/passwrod 或  privateKey/passphrase
+   |-->
+  <servers>
+    <!--
+    <server>
+      <id>deploymentRepo</id>
+      <username>repouser</username>
+      <password>repopwd</password>
+    </server>
+    <server>
+      <id>siteServer</id>
+      <privateKey>/path/to/private/key</privateKey>
+      <passphrase>optional; leave empty if not used.</passphrase>
+    </server>
+    -->
+  </servers>
+
+  <!-- 设置镜像站点
+   |  这里列出了远程仓库的镜像站点，用于减少远程仓库的负担、加快访问速度。
+   |-->
+  <mirrors>
+    <!--
+    <mirror>
+      <id>Nexus</id>
+      <mirrorOf>*</mirrorOf>
+      <name>Nexus</name>
+      <url>http://localhost:8081/nexus/content/groups/public</url>
+    </mirror>
+     -->
+    <mirror>
+      <id>Nexus</id>
+      <mirrorOf>*</mirrorOf>
+      <name>Nexus</name>
+      <url>http://localhost:8081/nexus/content/groups/public</url>
+    </mirror>
+  </mirrors>
+
+  <!-- profiles
+   |  这是神马东东？http://juvenshun.javaeye.com/blog/208714
+   |  瞅瞅默认注释掉的例子，再看看别人的说明，貌似可以这样理解：
+   |  类似于C语言中的条件编译， 类似于if...else...，
+   |  不过你也可以让一个配置默认就进行。
+   |  可是，偶想，这个配置才工程下的POM.xml应该更好吧。
+   |  注意： 在settings.xml中，这里只能指定软件仓库，插件仓库，
+   |  和在POM中使用在插件要用到格式自由的属性/变量
+   |-->
+  <profiles>
+    <profile>
+      <id>nexus</id>
+      <repositories>
+        <repository>
+          <id>central</id>
+          <name>Maven Repository Switchboard</name>
+          <url>http://repo1.maven.org/maven2</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+           <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </repository>
+
+        <!-- COPY FROM https://oss.sonatype.org/ -->
+        <repository>
+          <id>AppFuse</id>
+          <name>AppFuse</name>
+          <url>https://oss.sonatype.org/content/groups/appfuse/</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </repository>
+
+        <repository>
+          <id>Codehaus</id>
+          <name>Codehaus</name>
+          <url>https://oss.sonatype.org/content/groups/codehaus/</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+           <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </repository>
+
+        <repository>
+          <id>Cometd</id>
+          <name>Cometd</name>
+          <url>https://oss.sonatype.org/content/groups/cometd/</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+           <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </repository>
+
+
+        <repository>
+          <id>Dojo</id>
+          <name>Dojo</name>
+          <url>https://oss.sonatype.org/content/groups/dojo/</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+           <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </repository>
+
+        <repository>
+          <id>Github</id>
+          <name>Github</name>
+          <url>https://oss.sonatype.org/content/groups/github/</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+           <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </repository>
+
+        <repository>
+          <id>Google</id>
+          <name>Google</name>
+          <url>https://oss.sonatype.org/content/groups/google/</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+           <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </repository>
+
+        <repository>
+          <id>GoogleCode</id>
+          <name>GoogleCode</name>
+          <url>https://oss.sonatype.org/content/groups/googlecode/</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+           <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </repository>
+
+        <repository>
+          <id>JavaNet</id>
+          <name>JavaNet</name>
+          <url>https://oss.sonatype.org/content/groups/java-net/</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+           <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </repository>
+
+        <repository>
+          <id>JavaForge</id>
+          <name>JavaForge</name>
+          <url>https://oss.sonatype.org/content/groups/javaforge/</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+           <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </repository>
+
+        <repository>
+          <id>Jboss</id>
+          <name>Jboss</name>
+          <url>https://oss.sonatype.org/content/groups/jboss/</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+           <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </repository>
+
+        <repository>
+          <id>Jetty</id>
+          <name>Jetty</name>
+          <url>https://oss.sonatype.org/content/groups/jetty/</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+           <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </repository>
+
+        <repository>
+          <id>Joda</id>
+          <name>Joda</name>
+          <url>https://oss.sonatype.org/content/groups/joda/</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+           <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </repository>
+
+        <repository>
+          <id>SpringSource</id>
+          <name>SpringSource</name>
+          <url>https://oss.sonatype.org/content/groups/springsource-all/</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+           <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </repository>
+
+        <repository>
+          <id>CentralSync</id>
+          <name>CentralSync</name>
+          <url>https://oss.sonatype.org/content/repositories/central-sync/</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+           <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </repository>
+
+      </repositories>
+      <pluginRepositories>
+        <pluginRepository>
+          <id>central</id>
+          <name>Maven Plugin Repository</name>
+          <url>http://repo1.maven.org/maven2</url>
+          <releases>
+            <updatePolicy>never</updatePolicy>
+          </releases>
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </pluginRepository>
+      </pluginRepositories>
+    </profile>
+  </profiles>
+
+  <!-- 设定激活的Profile
+   | 这里激活或的Profile将对所有的构建都起作用。
+   |-->
+  <activeProfiles>
+    <activeProfile>nexus</activeProfile>
+  </activeProfiles>
+</settings>
