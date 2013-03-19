@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Test Dojo AMD</title>
+<title>Custom Dojo Button Skin</title>
 
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.8.0/dijit/themes/claro/claro.css" />
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.8.0/dijit/themes/tundra/tundra.css" />
@@ -16,10 +16,10 @@
 .myButton .dijitButtonNode {
   background: rgb(96,96,96) !important;
   color: white !important;
-  padding: 10px !important;
-  font-size: x-large !important;
-  padding-top: 10px !important;
-  padding-bottom: 10px !important;
+  padding: 5px !important;
+  font-size: 16px; !important;
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
   border: 2px inset rgb(96,96,96);
 }
 .myButtonHover .dijitButtonNode {
@@ -44,6 +44,8 @@ var dojoConfig = {
 </script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.8.0/dojo/dojo.js" ></script>
 <script type="text/javascript">
+// http://dojotoolkit.org/reference-guide/1.8/dijit/themes.html
+// http://davidwalsh.name/dijit-theme
 require( [
     "dojo/parser",
 
@@ -61,7 +63,7 @@ require( [
     ctr,
     domClass
 ) {
-  var themes = ["", "claro", "soria", "tundra", "nihilo"];
+  var themes = ["", "claro", "soria", "tundra", "nihilo", "myButton"];
 
   var changeThemeBtn = new Button({
     i:-1,
@@ -82,7 +84,8 @@ require( [
   new Button({"class": "soria"}, "soriaBtn");
   new Button({"class": "tundra"}, "tundraBtn");
   new Button({"class": "nihilo"}, "nihiloBtn");
-  new Button({"baseClass":"myButton"}, "myBtn");
+  new Button({"baseClass":"myButton"}, "myBtn"); // 固定样式，不会
+  new Button({"class":"myButton"}, "myBtn2"); // 固定样式，不会
 
   /////////////////////////////////////////////
   new Button({
@@ -112,6 +115,7 @@ require( [
     <span id="soriaBtn" >Soria Button</span>
     <span id="nihiloBtn">Nihilo Button</span>
     <span id="myBtn">My Button</span>
+    <span id="myBtn2">My Button2</span>
     <hr/>
 
     <span id="btn" class="claro">No Imgage Customer Button</span>
