@@ -23,15 +23,15 @@ require( [ "dojo/ready", "dojo/parser", "dijit/registry",
 
 
     back.addToHistory({
-      back: function(){ alert("back : cp1"); },
-      forward: function(){ alert("forward : cp1"); },
+      back: function(){ console.log("back : cp1"); },
+      forward: function(){ console.log("forward : cp1"); },
       changeUrl: "cp1"
     });
-    back.addToHistory({
-      back: function(){ alert("back : cp2"); },
-      forward: function(){ alert("forward : cp2"); },
-      changeUrl: "cp2"
-    });
-    back.init();
+//    back.addToHistory({
+//      back: function(){ console.log("back : cp2"); },
+//      forward: function(){ console.log("forward : cp2"); },
+//      changeUrl: "cp2"
+//    });
+    //back.init();
   });
 });

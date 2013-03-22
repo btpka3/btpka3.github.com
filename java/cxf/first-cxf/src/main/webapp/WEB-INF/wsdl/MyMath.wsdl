@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.test.me/MyMath/"
+  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="MyMath"
+  targetNamespace="http://www.test.me/MyMath/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.test.me/MyMath/">
+      <xsd:element name="add">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="x" type="xsd:int" />
+            <xsd:element name="y" type="xsd:int"></xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="addResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="out" type="xsd:int" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:complexType name="myFaultType">
+        <xsd:sequence>
+          <xsd:element name="errorCode" type="xsd:string"></xsd:element>
+          <xsd:element name="errorMessage" type="xsd:string"></xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="addFault">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="errorCode" type="xsd:string"></xsd:element>
+            <xsd:element name="errorMessage" type="xsd:string"></xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="myFault">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="errorCode" type="xsd:string"></xsd:element>
+            <xsd:element name="errorMessage" type="xsd:string"></xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="minusType">
+        <xsd:sequence>
+          <xsd:element name="x" type="xsd:int"></xsd:element>
+          <xsd:element name="y" type="xsd:int"></xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="minusResponseType">
+        <xsd:sequence>
+          <xsd:element name="out" type="xsd:int"></xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="multiply" type="tns:multiplyType">
+      </xsd:element>
+      <xsd:element name="multiplyResponse" type="tns:multiplyResponseType">
+      </xsd:element>
+
+      <xsd:complexType name="multiplyType">
+        <xsd:sequence>
+          <xsd:element name="x" type="xsd:int"></xsd:element>
+          <xsd:element name="y" type="xsd:int"></xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <xsd:complexType name="multiplyResponseType">
+        <xsd:sequence>
+          <xsd:element name="out" type="xsd:int"></xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="multiplyFault" type="tns:myFaultType">
+      </xsd:element>
+      <xsd:element name="divide" type="tns:divideType">
+      </xsd:element>
+      <xsd:element name="divideResponse" type="tns:divideResponseType">
+      </xsd:element>
+      <xsd:element name="divideFault">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="divideFault" type="xsd:string"></xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="divideType">
+        <xsd:sequence>
+          <xsd:element name="x" type="xsd:int"></xsd:element>
+          <xsd:element name="y" type="xsd:int"></xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="divideResponseType">
+        <xsd:sequence>
+          <xsd:element name="out" type="xsd:int"></xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="addRequest">
+    <wsdl:part element="tns:add" name="parameters" />
+  </wsdl:message>
+  <wsdl:message name="addResponse">
+    <wsdl:part element="tns:addResponse" name="parameters" />
+  </wsdl:message>
+  <wsdl:message name="minusRequest">
+    <wsdl:part name="parameters" type="tns:minusType"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="minusResponse">
+    <wsdl:part name="parameters" type="tns:minusResponseType"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addFault">
+    <wsdl:part name="parameters" element="tns:addFault"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="minusFault">
+    <wsdl:part name="parameters" type="tns:myFaultType"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="multiplyRequest">
+    <wsdl:part name="parameters" element="tns:multiply"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="multiplyResponse">
+    <wsdl:part name="parameters" element="tns:multiplyResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="multiplyFault">
+    <wsdl:part name="parameters" element="tns:multiplyFault"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="divideRequest">
+    <wsdl:part name="parameters" element="tns:divide"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="divideResponse">
+    <wsdl:part name="parameters" element="tns:divideResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="divideFault">
+    <wsdl:part name="parameters" element="tns:myFault"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="MyMath">
+    <wsdl:operation name="add">
+      <wsdl:input message="tns:addRequest" />
+      <wsdl:output message="tns:addResponse" />
+      <wsdl:fault name="fault" message="tns:addFault"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="minus">
+      <wsdl:input message="tns:minusRequest"></wsdl:input>
+      <wsdl:output message="tns:minusResponse"></wsdl:output>
+      <wsdl:fault name="fault" message="tns:minusFault"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="multiply">
+      <wsdl:input message="tns:multiplyRequest"></wsdl:input>
+      <wsdl:output message="tns:multiplyResponse"></wsdl:output>
+      <wsdl:fault name="fault" message="tns:multiplyFault"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="divide">
+      <wsdl:input message="tns:divideRequest"></wsdl:input>
+      <wsdl:output message="tns:divideResponse"></wsdl:output>
+      <wsdl:fault name="fault" message="tns:divideFault"></wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="MyMathSOAP" type="tns:MyMath">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="add">
+      <soap:operation soapAction="http://www.test.me/MyMath/add" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="minus">
+      <soap:operation soapAction="http://www.test.me/MyMath/add" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="multiply">
+      <soap:operation soapAction="http://www.test.me/MyMath/add" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="divide">
+      <soap:operation soapAction="http://www.test.me/MyMath/add" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MyMath">
+    <wsdl:port binding="tns:MyMathSOAP" name="MyMathSOAP">
+      <soap:address location="http://www.example.org/" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

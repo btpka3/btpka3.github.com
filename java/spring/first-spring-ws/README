@@ -7,3 +7,44 @@ ASP.NET       : WS-I Basic Profile Version 1.1
 
 WS-I Basic Profile 1.1
   http://www.ws-i.org/Profiles/BasicProfile-1.1.html
+
+Discover SOAP encoding's impact on Web service performance
+  http://www.ibm.com/developerworks/webservices/library/ws-soapenc/
+
+Which style of WSDL should I use?
+  https://www.ibm.com/developerworks/webservices/library/ws-whichwsdl/
+
+  该文章很好的阐述了各种区别。
+  最终结合性能考虑，使用 Document/literal 的方式。
+  另外，在Eclipse中通过WSDL Editor编写WSDL文件时，在Apache CXF的 Maven
+  插件 cxf-codegen-plugin 的帮助下，生成代码的规整时的WSDL应当：
+1. 每个方法的各个 <wsdl:message> 的name属性分别为:
+    request:  ${operationName}Request,
+    response: ${operationName}Response,
+    fault:    ${operationName}Fault,
+2. 各个<wsdl:message>下面有且仅有一个<wsdl:part>
+3. <wsdl:part>的name属性均保持 parameters 即可。
+4. <wsdl:part>均使用 xsd:element，而不是xsd:type。xsd:element的name应当是:
+    request:  ${operationName},
+    response: ${operationName}Response,
+    fault:    ${operationName}Fault,
+  所有xsd:element都不要定义匿名的本地xsd:type，而是引用单独定义的类型，这样的话，这些类型就可以尽可能地被重用。
+  在Apache CXF中，如果
+
+ MyMath中示例   <wsdl:part>的引用方式                   生成的java代码现象
+ add            匿名本地类型的xsd:element               接口声明的 fault为程序自动生成的有下划线的异常（ AddFault_Exception）
+ minus          xsd:type(不要使用，WS-I Basic-profile不兼容)                               接口声明参数仅为一个（MinusType），返回值类型为封装类型（MinusResponseType）
+ multiply       xsd:element -> 非匿名的本地xsd:type     接口声明的参数、返回值、异常类型均最简洁。
+
+
+
+
+
+.Net (C#) and SOAP with Attachments
+  http://blog.rueedlinger.ch/2009/01/net-c-and-soap-with-attachments/
+
+
+
+MyMath.wsdl
+
+

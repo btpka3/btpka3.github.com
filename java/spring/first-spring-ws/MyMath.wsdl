@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.test.me/MyMath/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="MyMath" targetNamespace="http://www.test.me/MyMath/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.test.me/MyMath/">
+      <xsd:element name="add">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="in" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="addResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="out" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="addRequest">
+    <wsdl:part element="tns:add" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="addResponse">
+    <wsdl:part element="tns:addResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:portType name="MyMath">
+    <wsdl:operation name="add">
+      <wsdl:input message="tns:addRequest"/>
+      <wsdl:output message="tns:addResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="MyMathSOAP" type="tns:MyMath">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="add">
+      <soap:operation soapAction="http://www.test.me/MyMath/add"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MyMath">
+    <wsdl:port binding="tns:MyMathSOAP" name="MyMathSOAP">
+      <soap:address location="http://www.example.org/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
