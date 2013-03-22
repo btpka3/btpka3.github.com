@@ -2,8 +2,18 @@ Apache Axis2  : WS-I Basic Profile Version 1.0
 Apache CXF    : WS-I Basic Profile 1.1
 Spring-WS     : WS-I Basic Profile ???
 ASP.NET       : WS-I Basic Profile Version 1.1
+                WS-I Basic Security Profile 1.0
   http://msdn.microsoft.com/en-us/library/ms230196.aspx
   http://msdn.microsoft.com/en-us/library/vstudio/ms230196(v=vs.100).aspx
 
 WS-I Basic Profile 1.1
   http://www.ws-i.org/Profiles/BasicProfile-1.1.html
+
+Basic Security Profile Version 1.0
+  http://www.ws-i.org/Profiles/BasicSecurityProfile-1.0.html
+
+Attachments Profile Version 1.0
+  http://www.ws-i.org/Profiles/AttachmentsProfile-1.0.html
+
+Simple SOAP Binding Profile Version 1.0
+  http://www.ws-i.org/Profiles/SimpleSoapBindingProfile-1.0.html
