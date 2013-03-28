@@ -47,4 +47,31 @@ Which style of WSDL should I use?
 
 MyMath.wsdl
 
+生成自签名的证书、并导出证书
+
+服务器端
+keytool -genkeypair -alias myServer -keyalg RSA -keysize 1024 -sigalg SHA1withRSA -dname "CN=myServer, OU=R & D department, O=\"BJ SOS Software Tech Co., Ltd\", L=Beijing, S=Beijing, C=CN" -validity 3650 -keypass 123456 -keystore myServer.jks -storepass 123456
+keytool -exportcert -rfc -file myServer.pem.cer -alias myServer -keystore myServer.jks -storepass 123456
+
+客户端
+keytool -genkeypair -alias myClient -keyalg RSA -keysize 1024 -sigalg SHA1withRSA -dname "CN=myClient, OU=R & D department, O=\"BJ SOS Software Tech Co., Ltd\", L=Beijing, S=Beijing, C=CN" -validity 3650 -keypass 123456 -keystore myClient.jks -storepass 123456
+keytool -exportcert -rfc -file myClient.pem.cer -alias myClient -keystore myClient.jks -storepass 123456
+keytool -importkeystore -srcstoretype JKS -srckeystore myClient.jks -srcstorepass 123456 -srcalias myClient -srckeypass 123456 -deststoretype PKCS12 -destkeystore myClient.p12 -deststorepass 123456 -destalias myClient -destkeypass 123456 -noprompt
+
+Spring WS 部分问题参考
+  加密后无法找到Endpoint
+  https://jira.springsource.org/browse/SWS-701
+
+  动态生成的WSDL中的soapAction属性为空
+  http://forum.springsource.org/showthread.php?34998-soapAction-attribute-of-operation-when-dynamically-generating-wsdl
+
+本工程现状
+  1. 可以使用Spring-WS的Java客户端调用其实现的WebServic
+      客户端通过用户名密码认证、通过服务器端公钥+随机对称加密进行加密。
+  2. C# 客户端可以连接未加密、未签名的Java服务。如果加密、签名，则会出错。
+      C# 使用WSE3.0 发送的消息会将<SOAP-ENV:Header>的<wsse:UsernameToken> 进行加密并进行摘要算法，而Java服务器端上不能完成此验证，返回的错误消息是：
+    <SOAP-ENV:Fault>
+      <faultcode>SOAP-ENV:Client</faultcode>
+      <faultstring xml:lang="en">The signature or decryption was invalid; nested exception is org.apache.ws.security.WSSecurityException: The signature or decryption was invalid</faultstring>
+    </SOAP-ENV:Fault>
 

@@ -1,25 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.test.me/MyMath/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="MyMath" targetNamespace="http://www.test.me/MyMath/">
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.test.me/MyMath/"
+  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="MyMath"
+  targetNamespace="http://www.test.me/MyMath/">
   <wsdl:types>
-    <xsd:schema targetNamespace="http://www.test.me/MyMath/">
-      <xsd:element name="add">
-        <xsd:complexType>
-          <xsd:sequence>
-            <xsd:element name="in" type="xsd:string"/>
-          </xsd:sequence>
-        </xsd:complexType>
-      </xsd:element>
-      <xsd:element name="addResponse">
-        <xsd:complexType>
-          <xsd:sequence>
-            <xsd:element name="out" type="xsd:string"/>
-          </xsd:sequence>
-        </xsd:complexType>
-      </xsd:element>
+    <xsd:schema>
+      <xsd:import namespace="http://www.test.me/MyMath/" schemaLocation="MyMath.xsd"/>
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="addRequest">
-    <wsdl:part element="tns:add" name="parameters"/>
+    <wsdl:part element="tns:addRequest" name="parameters"/>
   </wsdl:message>
   <wsdl:message name="addResponse">
     <wsdl:part element="tns:addResponse" name="parameters"/>
