@@ -6,7 +6,7 @@ define([
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
-    "dojo/text!my/dijit/templates/PersonWidget.html"
+    "dojo/text!./templates/PersonWidget.html"
 ], function(
     exports,
     dom,
@@ -17,19 +17,17 @@ define([
     _WidgetsInTemplateMixin,
     template
 ) {
-    declare("my.dijit.PersonWidget", [
+    declare([
         _WidgetBase,
         _TemplatedMixin,
         _WidgetsInTemplateMixin
       ], {
         baseClass : 'personWidget',
-        avatar : require.toUrl('dijit/images/defaultAvatar.png'),
+        avatar : require.toUrl('./images/defaultAvatar.png'),
         mouseAnim : null,
         templateString: template,
         bio : '',
         baseBackgroundColor : '#fff',
-        mouseBackgroundColor : '#def',
-        model:{name:'lilili'},
-        name:'zhang3'
+        mouseBackgroundColor : '#def'
     });
 });
