@@ -1,0 +1,25 @@
+/* theme : myTheme1 */
+.myTheme1 .personWidget {
+  border: 1px solid red;
+  margin: 2px;
+}
+
+.myTheme1 .personWidgetAvatar {
+  border-radius: 10px;
+  -moz-border-radius: 10px;
+  -khtml-border-radius: 10px;
+  -webkit-border-radius: 10px;
+}
+/* theme : myTheme2 */
+.myTheme2 .personWidget {
+  border: 1px solid blue;
+  margin: 2px;
+}
+
+.myTheme2 .personWidgetAvatar {
+  border-radius: 10px;
+  -moz-border-radius: 10px;
+  -khtml-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border: 3px solid blue;
+}
