@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+  xmlns:util="http://www.springframework.org/schema/util" xmlns:sws="http://www.springframework.org/schema/web-services"
+  xmlns:oxm="http://www.springframework.org/schema/oxm"
+  xsi:schemaLocation="http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm-3.1.xsd
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+    http://www.springframework.org/schema/web-services http://www.springframework.org/schema/web-services/web-services-2.0.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+
+  <oxm:jaxb2-marshaller id="marshaller" contextPath="me.test.ws.model" >
+  </oxm:jaxb2-marshaller>
+
+  <bean id="webServiceGatewaySupport" abstract="true" class=" org.springframework.ws.client.core.support.WebServiceGatewaySupport">
+    <property name="marshaller"  ref="marshaller"/>
+    <property name="unmarshaller" ref="marshaller"/>
+    <property name="interceptors">
+      <bean class="org.springframework.ws.soap.security.wss4j.Wss4jSecurityInterceptor">
+
+      <!-- 对接收消息的安全检查 -->
+      <property name="validationActions" value="Timestamp Encrypt Signature" /> <!--  -->
+
+      <!-- 对接收消息的安全检查 : 解密 -->
+      <property name="validationDecryptionCrypto" ref="myClientCrypto" />
+
+      <!-- 对接收消息的安全检查 : 签名确认 -->
+      <property name="validationSignatureCrypto" ref="myServerCrypto" />
+      <property name="enableSignatureConfirmation" value="true"/>
+
+      <!-- 对发送消息的安全设置 -->
+      <property name="securementActions" value="Timestamp Encrypt Signature" /> <!-- UsernameToken Encrypt -->
+
+      <property name="validationCallbackHandlers">
+        <list value-type="javax.security.auth.callback.CallbackHandler">
+
+          <!-- 对接收消息的安全检查 : 解密 -->
+          <bean class="org.springframework.ws.soap.security.wss4j.callback.KeyStoreCallbackHandler">
+            <property name="privateKeyPassword" value="123456" />
+          </bean>
+        </list>
+      </property>
+
+      <!-- 对发送消息的安全设置 : 设置用户名、密码
+      <property name="securementUsername" value="zhang3" />
+      <property name="securementPassword" value="f0f5671b9ec568d03cbe126ce135a8b3d6ce6ab2" />
+      <property name="securementPasswordType" value="PasswordText"/>
+      <property name="securementUsernameTokenElements" value="Nonce Created"/>
+       -->
+
+      <!-- 对发送消息的安全设置 : 加密 -->
+      <property name="securementEncryptionUser" value="myServer"/>
+      <property name="securementEncryptionCrypto" ref="myServerCrypto" />
+
+      <!-- 对发送消息的安全设置 : 消息签名 -->
+      <property name="securementUsername" value="myClient"/>   <!-- 签名用密钥的别名 -->
+      <property name="securementPassword" value="123456"/>    <!-- 签名用密钥的密码 -->
+      <property name="securementSignatureCrypto" ref="myClientCrypto" />
+
+    </bean>
+    </property>
+  </bean>
+
+  <bean id="myServerCrypto" class="org.springframework.ws.soap.security.wss4j.support.CryptoFactoryBean">
+    <property name="keyStorePassword" value="123456" />
+    <property name="keyStoreLocation" value="classpath:myServer.jks" />
+  </bean>
+
+  <bean id="myClientCrypto" class="org.springframework.ws.soap.security.wss4j.support.CryptoFactoryBean">
+    <property name="keyStorePassword" value="123456" />
+    <property name="keyStoreLocation" value="classpath:myClient.jks" />
+  </bean>
+
+  <bean name="client" parent="webServiceGatewaySupport" class="me.test.client.Client">
+    <property name="defaultUri" value="http://localhost:8080/first-spring-ws/ws/MyMath" />
+  </bean>
+
+
+</beans>

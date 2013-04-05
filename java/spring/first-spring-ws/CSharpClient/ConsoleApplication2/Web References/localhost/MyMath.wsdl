@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:sch="http://www.test.me/MyMath/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.test.me/MyMath/" targetNamespace="http://www.test.me/MyMath/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <schema elementFormDefault="qualified" targetNamespace="http://www.test.me/MyMath/" xmlns="http://www.w3.org/2001/XMLSchema">
+      <element name="addRequest">
+        <complexType>
+          <sequence>
+            <element name="x" type="int" />
+            <element name="y" type="int" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="addResponse">
+        <complexType>
+          <sequence>
+            <element name="out" type="int" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="minusRequest">
+        <complexType>
+          <sequence>
+            <element name="x" type="int" />
+            <element name="y" type="int" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="minusResponse">
+        <complexType>
+          <sequence>
+            <element name="out" type="int" />
+          </sequence>
+        </complexType>
+      </element>
+    </schema>
+  </wsdl:types>
+  <wsdl:message name="minusRequest">
+    <wsdl:part name="minusRequest" element="tns:minusRequest" />
+  </wsdl:message>
+  <wsdl:message name="addResponse">
+    <wsdl:part name="addResponse" element="tns:addResponse" />
+  </wsdl:message>
+  <wsdl:message name="minusResponse">
+    <wsdl:part name="minusResponse" element="tns:minusResponse" />
+  </wsdl:message>
+  <wsdl:message name="addRequest">
+    <wsdl:part name="addRequest" element="tns:addRequest" />
+  </wsdl:message>
+  <wsdl:portType name="MyMathPort">
+    <wsdl:operation name="minus">
+      <wsdl:input name="minusRequest" message="tns:minusRequest" />
+      <wsdl:output name="minusResponse" message="tns:minusResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="add">
+      <wsdl:input name="addRequest" message="tns:addRequest" />
+      <wsdl:output name="addResponse" message="tns:addResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="MyMathPortSoap11" type="tns:MyMathPort">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="minus">
+      <soap:operation soapAction="http://www.test.me/MyMath/minus" />
+      <wsdl:input name="minusRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="minusResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="add">
+      <soap:operation soapAction="http://www.test.me/MyMath/add" />
+      <wsdl:input name="addRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="addResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MyMathService">
+    <wsdl:port name="MyMathPortSoap11" binding="tns:MyMathPortSoap11">
+      <soap:address location="http://localhost:8080/first-spring-ws/ws/MyMath" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

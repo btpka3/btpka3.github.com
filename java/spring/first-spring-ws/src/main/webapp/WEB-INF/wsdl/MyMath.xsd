@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.test.me/MyMath/" xmlns:tns="http://www.test.me/MyMath/"
+  elementFormDefault="qualified">
+
+  <element name="addRequest">
+    <complexType>
+      <sequence>
+        <element name="x" type="int"></element>
+        <element name="y" type="int"></element>
+      </sequence>
+    </complexType>
+  </element>
+  <element name="addResponse">
+        <complexType>
+          <sequence>
+            <element name="out" type="int"></element>
+          </sequence>
+        </complexType>
+  </element>
+  <element name="minusRequest">
+    <complexType>
+      <sequence>
+        <element name="x" type="int"></element>
+        <element name="y" type="int"></element>
+      </sequence>
+    </complexType>
+  </element>
+  <element name="minusResponse">
+        <complexType>
+          <sequence>
+            <element name="out" type="int"></element>
+          </sequence>
+        </complexType>
+  </element>
+</schema>
