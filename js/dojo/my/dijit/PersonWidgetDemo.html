@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html >
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Test Dojo AMD</title>
+<title>Custom Dojo Widget</title>
 
 <!--
+根据以下资源创建第一个自定义Dojo Widget。
+实验以下功能：
+1. 自定义widget
+2. 自定义theme
+3. 自定义事件
+
+遗留任务：
+1. 与dataStore中的数据先关联，并能做到双向绑定（即在后台仅仅修改model中的数据，该Widget中就能自动更新。
+2. 使用DTL类似方式作为模板引擎。实现在当前例子中无法实现的循环等功能。
+
 http://css-tricks.com/removing-the-dotted-outline/
+http://dojotoolkit.org/documentation/tutorials/1.8/templated/
+http://dojotoolkit.org/documentation/tutorials/1.8/recipes/custom_widget/
+http://dojotoolkit.org/reference-guide/1.9/quickstart/writingWidgets.html#quickstart-writingwidgets
  -->
 <style type="text/css">
 *:focus {
@@ -15,25 +26,34 @@ http://css-tricks.com/removing-the-dotted-outline/
 }
 </style>
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.8.0/dijit/themes/claro/claro.css" />
+<link rel="stylesheet" href="./css/PersonWidget.css" />
 
 <script type="text/javascript">
-var dojoConfig = {
-    async:true,
-    isDebug: true,
-    baseUrl: './',
-    parseOnLoad:true,
-   // modulePaths: {
-   //     'custom': 'custom'
-   // }
-    packages: [{name: "my", location: "/js/dojo/my"}]
-};
+  var dojoConfig = {
+    "isDebug" : true,
+    "parseOnLoad" : true,
+    // modulePaths: {
+    //     'custom': 'custom'
+    // }
+    "packages" : [ {
+      "name" : "my",
+      "location" : "/js/dojo/my"
+    } ]
+  };
 </script>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.8.0/dojo/dojo.js" ></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.8.0/dojo/dojo.js.uncompressed.js" ></script>
+<!--
+ -->
 <script type="text/javascript" src="PersonWidgetDemo.js"></script>
+
 </head>
-<body class="claro">
-  <div id="editContainer"></div>
-  <div data-dojo-type="my.dijit.PersonWidget">11</div>
+<body class="claro myTheme1">
+  <div>
+  <button id="chageThemeBtn">Change Theme</button>
+  </div>
+  <!--
+  <div data-dojo-type="my/dijit/PersonWidget">11</div>
+   -->
   <hr/>
   <div id="listContainer"></div>
 </body>

@@ -1,15 +1,12 @@
-[ 1, 3, "AA", {
-  name : 'zhang3',
-  school : "WHHIT",
-  city : "LuoYang"
+[{
+  "name" : "zhang3<span>ss</span>",
+  "city" : "<span style=\"color:red\">Luo</span>Yang"
 }, {
-  name : 'li4',
-  school : "PKU",
-  city : "BeiJing",
-  avatar: "images/avatar1.png"
+  "name" : "li4\"",
+  "city" : "Wei<span style=\"color:red\">Hai</span>",
+  "avatar": "images/avatar1.png"
 }, {
-  name : 'wang5',
-  school : "HUST",
-  city : "WuHan",
-  avatar: "http://qlogo2.store.qq.com/qzone/103430585/103430585/100"
+  "name" : "wang5&amp;",
+  "city" : "Wu<span style=\"color:red\">Han</span>",
+  "avatar": "images/avatar2.png"
 }]

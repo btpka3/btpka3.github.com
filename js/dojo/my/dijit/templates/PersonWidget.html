@@ -1,3 +1,8 @@
 <div>
-  <h3 data-dojo-attach-point="nameNode">${model.names}</h3>
+  <div data-dojo-attach-event="onmouseenter:_onmouseenter, onmouseleave:_onmouseleave"> <!-- 测试事件处理函数 -->
+   name = <span data-dojo-attach-point="nameNode">${name}</span> <!-- 测试设置文本，并确保HTML标签被转义 -->
+  </div>
+  <div> city = <span data-dojo-attach-point="nameNode">${!city}</span> </div> <!-- 测试渲染HTML -->
+  <img alt="" src="" class="${baseClass}Avatar" data-dojo-attach-point="avatarNode" />
+  <button data-dojo-type="dijit/form/Button">btn</button>
 </div>
