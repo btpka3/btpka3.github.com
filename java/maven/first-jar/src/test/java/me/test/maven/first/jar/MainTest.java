@@ -9,13 +9,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.AfterTransaction;
 import org.springframework.test.context.transaction.BeforeTransaction;
-import org.springframework.test.context.transaction.TransactionConfiguration;
-import org.springframework.transaction.annotation.Transactional;
+//import org.springframework.test.context.transaction.TransactionConfiguration;
+//import org.springframework.transaction.annotation.Transactional;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:/applicationContext-Dao.xml"})
-@TransactionConfiguration(defaultRollback = true)
-@Transactional
+@ContextConfiguration
+//@TransactionConfiguration(defaultRollback = true)
 public class MainTest {
 
     @Autowired
@@ -38,6 +37,7 @@ public class MainTest {
     }
 
     @Test
+    // @Transactional
     public void testAdd01() {
     }
 

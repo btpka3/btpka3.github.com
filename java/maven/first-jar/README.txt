@@ -1,6 +1,20 @@
 说明：
 这个偶的第一个使用Maven和M2E创建的jar工程，会不断追加各种测试，目的就是为了熟练使用Maven。
 
+
+##################################################### maven-assembly-plugin
+# 命令：
+  mvn clean package assembly:single
+# 作用：将所有资源打包成 *.tar.gz, *.zip 等格式的发布包
+# 不足：需要自己手写所有启动脚本
+
+
+##################################################### maven-assembly-plugin
+# 命令：
+  mvn clean package appassembler:assemble appassembler:generate-daemons
+
+
+
 TODO：
 追加并配置Plugin
 进行测试、
