@@ -4,6 +4,9 @@
   <groupId>me.test.maven</groupId>
   <artifactId>first-jar</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
   <dependencies>
     <dependency>
       <groupId>org.apache.commons</groupId>
@@ -141,12 +144,30 @@
               <commandLineArguments>
                 <commandLineArgument>start</commandLineArgument>
               </commandLineArguments>
-               <platforms>
+              <platforms>
                 <platform>jsw</platform>
               </platforms>
+              <generatorConfigurations>
+                <generatorConfiguration>
+                  <generator>jsw</generator>
+                  <includes>
+                    <include>windows-x86-32</include>
+                    <include>windows-x86-64</include>
+                    <include>linux-x86-32</include>
+                    <include>linux-x86-64</include>
+                  </includes>
+                  <configuration>
+                    <property>
+                      <name>configuration.directory.in.classpath.first</name>
+                      <value>conf</value>
+                    </property>
+                  </configuration>
+                </generatorConfiguration>
+              </generatorConfigurations>
             </daemon>
           </daemons>
-          <target>${project.build.directory}/appassembler</target>
+          <target>${project.build.directory}/daemons</target>
+
 
           <!-- mvn appassembler:assemble -->
           <programs>
@@ -172,15 +193,75 @@
         </executions>
       </plugin>
 
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>2.5</version>
+        <executions>
+          <execution>
+            <id>copy-config-resources</id>
+            <phase>package</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/daemons/jsw/first-jar-daemon/conf</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>src/main/config</directory>
+                  <filtering>true</filtering>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
       <!-- 该插件用于最后打包（*.tar.gz, *.zip 等格式） -->
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
         <version>2.4</version>
-        <configuration>
-          <descriptors>
-            <descriptor>src/main/assembly/assembly.xml</descriptor>
-          </descriptors>
-        </configuration>
+        <executions>
+          <execution>
+            <id>assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <descriptors>
+                <descriptor>src/main/assembly/assembly.xml</descriptor>
+              </descriptors>
+            </configuration>
+          </execution>
+
+          <execution>
+            <id>program</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <descriptors>
+                <descriptor>src/main/assembly/program.xml</descriptor>
+              </descriptors>
+            </configuration>
+          </execution>
+
+          <execution>
+            <id>daemon</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <descriptors>
+                <descriptor>src/main/assembly/daemon.xml</descriptor>
+              </descriptors>
+            </configuration>
+          </execution>
+        </executions>
+
       </plugin>
     </plugins>
   </build>
