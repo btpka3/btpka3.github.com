@@ -126,7 +126,6 @@
       </resource>
     </resources>
 
-
     <plugins>
 
       <!-- 该插件用于生成Windows、Linux脚本 -->
@@ -177,7 +176,7 @@
             </program>
           </programs>
           <copyConfigurationDirectory>true</copyConfigurationDirectory>
-          <configurationDirectory>config</configurationDirectory>
+          <configurationDirectory>conf</configurationDirectory>
           <repositoryName>lib</repositoryName>
           <repositoryLayout>flat</repositoryLayout>
         </configuration>
@@ -189,30 +188,6 @@
               <goal>assemble</goal>
               <goal>generate-daemons</goal>
             </goals>
-          </execution>
-        </executions>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-resources-plugin</artifactId>
-        <version>2.5</version>
-        <executions>
-          <execution>
-            <id>copy-config-resources</id>
-            <phase>package</phase>
-            <goals>
-              <goal>copy-resources</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>${project.build.directory}/daemons/jsw/first-jar-daemon/conf</outputDirectory>
-              <resources>
-                <resource>
-                  <directory>src/main/config</directory>
-                  <filtering>true</filtering>
-                </resource>
-              </resources>
-            </configuration>
           </execution>
         </executions>
       </plugin>
