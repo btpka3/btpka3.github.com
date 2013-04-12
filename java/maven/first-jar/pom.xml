@@ -116,17 +116,25 @@
       <resource>
         <directory>src/main/resources</directory>
       </resource>
-
-      <!-- 明确写明 src/main/resources 的基础上，再额外追加config目录， 但是生成jar包时，并不包含其中的配置文件。 -->
       <resource>
         <directory>src/main/config</directory>
-        <excludes>
-          <exclude>*</exclude>
-        </excludes>
       </resource>
     </resources>
 
     <plugins>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.4</version>
+        <configuration>
+          <!-- 打包时需要排除来自于 src/main/config 目录下的文件 -->
+          <excludes>
+            <exclude>config.properties</exclude>
+            <exclude>logback.xml</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
 
       <!-- 该插件用于生成Windows、Linux脚本 -->
       <plugin>
@@ -197,18 +205,6 @@
         <artifactId>maven-assembly-plugin</artifactId>
         <version>2.4</version>
         <executions>
-          <execution>
-            <id>assembly</id>
-            <phase>package</phase>
-            <goals>
-              <goal>single</goal>
-            </goals>
-            <configuration>
-              <descriptors>
-                <descriptor>src/main/assembly/assembly.xml</descriptor>
-              </descriptors>
-            </configuration>
-          </execution>
 
           <execution>
             <id>program</id>
@@ -238,6 +234,23 @@
         </executions>
 
       </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.2.1</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>java</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <mainClass>me.test.maven.first.jar.Main</mainClass>
+        </configuration>
+      </plugin>
+
     </plugins>
   </build>
 </project>
