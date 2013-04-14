@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:aop="http://www.springframework.org/schema/aop"
+  xmlns:tx="http://www.springframework.org/schema/tx"
+  xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+  <bean id="org.h2.tools.Server-WebServer" class="org.h2.tools.Server" scope="singleton" factory-method="createWebServer"
+    init-method="start">
+    <constructor-arg value="-web,-webAllowOthers,true,-webPort,8082" />
+  </bean>
+
+  <bean id="org.h2.tools.Server" class="org.h2.tools.Server" factory-method="createTcpServer" init-method="start"
+    destroy-method="stop" depends-on="org.h2.tools.Server-WebServer">
+    <constructor-arg value="-tcp,-tcpAllowOthers,true,-tcpPort,9092" />
+  </bean>
+
+</beans>

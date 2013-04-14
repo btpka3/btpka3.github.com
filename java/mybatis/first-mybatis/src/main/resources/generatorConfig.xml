@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+  <!-- dependency:copy 默认的输出目录  -->
+  <classPathEntry location="target/dependency/h2-1.3.150.jar" />
+
+  <context id="myTables" targetRuntime="MyBatis3">
+
+    <commentGenerator>
+      <property name="suppressAllComments" value="true"/>
+      <property name="suppressDate" value="true"/>
+    </commentGenerator>
+
+    <!-- 数据库连接 -->
+    <jdbcConnection driverClass="org.h2.Driver"
+                    connectionURL="jdbc:h2:tcp://localhost:9092/~/first-mybatis"
+                    userId="zhang3"
+                    password="zhang3">
+    </jdbcConnection>
+
+    <javaTypeResolver>
+      <property name="forceBigDecimals" value="false" />
+    </javaTypeResolver>
+
+    <!-- 生成Model的Java文件 -->
+    <javaModelGenerator targetPackage="me.test.model"
+                        targetProject="target/generated-sources/mybatis-generator">
+      <property name="trimStrings"        value="true" />
+    </javaModelGenerator>
+
+    <!-- 生成Mapper的XML文件 -->
+    <sqlMapGenerator targetPackage="me.test.model"
+                     targetProject="target/generated-resources/mybatis-generator">
+    </sqlMapGenerator>
+
+    <!-- 生成DAO的Java文件 -->
+    <javaClientGenerator type="XMLMAPPER"
+                         targetPackage="me.test.dao"
+                         targetProject="target/generated-sources/mybatis-generator">
+    </javaClientGenerator>
+
+    <table tableName="T_USER" />
+    <table tableName="T_USER_GROUP" />
+    <table tableName="T_USER_GROUP_MEMBER" />
+
+  </context>
+</generatorConfiguration>
