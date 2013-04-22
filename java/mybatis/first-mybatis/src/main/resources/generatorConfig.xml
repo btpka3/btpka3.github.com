@@ -13,6 +13,21 @@
     <property name="javaFormatter" value="org.mybatis.generator.api.dom.DefaultJavaFormatter"/>
     <property name="xmlFormatter" value="org.mybatis.generator.api.dom.DefaultXmlFormatter"/>
 
+    <plugin type="org.mybatis.generator.plugins.SerializablePlugin">
+    </plugin>
+    <plugin type="org.mybatis.generator.plugins.ToStringPlugin">
+    </plugin>
+    <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin">
+    </plugin>
+    <plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin">
+      <property name="searchString"   value="Example$" />
+      <property name="replaceString"  value="Criteria" />
+    </plugin>
+    <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin">
+    </plugin>
+    <plugin type="me.test.mbg.plugins.RenameSqlIdPlugin">
+    </plugin>
+
     <commentGenerator>
       <property name="suppressAllComments" value="true"/>
       <property name="suppressDate" value="true"/>
