@@ -1,0 +1,26 @@
+在 C:\Windows\System32\drivers\etc\hosts 中追加以下两行
+127.0.0.1       cas.localhost
+127.0.0.1       app.localhost
+
+
+# 在根目录下执行以下命令
+#keytool -genkeypair -alias mykey0 -keyalg RSA -keysize 1024 -sigalg SHA1withRSA -dname "CN=localhost, OU=R & D department, O=\"ABC Tech Co., Ltd\", L=Weihai, S=Shandong, C=CN" -validity 365 -keypass 123456 -keystore tomcat.keystore -storepass 123456
+keytool -genkeypair -alias mykey1 -keyalg RSA -keysize 1024 -sigalg SHA1withRSA -dname "CN=*.localhost, OU=R & D department, O=\"ABC Tech Co., Ltd\", L=Weihai, S=Shandong, C=CN" -validity 365 -keypass 123456 -keystore tomcat.keystore -storepass 123456
+#
+注意：其中CN是域名
+注意：-keypass 和 -storepass tomcat貌似是要求一致的。
+
+
+# 修改${CATALINA_HOME}/conf/server.xml
+<Connector port="8443" protocol="HTTP/1.1" SSLEnabled="true"
+               maxThreads="150" scheme="https" secure="true"
+               clientAuth="false" sslProtocol="TLS"
+               keystoreFile="D:/tomcat.keystore"
+               keystorePass="123456"/>
+
+
+# 在 %CATALINA_HOME%/bin/catalina.bat 开头追加：
+JAVA_OPTS = -Djavax.net.ssl.trustStore="D:\tomcat.keystore" -Djavax.net.ssl.trustStorePassword="123456"
+
+
+
