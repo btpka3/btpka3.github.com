@@ -15,13 +15,13 @@
 
     <sec:authorize access="hasAnyRole('XROLE_READ_APPOINTMENT')">
       <div>
-        <a href="<c:url value="#1"/>">预约列表 (直接检测权限)</a>
+        <a href="<c:url value="appointment.jsp"/>">预约列表 (直接检测权限)</a>
       </div>
     </sec:authorize>
 
     <sec:authorize access="hasAnyRole('XROLE_READ_STAFF')">
       <div>
-        <a href="<c:url value="#2"/>">员工列表 (直接检测权限)</a>
+        <a href="<c:url value="staff.jsp"/>">员工列表 (直接检测权限)</a>
       </div>
     </sec:authorize>
 

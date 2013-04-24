@@ -1,6 +1,7 @@
 在 C:\Windows\System32\drivers\etc\hosts 中追加以下两行
 127.0.0.1       cas.localhost
 127.0.0.1       app.localhost
+127.0.0.1       stateless.localhost
 
 
 # 在根目录下执行以下命令

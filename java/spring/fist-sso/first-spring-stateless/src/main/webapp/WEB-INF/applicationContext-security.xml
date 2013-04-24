@@ -15,21 +15,24 @@
   <sec:http realm="My SEC"
             use-expressions="true"
             disable-url-rewriting="true"
-            entry-point-ref="casEntryPoint" >
+            create-session="stateless"
+            entry-point-ref="http403ForbiddenEntryPoint" >
+
+<!-- 如果完全是无状态的服务，则就不应该使用重定向让用户输入用户名、密码，而是如果认证失败就直接返回403错误。
+      entry-point-ref="http403ForbiddenEntryPoint"
+      entry-point-ref="casEntryPoint"
+     -->
     <sec:access-denied-handler error-page="/denied.jsp"/>
-    <sec:logout logout-success-url="/logoutSuccess.jsp" />
-    <sec:intercept-url pattern="/login.jsp"           access="isAuthenticated()" />
     <sec:intercept-url pattern="/sec.jsp"           access="isAuthenticated()" />
     <sec:intercept-url pattern="/appointment.jsp"   access="hasAnyRole('XROLE_READ_APPOINTMENT')" />
     <sec:intercept-url pattern="/staff.jsp"         access="hasAnyRole('XROLE_READ_STAFF')" />
-    <!-- <sec:intercept-url pattern="/testProxy.do"      access="isAuthenticated()" /> -->
-
-
+<!-- 由于没有状态，也就不牵涉到登录与退出登录的问题了
     <sec:custom-filter before="LOGOUT_FILTER"       ref="requestSingleLogoutFilter"  />
-    <sec:custom-filter before="CAS_FILTER"          ref="singleLogoutFilter" />
+    <sec:custom-filter before="CAS_FILTER"          ref="singleLogoutFilter" /> -->
     <sec:custom-filter position="CAS_FILTER"        ref="casFilter" />
   </sec:http>
-
+  <bean id="http403ForbiddenEntryPoint"
+        class="org.springframework.security.web.authentication.Http403ForbiddenEntryPoint"></bean>
 
   <!-- 该Filter会将用户重定向到CAS服务器，并通知CAS服务器进行单点退出操作 -->
   <bean id="requestSingleLogoutFilter"
@@ -50,7 +53,11 @@
         class="org.springframework.security.cas.web.CasAuthenticationFilter">
     <property name="authenticationManager"          ref="authenticationManager"/>
     <property name="proxyGrantingTicketStorage"     ref="pgtStorage"/>
+    <property name="serviceProperties"              ref="serviceProperties"/>
     <property name="proxyReceptorUrl"               value="/j_spring_cas_security_proxyreceptor"/>
+    <property name="authenticationDetailsSource">
+      <bean class="org.springframework.security.cas.web.authentication.ServiceAuthenticationDetailsSource"/>
+    </property>
   </bean>
 
   <bean id="casEntryPoint"
@@ -66,6 +73,8 @@
     <property name="service"                        value="${app.url.service}"/>
     <!-- 告知CAS服务器：本应用是敏感业务，不允许使用其他应用产生的登录状态，必须要求用户重新输入密码 -->
     <property name="sendRenew"                      value="false"/>
+    <!-- 对所有的URL均进行认证检查 -->
+    <property name="authenticateAllArtifacts"       value="true"/>
   </bean>
 
   <sec:authentication-manager alias="authenticationManager">
@@ -84,7 +93,10 @@
     <property name="ticketValidator"                ref="cas20ServiceTicketValidator" />
      -->
     <property name="ticketValidator"                ref="cas20ProxyTicketValidator" />
-    <property name="key"                            value="first-spring-cas"/>
+    <property name="key"                            value="first-spring-stateless"/>
+    <!-- 使用Ehchace可以延长ProxyTicket的使用期限或次数，避免每次都得向CAS服务器验证token有效性，Ehcache应合理设置，否则会面临安全风险 -->
+    <property name="statelessTicketCache"           ref="ticketCache" />
+
   </bean>
 
   <sec:user-service id="userService">
@@ -100,12 +112,21 @@
 
   <bean id="cas20ProxyTicketValidator"
         class="org.jasig.cas.client.validation.Cas20ProxyTicketValidator">
-    <constructor-arg                                value="${cas.url}" />
+    <constructor-arg value="${cas.url}" />
     <property name="proxyCallbackUrl"               value="${app.url.proxyreceptor}"/>
     <property name="proxyGrantingTicketStorage"     ref="pgtStorage"/>
+    <property name="acceptAnyProxy"                 value="true"/>
   </bean>
   <bean id="pgtStorage"
         class="org.jasig.cas.client.proxy.ProxyGrantingTicketStorageImpl"/>
+
+  <bean id="ticketCache"
+        class="org.springframework.security.cas.authentication.EhCacheBasedTicketCache">
+    <property name="cache" value="#{ehCacheManager.getEhcache('sampleCache1')}" />
+  </bean>
+  <bean id="ehCacheManager"
+        class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"
+        p:config-location="classpath:ehcache.xml"/>
 
 </beans>
 

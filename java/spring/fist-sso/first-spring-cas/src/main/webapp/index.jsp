@@ -11,7 +11,7 @@
 <body>
 
 <sec:authorize access="isAnonymous()">
-    <div>您尚未登录，请先登录:</div>
+    <div>您尚未登录，请先<a href="<c:url value="/login.jsp"/>">登录</a>:</div>
     <div>
       用户列表
       <table>
@@ -50,6 +50,9 @@
 
 <div>
   <a href="<c:url value="/sec.jsp"/>">查看受保护内容</a>
+</div>
+<div>
+  <a href="<c:url value="/testProxy.do"/>">查看调用RESTful服务</a> - 注意：只有已经登录后才能使用该服务，否则无法获取PGT
 </div>
 
 </body>
