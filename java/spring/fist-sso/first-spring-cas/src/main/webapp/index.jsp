@@ -52,7 +52,7 @@
   <a href="<c:url value="/sec.jsp"/>">查看受保护内容</a>
 </div>
 <div>
-  <a href="<c:url value="/testProxy.do"/>">查看调用RESTful服务</a> - 注意：只有已经登录后才能使用该服务，否则无法获取PGT
+  <a href="<c:url value="/testProxy.do"/>">查看调用RESTful服务</a> - 注意：如果是有状态的服务，则这边只能已经登录后才能使用该服务，因为JavaScript程序、Java程序无法、较难实现跨域，跨HTTP/HTTPS的跳转。
 </div>
 
 </body>

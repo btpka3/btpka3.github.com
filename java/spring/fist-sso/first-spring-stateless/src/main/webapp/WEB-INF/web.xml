@@ -66,5 +66,9 @@
     <error-code>403</error-code>
     <location>/denied.jsp</location>
   </error-page>
+  <error-page>
+    <error-code>401</error-code>
+    <location>/denied.jsp</location>
+  </error-page>
 
 </web-app>

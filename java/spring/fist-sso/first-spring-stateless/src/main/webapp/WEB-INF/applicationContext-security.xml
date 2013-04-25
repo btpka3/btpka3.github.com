@@ -12,41 +12,27 @@
   <context:property-placeholder properties-ref="appCfg"  />
   <util:properties id="appCfg" location="classpath:config.properties" />
 
+<!-- 完全无状态的服务:
+  - 不需要登录重定向，因此使用 entry-point-ref="http403ForbiddenEntryPoint" 是指如果不能从当前请求中获取到认证信息，则直接返回403错误，而不尝试进行认证。
+  - create-session="stateless" 指明及时当前有session，且session中有认证信息，也完全忽视。
+  -
+  - 由于是无状态服务，所以不需要登录、也不需要退出的filter（requestSingleLogoutFilter、singleLogoutFilter）
+  -->
+<!--
+ -->
   <sec:http realm="My SEC"
             use-expressions="true"
             disable-url-rewriting="true"
             create-session="stateless"
             entry-point-ref="http403ForbiddenEntryPoint" >
-
-<!-- 如果完全是无状态的服务，则就不应该使用重定向让用户输入用户名、密码，而是如果认证失败就直接返回403错误。
-      entry-point-ref="http403ForbiddenEntryPoint"
-      entry-point-ref="casEntryPoint"
-     -->
     <sec:access-denied-handler error-page="/denied.jsp"/>
     <sec:intercept-url pattern="/sec.jsp"           access="isAuthenticated()" />
     <sec:intercept-url pattern="/appointment.jsp"   access="hasAnyRole('XROLE_READ_APPOINTMENT')" />
     <sec:intercept-url pattern="/staff.jsp"         access="hasAnyRole('XROLE_READ_STAFF')" />
-<!-- 由于没有状态，也就不牵涉到登录与退出登录的问题了
-    <sec:custom-filter before="LOGOUT_FILTER"       ref="requestSingleLogoutFilter"  />
-    <sec:custom-filter before="CAS_FILTER"          ref="singleLogoutFilter" /> -->
     <sec:custom-filter position="CAS_FILTER"        ref="casFilter" />
   </sec:http>
   <bean id="http403ForbiddenEntryPoint"
         class="org.springframework.security.web.authentication.Http403ForbiddenEntryPoint"></bean>
-
-  <!-- 该Filter会将用户重定向到CAS服务器，并通知CAS服务器进行单点退出操作 -->
-  <bean id="requestSingleLogoutFilter"
-        class="org.springframework.security.web.authentication.logout.LogoutFilter">
-    <constructor-arg value="${cas.url.logout}"/>
-    <constructor-arg>
-      <bean class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler"/>
-    </constructor-arg>
-    <property name="filterProcessesUrl" value="/j_spring_cas_security_logout"/>
-  </bean>
-
-  <!-- 该Filter处理来自CAS服务器的单点退出请求 -->
-  <bean id="singleLogoutFilter"
-        class="org.jasig.cas.client.session.SingleSignOutFilter"/>
 
   <!-- 默认监视 /j_spring_cas_security_check -->
   <bean id="casFilter"
@@ -54,7 +40,8 @@
     <property name="authenticationManager"          ref="authenticationManager"/>
     <property name="proxyGrantingTicketStorage"     ref="pgtStorage"/>
     <property name="serviceProperties"              ref="serviceProperties"/>
-    <property name="proxyReceptorUrl"               value="/j_spring_cas_security_proxyreceptor"/>
+    <!-- 由于authenticateAllArtifacts=true， 即对所有的URL均进行拦截，所以单独设置这个URL没意义，不需要 -->
+    <!-- <property name="proxyReceptorUrl"               value="/j_spring_cas_security_proxyreceptor"/> -->
     <property name="authenticationDetailsSource">
       <bean class="org.springframework.security.cas.web.authentication.ServiceAuthenticationDetailsSource"/>
     </property>
@@ -89,13 +76,15 @@
       </bean>
     </property>
     <property name="serviceProperties"              ref="serviceProperties" />
-    <!--
+    <!-- 如果该应用不需要再往下调用其他后台服务，可以使用这个
     <property name="ticketValidator"                ref="cas20ServiceTicketValidator" />
      -->
     <property name="ticketValidator"                ref="cas20ProxyTicketValidator" />
     <property name="key"                            value="first-spring-stateless"/>
-    <!-- 使用Ehchace可以延长ProxyTicket的使用期限或次数，避免每次都得向CAS服务器验证token有效性，Ehcache应合理设置，否则会面临安全风险 -->
-    <property name="statelessTicketCache"           ref="ticketCache" />
+    <!-- 该值有默认值，默认会要求每次都向CAS服务器认证Service Token。
+      - 如果使用Ehchace，可以延长ProxyTicket的使用期限或次数，避免每次都得向CAS服务器验证token有效性，
+      - 但Ehcache应合理设置，否则可能会面临安全风险
+    <property name="statelessTicketCache"           ref="ticketCache" />-->
 
   </bean>
 
