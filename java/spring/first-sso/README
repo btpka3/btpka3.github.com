@@ -60,7 +60,6 @@ keytool -genkeypair -alias mykey1 -keyalg RSA -keysize 1024 -sigalg SHA1withRSA 
 
 1. 通过 TortoiseGit 从 github 上 clone cas 3.5.x 分支。
     URL     - git://github.com/Jasig/cas.git
-    depth   - 1 (不要History？)
     Branch  - 3.5.x (分支列表这个可以在Github上看到)
 
 2. 通过 TortoiseGit 切换到 3.5.1 这个 tag上
@@ -102,3 +101,17 @@ management.services.status.evaluationOrder.notupdated
 2. 自定义CAS服务器的持久化
 3. CAS服务器与QQ、人人、新浪、谷歌等的OpenId联合
 4. CAS服务器的集群
+5. 使用CAS的RemeberMe？且发现RememberMe AccessDenied 之后能够自动重新登录？
+    Spring Security目前尚未实现
+    https://wiki.jasig.org/display/CASUM/Remember+Me
+    https://groups.google.com/forum/#!msg/jasig-cas-user/w9f5LAyHsWA/McpQQOcRUzgJ
+    https://jira.springsource.org/browse/SEC-1986
+7. OAuth?
+
+AuthenticationTrustResolver#isAnonymous()
+使用Properties方式时的调用路径
+  at AuthenticatedVoter#vote()
+  at AffirmativeBased#decide()
+  at MethodInvocationPrivilegeEvaluator#isAllowed() / DefaultWebInvocationPrivilegeEvaluator#isAllowed()
+使用Expression时的调用路径
+  at SecurityExpressionRoot#isAnonymous()
