@@ -5,21 +5,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Test Dojo Data</title>
-<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dijit/themes/claro/claro.css" />
-<script type="text/javascript">
-var dojoConfig = {
-    async:true
-};
-</script>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dojo/dojo.js"></script>
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/dojo/1.7.1/dijit/themes/claro/claro.css" />
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/dojo/1.7.1/dojo/dojo.js"></script>
 <script type="text/javascript">
 require(["dojo/ready",
          "dojo/store/Memory",
          "dijit/form/FilteringSelect",
          "dojo/data/ItemFileReadStore",
          "dijit/form/Button",
-         "dojo/dom"
-         "dojo/json",
+         "dojo/dom",
+         "dojo/store/Observable",
          "dojo/domReady!"
 ], function(
              ready,
@@ -28,7 +23,7 @@ require(["dojo/ready",
              ItemFileReadStore,
              Button,
              dom,
-             json
+             Observable
 ){
     var store = new Memory({
         data: [ {uniqueId: 1, status:"CLOSED"},
@@ -46,30 +41,23 @@ require(["dojo/ready",
         ],
         idProperty : "uniqueId"
     });
+    //store = Observable(store);
 
-/*
-    // Define the comparator function for status.
-    store.comparatorMap = {};
-    store.comparatorMap["status"] = function(a, b){
-        var ret = 0;
-        // We want to map these by what the priority of these items are, not by alphabetical.
-        // So, custom comparator.
-        var enumMap = { OPEN: 3, BLOCKED: 2, PENDING: 1, CLOSED: 0};
-        if(enumMap[a] > enumMap[b]){
-            ret = 1;
-        }
-        if(enumMap[a] < enumMap[b]){
-            ret = -1;
-        }
-        return ret;
-    };*/
+    // define a named query witch is a <code>array.filter(callback[, thisObject])</code>'s callback function
+    // https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Array/filter
+    store.getOdds = function(element, index, array){
+        return element.uniqueId % 2 == 1;
+    }
 
-    function display(items, request){
+
+    function display(items){
         dom.byId("out").innerHTML = "";
         for(var i = 0; i < items.length; i++){
           dom.byId("out").innerHTML += "uniqueId : " + items[i].uniqueId +", status : " + items[i].status + "\r\n";
         }
     }
+
+
     new Button({
         label: "ShowId2",
         onClick: function(){
@@ -77,56 +65,47 @@ require(["dojo/ready",
         }}, "showId2");
 
     new Button({
-        label: "Show",
+        label: "ShowAll",
         onClick: function(){
-            var queryResults = store.query({},{});
-            display();
-        }}, "showBtn");
-/*
-    new Button({
-        label: "Sort by Id",
-        onClick: function(){
-          var sortAttributes = [{ attribute: "uniqueId"}];
-          store.fetch({onComplete: display, sort: sortAttributes});
-        }}, "sortIdBtn");
+            // Memory is synchronous store
+            var queryResults = store.query({},{sort:[{attribute:"uniqueId", descending: false}]});
+            display(queryResults);
+            //queryResults.then(display, function(e){
+            //    console.error(e);
+            //});
+        }}, "showAllBtn");
 
     new Button({
-        label: "Sort by status",
+        label: "Show 5~10",
         onClick: function(){
-          var sortAttributes = [{attribute: "status", descending: true},
-                                { attribute: "uniqueId", descending: true}];
-          store.fetch({onComplete: display, sort: sortAttributes});
-        }}, "sortStatusBtn");
-
-
-    // could not apply complex query equivalent to "<=", ">", "!=" in SQL.
-    new Button({
-        label: "Query",
-        onClick: function(){
-            var sortAttributes = [{ attribute: "uniqueId"}];
-            store.fetch({
-              onComplete: display,
-              sort: sortAttributes,
-              query: { uniqueId: /^1/},
-              queryOptions: { ignoreCase: true },
+            // Memory is synchronous store
+            var queryResults = store.query({},{
+                start : 5,
+                count : 5,
+                sort  : [{attribute:"uniqueId", descending: true}]
             });
-        }}, "queryBtn");
-*/
+            display(queryResults);
+        }}, "show5_10Btn");
+
+    new Button({
+        label: "Named Query: getOdds",
+        onClick: function(){
+            // Memory is synchronous store
+            var queryResults = store.query("getOdds", {
+                sort  : [{attribute:"uniqueId"}]
+            });
+            display(queryResults);
+        }}, "getOddsBtn");
+
 });
 </script>
 </head>
 <body class="claro">
-<!--
-http://livedocs.dojotoolkit.org/dojo/store
-http://livedocs.dojotoolkit.org/dojo/data/api/Read
-http://livedocs.dojotoolkit.org/dojo/data/ItemFileReadStore
- -->
 <div>
   <div id="showId2"></div>
-  <div id="showBtn"></div>
-  <div id="sortIdBtn"></div>
-  <div id="sortStatusBtn"></div>
-  <div id="queryBtn"></div>
+  <div id="showAllBtn"></div>
+  <div id="show5_10Btn"></div>
+  <div id="getOddsBtn"></div>
 </div>
 <textarea id="out" rows="20" cols="100"></textarea>
 </body>

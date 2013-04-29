@@ -1,7 +1,7 @@
 <html>
 <head>
 <title>test dojox.mvc</title>
-<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.8.3/dijit/themes/claro/claro.css" />
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/dojo/1.8.3/dijit/themes/claro/claro.css" />
 
 <script type="text/javascript">
 var dojoConfig = {
@@ -9,12 +9,7 @@ var dojoConfig = {
 };
 </script>
 
-<script type="text/javascript"
-        src="http://ajax.googleapis.com/ajax/libs/dojo/1.8.3/dojo/dojo.js.uncompressed.js" ></script>
-<!--
-<script type="text/javascript"
-        src="http://localhost/dojo-1.7.3-src/dojo/dojo.js" ></script>
- -->
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/dojo/1.8.3/dojo/dojo.js.uncompressed.js" ></script>
 <script type="text/javascript">
 var i=0;
 var src;
@@ -26,7 +21,9 @@ require([
     "dojox/mvc/Group",
     "dojox/mvc/Output",
     "dijit/form/Button",
-    "dojo/dom"
+    "dojo/dom",
+    "dojox/mvc/at",
+    "dojo/domReady!"
 ], function(
     parser,
     ready,
@@ -34,8 +31,9 @@ require([
     Group,
     Output,
     Button,
-    dom){
-  ready(function(){
+    dom,
+    at
+){
     src = {
         "name" : "li2",
         "age"  : "24",
@@ -68,7 +66,6 @@ require([
       onClick: function(){
         li2.name.set("value", dom.byId("helloInput").value);
       }}, "changeNameTxt");
-  });
 });
 </script>
 </head>
