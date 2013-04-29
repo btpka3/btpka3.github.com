@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+  xmlns:sec="http://www.springframework.org/schema/security" xmlns:tx="http://www.springframework.org/schema/tx"
+  xmlns:util="http://www.springframework.org/schema/util"
+  xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd
+                      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                      http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+                      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+                      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+  <context:property-placeholder properties-ref="appCfg"  />
+  <util:properties id="appCfg" location="classpath:config.properties" />
+
+<!-- 完全无状态的服务:
+  - 不需要登录重定向，因此使用 entry-point-ref="http403ForbiddenEntryPoint" 是指如果不能从当前请求中获取到认证信息，则直接返回403错误，而不尝试进行认证。
+  - create-session="stateless" 指明及时当前有session，且session中有认证信息，也完全忽视。
+  -
+  - 由于是无状态服务，所以不需要登录、也不需要退出的filter（requestSingleLogoutFilter、singleLogoutFilter）
+  -->
+<!--
+ -->
+  <sec:http realm="My SEC"
+            use-expressions="true"
+            disable-url-rewriting="true"
+            create-session="stateless"
+            entry-point-ref="http403ForbiddenEntryPoint" >
+    <sec:access-denied-handler error-page="/denied.jsp"/>
+    <sec:intercept-url pattern="/sec.jsp"           access="isAuthenticated()" />
+    <sec:intercept-url pattern="/appointment.jsp"   access="hasAnyRole('XROLE_READ_APPOINTMENT')" />
+    <sec:intercept-url pattern="/staff.jsp"         access="hasAnyRole('XROLE_READ_STAFF')" />
+    <sec:custom-filter position="CAS_FILTER"        ref="casFilter" />
+  </sec:http>
+  <bean id="http403ForbiddenEntryPoint"
+        class="org.springframework.security.web.authentication.Http403ForbiddenEntryPoint"></bean>
+
+  <!-- 默认监视 /j_spring_cas_security_check -->
+  <bean id="casFilter"
+        class="org.springframework.security.cas.web.CasAuthenticationFilter">
+    <property name="authenticationManager"          ref="authenticationManager"/>
+    <property name="proxyGrantingTicketStorage"     ref="pgtStorage"/>
+    <property name="serviceProperties"              ref="serviceProperties"/>
+    <!-- 由于authenticateAllArtifacts=true， 即对所有的URL均进行拦截，所以单独设置这个URL没意义，不需要 -->
+    <!-- <property name="proxyReceptorUrl"               value="/j_spring_cas_security_proxyreceptor"/> -->
+    <property name="authenticationDetailsSource">
+      <bean class="org.springframework.security.cas.web.authentication.ServiceAuthenticationDetailsSource"/>
+    </property>
+  </bean>
+
+  <bean id="casEntryPoint"
+        class="org.springframework.security.cas.web.CasAuthenticationEntryPoint">
+    <!-- CAS服务器登录的URL -->
+    <property name="loginUrl"                       value="${cas.url.login}"/>
+    <property name="serviceProperties"              ref="serviceProperties"/>
+  </bean>
+
+  <bean id="serviceProperties"
+        class="org.springframework.security.cas.ServiceProperties">
+    <!-- 发送给CAS服务器的回调URL -->
+    <property name="service"                        value="${app.url.service}"/>
+    <!-- 告知CAS服务器：本应用是敏感业务，不允许使用其他应用产生的登录状态，必须要求用户重新输入密码 -->
+    <property name="sendRenew"                      value="false"/>
+    <!-- 对所有的URL均进行认证检查 -->
+    <property name="authenticateAllArtifacts"       value="true"/>
+  </bean>
+
+  <sec:authentication-manager alias="authenticationManager">
+    <sec:authentication-provider ref="casAuthenticationProvider" />
+  </sec:authentication-manager>
+
+  <bean id="casAuthenticationProvider"
+        class="org.springframework.security.cas.authentication.CasAuthenticationProvider">
+    <property name="authenticationUserDetailsService">
+      <bean class="org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper">
+        <constructor-arg                            ref="userService" />
+      </bean>
+    </property>
+    <property name="serviceProperties"              ref="serviceProperties" />
+    <!-- 如果该应用不需要再往下调用其他后台服务，可以使用这个
+    <property name="ticketValidator"                ref="cas20ServiceTicketValidator" />
+     -->
+    <property name="ticketValidator"                ref="cas20ProxyTicketValidator" />
+    <property name="key"                            value="first-spring-stateless"/>
+    <!-- 该值有默认值，默认会要求每次都向CAS服务器认证Service Token。
+      - 如果使用Ehchace，可以延长ProxyTicket的使用期限或次数，避免每次都得向CAS服务器验证token有效性，
+      - 但Ehcache应合理设置，否则可能会面临安全风险
+    <property name="statelessTicketCache"           ref="ticketCache" />-->
+
+  </bean>
+
+  <sec:user-service id="userService">
+    <sec:user name="zhang3"   password="zhang3"     authorities="XROLE_READ_APPOINTMENT" />
+    <sec:user name="li4"      password="li4"        authorities="XROLE_READ_STAFF" />
+    <sec:user name="wang5"    password="wang5"      authorities="XROLE_READ_APPOINTMENT, XROLE_READ_STAFF" />
+  </sec:user-service>
+
+  <bean id="cas20ServiceTicketValidator"
+        class="org.jasig.cas.client.validation.Cas20ServiceTicketValidator">
+    <constructor-arg index="0"                      value="${cas.url}" />
+  </bean>
+
+  <bean id="cas20ProxyTicketValidator"
+        class="org.jasig.cas.client.validation.Cas20ProxyTicketValidator">
+    <constructor-arg value="${cas.url}" />
+    <property name="proxyCallbackUrl"               value="${app.url.proxyreceptor}"/>
+    <property name="proxyGrantingTicketStorage"     ref="pgtStorage"/>
+    <property name="acceptAnyProxy"                 value="true"/>
+  </bean>
+  <bean id="pgtStorage"
+        class="org.jasig.cas.client.proxy.ProxyGrantingTicketStorageImpl"/>
+
+  <bean id="ticketCache"
+        class="org.springframework.security.cas.authentication.EhCacheBasedTicketCache">
+    <property name="cache" value="#{ehCacheManager.getEhcache('sampleCache1')}" />
+  </bean>
+  <bean id="ehCacheManager"
+        class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"
+        p:config-location="classpath:ehcache.xml"/>
+
+</beans>
+

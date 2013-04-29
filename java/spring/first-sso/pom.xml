@@ -9,6 +9,7 @@
   <modules>
     <module>first-cas-server</module>
     <module>first-spring-cas</module>
+    <module>first-spring-stateless</module>
   </modules>
 
   <properties>

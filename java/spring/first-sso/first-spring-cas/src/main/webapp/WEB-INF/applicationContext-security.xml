@@ -9,15 +9,21 @@
                       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
                       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
+  <context:property-placeholder properties-ref="appCfg"  />
+  <util:properties id="appCfg" location="classpath:config.properties" />
+
   <sec:http realm="My SEC"
             use-expressions="true"
             disable-url-rewriting="true"
             entry-point-ref="casEntryPoint" >
     <sec:access-denied-handler error-page="/denied.jsp"/>
-    <sec:form-login login-page="/index.jsp"  />
     <sec:logout logout-success-url="/logoutSuccess.jsp" />
-    <sec:intercept-url pattern="/appointment.jsp"   access="hasAnyRole('ROLE_READ_APPOINTMENT')" />
-    <sec:intercept-url pattern="/staff.jsp"         access="hasAnyRole('ROLE_READ_STAFF')" />
+    <sec:intercept-url pattern="/login.jsp"           access="isAuthenticated()" />
+    <sec:intercept-url pattern="/sec.jsp"           access="isAuthenticated()" />
+    <sec:intercept-url pattern="/appointment.jsp"   access="hasAnyRole('XROLE_READ_APPOINTMENT')" />
+    <sec:intercept-url pattern="/staff.jsp"         access="hasAnyRole('XROLE_READ_STAFF')" />
+    <!-- <sec:intercept-url pattern="/testProxy.do"      access="isAuthenticated()" /> -->
+
 
     <sec:custom-filter before="LOGOUT_FILTER"       ref="requestSingleLogoutFilter"  />
     <sec:custom-filter before="CAS_FILTER"          ref="singleLogoutFilter" />
@@ -28,7 +34,7 @@
   <!-- 该Filter会将用户重定向到CAS服务器，并通知CAS服务器进行单点退出操作 -->
   <bean id="requestSingleLogoutFilter"
         class="org.springframework.security.web.authentication.logout.LogoutFilter">
-    <constructor-arg value="http://127.0.0.1:8080/fist-cas-server/logout"/>
+    <constructor-arg value="${cas.url.logout}"/>
     <constructor-arg>
       <bean class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler"/>
     </constructor-arg>
@@ -43,19 +49,21 @@
   <bean id="casFilter"
         class="org.springframework.security.cas.web.CasAuthenticationFilter">
     <property name="authenticationManager"          ref="authenticationManager"/>
+    <property name="proxyGrantingTicketStorage"     ref="pgtStorage"/>
+    <property name="proxyReceptorUrl"               value="/j_spring_cas_security_proxyreceptor"/>
   </bean>
 
   <bean id="casEntryPoint"
         class="org.springframework.security.cas.web.CasAuthenticationEntryPoint">
     <!-- CAS服务器登录的URL -->
-    <property name="loginUrl"                       value="http://127.0.0.1:9443/first-cas-server/login"/>
+    <property name="loginUrl"                       value="${cas.url.login}"/>
     <property name="serviceProperties"              ref="serviceProperties"/>
   </bean>
 
   <bean id="serviceProperties"
         class="org.springframework.security.cas.ServiceProperties">
     <!-- 发送给CAS服务器的回调URL -->
-    <property name="service"                        value="http://localhost:8080/fist-spring-cas/j_spring_cas_security_check"/>
+    <property name="service"                        value="${app.url.service}"/>
     <!-- 告知CAS服务器：本应用是敏感业务，不允许使用其他应用产生的登录状态，必须要求用户重新输入密码 -->
     <property name="sendRenew"                      value="false"/>
   </bean>
@@ -72,17 +80,32 @@
       </bean>
     </property>
     <property name="serviceProperties"              ref="serviceProperties" />
-    <property name="ticketValidator">
-      <bean class="org.jasig.cas.client.validation.Cas20ServiceTicketValidator">
-        <constructor-arg index="0"                  value="http://127.0.0.1:8080/fist-cas-server/proxyValidate" /> <!-- 实际使用时最好使用HTTPS -->
-      </bean>
-    </property>
-    <property name="key"                            value="an_id_for_this_auth_provider_only"/>
+    <!--
+    <property name="ticketValidator"                ref="cas20ServiceTicketValidator" />
+     -->
+    <property name="ticketValidator"                ref="cas20ProxyTicketValidator" />
+    <property name="key"                            value="first-spring-cas"/>
   </bean>
 
   <sec:user-service id="userService">
-    <sec:user name="zhang3"  password="zhang3"      authorities="ROLE_USER" />
+    <sec:user name="zhang3"   password="zhang3"     authorities="XROLE_READ_APPOINTMENT" />
+    <sec:user name="li4"      password="li4"        authorities="XROLE_READ_STAFF" />
+    <sec:user name="wang5"    password="wang5"      authorities="XROLE_READ_APPOINTMENT, XROLE_READ_STAFF" />
   </sec:user-service>
+
+  <bean id="cas20ServiceTicketValidator"
+        class="org.jasig.cas.client.validation.Cas20ServiceTicketValidator">
+    <constructor-arg index="0"                      value="${cas.url}" />
+  </bean>
+
+  <bean id="cas20ProxyTicketValidator"
+        class="org.jasig.cas.client.validation.Cas20ProxyTicketValidator">
+    <constructor-arg                                value="${cas.url}" />
+    <property name="proxyCallbackUrl"               value="${app.url.proxyreceptor}"/>
+    <property name="proxyGrantingTicketStorage"     ref="pgtStorage"/>
+  </bean>
+  <bean id="pgtStorage"
+        class="org.jasig.cas.client.proxy.ProxyGrantingTicketStorageImpl"/>
 
 </beans>
 

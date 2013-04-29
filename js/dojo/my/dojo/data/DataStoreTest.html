@@ -14,14 +14,12 @@ var dojoConfig = {
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dojo/dojo.js"></script>
 <script type="text/javascript">
 require(["dojo/ready",
-         "dojo/store/Memory",
          "dijit/form/FilteringSelect",
          "dojo/data/ItemFileReadStore",
          "dijit/form/Button",
          "dojo/dom"
          ], function(
              ready,
-             Memory,
              FilteringSelect,
              ItemFileReadStore,
              Button,
@@ -83,6 +81,13 @@ require(["dojo/ready",
         }}, "sortIdBtn");
 
     new Button({
+        label: "Sort by Id 8~108",
+        onClick: function(){
+          var sortAttributes = [{ attribute: "uniqueId"}];
+          store.fetch({onComplete: display, sort: sortAttributes, start:8, count:100});
+        }}, "sortIdBtn2_10");
+
+    new Button({
         label: "Sort by status",
         onClick: function(){
           var sortAttributes = [{attribute: "status", descending: true},
@@ -116,6 +121,7 @@ http://livedocs.dojotoolkit.org/dojo/data/ItemFileReadStore
 <div>
   <div id="showBtn"></div>
   <div id="sortIdBtn"></div>
+  <div id="sortIdBtn2_10"></div>
   <div id="sortStatusBtn"></div>
   <div id="queryBtn"></div>
 </div>
