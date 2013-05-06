@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Test Calendar</title>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.8.0/dijit/themes/claro/claro.css" />
+
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.8.0/dojox/calendar/themes/claro/Calendar.css" />
+<style type="text/css">
+.dojoxCalendar{ font-size: 12px; font-family:Myriad,Helvetica,Tahoma,Arial,clean,sans-serif; }
+.claro .dojoxCalendarEvent.Calendar1 .bg {
+  background-color: #00AA00;
+}
+.claro .dojoxCalendarEvent.Calendar1.Hovered .bg {
+  background-color: #00FF00;
+}
+.claro .dojoxCalendarEvent.Calendar1.Selected .bg {
+  background-color: #004400;
+}
+.claro .dojoxCalendarEvent.Calendar2 .bg {
+  background-color: #0000AA;
+}
+.claro .dojoxCalendarEvent.Calendar2.Hovered .bg {
+  background-color: #0000FF;
+}
+.claro .dojoxCalendarEvent.Calendar2.Selected .bg {
+  background-color: #000044;
+}
+</style>
+
+<script type="text/javascript">
+var dojoConfig = {
+    async:true,
+    parseOnLoad: true
+};
+</script>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.8.0/dojo/dojo.js" ></script>
+<script type="text/javascript">
+require( [
+    "dojox/calendar/Calendar",
+    "dojo/store/Memory",
+    "dojo/store/Observable",
+    "dojo/domReady!"
+], function (
+    Calendar,
+    Memory,
+    Observable
+) {
+    var someData = [{
+          id: 0,
+          summary: "牙医1",
+          startTime: new Date(2013, 4, 6, 10, 0),
+          endTime: new Date(2013, 4, 6, 12, 0),
+          calendar: "Calendar1"
+    },{
+        id: 1,
+        summary: "牙医2 2 2 2 2 2 2 2 2 <a href='baidu.com'>2 2 2 2 2 2 2 2</a> ",
+        startTime: new Date(2013, 4, 6, 11, 0),
+        endTime: new Date(2013, 4, 6, 13, 0),
+        calendar: "Calendar2"
+  },{
+      id: 2,
+      summary: "牙医3",
+      startTime: new Date(2013, 4, 6, 11, 10),
+      endTime: new Date(2013, 4, 6, 13, 10),
+      calendar: "Calendar2"
+},{
+    id: 3,
+    summary: "牙医4",
+    startTime: new Date(2013, 4, 6, 11, 20),
+    endTime: new Date(2013, 4, 6, 13, 20),
+    calendar: "Calendar2"
+},{
+    id: 4,
+    summary: "牙医5",
+    startTime: new Date(2013, 4, 6, 11, 30),
+    endTime: new Date(2013, 4, 6, 13, 30),
+    calendar: "Calendar2"
+},{
+    id: 5,
+    summary: "牙医66666 666 66 6666 666666 6666666666 6666 666666",
+    startTime: new Date(2013, 4, 6, 11, 30),
+    endTime: new Date(2013, 4, 6, 13, 30),
+    calendar: "Calendar2"
+},{
+    id: 6,
+    summary: "牙医7",
+    startTime: new Date(2013, 4, 6, 11, 30),
+    endTime: new Date(2013, 4, 6, 13, 30),
+    calendar: "Calendar2"
+}];
+
+    var calendar =   new Calendar({
+        //datePackage : "dojox.date.hebrew",
+        date: new Date(2013, 4, 6),
+        //startDate: new Date(2013, 3, 1),
+        //endDate: new Date(2013, 4, 31),
+        //startTimeAttr: "begin",
+        //endTimeAttr: "end",
+        store: new Observable(new Memory({data: someData})),
+        dateInterval: "day",
+        //dateInterval: "week",
+        //dateIntervalSteps:2,
+        style: "position:relative;width:800px;height:600px",
+        cssClassFunc: function(item){
+            return item.calendar;
+        },
+        columnViewProps :{
+            minHours : 5,
+            maxHours : 23,
+            hourSize : 200,
+            timeSlotDuration  : 10
+        },
+        matrixViewProps :{
+        },
+        postCreate:function(){
+            //this.inherited(arguments); FIXME
+            this.get("dayButton").destroy();
+        }
+     }, "c");
+
+    var childs =  calendar.getChildren();
+    for(var i =0;i<childs.length; i++){
+        console.log(" i = "+i, childs[i]);
+    }
+    calendar.get("dayButton").destroy();
+
+
+    //calendar.get("dayButton").destroy();
+    //calendar.get("fourDaysButton").destroy();
+
+    calendar.on("itemClick", function(e){
+        console.log("Item clicked", e );
+    });
+    calendar.on("gridClick", function(e){
+        console.log("grid clicked", e );
+    });
+});
+</script>
+</head>
+<body class="claro">
+  <div id="c"></div>
+</body>
+</html>
