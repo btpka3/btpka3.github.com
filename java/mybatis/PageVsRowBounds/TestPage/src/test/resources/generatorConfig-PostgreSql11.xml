@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+    PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+    "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+  <classPathEntry
+    location="target/dependency/postgresql-9.1-901.jdbc4.jar" />
+
+  <context id="DB2Tables" targetRuntime="MyBatis3">
+    <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+    <plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin" />
+
+    <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"/>
+    <plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin">
+      <property name="searchString"   value="Example$" />
+      <property name="replaceString"  value="Criteria" />
+    </plugin>
+
+    <plugin type="com.tc.his.provider.dao.plugin.RenameJavaClientPlugin">
+      <property name="searchString" value="Mapper$" />
+      <property name="replaceString" value="Dao" />
+    </plugin>
+
+    <plugin type="com.tc.his.provider.dao.plugin.RenameXmlFilePlugin">
+      <property name="searchString" value="Mapper\.xml$" />
+      <property name="replaceString" value="Dao\.xml" />
+    </plugin>
+
+
+    <!-- 去除自动生成的注释 -->
+    <commentGenerator>
+      <property name="suppressAllComments" value="true" />
+      <property name="suppressDate" value="true" />
+    </commentGenerator>
+    <jdbcConnection driverClass="org.postgresql.Driver"
+                    connectionURL="jdbc:postgresql://10.1.10.105:1949/his_cxfy"
+                    userId="develop"
+                    password="his_develop">
+    </jdbcConnection>
+
+    <javaTypeResolver>
+      <property name="forceBigDecimals" value="false" />
+    </javaTypeResolver>
+
+    <!-- generate Model -->
+    <javaModelGenerator targetPackage="com.tc.his.api.model"
+      targetProject="src/main/java">
+      <property name="enableSubPackages" value="true" />
+      <property name="trimStrings" value="true" />
+      <property name="constructorBased" value="true" />
+    </javaModelGenerator>
+
+    <!-- generate xml -->
+    <sqlMapGenerator targetPackage="."
+                     targetProject="src/main/resources/ibatis">
+      <property name="enableSubPackages" value="true" />
+    </sqlMapGenerator>
+
+    <!-- generate Mapper -->
+    <javaClientGenerator type="XMLMAPPER"
+                         targetPackage="com.tc.his.provider.dao"
+                         targetProject="src/main/java">
+      <property name="enableSubPackages" value="true" />
+    </javaClientGenerator>
+
+    <table schema="" tableName="t_office_ca" domainObjectName="OfficeCa">
+      <generatedKey column="oca_id"
+        sqlStatement="SELECT currval('t_office_ca_oca_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_change_card_his"
+           domainObjectName="ChangeCardHis">
+      <generatedKey column="change_id"
+        sqlStatement="SELECT currval('t_change_card_his_change_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_child_dispense"
+      domainObjectName="ChildDispense">
+      <generatedKey column="dispense_child_id"
+        sqlStatement="SELECT currval('t_child_dispense_dispense_child_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_charge_compose"
+      domainObjectName="ChargeCompose">
+      <generatedKey column="charge_compose_id"
+        sqlStatement="SELECT currval('t_charge_compose_charge_compose_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_role" domainObjectName="Role">
+      <generatedKey column="role_id"
+        sqlStatement="SELECT currval('t_role_role_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_user_group" domainObjectName="UserGroup">
+      <generatedKey column="ug_id"
+        sqlStatement="SELECT currval('t_user_group_ug_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_privilege" domainObjectName="Privilege">
+      <generatedKey column="pri_id"
+        sqlStatement="SELECT currval('t_privilege_pri_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_rp_relation" domainObjectName="RpRelation">
+      <generatedKey column="rp_id"
+        sqlStatement="SELECT currval('t_rp_relation_rp_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_ugr_relation" domainObjectName="UgrRelation">
+      <generatedKey column="ugr_id"
+        sqlStatement="SELECT currval('t_ugr_relation_ugr_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_ugu_relation" domainObjectName="UguRelation">
+      <generatedKey column="ugu_id"
+        sqlStatement="SELECT currval('t_ugu_relation_ugu_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_up_relation" domainObjectName="UpRelation">
+      <generatedKey column="up_id"
+        sqlStatement="SELECT currval('t_up_relation_up_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_ur_relation" domainObjectName="UrRelation">
+      <generatedKey column="ur_id"
+        sqlStatement="SELECT currval('t_ur_relation_ur_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_disease" domainObjectName="Disease">
+      <generatedKey column="disease_id"
+        sqlStatement="SELECT currval('t_disease_disease_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_recipe" domainObjectName="Recipe">
+      <generatedKey column="recipe_id"
+        sqlStatement="SELECT currval('t_recipe_recipe_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_dict" domainObjectName="Dict">
+      <generatedKey column="dict_id"
+        sqlStatement="SELECT currval('t_dict_dict_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_reception" domainObjectName="Reception">
+      <generatedKey column="reception_id"
+        sqlStatement="SELECT currval('t_reception_reception_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_child_recipe" domainObjectName="ChildRecipe">
+      <generatedKey column="recipe_child_id"
+        sqlStatement="SELECT currval('t_child_recipe_recipe_child_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_msg_send_list" domainObjectName="MsgSendList">
+      <generatedKey column="msg_list_id"
+        sqlStatement="SELECT currval('t_msg_send_list_msg_list_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_msg_unsend_list"
+      domainObjectName="MsgUnsendList">
+      <generatedKey column="msg_list_id"
+        sqlStatement="SELECT currval('t_msg_unsend_list_msg_list_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_visit_queue" domainObjectName="VisitQueue">
+      <generatedKey column="queue_id"
+        sqlStatement="SELECT currval('t_visit_queue_queue_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_storage_log" domainObjectName="StorageLog">
+      <generatedKey column="storage_log_id"
+        sqlStatement="SELECT currval('t_storage_log_storage_log_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_register" domainObjectName="Register">
+      <generatedKey column="register_id"
+        sqlStatement="SELECT currval('t_register_register_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_radiate" domainObjectName="Radiate">
+      <generatedKey column="radiate_id"
+        sqlStatement="SELECT currval('t_radiate_radiate_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_child_radiate" domainObjectName="ChildRadiate">
+      <generatedKey column="radiate_child_id"
+        sqlStatement="SELECT currval('t_child_radiate_radiate_child_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_charge_item" domainObjectName="ChargeItem">
+      <generatedKey column="charge_item_id"
+        sqlStatement="SELECT currval('t_charge_item_charge_item_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_charge_template_child"
+      domainObjectName="ChargeTemplateChild">
+      <generatedKey column="charge_template_child_id"
+        sqlStatement="SELECT currval('t_charge_template_child_charge_template_child_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_child_register"
+      domainObjectName="ChildRegister">
+      <generatedKey column="child_register_id"
+        sqlStatement="SELECT currval('t_child_register_child_register_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_charge_type" domainObjectName="ChargeType">
+      <generatedKey column="charge_type_id"
+        sqlStatement="SELECT currval('t_charge_type_charge_type_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_child_storage" domainObjectName="ChildStorage">
+      <generatedKey column="storage_child_id"
+        sqlStatement="SELECT currval('t_child_storage_storage_child_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_child_storage_check"
+      domainObjectName="ChildStorageCheck">
+      <generatedKey column="storage_check_child_id"
+        sqlStatement="SELECT currval('t_child_storage_check_storage_check_child_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_child_storage_in"
+      domainObjectName="ChildStorageIn">
+      <generatedKey column="storage_in_child_id"
+        sqlStatement="SELECT currval('t_child_storage_in_storage_in_child_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_bill_receive" domainObjectName="BillReceive">
+      <generatedKey column="bill_receive_id"
+        sqlStatement="SELECT currval('t_bill_receive_bill_receive_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_bill_usage" domainObjectName="BillUsage">
+      <generatedKey column="bill_usage_id"
+        sqlStatement="SELECT currval('t_bill_usage_bill_usage_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_charge_template"
+      domainObjectName="ChargeTemplate">
+      <generatedKey column="charge_template_id"
+        sqlStatement="SELECT currval('t_charge_template_charge_template_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_dispense" domainObjectName="Dispense">
+      <generatedKey column="dispense_id"
+        sqlStatement="SELECT currval('t_dispense_dispense_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_child_storage_loss"
+      domainObjectName="ChildStorageLoss">
+      <generatedKey column="loss_child_id"
+        sqlStatement="SELECT currval('t_child_storage_loss_loss_child_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_treatment" domainObjectName="Treatment">
+      <generatedKey column="treatment_id"
+        sqlStatement="SELECT currval('t_treatment_treatment_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_child_treatment"
+      domainObjectName="ChildTreatment">
+      <generatedKey column="treatment_child_id"
+        sqlStatement="SELECT currval('t_child_treatment_treatment_child_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_internal_user" domainObjectName="InternalUser">
+      <generatedKey column="user_id"
+        sqlStatement="SELECT currval('t_internal_user_user_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_msg_template" domainObjectName="MsgTemplate">
+      <generatedKey column="msg_template_id"
+        sqlStatement="SELECT currval('t_msg_template_msg_template_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_clinic_area" domainObjectName="ClinicArea">
+      <generatedKey column="ca_id"
+        sqlStatement="SELECT currval('t_clinic_area_ca_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_lead_no" domainObjectName="LeadNo">
+      <generatedKey column="lead_id"
+        sqlStatement="SELECT currval('t_lead_no_lead_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_lead_data" domainObjectName="LeadData">
+      <generatedKey column="lead_data_id"
+        sqlStatement="SELECT currval('t_lead_data_lead_data_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_medicinal_unit"
+      domainObjectName="MedicinalUnit">
+      <generatedKey column="unit_id"
+        sqlStatement="SELECT currval('t_medicinal_unit_unit_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_dosage_form" domainObjectName="DosageForm">
+      <generatedKey column="dosage_form_id"
+        sqlStatement="SELECT currval('t_dosage_form_dosage_form_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_pharmacology" domainObjectName="Pharmacology">
+      <generatedKey column="pharmacology_id"
+        sqlStatement="SELECT currval('t_pharmacology_pharmacology_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_medicinal_area"
+      domainObjectName="MedicinalArea">
+      <generatedKey column="area_id"
+        sqlStatement="SELECT currval('t_medicinal_area_area_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_hospital" domainObjectName="Hospital">
+      <generatedKey column="hospital_id"
+        sqlStatement="SELECT currval('t_hospital_hospital_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_office" domainObjectName="Office">
+      <generatedKey column="office_id"
+        sqlStatement="SELECT currval('t_office_office_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_charge" domainObjectName="Charge">
+      <generatedKey column="charge_id"
+        sqlStatement="SELECT currval('t_charge_charge_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_pay_type_compose"
+      domainObjectName="PayTypeCompose">
+      <generatedKey column="charge_compose_id"
+        sqlStatement="SELECT currval('t_pay_type_compose_charge_compose_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_warehouse" domainObjectName="Warehouse">
+      <generatedKey column="warehouse_id"
+        sqlStatement="SELECT currval('t_warehouse_warehouse_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_storage_loss" domainObjectName="StorageLoss">
+      <generatedKey column="loss_id"
+        sqlStatement="SELECT currval('t_storage_loss_loss_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_patient" domainObjectName="Patient">
+      <generatedKey column="patient_id"
+        sqlStatement="SELECT currval('t_patient_patient_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_appointment" domainObjectName="Appointment">
+      <generatedKey column="appointment_id"
+        sqlStatement="SELECT currval('t_appointment_appointment_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_offic_user" domainObjectName="OfficeUser">
+      <generatedKey column="ou_id"
+        sqlStatement="SELECT currval('t_offic_user_ou_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_outpatient_log"
+      domainObjectName="OutpatientLog">
+      <generatedKey column="outpatient_log_id"
+        sqlStatement="SELECT currval('t_outpatient_log_outpatient_log_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_medicine" domainObjectName="Medicine">
+      <generatedKey column="medicine_id"
+        sqlStatement="SELECT currval('t_medicine_medicine_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_storage" domainObjectName="Storage">
+      <generatedKey column="storage_id"
+        sqlStatement="SELECT currval('t_storage_storage_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_supplier" domainObjectName="Supplier">
+      <generatedKey column="supplier_id"
+        sqlStatement="SELECT currval('t_supplier_supplier_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_storage_in" domainObjectName="StorageIn">
+      <generatedKey column="storage_in_id"
+        sqlStatement="SELECT currval('t_storage_in_storage_in_id_seq'::regclass);"
+        identity="true" />
+    </table>
+
+    <table schema="" tableName="t_storage_check" domainObjectName="StorageCheck">
+      <generatedKey column="storage_check_id"
+        sqlStatement="SELECT currval('t_storage_check_storage_check_id_seq'::regclass);"
+        identity="true" />
+    </table>
+  </context>
+</generatorConfiguration>
