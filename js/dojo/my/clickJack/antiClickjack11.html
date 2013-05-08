@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Test antiClickjack1</title>
+
+<style >body{background-color: green;}</style>
+<style id="antiClickjack">body{display:none !important;}</style>
+
+<script type="text/javascript">
+var dojoConfig = {
+  async:true,
+  packages: [{name: "my", location: "/js/dojo/my"}]
+};
+</script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.8.0/dojo/dojo.js.uncompressed.js" ></script>
+<script type="text/javascript" >
+require([
+  "my/clickjack/antiClickjack"
+], function(antiClickjack){
+    antiClickjack();
+});
+</script>
+
+
+</head>
+<body >
+22222222222222222222222222 With dojo
+</body>
+</html>
