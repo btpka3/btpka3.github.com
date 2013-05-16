@@ -1,0 +1,216 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>me.test</groupId>
+  <artifactId>first-exec-war</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>war</packaging>
+
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <jetty.version>9.0.3.v20130506</jetty.version>
+    <slf4j.version>1.6.6</slf4j.version>
+  </properties>
+
+
+
+  <dependencies>
+
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>3.0.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jcl-over-slf4j</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>log4j-over-slf4j</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-core</artifactId>
+      <version>1.0.6</version>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>1.0.6</version>
+    </dependency>
+
+    <dependency>
+      <groupId>joda-time</groupId>
+      <artifactId>joda-time</artifactId>
+      <version>2.2</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-webapp</artifactId>
+      <version>${jetty.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-jsp</artifactId>
+      <version>${jetty.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-annotations</artifactId>
+      <version>9.0.3.v20130506</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-start</artifactId>
+      <version>9.0.3.v20130506</version>
+    </dependency>
+  </dependencies>
+
+
+  <build>
+    <plugins>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.5.1</version>
+        <configuration>
+          <source>1.7</source>
+          <target>1.7</target>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>1.8</version>
+
+        <configuration>
+          <sources>
+            <source>src/execWar/java</source>
+          </sources>
+        </configuration>
+
+        <executions>
+          <execution>
+            <id>add-source</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>add-source</goal>
+            </goals>
+          </execution>
+        </executions>
+
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.7</version>
+        <executions>
+          <execution>
+            <id>main-class-placement</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target>
+                <move todir="${project.build.directory}/${project.build.finalName}/">
+                  <fileset dir="${project.build.directory}/classes/">
+                    <include name="Main.class" />
+                  </fileset>
+                </move>
+              </target>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>2.7</version>
+        <executions>
+          <execution>
+            <id>jetty-classpath</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>unpack-dependencies</goal>
+            </goals>
+            <configuration>
+              <includeGroupIds>
+                org.eclipse.jetty,
+                org.eclipse.jetty.orbit
+              </includeGroupIds>
+              <excludes>
+                META-INF/eclipse.inf,
+                META-INF/ECLIPSEF.RSA,
+                META-INF/ECLIPSEF.SF,
+                META-INF/ECLIPSE_.RSA,
+                META-INF/ECLIPSE_.SF,
+                META-INF/MANIFEST.MF,
+                META-INF/maven/**,
+                about_files/**,
+                about.html,
+                plugin.properties,
+                readme.txt
+              </excludes>
+              <outputDirectory>${project.build.directory}/${project.build.finalName}</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>2.3</version>
+        <configuration>
+          <archiveClasses>true</archiveClasses>
+          <packagingExcludes>
+            WEB-INF/classes/Main.class,
+            WEB-INF/lib/com.sun.el-2.2.0.v201303151357.jar,
+            WEB-INF/lib/javax.el-2.2.0.v201303151357.jar,
+            <!--
+            WEB-INF/lib/javax.servlet.jsp.jstl-1.2.0.v201105211821.jar,
+            WEB-INF/lib/javax.servlet.jsp-2.2.0.v201112011158.jar,
+             -->
+            WEB-INF/lib/javax.servlet-3.0.0.v201112011016.jar,
+            WEB-INF/lib/jetty-jsp-${jetty.version}.jar,
+            WEB-INF/lib/jetty-http-${jetty.version}.jar,
+            WEB-INF/lib/jetty-io-${jetty.version}.jar,
+            WEB-INF/lib/jetty-security-${jetty.version}.jar,
+            WEB-INF/lib/jetty-server-${jetty.version}.jar,
+            WEB-INF/lib/jetty-servlet-${jetty.version}.jar,
+            WEB-INF/lib/jetty-util-${jetty.version}.jar,
+            WEB-INF/lib/jetty-webapp-${jetty.version}.jar,
+            WEB-INF/lib/jetty-xml-${jetty.version}.jar,
+            WEB-INF/lib/org.apache.jasper.glassfish-2.2.2.v201112011158.jar,
+            WEB-INF/lib/org.apache.taglibs.standard.glassfish-1.2.0.v201112081803.jar,
+            WEB-INF/lib/org.eclipse.jdt.core-3.8.2.v20130121.jar
+          </packagingExcludes>
+          <archive>
+            <manifest>
+              <mainClass>Main</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
