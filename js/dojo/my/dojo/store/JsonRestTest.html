@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Test Dojo Data</title>
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/dojo/1.8.3/dijit/themes/claro/claro.css" />
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/dojo/1.8.3/dojo/dojo.js"></script>
+<script type="text/javascript">
+require(["dojo/ready",
+         "dojo/store/JsonRest",
+         "dijit/form/FilteringSelect",
+         "dojo/data/ItemFileReadStore",
+         "dijit/form/Button",
+         "dojo/dom",
+         "dojo/store/Observable",
+         "dojo/domReady!"
+], function(
+             ready,
+             JsonRest,
+             FilteringSelect,
+             ItemFileReadStore,
+             Button,
+             dom,
+             Observable
+){
+    var store = new JsonRest({
+        target: "/some/resource/",
+        sortParam : "sortBy"
+    });
+    //store = Observable(store);
+    store.get(11);
+
+    // Query for objects with options
+    store.query({foo:"bar", name:["a","b"]}, {
+      //start: 10,
+      count: 10,
+      sort: [
+        { attribute: "baz", descending: true }
+      ]
+    }).then(function(results){
+      console.log("query back : ", results)
+    });
+
+});
+</script>
+</head>
+<body class="claro">
+<div>
+  <div id="showId2"></div>
+  <div id="showAllBtn"></div>
+  <div id="show5_10Btn"></div>
+  <div id="getOddsBtn"></div>
+</div>
+<textarea id="out" rows="20" cols="100"></textarea>
+</body>
+</html>

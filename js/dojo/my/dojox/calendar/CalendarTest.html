@@ -89,6 +89,24 @@ require( [
     startTime: new Date(2013, 4, 6, 11, 30),
     endTime: new Date(2013, 4, 6, 13, 30),
     calendar: "Calendar2"
+},{
+    id: 7,
+    summary: "牙医8",
+    startTime: new Date(2013, 4, 6, 11, 30),
+    endTime: new Date(2013, 4, 6, 13, 30),
+    calendar: "Calendar2"
+},{
+    id: 8,
+    summary: "牙医7",
+    startTime: new Date(2013, 4, 6, 11, 30),
+    endTime: new Date(2013, 4, 6, 13, 30),
+    calendar: "Calendar2"
+},{
+    id: 9,
+    summary: "牙医8",
+    startTime: new Date(2013, 4, 6, 11, 30),
+    endTime: new Date(2013, 4, 6, 13, 30),
+    calendar: "Calendar2"
 }];
 
     var calendar =   new Calendar({
@@ -98,19 +116,20 @@ require( [
         //endDate: new Date(2013, 4, 31),
         //startTimeAttr: "begin",
         //endTimeAttr: "end",
+        editable : false,
         store: new Observable(new Memory({data: someData})),
         dateInterval: "day",
         //dateInterval: "week",
         //dateIntervalSteps:2,
-        style: "position:relative;width:800px;height:600px",
+        style: "position:relative;width:800px;height:900px",
         cssClassFunc: function(item){
             return item.calendar;
         },
         columnViewProps :{
-            minHours : 5,
-            maxHours : 23,
-            hourSize : 200,
-            timeSlotDuration  : 10
+            minHours : 9,
+            maxHours : 22,
+            hourSize : 60,
+            timeSlotDuration  : 15
         },
         matrixViewProps :{
         },
@@ -118,12 +137,12 @@ require( [
             this.inherited("postCreate", arguments);
 
             var toolbar =  this.get("toolbar");
-            toolbar.removeChild(4); // second dijit.ToolbarSeparator
-            toolbar.removeChild(4); // dayButton
-            toolbar.removeChild(4); // fourDaysButton
+            //toolbar.removeChild(4); // second dijit.ToolbarSeparator
+            //toolbar.removeChild(4); // dayButton
+            //toolbar.removeChild(6); // fourDaysButton
 
             //this.get("dayButton").destroy();
-            //this.get("fourDaysButton").destroy();
+            this.get("fourDaysButton").destroy();
         }
      }, "c");
 
@@ -133,9 +152,17 @@ require( [
     calendar.on("itemClick", function(e){
         console.log("Item clicked", e );
     });
+    calendar.on("itemDoubleClick", function(e){
+        console.log("Item double clicked", e );
+    });
     calendar.on("gridClick", function(e){
         console.log("grid clicked", e );
     });
+    calendar.on("gridDoubleClick", function(e){
+        console.log("grid double clicked", e );
+    });
+
+
 });
 </script>
 </head>

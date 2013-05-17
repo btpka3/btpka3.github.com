@@ -1,47 +1,48 @@
 package me.test.first.spring.rs.exception;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.http.HttpStatus;
 
 public class BusinessException extends RuntimeException {
-	private static final long serialVersionUID = 1L;
-	private HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
-	private List<String> messages = new ArrayList<String>();
+    private static final long serialVersionUID = 1L;
+    private HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
 
-	public BusinessException() {
-		super();
-	}
+    public BusinessException() {
+        super();
+    }
 
-	public BusinessException(String message, Throwable cause) {
-		super(message, cause);
-		messages.add(message);
-	}
+    public BusinessException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-	public BusinessException(String message) {
-		super(message);
-		messages.add(message);
-	}
+    public BusinessException(String message) {
+        super(message);
+    }
 
-	public BusinessException(Throwable cause) {
-		super(cause);
-	}
+    public BusinessException(Throwable cause) {
+        super(cause);
+    }
 
-	public HttpStatus getHttpStatus() {
-		return httpStatus;
-	}
+    public BusinessException(HttpStatus httpStatus) {
+        super();
+        this.httpStatus = httpStatus;
+    }
 
-	public void setHttpStatus(HttpStatus httpStatus) {
-		this.httpStatus = httpStatus;
-	}
+    public BusinessException(HttpStatus httpStatus, String message, Throwable cause) {
+        super(message, cause);
+        this.httpStatus = httpStatus;
+    }
 
-	public List<String> getMessages() {
-		return messages;
-	}
+    public BusinessException(HttpStatus httpStatus, String message) {
+        super(message);
+        this.httpStatus = httpStatus;
+    }
 
-	public void setMessages(List<String> messages) {
-		this.messages = messages;
-	}
+    public BusinessException(HttpStatus httpStatus, Throwable cause) {
+        super(cause);
+        this.httpStatus = httpStatus;
+    }
 
+    public HttpStatus getHttpStatus() {
+        return httpStatus;
+    }
 }
