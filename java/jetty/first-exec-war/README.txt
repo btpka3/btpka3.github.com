@@ -7,7 +7,8 @@
 5. 使用EL表达式
 6. 使用JSTL
 
-
+TODO:
+1. add 404 filter for the file copied for jetty jars and placed at filesfirst-exec-war-0.0.1-SNAPSHOT.war.jar root 
 
 
 
