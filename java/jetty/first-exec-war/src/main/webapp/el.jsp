@@ -8,10 +8,12 @@
 <title>Expression Language Test</title>
 </head>
 <body>
+<%--
 <div>session.id = ${session}</div>
 <div>session.id = ${session.id}</div>
 <div>session.id = ${request}</div>
 <div>request.requestURI = ${request.requestURI}</div>
+ --%>
 <div>param.user = ${param.user}</div>
 </body>
 </html>

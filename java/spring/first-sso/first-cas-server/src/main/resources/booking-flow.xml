@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+
+flow 相当于在requst和session之间的一种定义。它可以存在于多个request，但生命周期又短于session。
+
+起始state默认是按照文档定义顺序中的第一个。
+
+flow是有状态的。
+一个Flow的URL会代表Spring MVC 中所有的URL和View，靠服务器端保存相应的状态，不能bookmark。
+
+flow定义中各个元素的顺序是有先后关系的。但是 <*-state> 可以任意顺序
+  FIXME: 可不可以单个session同时进行多个相同flow？
+  FIXME: 浏览器中F5刷新，back会如何？
+-->
+<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/webflow
+        http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+
+  <!-- -->
+  <attribute name=""></attribute>
+
+  <!-- FIXME: 需要么？能否使用Spring Security的Expression？ -->
+  <secured attributes="" />
+
+  <!-- 是否增加复杂度，影响数据库设计？不应当使用？ -->
+  <persistence-context></persistence-context>
+
+  <!-- flowScope作用域内的变量，当flow开始时创建，当flow结束时销毁 -->
+  <var name="" class="" />
+
+  <!-- 在flowScope内注册一个输入值
+  FIXME :  来自于何处？使用EL？
+  -->
+  <input name="" value="" required="true"  type="" />
+
+  <on-start>
+    <!-- 将指定值保存到指定的地方，一般name属性都是 "xxxScope.propName"的格式 -->
+    <set name="" value="" type="" />
+    <!-- 执行一段代码并将结果保存到指定的地方 -->
+    <evaluate expression="springBeanId.method(xxProp, xxScope, ...)" result="" result-type="" />
+    <!-- 告诉下个view在渲染时，将指定的片段展示出来
+    FIXME: Should never use？ 感觉太牵涉到View的实现了吧？
+    应该可以通过相应的属性作为指示。
+    -->
+    <render fragments=""></render>
+  </on-start>
+
+  <action-state id="xx"></action-state>
+
+  <!--
+向浏览器渲染一个View，并将flow暂停，之后由用户在画面上出发相应的事件（确认、取消等）提交到服务器端继续执行flow
+  model 属性是在任意scope中的属性值。
+  当从该view 提交表单时，将以model属性的值为key从scope，找到model对象，并将表单数据将绑定、验证。
+  FIXME: model何时创建？什么类型？
+   -->
+  <view-state id="start" model="modelName">
+
+    <attribute name=""></attribute> <!-- 貌似无用 -->
+
+    <secured attributes="" /> <!-- FIXME：能否使用Spring Security 的 Expression？ -->
+    <var name="" class="" /> <!-- 定义viewscope的变量， FIXME：什么场景下需要用到？ -->
+
+    <!-- 明确指定要绑定哪些属性，应当不常用。 -->
+    <binder>
+      <binding property="" converter="" required="true" />
+    </binder>
+
+    <!-- 当进入该state时执行 -->
+    <on-entry>
+      <evaluate expression="" result=""></evaluate>
+    </on-entry>
+
+    <!-- 在view被渲染前立即执行，一般是该view要展示的画面内容，而不含业务控制逻辑 -->
+    <on-render>
+      <evaluate expression=""></evaluate>
+    </on-render>
+
+    <!-- 在这里，渲染后的view会被发送给浏览器端，等待用户下一个操作 -->
+
+
+    <transition on="confirm" to="" history="preserve" on-exception="" validate="true" bind="true">
+      <evaluate expression=""></evaluate>
+    </transition>
+
+    <!-- 当执行transition后离开该state时执行 -->
+    <on-exit>
+      <set name="" value=""></set>
+    </on-exit>
+
+    <exception-handler bean="" />
+  </view-state>
+
+  <!-- 貌似木用，可以全部写到aciont的代码逻辑中 -->
+  <decision-state id="xs">
+    <if test="" then="" else="" />
+  </decision-state>
+
+  <subflow-state id="sf"></subflow-state>
+
+  <end-state id="e" commit="" view="">
+    <output name="" value="" />
+  </end-state>
+
+  <global-transitions>
+    <transition></transition>
+  </global-transitions>
+
+  <on-end>
+    <evaluate expression=""></evaluate>
+    <render fragments=""></render>
+    <set name="" value=""></set>
+  </on-end>
+
+  <!-- 设置一个Flow的输出值。 FIXME：输出值都保存到哪里去了？ -->
+  <output name="" value="" required="true" type="" />
+
+  <exception-handler bean="" />
+
+  <bean-import resource="" />
+
+
+</flow>

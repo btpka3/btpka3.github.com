@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/webflow
+        http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+
+  <var name="" class="" />
+
+  <input name="" value="" required="true" type="" />
+
+  <on-start>
+    <set name="" value="" type="" />
+    <evaluate expression="springBeanId.method(xxProp, xxScope, ...)" result="" result-type="" />
+  </on-start>
+
+  <action-state id="xx"></action-state>
+
+  <view-state id="start" model="modelName">
+
+    <secured attributes="" /> <!-- FIXME：能否使用Spring Security 的 Expression？ -->
+    <var name="" class="" /> <!-- 定义viewscope的变量， FIXME：什么场景下需要用到？ -->
+
+    <on-entry>
+      <evaluate expression="" result=""></evaluate>
+    </on-entry>
+
+    <on-render>
+      <evaluate expression=""></evaluate>
+    </on-render>
+
+    <transition on="confirm" to="" history="preserve" on-exception="" validate="true" bind="true">
+      <evaluate expression=""></evaluate>
+    </transition>
+
+    <on-exit>
+      <set name="" value=""></set>
+    </on-exit>
+
+    <exception-handler bean="" />
+  </view-state>
+
+  <subflow-state id="sf"></subflow-state>
+
+  <end-state id="e" commit="" view="">
+    <output name="" value="" />
+  </end-state>
+
+  <global-transitions>
+    <transition></transition>
+  </global-transitions>
+
+  <on-end>
+    <evaluate expression=""></evaluate>
+    <render fragments=""></render>
+    <set name="" value=""></set>
+
+  </on-end>
+
+  <output name="" value="" required="true" type="" />
+
+  <exception-handler bean="" />
+
+</flow>
