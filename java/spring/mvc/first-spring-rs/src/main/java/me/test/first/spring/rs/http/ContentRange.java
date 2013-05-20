@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 
 import org.springframework.util.Assert;
 
+// for http response header
 public class ContentRange implements Serializable {
 
     private static final long serialVersionUID = 1L;

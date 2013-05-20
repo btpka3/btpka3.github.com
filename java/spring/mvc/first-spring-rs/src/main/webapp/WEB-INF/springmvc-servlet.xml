@@ -224,4 +224,9 @@
   </aop:config>
 
 
+ <bean id="multipartResolver"
+       class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    <property name="maxUploadSize" value="100000"/>
+  </bean>
+
 </beans>
