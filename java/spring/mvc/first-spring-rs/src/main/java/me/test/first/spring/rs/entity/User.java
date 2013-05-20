@@ -10,11 +10,8 @@ public class User implements Serializable {
     private String name = null;
     private Boolean gender = null;
     private Date birthday = null;
-    private String idCardNo = null;
-    private String email = null;
     private Integer height = null;
     private byte[] avatar = null;
-    private Long version = null;
 
     public Long getId() {
         return id;
@@ -48,22 +45,6 @@ public class User implements Serializable {
         this.birthday = birthday;
     }
 
-    public String getIdCardNo() {
-        return idCardNo;
-    }
-
-    public void setIdCardNo(String idCardNo) {
-        this.idCardNo = idCardNo;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public Integer getHeight() {
         return height;
     }
@@ -80,11 +61,4 @@ public class User implements Serializable {
         this.avatar = avatar;
     }
 
-    public Long getVersion() {
-        return version;
-    }
-
-    public void setVersion(Long version) {
-        this.version = version;
-    }
 }

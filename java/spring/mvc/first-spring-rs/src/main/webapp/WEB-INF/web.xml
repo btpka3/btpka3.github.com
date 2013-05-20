@@ -14,6 +14,15 @@
 
   <display-name>first-spring-rs</display-name>
 
+  <filter>
+    <filter-name>etagFilter</filter-name>
+    <filter-class>org.springframework.web.filter.ShallowEtagHeaderFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>etagFilter</filter-name>
+    <servlet-name>springmvc</servlet-name>
+  </filter-mapping>
+
   <servlet>
     <servlet-name>springmvc</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>

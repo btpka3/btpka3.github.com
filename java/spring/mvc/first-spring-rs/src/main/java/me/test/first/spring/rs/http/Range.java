@@ -18,6 +18,7 @@ import org.springframework.util.Assert;
  * @author zhangliangliang
  *
  */
+//for http request header
 public class Range implements Serializable {
 
     private static final long serialVersionUID = 1L;

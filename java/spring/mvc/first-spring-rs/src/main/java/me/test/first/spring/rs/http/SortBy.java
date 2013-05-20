@@ -87,6 +87,10 @@ public class SortBy implements Serializable {
         return buf.toString();
     }
 
+    public List<Item> getItems() {
+        return this.items;
+    }
+
     public static void main(String[] args) {
         System.out.println(new SortBy(" +aa, -bb , +  cc  ").toString());
     }
