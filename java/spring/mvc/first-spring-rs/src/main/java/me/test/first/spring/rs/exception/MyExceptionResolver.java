@@ -1,11 +1,10 @@
-package me.test.first.spring.rs;
+package me.test.first.spring.rs.exception;
 
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import me.test.first.spring.rs.exception.BusinessException;
 
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver;

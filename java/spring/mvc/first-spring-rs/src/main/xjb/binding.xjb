@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bindings xmlns="http://java.sun.com/xml/ns/jaxb" version="2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" >
+  <!--
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd"
+   -->
+  <globalBindings typesafeEnumMaxMembers="0" >
+    <javaType name="java.util.Date"
+              xmlType="xs:date"
+              parseMethod="me.test.first.spring.rs.jaxb.DateAdapter.parseDate"
+              printMethod="me.test.first.spring.rs.jaxb.DateAdapter.printDate" />
+  </globalBindings>
+</bindings>

@@ -1,3 +1,7 @@
+https://jaxb.java.net/guide/Using_different_datatypes.html
+http://docs.oracle.com/cd/E13222_01/wls/docs103/webserv/data_types.html
+
+
 注意：
 1. 要先运行  mvn clean process-classes 之后，
 2. 整个工程 F5 刷新

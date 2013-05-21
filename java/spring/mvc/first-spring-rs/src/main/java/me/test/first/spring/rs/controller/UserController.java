@@ -1,6 +1,5 @@
-package me.test.first.spring.rs;
+package me.test.first.spring.rs.controller;
 
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,6 +7,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,20 +16,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import me.test.first.spring.rs.entity.User;
 import me.test.first.spring.rs.exception.BusinessException;
+import me.test.first.spring.rs.http.ContentRange;
 import me.test.first.spring.rs.http.Range;
 import me.test.first.spring.rs.http.SortBy;
 import me.test.first.spring.rs.http.SortBy.Item;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.io.IOUtils;
 import org.joda.time.DateTime;
 import org.joda.time.format.ISODateTimeFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,6 +37,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.LastModified;
+import org.springframework.web.util.UriComponentsBuilder;
+import org.springframework.web.util.UriTemplate;
 import org.springframework.web.util.UrlPathHelper;
 
 /*
@@ -69,68 +71,99 @@ import org.springframework.web.util.UrlPathHelper;
 // http://en.wikipedia.org/wiki/Representational_State_Transfer
 // http://stackoverflow.com/questions/1601992/spring-3-json-with-mvc
 // http://code.google.com/p/spring-finance-manager/
+
+/**
+ *
+ * <table border=1 cellspacing=0 cellpadding=0 >
+ * <tr>
+ * <th>URL</th>
+ * <th>HTTP方法</th>
+ * <th>作用</th>
+ * </tr>
+ * <tr>
+ * <td>/user</td>
+ * <td>GET</td>
+ * <td>查询用户列表</td>
+ * </tr>
+ * <tr>
+ * <td>/user</td>
+ * <td>POST</td>
+ * <td>新增用户</td>
+ * </tr>
+ * <tr>
+ * <td>/user/{id}</td>
+ * <td>HEAD</td>
+ * <td>检查资源是否可用</td>
+ * </tr>
+ * <tr>
+ * <td>/user/{id}</td>
+ * <td>GET</td>
+ * <td>查询指定ID的用户信息</td>
+ * </tr>
+ * <tr>
+ * <td>/user/{id}</td>
+ * <td>PUT</td>
+ * <td>更新指定ID的用户信息</td>
+ * </tr>
+ * <tr>
+ * <td>/user/{id}</td>
+ * <td>DELETE</td>
+ * <td>删除指定ID的用户信息</td>
+ * </tr>
+ * </table>
+ *
+ */
 @Controller
 @RequestMapping("/user")
-public class UserController {
+public class UserController implements LastModified {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    public final static int maxStudents = 10;
+    private final Map<Long, User> userMap = new HashMap<Long, User>();
 
-    private Map<Long, User> userMap = new HashMap<Long, User>();
+    /** 每条的最后修改时间 */
+    private final Map<Long, Long> lastModifiedMap = new LinkedHashMap<Long, Long>();
 
-    @Autowired
-    private ApplicationContext appCtx;
-
-    @Autowired
-    private MessageSource messageSource = null;
+    /** 所有记录的最后修改时间，相当于整个表的最后修改时间 */
+    // when using DB, this should be `SELECT MAX(VERSION) FROM T_USER`
+    private long lastModified = 0;
 
     @Autowired
     private UrlPathHelper urlPathHelper = null;
 
+    @Autowired
+    private FileController fileController = null;
+
     public UserController() {
         User user;
-
-        byte[] avatar;
-        try {
-            avatar = IOUtils.toByteArray(appCtx.getResource("classpath:avatar.png").getInputStream());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        for (int i = 1; i <= 105; i++) {
+        lastModified = System.currentTimeMillis();
+        for (long i = 1; i <= 105; i++) {
             user = new User();
-            user.setId(Long.valueOf((long) i));
+            user.setId(i);
             user.setName("zhang3_" + i);
             user.setGender(true);
-            user.setAvatar(avatar);
-            user.setBirthday(DateTime.now().withDate(1985, 6, 1).withTime(0, 0, 0, 0).plusDays(i - 1).toDate());
+            user.setAvatarId(1L);
+            user.setBirthday(DateTime.now().withDate(1985, 6, 1).withTime(0, 0, 0, 0).plusDays((int) (i - 1)).toDate());
             userMap.put(user.getId(), user);
+            lastModifiedMap.put(i, lastModified);
         }
 
     }
 
     // 模拟数据库进行查询、排序
     @SuppressWarnings("rawtypes")
-    private List<User> query(final Map<String, Object> queryBean, final SortBy sortBy) {
+    private List<User> query(final String name, final SortBy sortBy) {
 
         List<User> resultList = new ArrayList<User>();
-        if (queryBean == null) {
+        if (name == null || name.trim().length() == 0) {
             resultList.addAll(userMap.values());
         } else {
-
-            for (String key : queryBean.keySet()) {
-                if (!"name".equals(key)) {
-                    throw new BusinessException(HttpStatus.BAD_REQUEST, "Not supported query parameter for \"" + key
-                            + "\"");
-                }
-            }
 
             Iterator<User> it = userMap.values().iterator();
             while (it.hasNext()) {
 
                 User user = it.next();
-                if (user.getName() != null && user.getName().contains((String) queryBean.get("name"))) {
+                if (user.getName() != null && user.getName().contains(name)) {
                     resultList.add(user);
                 }
             }
@@ -141,6 +174,7 @@ public class UserController {
 
             Collections.sort(resultList, new Comparator<User>() {
 
+                @SuppressWarnings("unchecked")
                 @Override
                 public int compare(User user1, User user2) {
                     List<Item> items = sortBy.getItems();
@@ -165,7 +199,6 @@ public class UserController {
                             }
 
                             // null as max value
-
                             if (v1 != null) {
                                 if (v2 == null) {
                                     return -1;
@@ -196,7 +229,7 @@ public class UserController {
     /**
      *
      * <ul>
-     * 会返回的状态码：
+     * 会返回的状态码：400, 200, 206
      * <li>
      * {@link org.springframework.http.HttpStatus#BAD_REQUEST
      * HttpStatus.BAD_REQUEST }</li>
@@ -208,14 +241,16 @@ public class UserController {
      * HttpStatus.PARTIAL_CONTENT }</li>
      * </ul>
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET, consumes = {""})
     @ResponseBody
-    public List<User> list(@RequestBody Map<String, Object> queryBean,
-            @RequestParam SortBy sortBy, @RequestHeader("Range") Range range, HttpServletResponse resp) {
+    public List<User> list(@RequestHeader("Range") Range range,
+            @RequestParam("name") String name,
+            @RequestParam SortBy sortBy,
+            HttpServletResponse resp) {
 
-        logger.debug(" queryBean = " + queryBean + ", SortBy = " + sortBy);
+        logger.debug("SortBy = " + sortBy);
 
-        List<User> resultList = query(queryBean, sortBy);
+        List<User> resultList = query(name, sortBy);
         int start = 0;
         int end = 10;
         if (range != null) {
@@ -230,6 +265,7 @@ public class UserController {
             resp.setStatus(HttpStatus.OK.value());
         } else {
             resp.setStatus(HttpStatus.PARTIAL_CONTENT.value());
+            resp.setHeader("Content-Range", new ContentRange(start, end, resultList.size()).toString());
         }
 
         return resultList.subList(start, end);
@@ -267,13 +303,23 @@ public class UserController {
         newId++;
         user.setId(newId);
 
-        String contextPath = urlPathHelper.getContextPath(req);
-        String servletPath = urlPathHelper.getServletPath(req);
-        resp.setHeader("Location", contextPath + servletPath + "/user/" + newId);
+        // String uri = urlPathHelper.getRequestUri(req)+"/user/"+newId;
+        String uri = UriComponentsBuilder.newInstance().path("{contextPath}{servletPath}/user/{id}")
+                .build()
+                .expand(urlPathHelper.getContextPath(req),
+                        urlPathHelper.getServletPath(req),
+                        newId)
+                .encode()
+                .toUriString();
+        resp.setHeader("Location", uri);
 
         resp.setStatus(HttpStatus.CREATED.value());
-    }
 
+        userMap.put(newId, user);
+        lastModified = System.currentTimeMillis();
+        lastModifiedMap.put(newId, lastModified);
+
+    }
     /**
      * 获取单个用户信息。
      * <ul>
@@ -289,9 +335,8 @@ public class UserController {
      * </ul>
      *
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    @ResponseBody
-    public User get(@PathVariable("id") String idStr, HttpServletResponse resp) {
+    @RequestMapping(value = "/{id}", method = RequestMethod.HEAD)
+    public void head(@PathVariable("id") String idStr, HttpServletResponse resp) {
         Long id = null;
         try {
             id = Long.valueOf(idStr);
@@ -303,10 +348,40 @@ public class UserController {
             throw new BusinessException(HttpStatus.NOT_FOUND, "user with id =" + id + " not exists");
         }
 
+        resp.setStatus(HttpStatus.NO_CONTENT.value());
+    }
+
+    /**
+     * 获取单个用户信息。
+     * <ul>
+     * 会返回的状态码：
+     * <li>{@link org.springframework.http.HttpStatus#NOT_FOUND
+     * HttpStatus.NOT_FOUND }</li>
+     * <li>
+     * {@link org.springframework.http.HttpStatus#BAD_REQUEST
+     * HttpStatus.BAD_REQUEST }</li>
+     * <li>
+     * {@link org.springframework.http.HttpStatus#OK
+     * HttpStatus.OK }</li>
+     * </ul>
+     *
+     */
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public User get(@PathVariable("id") String idStr, WebRequest req, HttpServletResponse resp) {
+
+        head(idStr, resp);
+        if (req.checkNotModified(lastModified)) {
+            return null;
+        }
+
+        Long id = Long.valueOf(idStr);
+
         resp.setStatus(HttpStatus.OK.value());
 
         // 如果请求的path上id的值无法转换为long型，会出发TypeMismathcException而返回400.
         // 没有合适的消息是否合适？
+
         return userMap.get(id);
     }
 
@@ -331,25 +406,19 @@ public class UserController {
     public void put(@PathVariable("id") String idStr, @RequestBody Map<String, Object> updatingInfo,
             HttpServletResponse resp) {
 
-        Long id = null;
-        try {
-            id = Long.valueOf(idStr);
-        } catch (NumberFormatException e) {
-            throw new BusinessException(HttpStatus.NOT_FOUND, "user with id =" + id + " not exists");
-        }
-        if (!userMap.containsKey(id)) {
-            throw new BusinessException(HttpStatus.NOT_FOUND, "user with id =" + id + " not exists");
-        }
-
-        User user = userMap.get(id);
+        head(idStr, resp);
 
         if (updatingInfo == null) {
             throw new BusinessException(HttpStatus.BAD_REQUEST, "Updating user info can not be null");
         }
 
+        Long id = Long.valueOf(idStr);
+
         if (!id.equals(updatingInfo.get("id"))) {
             throw new BusinessException(HttpStatus.BAD_REQUEST, "Can not chage user id");
         }
+
+        User user = userMap.get(id);
 
         Object value = null;
         if (updatingInfo.containsKey("name")) {
@@ -402,8 +471,8 @@ public class UserController {
                     } catch (NumberFormatException e) {
                         throw new BusinessException(HttpStatus.BAD_REQUEST, "height must be positive integer ", e);
                     }
-                } else if (value instanceof Integer) {
-                    height = (Integer) value;
+                } else if (value instanceof Number) {
+                    height = ((Number) value).intValue();
                 } else {
                     throw new BusinessException(HttpStatus.BAD_REQUEST, "height must be positive integer ");
                 }
@@ -416,29 +485,37 @@ public class UserController {
             }
         }
 
-        if (updatingInfo.containsKey("avatar")) {
-            value = updatingInfo.get("avatar");
+        if (updatingInfo.containsKey("avatarId")) {
+            value = updatingInfo.get("avatarId");
             if (value == null) {
-                user.setAvatar(null);
+                user.setAvatarId(null);
             } else {
-                byte[] avatar = null;
+                Long avatarId = null;
                 if (value instanceof String) {
-                    if (!Base64.isBase64((String) value)) {
-                        throw new BusinessException(HttpStatus.BAD_REQUEST, "avatar must be image encoded in base64");
+                    try {
+                        avatarId = Long.valueOf((String) value);
+                    } catch (NumberFormatException e) {
+                        throw new BusinessException(HttpStatus.BAD_REQUEST, "avatarId must be positive Long ", e);
                     }
-                    avatar = Base64.decodeBase64((String) value);
+
+                } else if (value instanceof Number) {
+                    avatarId = ((Number) value).longValue();
                 } else {
-                    throw new BusinessException(HttpStatus.BAD_REQUEST, "avatar must be image encoded in base64");
+                    throw new BusinessException(HttpStatus.BAD_REQUEST, "avatarId must be positive Long ");
                 }
 
-                user.setAvatar(avatar);
+                // 检查要设置的头像资源是否存在
+                fileController.head(avatarId.toString(), resp);
+
+                user.setAvatarId(avatarId);
             }
         }
 
         resp.setStatus(HttpStatus.NO_CONTENT.value());
+        lastModified = System.currentTimeMillis();
+        lastModifiedMap.put(id, lastModified);
 
     }
-
     /**
      * 删除指定的用户。
      *
@@ -465,7 +542,45 @@ public class UserController {
 
         }
         userMap.remove(id);
+        lastModified = System.currentTimeMillis();
+        lastModifiedMap.remove(id);
         resp.setStatus(HttpStatus.NO_CONTENT.value());
+    }
+
+    @Override
+    public long getLastModified(HttpServletRequest request) {
+
+        String mappingUri = urlPathHelper.getPathWithinServletMapping(request);
+        if ("/user".equals(mappingUri)) {
+            return lastModified;
+        }
+
+        UriTemplate uriTemplate = new UriTemplate("/user/{id}");
+        if (uriTemplate.matches(mappingUri)) {
+            Map<String, String> pathVarMap = uriTemplate.match(mappingUri);
+            try {
+                Long id = Long.valueOf(pathVarMap.get("id"));
+                if (!lastModifiedMap.containsKey(id)) {
+                    return -1;
+                }
+                Long time = lastModifiedMap.get(id);
+                if (time == null) {
+                    return -1;
+                }
+                return time;
+            } catch (NumberFormatException e) {
+                return -1;
+            }
+
+        }
+        logger.warn("request last modifed time for path \"" + mappingUri + "\", not supported, will return -1.");
+        return -1;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(UriComponentsBuilder.newInstance().path("{contextPath}{servletPath}/user/{id}").build()
+                .expand("/aa", "/42", "21").toUriString());
+
     }
 
 }

@@ -33,6 +33,12 @@ public class ContentRange implements Serializable {
         this.total = Integer.valueOf(matcher.group(3));
     }
 
+    public ContentRange(int start, int end, int total) {
+        this.start = start;
+        this.end = end;
+        this.total = total;
+    }
+
     @Override
     public String toString() {
         return String.format("items %d-%d/%d", this.start, this.end, this.total);
