@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jdo xmlns="http://java.sun.com/xml/ns/jdo/jdo" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/jdo/jdo
+        http://java.sun.com/xml/ns/jdo/jdo_3_0.xsd">
+  <package name="me.test.first.spring.jdo.entity">
+
+    <class name="User" table="USER">
+
+      <field name="id"            column="ID"         value-strategy="increment" />
+      <field name="name"          column="NAME" />
+      <field name="gender"        column="GENDER" />
+      <field name="birthday"      column="BIRTHDAY" />
+      <field name="idCardNo"      column="ID_CARD_NO" />
+      <field name="email"         column="EMAIL" />
+      <field name="height"        column="HEIGHT" />
+      <field name="avatar"        column="AVATAR" />
+      <field name="version"       column="VERSION" />
+
+      <version column="VERSION"   strategy="version-number"  />
+
+      <fetch-group name="avatar" >
+        <field name="AVATAR" />
+      </fetch-group>
+
+    </class>
+  </package>
+</jdo>

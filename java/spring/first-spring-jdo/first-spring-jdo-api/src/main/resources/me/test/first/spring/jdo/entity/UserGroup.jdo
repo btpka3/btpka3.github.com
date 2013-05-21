@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jdo xmlns="http://java.sun.com/xml/ns/jdo/jdo" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/jdo/jdo
+        http://java.sun.com/xml/ns/jdo/jdo_3_0.xsd">
+  <package name="me.test.first.spring.jdo.entity">
+
+    <class name="UserGroup" table="USER_GROUP" >
+
+      <field name="id"            column="ID"       value-strategy="sequence" sequence="USER_GROUP_ID_SEQ" />
+      <field name="description"   column="DESCRIPTION" />
+      <field name="version"       column="VERSION" />
+
+      <version column="VERSION"   strategy="version-number"/>
+
+
+    </class>
+  </package>
+</jdo>
