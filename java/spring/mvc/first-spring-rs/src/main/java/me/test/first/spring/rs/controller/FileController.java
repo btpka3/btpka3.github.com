@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -66,7 +67,8 @@ public class FileController {
     @Autowired
     private UrlPathHelper urlPathHelper = null;
 
-    public FileController() {
+    @PostConstruct
+    public void init() {
         try {
             byte[] avatar = IOUtils.toByteArray(appCtx.getResource("classpath:avatar.png").getInputStream());
             fileMap.put(1L, new ByteArrayResource(avatar, "image/png"));
@@ -117,7 +119,7 @@ public class FileController {
 
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.HEAD)
     public void head(@PathVariable("id") String idStr, HttpServletResponse resp) {
         Long id = null;
         try {

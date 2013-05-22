@@ -26,7 +26,6 @@
   <bean id="urlPathHelper"
         class="org.springframework.web.util.UrlPathHelper" />
 
-
   <!-- ============================================== 定义一个ExceptionResolver -->
   <bean class="org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver">
     <property name="order" value="1" />
@@ -38,32 +37,11 @@
     <property name="order" value="3" />
   </bean>
 
-  <!-- ============================================== 定义一个HandlerMapping -->
-  <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" >
+  <!-- ============================================== 定义一个MultipartResolver -->
+  <bean id="multipartResolver"
+        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    <property name="maxUploadSize" value="100000"/>
   </bean>
-
-  <!-- ============================================== 定义一个HandlerAdapter
-  <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
-    <property name="messageConverters">
-      <util:list id="beanList">
-        <!- - 原有的 - ->
-        <ref bean="byteArrayHttpMessageConverter" />
-        <ref bean="stringHttpMessageConverter"/>
-        <ref bean="sourceHttpMessageConverter"/>
-        <ref bean="xmlAwareFormHttpMessageConverter"/>
-
-        <!- - 追加的 - ->
-        <ref bean="mappingJacksonHttpMessageConverter"/>
-      </util:list>
-    </property>
-  </bean>
-   -->
-
-  <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
-  </bean>
-  <!-- MarshallingHttpMessageConverter
-  RequestMappingHandlerAdapter
-   -->
 
 
   <!--
@@ -83,21 +61,20 @@
 
   </mvc:annotation-driven>
 
+  <mvc:interceptors>
+    <bean class="me.test.first.spring.rs.interceptor.CacheControlInterceptor" />
+  </mvc:interceptors>
 
   <bean id="contentNegotiationManager"
         class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
     <property name="mediaTypes" >
       <props>
         <prop key="json">application/json</prop>
-        <!-- for jsnp? -->
+        <prop key="xml">application/xml</prop>
       </props>
     </property>
     <property name="defaultContentType" value="application/json" />
   </bean>
 
-  <bean id="multipartResolver"
-        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-    <property name="maxUploadSize" value="100000"/>
-  </bean>
 
 </beans>

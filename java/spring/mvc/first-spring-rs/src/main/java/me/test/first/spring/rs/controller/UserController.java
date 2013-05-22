@@ -4,16 +4,17 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import me.test.first.spring.rs.entity.ListWrapper;
 import me.test.first.spring.rs.entity.User;
 import me.test.first.spring.rs.exception.BusinessException;
 import me.test.first.spring.rs.http.ContentRange;
@@ -24,7 +25,6 @@ import me.test.first.spring.rs.http.SortBy.Item;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.codec.binary.Base64;
 import org.joda.time.DateTime;
-import org.joda.time.format.ISODateTimeFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -134,7 +134,8 @@ public class UserController implements LastModified {
     @Autowired
     private FileController fileController = null;
 
-    public UserController() {
+    @PostConstruct
+    public void init() {
         User user;
         lastModified = System.currentTimeMillis();
         for (long i = 1; i <= 105; i++) {
@@ -143,11 +144,11 @@ public class UserController implements LastModified {
             user.setName("zhang3_" + i);
             user.setGender(true);
             user.setAvatarId(1L);
+            user.setHeight(182);
             user.setBirthday(DateTime.now().withDate(1985, 6, 1).withTime(0, 0, 0, 0).plusDays((int) (i - 1)).toDate());
             userMap.put(user.getId(), user);
             lastModifiedMap.put(i, lastModified);
         }
-
     }
 
     // 模拟数据库进行查询、排序
@@ -241,14 +242,18 @@ public class UserController implements LastModified {
      * HttpStatus.PARTIAL_CONTENT }</li>
      * </ul>
      */
-    @RequestMapping(method = RequestMethod.GET, consumes = {""})
+    @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public List<User> list(@RequestHeader("Range") Range range,
-            @RequestParam("name") String name,
-            @RequestParam SortBy sortBy,
+    public ListWrapper list(@RequestHeader(value = "Range", required = false) Range range,
+            @RequestParam(value = "name", required = false) String name,
+            @RequestParam(value = "sort", required = false) SortBy sortBy,
+            WebRequest req,
             HttpServletResponse resp) {
 
         logger.debug("SortBy = " + sortBy);
+        if (req.checkNotModified(lastModified)) {
+            return null;
+        }
 
         List<User> resultList = query(name, sortBy);
         int start = 0;
@@ -267,8 +272,9 @@ public class UserController implements LastModified {
             resp.setStatus(HttpStatus.PARTIAL_CONTENT.value());
             resp.setHeader("Content-Range", new ContentRange(start, end, resultList.size()).toString());
         }
-
-        return resultList.subList(start, end);
+        ListWrapper data = new ListWrapper();
+        data.getData().addAll(resultList.subList(start, end));
+        return data;
     }
 
     /**
@@ -371,12 +377,10 @@ public class UserController implements LastModified {
     public User get(@PathVariable("id") String idStr, WebRequest req, HttpServletResponse resp) {
 
         head(idStr, resp);
-        if (req.checkNotModified(lastModified)) {
+        Long id = Long.valueOf(idStr);
+        if (req.checkNotModified(lastModifiedMap.get(id))) {
             return null;
         }
-
-        Long id = Long.valueOf(idStr);
-
         resp.setStatus(HttpStatus.OK.value());
 
         // 如果请求的path上id的值无法转换为long型，会出发TypeMismathcException而返回400.
@@ -388,6 +392,9 @@ public class UserController implements LastModified {
     /**
      * 更新用户信息。
      * 但是不允许设定新ID。
+     * PUT是完整更新，而不是部分更新。
+     * TODO 如果有乐观锁（比如时间戳）机制，则需要先判断更新前的锁是否一致，更新完成后还要再更新乐观锁的值。
+     * FIXME 或者使用If-Match、If-Modified-Since?
      *
      * <ul>
      * 会返回的状态码：
@@ -402,113 +409,34 @@ public class UserController implements LastModified {
      * </ul>
      *
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public void put(@PathVariable("id") String idStr, @RequestBody Map<String, Object> updatingInfo,
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public void put(@PathVariable("id") String idStr, @RequestBody User newUser,
             HttpServletResponse resp) {
 
         head(idStr, resp);
 
-        if (updatingInfo == null) {
-            throw new BusinessException(HttpStatus.BAD_REQUEST, "Updating user info can not be null");
-        }
-
         Long id = Long.valueOf(idStr);
 
-        if (!id.equals(updatingInfo.get("id"))) {
+        if (!id.equals(newUser.getId())) {
             throw new BusinessException(HttpStatus.BAD_REQUEST, "Can not chage user id");
         }
 
+        if (newUser.getHeight() != null && newUser.getHeight() < 0) {
+            throw new BusinessException(HttpStatus.BAD_REQUEST, "height must be positive integer ");
+        }
+
+        if (newUser.getAvatarId() != null) {
+            // 检查要设置的头像资源是否存在
+            fileController.head(newUser.getAvatarId().toString(), resp);
+        }
+
+        // 更新
         User user = userMap.get(id);
+        try {
+            PropertyUtils.copyProperties(newUser, user);
 
-        Object value = null;
-        if (updatingInfo.containsKey("name")) {
-            value = updatingInfo.get("name");
-            user.setName(value == null ? null : value.toString());
-        }
-
-        if (updatingInfo.containsKey("gender")) {
-            value = updatingInfo.get("gender");
-            if (value == null) {
-                user.setGender(null);
-            } else {
-                if (!(value instanceof Boolean)) {
-                    throw new BusinessException(HttpStatus.BAD_REQUEST, "gender must be of type boolean");
-                }
-                user.setGender((Boolean) value);
-            }
-        }
-
-        if (updatingInfo.containsKey("birthday")) {
-            value = updatingInfo.get("birthday");
-            if (value == null) {
-                user.setGender(null);
-            } else {
-                if (!(value instanceof String)) {
-                    throw new BusinessException(HttpStatus.BAD_REQUEST, "birthday must be of type date");
-                }
-                try {
-
-                    Date birthday = ISODateTimeFormat.dateParser().parseDateTime((String) value).toDate();
-                    // Date birthday = DatatypeConverter.parseDate((String)
-                    // value).getTime();
-                    user.setBirthday(birthday);
-
-                } catch (Exception e) {
-                    throw new BusinessException(HttpStatus.BAD_REQUEST, "birthday must be of type date");
-                }
-            }
-        }
-
-        if (updatingInfo.containsKey("height")) {
-            value = updatingInfo.get("height");
-            if (value == null) {
-                user.setHeight(null);
-            } else {
-                Integer height = null;
-                if (value instanceof String) {
-                    try {
-                        height = Integer.valueOf((String) value);
-                    } catch (NumberFormatException e) {
-                        throw new BusinessException(HttpStatus.BAD_REQUEST, "height must be positive integer ", e);
-                    }
-                } else if (value instanceof Number) {
-                    height = ((Number) value).intValue();
-                } else {
-                    throw new BusinessException(HttpStatus.BAD_REQUEST, "height must be positive integer ");
-                }
-
-                if (height < 0) {
-                    throw new BusinessException(HttpStatus.BAD_REQUEST, "height must be positive integer ");
-                }
-                user.setHeight(height);
-
-            }
-        }
-
-        if (updatingInfo.containsKey("avatarId")) {
-            value = updatingInfo.get("avatarId");
-            if (value == null) {
-                user.setAvatarId(null);
-            } else {
-                Long avatarId = null;
-                if (value instanceof String) {
-                    try {
-                        avatarId = Long.valueOf((String) value);
-                    } catch (NumberFormatException e) {
-                        throw new BusinessException(HttpStatus.BAD_REQUEST, "avatarId must be positive Long ", e);
-                    }
-
-                } else if (value instanceof Number) {
-                    avatarId = ((Number) value).longValue();
-                } else {
-                    throw new BusinessException(HttpStatus.BAD_REQUEST, "avatarId must be positive Long ");
-                }
-
-                // 检查要设置的头像资源是否存在
-                fileController.head(avatarId.toString(), resp);
-
-                user.setAvatarId(avatarId);
-            }
+        } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+            throw new BusinessException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
 
         resp.setStatus(HttpStatus.NO_CONTENT.value());
@@ -516,6 +444,7 @@ public class UserController implements LastModified {
         lastModifiedMap.put(id, lastModified);
 
     }
+
     /**
      * 删除指定的用户。
      *
@@ -529,7 +458,7 @@ public class UserController implements LastModified {
      * HttpStatus.NO_CONTENT }</li>
      * </ul>
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable("id") String idStr, HttpServletResponse resp) {
         Long id = null;
         try {

@@ -4,6 +4,8 @@ import org.springframework.http.HttpStatus;
 
 public class BusinessException extends RuntimeException {
     private static final long serialVersionUID = 1L;
+
+    // TODO here should use `int` type for decreasing couple with Spring
     private HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
 
     public BusinessException() {

@@ -22,8 +22,7 @@
   </appender>
 
   <logger name="me.test" level="TRACE"/>
-  <logger name="org.springframework" level="DEBUG"/>
-  <logger name="org.datanucleus.maven" level="TRACE"/>
+  <logger name="org.springframework" level="TRACE"/>
 
   <root level="DEBUG">
     <appender-ref ref="FILE" />

@@ -1,5 +1,28 @@
 https://jaxb.java.net/guide/Using_different_datatypes.html
 http://docs.oracle.com/cd/E13222_01/wls/docs103/webserv/data_types.html
+http://stackoverflow.com/questions/2364110/whats-the-justification-behind-disallowing-partial-put
+http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html
+
+feathers：
+1. only using Servelt, without JSP.
+
+
+
+缓存：
+1. 只对 GET、HEAD有效
+2. POST、PUT、DELETE应当使cache失效
+3. 200, 203, 206, 300, 301 or 410的响应可以被缓存
+但是如果缓存系统不支持 Range、Content-Range头的话，就不应缓存 206 (Partial Content)
+4. Last-Modified 在业务逻辑执行前判断，而 ETag则在执行后判断，后者并不能降低CPU使用率。两者均可降低带宽使用。
+
+
+
+TODO:
+  JSONP?
+  XML?
+
+PUT是一个完整的实体对象，不能被部分更新。
+如果需要部分更新，需要使用PATCH方法。
 
 
 注意：
