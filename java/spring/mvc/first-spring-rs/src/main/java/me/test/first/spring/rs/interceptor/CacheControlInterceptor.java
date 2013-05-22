@@ -25,7 +25,7 @@ public class CacheControlInterceptor implements HandlerInterceptor {
                 && status >= 200 && status < 300
                 //&& status != 206
                 && StringUtils.isBlank(response.getHeader("Cache-Control"))) {
-            response.setHeader("Cache-Control", "private, must-revalidate");
+            response.setHeader("Cache-Control", "private, max-age=0");
         }
 
     }
