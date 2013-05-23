@@ -76,5 +76,4 @@
     <property name="defaultContentType" value="application/json" />
   </bean>
 
-
 </beans>

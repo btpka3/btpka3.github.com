@@ -6,6 +6,8 @@ require(["dojo/store/Cache",
          "dojo/data/ItemFileReadStore",
          "dijit/form/Button",
          "dojo/dom",
+         "dojo/aspect",
+         "dojo/_base/lang",
          "dojo/domReady!"
 ], function(
              Cache,
@@ -15,13 +17,43 @@ require(["dojo/store/Cache",
              FilteringSelect,
              ItemFileReadStore,
              Button,
-             dom
+             dom,
+             aspect,
+             lang
 ){
     var store = new JsonRest({
         target: "rs/user/",
         sortParam : "sortBy"
     });
     //store = new Observable(new Cache(store, new Memory()));
+
+    aspect.around(store, "query", function(orgQueryFunc){
+        return function(){
+            store.lastQuery = arguments[0];
+            store.lastOptions = lang.mixin({}, arguments[1]);
+            var results = orgQueryFunc.apply(this, arguments); // call the original
+            results.then(function(data){
+                console.info("sssss", results);
+
+               var last = {start:0, end:0, total:0};
+               if(data && data["data"]){
+                   last.total = data["data"].length;
+                   last.start = last.total - 1;
+               }
+
+               var str = results.ioArgs.xhr.getResponseHeader("Content-Range");
+               var regex = /\s*(\d*)\s*-\s*(\d*)\s*\/\s*(\d*)\s*/;
+               if(str && regex.test(str)){
+                   var matches = regex.exec(str);
+                   last.start = parseInt(matches[1]);
+                   last.end = parseInt(matches[2]);
+                   last.total = parseInt(matches[3]);
+               }
+               store.lastContentRange = last;
+            });
+            return results;
+        };
+    });
 
     function display(items){
         dom.byId("out").innerHTML = "";
@@ -37,29 +69,49 @@ require(["dojo/store/Cache",
     }
 
     new Button({
-        label: "Range 1~10",
+        label: "Range 0~9",
         onClick: function(){
             var o = store.query({},{
-                start : 1,
+                start : 0,
                 count : 10});
+            console.info("check ioArgs ", o);
             o.then(function(data){
                 console.info("data = ",data);
                 display(data["data"]);
             });
-        }}, "range1_10");
+        }}, "range0_9");
 
     new Button({
-        label: "Range 11~20",
+        label: "Range 10~19",
         onClick: function(){
             var o = store.query({},{
-                start : 11,
+                start : 10,
                 count : 10});
             o.then(function(data){
-                console.info("data = ",data);
                 display(data["data"]);
             });
-        }}, "range11_20");
+        }}, "range10_19");
 
+    new Button({
+        label: "query name contains '3_1'",
+        onClick: function(){
+            var o = store.query({name:"3_1"});
+            o.then(function(data){
+                display(data["data"]);
+            });
+        }}, "queryName");
+
+    new Button({
+        label: "sort by height asc, gender desc",
+        onClick: function(){
+            var o = store.query({}, {
+                sort:[{attribute:"height", descending: false},
+                      {attribute:"gender", descending: true}]
+            });
+            o.then(function(data){
+                display(data["data"]);
+            });
+        }}, "sortBtn");
 
     new Button({
         label: "Clear",
@@ -77,16 +129,23 @@ require(["dojo/store/Cache",
         }}, "showId2");
 
     new Button({
-        label: "ShowAll",
+        label: "Next page",
         onClick: function(){
-            // Memory is synchronous store
-            var queryResults = store.query({},{
-                start : 5,
-                count : 5});
-            display(queryResults);
-            //queryResults.then(display, function(e){
-            //    console.error(e);
-            //});
-        }}, "showAllBtn");
+
+            if(!(store.lastQuery || store.lastQuery)){
+                console.error("no query ran before");
+                return;
+            }
+
+            if(store.lastContentRange && store.lastContentRange["total"] > 0 && store.lastOptions && store.lastOptions["count"]){
+                store.lastOptions["start"] =  store.lastContentRange["start"] + store.lastOptions["count"];
+            }
+            var o = store.query(store.lastQuery, store.lastOptions);
+            o.then(function(data){
+                display(data["data"]);
+            });
+        }}, "nextBtn");
+
+
 
 });

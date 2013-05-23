@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 
 import org.springframework.util.Assert;
 
+// start from 0
 // for http response header
 public class ContentRange implements Serializable {
 
@@ -22,21 +23,26 @@ public class ContentRange implements Serializable {
         super();
     }
 
-    public ContentRange(String headStr) {
-        super();
-
-        Assert.notNull(headStr);
-        Matcher matcher = p.matcher(headStr);
-        Assert.isTrue(matcher.matches(), "Invalid http Content-Range header");
-        this.start = Integer.valueOf(matcher.group(1));
-        this.end = Integer.valueOf(matcher.group(2));
-        this.total = Integer.valueOf(matcher.group(3));
-    }
-
     public ContentRange(int start, int end, int total) {
         this.start = start;
         this.end = end;
         this.total = total;
+
+        Assert.isTrue(this.start >= 0, "Content-Range start value must equal or bigger than 0");
+        Assert.isTrue(this.end >= this.start, "Content-Range end value must equal or bigger than start value");
+        Assert.isTrue(this.end < this.total, "Content-Range end value must less than total value");
+    }
+
+    public static ContentRange valueOf(String value) {
+
+        Assert.notNull(value);
+        Matcher matcher = p.matcher(value);
+        Assert.isTrue(matcher.matches(), "Invalid http Content-Range header");
+        int start = Integer.valueOf(matcher.group(1));
+        int end = Integer.valueOf(matcher.group(2));
+        int total = Integer.valueOf(matcher.group(3));
+
+        return new ContentRange(start, end, total);
     }
 
     @Override
@@ -48,28 +54,16 @@ public class ContentRange implements Serializable {
         return start;
     }
 
-    public void setStart(int start) {
-        this.start = start;
-    }
-
     public int getEnd() {
         return end;
-    }
-
-    public void setEnd(int end) {
-        this.end = end;
     }
 
     public int getTotal() {
         return total;
     }
 
-    public void setTotal(int total) {
-        this.total = total;
-    }
-
     public static void main(String[] args) {
-        ContentRange c = new ContentRange("    items   4  -  9 / 50  ");
+        ContentRange c = ContentRange.valueOf("    items   4  -  9 / 50  ");
         System.out.println(c.toString());
     }
 }

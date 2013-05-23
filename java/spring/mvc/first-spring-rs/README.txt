@@ -16,6 +16,18 @@ feathers：
 4. Last-Modified 在业务逻辑执行前判断，而 ETag则在执行后判断，后者并不能降低CPU使用率。两者均可降低带宽使用。
 
 
+类型转换：
+Spring 3.1 之后默认使用：
+org.springframework.core.convert.support.DefaultConversionService
+它注册了很多默认的converter，比如
+org.springframework.core.convert.support.ObjectToObjectConverter
+该Converter是非public的，因此只能通过源代码看到说明。
+它依次尝试使用目标类型的静态 valueOf(srcType)， 接收单个srcType的构造函数进行转换。
+这样的话，就可以不必再些专门的Converter类了。
+
+
+
+
 
 TODO:
   JSONP?

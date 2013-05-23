@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.Assert;
 
 /**
+ *
  * <ul>
  * <li>{@code Range: items=0-9} : 前10条记录</li>
  * <li>{@code Range: items=0-} : 全部记录</li>
@@ -18,51 +19,59 @@ import org.springframework.util.Assert;
  * @author zhangliangliang
  *
  */
-//for http request header
+// for http request header
 public class Range implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private static final Pattern p = Pattern.compile("\\s*items\\s*=\\s*(\\d*)\\s*-\\s*(\\d*)?\\s*",
             Pattern.CASE_INSENSITIVE);
 
-    // required
+    // required (inclusive)
     private int start = 0;
 
-    // optional : -1 means to end
+    // optional (inclusive) : -1 means to end
     private int end = -1;
 
     public Range() {
         super();
     }
 
-    public Range(String headStr) {
-        super();
+    public Range(int start, int end) {
+        this.start = start;
+        this.end = end;
 
-        Assert.notNull(headStr);
-        Matcher matcher = p.matcher(headStr);
+        Assert.isTrue(this.start >= 0, "Range start value must be equal or bigger than 0.");
+        Assert.isTrue(this.end < 0 || this.end >= this.start,
+                "Range end value must be minus, or equal or bigger than start value.");
+    }
+
+    public Range(int start) {
+        this(start, -1);
+    }
+
+    public static Range valueOf(String value) {
+
+        Assert.notNull(value);
+        Matcher matcher = p.matcher(value);
         Assert.isTrue(matcher.matches(), "Invalid http Range header");
         String startStr = matcher.group(1);
         String endStr = matcher.group(2);
 
-        this.start = Integer.valueOf(startStr);
+        int start = Integer.valueOf(startStr);
+
+        int end = -1;
         if (StringUtils.isNotEmpty(endStr)) {
-            this.end = Integer.valueOf(endStr);
+            end = Integer.valueOf(endStr);
         }
+        return new Range(start, end);
     }
+
     public int getStart() {
         return start;
     }
 
-    public void setStart(int start) {
-        this.start = start;
-    }
-
     public int getEnd() {
         return end;
-    }
-
-    public void setEnd(int end) {
-        this.end = end;
     }
 
     @Override
@@ -74,7 +83,7 @@ public class Range implements Serializable {
     }
 
     public static void main(String[] args) {
-        System.out.println(new Range(" items  =  4  -  9   ").toString());
-        System.out.println(new Range(" items  =  4  -     ").toString());
+        System.out.println(Range.valueOf(" items  =  4  -  9   ").toString());
+        System.out.println(Range.valueOf(" items  =  4  -     ").toString());
     }
 }

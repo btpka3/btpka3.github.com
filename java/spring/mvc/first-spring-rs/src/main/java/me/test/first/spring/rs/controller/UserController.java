@@ -142,9 +142,17 @@ public class UserController implements LastModified {
             user = new User();
             user.setId(i);
             user.setName("zhang3_" + i);
-            user.setGender(true);
+            if (i % 10 == 0) {
+                user.setGender(null);
+            } else {
+                user.setGender(i % 2 == 0);
+            }
             user.setAvatarId(1L);
-            user.setHeight(182);
+            if (i % 10 == 0) {
+                user.setHeight(null);
+            } else {
+                user.setHeight((int) (180 + i % 10));
+            }
             user.setBirthday(DateTime.now().withDate(1985, 6, 1).withTime(0, 0, 0, 0).plusDays((int) (i - 1)).toDate());
             userMap.put(user.getId(), user);
             lastModifiedMap.put(i, lastModified);
@@ -244,13 +252,18 @@ public class UserController implements LastModified {
      */
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public ListWrapper list(@RequestHeader(value = "Range", required = false) Range range,
+    public ListWrapper list(
+            @RequestHeader(value = "Range", required = false) Range range,
             @RequestParam(value = "name", required = false) String name,
             @RequestParam(value = "sort", required = false) SortBy sortBy,
             WebRequest req,
             HttpServletResponse resp) {
 
         logger.debug("SortBy = " + sortBy);
+
+        // there is no need apply `HEAD` for this path, because it always
+        // exists.
+
         if (req.checkNotModified(lastModified)) {
             return null;
         }
@@ -261,19 +274,22 @@ public class UserController implements LastModified {
         if (range != null) {
             start = range.getStart();
             end = range.getEnd();
-            if (start + end > resultList.size()) {
-                end = resultList.size();
+            if (end < 0) {
+
+            }
+            if (end >= resultList.size()) {
+                end = resultList.size() - 1;
             }
         }
 
-        if (start == 0 && end == resultList.size()) {
+        if (start == 0 && end == resultList.size() - 1) {
             resp.setStatus(HttpStatus.OK.value());
         } else {
             resp.setStatus(HttpStatus.PARTIAL_CONTENT.value());
             resp.setHeader("Content-Range", new ContentRange(start, end, resultList.size()).toString());
         }
         ListWrapper data = new ListWrapper();
-        data.getData().addAll(resultList.subList(start, end));
+        data.getData().addAll(resultList.subList(start, end + 1));
         return data;
     }
 
@@ -479,6 +495,8 @@ public class UserController implements LastModified {
     @Override
     public long getLastModified(HttpServletRequest request) {
 
+        // 可以忽略URL参数和HTTP Header
+        // 当它们不同时，是否发送 If-Match、If-Modified-Since 应由浏览器缓存决定。
         String mappingUri = urlPathHelper.getPathWithinServletMapping(request);
         if ("/user".equals(mappingUri)) {
             return lastModified;
@@ -507,9 +525,6 @@ public class UserController implements LastModified {
     }
 
     public static void main(String[] args) {
-        System.out.println(UriComponentsBuilder.newInstance().path("{contextPath}{servletPath}/user/{id}").build()
-                .expand("/aa", "/42", "21").toUriString());
-
     }
 
 }

@@ -18,35 +18,26 @@ public class SortBy implements Serializable {
         private String attribute;
         private boolean descending = false;
 
-        public Item() {
-        };
-
-        public Item(String str) {
-            Assert.notNull(str);
-            Matcher matcher = p.matcher(str);
-            Assert.isTrue(matcher.matches(), "Invalid sort item string");
-
-            this.attribute = matcher.group(2);
-            this.descending = "+".equals(matcher.group(1)) ? false : true;
-        }
-
         public Item(String attribute, boolean descending) {
             this.attribute = attribute;
             this.descending = descending;
         }
+
+        public static Item valueOf(String value) {
+            Assert.notNull(value);
+            Matcher matcher = p.matcher(value);
+            Assert.isTrue(matcher.matches(), "Invalid sort item string");
+            boolean descending = "+".equals(matcher.group(1)) ? false : true;
+            String attribute = matcher.group(2);
+            return new Item(attribute, descending);
+        }
+
         public String getAttribute() {
             return attribute;
-        }
-        public void setAttribute(String attribute) {
-            this.attribute = attribute;
         }
         public boolean isDescending() {
             return descending;
         }
-        public void setDescending(boolean descending) {
-            this.descending = descending;
-        }
-
         @Override
         public String toString() {
             String str = "+";
@@ -64,14 +55,20 @@ public class SortBy implements Serializable {
         super();
     }
 
-    public SortBy(String sortValueStr) {
+    public SortBy(List<Item> items) {
         super();
+        this.items.addAll(items);
+    }
 
-        Assert.notNull(sortValueStr);
-        String[] sortCols = sortValueStr.split(",");
+    public static SortBy valueOf(String value) {
+        Assert.notNull(value);
+        String[] sortCols = value.split(",");
+        List<Item> items = new ArrayList<Item>();
+
         for (String sortCol : sortCols) {
-            items.add(new Item(sortCol));
+            items.add(Item.valueOf(sortCol));
         }
+        return new SortBy(items);
     }
 
     @Override
@@ -92,6 +89,6 @@ public class SortBy implements Serializable {
     }
 
     public static void main(String[] args) {
-        System.out.println(new SortBy(" +aa, -bb , +  cc  ").toString());
+        System.out.println(SortBy.valueOf(" +aa, -bb , +  cc  ").toString());
     }
 }
