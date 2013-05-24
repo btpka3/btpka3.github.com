@@ -50,6 +50,7 @@ require(["dojo/store/Cache",
                    last.total = parseInt(matches[3]);
                }
                store.lastContentRange = last;
+               store.data = data;
             });
             return results;
         };
@@ -60,7 +61,7 @@ require(["dojo/store/Cache",
         for(var i = 0; i < items.length; i++){
             dom.byId("out").innerHTML += "id : " + items[i].id + ", "
                 + "name : " + items[i].name + ", "
-                + "gender : " + (items[i].gender ? "M" : "F" ) + ", "
+                + "gender : " + items[i].gender + ", "
                 + "birthday : " + items[i].birthday + ", "
                 + "height : " + items[i].height + ", "
                 + "avatarId : " + items[i].avatarId + ", "
@@ -68,6 +69,8 @@ require(["dojo/store/Cache",
         }
     }
 
+
+    /////////////////////////////////////////////////////////////////////
     new Button({
         label: "Range 0~9",
         onClick: function(){
@@ -95,7 +98,7 @@ require(["dojo/store/Cache",
     new Button({
         label: "query name contains '3_1'",
         onClick: function(){
-            var o = store.query({name:"3_1"});
+            var o = store.query({name:"3_1"}, { count : 10});
             o.then(function(data){
                 display(data["data"]);
             });
@@ -105,6 +108,7 @@ require(["dojo/store/Cache",
         label: "sort by height asc, gender desc",
         onClick: function(){
             var o = store.query({}, {
+                count : 10,
                 sort:[{attribute:"height", descending: false},
                       {attribute:"gender", descending: true}]
             });
@@ -113,20 +117,74 @@ require(["dojo/store/Cache",
             });
         }}, "sortBtn");
 
+    /////////////////////////////////////////////////////////////////////
+
     new Button({
         label: "Clear",
         onClick: function(){
             dom.byId("out").innerHTML = "";
         }}, "clear");
 
+
+
+    /////////////////////////////////////////////////////////////////////
+
     new Button({
-        label: "ShowId2",
+        label: "get",
         onClick: function(){
             var o =store.get(2);
             o.then(function(data){
                 display([data]);
             });
-        }}, "showId2");
+        }}, "get");
+
+    /////////////////////////////////////////////////////////////////////
+
+    new Button({
+        label: "Pre page",
+        onClick: function(){
+
+            if(!(store.lastQuery || store.lastQuery)){
+                console.error("no query ran before");
+                return;
+            }
+
+            if(!store.lastOptions || !("count" in store.lastOptions)){
+                console.error("last query is runing without paging");
+                return;
+            }
+            if(!store.lastOptions["start"]){
+                store.lastOptions["start"] = 0;
+            }
+
+            if(store.lastOptions["start"] == 0 ){
+                console.error("First reached, could not forward any more.");
+                return;
+            }
+            store.lastOptions["start"] = store.lastOptions["start"] - store.lastOptions["count"];
+            if(store.lastOptions["start"] < 0){
+                store.lastOptions["start"] = 0;
+            }
+            var o = store.query(store.lastQuery, store.lastOptions);
+            o.then(function(data){
+                display(data["data"]);
+            });
+            if(!(store.lastQuery || store.lastQuery)){
+                console.error("no query ran before");
+                return;
+            }
+
+            if(store.lastContentRange && store.lastContentRange["total"] > 0 && store.lastOptions && store.lastOptions["count"]){
+                store.lastOptions["start"] =  store.lastContentRange["start"] - store.lastOptions["count"];
+                if(store.lastOptions["start"]<0){
+                    store.lastOptions["start"] = 0;
+                }
+            }
+            var o = store.query(store.lastQuery, store.lastOptions);
+            o.then(function(data){
+                display(data["data"]);
+            });
+        }}, "preBtn");
 
     new Button({
         label: "Next page",
@@ -137,9 +195,20 @@ require(["dojo/store/Cache",
                 return;
             }
 
-            if(store.lastContentRange && store.lastContentRange["total"] > 0 && store.lastOptions && store.lastOptions["count"]){
-                store.lastOptions["start"] =  store.lastContentRange["start"] + store.lastOptions["count"];
+            if(!store.lastOptions || !("count" in store.lastOptions)){
+                console.error("last query is runing without paging");
+                return;
             }
+            if(!store.lastOptions["start"]){
+                store.lastOptions["start"] = 0;
+            }
+
+            if(store.lastOptions["start"] + store.lastOptions["count"] >= store.lastContentRange["total"]){
+                console.error("End reached, could not forward any more.");
+                return;
+            }
+            store.lastOptions["start"] =  store.lastContentRange["start"] + store.lastOptions["count"];
+
             var o = store.query(store.lastQuery, store.lastOptions);
             o.then(function(data){
                 display(data["data"]);

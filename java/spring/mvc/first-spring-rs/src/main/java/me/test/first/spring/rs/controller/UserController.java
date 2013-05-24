@@ -4,7 +4,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -119,7 +118,7 @@ public class UserController implements LastModified {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    private final Map<Long, User> userMap = new HashMap<Long, User>();
+    private final Map<Long, User> userMap = new LinkedHashMap<Long, User>();
 
     /** 每条的最后修改时间 */
     private final Map<Long, Long> lastModifiedMap = new LinkedHashMap<Long, Long>();
@@ -127,6 +126,9 @@ public class UserController implements LastModified {
     /** 所有记录的最后修改时间，相当于整个表的最后修改时间 */
     // when using DB, this should be `SELECT MAX(VERSION) FROM T_USER`
     private long lastModified = 0;
+
+    // 未指定分页，或分页后的数据最多能显示的最大数量
+    private int maxRecords = 15;
 
     @Autowired
     private UrlPathHelper urlPathHelper = null;
@@ -136,31 +138,14 @@ public class UserController implements LastModified {
 
     @PostConstruct
     public void init() {
-        User user;
         lastModified = System.currentTimeMillis();
-        for (long i = 1; i <= 105; i++) {
-            user = new User();
-            user.setId(i);
-            user.setName("zhang3_" + i);
-            if (i % 10 == 0) {
-                user.setGender(null);
-            } else {
-                user.setGender(i % 2 == 0);
-            }
-            user.setAvatarId(1L);
-            if (i % 10 == 0) {
-                user.setHeight(null);
-            } else {
-                user.setHeight((int) (180 + i % 10));
-            }
-            user.setBirthday(DateTime.now().withDate(1985, 6, 1).withTime(0, 0, 0, 0).plusDays((int) (i - 1)).toDate());
+        for (User user : genTestData(35)) {
             userMap.put(user.getId(), user);
-            lastModifiedMap.put(i, lastModified);
+            lastModifiedMap.put(user.getId(), lastModified);
         }
     }
 
     // 模拟数据库进行查询、排序
-    @SuppressWarnings("rawtypes")
     private List<User> query(final String name, final SortBy sortBy) {
 
         List<User> resultList = new ArrayList<User>();
@@ -181,55 +166,7 @@ public class UserController implements LastModified {
         // sort
         if (sortBy != null) {
 
-            Collections.sort(resultList, new Comparator<User>() {
-
-                @SuppressWarnings("unchecked")
-                @Override
-                public int compare(User user1, User user2) {
-                    List<Item> items = sortBy.getItems();
-                    for (Item item : items) {
-                        try {
-                            String attr = item.getAttribute();
-
-                            Comparable v1 = null;
-                            Comparable v2 = null;
-                            if ("avatar".equals(attr)) {
-                                byte[] v = (byte[]) PropertyUtils.getMappedProperty(user1, attr);
-                                if (v != null) {
-                                    v1 = Base64.encodeBase64String(v);
-                                }
-                                v = (byte[]) PropertyUtils.getMappedProperty(user2, attr);
-                                if (v != null) {
-                                    v2 = Base64.encodeBase64String(v);
-                                }
-                            } else {
-                                v1 = (Comparable) PropertyUtils.getMappedProperty(user1, attr);
-                                v2 = (Comparable) PropertyUtils.getMappedProperty(user2, attr);
-                            }
-
-                            // null as max value
-                            if (v1 != null) {
-                                if (v2 == null) {
-                                    return -1;
-                                } else {
-                                    if (v1.compareTo(v2) != 0) {
-                                        return v1.compareTo(v2);
-                                    }
-                                }
-                            } else {
-                                if (v2 != null) {
-                                    return 1;
-                                }
-                            }
-
-                        } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                    return 0;
-                }
-
-            });
+            Collections.sort(resultList, new UserComparator(sortBy));
         }
 
         return resultList;
@@ -255,44 +192,52 @@ public class UserController implements LastModified {
     public ListWrapper list(
             @RequestHeader(value = "Range", required = false) Range range,
             @RequestParam(value = "name", required = false) String name,
-            @RequestParam(value = "sort", required = false) SortBy sortBy,
+            @RequestParam(value = "sortBy", required = false) SortBy sortBy,
             WebRequest req,
             HttpServletResponse resp) {
 
         logger.debug("SortBy = " + sortBy);
-
-        // there is no need apply `HEAD` for this path, because it always
-        // exists.
 
         if (req.checkNotModified(lastModified)) {
             return null;
         }
 
         List<User> resultList = query(name, sortBy);
-        int start = 0;
-        int end = 10;
-        if (range != null) {
+
+        List<User> rtnList = resultList;
+
+        if (range == null) {
+            resp.setStatus(HttpStatus.OK.value());
+        } else {
+            int start = 0;
+            int end = 10;
             start = range.getStart();
+
+            if (start > resultList.size()) {
+                resp.setStatus(HttpStatus.NO_CONTENT.value());
+                return null;
+            }
+
             end = range.getEnd();
             if (end < 0) {
-
+                end = resultList.size() - 1;
             }
             if (end >= resultList.size()) {
                 end = resultList.size() - 1;
             }
-        }
-
-        if (start == 0 && end == resultList.size() - 1) {
-            resp.setStatus(HttpStatus.OK.value());
-        } else {
+            rtnList = resultList.subList(start, end + 1);
             resp.setStatus(HttpStatus.PARTIAL_CONTENT.value());
             resp.setHeader("Content-Range", new ContentRange(start, end, resultList.size()).toString());
         }
+
+        if (rtnList.size() > maxRecords) {
+            throw new BusinessException(HttpStatus.BAD_REQUEST, "too much records, please using paging.");
+        }
+
         ListWrapper data = new ListWrapper();
-        data.getData().addAll(resultList.subList(start, end + 1));
+        data.getData().addAll(rtnList);
         return data;
     }
-
     /**
      *
      * 新建一个用户。
@@ -518,13 +463,106 @@ public class UserController implements LastModified {
             } catch (NumberFormatException e) {
                 return -1;
             }
-
         }
         logger.warn("request last modifed time for path \"" + mappingUri + "\", not supported, will return -1.");
         return -1;
     }
 
+    public static List<User> genTestData(int count) {
+
+        List<User> list = new ArrayList<User>(count);
+        for (int i = 1; i <= 35; i++) {
+            User user = new User();
+            user.setId((long) i);
+            user.setName("zhang3_" + i);
+
+            // Boolean v = (i / 10) % 3 == 0 ? Boolean.TRUE : (i / 10) % 3 == 1
+            // ? false : null;
+
+            if (i % 10 == 0) {
+                user.setGender(null);
+                user.setHeight(null);
+            } else {
+                user.setGender(i % 3 == 1 ? null : i % 3 == 2 ? Boolean.TRUE : Boolean.FALSE);
+                int j = i % 10;
+                user.setHeight(j % 3 != 0 ? Integer.valueOf(180 + j) : null);
+
+            }
+            user.setAvatarId(1L);
+
+            user.setBirthday(DateTime.now().withDate(1985, 6, 1).withTime(0, 0, 0, 0).plusDays((int) (i - 1)).toDate());
+            list.add(user);
+        }
+        return list;
+    }
+
     public static void main(String[] args) {
+
+        List<User> l = genTestData(35);
+        for (User u : l) {
+            System.out.printf("id=%s, height=%d, gender=%s %n", u.getId(), u.getHeight(), u.getGender());
+        }
+        System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+
+        final SortBy sortBy = SortBy.valueOf("+height,-gender");
+        Collections.sort(l, new UserComparator(sortBy));
+        System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+        for (User u : l) {
+            System.out.printf("id=%s, height=%d, gender=%s %n", u.getId(), u.getHeight(), u.getGender());
+        }
+
+    }
+}
+
+class UserComparator implements Comparator<User> {
+    private SortBy sortBy;
+    public UserComparator(SortBy sortBy) {
+        this.sortBy = sortBy;
+    }
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    @Override
+    public int compare(User user1, User user2) {
+        List<Item> items = sortBy.getItems();
+        for (Item item : items) {
+            try {
+                String attr = item.getAttribute();
+
+                Comparable v1 = null;
+                Comparable v2 = null;
+                if ("avatar".equals(attr)) {
+                    byte[] v = (byte[]) PropertyUtils.getProperty(user1, attr);
+                    if (v != null) {
+                        v1 = Base64.encodeBase64String(v);
+                    }
+                    v = (byte[]) PropertyUtils.getProperty(user2, attr);
+                    if (v != null) {
+                        v2 = Base64.encodeBase64String(v);
+                    }
+                } else {
+                    v1 = (Comparable) PropertyUtils.getProperty(user1, attr);
+                    v2 = (Comparable) PropertyUtils.getProperty(user2, attr);
+                }
+
+                // null as max value
+                if (v1 != null) {
+                    if (v2 == null) {
+                        return -1;
+                    } else {
+                        if (v1.compareTo(v2) != 0) {
+                            return v1.compareTo(v2);
+                        }
+                    }
+                } else {
+                    if (v2 != null) {
+                        return 1;
+                    }
+                }
+
+            } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return 0;
     }
 
 }

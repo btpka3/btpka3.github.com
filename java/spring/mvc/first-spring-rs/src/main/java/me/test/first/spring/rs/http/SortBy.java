@@ -13,7 +13,7 @@ public class SortBy implements Serializable {
     public static class Item implements Serializable {
 
         private static final long serialVersionUID = 1L;
-        private static final Pattern p = Pattern.compile("\\s*([\\+-])\\s*(\\S+)\\s*");
+        private static final Pattern p = Pattern.compile("\\s*[\\+-]?\\s*(\\S+)\\s*");
 
         private String attribute;
         private boolean descending = false;
@@ -27,8 +27,8 @@ public class SortBy implements Serializable {
             Assert.notNull(value);
             Matcher matcher = p.matcher(value);
             Assert.isTrue(matcher.matches(), "Invalid sort item string");
-            boolean descending = "+".equals(matcher.group(1)) ? false : true;
-            String attribute = matcher.group(2);
+            boolean descending = value.trim().startsWith("-");
+            String attribute = matcher.group(1);
             return new Item(attribute, descending);
         }
 

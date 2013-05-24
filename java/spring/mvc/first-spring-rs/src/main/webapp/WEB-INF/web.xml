@@ -43,6 +43,6 @@
 
   <!-- 使用Servlet 3.0 可以设定一个统一的默认错误画面 -->
   <error-page>
-    <location>/error</location>
+    <location>/rs/error</location>
   </error-page>
 </web-app>

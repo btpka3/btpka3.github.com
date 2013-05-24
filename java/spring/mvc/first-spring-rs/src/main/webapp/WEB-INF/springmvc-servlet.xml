@@ -12,6 +12,7 @@
     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
+  <context:annotation-config/>
   <context:component-scan base-package="me.test" />
 
   <bean id="messageSource"
@@ -27,14 +28,8 @@
         class="org.springframework.web.util.UrlPathHelper" />
 
   <!-- ============================================== 定义一个ExceptionResolver -->
-  <bean class="org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver">
-    <property name="order" value="1" />
-  </bean>
-  <bean class="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver">
-    <property name="order" value="2" />
-  </bean>
   <bean class="me.test.first.spring.rs.exception.MyExceptionResolver">
-    <property name="order" value="3" />
+    <property name="order" value="10" />
   </bean>
 
   <!-- ============================================== 定义一个MultipartResolver -->
@@ -57,7 +52,7 @@
    -->
 
   <!-- ============================================== 定义ViewResolver -->
-  <mvc:annotation-driven content-negotiation-manager="contentNegotiationManager" >
+  <mvc:annotation-driven content-negotiation-manager="contentNegotiationManager"  >
 
   </mvc:annotation-driven>
 

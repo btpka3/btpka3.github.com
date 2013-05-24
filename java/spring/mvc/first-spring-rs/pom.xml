@@ -189,6 +189,7 @@
           <packageName>me.test.first.spring.rs.entity</packageName>
           <verbose>true</verbose>
           <target>2.2</target>
+          <enableIntrospection>true</enableIntrospection>
         </configuration>
 
         <executions>
