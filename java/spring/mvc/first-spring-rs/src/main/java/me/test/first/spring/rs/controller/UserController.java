@@ -394,7 +394,7 @@ public class UserController implements LastModified {
         // 更新
         User user = userMap.get(id);
         try {
-            PropertyUtils.copyProperties(newUser, user);
+            PropertyUtils.copyProperties(user, newUser);
 
         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             throw new BusinessException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());

@@ -8,6 +8,9 @@ require(["dojo/store/Cache",
          "dojo/dom",
          "dojo/aspect",
          "dojo/_base/lang",
+         "dijit/Dialog",
+         "dijit/registry",
+         "dojo/on",
          "dojo/domReady!"
 ], function(
              Cache,
@@ -19,7 +22,10 @@ require(["dojo/store/Cache",
              Button,
              dom,
              aspect,
-             lang
+             lang,
+             Dialog,
+             registry,
+             on
 ){
     var store = new JsonRest({
         target: "rs/user/",
@@ -128,15 +134,90 @@ require(["dojo/store/Cache",
 
 
     /////////////////////////////////////////////////////////////////////
+    new Button({
+        label: "add",
+        onClick: function(){
+            var newUser = {"name":"zhang3_10999","gender":true,"birthday":486489600000,"height":182,"avatarId":1};
+            var o = store.add(newUser);
+            o.then(function(data){
+                if (o.ioArgs.xhr.status == 201) { // Created
+                    new Dialog({
+                        title: "Info",
+                        content: "Success! access url is "+ o.ioArgs.xhr.getResponseHeader("Location"),
+                        style: "width: 600px"
+                    }).show();
+                } else {
+                    new Dialog({
+                        title: "Error",
+                        content: "ERROR : response status = "+o.ioArgs.xhr.status,
+                        style: "width: 600px"
+                    }).show();
+                }
+            });
+        }}, "add");
 
     new Button({
-        label: "get",
+        label: "get2",
         onClick: function(){
             var o =store.get(2);
             o.then(function(data){
                 display([data]);
             });
-        }}, "get");
+        }
+    }, "get2");
+
+    new Button({
+        label: "update2",
+        onClick: function(){
+            var o = store.get(2);
+            o.then(function(data){
+                data.height ++;
+                var o1 = store.put(data, {id: data.id});
+                o1.then(function(){
+                    if (o1.ioArgs.xhr.status == 204) { // No Content
+                        new Dialog({
+                            title: "Info",
+                            content: "Update Success! ",
+                            style: "width: 600px"
+                        }).show();
+                        console.info("xxxx",registry.byId("get2"));
+                        on.emit(registry.byId("get2"), "Click",{
+                            bubbles: true,
+                            cancelable: true
+                        });
+                    } else {
+                        new Dialog({
+                            title: "Error",
+                            content: "ERROR : response status = "+o.ioArgs.xhr.status,
+                            style: "width: 600px"
+                        }).show();
+                    }
+                });
+            });
+        }
+    }, "update2");
+
+    new Button({
+        label: "delete2",
+        onClick: function(){
+            var o = store.remove(2);
+            o.then(function(data){
+                if (o.ioArgs.xhr.status == 204) { // No Content
+                    new Dialog({
+                        title: "Info",
+                        content: "Update Success! ",
+                        style: "width: 600px"
+                    }).show();
+                } else {
+                    new Dialog({
+                        title: "Error",
+                        content: "ERROR : response status = "+o.ioArgs.xhr.status,
+                        style: "width: 600px"
+                    }).show();
+                }
+            });
+        }
+    }, "delete2");
 
     /////////////////////////////////////////////////////////////////////
 
@@ -145,12 +226,20 @@ require(["dojo/store/Cache",
         onClick: function(){
 
             if(!(store.lastQuery || store.lastQuery)){
-                console.error("no query ran before");
+                new Dialog({
+                    title: "Error",
+                    content: "no query ran before",
+                    style: "width: 600px"
+                }).show();
                 return;
             }
 
             if(!store.lastOptions || !("count" in store.lastOptions)){
-                console.error("last query is runing without paging");
+                new Dialog({
+                    title: "Error",
+                    content: "last query is runing without paging",
+                    style: "width: 600px"
+                }).show();
                 return;
             }
             if(!store.lastOptions["start"]){
@@ -158,7 +247,11 @@ require(["dojo/store/Cache",
             }
 
             if(store.lastOptions["start"] == 0 ){
-                console.error("First reached, could not forward any more.");
+                new Dialog({
+                    title: "Error",
+                    content: "First reached, could not forward any more.",
+                    style: "width: 600px"
+                }).show();
                 return;
             }
             store.lastOptions["start"] = store.lastOptions["start"] - store.lastOptions["count"];
@@ -169,21 +262,7 @@ require(["dojo/store/Cache",
             o.then(function(data){
                 display(data["data"]);
             });
-            if(!(store.lastQuery || store.lastQuery)){
-                console.error("no query ran before");
-                return;
-            }
 
-            if(store.lastContentRange && store.lastContentRange["total"] > 0 && store.lastOptions && store.lastOptions["count"]){
-                store.lastOptions["start"] =  store.lastContentRange["start"] - store.lastOptions["count"];
-                if(store.lastOptions["start"]<0){
-                    store.lastOptions["start"] = 0;
-                }
-            }
-            var o = store.query(store.lastQuery, store.lastOptions);
-            o.then(function(data){
-                display(data["data"]);
-            });
         }}, "preBtn");
 
     new Button({
@@ -191,12 +270,20 @@ require(["dojo/store/Cache",
         onClick: function(){
 
             if(!(store.lastQuery || store.lastQuery)){
-                console.error("no query ran before");
+                new Dialog({
+                    title: "Error",
+                    content: "no query ran before",
+                    style: "width: 600px"
+                }).show();
                 return;
             }
 
             if(!store.lastOptions || !("count" in store.lastOptions)){
-                console.error("last query is runing without paging");
+                new Dialog({
+                    title: "Error",
+                    content: "last query is runing without paging",
+                    style: "width: 600px"
+                }).show();
                 return;
             }
             if(!store.lastOptions["start"]){
@@ -204,7 +291,11 @@ require(["dojo/store/Cache",
             }
 
             if(store.lastOptions["start"] + store.lastOptions["count"] >= store.lastContentRange["total"]){
-                console.error("End reached, could not forward any more.");
+                new Dialog({
+                    title: "Error",
+                    content: "End reached, could not forward any more.",
+                    style: "width: 600px"
+                }).show();
                 return;
             }
             store.lastOptions["start"] =  store.lastContentRange["start"] + store.lastOptions["count"];
