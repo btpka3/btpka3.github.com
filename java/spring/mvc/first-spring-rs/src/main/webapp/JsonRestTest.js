@@ -11,6 +11,7 @@ require(["dojo/store/Cache",
          "dijit/Dialog",
          "dijit/registry",
          "dojo/on",
+         "dojo/date/locale",
          "dojo/domReady!"
 ], function(
              Cache,
@@ -25,7 +26,8 @@ require(["dojo/store/Cache",
              lang,
              Dialog,
              registry,
-             on
+             on,
+             locale
 ){
     var store = new JsonRest({
         target: "rs/user/",
@@ -68,7 +70,8 @@ require(["dojo/store/Cache",
             dom.byId("out").innerHTML += "id : " + items[i].id + ", "
                 + "name : " + items[i].name + ", "
                 + "gender : " + items[i].gender + ", "
-                + "birthday : " + items[i].birthday + ", "
+                // http://www.unicode.org/reports/tr35/tr35-4.html#Date_Format_Patterns
+                + "birthday : " + locale.format(new Date(items[i].birthday), {selector:"date", datePattern:"yyyy/MM/dd"}) + ", "
                 + "height : " + items[i].height + ", "
                 + "avatarId : " + items[i].avatarId + ", "
                 + "<br/>";

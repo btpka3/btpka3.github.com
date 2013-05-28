@@ -77,16 +77,17 @@ public class FileController {
         }
     }
 
+    // Should not handle multi file, even should be only one file item in post data.
     @RequestMapping(method = RequestMethod.POST)
     public void post(@RequestParam("file") MultipartFile file, HttpServletRequest req, HttpServletResponse resp) {
 
         if (file == null) {
-            throw new BusinessException(HttpStatus.BAD_REQUEST,
+            throw new BusinessException(HttpStatus.BAD_REQUEST.value(),
                     "for uploading, parameter name must be \"file\"");
         }
 
         if (file.isEmpty()) {
-            throw new BusinessException(HttpStatus.BAD_REQUEST,
+            throw new BusinessException(HttpStatus.BAD_REQUEST.value(),
                     "File could not be empty");
         }
 
@@ -95,7 +96,7 @@ public class FileController {
             rsc = new ByteArrayResource(file.getBytes(),
                     file.getContentType());
         } catch (IOException e) {
-            throw new BusinessException(HttpStatus.INTERNAL_SERVER_ERROR,
+            throw new BusinessException(HttpStatus.INTERNAL_SERVER_ERROR.value(),
                     "Could not read the file uploaded.");
         }
 
@@ -117,6 +118,7 @@ public class FileController {
                 .toUriString();
         resp.setHeader("Location", uri);
 
+        resp.setStatus(HttpStatus.CREATED.value());
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.HEAD)
@@ -125,11 +127,12 @@ public class FileController {
         try {
             id = Long.valueOf(idStr);
         } catch (NumberFormatException e) {
-            throw new BusinessException(HttpStatus.NOT_FOUND, "file with id =" + id + " not exists");
+            throw new BusinessException(HttpStatus.NOT_FOUND.value(),
+                    "file with id =" + id + " not exists");
         }
 
         if (!fileMap.containsKey(id)) {
-            throw new BusinessException(HttpStatus.NOT_FOUND,
+            throw new BusinessException(HttpStatus.NOT_FOUND.value(),
                     "file with id \"" + id + "\" not found.");
         }
 

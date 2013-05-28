@@ -29,7 +29,7 @@ public class MyExceptionResolver extends AbstractHandlerExceptionResolver {
     protected ModelAndView handleBusinessException(BusinessException ex,
             HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
 
-        response.sendError(ex.getHttpStatus().value(), ex.getMessage());
+        response.sendError(ex.getHttpStatus(), ex.getMessage());
         return new ModelAndView();
     }
 

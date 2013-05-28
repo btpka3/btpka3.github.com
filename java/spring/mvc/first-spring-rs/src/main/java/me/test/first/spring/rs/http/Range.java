@@ -26,27 +26,30 @@ public class Range implements Serializable {
     private static final Pattern p = Pattern.compile("\\s*items\\s*=\\s*(\\d*)\\s*-\\s*(\\d*)?\\s*",
             Pattern.CASE_INSENSITIVE);
 
-    // required (inclusive)
-    private int start = 0;
+    // required (inclusive) : must not be null or minus
+    private Integer start;
 
-    // optional (inclusive) : -1 means to end
-    private int end = -1;
+    // optional (inclusive) : null means to end
+    private Integer end;
 
     public Range() {
         super();
     }
 
-    public Range(int start, int end) {
+    public Range(Integer start, Integer end) {
+        Assert.notNull(start);
+        Assert.isTrue(start >= 0, "Range start value must be equal or bigger than 0.");
+        if (end != null) {
+            Assert.isTrue(end >= start,
+                    "Range end value must be null, or equal or bigger than start value.");
+        }
         this.start = start;
         this.end = end;
 
-        Assert.isTrue(this.start >= 0, "Range start value must be equal or bigger than 0.");
-        Assert.isTrue(this.end < 0 || this.end >= this.start,
-                "Range end value must be minus, or equal or bigger than start value.");
     }
 
-    public Range(int start) {
-        this(start, -1);
+    public Range(Integer start) {
+        this(start, null);
     }
 
     public static Range valueOf(String value) {
@@ -57,29 +60,29 @@ public class Range implements Serializable {
         String startStr = matcher.group(1);
         String endStr = matcher.group(2);
 
-        int start = Integer.valueOf(startStr);
+        Integer start = Integer.valueOf(startStr);
 
-        int end = -1;
+        Integer end = null;
         if (StringUtils.isNotEmpty(endStr)) {
             end = Integer.valueOf(endStr);
         }
         return new Range(start, end);
     }
 
-    public int getStart() {
+    public Integer getStart() {
         return start;
     }
 
-    public int getEnd() {
+    public Integer getEnd() {
         return end;
     }
 
     @Override
     public String toString() {
-        if (this.end > -0) {
-            return String.format("items=%d-%d", this.start, this.end);
+        if (this.end == null) {
+            return String.format("items=%d-", this.start);
         }
-        return String.format("items=%d-", this.start);
+        return String.format("items=%d-%d", this.start, this.end);
     }
 
     public static void main(String[] args) {

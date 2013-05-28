@@ -1,12 +1,9 @@
 package me.test.first.spring.rs.exception;
 
-import org.springframework.http.HttpStatus;
 
 public class BusinessException extends RuntimeException {
     private static final long serialVersionUID = 1L;
-
-    // TODO here should use `int` type for decreasing couple with Spring
-    private HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+    private int httpStatus = 400;
 
     public BusinessException() {
         super();
@@ -24,27 +21,27 @@ public class BusinessException extends RuntimeException {
         super(cause);
     }
 
-    public BusinessException(HttpStatus httpStatus) {
+    public BusinessException(int httpStatus) {
         super();
         this.httpStatus = httpStatus;
     }
 
-    public BusinessException(HttpStatus httpStatus, String message, Throwable cause) {
+    public BusinessException(int httpStatus, String message, Throwable cause) {
         super(message, cause);
         this.httpStatus = httpStatus;
     }
 
-    public BusinessException(HttpStatus httpStatus, String message) {
+    public BusinessException(int httpStatus, String message) {
         super(message);
         this.httpStatus = httpStatus;
     }
 
-    public BusinessException(HttpStatus httpStatus, Throwable cause) {
+    public BusinessException(int httpStatus, Throwable cause) {
         super(cause);
         this.httpStatus = httpStatus;
     }
 
-    public HttpStatus getHttpStatus() {
+    public int getHttpStatus() {
         return httpStatus;
     }
 }

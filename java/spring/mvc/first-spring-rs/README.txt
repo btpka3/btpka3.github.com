@@ -33,6 +33,8 @@ TODO:
   JSONP?
   XML?
 
+文件上传，如果需要使用不同的最大大小，最好使用不同的Spring DispatcherServlet， 进而使用不同的 multipartResolver
+
 PUT是一个完整的实体对象，不能被部分更新。
 如果需要部分更新，需要使用PATCH方法。
 

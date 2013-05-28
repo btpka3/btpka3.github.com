@@ -209,19 +209,16 @@ public class UserController implements LastModified {
         if (range == null) {
             resp.setStatus(HttpStatus.OK.value());
         } else {
-            int start = 0;
-            int end = 10;
-            start = range.getStart();
+            Integer start = range.getStart();
+            Integer end = range.getEnd();
 
-            if (start > resultList.size()) {
-                resp.setStatus(HttpStatus.NO_CONTENT.value());
+            if (start > resultList.size() || (end != null && end > resultList.size())) {
+                resp.setStatus(HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE.value());
+                resp.setHeader("Content-Range",
+                        new ContentRange(0, resultList.size() - 1, resultList.size()).toString());
                 return null;
             }
 
-            end = range.getEnd();
-            if (end < 0) {
-                end = resultList.size() - 1;
-            }
             if (end >= resultList.size()) {
                 end = resultList.size() - 1;
             }
@@ -231,7 +228,7 @@ public class UserController implements LastModified {
         }
 
         if (rtnList.size() > maxRecords) {
-            throw new BusinessException(HttpStatus.BAD_REQUEST, "too much records, please using paging.");
+            throw new BusinessException(HttpStatus.BAD_REQUEST.value(), "too much records, please using paging.");
         }
 
         ListWrapper data = new ListWrapper();
@@ -256,10 +253,10 @@ public class UserController implements LastModified {
     @RequestMapping(method = RequestMethod.POST)
     public void post(@RequestBody User user, HttpServletRequest req, HttpServletResponse resp) {
         if (user == null) {
-            throw new BusinessException(HttpStatus.BAD_REQUEST, "user info could not be null");
+            throw new BusinessException(HttpStatus.BAD_REQUEST.value(), "user info could not be null");
         }
         if (user.getId() != null) {
-            throw new BusinessException(HttpStatus.BAD_REQUEST,
+            throw new BusinessException(HttpStatus.BAD_REQUEST.value(),
                     "user id is generated at server, could not be specified by client");
         }
 
@@ -308,11 +305,11 @@ public class UserController implements LastModified {
         try {
             id = Long.valueOf(idStr);
         } catch (NumberFormatException e) {
-            throw new BusinessException(HttpStatus.NOT_FOUND, "user with id =" + id + " not exists");
+            throw new BusinessException(HttpStatus.NOT_FOUND.value(), "user with id =" + id + " not exists");
         }
 
         if (!userMap.containsKey(id)) {
-            throw new BusinessException(HttpStatus.NOT_FOUND, "user with id =" + id + " not exists");
+            throw new BusinessException(HttpStatus.NOT_FOUND.value(), "user with id =" + id + " not exists");
         }
 
         resp.setStatus(HttpStatus.NO_CONTENT.value());
@@ -379,11 +376,11 @@ public class UserController implements LastModified {
         Long id = Long.valueOf(idStr);
 
         if (!id.equals(newUser.getId())) {
-            throw new BusinessException(HttpStatus.BAD_REQUEST, "Can not chage user id");
+            throw new BusinessException(HttpStatus.BAD_REQUEST.value(), "Can not chage user id");
         }
 
         if (newUser.getHeight() != null && newUser.getHeight() < 0) {
-            throw new BusinessException(HttpStatus.BAD_REQUEST, "height must be positive integer ");
+            throw new BusinessException(HttpStatus.BAD_REQUEST.value(), "height must be positive integer ");
         }
 
         if (newUser.getAvatarId() != null) {
@@ -397,7 +394,7 @@ public class UserController implements LastModified {
             PropertyUtils.copyProperties(user, newUser);
 
         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-            throw new BusinessException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+            throw new BusinessException(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
         }
 
         resp.setStatus(HttpStatus.NO_CONTENT.value());
@@ -425,10 +422,10 @@ public class UserController implements LastModified {
         try {
             id = Long.valueOf(idStr);
         } catch (NumberFormatException e) {
-            throw new BusinessException(HttpStatus.NOT_FOUND, "user with id =" + id + " not exists");
+            throw new BusinessException(HttpStatus.NOT_FOUND.value(), "user with id =" + id + " not exists");
         }
         if (!userMap.containsKey(id)) {
-            throw new BusinessException(HttpStatus.NOT_FOUND, "user with id =" + id + " not exists");
+            throw new BusinessException(HttpStatus.NOT_FOUND.value(), "user with id =" + id + " not exists");
 
         }
         userMap.remove(id);
