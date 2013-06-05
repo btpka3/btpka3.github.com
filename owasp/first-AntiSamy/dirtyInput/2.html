@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+<title>test AntiSamy</title>
+</head>
+<body >
+test 7788
+
+<!-- comment -->
+<%-- JSP Sytle comment --%>
+<? directive ?>
+
+<!-- z-index -->
+<a style="z-index: 999; width:100%; height: 100%; display: block; position: absolute; top: 0; left: 0;" href="xxx">aaa</a>
+
+<!-- unkonwn attribute -->
+<div xxx="xxx">bbb</div>
+
+<!-- unkonwn tag -->
+<xxx>xxxxx</xxx>
+<XSS STYLE="xss:expression(alert('XSS'))">
+<BGSOUND SRC="javascript:alert('XSS');">
+<OBJECT TYPE="text/x-scriptlet" DATA="http://ha.ckers.org/scriptlet.html"></OBJECT>
+<EMBED SRC="data:image/svg+xml;base64,PHN2ZyB4bWxuczpzdmc9Imh0dH A6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv MjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hs aW5rIiB2ZXJzaW9uPSIxLjAiIHg9IjAiIHk9IjAiIHdpZHRoPSIxOTQiIGhlaWdodD0iMjAw IiBpZD0ieHNzIj48c2NyaXB0IHR5cGU9InRleHQvZWNtYXNjcmlwdCI+YWxlcnQoIlh TUyIpOzwvc2NyaXB0Pjwvc3ZnPg==" type="image/svg+xml" AllowScriptAccess="always"></EMBED>
+
+
+
+<iframe src="yyy" ></iframe>
+<IFRAME SRC="javascript:alert('XSS');"></IFRAME>
+<IFRAME SRC=# onmouseover="alert(document.cookie)"></IFRAME>
+<FRAMESET><FRAME SRC="javascript:alert('XSS');"></FRAMESET>
+
+<TABLE BACKGROUND="javascript:alert('XSS')">
+<DIV STYLE="background-image:\0075\0072\006C\0028'\006a\0061\0076\0061\0073\0063\0072\0069\0070\0074\003a\0061\006c\0065\0072\0074\0028.1027\0058.1053\0053\0027\0029'\0029"></DIV>
+<DIV STYLE="width: expression(alert('XSS'));"></DIV>
+
+</body>
+</html>
+
+
+
+
+<SCRIPT SRC=//ha.ckers.org/.j>
