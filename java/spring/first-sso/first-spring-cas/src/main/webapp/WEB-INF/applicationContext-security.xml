@@ -17,8 +17,12 @@
             disable-url-rewriting="true"
             entry-point-ref="casEntryPoint" >
     <sec:access-denied-handler error-page="/denied.jsp"/>
-    <sec:logout logout-success-url="/logoutSuccess.jsp" />
-    <sec:intercept-url pattern="/login.jsp"           access="isAuthenticated()" />
+
+    <sec:session-management session-fixation-protection="migrateSession">
+    </sec:session-management>
+
+    <sec:logout logout-success-url="/logoutSuccess.jsp" delete-cookies="JSESSIONID" invalidate-session="true" />
+    <sec:intercept-url pattern="/login.jsp"         access="isAuthenticated()" />
     <sec:intercept-url pattern="/sec.jsp"           access="isAuthenticated()" />
     <sec:intercept-url pattern="/appointment.jsp"   access="hasAnyRole('XROLE_READ_APPOINTMENT')" />
     <sec:intercept-url pattern="/staff.jsp"         access="hasAnyRole('XROLE_READ_STAFF')" />
