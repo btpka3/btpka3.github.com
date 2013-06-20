@@ -305,6 +305,18 @@
           </snapshots>
         </repository>
 
+        <repository>
+          <id>swt-repo</id>
+          <name>CentralSync</name>
+          <url>http://swt-repo.googlecode.com/svn/repo/</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+           <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </repository>
+
       </repositories>
       <pluginRepositories>
         <pluginRepository>
