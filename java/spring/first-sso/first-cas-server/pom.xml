@@ -15,13 +15,7 @@
   </properties>
 
   <dependencies>
-    <dependency>
-      <groupId>org.jasig.cas</groupId>
-      <artifactId>cas-server-webapp</artifactId>
-      <version>3.5.1</version>
-      <type>war</type>
-      <scope>runtime</scope>
-    </dependency>
+
     <dependency>
       <groupId>org.jasig.cas</groupId>
       <artifactId>cas-server-support-jdbc</artifactId>
@@ -37,18 +31,150 @@
       <artifactId>commons-dbcp</artifactId>
       <version>1.4</version>
     </dependency>
+    <dependency>
+      <groupId>org.jasig.cas</groupId>
+      <artifactId>cas-server-integration-restlet</artifactId>
+      <version>3.5.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-core</artifactId>
+      <version>3.1.1.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-cas</artifactId>
+      <version>3.1.1.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-core</artifactId>
+      <version>3.1.1.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-config</artifactId>
+      <version>3.1.1.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc</artifactId>
+      <version>3.1.1.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>3.1.1.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-web</artifactId>
+      <version>3.1.1.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-tx</artifactId>
+      <version>3.1.1.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jasig.cas</groupId>
+      <artifactId>cas-server-webapp</artifactId>
+      <version>3.5.1</version>
+      <type>war</type>
+      <scope>runtime</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>cglib-full</artifactId>
+          <groupId>cglib</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+<!--
+    <dependency>
+      <groupId>org.jasig.cas</groupId>
+      <artifactId>cas-server-webapp</artifactId>
+      <version>3.5.1</version>
+      <type>warpath</type>
+    </dependency>
+ -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+      <version>3.1.1.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-expression</artifactId>
+      <version>3.1.1.RELEASE</version>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
+
+      <plugin>
+        <groupId>org.appfuse.plugins</groupId>
+        <artifactId>maven-warpath-plugin</artifactId>
+        <version>2.2.1</version>
+        <extensions>true</extensions>
+        <executions>
+          <execution>
+            <goals>
+              <goal>add-classes</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
         <version>2.3</version>
         <configuration>
           <warName>first-cas-server</warName>
+          <dependentWarExcludes>WEB-INF/lib/*</dependentWarExcludes>
+          <!--
+          <overlays>
+            <overlay>
+              <groupId>org.jasig.cas</groupId>
+              <artifactId>cas-server-webapp</artifactId>
+              <excludes>
+                <exclude>WEB-INF/lib/cglib-full-*.jar</exclude>
+              </excludes>
+            </overlay>
+          </overlays>
+           -->
         </configuration>
       </plugin>
     </plugins>
+    <pluginManagement>
+      <plugins>
+        <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+        <plugin>
+          <groupId>org.eclipse.m2e</groupId>
+          <artifactId>lifecycle-mapping</artifactId>
+          <version>1.0.0</version>
+          <configuration>
+            <lifecycleMappingMetadata>
+              <pluginExecutions>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.appfuse.plugins</groupId>
+                    <artifactId>maven-warpath-plugin</artifactId>
+                    <versionRange>[2.2.1,)</versionRange>
+                    <goals>
+                      <goal>add-classes</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <execute/>
+                  </action>
+                </pluginExecution>
+              </pluginExecutions>
+            </lifecycleMappingMetadata>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
   </build>
 
 </project>

@@ -93,9 +93,64 @@ management.services.status.evaluationOrder.notupdated
       而B返回的数据要使用JSONP格式，即结果是一个JavaScript回调函数包装，而不是 JSON 数据。
 
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Spring Web Flow 与 Spring MVC 集成
+1. 定义一个SpringFlow的HandlerAdapter
+<bean class="org.springframework.webflow.mvc.servlet.FlowHandlerAdapter">
+  <property name="flowExecutor" ref="flowExecutor" />
+</bean>
+
+2. 定义Flow Mappings
+将发送到 /hotels/booking 请求交由 id=hotels/booking 的flow执行
+<bean class="org.springframework.webflow.mvc.servlet.FlowHandlerMapping">
+  <property name="flowRegistry" ref="flowRegistry"/>
+  <property name="order" value="0"/>
+</bean>
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+RESTful API
+https://wiki.jasig.org/display/CASUM/RESTful+API
+
+* 在 maven的 setting.xml的激活的profile中追加以下仓库
+<repository>
+   <id>maven-restlet</id>
+   <name>Public online Restlet repository</name>
+   <url>http://maven.restlet.org</url>
+</repository>
+
+* 在 fisrt-cas-server 的 pom.xml中加入以下依赖
+<dependency>
+    <groupId>org.jasig.cas</groupId>
+    <artifactId>cas-server-integration-restlet</artifactId>
+    <version>${cas.version}</version>
+    <type>jar</type>
+</dependency>
+
+* 在 fisrt-cas-server 的 pom.xml中加入 移除 cas-server-webapp 中的 cglib-full-2.0.2.jar
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>2.3</version>
+        <configuration>
+          <warName>first-cas-server</warName>
+          <overlays>
+            <overlay>
+              <groupId>org.jasig.cas</groupId>
+              <artifactId>cas-server-webapp</artifactId>
+              <excludes>
+                <exclude>WEB-INF/lib/cglib-full-*.jar</exclude>
+              </excludes>
+            </overlay>
+          </overlays>
+        </configuration>
+      </plugin>
+    </plugins>
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 未完成任务：
 1. 自定义CAS服务器的皮肤
 2. 自定义CAS服务器的持久化
