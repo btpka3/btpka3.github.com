@@ -67,7 +67,7 @@ public class Adc {
                 } else {
                     Map lv2Obj = (Map) ((Map) lv1Obj.get("children")).get(code.substring(0, 4) + "00");
                     Assert.notNull(lv2Obj, code + " 父元素未找到");
-                    ((Map) lv1Obj.get("children")).put(code, lv3Obj);
+                    ((Map) lv2Obj.get("children")).put(code, lv3Obj);
                 }
             }
         }
