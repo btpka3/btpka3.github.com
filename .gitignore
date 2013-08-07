@@ -6,3 +6,4 @@ target
 bin
 *.log
 /owasp/first-AntiSamy/cleanResult
+.pmd
