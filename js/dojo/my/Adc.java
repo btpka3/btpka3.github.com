@@ -62,7 +62,16 @@ public class Adc {
                 if (lv1Obj.get("name").equals("北京市")
                         || lv1Obj.get("name").equals("上海市")
                         || lv1Obj.get("name").equals("天津市")
-                        || lv1Obj.get("name").equals("重庆市")) {
+                        || lv1Obj.get("name").equals("重庆市")
+
+                        // 省直辖县级行政区划
+                        || code.startsWith("4190")
+                        || code.startsWith("4290")
+                        || code.startsWith("4690")
+
+                        // 自治区直辖县级行政区划
+                        || code.startsWith("6590")
+                        ) {
                     ((Map) lv1Obj.get("children")).put(code, lv3Obj);
                 } else {
                     Map lv2Obj = (Map) ((Map) lv1Obj.get("children")).get(code.substring(0, 4) + "00");
