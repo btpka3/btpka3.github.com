@@ -5,15 +5,15 @@
 
   first-cas-server
     是通过Maven War Overlay方式简单自定义的CAS中心。访问路径：
-      https://cas.localhost:8443/first-cas-server/
+      https://cas.localhost.me:8443/first-cas-server/
 
   first-spring-cas
     是使用CAS进行SSO的客户程序，这里使用Spring Security进行配置。访问路径
-      http://app.localhost:8080/first-spring-cas/
+      http://app.localhost.me:8080/first-spring-cas/
 
   first-spring-stateless
     设计为尽量按照RESTFul提供JSON数据和业务操作的服务，用户不直接与其进行交互，但浏览器可以访问的到。
-      http://stateless.localhost:8080/first-spring-stateless/
+      http://stateless.localhost.me:8080/first-spring-stateless/
 
 
 

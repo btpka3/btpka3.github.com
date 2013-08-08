@@ -16,7 +16,7 @@
             use-expressions="true"
             disable-url-rewriting="true"
             entry-point-ref="casEntryPoint" >
-    <sec:access-denied-handler error-page="/denied.jsp"/>
+    <sec:access-denied-handler                      error-page="/denied.jsp"/>
 
     <sec:session-management session-fixation-protection="migrateSession">
     </sec:session-management>
@@ -38,9 +38,11 @@
   <!-- 该Filter会将用户重定向到CAS服务器，并通知CAS服务器进行单点退出操作 -->
   <bean id="requestSingleLogoutFilter"
         class="org.springframework.security.web.authentication.logout.LogoutFilter">
-    <constructor-arg value="${cas.url.logout}"/>
-    <constructor-arg>
-      <bean class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler"/>
+    <constructor-arg value="${cas.url.logout}" type="java.lang.String" index="0" />
+    <constructor-arg index="1" type="org.springframework.security.web.authentication.logout.LogoutHandler[]">
+      <list value-type="org.springframework.security.web.authentication.logout.LogoutHandler">
+        <bean class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler"/>
+      </list>
     </constructor-arg>
     <property name="filterProcessesUrl" value="/j_spring_cas_security_logout"/>
   </bean>
@@ -54,7 +56,10 @@
         class="org.springframework.security.cas.web.CasAuthenticationFilter">
     <property name="authenticationManager"          ref="authenticationManager"/>
     <property name="proxyGrantingTicketStorage"     ref="pgtStorage"/>
+    <property name="serviceProperties"              ref="serviceProperties"/>
+    <!---->
     <property name="proxyReceptorUrl"               value="/j_spring_cas_security_proxyreceptor"/>
+
   </bean>
 
   <bean id="casEntryPoint"
@@ -70,6 +75,8 @@
     <property name="service"                        value="${app.url.service}"/>
     <!-- 告知CAS服务器：本应用是敏感业务，不允许使用其他应用产生的登录状态，必须要求用户重新输入密码 -->
     <property name="sendRenew"                      value="false"/>
+    <!-- 对所有的URL均进行认证检查 -->
+    <property name="authenticateAllArtifacts"       value="true"/>
   </bean>
 
   <sec:authentication-manager alias="authenticationManager">
@@ -107,6 +114,7 @@
     <constructor-arg                                value="${cas.url}" />
     <property name="proxyCallbackUrl"               value="${app.url.proxyreceptor}"/>
     <property name="proxyGrantingTicketStorage"     ref="pgtStorage"/>
+    <property name="acceptAnyProxy"                 value="true"/>
   </bean>
   <bean id="pgtStorage"
         class="org.jasig.cas.client.proxy.ProxyGrantingTicketStorageImpl"/>
