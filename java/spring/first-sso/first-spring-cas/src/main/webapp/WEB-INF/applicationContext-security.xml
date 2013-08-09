@@ -59,7 +59,9 @@
     <property name="serviceProperties"              ref="serviceProperties"/>
     <!---->
     <property name="proxyReceptorUrl"               value="/j_spring_cas_security_proxyreceptor"/>
-
+    <property name="authenticationDetailsSource">
+      <bean class="org.springframework.security.cas.web.authentication.ServiceAuthenticationDetailsSource"/>
+    </property>
   </bean>
 
   <bean id="casEntryPoint"

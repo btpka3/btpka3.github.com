@@ -40,23 +40,25 @@ public class TestCasRESTfulApi {
         URI tgtUrl = rest.postForLocation(casUrlPrefix + "/v1/tickets", params, Collections.emptyMap());
 
         // GET ST
-        //String service = "http://app.localhost.me:8080/first-spring-cas/sec.jsp";
-        String service = "http://stateless.localhost:8080/first-spring-stateless/appointment.jsp";
+        String service = "http://app.localhost.me:8080/first-spring-cas/sec.jsp";
+        //String service = "http://stateless.localhost:8080/first-spring-stateless/appointment.jsp";
         params.clear();
         params.set("service", service);
         ResponseEntity<String> st = rest.postForEntity(tgtUrl, params, String.class);
         System.out.println(st.getBody());
 
         // GET SSO Web App content
-        Map<String, Object> urlParams = new HashMap<String, Object>();
-        urlParams.put("ticket", st.getBody());
-        ResponseEntity<String> html = rest.getForEntity(service, String.class, urlParams);
-        System.out.println(html);
-        System.out.println(html.getBody());
+//        Map<String, Object> urlParams = new HashMap<String, Object>();
+//        urlParams.put("ticket", st.getBody());
+//        ResponseEntity<String> html = rest.getForEntity(service, String.class, urlParams);
+//        System.out.println(html);
+//        System.out.println(html.getBody());
 
         System.out.println("~~~~~~~~~~~~~~");
-        html = rest.getForEntity(service+"?ticket="+st.getBody(), String.class, Collections.emptyMap());
+        ResponseEntity<String> html = rest.getForEntity(service+"?ticket="+st.getBody(), String.class, Collections.emptyMap());
         System.out.println(html);
         System.out.println(html.getBody());
+        System.out.println("~~~~~~~~~~~~~~");
+        System.out.println(html.getHeaders());
     }
 }
