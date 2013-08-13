@@ -170,3 +170,66 @@ AuthenticationTrustResolver#isAnonymous()
   at MethodInvocationPrivilegeEvaluator#isAllowed() / DefaultWebInvocationPrivilegeEvaluator#isAllowed()
 使用Expression时的调用路径
   at SecurityExpressionRoot#isAnonymous()
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+TGT 是存放于 SSO 服务器的域名下的Cookie里的。
+
+org.jasig.cas.authentication.principal.Credentials
+  Marker Interface。需要客户端提供，以便验证的东西（用户名，密码，证书等）。
+  验证通过后会转换成 Principal。
+  org.jasig.cas.authentication.principal.HttpBasedServiceCredentials
+    验证ST时，提供的验证成功时发送PGT的URL。
+
+org.jasig.cas.authentication.Authentication
+  + Principal
+  + 属性Map
+  + 认证时间戳
+
+  代表一个成功的认证请求，还包含一些其他的额外信息（比如认证时间等）。
+
+
+org.jasig.cas.authentication.principal.Principal
+  认证后的某种东西，比如人或者服务。有ID和属性列表组成。
+
+org.jasig.cas.authentication.principal.UsernamePasswordCredentials
+
+
+
+org.jasig.cas.authentication.AuthenticationManager
+  org.jasig.cas.authentication.handler.AuthenticationHandler
+  org.jasig.cas.authentication.principal.CredentialsToPrincipalResolver
+    (org.jasig.cas.authentication.principal.UsernamePasswordCredentialsToPrincipalResolver)
+    org.jasig.cas.authentication.principal.SimplePrincipal
+
+org.jasig.cas.CentralAuthenticationService
+    createTicketGrantingTicket(Credentials)
+    delegateTicketGrantingTicket(String, Credentials)
+    destroyTicketGrantingTicket(String)
+    grantServiceTicket(String, Service)
+    grantServiceTicket(String, Service, Credentials)
+    validateServiceTicket(String, Service)
+
+org.jasig.cas.CentralAuthenticationServiceImpl
+  + org.jasig.cas.ticket.registry.TicketRegistry
+  + org.jasig.cas.authentication.AuthenticationManager
+      负责 org.jasig.cas.authentication.principal.Credentials -> org.jasig.cas.authentication.Authentication
+  + org.jasig.cas.util.UniqueTicketIdGenerator
+  + org.jasig.cas.ticket.ExpirationPolicy
+  + org.jasig.cas.services.ServicesManager
+
+  + org.jasig.cas.authentication.principal.PersistentIdGenerator
+
+
+
+String serviceTicketId
+  ST-xxxxx
+
+org.jasig.cas.ticket.ServiceTicket
+    包含 org.jasig.cas.authentication.principal.Service
+            包含 org.jasig.cas.authentication.principal.Principal
+
+org.jasig.cas.ticket.registry.TicketRegistry
+
+
