@@ -43,12 +43,28 @@ fi
 ########################### Settings
 
 RUNNING_USER=tomcat
-CMD_START="/path/to/app start"
-CMD_STOP="/path/to/app stop"
+SHUTDOWN_WAIT=3
+TOMCAT_HOME="/usr/local/${NAME}"
+export JAVA_HOME="/usr/local/jdk"
+export JAVA_OPTS="-Dnode=${NAME}\
+  -Dfile.encoding=UTF-8 \
+  -XX:+DoEscapeAnalysis \
+  -XX:+UseConcMarkSweepGC \
+  -XX:+CMSClassUnloadingEnabled \
+  -XX:+UseParNewGC \
+  -XX:MaxPermSize=2568m \
+  -Xms512m\
+  -Xmx512m\
+"
+
+CMD_START="${TOMCAT_HOME}/bin/catalina.sh start"
+CMD_STOP="${TOMCAT_HOME}/bin/catalina.sh stop"
 LOCK_FILE="/var/lock/subsys/${NAME}"
 PID_FILE="/var/run/${NAME}.pid"
-LOG_FILE="/var/log/${NAME}.log"
-SHUTDOWN_WAIT=3
+export CATALINA_PID="${PID_FILE}"
+LOG_FILE="${TOMCAT_HOME}/logs/${NAME}.log"
+
+########################### ENV PASSED
 
 
 ########################### Functions
