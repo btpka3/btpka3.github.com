@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
-  xmlns:sec="http://www.springframework.org/schema/security" xmlns:tx="http://www.springframework.org/schema/tx"
-  xmlns:util="http://www.springframework.org/schema/util"
-  xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd
-                      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-                      http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
-                      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
-                      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p" xmlns:sec="http://www.springframework.org/schema/security" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+  xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd
+    http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
   <sec:http realm="TC HIS 2.0" use-expressions="true" disable-url-rewriting="true" >
     <sec:access-denied-handler error-page="/denied.jsp"/>
@@ -20,7 +18,31 @@
   <sec:authentication-manager>
     <sec:authentication-provider user-service-ref="myUserDetailsService" />    <!-- 默认是实例化 DaoAuthenticationProvider -->
   </sec:authentication-manager>
+
   <bean id="myUserDetailsService" class="me.test.MyUserDetailsService"></bean>
 
+
+  <!-- JDBC -->
+
+  <bean id="h2WebServer" class="org.h2.tools.Server" scope="singleton" factory-method="createWebServer"
+    init-method="start">
+    <constructor-arg value="-web,-webAllowOthers,-webPort,8082" />
+  </bean>
+
+  <bean id="h2Server" class="org.h2.tools.Server" factory-method="createTcpServer" init-method="start"
+    destroy-method="stop" depends-on="h2WebServer">
+    <constructor-arg value="-tcp,-tcpAllowOthers,-tcpPort,9092" />
+  </bean>
+
+  <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+    <property name="driverClassName" value="org.h2.Driver" />
+    <property name="url" value="jdbc:h2:tcp://localhost:9092/~/first-spring-security" />
+    <property name="username" value="zhang3" />
+    <property name="password" value="zhang3" />
+  </bean>
+
+  <jdbc:initialize-database data-source="dataSource">
+    <jdbc:script location="classpath:schema.sql" />
+  </jdbc:initialize-database>
 </beans>
 

@@ -72,6 +72,16 @@
       <artifactId>commons-dbcp</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>org.jasig.cas</groupId>
+      <artifactId>cas-server-support-ldap</artifactId>
+      <version>${cas.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jasig.cas</groupId>
+      <artifactId>cas-server-integration-jboss</artifactId>
+      <version>${cas.version}</version>
+    </dependency>
   </dependencies>
 
   <build>

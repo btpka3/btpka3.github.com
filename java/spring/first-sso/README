@@ -187,11 +187,16 @@ org.jasig.cas.authentication.Authentication
   + 属性Map
   + 认证时间戳
 
-  代表一个成功的认证请求，还包含一些其他的额外信息（比如认证时间等）。
+  代表一个验证成功的认证请求，还包含一些其他的额外信息（比如认证时间等）。
 
 
 org.jasig.cas.authentication.principal.Principal
   认证后的某种东西，比如人或者服务。有ID和属性列表组成。
+
+
+org.jasig.cas.validation.Assertion
+  调用 CentralAuthenticationService.validateServiceTicket(String, Service) 的返回值。
+  主要有一组 Authentication、ST要验证的 Service、 和 isFromNewLogin 构成。
 
 org.jasig.cas.authentication.principal.UsernamePasswordCredentials
 

@@ -16,19 +16,11 @@ import org.springframework.web.client.RestTemplate;
 
 public class TestCasRESTfulApi {
 
-    /**
-     * TODO 方法的作用是？
-     *
-     * @author zhangliangliang
-     * @date 2013-8-8下午2:25:29
-     *
-     * @param args
-     */
     @SuppressWarnings("unchecked")
-    public static void main(String[] args) {
+    public static void test() {
 
-        String casUrlPrefix = "https://cas.localhost.me:8443/first-cas-server";
-        String username = "zhang3";
+        String casUrlPrefix = "http://login-test.his.com/tcgroup-sso-web";
+        String username = "15372712873";
         String password = "123456";
 
         // GET TGT
@@ -38,27 +30,36 @@ public class TestCasRESTfulApi {
         params.set("username", username);
         params.set("password", password);
         URI tgtUrl = rest.postForLocation(casUrlPrefix + "/v1/tickets", params, Collections.emptyMap());
+        System.out.println("[" + tgtUrl + "]");
 
         // GET ST
-        String service = "http://app.localhost.me:8080/first-spring-cas/sec.jsp";
-        //String service = "http://stateless.localhost:8080/first-spring-stateless/appointment.jsp";
+        String service = "http://login-test.his.com/tcgroup-his-web/client/nop.do";
         params.clear();
         params.set("service", service);
         ResponseEntity<String> st = rest.postForEntity(tgtUrl, params, String.class);
-        System.out.println(st.getBody());
+        System.out.println("[" + st.getBody() + "]");
 
-        // GET SSO Web App content
-//        Map<String, Object> urlParams = new HashMap<String, Object>();
-//        urlParams.put("ticket", st.getBody());
-//        ResponseEntity<String> html = rest.getForEntity(service, String.class, urlParams);
-//        System.out.println(html);
-//        System.out.println(html.getBody());
+        // Using ST get data from SSO app(tcgroup-his-web).
+        Map<String, Object> urlParams = new HashMap<String, Object>();
+        urlParams.put("ticket", st.getBody());
+        ResponseEntity<String> html = rest.getForEntity(service + "?ticket=" + st.getBody(), String.class, urlParams);
+        System.out.println("[" + html.getBody() + "]");
+    }
 
-        System.out.println("~~~~~~~~~~~~~~");
-        ResponseEntity<String> html = rest.getForEntity(service+"?ticket="+st.getBody(), String.class, Collections.emptyMap());
-        System.out.println(html);
-        System.out.println(html.getBody());
-        System.out.println("~~~~~~~~~~~~~~");
-        System.out.println(html.getHeaders());
+    public static void main(String[] args) {
+
+        // 测试总次数
+        int count = 100;
+
+        // 开始测试
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < count; i++) {
+            test();
+        }
+        long end = System.currentTimeMillis();
+
+        long cost = end - start;
+        System.out.println("total time cost : " + cost);
+        System.out.println("Done.");
     }
 }

@@ -9,7 +9,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class Main extends Thread {
 
-    private static Logger logger = LoggerFactory.getLogger(A.class);
+    private static Logger logger = LoggerFactory.getLogger(Main.class);
 
     static class T extends Thread {
 
