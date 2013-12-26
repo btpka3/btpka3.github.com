@@ -160,7 +160,7 @@ public class SimpleCaptchaController {
                 // 设定字符
                 // .addText(new DefaultTextProducer(4, DEFAULT_CHARS))
                 // .addText(new MyChineseTextProducer(6))
-                .addText(new DefaultTextProducer(6, DEFAULT_CHARS), new DefaultWordRenderer(textColors, textFonts))
+                .addText(new DefaultTextProducer(6, DEFAULT_CHARS), new MyWordRenderer(textColors, textFonts))
                 // .addText(new DefaultTextProducer(6, DEFAULT_CHARS), new ColoredEdgesWordRenderer(textColors,
                 // textFonts, 1f))
 
