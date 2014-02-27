@@ -28,5 +28,13 @@ public class Main {
 
         appCtx.close();
     }
-
+/* output:
+-------------
+taskA is running.
+-------------
+111111111111 :{a=a1, b=b1}
+taskB is running.
+222222222222 :{a=a1, b=b1}
+-------------
+ */
 }
