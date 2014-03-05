@@ -12,7 +12,7 @@ public class Auth {
         @SuppressWarnings("resource")
         ApplicationContext appCtx = new ClassPathXmlApplicationContext("applicationContext.xml");
         LdapTemplate ldapTemplate = (LdapTemplate) appCtx.getBean("ldapTemplate");
-        boolean result = ldapTemplate.authenticate("", "mail=zhangliangliang@eetop.com", "{Mp3mp4}");
+        boolean result = ldapTemplate.authenticate("", "mail=zhangliangliang@eetop.com", "xxxxxx");
         System.out.println("================" + result);
     }
 
