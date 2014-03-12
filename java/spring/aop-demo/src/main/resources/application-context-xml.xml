@@ -12,22 +12,22 @@
     <entry key="b" value="b1"/>
   </util:map>
 
-  <bean id="myAspectLogic"
-        class="me.test.xml.MyAspectLogic"
-        p:cfgMap-ref="configMap" />
+  <bean id="myPojoAspectLogic"
+        class="me.test.xml.MyPojoAspectLogic"
+        p:configMap-ref="configMap" />
 
   <bean id="taskA"
-        class="me.test.xml.TaskA" />
+        class="me.test.task.TaskA" />
 
   <bean id="taskB"
-        class="me.test.xml.TaskB" />
+        class="me.test.task.TaskB" />
 
   <aop:config>
-    <aop:pointcut id="myPointCut" expression="execution(* me.test.xml.TaskB.run())" />
+    <aop:pointcut id="myXmlPointCut" expression="execution(* me.test.task.TaskB.run())" />
 
-    <aop:aspect id="myAspect" ref="myAspectLogic">
-      <aop:before method="printBefore" pointcut-ref="myPointCut"/>
-      <aop:after method="printAfter" pointcut-ref="myPointCut"/>
+    <aop:aspect id="myXmlAspect" ref="myPojoAspectLogic">
+      <aop:before method="printBefore" pointcut-ref="myXmlPointCut"/>
+      <aop:after method="printAfter" pointcut-ref="myXmlPointCut"/>
     </aop:aspect>
 
   </aop:config>

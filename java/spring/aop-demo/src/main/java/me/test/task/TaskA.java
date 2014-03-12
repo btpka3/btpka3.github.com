@@ -1,5 +1,5 @@
 
-package me.test.xml;
+package me.test.task;
 
 public class TaskA implements Runnable {
 
