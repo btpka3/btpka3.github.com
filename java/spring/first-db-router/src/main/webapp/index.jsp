@@ -26,7 +26,7 @@ span.a{
 </ul>
 </div>
 
-<div><a href='transTest.jsp' target="test">事务控制测试</a>
+<div>事务控制测试
 <ul>确认多数据库操作时结果符合预期（实际是required事务不符合预期），开发中应当避免跨数据库：
   <li><a href="/test/reset.do" target="test"><button>Reset DB</button></a></li>
   <li><a href="test/requiredTransSucceed.do" target="test"><button>requiredTransSucceed</button></a></li>

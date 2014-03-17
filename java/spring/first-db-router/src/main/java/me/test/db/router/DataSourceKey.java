@@ -6,9 +6,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * 设置作为数据源Key的SpringEL表达式。
+ */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.METHOD })
-public @interface DataSouceKey {
+public @interface DataSourceKey {
 
-    String value() default "";
+    String value();
 }

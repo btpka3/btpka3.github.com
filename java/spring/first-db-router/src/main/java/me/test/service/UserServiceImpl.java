@@ -8,6 +8,8 @@ import java.util.Queue;
 
 import javax.annotation.Resource;
 
+import me.test.db.router.DataSourceKey;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
@@ -42,6 +44,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
+    @DataSourceKey("#hospitalId")
     public User selectById(Long hospitalId, Long userId) {
 
         return jdbcTemplate.queryForObject("SELECT ID, HOSPITAL_ID, NAME, REMARK FROM T_USER WHERE ID=?",

@@ -2,15 +2,30 @@
 package me.test.db.router;
 
 import java.lang.reflect.Method;
+import java.util.Map;
 import java.util.Stack;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.expression.BeanFactoryAccessor;
+import org.springframework.context.expression.BeanFactoryResolver;
+import org.springframework.context.expression.EnvironmentAccessor;
+import org.springframework.context.expression.MapAccessor;
 import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
 import org.springframework.core.ParameterNameDiscoverer;
+import org.springframework.expression.Expression;
+import org.springframework.expression.ExpressionParser;
+import org.springframework.expression.spel.standard.SpelExpressionParser;
+import org.springframework.expression.spel.support.StandardEvaluationContext;
+import org.springframework.expression.spel.support.StandardTypeLocator;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
+import org.springframework.util.Assert;
 
 /**
  * 在 Spring Transaction AOP 之前，将路由数据源的key存设置一下。
@@ -32,7 +47,7 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
  * <ol>
  * </p>
  */
-public class DataSourceKeyAdvice implements MethodInterceptor {
+public class DataSourceKeyAdvice implements MethodInterceptor, ApplicationContextAware {
 
     private Logger logger = LoggerFactory.getLogger(DataSourceKeyAdvice.class);
 
@@ -49,6 +64,11 @@ public class DataSourceKeyAdvice implements MethodInterceptor {
 
     /** 是否允许空key */
     private boolean allowNullKey = true;
+
+    // internal used field
+    private ExpressionParser expressionParser = new SpelExpressionParser();
+    private Map<Method, String[]> paramNameCache = new ConcurrentHashMap<Method, String[]>();
+    private ApplicationContext appCtx;
 
     @Override
     public Object invoke(MethodInvocation invocation) throws Throwable {
@@ -108,8 +128,44 @@ public class DataSourceKeyAdvice implements MethodInterceptor {
 
     private String lookUpKeyByAnnotaion(MethodInvocation invocation) {
 
-        // TODO
-        return null;
+        Method targetMethod = invocation.getMethod();
+        DataSourceKey dsKey = targetMethod.getAnnotation(DataSourceKey.class);
+        if (dsKey == null) {
+            return null;
+        }
+        String exprStr = dsKey.value();
+        Assert.isTrue(exprStr != null && exprStr.length() > 0, "DataSouceKey's value is not specified for method : " + targetMethod);
+
+        // 查询是否被注解，如果被注解，则查询到注解的值
+        Expression exp = expressionParser.parseExpression(exprStr);
+        StandardEvaluationContext sec = new StandardEvaluationContext();
+        sec.setRootObject(invocation.getThis());
+        sec.addPropertyAccessor(new BeanFactoryAccessor());
+        sec.addPropertyAccessor(new MapAccessor());
+        sec.addPropertyAccessor(new EnvironmentAccessor());
+        sec.setBeanResolver(new BeanFactoryResolver(appCtx));
+        sec.setTypeLocator(new StandardTypeLocator(this.getClass().getClassLoader()));
+
+        // 注册参数(参考：org.springframework.cache.interceptor.LazyParamAwareEvaluationContext#loadArgsAsVariables())
+        Object[] args = invocation.getArguments();
+        for (int i = 0; i < args.length; i++) {
+            sec.setVariable("a" + i, args[i]);
+            sec.setVariable("p" + i, args[i]);
+        }
+
+        String[] parameterNames = paramNameCache.get(targetMethod);
+        if (parameterNames == null) {
+            parameterNames = parameterNameDiscoverer.getParameterNames(targetMethod);
+            paramNameCache.put(targetMethod, parameterNames);
+        }
+        if (parameterNames != null) {
+            for (int i = 0; i < parameterNames.length; i++) {
+                sec.setVariable(parameterNames[i], args[i]);
+            }
+        }
+
+        Object value = exp.getValue(sec);
+        return value == null ? null : value.toString();
     }
 
     private String lookUpKeyByParamName(MethodInvocation invocation) {
@@ -187,6 +243,12 @@ public class DataSourceKeyAdvice implements MethodInterceptor {
     public void setThrowExceptionWhenCrossDb(boolean throwExceptionWhenCrossDb) {
 
         this.throwExceptionWhenCrossDb = throwExceptionWhenCrossDb;
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+
+        this.appCtx = applicationContext;
     }
 
 }
