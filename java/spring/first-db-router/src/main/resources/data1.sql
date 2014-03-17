@@ -1,0 +1,3 @@
+INSERT INTO T_USER (ID, HOSPITAL_ID, NAME, REMARK) VALUES (1, 1, 'zhang3', 'zhang3~~~~~');
+INSERT INTO T_USER (ID, HOSPITAL_ID, NAME, REMARK) VALUES (2, 1, 'li4',    'li4~~~~~~~~');
+INSERT INTO T_USER (ID, HOSPITAL_ID, NAME, REMARK) VALUES (3, 1, 'wang5',  'wang5~~~~~~');
