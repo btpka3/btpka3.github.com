@@ -10,11 +10,6 @@ public class DataSouceKeyNotFoundException extends RuntimeException {
         super();
     }
 
-    public DataSouceKeyNotFoundException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-
-        super(message, cause, enableSuppression, writableStackTrace);
-    }
-
     public DataSouceKeyNotFoundException(String message, Throwable cause) {
 
         super(message, cause);
