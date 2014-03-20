@@ -10,11 +10,6 @@ public class CrossDbTransNotSupportedException extends RuntimeException {
         super();
     }
 
-    public CrossDbTransNotSupportedException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-
-        super(message, cause, enableSuppression, writableStackTrace);
-    }
-
     public CrossDbTransNotSupportedException(String message, Throwable cause) {
 
         super(message, cause);
