@@ -35,9 +35,11 @@ public class UserAction {
         if (hospitalId == null) {
             List<User> userList1 = userService.selectAll(1L);
             List<User> userList2 = userService.selectAll(2L);
+            List<User> userList3 = userService.selectAll(3L);
 
             List<User> userList = new ArrayList<User>(userList1);
             userList.addAll(userList2);
+            userList.addAll(userList3);
             model.addAttribute("userList", userList);
         } else {
             // 查询指定的医院（可能会由于医院不存在而出错）

@@ -32,6 +32,7 @@ hospital :
     <option value="">All</option>
     <option value="1" <c:if test="${param['hospitalId'] == '1' }">selected="selected"</c:if> >1</option>
     <option value="2" <c:if test="${param['hospitalId'] == '2' }">selected="selected"</c:if>>2</option>
+    <option value="3" <c:if test="${param['hospitalId'] == '3' }">selected="selected"</c:if>>3</option>
   </select>
   <input type="submit" value="search"/>
 </form>

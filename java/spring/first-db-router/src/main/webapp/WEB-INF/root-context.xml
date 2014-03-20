@@ -97,8 +97,8 @@
         class="me.test.db.router.RoutingDataSourceImpl">
     <property name="targetDataSources">
       <map>
-        <entry key="1" value-ref="dataSource1" />
-        <entry key="2" value-ref="dataSource2" />
+        <entry key="ds1" value-ref="dataSource1" />
+        <entry key="ds2" value-ref="dataSource2" />
       </map>
     </property>
     <property name="defaultTargetDataSource" ref="dataSource1" />
@@ -109,10 +109,34 @@
         p:dataSource-ref="dataSource" />
 
   <!-- =========================================== 保存DataSource Key的AOP -->
+
+  <bean id="dataSourceKeyResolver"
+        class="me.test.db.router.ComposeDataSourceKeyResolver">
+    <property name="resolverList">
+      <list>
+        <bean class="me.test.db.router.AnnatationDataSourceKeyResolver" />
+        <bean class="me.test.db.router.ParamDataSourceKeyResolver"
+              p:paramName="hospitalId"/>
+        <bean class="me.test.db.router.FirstParamDataSourceKeyResolver"/>
+      </list>
+    </property>
+  </bean>
+
+  <bean id="dataSourceKeyMapper"
+        class="me.test.db.router.MapDataSourceKeyMapper">
+    <property name="keyMap">
+      <map key-type="java.lang.String" value-type="java.lang.String">
+        <entry key="1" value="ds1"/>
+        <entry key="2" value="ds2"/>
+        <entry key="3" value="ds1"/>
+      </map>
+    </property>
+  </bean>
+
   <bean id="dataSourceKeyAdvice"
         class="me.test.db.router.DataSourceKeyAdvice"
-        p:keyParamName="hospitalId"
-        p:throwExceptionWhenCrossDb="false"/>
+        p:keyResolver-ref="dataSourceKeyResolver"
+        p:keyMapper-ref="dataSourceKeyMapper" />
 
   <aop:config proxy-target-class="true">
     <aop:pointcut id="txAopPointcut" expression="@annotation(org.springframework.transaction.annotation.Transactional) &amp;&amp; execution(* me.test.service.*.*(..))" />

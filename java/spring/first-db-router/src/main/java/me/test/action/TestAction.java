@@ -49,13 +49,21 @@ public class TestAction {
 
     @RequestMapping(value = "/requiredTransSucceed")
     public String requiredTransSucceed() {
-
+/*
         userService.multiUpdate(new LinkedList<UpdateRecord>(Arrays.asList(
                 new UpdateRecord(0, Propagation.REQUIRED, 1L, 1L, "--000", true), // 期待结果：更新成功
                 new UpdateRecord(1, Propagation.REQUIRED, 2L, 1L, "--111", true), // 期待结果：更新成功
                 new UpdateRecord(2, Propagation.REQUIRED, 1L, 2L, "--222", true), // 期待结果：更新成功
                 new UpdateRecord(3, Propagation.REQUIRED, 2L, 2L, "--333", true)) // 期待结果：更新成功
         ));
+*/
+        userService.multiUpdate(new LinkedList<UpdateRecord>(Arrays.asList(
+                new UpdateRecord(0, Propagation.REQUIRED, 1L, 1L, "--000", true), // 期待结果：更新成功
+                new UpdateRecord(1, Propagation.REQUIRED, 3L, 4L, "--444", true), // 期待结果：更新成功
+                new UpdateRecord(2, Propagation.REQUIRED, 1L, 2L, "--222", true), // 期待结果：更新成功
+                new UpdateRecord(3, Propagation.REQUIRED, 3L, 5L, "--555", true)) // 期待结果：更新成功
+        ));
+
         return "redirect:/user/list.do";
     }
 

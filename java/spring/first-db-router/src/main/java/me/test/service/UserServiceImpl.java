@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<User> selectAll(Long hospitalId) {
+    public List<User> selectAll(@DataSourceKey Long hospitalId) {
 
         return jdbcTemplate.query("SELECT ID, HOSPITAL_ID, NAME, REMARK FROM T_USER WHERE HOSPITAL_ID=?",
                 new Object[] { hospitalId }, userRowMapper);
@@ -65,7 +65,12 @@ public class UserServiceImpl implements UserService {
 
         Assert.notNull(hospitalId, "hospitalId must not be null");
 
-        Long maxUserId = jdbcTemplate.queryForObject("SELECT MAX(ID) FROM T_USER WHERE HOSPITAL_ID = ?", Long.class, hospitalId);
+        // 如果两家医院的数据放 [不] 在同一个库内，则应where条件带 HOSPITAL_ID = ? 查询条件
+        // Long maxUserId = jdbcTemplate.queryForObject("SELECT MAX(ID) FROM T_USER WHERE HOSPITAL_ID = ?", Long.class,
+        // hospitalId);
+
+        // 如果两家医院的数据放在同一个库内，则应where条件不带 HOSPITAL_ID = ? 查询条件
+        Long maxUserId = jdbcTemplate.queryForObject("SELECT MAX(ID) FROM T_USER", Long.class);
         Long newUserId = maxUserId + 1;
         jdbcTemplate.update("INSERT INTO T_USER (ID, HOSPITAL_ID, NAME, REMARK) VALUES (? , ?, ?, ?)",
                 new Object[] { newUserId, hospitalId, name, remark });
