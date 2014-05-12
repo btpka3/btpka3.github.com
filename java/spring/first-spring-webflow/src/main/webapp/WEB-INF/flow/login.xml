@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/webflow
+        http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+
+  <on-start>
+    <set name="flowScope.errorCount" value="0" type="int"></set>
+  </on-start>
+
+  <decision-state id="checkIsLogined">
+    <if test="externalContext.sessionMap.userName != null" then="welcomeView" else="loginView"/>
+  </decision-state>
+
+  <view-state id="loginView" view="login">
+    <transition on="submit" to="checkPassword" />
+  </view-state>
+
+  <action-state id="checkPassword">
+    <evaluate expression="loginAction.checkPassword(requestParameters.userName, requestParameters.password)"/>
+    <transition on="success" to="welcomeView">
+      <set name="externalContext.sessionMap.userName" value="requestParameters.userName"/>
+      <!-- <evaluate expression="externalContext.sessionMap.userName = requestParameters.userName" /> -->
+    </transition>
+    <transition on="error" to="loginView">
+      <evaluate expression="flowScope.errorCount = (flowScope.errorCount?:0)+1" />
+    </transition>
+  </action-state>
+
+  <end-state id="welcomeView"  view="welcome"/>
+
+<!--
+  <decision-state id="checkNeedCaptcha">
+    <if  test="errorCount ge 3" then=""/>
+  </decision-state>
+ -->
+
+</flow>

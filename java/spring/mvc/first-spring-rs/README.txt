@@ -1,3 +1,52 @@
+https://jaxb.java.net/guide/Using_different_datatypes.html
+http://docs.oracle.com/cd/E13222_01/wls/docs103/webserv/data_types.html
+http://stackoverflow.com/questions/2364110/whats-the-justification-behind-disallowing-partial-put
+http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html
+
+
+说明：
+该示例主要是受到Dojo的JsonRest的启发，加之对dojo、RESTFul Web Service、Spring 的兴趣而实现 JsonRest 的服务器端业务逻辑。
+为了简单起见，该示例没有使用数据库，故查询、排序、分页均是在程序中进行的。
+
+序列化和反序列化:
+
+为了简化开发，一般都先定义RESTFul Web服务通信规范，也即 Contract First。具体而言就是：
+1. 先定义 xsd 文件，描述通信的JSON/XML的内容
+2. 通过jaxb2-maven-plugin 插件自动生成相应的Java类，并在Controller中接受、返回该类型对象。
+3. 通过Spring的相应的 HttpMessageConverter 自动完成序列化和反序列化。
+ Spring 3.1 之后默认使用：
+  org.springframework.core.convert.support.DefaultConversionService
+  它注册了很多默认的converter，比如
+  org.springframework.core.convert.support.ObjectToObjectConverter
+该Converter是非public的，因此只能通过源代码看到说明。
+它依次尝试使用目标类型的静态 valueOf(srcType)， 接收单个srcType的构造函数进行转换。
+这样的话，就可以不必再些专门的Converter类了。
+
+
+
+关于缓存：
+1. 只对 GET、HEAD有效
+2. POST、PUT、DELETE应当使cache失效
+3. 200, 203, 206, 300, 301 or 410的响应可以被缓存
+但是如果缓存系统不支持 Range、Content-Range头的话，就不应缓存 206 (Partial Content)
+4. Last-Modified 在业务逻辑执行前判断，而 ETag则在执行后判断，后者并不能降低CPU使用率。两者均可降低带宽使用。
+
+
+：
+
+
+
+
+TODO:
+  JSONP?
+  XML?
+
+文件上传，如果需要使用不同的最大大小，最好使用不同的Spring DispatcherServlet， 进而使用不同的 multipartResolver
+
+PUT是一个完整的实体对象，不能被部分更新。
+如果需要部分更新，需要使用PATCH方法。
+
+
 注意：
 1. 要先运行  mvn clean process-classes 之后，
 2. 整个工程 F5 刷新

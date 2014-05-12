@@ -4,7 +4,7 @@
 # description:
 #
 ### BEGIN INIT INFO
-# Provides: center
+# Provides: appName
 # Required-Start: $network
 # Required-Stop: $network
 # Should-Start:
@@ -28,9 +28,9 @@ DISTRIB_ID=`lsb_release -i -s 2>/dev/null`
 
 # For SELinux we need to use 'runuser' not 'su'
 if [ -x "/sbin/runuser" ]; then
-  SU="/sbin/runuser -s /bin/sh"
+  SU="/sbin/runuser -m -s /bin/sh"
 else
-  SU="/bin/su -s /bin/sh"
+  SU="/bin/su -m -s /bin/sh"
 fi
 
 
@@ -42,7 +42,7 @@ fi
 
 ########################### Settings
 
-RUNNING_USER=$USER
+RUNNING_USER=tomcat
 CMD_START="/path/to/app start"
 CMD_STOP="/path/to/app stop"
 LOCK_FILE="/var/lock/subsys/${NAME}"
@@ -50,12 +50,6 @@ PID_FILE="/var/run/${NAME}.pid"
 LOG_FILE="/var/log/${NAME}.log"
 SHUTDOWN_WAIT=3
 
-########################### ENV PASSED
-ENV_PASS="export PID_FILE='${PID_FILE}';"
-
-# when using tomcat, uncomment the following command
-# export CATALINA_PID=${PID_FILE}
-#ENV_PASS="export CATALINA_PID='${PID_FILE}'; ${ENV_PASS}"
 
 ########################### Functions
 
@@ -110,8 +104,7 @@ function start() {
     return
   fi
 
-  $SU - ${RUNNING_USER} -c "${ENV_PASS} ${CMD_START} >> ${LOG_FILE} 2>&1"
-  #$SU - ${RUNNING_USER} -c "${ENV_PASS} ${CMD_START} "
+  $SU ${RUNNING_USER} -c "${CMD_START} >> ${LOG_FILE} 2>&1"
   RETVAL=$?
   if [ "${RETVAL}" -eq "0" ]; then
     success; echo
@@ -149,8 +142,7 @@ function stop() {
       fi
 
     else
-      $SU - ${RUNNING_USER} -c "${ENV_PASS} ${CMD_STOP} >> ${LOG_FILE} 2>&1"
-      #$SU - ${RUNNING_USER} -c "${ENV_PASS} ${CMD_STOP}"
+      $SU ${RUNNING_USER} -c "${CMD_STOP} >> ${LOG_FILE} 2>&1"
     fi
 
 # If process is still running, wait some seconds and kill it.

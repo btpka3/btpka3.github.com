@@ -25,7 +25,7 @@
             disable-url-rewriting="true"
             create-session="stateless"
             entry-point-ref="http403ForbiddenEntryPoint" >
-    <sec:access-denied-handler error-page="/denied.jsp"/>
+    <sec:access-denied-handler                      error-page="/denied.jsp"/>
     <sec:intercept-url pattern="/sec.jsp"           access="isAuthenticated()" />
     <sec:intercept-url pattern="/appointment.jsp"   access="hasAnyRole('XROLE_READ_APPOINTMENT')" />
     <sec:intercept-url pattern="/staff.jsp"         access="hasAnyRole('XROLE_READ_STAFF')" />
@@ -101,7 +101,7 @@
 
   <bean id="cas20ProxyTicketValidator"
         class="org.jasig.cas.client.validation.Cas20ProxyTicketValidator">
-    <constructor-arg value="${cas.url}" />
+    <constructor-arg                                value="${cas.url}" />
     <property name="proxyCallbackUrl"               value="${app.url.proxyreceptor}"/>
     <property name="proxyGrantingTicketStorage"     ref="pgtStorage"/>
     <property name="acceptAnyProxy"                 value="true"/>

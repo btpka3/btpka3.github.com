@@ -5,15 +5,15 @@
 
   first-cas-server
     是通过Maven War Overlay方式简单自定义的CAS中心。访问路径：
-      https://cas.localhost:8443/first-cas-server/
+      https://cas.localhost.me:8443/first-cas-server/
 
   first-spring-cas
     是使用CAS进行SSO的客户程序，这里使用Spring Security进行配置。访问路径
-      http://app.localhost:8080/first-spring-cas/
+      http://app.localhost.me:8080/first-spring-cas/
 
   first-spring-stateless
     设计为尽量按照RESTFul提供JSON数据和业务操作的服务，用户不直接与其进行交互，但浏览器可以访问的到。
-      http://stateless.localhost:8080/first-spring-stateless/
+      http://stateless.localhost.me:8080/first-spring-stateless/
 
 
 
@@ -26,7 +26,7 @@
 1. 为tomcat配置HTTPS
 
 1.1 生成自签名证书
-keytool -genkeypair -alias mykey1 -keyalg RSA -keysize 1024 -sigalg SHA1withRSA -dname "CN=*.localhost, OU=R & D department, O=\"ABC Tech Co., Ltd\", L=Weihai, S=Shandong, C=CN" -validity 365 -keypass 123456 -keystore tomcat.keystore -storepass 123456
+keytool -genkeypair -alias mykey1 -keyalg RSA -keysize 1024 -sigalg SHA1withRSA -dname "CN=*.localhost.me, OU=R & D department, O=\"ABC Tech Co., Ltd\", L=Weihai, S=Shandong, C=CN" -validity 365 -keypass 123456 -keystore tomcat.keystore -storepass 123456
 
 注意：其中CN是域名
 注意：-keypass 和 -storepass tomcat貌似是要求一致的。
@@ -39,16 +39,16 @@ keytool -genkeypair -alias mykey1 -keyalg RSA -keysize 1024 -sigalg SHA1withRSA 
                keystorePass="123456"/>
 
 1.3 为tomcat指定JVM启动参数
-若果在 Ecipse中启动Tomcat，则需要追加JVM参数：
+若果在 Eclipse中启动Tomcat，则需要追加JVM参数：
   -Djavax.net.ssl.trustStore="D:\tomcat.keystore" -Djavax.net.ssl.trustStorePassword="123456"
 # 如果需要单独启动tomcat，则在 %CATALINA_HOME%/bin/catalina.bat 开头追加：
   JAVA_OPTS = -Djavax.net.ssl.trustStore="D:\tomcat.keystore" -Djavax.net.ssl.trustStorePassword="123456"
 
 2. 修改 C:\Windows\System32\drivers\etc\hosts， 追加以下配置：
 
-127.0.0.1       cas.localhost
-127.0.0.1       app.localhost
-127.0.0.1       stateless.localhost
+127.0.0.1       cas.localhost.me
+127.0.0.1       app.localhost.me
+127.0.0.1       stateless.localhost.me
 
 
 
@@ -93,9 +93,64 @@ management.services.status.evaluationOrder.notupdated
       而B返回的数据要使用JSONP格式，即结果是一个JavaScript回调函数包装，而不是 JSON 数据。
 
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Spring Web Flow 与 Spring MVC 集成
+1. 定义一个SpringFlow的HandlerAdapter
+<bean class="org.springframework.webflow.mvc.servlet.FlowHandlerAdapter">
+  <property name="flowExecutor" ref="flowExecutor" />
+</bean>
+
+2. 定义Flow Mappings
+将发送到 /hotels/booking 请求交由 id=hotels/booking 的flow执行
+<bean class="org.springframework.webflow.mvc.servlet.FlowHandlerMapping">
+  <property name="flowRegistry" ref="flowRegistry"/>
+  <property name="order" value="0"/>
+</bean>
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+RESTful API
+https://wiki.jasig.org/display/CASUM/RESTful+API
+
+* 在 maven的 setting.xml的激活的profile中追加以下仓库
+<repository>
+   <id>maven-restlet</id>
+   <name>Public online Restlet repository</name>
+   <url>http://maven.restlet.org</url>
+</repository>
+
+* 在 fisrt-cas-server 的 pom.xml中加入以下依赖
+<dependency>
+    <groupId>org.jasig.cas</groupId>
+    <artifactId>cas-server-integration-restlet</artifactId>
+    <version>${cas.version}</version>
+    <type>jar</type>
+</dependency>
+
+* 在 fisrt-cas-server 的 pom.xml中加入 移除 cas-server-webapp 中的 cglib-full-2.0.2.jar
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>2.3</version>
+        <configuration>
+          <warName>first-cas-server</warName>
+          <overlays>
+            <overlay>
+              <groupId>org.jasig.cas</groupId>
+              <artifactId>cas-server-webapp</artifactId>
+              <excludes>
+                <exclude>WEB-INF/lib/cglib-full-*.jar</exclude>
+              </excludes>
+            </overlay>
+          </overlays>
+        </configuration>
+      </plugin>
+    </plugins>
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 未完成任务：
 1. 自定义CAS服务器的皮肤
 2. 自定义CAS服务器的持久化
@@ -115,3 +170,71 @@ AuthenticationTrustResolver#isAnonymous()
   at MethodInvocationPrivilegeEvaluator#isAllowed() / DefaultWebInvocationPrivilegeEvaluator#isAllowed()
 使用Expression时的调用路径
   at SecurityExpressionRoot#isAnonymous()
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+TGT 是存放于 SSO 服务器的域名下的Cookie里的。
+
+org.jasig.cas.authentication.principal.Credentials
+  Marker Interface。需要客户端提供，以便验证的东西（用户名，密码，证书等）。
+  验证通过后会转换成 Principal。
+  org.jasig.cas.authentication.principal.HttpBasedServiceCredentials
+    验证ST时，提供的验证成功时发送PGT的URL。
+
+org.jasig.cas.authentication.Authentication
+  + Principal
+  + 属性Map
+  + 认证时间戳
+
+  代表一个验证成功的认证请求，还包含一些其他的额外信息（比如认证时间等）。
+
+
+org.jasig.cas.authentication.principal.Principal
+  认证后的某种东西，比如人或者服务。有ID和属性列表组成。
+
+
+org.jasig.cas.validation.Assertion
+  调用 CentralAuthenticationService.validateServiceTicket(String, Service) 的返回值。
+  主要有一组 Authentication、ST要验证的 Service、 和 isFromNewLogin 构成。
+
+org.jasig.cas.authentication.principal.UsernamePasswordCredentials
+
+
+
+org.jasig.cas.authentication.AuthenticationManager
+  org.jasig.cas.authentication.handler.AuthenticationHandler
+  org.jasig.cas.authentication.principal.CredentialsToPrincipalResolver
+    (org.jasig.cas.authentication.principal.UsernamePasswordCredentialsToPrincipalResolver)
+    org.jasig.cas.authentication.principal.SimplePrincipal
+
+org.jasig.cas.CentralAuthenticationService
+    createTicketGrantingTicket(Credentials)
+    delegateTicketGrantingTicket(String, Credentials)
+    destroyTicketGrantingTicket(String)
+    grantServiceTicket(String, Service)
+    grantServiceTicket(String, Service, Credentials)
+    validateServiceTicket(String, Service)
+
+org.jasig.cas.CentralAuthenticationServiceImpl
+  + org.jasig.cas.ticket.registry.TicketRegistry
+  + org.jasig.cas.authentication.AuthenticationManager
+      负责 org.jasig.cas.authentication.principal.Credentials -> org.jasig.cas.authentication.Authentication
+  + org.jasig.cas.util.UniqueTicketIdGenerator
+  + org.jasig.cas.ticket.ExpirationPolicy
+  + org.jasig.cas.services.ServicesManager
+
+  + org.jasig.cas.authentication.principal.PersistentIdGenerator
+
+
+
+String serviceTicketId
+  ST-xxxxx
+
+org.jasig.cas.ticket.ServiceTicket
+    包含 org.jasig.cas.authentication.principal.Service
+            包含 org.jasig.cas.authentication.principal.Principal
+
+org.jasig.cas.ticket.registry.TicketRegistry
+
+

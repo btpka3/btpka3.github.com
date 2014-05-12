@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Test File Upload</title>
+
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/dojo/1.9.0/dijit/themes/claro/claro.css" />
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/dojo/1.9.0/dojox/form/resources/UploaderFileList.css" />
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/dojo/1.9.0/dojo/dojo.js"></script>
+<!--
+ <script type="text/javascript" src="/s/dojo/dojo.js"></script>
+ -->
+
+<script type="text/javascript" src="FileUploadTest.js"></script>
+
+</head>
+<body class="claro">
+
+<img src="rs/file/1"/>
+<div>
+  <form action="rs/file" enctype="multipart/form-data" method="post">
+    <input type="file" name="file" id="uploader" />
+    <div id="s1"></div>
+  </form>
+</div>
+<div id="fileList" ></div>
+</body>
+</html>

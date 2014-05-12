@@ -6,3 +6,16 @@ quartz-x.x..tar.gz
 <<Spring Framework Reference Manual>> 中给出的使用 Quartz 的例子比较适用于：
 1. 要调度的 job 个数比较明确
 2. 不会动态增加、停用
+
+
+## FIXME
+* 要集群的job无法与Quartz的API解耦？
+
+## Best Practices?
+* 自定义job应继承自org.springframework.scheduling.quartz.QuartzJobBean.
+  之后就可以通过提供setter的方式，直接将jobDataMap中的同名数据通过setter设置进来？
+
+* 应该使用 org.springframework.scheduling.quartz.SchedulerFactoryBean，以方便其他Bean引用Quartz的Scheduler实例
+
+
+## Qu

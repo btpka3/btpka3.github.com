@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Custom Dojo Menu</title>
+
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/dojo/1.9.0/dijit/themes/claro/claro.css" />
+<style type="text/css">
+</style>
+
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/dojo/1.9.0/dojo/dojo.js" ></script>
+<script type="text/javascript">
+require([
+   "dijit/MenuBar",
+   "dijit/MenuBarItem",
+   "dijit/PopupMenuBarItem",
+
+   "dijit/Menu",
+   "dijit/DropDownMenu",
+   "dijit/MenuItem",
+   "dijit/PopupMenuItem",
+   "dijit/RadioMenuItem",
+   "dijit/CheckedMenuItem",
+   "dijit/MenuSeparator",
+
+   "dojo/domReady!"
+
+], function(
+   MenuBar,             // 菜单栏（水平菜单）
+   MenuBarItem,         //
+   PopupMenuBarItem,    // 相比 MenuBarItem， 多一个弹出子菜单的功能
+
+   Menu,                // 继承自 DropDownMenu，可以分配给多个元素
+   DropDownMenu,        // 垂直菜单
+   MenuItem,            //
+   PopupMenuItem,       // 相比 MenuItem，多一个弹出子菜单的功能
+   RadioMenuItem,       // 带单选框的菜单项
+   CheckedMenuItem,     // 带复选框的菜单项
+   MenuSeparator        // 菜单项分隔符
+){
+   var menuBar = new MenuBar({});
+
+   // 第一项：不弹出子菜单
+   menuBar.addChild(new MenuBarItem({
+       label: "AAA"
+   }));
+
+   // 第二项：下拉弹出菜单
+   var menu1 = new DropDownMenu({});
+   menu1.addChild(new MenuItem({
+       label: "B1"
+   }));
+   menu1.addChild(new MenuSeparator({
+   }));
+   menu1.addChild(new RadioMenuItem({
+       label: "B2"
+   }));
+   menu1.addChild(new CheckedMenuItem({
+       label: "B3"
+   }));
+
+   var menu1_1 = new DropDownMenu({});
+   menu1_1.addChild(new MenuItem({
+       label: "B1-1"
+   }));
+   menu1_1.addChild(new MenuItem({
+       label: "B1-2"
+   }));
+   menu1.addChild(new PopupMenuItem({
+       label: "B3",
+       popup: menu1_1
+   }));
+   menuBar.addChild(new PopupMenuBarItem({
+       label: "BBB",
+       popup: menu1
+   }));
+
+   // 第二项：下拉弹出菜单
+   var menu2 = new DropDownMenu({});
+   menu2.addChild(new MenuItem({
+       label: "C1",
+       iconClass: "dijitEditorIcon dijitEditorIconCut"
+   }));
+   menu2.addChild(new MenuItem({
+       label: "C2",
+       iconClass: "dijitEditorIcon dijitEditorIconCopy"
+   }));
+   menu2.addChild(new MenuItem({
+       label: "C3",
+       iconClass: "dijitEditorIcon dijitEditorIconPaste"
+   }));
+   menuBar.addChild(new PopupMenuBarItem({
+       label: "CCC",
+       popup: menu2
+   }));
+
+   menuBar.placeAt("wrapper");
+   menuBar.startup();
+});
+</script>
+</head>
+<body class="claro">
+  <ul id="wrapper"></ul>
+
+</body>
+</html>

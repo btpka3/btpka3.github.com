@@ -5,3 +5,5 @@ target
 .settings
 bin
 *.log
+/owasp/first-AntiSamy/cleanResult
+.pmd

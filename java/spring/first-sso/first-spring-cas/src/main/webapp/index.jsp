@@ -11,7 +11,10 @@
 <body>
 
 <sec:authorize access="isAnonymous()">
-    <div>您尚未登录，请先<a href="<c:url value="/login.jsp"/>">登录</a>:</div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script src="<c:url value="/login.js"/>"></script>
+
+    <div>您尚未登录，请先<a href="<c:url value="/login.jsp"/>">单点登录</a> :</div>
     <div>
       用户列表
       <table>
@@ -22,20 +25,29 @@
         </tr>
         <tr>
           <td>zhang3</td>
-          <td>zhang3</td>
+          <td>123456</td>
           <td>可以查看预约记录</td>
         </tr>
         <tr>
           <td>li4</td>
-          <td>li4</td>
+          <td>123456</td>
           <td>可以查看员工信息</td>
         </tr>
         <tr>
           <td>wang5</td>
-          <td>wang5</td>
+          <td>123456</td>
           <td>全部</td>
         </tr>
       </table>
+    </div>
+    <div><button id="ajaxLogin">Ajax登录</button></div>
+    <div id="ajaxLoginDiv" style="display:none; background-color: silver;" >
+      <div>异步登录</div>
+      <form id="ajaxLoginForm">
+      <div><label for="name">用户名</label>:<input type="text" id="ajaxLoginName" name="name" value="zhang3" /></div>
+      <div><label for="ajaxLoginPassword" >密码</label>:<input type="text" id="ajaxLoginPassword" name="password" value="123456" /></div>
+      <div><button id="ajaxLoginSubmit">登录</button></div>
+      </form>
     </div>
 </sec:authorize>
 
@@ -53,6 +65,9 @@
 </div>
 <div>
   <a href="<c:url value="/testProxy.do"/>">查看调用RESTful服务</a> - 注意：如果是有状态的服务，则这边只能已经登录后才能使用该服务，因为JavaScript程序、Java程序无法、较难实现跨域，跨HTTP/HTTPS的跳转。
+</div>
+<div>
+  <a href="<c:url value="/testCasRESTfulApi.html"/>">查看测试CAS RESTful API</a> - 注意：如果是有状态的服务，则这边只能已经登录后才能使用该服务，因为JavaScript程序、Java程序无法、较难实现跨域，跨HTTP/HTTPS的跳转。
 </div>
 
 </body>

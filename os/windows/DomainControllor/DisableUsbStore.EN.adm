@@ -1,0 +1,76 @@
+; This config file is used to disable some USB Divice.
+CLASS MACHINE
+CATEGORY !!category
+  CATEGORY !!categoryname
+
+; Disable USB
+    POLICY !!policynameusb
+      KEYNAME "SYSTEM\CurrentControlSet\Services\USBSTOR"
+      EXPLAIN !!explaintextusb
+      PART !!labeltextusb DROPDOWNLIST REQUIRED
+        VALUENAME "Start"
+        ITEMLIST
+          NAME !!Disabled VALUE NUMERIC 3 DEFAULT
+          NAME !!Enabled VALUE NUMERIC 4
+        END ITEMLIST
+      END PART
+    END POLICY
+
+; Disable CD-ROM
+    POLICY !!policynamecd
+      KEYNAME "SYSTEM\CurrentControlSet\Services\Cdrom"
+      EXPLAIN !!explaintextcd
+      PART !!labeltextcd DROPDOWNLIST REQUIRED
+        VALUENAME "Start"
+        ITEMLIST
+          NAME !!Disabled VALUE NUMERIC 1 DEFAULT
+          NAME !!Enabled VALUE NUMERIC 4
+        END ITEMLIST
+      END PART
+    END POLICY
+
+; Disable Floppy
+    POLICY !!policynameflpy
+      KEYNAME "SYSTEM\CurrentControlSet\Services\Flpydisk"
+      EXPLAIN !!explaintextflpy
+      PART !!labeltextflpy DROPDOWNLIST REQUIRED
+        VALUENAME "Start"
+        ITEMLIST
+          NAME !!Disabled VALUE NUMERIC 3 DEFAULT
+          NAME !!Enabled VALUE NUMERIC 4
+        END ITEMLIST
+      END PART
+    END POLICY
+
+; Disable High Capacity Floppy
+    POLICY !!policynamels120
+      KEYNAME "SYSTEM\CurrentControlSet\Services\Sfloppy"
+      EXPLAIN !!explaintextls120
+      PART !!labeltextls120 DROPDOWNLIST REQUIRED
+        VALUENAME "Start"
+        ITEMLIST
+          NAME !!Disabled VALUE NUMERIC 3 DEFAULT
+          NAME !!Enabled VALUE NUMERIC 4
+        END ITEMLIST
+      END PART
+    END POLICY
+  END CATEGORY
+END CATEGORY
+ 
+[strings]
+category="Custom Policy Settings"
+categoryname="Restrict Drives"
+policynameusb="Disable USB"
+policynamecd="Disable CD-ROM"
+policynameflpy="Disable Floppy"
+policynamels120="Disable High Capacity Floppy"
+explaintextusb="Disables the computers USB ports by disabling the usbstor.sys driver"
+explaintextcd="Disables the computers CD-ROM Drive by disabling the cdrom.sys driver"
+explaintextflpy="Disables the computers Floppy Drive by disabling the flpydisk.sys driver"
+explaintextls120="Disables the computers High Capacity Floppy Drive by disabling the sfloppy.sys driver"
+labeltextusb="Disable USB Ports"
+labeltextcd="Disable CD-ROM Drive"
+labeltextflpy="Disable Floppy Drive"
+labeltextls120="Disable High Capacity Floppy Drive"
+Enabled="Enabled"
+Disabled="Disabled"

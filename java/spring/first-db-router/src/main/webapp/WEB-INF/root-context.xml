@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
+  xmlns:util="http://www.springframework.org/schema/util" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+  xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+  xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.2.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+
+  <context:component-scan base-package="me.test.service" />
+
+  <bean id="h2WebServer"
+        class="org.h2.tools.Server"
+        factory-method="createWebServer"
+        init-method="start" >
+    <constructor-arg value="-web,-webAllowOthers,-webPort,9090" />
+  </bean>
+
+  <!-- ============================================ DB1 -->
+
+  <bean id="h2Server1"
+        class="org.h2.tools.Server"
+        factory-method="createTcpServer"
+        init-method="start"
+        destroy-method="stop"
+        depends-on="h2WebServer">
+    <constructor-arg value="-tcp,-tcpAllowOthers,-tcpPort,9001" />
+  </bean>
+
+  <!-- 注意：H2默认使用表级锁，哪怕只更新一条记录。
+    - 通过追加JDBC URL参数 MVCC=TRUE 来允许使用行级锁
+    - NOTICE：H2官方声称MVCC功能尚未充分测试
+    -->
+  <bean id="dataSource1"
+        class="org.apache.commons.dbcp.BasicDataSource"
+        destroy-method="close"
+        p:driverClassName="org.h2.Driver"
+        p:url="jdbc:h2:tcp://localhost:9001/~/.h2/first-db-router1;MVCC=TRUE"
+        p:username="db1"
+        p:password="123456" />
+
+  <jdbc:initialize-database data-source="dataSource1">
+    <jdbc:script location="classpath:ddl.sql" />
+    <jdbc:script location="classpath:data1.sql"/>
+  </jdbc:initialize-database>
+  <bean id="dbPop1"
+        class="org.springframework.jdbc.datasource.init.ResourceDatabasePopulator">
+    <property name="scripts">
+      <list value-type="org.springframework.core.io.Resource">
+        <value>classpath:ddl.sql</value>
+        <value>classpath:data1.sql</value>
+      </list>
+    </property>
+  </bean>
+
+
+  <!-- ============================================ DB2 -->
+  <bean id="h2Server2"
+        class="org.h2.tools.Server"
+        factory-method="createTcpServer"
+        init-method="start"
+        destroy-method="stop"
+        depends-on="h2WebServer">
+    <constructor-arg value="-tcp,-tcpAllowOthers,-tcpPort,9002" />
+  </bean>
+
+  <bean id="dataSource2"
+        class="org.apache.commons.dbcp.BasicDataSource"
+        destroy-method="close"
+        p:driverClassName="org.h2.Driver"
+        p:url="jdbc:h2:tcp://localhost:9002/~/.h2/first-db-router2;MVCC=TRUE"
+        p:username="db2"
+        p:password="123456" />
+
+  <jdbc:initialize-database data-source="dataSource2">
+    <jdbc:script location="classpath:ddl.sql" />
+    <jdbc:script location="classpath:data2.sql"/>
+  </jdbc:initialize-database>
+  <bean id="dbPop2"
+        class="org.springframework.jdbc.datasource.init.ResourceDatabasePopulator">
+    <property name="scripts">
+      <list value-type="org.springframework.core.io.Resource">
+        <value>classpath:ddl.sql</value>
+        <value>classpath:data2.sql</value>
+      </list>
+    </property>
+  </bean>
+
+
+
+  <!-- ============================================ DB1+2, Transaction AOP  -->
+
+  <bean id="dataSource"
+        class="me.test.db.router.RoutingDataSourceImpl">
+    <property name="targetDataSources">
+      <map>
+        <entry key="ds1" value-ref="dataSource1" />
+        <entry key="ds2" value-ref="dataSource2" />
+      </map>
+    </property>
+    <property name="defaultTargetDataSource" ref="dataSource1" />
+  </bean>
+
+  <bean id="jdbcTemplate"
+        class="org.springframework.jdbc.core.JdbcTemplate"
+        p:dataSource-ref="dataSource" />
+
+  <!-- =========================================== 保存DataSource Key的AOP -->
+
+  <bean id="dataSourceKeyResolver"
+        class="me.test.db.router.ComposeDataSourceKeyResolver">
+    <property name="resolverList">
+      <list>
+        <bean class="me.test.db.router.AnnatationDataSourceKeyResolver" />
+        <bean class="me.test.db.router.ParamDataSourceKeyResolver"
+              p:paramName="hospitalId"/>
+        <bean class="me.test.db.router.FirstParamDataSourceKeyResolver"/>
+      </list>
+    </property>
+  </bean>
+
+  <bean id="dataSourceKeyMapper"
+        class="me.test.db.router.MapDataSourceKeyMapper">
+    <property name="keyMap">
+      <map key-type="java.lang.String" value-type="java.lang.String">
+        <entry key="1" value="ds1"/>
+        <entry key="2" value="ds2"/>
+        <entry key="3" value="ds1"/>
+      </map>
+    </property>
+  </bean>
+
+  <bean id="dataSourceKeyAdvice"
+        class="me.test.db.router.DataSourceKeyAdvice"
+        p:keyResolver-ref="dataSourceKeyResolver"
+        p:keyMapper-ref="dataSourceKeyMapper" />
+
+  <aop:config proxy-target-class="true">
+    <aop:pointcut id="txAopPointcut" expression="@annotation(org.springframework.transaction.annotation.Transactional) &amp;&amp; execution(* me.test.service.*.*(..))" />
+    <aop:advisor advice-ref="dataSourceKeyAdvice" pointcut-ref="txAopPointcut" order="1"/>
+  </aop:config>
+
+  <!-- ======================================= 通过 @Transactional 的事务AOP -->
+  <bean id="transactionManager"
+        class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+        p:dataSource-ref="dataSource"/>
+
+  <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" order="2" />
+
+</beans>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.test.me/first-spring-rs" xmlns:tns="http://www.test.me/first-spring-rs" elementFormDefault="qualified">
+    <element name="user">
+      <complexType>
+        <sequence>
+          <element name="id" type="long" nillable="true"></element>
+          <element name="name" type="string" nillable="true"></element>
+          <element name="gender" type="boolean" nillable="true"></element>
+          <element name="birthday" type="date" nillable="true"></element>
+          <element name="height" type="int" nillable="true"></element>
+          <element name="avatarId" type="long" nillable="true"></element>
+        </sequence>
+      </complexType>
+    </element>
+</schema>

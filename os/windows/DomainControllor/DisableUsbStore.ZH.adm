@@ -1,0 +1,82 @@
+; 该文件是用来在域服务器上为域成员统一设置USB设备的策略的。
+
+CLASS MACHINE
+CATEGORY !!category
+  CATEGORY !!categoryname
+
+; USB 大容量存储设备
+    POLICY !!policynameusb
+      KEYNAME "SYSTEM\CurrentControlSet\Services\USBSTOR"
+      EXPLAIN !!explaintextusb
+      PART !!labeltextusb DROPDOWNLIST REQUIRED
+        VALUENAME "Start"
+        ITEMLIST
+          NAME !!Enabled VALUE NUMERIC 3
+          NAME !!Disabled VALUE NUMERIC 4 DEFAULT
+        END ITEMLIST
+      END PART
+    END POLICY
+
+; CD-ROM
+    POLICY !!policynamecd
+      KEYNAME "SYSTEM\CurrentControlSet\Services\Cdrom"
+      EXPLAIN !!explaintextcd
+      PART !!labeltextcd DROPDOWNLIST REQUIRED
+        VALUENAME "Start"
+        ITEMLIST
+          NAME !!Enabled VALUE NUMERIC 1
+          NAME !!Disabled VALUE NUMERIC 4 DEFAULT
+        END ITEMLIST
+      END PART
+    END POLICY
+
+; 软驱
+    POLICY !!policynameflpy
+      KEYNAME "SYSTEM\CurrentControlSet\Services\Flpydisk"
+      EXPLAIN !!explaintextflpy
+      PART !!labeltextflpy DROPDOWNLIST REQUIRED
+        VALUENAME "Start"
+        ITEMLIST
+          NAME !!Enabled VALUE NUMERIC 3 
+          NAME !!Disabled VALUE NUMERIC 4 DEFAULT
+        END ITEMLIST
+      END PART
+    END POLICY
+
+; Disable High Capacity Floppy
+    POLICY !!policynamels120
+      KEYNAME "SYSTEM\CurrentControlSet\Services\Sfloppy"
+      EXPLAIN !!explaintextls120
+      PART !!labeltextls120 DROPDOWNLIST REQUIRED
+        VALUENAME "Start"
+        ITEMLIST
+          NAME !!Enabled VALUE NUMERIC 3
+          NAME !!Disabled VALUE NUMERIC 4 DEFAULT
+        END ITEMLIST
+      END PART
+    END POLICY
+  END CATEGORY
+END CATEGORY
+ 
+[strings]
+category="自定义策略设置"
+categoryname="受限设备"
+
+policynameusb="USB 大容量存储设备"
+explaintextusb="是否通过禁止加载usbstor.sys驱动以禁用USB 大容量存储设备（U盘、USB移动硬盘等）。（默认：禁用）"
+labeltextusb="是否启用该设备？"
+
+policynamecd="CD-ROM"
+explaintextcd="是否通过禁止加载cdrom.sys驱动以禁用CD-ROM。（默认：禁用）"
+labeltextcd="是否启用该设备？"
+
+policynameflpy="软驱"
+explaintextflpy="是否通过禁止加载flpydisk.sys驱动以禁用软驱。（默认：禁用）"
+labeltextflpy="是否启用该设备？"
+
+policynamels120="大容量软驱"
+explaintextls120="是否通过禁止加载sfloppy.sys驱动以禁用大容量软驱。（默认：禁用）"
+labeltextls120="是否启用该设备？"
+
+Enabled="启用"
+Disabled="禁用"

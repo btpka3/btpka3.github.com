@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Trigger Event Test</title>
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/dojo/1.9.0/dijit/themes/claro/claro.css" />
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/dojo/1.9.0/dojo/dojo.js"></script>
+<script type="text/javascript">
+require(["dijit/form/Button",
+         "dijit/registry",
+         "dojo/on",
+         "dojo/domReady!"
+], function(Button,
+             registry,
+             on
+){
+
+    var b1 = new Button({
+        label: "b1",
+        // NOTICE: Not use onXXX event handler anymore, these will be removed at Dojo 2.0 (according _WidgetBase#on() comment in source code 1.9)
+        onClick: function(){
+            console.info("b1 widget's onClick (UPPER case) is triggered");
+        },
+        onclick: function(){
+            console.info("b1 widget's onclick (LOWER case)is triggered");
+        }
+    }, "b1");
+
+    // http://dojotoolkit.org/reference-guide/1.9/dojo/Evented.html
+    // quote: Common convention is that events emitted are all lower case and usually a single word that has semantic meaning.
+    on(b1, "click", function(){
+        console.info("on(b1, 'click', func)'s func is triggered");
+    });
+
+    on(b1.domNode, 'click', function(){
+        console.info("on(b1.domNode, 'click', func)'s func is triggered")
+    });
+    // domNode is <span>, not <div>
+    b1.domNode.onclick = function(){
+       console.info("b1 <span>'s onclick is triggered");
+    };
+
+    // without b1.startup(), b1.emit() will not trigger b1.domNode.onclick
+    b1.startup();
+
+
+
+    var b2 = new Button({
+        label: "trigger by b1.emit('click')"
+    }, "b2");
+    on(b2, "click", function(){
+        b1.emit("click");
+    });
+
+    var b3 = new Button({
+        label: "trigger by on#emit(b1, 'click', event)"
+    }, "b3");
+    on(b3, "click", function(){
+        on.emit(b1, "click", {
+            bubbles: true,
+            cancelable: true
+        });
+    });
+
+    var b4 = new Button({
+        label: "trigger by on#emit(b1.domNode, 'click', event)"
+    }, "b4");
+    on(b4, "click", function(){
+        on.emit(b1.domNode, "click", {
+            bubbles: true,
+            cancelable: true
+        });
+    });
+});
+</script>
+</head>
+<body class="claro">
+This is a test for trigger Button Widget onclick event. please see console log.
+<ul>
+<li>Not declare any event handler on Widget place-holder HTML element (here is &lt;div&gt;).</li>
+<li>Not use 'onXxx' options in constructor any more, they will be removed at dojo 2.0.</li>
+<li>Not use _WidgetBase#on(widget, eventType, func): because on() -> _WidgetBase#on() -> _WidgetBase#onXxx()</li>
+<li>Not use on(widget, eventType, func): because on() -> _WidgetBase#on()</li>
+<li>Not use on.emit(widget, eventType): because it will not trigger the event handler on domNode</li>
+<li>So, simplest way is always use on(widget.domNode, "click", func), on.emit(widget.domNode, "click", event)</li>
+</ul>
+<hr/>
+<!-- this div element will be removed when button widget is constructed. So this event handler will never be triggered. -->
+<div id="b1" onclick="console.info('b1 div's onclick is triggered')"></div>
+<div id="b2" ></div>
+<div id="b3" ></div>
+<div id="b4" ></div>
+<hr/>
+
+</body>
+</html>
