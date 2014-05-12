@@ -1,3 +1,19 @@
+# 开发步骤
+
+## first-spring-jdo-api 手动编写Entity
+（FIXME：能否根据已有的表结构反向生成）
+1. 手动编写Entity的java类
+1. 手动编写Entity与表结构之间的映射关系
+1. `mvn install`
+
+## first-spring-jdo-dsl 生成dsl相应的QBean
+
+```sh
+mvn generate-sources
+```
+
+## first-spring-jdo-app 更新使用
+
 参考：
 http://www.datanucleus.org/products/accessplatform_3_2/jdo/api.html
 http://db.apache.org/jdo/api30/apidocs/index.html
@@ -26,8 +42,10 @@ DB设计：
     version   - 版本更新字段，可以用于乐观锁
 
   UserGroupMember - 用户组成员表
-    uid       - 用户ID，组合主键1
-    gid       - 用户组ID，组合主键2
+    recId     - 主键
+    uid       - 用户ID
+    gid       - 用户组ID
+    createDate - 创建日期
 
 mapping
   class mapping
@@ -58,7 +76,8 @@ mapping
 
           对于组合主键，如果没有指定相应的主键类，DataNucleus enhancer会自动生成一个。
           http://www.datanucleus.org/products/accessplatform_3_2/jdo/enhancer.html
-          要开发者自定义主键类，还是比较麻烦的，比如：主键类必须有个接受String参数的构造函数，必须覆盖toString()方法，且toString()的返回值能用于构造函数。
+          要开发者自定义主键类，还是比较麻烦的，比如：主键类必须有个接受String参数的构造函数，必须覆盖toString()方法，
+          且toString()的返回值能用于构造函数。而且只按照组合主键中的一列进行查询也比较麻烦。
 
       Nondurable Identity
           特点：数据库表中常常没有主键，而是靠DataNucleus在Client端为其创建一个，以方便使用。

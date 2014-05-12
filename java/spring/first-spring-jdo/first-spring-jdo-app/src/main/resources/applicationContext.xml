@@ -35,9 +35,14 @@
 
   <bean id="pmf" class="org.springframework.orm.jdo.TransactionAwarePersistenceManagerFactoryProxy">
     <property name="targetPersistenceManagerFactory" ref="jdoPmf" />
+    <property name="allowCreate" value="true"/>
   </bean>
 
-  <bean id="personDAO" class="me.test.first.spring.jdo.PersonDAOImpl">
+  <bean id="userDaoJdo" class="me.test.first.spring.jdo.UserDaoJdoImpl">
+    <property name="persistenceManagerFactory" ref="pmf" />
+  </bean>
+
+  <bean id="userDaoDsl" class="me.test.first.spring.jdo.UserDaoDslImpl">
     <property name="persistenceManagerFactory" ref="pmf" />
   </bean>
 
@@ -47,20 +52,6 @@
     </property>
   </bean>
 
-  <tx:advice id="txAdvice" transaction-manager="txManager">
-    <tx:attributes>
-      <tx:method name="list" propagation="SUPPORTS" read-only="true" />
-      <tx:method name="insert" propagation="REQUIRED" />
-      <tx:method name="select" propagation="SUPPORTS" read-only="true" />
-      <tx:method name="list" propagation="REQUIRED" />
-      <tx:method name="delete" propagation="REQUIRED" />
-      <tx:method name="dslQuery" propagation="REQUIRED" />
-    </tx:attributes>
-  </tx:advice>
-
-  <aop:config>
-    <aop:pointcut id="daoPointcut" expression="bean(*DAO)" />
-    <aop:advisor advice-ref="txAdvice" pointcut-ref="daoPointcut" />
-  </aop:config>
+  <tx:annotation-driven transaction-manager="txManager"/>
 
 </beans>

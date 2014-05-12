@@ -1,6 +1,7 @@
 package me.test.first.spring.jdo.entity;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Date;
 
 import javax.jdo.annotations.PersistenceCapable;
@@ -20,7 +21,7 @@ public class User implements Serializable {
     // http://docs.oracle.com/javase/1.5.0/docs/guide/jdbc/getstart/mapping.html
     private byte[] imgData;
     private Date birthday;
-    private Date version;
+//    private Date version;
 
     public Long getId() {
         return id;
@@ -70,12 +71,21 @@ public class User implements Serializable {
         this.imgData = imgData;
     }
 
-    public Date getVersion() {
-        return version;
+//    public Date getVersion() {
+//        return version;
+//    }
+//
+//    public void setVersion(Date version) {
+//        this.version = version;
+//    }
+
+    @Override
+    public String toString() {
+        return "User [id=" + id + ", name=" + name + ", age=" + age + ", male=" + male + ", imgData="
+                + Arrays.toString( imgData) + ", birthday=" + birthday
+//                + ", version=" + version
+                + "]";
     }
 
-    public void setVersion(Date version) {
-        this.version = version;
-    }
 
 }
