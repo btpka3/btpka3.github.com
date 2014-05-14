@@ -1,39 +1,37 @@
 
 package me.test.redis;
 
-import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionContext;
 
+import me.test.MySessionFilter;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 
 @SuppressWarnings("deprecation")
 public class MySession implements HttpSession {
 
     private Logger logger = LoggerFactory.getLogger(MySession.class);
-//    public static final String SESSION_MAP_KEY = MySession.class.getName() + ".SESSION_MAP_KEY";
 
-    private static ThreadLocal<HttpServletRequest> requestHolder = new ThreadLocal<HttpServletRequest>();
-    private static ThreadLocal<HttpServletResponse> responseHolder = new ThreadLocal<HttpServletResponse>();
+    private MySessionManager sessionManager;
+    private RedisTemplate<String, Object> redisTemplate;
+    private String redisHashKey;
 
-    private static final MySession instance = new MySession();
-    private RedisTemplate<Object, Object> redisTemplate; //FIXME
-    private MySessionManager sessionManager; // FIXME
+    private final String id;
+    private boolean isNew = true;
 
-    public String id; // FIXME
-
-    private static final HttpSessionContext _nullSessionContext = new HttpSessionContext() {
+    private static final HttpSessionContext NULL_SESSION_CONTEXT = new HttpSessionContext() {
 
         public HttpSession getSession(String sessionId) {
 
@@ -47,59 +45,36 @@ public class MySession implements HttpSession {
         }
     };
 
-    private MySession() {
+    public MySession(String id, MySessionManager sessionManager) {
 
+        this.id = id;
+        this.isNew = true;
+        this.sessionManager = sessionManager;
+        this.redisTemplate = sessionManager.getRedisTemplate();
+        this.redisHashKey = sessionManager.getRedisHashKey(id);
     }
 
-    public static MySession getInstance(HttpServletRequest request, HttpServletResponse response) {
+    private void checkAttributeValid(String name) {
 
-        requestHolder.set(request);
-        responseHolder.set(response);
-
-        return instance;
-
-    }
-
-    private void checkValid() {
-
-        if (!sessionManager.isValid(getId())) {
-            throw new IllegalStateException();
+        if (name == null) {
+            throw new NullPointerException("Session attribute name can not be null");
         }
-
+        if (MEATDATA_KEY_CREATE_TIME.equals(name)
+                || MEATDATA_KEY_LAST_ACCESS_TIME.equals(name)
+                || MEATDATA_KEY_MAX_INACTIVE_INTERVAL.equals(name)) {
+            throw new IllegalArgumentException("attribute name \"" + name + "\" is reverse for internal useage.");
+        }
     }
-
-    // @SuppressWarnings("unchecked")
-    // private Map<Object, Object> getSessionMap() {
-    //
-    // HttpServletRequest req = requestHolder.get();
-    //
-    // Object sessionMapObj = req.getAttribute(SESSION_MAP_KEY);
-    // Map<Object, Object> sessionMap = null;
-    // if (sessionMapObj == null) {
-    // sessionMap = new HashMap<Object, Object>();
-    // } else if (!(sessionMapObj instanceof Map)) {
-    // logger.warn("session map is overrided by others, rebuild it now");
-    // sessionMap = new HashMap<Object, Object>();
-    // } else {
-    // sessionMap = (Map<Object, Object>) sessionMapObj;
-    // }
-    // req.setAttribute(SESSION_MAP_KEY, sessionMap);
-    //
-    // return sessionMap;
-    // }
 
     // //////////////////////////////////////////////////////////////////
     public static final String PREFIX = MySession.class.getName();
-    public static final String _REQUEST_KEY_SESSION_ID = PREFIX + ".SESSION_ID";
-    public static final String _REQUEST_KEY_SESSION = PREFIX + ".SESSION";
-    public static final String _SESSION_KEY_CREATE_TIME = PREFIX + ".CREATE_TIME";
-    public static final String _SESSION_KEY_LAST_ACCESS_TIME = PREFIX + ".LAST_ACCESS_TIME";
-    public static final String _SESSION_KEY_MAX_INACTIVE_INTERVAL = PREFIX + ".MAX_INACTIVE_INTERVAL";
-    public static final String _SESSION_KEY_IS_NEW = PREFIX + ".IS_NEW";
+    public static final String MEATDATA_KEY_CREATE_TIME = PREFIX + ".CREATE_TIME";
+    public static final String MEATDATA_KEY_LAST_ACCESS_TIME = PREFIX + ".LAST_ACCESS_TIME";
+    public static final String MEATDATA_KEY_MAX_INACTIVE_INTERVAL = PREFIX + ".MAX_INACTIVE_INTERVAL";
 
     public long getCreationTime() {
 
-        return (Long) redisTemplate.opsForHash().get(getId(), _SESSION_KEY_CREATE_TIME);
+        return (Long) redisTemplate.opsForHash().get(redisHashKey, MEATDATA_KEY_CREATE_TIME);
     }
 
     public String getId() {
@@ -107,40 +82,69 @@ public class MySession implements HttpSession {
         return id;
     }
 
+    private void checkValid() {
+
+        if (!sessionManager.isSessionValid(getId())) {
+            throw new IllegalStateException();
+        }
+
+    }
+
     public long getLastAccessedTime() {
 
         checkValid();
-        Long lastAccessedTime = (Long) redisTemplate.opsForHash().get(getId(), _SESSION_KEY_LAST_ACCESS_TIME);
-        return lastAccessedTime == null ? lastAccessedTime : 0;
+
+        Long lastAccessedTime = (Long) redisTemplate.opsForHash().get(redisHashKey, MEATDATA_KEY_LAST_ACCESS_TIME);
+        return lastAccessedTime != null ? lastAccessedTime : 0;
+    }
+
+    protected void access() {
+
+        long curTimeMillis = System.currentTimeMillis();
+
+        redisTemplate.opsForHash().put(redisHashKey, MEATDATA_KEY_LAST_ACCESS_TIME, curTimeMillis);
+        Calendar expireTime = Calendar.getInstance();
+        expireTime.setTimeInMillis(curTimeMillis);
+        expireTime.add(Calendar.SECOND, this.getMaxInactiveInterval());
+        redisTemplate.expireAt(redisHashKey, expireTime.getTime());
     }
 
     public ServletContext getServletContext() {
 
-        return sessionManager.getServletContext(); // FIXME
+        return MySessionFilter.servletContextHolder.get();
     }
 
     public void setMaxInactiveInterval(int interval) {
 
-        redisTemplate.opsForHash().put(getId(), _SESSION_KEY_MAX_INACTIVE_INTERVAL, interval);
+        long createTime = this.getCreationTime();
+
+        Calendar expireTime = Calendar.getInstance();
+        expireTime.setTimeInMillis(createTime);
+        expireTime.add(Calendar.SECOND, interval);
+
+        redisTemplate.opsForHash().put(redisHashKey, MEATDATA_KEY_MAX_INACTIVE_INTERVAL, interval);
+        redisTemplate.expireAt(redisHashKey, expireTime.getTime());
 
     }
 
     public int getMaxInactiveInterval() {
 
-        Integer interval = (Integer) redisTemplate.opsForHash().get(getId(), _SESSION_KEY_MAX_INACTIVE_INTERVAL);
+        Integer interval = (Integer) redisTemplate.opsForHash().get(redisHashKey, MEATDATA_KEY_MAX_INACTIVE_INTERVAL);
         return interval != null ? interval : 0;
     }
 
     public HttpSessionContext getSessionContext() {
 
         checkValid();
-        return _nullSessionContext;
+        return NULL_SESSION_CONTEXT;
     }
 
     public Object getAttribute(String name) {
 
+        checkAttributeValid(name);
         checkValid();
-        return redisTemplate.opsForHash().get(getId(), name);
+
+        return sessionManager.getRedisTemplate().opsForHash().get(redisHashKey, name);
     }
 
     public Object getValue(String name) {
@@ -152,22 +156,27 @@ public class MySession implements HttpSession {
     public Enumeration getAttributeNames() {
 
         checkValid();
-        return Collections.enumeration(redisTemplate.opsForHash().keys(getId()));
+        HashOperations<String, String, Object> hashOps = redisTemplate.opsForHash();
+        Set<String> attrNameSet = hashOps.keys(redisHashKey);
+        attrNameSet.remove(MEATDATA_KEY_CREATE_TIME);
+        attrNameSet.remove(MEATDATA_KEY_LAST_ACCESS_TIME);
+        attrNameSet.remove(MEATDATA_KEY_MAX_INACTIVE_INTERVAL);
+        List<String> attrNameList = new LinkedList<String>(attrNameSet);
+        Collections.sort(attrNameList);
+        return Collections.enumeration(attrNameList);
     }
 
     public String[] getValueNames() {
 
         checkValid();
-        return (String[]) redisTemplate.opsForHash().keys(getId()).toArray();
+        return (String[]) redisTemplate.opsForHash().keys(redisHashKey).toArray();
     }
 
     public void setAttribute(String name, Object value) {
 
-        if (name == null) {
-            throw new NullPointerException("Session attribute name can not be null");
-        }
+        checkAttributeValid(name);
         checkValid();
-        redisTemplate.opsForHash().put(getId(), name, value);
+        redisTemplate.opsForHash().put(redisHashKey, name, value);
 
     }
 
@@ -179,11 +188,9 @@ public class MySession implements HttpSession {
 
     public void removeAttribute(String name) {
 
-        if (name == null) {
-            throw new NullPointerException("Session attribute name can not be null");
-        }
+        checkAttributeValid(name);
         checkValid();
-        redisTemplate.opsForHash().delete(getId(), name);
+        redisTemplate.opsForHash().delete(redisHashKey, name);
 
     }
 
@@ -196,16 +203,19 @@ public class MySession implements HttpSession {
     public void invalidate() {
 
         checkValid();
+        redisTemplate.delete(redisHashKey);
 
-        sessionManager.removeSession(getId());
+    }
 
+    public String getRedisHashKey() {
+
+        return redisHashKey;
     }
 
     public boolean isNew() {
 
         checkValid();
-        Boolean isNew = (Boolean) redisTemplate.opsForHash().get(getId(), _SESSION_KEY_IS_NEW);
-        return isNew == null ? true : isNew;
+        return this.isNew;
     }
 
 }

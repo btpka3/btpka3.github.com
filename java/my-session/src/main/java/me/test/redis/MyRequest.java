@@ -2,11 +2,10 @@
 package me.test.redis;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import me.test.MySessionFilter;
 import me.test.SessionManager;
 
 import org.slf4j.Logger;
@@ -16,17 +15,15 @@ public class MyRequest extends HttpServletRequestWrapper {
 
     private Logger logger = LoggerFactory.getLogger(MyRequest.class);
 
-    private HttpServletResponse response;
     private SessionManager sessionManager;
     private HttpSession session;
 
     private String requestedSessionId;
     private boolean requestedSessionIdFromCookie = false;
 
-    public MyRequest(HttpServletRequest request, HttpServletResponse response, SessionManager sessionManager) {
+    public MyRequest(SessionManager sessionManager) {
 
-        super(request);
-        this.response = response;
+        super(MySessionFilter.requestHolder.get());
         this.sessionManager = sessionManager;
 
         // 从request中获取 sessionID
@@ -42,7 +39,7 @@ public class MyRequest extends HttpServletRequestWrapper {
             readRequestedSessionIdFromURL();
         }
         if (session != null) {
-            sessionManager.accessSession(session.getId());
+            sessionManager.accessSession(session);
         }
     }
 
@@ -74,8 +71,10 @@ public class MyRequest extends HttpServletRequestWrapper {
 
         String uri = getRequestURI();
 
-        String prefix = sessionManager.getSessionIdUrlMatrixParamName();
-        if (prefix != null) {
+        String paramName = sessionManager.getSessionIdUrlMatrixParamName();
+
+        if (paramName != null) {
+            String prefix = ";" + paramName + "=";
             int s = uri.indexOf(prefix);
             if (s >= 0) {
                 s += prefix.length();
@@ -109,7 +108,7 @@ public class MyRequest extends HttpServletRequestWrapper {
 
         // 可用HttpSession对象是否已经创建了？
         if (session != null) {
-            if (!sessionManager.isSessionValid(session.getId())) {
+            if (sessionManager.isSessionValid(session.getId())) {
                 return session;
             } else {
                 session = null;
@@ -120,11 +119,7 @@ public class MyRequest extends HttpServletRequestWrapper {
             return null;
         }
 
-        session = sessionManager.newHttpSession(this);
-
-        Cookie cookie = sessionManager.newSessionCookie(this, response, session.getId());
-        response.addCookie(cookie);
-
+        session = sessionManager.newHttpSession();
         return session;
 
     }

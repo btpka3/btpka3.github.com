@@ -2,28 +2,24 @@
 package me.test;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public interface SessionManager {
 
-    HttpServletRequest wrapHttpSevletRequest(HttpServletRequest rquest, HttpServletResponse response);
+    HttpServletRequest wrapHttpSevletRequest();
 
-    HttpServletResponse wrapHttpSevletResponse(HttpServletRequest rquest, HttpServletResponse response);
+    HttpServletResponse wrapHttpSevletResponse();
 
-    Cookie newSessionCookie(HttpServletRequest request, HttpServletResponse response, String sessionId);
+    HttpSession newHttpSession();
 
-    HttpSession newHttpSession(HttpServletRequest request);
-
+    // 不出错
     HttpSession getHttpSession(String sessionId);
-
-    void removeSession(String sessionId);
 
     ServletContext getServletContext();
 
-    void accessSession(String sessionId);
+    void accessSession(HttpSession session);
 
     boolean isSessionValid(String sessionId);
 
