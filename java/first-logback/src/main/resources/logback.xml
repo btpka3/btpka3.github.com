@@ -1,0 +1,47 @@
+<configuration debug="false">
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
+  
+  <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>/tmp/logFile.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <!-- daily rollover -->
+      <fileNamePattern>logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
+
+      <!-- keep 30 days' worth of history -->
+      <maxHistory>30</maxHistory>
+    </rollingPolicy>
+
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
+  
+  <appender name="DB" class="ch.qos.logback.classic.db.DBAppender">
+    <connectionSource class="ch.qos.logback.core.db.DataSourceConnectionSource">
+      <dataSource class="org.apache.commons.dbcp.BasicDataSource">
+        <driverClassName>org.h2.Driver</driverClassName>
+        <url>jdbc:h2:tcp://localhost:9092/~/test</url>
+        <username>sa</username>
+        <password></password>
+        <minIdle>2</minIdle>
+        <maxActive>10</maxActive>
+      </dataSource>
+    </connectionSource>
+  </appender>
+  
+  <appender name="asyncDB" class="ch.qos.logback.classic.AsyncAppender">
+    <appender-ref ref="DB" />
+  </appender>
+ 
+  <logger name="me.test" level="ALL" >
+    <appender-ref ref="DB" />
+  </logger>
+
+  <root level="OFF">
+  </root>
+
+</configuration>
