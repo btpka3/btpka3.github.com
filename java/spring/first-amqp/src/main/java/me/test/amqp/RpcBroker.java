@@ -5,8 +5,8 @@ import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 
-public class RcpBroker {
-    public static final String QUEUE_NAME = "my-as-queue";
+public class RpcBroker {
+    public static final String QUEUE_NAME = "my-rpc-queue";
 
     public static void main(String[] args) {
         CachingConnectionFactory connectionFactory = new CachingConnectionFactory("localhost");

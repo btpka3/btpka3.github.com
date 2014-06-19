@@ -6,7 +6,7 @@ import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 
-public class RcpProducer {
+public class RpcProducer {
     private final static AtomicInteger counter = new AtomicInteger();
 
     public static void main(String[] args) {
@@ -15,13 +15,26 @@ public class RcpProducer {
         connectionFactory.setPassword("guest");
 
         RabbitTemplate template = new RabbitTemplate(connectionFactory);
-        template.setRoutingKey(RcpBroker.QUEUE_NAME);
+        template.setRoutingKey(RpcBroker.QUEUE_NAME);
 
-        for (int i = 0; i < 3; i++) {
+        int count = 10;
+        long totalTime = 0;
+        for (int i = 0; i < count; i++) {
             String msg = "Hello World " + counter.incrementAndGet();
+
+            long start = System.currentTimeMillis();
+
             Object reply = template.convertSendAndReceive(msg);
-            System.out.println("send msg :" + msg + ", reply = " + reply);
+
+            long end = System.currentTimeMillis();
+            long time = end - start;
+            totalTime += time;
+
+            System.out.println("send msg :" + msg + ", reply = " + reply + ", using time = " + time
+                    + " millis.");
         }
+
+        System.out.println("Total time: " + totalTime + " millis, avg = " + (totalTime / count) + " millis.");
 
         connectionFactory.destroy();
     }
