@@ -1,0 +1,189 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>me.test</groupId>
+  <artifactId>first-hibernate-tools</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+
+
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <version>1.4.178</version>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate.javax.persistence</groupId>
+      <artifactId>hibernate-jpa-2.1-api</artifactId>
+      <version>1.0.0.Final</version>
+    </dependency>
+  </dependencies>
+
+  <profiles>
+  
+  
+  <!--
+    - 通过Maven使用ant，再调用hibernate-tool 
+    - http://www.taringamberini.com/italiano/hibernatetools_hibernate_4_maven.shtml
+    -->
+
+
+    <profile>
+      <id>hbm2java</id>
+      <activation>
+        <property>
+          <name>p_hbm2java</name>
+        </property>
+      </activation>
+
+      <dependencies>
+        <dependency>
+          <groupId>org.hibernate</groupId>
+          <artifactId>hibernate-tools</artifactId>
+          <version>4.3.1.CR1</version>
+        </dependency>
+      </dependencies>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <version>1.7</version>
+
+            <configuration>
+              <target>
+                <property name="maven_compile_classpath" refid="maven.compile.classpath" />
+                <property name="maven_test_classpath" refid="maven.test.classpath" />
+                <path id="hibernatetool.path">
+                  <pathelement path="${maven_compile_classpath}" />
+                  <pathelement path="${maven_test_classpath}" />
+                </path>
+
+                <pathconvert property="hibernatetool_path" refid="hibernatetool.path" />
+                <echo message="Using class path  = ${hibernatetool_path}" />
+
+                <taskdef name="hibernatetool" classname="org.hibernate.tool.ant.HibernateToolTask" classpathref="hibernatetool.path" />
+
+                <hibernatetool destdir="target/generated/java">
+                  <classpath>
+                    <path location="src/main/resources" />
+                  </classpath>
+
+                  <configuration configurationfile="src/main/resources/hibernate.hbm2java.cfg.xml" />
+                  <hbm2java jdk5="true" ejb3="true" />
+
+                </hibernatetool>
+              </target>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+
+    </profile>
+
+
+    <profile>
+      <id>hbm2hbmxml</id>
+      <activation>
+        <property>
+          <name>p_hbm2hbmxml</name>
+        </property>
+      </activation>
+
+      <dependencies>
+        <dependency>
+          <groupId>org.hibernate</groupId>
+          <artifactId>hibernate-tools</artifactId>
+          <version>4.3.1.CR1</version>
+        </dependency>
+      </dependencies>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <version>1.7</version>
+
+            <configuration>
+              <target>
+                <property name="maven_compile_classpath" refid="maven.compile.classpath" />
+                <property name="maven_test_classpath" refid="maven.test.classpath" />
+                <path id="hibernatetool.path">
+                  <pathelement path="${maven_compile_classpath}" />
+                  <pathelement path="${maven_test_classpath}" />
+                </path>
+
+                <pathconvert property="hibernatetool_path" refid="hibernatetool.path" />
+                <echo message="Using class path  = ${hibernatetool_path}" />
+
+                <taskdef name="hibernatetool" classname="org.hibernate.tool.ant.HibernateToolTask" classpathref="hibernatetool.path" />
+
+                <hibernatetool destdir="target/generated/resources">
+                  <configuration configurationfile="src/main/resources/hibernate.hbm2hbmxml.cfg.xml" />
+                  <hbm2hbmxml />
+                </hibernatetool>
+              </target>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+
+    </profile>
+
+
+
+    <profile>
+      <id>hbm2ddl</id>
+      <activation>
+        <property>
+          <name>p_hbm2ddl</name>
+        </property>
+      </activation>
+
+      <dependencies>
+        <dependency>
+          <groupId>org.hibernate</groupId>
+          <artifactId>hibernate-tools</artifactId>
+          <version>4.3.1.CR1</version>
+        </dependency>
+      </dependencies>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <version>1.7</version>
+
+            <configuration>
+              <target>
+                <property name="maven_compile_classpath" refid="maven.compile.classpath" />
+                <property name="maven_test_classpath" refid="maven.test.classpath" />
+                <path id="hibernatetool.path">
+                  <pathelement path="${maven_compile_classpath}" />
+                  <pathelement path="${maven_test_classpath}" />
+                </path>
+
+                <pathconvert property="hibernatetool_path" refid="hibernatetool.path" />
+                <echo message="Using class path  = ${hibernatetool_path}" />
+
+                <taskdef name="hibernatetool" classname="org.hibernate.tool.ant.HibernateToolTask" classpathref="hibernatetool.path" />
+
+                <mkdir dir="target/generated/resources" />
+                <hibernatetool destdir="target/generated/resources">
+                  <configuration configurationfile="src/main/resources/hibernate.hbm2ddl.cfg.xml" />
+                  <hbm2ddl format="true" outputfilename="User4Ddl.sql" delimiter=";" />
+                </hibernatetool>
+              </target>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+
+    </profile>
+  </profiles>
+</project>

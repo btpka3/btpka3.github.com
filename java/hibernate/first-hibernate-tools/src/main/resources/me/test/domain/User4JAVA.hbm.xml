@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="me.test.domain">
+    <class name="User4Java" table="USER4JAVA" >
+        <id name="id" column="ID" type="java.lang.Long"/>
+        <property name="name" column="name" type="java.lang.String"/>
+    </class>
+</hibernate-mapping>
