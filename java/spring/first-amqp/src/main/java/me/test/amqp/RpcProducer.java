@@ -4,7 +4,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.scheduling.annotation.Scheduled;
 
 public class RpcProducer {
     private final static AtomicInteger counter = new AtomicInteger();
@@ -37,10 +36,5 @@ public class RpcProducer {
         System.out.println("Total time: " + totalTime + " millis, avg = " + (totalTime / count) + " millis.");
 
         connectionFactory.destroy();
-    }
-
-    @Scheduled(fixedRate = 3000)
-    public void sendMessage() {
-
     }
 }

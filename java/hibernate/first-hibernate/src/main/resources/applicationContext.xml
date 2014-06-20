@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:aop="http://www.springframework.org/schema/aop" xmlns:c="http://www.springframework.org/schema/c" xmlns:p="http://www.springframework.org/schema/p"
+  xmlns:util="http://www.springframework.org/schema/util"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+
+  <bean id="dataSource"
+        class="org.apache.commons.dbcp.BasicDataSource"
+        p:driverClassName="org.h2.Driver"
+        p:url="jdbc:h2:tcp://localhost:9092/~/first-hibernate"
+        p:username="sa"
+        p:password=""/>
+
+<!-- 
+  - 如果要不使用JPA，而仅仅使用Hibernate的API的话，应该一切从sessionFactory开始。
+  - 但是，如此的话，则无法出发domain类上的@PrePersist、@PreUpdate标注的方法。
+  - 因此，还是建议通过JPA 的 entityManager#.unwrap(Session.class) 来获取 hibernate的Session实例。
+  -
+  <bean id="sessionFactory"
+        class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+    <property name="dataSource"     ref="dataSource" /> 
+    <property name="packagesToScan" value="me.test.domain" />
+    <property name="hibernateProperties">
+      <props>
+        <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
+        <prop key="hibernate.show_sql">true</prop>
+        <prop key="hibernate.format_sql">true</prop>
+        <prop key="hibernate.hbm2ddl.auto">update</prop>
+      </props>
+    </property>
+  </bean>
+ -->
+ 
+  <bean id="myEmf" 
+        class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+        p:dataSource-ref="dataSource"
+        p:packagesToScan="me.test.domain">
+    <property name="jpaDialect">
+      <bean class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
+    </property>
+    <property name="loadTimeWeaver">
+      <bean class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver" />
+    </property>
+    <property name="persistenceProviderClass" value="org.hibernate.jpa.HibernatePersistenceProvider" />
+    <property name="jpaProperties">
+      <props>
+        <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
+        <prop key="hibernate.show_sql">true</prop>
+        <prop key="hibernate.format_sql">true</prop>
+        <prop key="hibernate.hbm2ddl.auto">update</prop>
+      </props>
+    </property>
+  </bean>
+   
+</beans>

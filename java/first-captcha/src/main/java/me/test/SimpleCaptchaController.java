@@ -65,7 +65,6 @@ public class SimpleCaptchaController {
      * 获取
      *
      *
-     * @param hash
      *            要显示指定的验证码图片
      * @param response
      * @return
@@ -186,6 +185,7 @@ public class SimpleCaptchaController {
 
         Captcha captcha = controller.generateCaptcha();
 
-        ImageIO.write(captcha.getImage(), "jpg", new File("/" + captcha.getAnswer() + ".jpg"));
+        ImageIO.write(captcha.getImage(), "jpg", new File("/tmp/simpleCaptcha_" + captcha.getAnswer() + ".jpg"));
+        System.out.println("---------over");
     }
 }
