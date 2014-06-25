@@ -21,7 +21,7 @@ if(sess!=null){
 </head>
 <body>
 
-<div>${pageContext.session.id}</div>
+<div>current session id = ${pageContext.session.id}</div>
 <table>
 <tr><th>attr</th><th>value</th></tr>
 <c:forEach items="${pageContext.session.attributeNames}" var="attrName">
@@ -29,12 +29,11 @@ if(sess!=null){
 </c:forEach>
 </table>
 <c:url var="url1" value="index.jsp" />
-<div><a href="${url1}">url 1</a></div>
-<%--
+<div><a href="${url1}">第一次JSP展示时，&lt;c:url&gt;中内部链接URL 会 添加 ";jsessionid=xxxx"，你可以删除cookie后再点击该URL。</a></div>
 
 <c:url var="url2" value="index.jsp?a=b" />
-<div><a href="${url2}">url 2</a></div>
-
+<div><a href="${url2}">第一次JSP展示时，&lt;c:url&gt;中内部链接URL即使有参数，也会在合适的位置会添加 ";jsessionid=xxxx"，你可以删除cookie后再点击该URL。</a></div>
+<%--
 <c:url var="url3" value="/index.jsp" />
 <div><a href="${url3}">url 3</a></div>
 
@@ -43,33 +42,24 @@ if(sess!=null){
 <div><a href="${url4}">url 4</a></div>
  --%>
 
-<c:url var="url5" value="http://localhost:8080/index.html?c=d" />
-<div><a href="${url5}">url 5</a></div>
+<c:url var="url5" value="http://localhost:10001/index.html?c=d" />
+<div><a href="${url5}" onclick="return false;">第一次JSP展示时，&lt;c:url&gt;中绝对URL不会添加 ";jsessionid=xxxx"</a></div>
 
 <%--
 <c:url var="url6" value="http://www.baidu.com/#wd=b" />
 <div><a href="${url6}">url 6</a></div>
  --%>
 
+
+<%-- 
 <div><a href="index.jsp?invalidSession=true">invalidSession</a></div>
-
-<%--
-
 <%
   if(request.getParameter("invalidSession")!=null){
       session.invalidate();
   }
 %>
+ --%>
 
 
-
-
-
-
-
-
-
-
---%>
 </body>
 </html>
