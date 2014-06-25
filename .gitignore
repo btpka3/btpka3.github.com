@@ -7,3 +7,4 @@ bin
 *.log
 /owasp/first-AntiSamy/cleanResult
 .pmd
+.iml
