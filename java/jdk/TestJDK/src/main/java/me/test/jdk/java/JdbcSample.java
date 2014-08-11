@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class JdbcSampel {
+public class JdbcSample {
 
     public static void main(String[] args) {
         Connection conn = null;
