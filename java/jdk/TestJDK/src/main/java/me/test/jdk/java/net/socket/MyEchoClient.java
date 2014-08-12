@@ -4,18 +4,33 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.nio.charset.StandardCharsets;
 
 public class MyEchoClient {
 
     public static void main(String[] args) throws UnknownHostException, IOException {
 
-        String[] userMsgs = args;
+        byte[] userMsgs = null;
+        if (args.length == 0) {
+
+            // 模拟的用户输入
+            userMsgs = new byte[] {
+                    'I',
+                    -26, -120, -111, // '我',
+                    -26, // malformed
+                    'I',
+                    'I',
+                    '.'
+            };
+        } else {
+            userMsgs = args[0].getBytes(StandardCharsets.UTF_8);
+        }
+
         if (userMsgs.length == 0) {
-            userMsgs = new String[] { "hi 中国" };
+
         }
 
         Socket socket = new Socket("localhost", 9999);
@@ -29,55 +44,29 @@ public class MyEchoClient {
      */
     private static class UserMsgHander implements Runnable {
 
-        private String[] userMsgs;
+        private byte[] userMsgs;
         private Socket socket;
 
-        public UserMsgHander(Socket socket, String[] userMsgs) {
+        public UserMsgHander(Socket socket, byte[] userMsgs) {
             this.socket = socket;
             this.userMsgs = userMsgs;
         }
-//
-//        @Override
-//        public void run() {
-//
-//            // send message to sever
-//            Writer writer;
-//            try {
-//                writer = new OutputStreamWriter(socket.getOutputStream(), "UTF-8");
-//
-//                for (String arg : userMsgs) {
-//                    for (char c : arg.toCharArray()) {
-//                        writer.write(c);
-//                        writer.flush();
-//                        System.out.println(">>> '" + c + "'");
-//                    }
-//                }
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        
 
         @Override
         public void run() {
 
             // send message to sever
-            OutputStream out;
             try {
-                out = socket.getOutputStream();
-
-                for (String arg : userMsgs) {
-                    for (byte b : arg.getBytes("UTF-8")) {
-                        out.write(b);
-                        out.flush();
-                        System.out.println(">>> '" + b + "'");
-                        Thread.sleep(1000);
-                    }
+                OutputStream out = socket.getOutputStream();
+                for (byte b : userMsgs) {
+                    out.write(b);
+                    out.flush();
+                    System.out.println(">>> '" + b + "'");
+                    Thread.sleep(1000);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
