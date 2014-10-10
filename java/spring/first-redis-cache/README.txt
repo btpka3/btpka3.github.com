@@ -1,3 +1,6 @@
+0. compile
+mvn compile
+ 
 1. start database
 mvn -Dmaven.test.skip=true -Dp_startDb exec:java
 
