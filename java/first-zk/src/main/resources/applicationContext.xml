@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+  <bean id="zkRetry" class="org.apache.curator.retry.ExponentialBackoffRetry">
+    <constructor-arg value="1000" />
+    <constructor-arg value="3" />
+  </bean>
+  <bean id="zkClient" class="org.apache.curator.framework.CuratorFrameworkFactory" factory-method="newClient"
+     init-method="start" destroy-method="close">
+    <constructor-arg value="127.0.0.1:2110,127.0.0.1:2120,127.0.0.1:2130" />
+    <constructor-arg ref="zkRetry" />
+  </bean>
+</beans>
