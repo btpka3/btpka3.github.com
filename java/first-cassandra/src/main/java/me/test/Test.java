@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.datastax.driver.core.BatchStatement;
 import com.datastax.driver.core.BoundStatement;
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Host;
@@ -49,11 +50,12 @@ public class Test {
 
         Session session = cluster.connect();
 
-        recreateKeyspace(session);
-        recreateTable(session);
-        insertData1(session); // 8.034s, 5.698s, 5.77s
+        recreateKeyspace(session); // 3.948s, 4.364s
+        recreateTable(session); // 3.091s, 4.364s, 3.014s
+        insertData0(session); // 5.323s, 5.495s
+        // insertData1(session); // 8.034s, 5.698s, 5.77s
         // insertData2(session); // 18.11s
-        query(session);
+        query(session); // 1.035s, 0.761s
 
         session.close();
         cluster.close();
@@ -115,6 +117,63 @@ public class Test {
         System.out.println("recreateTable end : " + timeConsume + "s");
     }
 
+    // batch + prepared statement
+    private static void insertData0(Session session) {
+
+        System.out.println("insertData0 begin");
+        showMemory();
+        long beginTime = System.currentTimeMillis();
+
+        Insert insert = QueryBuilder
+                .insertInto("xxx")
+                .value("id", bindMarker())
+                .value("sid", bindMarker())
+                .value("name", bindMarker())
+                .value("tags", bindMarker())
+                .value("addrs", bindMarker())
+                .value("extra", bindMarker())
+                .value("memo", bindMarker());
+        PreparedStatement preStmt = session.prepare(insert.toString());
+        BatchStatement batchStmt = new BatchStatement();
+
+        // batch loop
+        for (int i = 0; i < 1000; i++) {
+
+            // inserts loop in one batch
+            for (int j = 0; j < 10; j++) {
+                int num = i * 10 + j;
+
+                String id = "0";
+                String sid = "sid" + num;
+                String name = "name" + num;
+
+                Set<String> tags = new HashSet<String>(2);
+                tags.add("tag" + num + ".3");
+                tags.add("tag" + num + ".4");
+
+                List<String> addrs = new ArrayList<String>(2);
+                addrs.add("addr" + num + ".3");
+                addrs.add("addr" + num + ".4");
+
+                Map<String, String> extra = new HashMap<String, String>(2);
+                extra.put("key" + num + ".3", "value" + num + ".3");
+                extra.put("key" + num + ".4", "value" + num + ".4");
+
+                String memo = "memo" + num;
+
+                BoundStatement boundStmt = preStmt.bind(id, sid, name, tags, addrs, extra, memo);
+                batchStmt.add(boundStmt);
+            }
+            session.execute(batchStmt);
+            batchStmt.clear();
+        }
+        long endTime = System.currentTimeMillis();
+        double timeConsume = (endTime - beginTime) / 1000.0;
+        showMemory();
+        System.out.println("insertData0 end : " + timeConsume + "s");
+    }
+
+    // batch
     private static void insertData1(Session session) {
 
         System.out.println("insertData1 begin");
@@ -166,6 +225,7 @@ public class Test {
         System.out.println("insertData1 end : " + timeConsume + "s");
     }
 
+    // prepared statement
     private static void insertData2(Session session) {
 
         System.out.println("insertData2 begin");
@@ -192,7 +252,6 @@ public class Test {
                 .value("extra", bindMarker())
                 .value("memo", bindMarker());
         PreparedStatement preStmt = session.prepare(insert.toString());
-        BoundStatement boundStmt = new BoundStatement(preStmt);
 
         for (int i = 0; i < 10000; i++) {
             String id = "0";
@@ -212,7 +271,8 @@ public class Test {
             extra.put("key" + i + ".4", "value" + i + ".4");
 
             String memo = "memo" + i;
-            boundStmt.bind(id, sid, name, tags, addrs, extra, memo);
+
+            BoundStatement boundStmt = preStmt.bind(id, sid, name, tags, addrs, extra, memo);
             session.execute(boundStmt);
         }
 
