@@ -1,9 +1,14 @@
 package me.test;
 
+import static com.datastax.driver.core.querybuilder.QueryBuilder.add;
 import static com.datastax.driver.core.querybuilder.QueryBuilder.batch;
 import static com.datastax.driver.core.querybuilder.QueryBuilder.bindMarker;
 import static com.datastax.driver.core.querybuilder.QueryBuilder.desc;
 import static com.datastax.driver.core.querybuilder.QueryBuilder.eq;
+import static com.datastax.driver.core.querybuilder.QueryBuilder.prepend;
+import static com.datastax.driver.core.querybuilder.QueryBuilder.put;
+import static com.datastax.driver.core.querybuilder.QueryBuilder.set;
+import static com.datastax.driver.core.querybuilder.QueryBuilder.ttl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -126,6 +131,7 @@ public class Test {
 
         Insert insert = QueryBuilder
                 .insertInto("xxx")
+                // .ifNotExists()
                 .value("id", bindMarker())
                 .value("sid", bindMarker())
                 .value("name", bindMarker())
@@ -332,5 +338,20 @@ public class Test {
                 + "/"
                 + (freeMemory / 1024 / 1024));
         System.out.println(sb.toString());
+    }
+
+    // update demo
+    private static void update() {
+
+        QueryBuilder
+                .update("xxx")
+                .with(set("memo", "memo2"))
+                .and(add("tags", "tag1"))
+                .and(prepend("addrs", "addr1"))
+                .and(put("extra", "key1", "value1"))
+                .where(eq("id", "99"))
+                .and(eq("sid", ""))
+                .onlyIf(eq("memo", "memo1"))
+                .using(ttl(10000));
     }
 }

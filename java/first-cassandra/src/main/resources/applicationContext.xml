@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:cassandra="http://www.springframework.org/schema/data/cassandra"
+    xsi:schemaLocation="http://www.springframework.org/schema/cql http://www.springframework.org/schema/cql/spring-cql-1.0.xsd
+        http://www.springframework.org/schema/data/cassandra http://www.springframework.org/schema/data/cassandra/spring-cassandra-1.0.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <cassandra:cluster contact-points="localhost" port="9042" />
+    <cassandra:session keyspace-name="test" />
+    <cassandra:mapping />
+    <cassandra:converter />
+    <cassandra:template id="cassandraTemplate" />
+    <cassandra:repositories base-package="me.test.spring.data.repo" cassandra-template-ref="cassandraTemplate"
+        query-lookup-strategy="create-if-not-found" />
+
+</beans>
