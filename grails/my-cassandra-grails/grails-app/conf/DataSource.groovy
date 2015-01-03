@@ -54,3 +54,11 @@ environments {
         }
     }
 }
+
+grails {
+	cassandra {
+		contactPoints = "localhost"
+		port = 9042
+		keyspace.name = "test"
+	}
+}
