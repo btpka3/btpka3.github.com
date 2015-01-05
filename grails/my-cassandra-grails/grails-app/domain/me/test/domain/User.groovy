@@ -2,25 +2,31 @@ package me.test.domain
 
 class User {
 
-	static constraints = {
-	}
-	static mapping = {
-		table "xxx"
-		id name : "id",primaryKey : [ordinal : 0, type : "partitioned"], generator : "assigned"
-		sid primaryKey : [ordinal : 1, type : "clustered"]
-	}
+    static constraints = {
+    }
 
-	String id;
+    static mapping = {
+        table "xxx"
+        id name : "id",primaryKey : [ordinal : 0, type : "partitioned"], generator : "assigned"
+        sid primaryKey : [ordinal : 1, type : "clustered"]
+    }
 
-	String sid;
+    String id
 
-	String name;
+    String sid
 
-	Set<String> tags;
+    String name
 
-	List<String> addrs;
+    Set<String> tags
 
-	Map<String, String> extra;
+    List<String> addrs
 
-	String memo;
+    Map<String, String> extra
+
+    String memo
+
+    @Override
+    public String toString() {
+        return "User [id=" + id + ", sid=" + sid + ", name=" + name + ", tags=" + tags + ", addrs=" + addrs + ", extra=" + extra + ", memo="  + memo + "]"
+    }
 }
