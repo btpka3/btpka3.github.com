@@ -10,6 +10,7 @@ import static com.datastax.driver.core.querybuilder.QueryBuilder.put;
 import static com.datastax.driver.core.querybuilder.QueryBuilder.set;
 import static com.datastax.driver.core.querybuilder.QueryBuilder.ttl;
 
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -30,14 +31,16 @@ import com.datastax.driver.core.Session;
 import com.datastax.driver.core.Statement;
 import com.datastax.driver.core.policies.ConstantReconnectionPolicy;
 import com.datastax.driver.core.policies.DowngradingConsistencyRetryPolicy;
+import com.datastax.driver.core.querybuilder.Clause;
 import com.datastax.driver.core.querybuilder.Insert;
 import com.datastax.driver.core.querybuilder.QueryBuilder;
+import com.datastax.driver.core.querybuilder.QueryBuilderEx;
 
 public class Test {
 
     public static void main(String[] args) {
         Cluster cluster = Cluster.builder()
-                .addContactPoint("localhost")
+                .addContactPoint("192.168.101.80")
                 .withPort(9042)
                 .withRetryPolicy(DowngradingConsistencyRetryPolicy.INSTANCE)
                 .withReconnectionPolicy(new ConstantReconnectionPolicy(100L))
@@ -61,6 +64,7 @@ public class Test {
         // insertData1(session); // 8.034s, 5.698s, 5.77s
         // insertData2(session); // 18.11s
         query(session); // 1.035s, 0.761s
+        queryContains(session);
 
         session.close();
         cluster.close();
@@ -167,7 +171,8 @@ public class Test {
 
                 String memo = "memo" + num;
 
-                BoundStatement boundStmt = preStmt.bind(id, sid, name, tags, addrs, extra, memo);
+                BoundStatement boundStmt = preStmt.bind(id, sid, name, tags,
+                        addrs, extra, memo);
                 batchStmt.add(boundStmt);
             }
             session.execute(batchStmt);
@@ -278,7 +283,8 @@ public class Test {
 
             String memo = "memo" + i;
 
-            BoundStatement boundStmt = preStmt.bind(id, sid, name, tags, addrs, extra, memo);
+            BoundStatement boundStmt = preStmt.bind(id, sid, name, tags, addrs,
+                    extra, memo);
             session.execute(boundStmt);
         }
 
@@ -322,6 +328,34 @@ public class Test {
         double timeConsume = (endTime - beginTime) / 1000.0;
         showMemory();
         System.out.println("query end : " + timeConsume + "s");
+    }
+
+    private static void queryContains(Session session) {
+        System.out.println("queryContains begin");
+        showMemory();
+        long beginTime = System.currentTimeMillis();
+
+        Statement stmt = QueryBuilder
+                .select()
+                .all()
+                .from("xxx")
+                .where(eq("id", "0"))
+                .and(QueryBuilderEx.contains("tags", "tag0.3"))
+                // .orderBy(desc("sid"))
+                // .limit(10)
+                .setFetchSize(100);
+        ResultSet rs = session.execute(stmt);
+        int i = 0;
+        while (!rs.isExhausted()) {
+            Row row = rs.one();
+            System.out.println(i + " : " + row);
+            i++;
+        }
+
+        long endTime = System.currentTimeMillis();
+        double timeConsume = (endTime - beginTime) / 1000.0;
+        showMemory();
+        System.out.println("queryContains end : " + timeConsume + "s");
     }
 
     private static void showMemory() {
