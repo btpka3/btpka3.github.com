@@ -13,3 +13,4 @@ bin
 *.swp
 .idea
 .DS_Store
+target-eclipse
