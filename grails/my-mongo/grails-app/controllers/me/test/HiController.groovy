@@ -3,6 +3,7 @@ package me.test
 import me.test.domain.Address
 import me.test.domain.Cart
 import me.test.domain.Item
+import org.grails.datastore.mapping.mongo.query.MongoQuery
 
 class HiController {
 
@@ -126,12 +127,12 @@ class HiController {
         def cartList = Cart.createCriteria().list {
             eq("addrMap.key1.city", "南京8")
 
-// Map字段不支持以下写法：
-//            addrMap {
-//                key1 {
-//                    eq("city", "南京8")
-//                }
-//            }
+            // Map字段不支持以下写法：
+            // addrMap {
+            //     key1 {
+            //         eq("city", "南京8")
+            //     }
+            // }
         }
         render "where6 <br/>\n" + printAll(cartList)
     }
@@ -184,11 +185,25 @@ class HiController {
     def count2() {
         def cartList = Cart.createCriteria().list() {
             projections {
-                //count("userName")
+                // count("userName") // 不支持
                 rowCount()
             }
         }
         render "count2 <br/>\n" + printAll(cartList)
     }
 
+    def cursor1() {
+        // TYPE : org.grails.datastore.mapping.mongo.query.MongoQuery$MongoResultList
+        MongoQuery.MongoResultList obj = Cart.createCriteria().scroll() {
+        }
+        println(obj.class)
+        def iterator = obj.iterator()
+        while (iterator.hasNext()) {
+            Cart cart = iterator.next()
+            println cart
+            println cart.items.class  // org.grails.datastore.mapping.collection.PersistentSet
+            println cart.items[0].name // 外部关联对象虽然不能JOIN查询条件，但查询结果中可以直接使用。
+        }
+        render "cursor1 <br/>\n"
+    }
 }
