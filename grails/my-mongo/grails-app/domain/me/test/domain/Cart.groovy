@@ -16,4 +16,12 @@ class Cart {
 
     // Map : Key只能是String? Value的类型需要明确声明?
     Map<String, Address> addrMap
+
+    static class Address {
+        String id
+
+        String province
+        String city
+        String zipCode
+    }
 }

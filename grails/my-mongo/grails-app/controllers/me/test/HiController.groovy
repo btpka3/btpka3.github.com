@@ -1,6 +1,6 @@
 package me.test
 
-import me.test.domain.Address
+import me.test.domain.Cart.Address
 import me.test.domain.Cart
 import me.test.domain.Item
 import org.grails.datastore.mapping.mongo.query.MongoQuery
@@ -18,6 +18,8 @@ class HiController {
             def cart = new Cart()
             cart.userName = "zhang3"
 
+            // 为了方便起见，Embed 文档都最好在其Domain类内声明为 public static class
+            // 比如 me.test.domain.Cart.Address
             cart.addr = new Address(
                     province: "河南${num}",
                     city: "郑州${num}",
@@ -206,4 +208,15 @@ class HiController {
         }
         render "cursor1 <br/>\n"
     }
+
+
+    def update1() {
+        def cartList = Cart.createCriteria().list(max: 1, offset: 1) {
+        }
+        Cart cart = cartList[0];
+        cart.addr.city = '郑州11'
+        cart.save(flush:true)
+        render "update1 <br/>\n"
+    }
+
 }
