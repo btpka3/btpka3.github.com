@@ -100,12 +100,13 @@ environments {
 }
 
 // log4j configuration
+def logPattern = "%d [%-5p][%t] %c - %m%n"
 log4j = {
     // Example of changing the log pattern for the default console appender:
     //
-    //appenders {
-    //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
-    //}
+    appenders {
+        console name:'stdout', layout: pattern(conversionPattern: logPattern)
+    }
 
     error  'org.codehaus.groovy.grails.web.servlet',        // controllers
            'org.codehaus.groovy.grails.web.pages',          // GSP
