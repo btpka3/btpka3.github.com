@@ -1,55 +1,64 @@
 
 
-说明：
-  该demo是为了学习Spring Security + CAS 实现单点登录。
+# 说明
+该demo是为了学习Spring Security + CAS 实现单点登录。
 
-  first-cas-server
-    是通过Maven War Overlay方式简单自定义的CAS中心。访问路径：
-      https://cas.localhost.me:8443/first-cas-server/
+* first-cas-server：是通过Maven War Overlay方式简单自定义的CAS中心。访问路径：
+    `https://cas.localhost.me:8443/first-cas-server/`
 
-  first-spring-cas
-    是使用CAS进行SSO的客户程序，这里使用Spring Security进行配置。访问路径
-      http://app.localhost.me:8080/first-spring-cas/
+* first-spring-cas：是使用CAS进行SSO的客户程序，这里使用Spring Security进行配置。访问路径：
+    `http://app.localhost.me:8080/first-spring-cas/`
 
-  first-spring-stateless
-    设计为尽量按照RESTFul提供JSON数据和业务操作的服务，用户不直接与其进行交互，但浏览器可以访问的到。
-      http://stateless.localhost.me:8080/first-spring-stateless/
+* first-spring-stateless：设计为尽量按照RESTFul提供JSON数据和业务操作的服务，用户不直接与其进行交互，但浏览器可以访问的到。
+    `http://stateless.localhost.me:8080/first-spring-stateless/`
 
+示例运行环境：  Windows OS + JDK 1.6 + STS 3.1 + Tomcat 6.x
 
+# 配置步骤
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-示例运行环境：
-  Windows OS + JDK 1.6 + STS 3.1 + Tomcat 6.x
+## 为tomcat配置HTTPS
 
-配置步骤：
+1. 生成自签名证书
 
-1. 为tomcat配置HTTPS
+    ```sh
+    keytool -genkeypair \
+            -alias mykey1 \
+            -keyalg RSA \
+            -keysize 1024 \
+            -sigalg SHA1withRSA \
+            -dname "CN=*.localhost.me, OU=R & D department, O=\"ABC Tech Co., Ltd\", L=Weihai, S=Shandong, C=CN" \
+            -validity 365 \
+            -keypass 123456 \
+            -keystore tomcat.keystore \
+            -storepass 123456
+    ```
 
-1.1 生成自签名证书
-keytool -genkeypair -alias mykey1 -keyalg RSA -keysize 1024 -sigalg SHA1withRSA -dname "CN=*.localhost.me, OU=R & D department, O=\"ABC Tech Co., Ltd\", L=Weihai, S=Shandong, C=CN" -validity 365 -keypass 123456 -keystore tomcat.keystore -storepass 123456
+    注意：其中CN是域名
+    注意：-keypass 和 -storepass tomcat貌似是要求一致的。
 
-注意：其中CN是域名
-注意：-keypass 和 -storepass tomcat貌似是要求一致的。
+1. 修改 `${CATALINA_HOME}/conf/server.xml`
 
-1.2 修改${CATALINA_HOME}/conf/server.xml
-<Connector port="8443" protocol="HTTP/1.1" SSLEnabled="true"
-               maxThreads="150" scheme="https" secure="true"
-               clientAuth="false" sslProtocol="TLS"
-               keystoreFile="D:/tomcat.keystore"
-               keystorePass="123456"/>
+    ```xml
+    <Connector port="8443" protocol="HTTP/1.1" SSLEnabled="true"
+                   maxThreads="150" scheme="https" secure="true"
+                   clientAuth="false" sslProtocol="TLS"
+                   keystoreFile="D:/tomcat.keystore"
+                   keystorePass="123456"/>
+    ```
 
-1.3 为tomcat指定JVM启动参数
-若果在 Eclipse中启动Tomcat，则需要追加JVM参数：
-  -Djavax.net.ssl.trustStore="D:\tomcat.keystore" -Djavax.net.ssl.trustStorePassword="123456"
-# 如果需要单独启动tomcat，则在 %CATALINA_HOME%/bin/catalina.bat 开头追加：
-  JAVA_OPTS = -Djavax.net.ssl.trustStore="D:\tomcat.keystore" -Djavax.net.ssl.trustStorePassword="123456"
+1. 为tomcat指定JVM启动参数
+    * 若果在 Eclipse中启动Tomcat，则需要追加JVM参数：
+        `-Djavax.net.ssl.trustStore="D:\tomcat.keystore" -Djavax.net.ssl.trustStorePassword="123456"`
+    * 如果需要单独启动tomcat，则在 %CATALINA_HOME%/bin/catalina.bat 开头追加：
+        `JAVA_OPTS = -Djavax.net.ssl.trustStore="D:\tomcat.keystore" -Djavax.net.ssl.trustStorePassword="123456"`
 
-2. 修改 C:\Windows\System32\drivers\etc\hosts， 追加以下配置：
+1. 修改 `C:\Windows\System32\drivers\etc\hosts` 或 `/etc/hosts`， 追加以下配置：
 
-127.0.0.1       cas.localhost.me
-127.0.0.1       app.localhost.me
-127.0.0.1       stateless.localhost.me
-
+    ```text
+    127.0.0.1       cas.localhost.me
+    127.0.0.1       app.localhost.me
+    127.0.0.1       stateless.localhost.me
+    ```
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
