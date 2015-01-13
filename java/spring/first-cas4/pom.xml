@@ -17,6 +17,7 @@
         <cas.version>4.0.0</cas.version>
         <jdk.version>1.7</jdk.version>
         <spring.version>3.2.6.RELEASE</spring.version>
+        <spring.sec.version>3.2.5.RELEASE</spring.sec.version>
     </properties>
 
     <dependencyManagement>
