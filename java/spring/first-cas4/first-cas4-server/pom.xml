@@ -26,6 +26,16 @@
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>9.2.6.v20141205</version>
                 <configuration>
+                    <systemProperties>
+                        <systemProperty>
+                            <name>jetty.port</name>
+                            <value>10010</value>
+                        </systemProperty>
+                        <systemProperty>
+                            <name>https.port</name>
+                            <value>10011</value>
+                        </systemProperty>
+                    </systemProperties>
                     <jettyXml>src/main/config/jetty.xml,src/main/config/jetty-http.xml,src/main/config/jetty-ssl.xml,src/main/config/jetty-https.xml</jettyXml>
                 </configuration>
             </plugin>
