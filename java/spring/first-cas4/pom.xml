@@ -9,7 +9,6 @@
     <modules>
         <module>first-cas4-server</module>
         <module>first-cas4-client</module>
-        <module>first-cas4-stateless</module>
     </modules>
 
     <properties>

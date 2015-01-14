@@ -5,7 +5,7 @@
 |module            |http  |https |
 |------------------|------|------|
 |first-cas4-server |10010 |10011 |
-|first-cas4-client |10020 |-     |
+|first-cas4-client |10020 |10021 |
 
 
 ## 生成自签名证书

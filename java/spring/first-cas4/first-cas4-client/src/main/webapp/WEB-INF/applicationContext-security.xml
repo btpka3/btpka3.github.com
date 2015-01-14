@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:sec="http://www.springframework.org/schema/security" xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+  <context:property-placeholder properties-ref="appCfg"  />
+  <util:properties id="appCfg" location="classpath:config.properties" />
+
+  <sec:http realm="My SEC"
+            use-expressions="true"
+            disable-url-rewriting="true"
+            entry-point-ref="casEntryPoint" >
+    <sec:access-denied-handler                      error-page="/denied.jsp"/>
+
+    <sec:session-management session-fixation-protection="migrateSession">
+    </sec:session-management>
+
+    <sec:logout logout-success-url="/logoutSuccess.jsp" delete-cookies="JSESSIONID" invalidate-session="true" />
+    <sec:intercept-url pattern="/login.jsp"                         access="isAuthenticated()" />
+    <sec:intercept-url pattern="/sec.jsp"                           access="isAuthenticated()" />
+    <sec:intercept-url pattern="/appointment.jsp"                   access="hasAnyRole('XROLE_READ_APPOINTMENT')" />
+    <sec:intercept-url pattern="/staff.jsp"                         access="hasAnyRole('XROLE_READ_STAFF')" />
+    <!--
+    <sec:intercept-url pattern="j_spring_cas_security_check"        access="permitAll" />
+    <sec:intercept-url pattern="/testProxy.do"      access="isAuthenticated()" /> -->
+
+
+    <sec:custom-filter before="LOGOUT_FILTER"       ref="requestSingleLogoutFilter"  />
+    <sec:custom-filter before="CAS_FILTER"          ref="singleLogoutFilter" />
+    <sec:custom-filter position="CAS_FILTER"        ref="casFilter" />
+  </sec:http>
+
+
+  <!-- 该Filter会将用户重定向到CAS服务器，并通知CAS服务器进行单点退出操作 -->
+  <bean id="requestSingleLogoutFilter"
+        class="org.springframework.security.web.authentication.logout.LogoutFilter">
+    <constructor-arg value="${cas.url.logout}" type="java.lang.String" index="0" />
+    <constructor-arg index="1" type="org.springframework.security.web.authentication.logout.LogoutHandler[]">
+      <list value-type="org.springframework.security.web.authentication.logout.LogoutHandler">
+        <bean class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler"/>
+      </list>
+    </constructor-arg>
+    <property name="filterProcessesUrl" value="/j_spring_cas_security_logout"/>
+  </bean>
+
+  <!-- 该Filter处理来自CAS服务器的单点退出请求 -->
+  <bean id="singleLogoutFilter"
+        class="org.jasig.cas.client.session.SingleSignOutFilter"/>
+
+  <!-- 默认监视 /j_spring_cas_security_check -->
+  <bean id="casFilter"
+        class="org.springframework.security.cas.web.CasAuthenticationFilter">
+    <property name="authenticationManager"          ref="authenticationManager"/>
+    <!-- <property name="proxyGrantingTicketStorage"     ref="pgtStorage"/> -->
+    <property name="serviceProperties"              ref="serviceProperties"/>
+    <property name="proxyReceptorUrl"               value="/j_spring_cas_security_proxyreceptor"/>
+    <property name="authenticationDetailsSource">
+      <bean class="org.springframework.security.cas.web.authentication.ServiceAuthenticationDetailsSource"/>
+    </property>
+  </bean>
+
+  <bean id="casEntryPoint"
+        class="org.springframework.security.cas.web.CasAuthenticationEntryPoint">
+    <!-- CAS服务器登录的URL -->
+    <property name="loginUrl"                       value="${cas.url.login}"/>
+    <property name="serviceProperties"              ref="serviceProperties"/>
+  </bean>
+
+  <bean id="serviceProperties"
+        class="org.springframework.security.cas.ServiceProperties">
+    <!-- 发送给CAS服务器的回调URL -->
+    <property name="service"                        value="${app.url.service}"/>
+    <!-- 告知CAS服务器：本应用是敏感业务，不允许使用其他应用产生的登录状态，必须要求用户重新输入密码 -->
+    <property name="sendRenew"                      value="false"/>
+    <!-- 对所有的URL均进行认证检查 -->
+    <property name="authenticateAllArtifacts"       value="false"/>
+  </bean>
+
+  <sec:authentication-manager alias="authenticationManager">
+    <sec:authentication-provider ref="casAuthenticationProvider" />
+  </sec:authentication-manager>
+
+  <bean id="casAuthenticationProvider"
+        class="org.springframework.security.cas.authentication.CasAuthenticationProvider">
+    <property name="authenticationUserDetailsService">
+      <bean class="org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper">
+        <constructor-arg                            ref="userService" />
+      </bean>
+    </property>
+    <property name="serviceProperties"              ref="serviceProperties" />
+    <property name="ticketValidator"                ref="cas20ServiceTicketValidator" />
+    <!--
+    <property name="ticketValidator"                ref="cas20ProxyTicketValidator" />
+     -->
+    <property name="key"                            value="${app.name}"/>
+  </bean>
+
+  <sec:user-service id="userService">
+    <sec:user name="zhang3"   password="zhang3"     authorities="XROLE_READ_APPOINTMENT" />
+    <sec:user name="li4"      password="li4"        authorities="XROLE_READ_STAFF" />
+    <sec:user name="wang5"    password="wang5"      authorities="XROLE_READ_APPOINTMENT, XROLE_READ_STAFF" />
+  </sec:user-service>
+
+  <bean id="cas20ServiceTicketValidator"
+        class="org.jasig.cas.client.validation.Cas20ServiceTicketValidator">
+    <constructor-arg index="0"                      value="${cas.url}" />
+  </bean>
+
+<!-- 
+  <bean id="cas20ProxyTicketValidator"
+        class="org.jasig.cas.client.validation.Cas20ProxyTicketValidator">
+    <constructor-arg                                value="${cas.url}" />
+    <property name="proxyCallbackUrl"               value="${app.url.proxyreceptor}"/>
+    <property name="proxyGrantingTicketStorage"     ref="pgtStorage"/>
+    <property name="acceptAnyProxy"                 value="true"/>
+  </bean>
+  <bean id="pgtStorage"
+        class="org.jasig.cas.client.proxy.ProxyGrantingTicketStorageImpl"/>
+ -->
+</beans>
+

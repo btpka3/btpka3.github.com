@@ -80,8 +80,16 @@
                             <name>https.port</name>
                             <value>10021</value>
                         </systemProperty>
+                        <systemProperty>
+                            <name>javax.net.ssl.trustStore</name>
+                            <value>./src/main/config/ssl.keystore</value>
+                        </systemProperty>
+                        <systemProperty>
+                            <name>javax.net.ssl.trustStorePassword=123456</name>
+                            <value>123456</value>
+                        </systemProperty>
                     </systemProperties>
-                    <jettyXml>src/main/config/jetty.xml,src/main/config/jetty-http.xml</jettyXml>
+                    <jettyXml>src/main/config/jetty.xml,src/main/config/jetty-http.xml,src/main/config/jetty-ssl.xml,src/main/config/jetty-https.xml</jettyXml>
                 </configuration>
             </plugin>
 

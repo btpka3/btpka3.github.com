@@ -109,6 +109,9 @@
         <property name="users">
             <map>
                 <entry key="casuser" value="Mellon"/>
+                <entry key="zhang3"     value="123456"/>
+                <entry key="li4"        value="123456"/>
+                <entry key="wang5"      value="123456"/>
             </map>
         </property>
     </bean>
