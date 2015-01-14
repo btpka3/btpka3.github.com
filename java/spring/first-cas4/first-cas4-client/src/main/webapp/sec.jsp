@@ -30,7 +30,7 @@
   <div>&nbsp;</div>
   
   <div style="border: 1px solid blue;">
-    以下是测试区，可以尝试直接访问URL(即使没有相应的权限，但访问会出错 401 )：
+    以下是测试区，可以尝试直接访问URL(即使没有相应的权限，但访问会出错 403 )：
       <div>
         <a href="<c:url value="appointment.jsp"/>">预约列表 (直接检测权限)</a>
       </div>

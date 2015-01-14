@@ -85,7 +85,7 @@
                             <value>./src/main/config/ssl.keystore</value>
                         </systemProperty>
                         <systemProperty>
-                            <name>javax.net.ssl.trustStorePassword=123456</name>
+                            <name>javax.net.ssl.trustStorePassword</name>
                             <value>123456</value>
                         </systemProperty>
                     </systemProperties>
