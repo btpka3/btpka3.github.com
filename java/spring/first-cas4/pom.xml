@@ -113,6 +113,24 @@
                 <version>${spring.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.pac4j</groupId>
+                <artifactId>pac4j-core</artifactId>
+                <version>${pac4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.pac4j</groupId>
+                <artifactId>pac4j-oauth</artifactId>
+                <version>${pac4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.pac4j</groupId>
+                <artifactId>pac4j-core</artifactId>
+                <version>${pac4j.version}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 </project>
