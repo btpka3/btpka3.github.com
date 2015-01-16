@@ -10,10 +10,14 @@
     <artifactId>pac4j-oauth-tencent</artifactId>
 
     <dependencies>
-    
+
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
         </dependency>
 
         <dependency>
@@ -39,7 +43,7 @@
         <dependency>
             <groupId>net.sourceforge.htmlunit</groupId>
             <artifactId>htmlunit</artifactId>
-            <version>2.15</version>
+            <version>2.12</version>
             <scope>test</scope>
             <exclusions>
                 <exclusion>

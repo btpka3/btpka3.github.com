@@ -1,5 +1,5 @@
 /*
-  Copyright 2012 - 2014 Jerome Leleu
+  Copyright 2012 - 2013 Jerome Leleu
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -16,40 +16,39 @@
 package org.pac4j.oauth.client;
 
 import org.pac4j.core.client.BaseClient;
-import org.pac4j.core.client.ClientIT;
-import org.pac4j.core.client.Mechanism;
+import org.pac4j.core.client.Protocol;
+import org.pac4j.core.client.TestClient;
 import org.pac4j.core.util.TestsHelper;
-import org.pac4j.oauth.client.BaseOAuthClient;
 
 /**
  * This class is the generic test case for OAuth client.
- *
+ * 
  * @author Jerome Leleu
  * @since 1.4.0
  */
 @SuppressWarnings("rawtypes")
-public abstract class OAuthClientIT extends ClientIT {
-
+public abstract class TestOAuthClient extends TestClient {
+    
     private static final int CONNECT_TIMEOUT = 135;
-
+    
     private static final int READ_TIMEOUT = 2896;
-
+    
     private static final String PROXY_HOST = "proxyHost";
-
+    
     private static final int PROXY_PORT = 12345;
-
+    
     public void testMissingKey() {
         final BaseOAuthClient client = (BaseOAuthClient) getClient();
         client.setKey(null);
         TestsHelper.initShouldFail(client, "key cannot be blank");
     }
-
+    
     public void testMissingSecret() {
         final BaseOAuthClient client = (BaseOAuthClient) getClient();
         client.setSecret(null);
         TestsHelper.initShouldFail(client, "secret cannot be blank");
     }
-
+    
     @Override
     protected BaseClient internalTestClone(final BaseClient oldBaseClient) {
         BaseOAuthClient oldClient = (BaseOAuthClient) oldBaseClient;
@@ -68,13 +67,13 @@ public abstract class OAuthClientIT extends ClientIT {
         assertEquals(oldClient.getProxyPort(), client.getProxyPort());
         return client;
     }
-
+    
     public void testClone() {
         internalTestClone((BaseClient) getClient());
     }
-
+    
     @Override
-    protected Mechanism getMechanism() {
-        return Mechanism.OAUTH_PROTOCOL;
+    protected Protocol getProtocol() {
+        return Protocol.OAUTH;
     }
 }
