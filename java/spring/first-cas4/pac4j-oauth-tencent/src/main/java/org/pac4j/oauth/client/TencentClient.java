@@ -3,24 +3,8 @@ package org.pac4j.oauth.client;
 import org.apache.commons.lang3.StringUtils;
 import org.pac4j.core.client.BaseClient;
 import org.pac4j.core.context.WebContext;
-import org.pac4j.core.util.CommonHelper;
 import org.pac4j.oauth.credentials.OAuthCredentials;
 import org.pac4j.oauth.profile.JsonHelper;
-import org.pac4j.oauth.profile.JsonList;
-import org.pac4j.oauth.profile.OAuthAttributesDefinitions;
-import org.pac4j.oauth.profile.facebook.FacebookApplication;
-import org.pac4j.oauth.profile.facebook.FacebookEducation;
-import org.pac4j.oauth.profile.facebook.FacebookEvent;
-import org.pac4j.oauth.profile.facebook.FacebookGroup;
-import org.pac4j.oauth.profile.facebook.FacebookInfo;
-import org.pac4j.oauth.profile.facebook.FacebookMusicData;
-import org.pac4j.oauth.profile.facebook.FacebookMusicListen;
-import org.pac4j.oauth.profile.facebook.FacebookObject;
-import org.pac4j.oauth.profile.facebook.FacebookPhoto;
-import org.pac4j.oauth.profile.facebook.FacebookPicture;
-import org.pac4j.oauth.profile.facebook.FacebookProfile;
-import org.pac4j.oauth.profile.facebook.FacebookRelationshipStatus;
-import org.pac4j.oauth.profile.facebook.FacebookWork;
 import org.pac4j.oauth.profile.tencent.TencentProfile;
 import org.scribe.builder.api.StateApi20;
 import org.scribe.builder.api.TencentApi;
@@ -30,10 +14,8 @@ import org.scribe.model.OAuthRequest;
 import org.scribe.model.SignatureType;
 import org.scribe.model.Token;
 import org.scribe.model.Verb;
-import org.scribe.oauth.StateOAuth20ServiceImpl;
 import org.scribe.oauth.TencentOAuth20ServiceImpl;
 
-import com.esotericsoftware.kryo.Kryo;
 import com.fasterxml.jackson.databind.JsonNode;
 
 public class TencentClient extends BaseOAuth20Client<TencentProfile> {
