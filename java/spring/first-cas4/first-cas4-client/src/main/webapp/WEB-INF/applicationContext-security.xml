@@ -106,6 +106,7 @@
     <sec:user name="zhang3"   password="zhang3"     authorities="XROLE_READ_APPOINTMENT" />
     <sec:user name="li4"      password="li4"        authorities="XROLE_READ_STAFF" />
     <sec:user name="wang5"    password="wang5"      authorities="XROLE_READ_APPOINTMENT, XROLE_READ_STAFF" />
+    <sec:user name="TencentProfile#F34941EFB6CD76E3EB9D844550176AE9"    password=""      authorities="XROLE_READ_APPOINTMENT, XROLE_READ_STAFF" />
   </sec:user-service>
 
   <bean id="cas20ServiceTicketValidator"

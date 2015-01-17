@@ -62,6 +62,7 @@
                    -->
                 <entry key-ref="proxyAuthenticationHandler" value-ref="proxyPrincipalResolver" />
                 <entry key-ref="primaryAuthenticationHandler" value-ref="primaryPrincipalResolver" />
+                <entry key-ref="pac4jAuthenticationHandler" value-ref="primaryPrincipalResolver" />
             </map>
         </constructor-arg>
 
@@ -74,6 +75,11 @@
            </util:list>
         </property>
         -->
+        <property name="authenticationMetaDataPopulators">
+           <util:list>
+              <bean class="org.jasig.cas.support.pac4j.authentication.ClientAuthenticationMetaDataPopulator" />
+           </util:list>
+        </property>
 
         <!--
            | Defines the security policy around authentication. Some alternative policies that ship with CAS:
@@ -115,6 +121,10 @@
             </map>
         </property>
     </bean>
+    
+    <bean id="pac4jAuthenticationHandler" class="org.jasig.cas.support.pac4j.authentication.handler.support.ClientAuthenticationHandler">
+        <constructor-arg index="0" ref="clients"/>
+    </bean>
 
     <!-- Required for proxy ticket mechanism -->
     <bean id="proxyPrincipalResolver"
@@ -153,7 +163,14 @@
     <util:list id="registeredServicesList">
         <bean class="org.jasig.cas.services.RegexRegisteredService"
               p:id="0" p:name="HTTP and IMAP" p:description="Allows HTTP(S) and IMAP(S) protocols"
-              p:serviceId="^(https?|imaps?)://.*" p:evaluationOrder="10000001" />
+              p:serviceId="^(https?|imaps?)://.*" p:evaluationOrder="10000001" >
+            <property name="allowedAttributes">
+                <list>
+                    <value>client_id</value>
+                    <value>openid</value>
+                </list>
+            </property>
+        </bean>
         <!--
         Use the following definition instead of the above to further restrict access
         to services within your domain (including sub domains).

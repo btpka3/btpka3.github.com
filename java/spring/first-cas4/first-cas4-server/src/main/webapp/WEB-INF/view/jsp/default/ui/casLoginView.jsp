@@ -74,6 +74,7 @@
       <input class="btn-reset" name="reset" accesskey="c" value="<spring:message code="screen.welcome.button.clear" />" tabindex="5" type="reset" />
     </section>
   </form:form>
+  <div><a href="${TencentClientUrl}"><img alt="login with qq" src="http://qzonestyle.gtimg.cn/qzone/vas/opensns/res/img/Connect_logo_1.png" /></a> <br /></div>
 </div>
   
 <div id="sidebar">

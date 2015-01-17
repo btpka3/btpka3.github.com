@@ -137,4 +137,16 @@
     <!-- The scheduler bean wires up any triggers that define scheduled tasks -->
     <bean id="scheduler" class="org.jasig.cas.util.AutowiringSchedulerFactoryBean"/>
             
+    <bean id="tencent" class="org.pac4j.oauth.client.TencentClient"
+          p:key="${tencent.appId}"
+          p:secret="${tencent.appKey}" />
+          
+    <bean id="clients" class="org.pac4j.core.client.Clients">
+        <property name="callbackUrl" value="${cas.delegate.callbakUrl}" />
+        <property name="clients">
+            <list>
+              <ref bean="tencent" />
+            </list>
+        </property>
+    </bean>
 </beans>

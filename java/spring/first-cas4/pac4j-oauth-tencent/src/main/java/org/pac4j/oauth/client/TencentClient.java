@@ -60,6 +60,7 @@ public class TencentClient extends BaseOAuth20Client<TencentProfile> {
         for (final String attribute : TencentAttributesDefinition.instance.getAllAttributes()) {
             profile.addAttribute(attribute, JsonHelper.get(json, attribute));
         }
+        profile.setId(profile.getAttribute(TencentAttributesDefinition.OPEN_ID));
         return profile;
     }
 

@@ -23,6 +23,12 @@ keytool -genkeypair \
         -storepass 123456
 ```
 
+其中 `*.localhost.me` 是域名。请修改域名为你所需要的实际域名。
+
+注意多域名的 https 证书貌似只支持这样的 3级层次，
+比如 `*.dev.localhost.me` 这样的 4级层次则没有成功。
+
+
 ## 加密密码
 
 ```sh
@@ -30,10 +36,25 @@ cd $JETTY_HOME/lib
 java -cp jetty-util-9.2.6.v20141205.jar  org.eclipse.jetty.util.security.Password me 123456
 ```
 
-从 Jetty 的压缩包中 copy 配置文件 etc/jetty*.xml 到 src/main/config 中
+从 Jetty 的压缩包中 copy 配置文件 etc/jetty*.xml 到 src/main/config 中，无需修改（jetty可以通过系统变量设置）。
 
 
-默认可用用户名、密码 ： casuser / Mellon
+
+## 运行
+
+### 运行
+
+```sh
+cd first-cas4
+
+# 启动 CAS 服务器
+mvn -am -pl first-cas4-server -Dp_runServer prepare-package
+
+# 启动 CAS 客户端
+mvn -am -pl first-cas4-client -Dp_runClient prepare-package
+
+```
+
 
 ## FIXME
 * https reverse proxy

@@ -5,6 +5,7 @@
         <groupId>me.test</groupId>
         <artifactId>first-cas4</artifactId>
         <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../</relativePath>
     </parent>
     <artifactId>first-cas4-client</artifactId>
     <packaging>war</packaging>
@@ -26,14 +27,17 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>jcl-over-slf4j</artifactId>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>log4j-over-slf4j</artifactId>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
+            <scope>runtime</scope>
         </dependency>
 
 
@@ -67,33 +71,6 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
-                <version>9.2.6.v20141205</version>
-                <configuration>
-                    <systemProperties>
-                        <systemProperty>
-                            <name>jetty.port</name>
-                            <value>10020</value>
-                        </systemProperty>
-                        <systemProperty>
-                            <name>https.port</name>
-                            <value>10021</value>
-                        </systemProperty>
-                        <systemProperty>
-                            <name>javax.net.ssl.trustStore</name>
-                            <value>./src/main/config/ssl.keystore</value>
-                        </systemProperty>
-                        <systemProperty>
-                            <name>javax.net.ssl.trustStorePassword</name>
-                            <value>123456</value>
-                        </systemProperty>
-                    </systemProperties>
-                    <jettyXml>src/main/config/jetty.xml,src/main/config/jetty-http.xml,src/main/config/jetty-ssl.xml,src/main/config/jetty-https.xml</jettyXml>
-                </configuration>
-            </plugin>
-
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.2</version>
@@ -104,4 +81,79 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>runClient</id>
+            <activation>
+                <property>
+                    <name>p_runClient</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.eclipse.jetty</groupId>
+                        <artifactId>jetty-maven-plugin</artifactId>
+                        <version>9.2.6.v20141205</version>
+                        <configuration>
+                            <systemProperties>
+                                <systemProperty>
+                                    <name>jetty.port</name>
+                                    <value>10020</value>
+                                </systemProperty>
+                                <systemProperty>
+                                    <name>https.port</name>
+                                    <value>10021</value>
+                                </systemProperty>
+                                <systemProperty>
+                                    <name>jetty.base</name>
+                                    <value>${basedir}</value>
+                                </systemProperty>
+                                <systemProperty>
+                                    <name>jetty.keystore</name>
+                                    <value>src/main/config/ssl.keystore</value>
+                                </systemProperty>
+                                <systemProperty>
+                                    <name>jetty.keystore.password</name>
+                                    <value>OBF:19iy19j019j219j419j619j8</value>
+                                </systemProperty>
+                                <systemProperty>
+                                    <name>jetty.keymanager.password</name>
+                                    <value>OBF:19iy19j019j219j419j619j8</value>
+                                </systemProperty>
+                                <systemProperty>
+                                    <name>jetty.truststore</name>
+                                    <value>src/main/config/ssl.keystore</value>
+                                </systemProperty>
+                                <systemProperty>
+                                    <name>jetty.truststore.password</name>
+                                    <value>OBF:19iy19j019j219j419j619j8</value>
+                                </systemProperty>
+
+                                <systemProperty>
+                                    <name>javax.net.ssl.trustStore</name>
+                                    <value>${basedir}/src/main/config/ssl.keystore</value>
+                                </systemProperty>
+                                <systemProperty>
+                                    <name>javax.net.ssl.trustStorePassword</name>
+                                    <value>123456</value>
+                                </systemProperty>
+
+                            </systemProperties>
+                            <jettyXml>${basedir}/src/main/config/jetty.xml,${basedir}/src/main/config/jetty-http.xml,${basedir}/src/main/config/jetty-ssl.xml,${basedir}/src/main/config/jetty-https.xml</jettyXml>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <phase>prepare-package</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

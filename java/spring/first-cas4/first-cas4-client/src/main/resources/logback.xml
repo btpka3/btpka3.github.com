@@ -4,15 +4,16 @@
       <pattern>%d{HH:mm:ss.SSS} [%thread] [first-cas4-client] %-5level %logger{36} - %msg%n</pattern>
     </encoder>
   </appender>
+  
+  <!-- 
   <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-    <file>first-spring-cas.log</file>
+    <file>first-cas4-client.log</file>
     <append>true</append>
-    <!-- encoders are assigned the type
-         ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
     <encoder>
       <pattern>%-4relative [%thread] [first-cas4-client] %-5level %logger{35} - %msg%n</pattern>
     </encoder>
   </appender>
+   -->
 
   <logger name="me.test" level="DEBUG"/>
   <!--

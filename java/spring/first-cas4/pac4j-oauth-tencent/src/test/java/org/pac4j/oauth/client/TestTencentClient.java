@@ -80,7 +80,7 @@ public class TestTencentClient extends TestOAuthClient {
     @Override
     protected void verifyProfile(UserProfile userProfile) {
         assertEquals(APP_ID, userProfile.getAttribute(TencentAttributesDefinition.CLIENT_ID));
-        assertEquals(USER_OPENID_IN_CUR_APP, userProfile.getAttribute(TencentAttributesDefinition.OPEM_ID));
+        assertEquals(USER_OPENID_IN_CUR_APP, userProfile.getAttribute(TencentAttributesDefinition.OPEN_ID));
     }
 
 }
