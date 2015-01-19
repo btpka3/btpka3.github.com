@@ -56,5 +56,102 @@ mvn -am -pl first-cas4-client -Dp_runClient prepare-package
 ```
 
 
+## 使用 Nginx 进行 https 反向代理
+
+### 从 keystore 中导出 私钥、公钥
+
+```
+# keystore 的格式 ： JKS -> PKCS12
+keytool -importkeystore \
+    -srcstoretype JKS \
+    -srckeystore ssl.keystore \
+    -srcstorepass 123456 \
+    -srcalias mykey1 \
+    -srckeypass 123456 \
+    -deststoretype PKCS12 \
+    -destkeystore ssl.p12 \
+    -deststorepass 123456 \
+    -destalias mykey1 \
+    -destkeypass 123456 \
+    -noprompt
+
+# keystore 的格式 ： PKCS12 -> PEM
+openssl pkcs12 \
+    -in ssl.p12 \
+    -out ssl.pem.p12 \
+    -passin pass:123456 \
+    -passout pass:123456
+
+# 导出私钥
+openssl rsa \
+    -in ssl.pem.p12 \
+    -passin pass:123456 \
+    -out ssl.pem.key \
+    -passout pass:123456
+
+# 导出公钥
+ keytool -exportcert \
+     -rfc \
+     -file ssl.pem.cer \
+     -alias mykey1 \
+     -keystore ssl.keystore \
+     -storepass 123456
+     
+openssl rsa \
+    -in ssl.pem.p12 \
+    -passin pass:123456 \
+    -out ssl.pem.pub \
+    -pubout
+```
+
+### 修改 nginx 相关配置
+
+```conf
+upstream my-cas {
+    server                        localhost:10010 weight=1 max_fails=1 fail_timeout=1s;
+}
+server {
+    listen 80;
+    root /notExisted;
+    index index.html index.htm;
+    server_name cas.localhost.me;
+    
+    if ($request_method != GET ) {
+       return 301 https://hisdev.eyar.com/;
+    }
+    return 301 https://hisdev.eyar.com$request_uri;
+}
+server {
+    listen 443;
+    root /usr/share/nginx/html;
+    index index.html index.htm;
+    server_name cas.localhost.me;
+    ssl on;
+    ssl_certificate     /path/to/ssl.pem.cer;
+    ssl_certificate_key /path/to/ssl.pem.clear.key;
+
+    location / {
+         proxy_pass              http://my-cas;
+         proxy_redirect          off;
+         proxy_set_header        Host            $host;
+         proxy_set_header        X-Real-IP       $remote_addr;
+         proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+         proxy_set_header        X-Forwarded-Proto $scheme;
+         add_header              Front-End-Https   on;
+    }
+}
+```
+
+### 修改 jetty 相关配置
+
+修改 first-cas-server/src/main/config/jetty.xml，启用 httpConfig 中 的以下配置：
+
+```
+<Call name="addCustomizer">
+  <Arg><New class="org.eclipse.jetty.server.ForwardedRequestCustomizer"/></Arg>
+</Call>
+```
+
+
 ## FIXME
 * https reverse proxy
