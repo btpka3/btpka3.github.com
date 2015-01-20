@@ -151,7 +151,3 @@ server {
   <Arg><New class="org.eclipse.jetty.server.ForwardedRequestCustomizer"/></Arg>
 </Call>
 ```
-
-
-## FIXME
-* https reverse proxy
