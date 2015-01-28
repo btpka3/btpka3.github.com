@@ -1,0 +1,36 @@
+<html>
+<head>
+<style >
+@keyframes throb {
+    0%      {background-position: 0px 0px;}
+    100%    {background-position: -696px 0px;}
+}
+@-webkit-keyframes throb {
+    0%      {background-position: 0px 0px;}
+    100%    {background-position: -696px 0px;}
+}
+
+.throbbing{
+    position: absolute;
+    opacity: 100;
+    transform: scale(1, 1);
+    top: 27px;
+    left: 30px;
+    animation: 0.5s steps(12, end) 0s alternate none infinite running throb;
+    -webkit-animation: 0.5s steps(12, end) 0s alternate none infinite running throb;
+    background: url("tip_throbber.png") no-repeat scroll 0px 0px transparent;
+    width: 58px;
+    height: 58px;
+    cursor: pointer;
+    z-index: 10;
+}
+</style>
+</head>
+<body style="/*background-color:#000000;*/">
+
+
+aaa
+
+<div class="throbbing"></div>
+</body>
+</html>
