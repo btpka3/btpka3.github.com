@@ -10,6 +10,7 @@ import javax.validation.ValidatorFactory;
 
 import junit.framework.TestCase;
 
+import org.hibernate.validator.constraints.ScriptAssert;
 import org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator;
 import org.junit.Before;
 import org.junit.Test;
@@ -285,9 +286,6 @@ public class PersonTest {
 
         LocalValidatorFactoryBean vf = (LocalValidatorFactoryBean) appContext.getBean("vf");
         Validator validator = vf.getValidator();
-//        Configuration<?> config = Validation.byDefaultProvider().configure();
-//        config.messageInterpolator(new ResourceBundleMessageInterpolator());
-//        validator = config.buildValidatorFactory().getValidator();
 
         // ■ 准备参数
         Person p = new Person();
@@ -308,6 +306,40 @@ public class PersonTest {
         TestCase.assertEquals("address", propertyPath);
         String message = violation.getMessage();
         TestCase.assertEquals("地址长度不能为>=5 && <=10", message);
+
+        // ■ 验证环境
+    }
+
+    /**
+     * test ScriptAssert
+     */
+    @SuppressWarnings("unchecked")
+    @Test
+    public void test008() {
+
+        // ■ 准备环境
+
+        // ■ 准备参数
+        Person p = new Person();
+        p.setId("U001");
+        p.setName("zhang3");
+        p.setAge(25);
+        p.setAddress("abcde");
+        p.setPwd1("123");
+        p.setPwd1("456");
+
+        // ■ 执行
+        Set<ConstraintViolation<Person>> violations = validator.validate(p);
+
+        // ■ 验证结果
+        ConstraintViolation<Person>[] arr = violations.toArray(new ConstraintViolation[0]);
+        TestCase.assertEquals(1, arr.length);
+
+        ConstraintViolation<Person> violation = arr[0];
+        String propertyPath = violation.getPropertyPath().toString();
+        TestCase.assertEquals("", propertyPath);
+        String message = violation.getMessage();
+        TestCase.assertEquals("两次密码不一致", message);
 
         // ■ 验证环境
     }

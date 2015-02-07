@@ -6,6 +6,11 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.ScriptAssert;
+
+@ScriptAssert.List(
+        @ScriptAssert(lang = "javascript", script = "_this.pwd1.equals(_this.pwd2)", message = "两次密码不一致")
+)
 public class Person {
 
     @Pattern(regexp = "^U\\d{3}$", message = "{me.test.Pattern.message}")
@@ -20,6 +25,10 @@ public class Person {
 
     @Size(min = 5, max = 10, message = "地址长度不能为>={min} && <=10")
     private String address = null;
+
+    private String pwd1;
+
+    private String pwd2;
 
     public String getId() {
         return id;
@@ -51,6 +60,22 @@ public class Person {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getPwd1() {
+        return pwd1;
+    }
+
+    public void setPwd1(String pwd1) {
+        this.pwd1 = pwd1;
+    }
+
+    public String getPwd2() {
+        return pwd2;
+    }
+
+    public void setPwd2(String pwd2) {
+        this.pwd2 = pwd2;
     }
 
 }
