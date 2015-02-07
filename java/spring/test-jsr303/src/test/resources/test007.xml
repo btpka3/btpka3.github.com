@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:util="http://www.springframework.org/schema/util" xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+    <util:list id="basenames">
+        <value>ValidationMessages</value>
+        <value>org.hibernate.validator.ValidationMessages</value>
+    </util:list>
+
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
+        p:basenames-ref="basenames" p:fallbackToSystemLocale="false" p:defaultEncoding="UTF-8" p:cacheSeconds="180"
+        p:useCodeAsDefaultMessage="true" />
+
+    <bean id="vf" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"
+        p:validationMessageSource-ref="messageSource" />
+
+</beans>
