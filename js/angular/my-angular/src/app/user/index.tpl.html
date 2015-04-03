@@ -1,0 +1,42 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2">
+      client side filter: <input ng-model="queryStr">
+      Sort by:
+      <select ng-model="orderProp">
+        <option value="+id">+id</option>
+        <option value="-id">-id</option>
+      </select>
+    </div>
+    <div class="col-md-10">
+
+
+      =={{num}}==
+      <table class="table table-hover">
+        <caption>员工列表</caption>
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>用户名</th>
+          <th>邮箱</th>
+          <th>电话</th>
+          <th>是否有效</th>
+          <th>最后登录时间</th>
+          <th>最后登录IP</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="user in userList | filter:queryStr |orderBy:orderProp">
+          <td>{{user.id}}</td>
+          <td><a href="#/user/{{user.id}}" class="thumb">{{user.name}}</a></td>
+          <td>{{user.email}}</td>
+          <td>{{user.phone}}</td>
+          <td>{{user.enabled}}</td>
+          <td>{{user.lastLoginTime}}</td>
+          <td>{{user.lastLoginIp}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
