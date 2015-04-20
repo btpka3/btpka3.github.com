@@ -14,3 +14,4 @@ bin
 .idea
 .DS_Store
 target-eclipse
+node_modules 
