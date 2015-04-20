@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN" ng-app="jujn-www-front">
+<html lang="zh-CN" ng-app="myApp">
 <head>
   <title>test user list</title>
   <meta charset="utf-8">
@@ -8,8 +8,24 @@
 </head>
 <body>
 <div class="view-container">
-  <div ng-view class="view-frame"></div>
+  aaa
+  <div ui-view class="container slide" style="border: 1px solid blue;"></div>
+  bbb
 </div>
+
+<hr>
+    <pre>
+      <!-- Here's some values to keep an eye on in the sample in order to understand $state and $stateParams -->
+      $state = {{$state.current.name}}
+      $stateParams = {{$stateParams}}
+      $state full url = {{ $state.$current.url.source }}
+      <!-- $state.$current is not a public api, we are using it to
+           display the full url for learning purposes-->
+    </pre>
+
+
+aaabc
+<div ng-include="'user/detail.tpl.html'"></div>
 
 <script src="libs/jquery/jquery.min.js"></script>
 <script src="libs/bootstrap/js/bootstrap.min.js"></script>
@@ -18,6 +34,7 @@
 <script src="libs/angular-route/angular-route.min.js"></script>
 <script src="libs/angular-ui/angular-ui.min.js"></script>
 <script src="libs/angular-ui/angular-ui-ieshiv.min.js"></script>
-<script src="my-angular.js"></script>
+<script src="libs/angular-ui-router/angular-ui-router.min.js"></script>
+<script src="myApp.js"></script>
 </body>
 </html>

@@ -1,3 +1,4 @@
+/*
 app.config(['$routeProvider',
   function ($routeProvider) {
     $routeProvider
@@ -18,3 +19,4 @@ app.controller('UserDetailController', [
     $scope.num = 444;
     $scope.user = UserService.get({userId: $routeParams.userId})
   }]);
+*/

@@ -1,18 +1,20 @@
-app.config(['$routeProvider',
-  function ($routeProvider) {
-    $routeProvider
-      .when('/user', {
-        templateUrl: 'user/index.tpl.html',
-        controller: 'UserListController'
-      })
-  }]);
-
-app.controller('UserListController', [
-  '$scope',
-  'UserService',
-
-  function ($scope, UserService) {
-    $scope.num = 333;
-    $scope.userList = UserService.query()
-  }]);
-
+//app.config([
+//  '$stateProvider',
+//  '$urlRouterProvider',
+//  function ($stateProvider, $urlRouterProvider) {
+//
+//    $stateProvider.state('user', {
+//      url: '/user',
+//      templateUrl: 'user/index.tpl.html',
+//
+//      controller: [
+//        '$scope',
+//        '$state',
+//        'UserService',
+//        function ($scope, $state, UserService) {
+//          $scope.num = 333;
+//          $scope.userList = UserService.query()
+//        }]
+//    });
+//  }
+//]);

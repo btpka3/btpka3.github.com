@@ -3,50 +3,74 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.loadNpmTasks('grunt-contrib-htmlmin');
+  grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-recess');
   grunt.loadNpmTasks('grunt-html2js');
-
+  grunt.loadNpmTasks('grunt-usemin');
 
   // Default task.
   grunt.registerTask('default', [
     'clean',
     'copy',
+
+    'htmlmin',
     'html2js',
     'concat',
-    'uglify'
-  ]);
-  grunt.registerTask('devWatch', [
-    'watch'
+    'uglify',
+
+    'less',
+    'cssmin'
+
   ]);
 
 
   // Project configuration.
   grunt.initConfig({
       distdir: 'dist',
+
       pkg: grunt.file.readJSON('package.json'),
+
       banner: '' +
       '/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n' +
       '<%= pkg.homepage ? " * " + pkg.homepage + "\\n" : "" %>' +
       ' * Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author %>;\n' +
       ' * Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %>\n */\n',
 
-      s: {},
-
-      src: {
-        js: ['src/**/*.js'],
-        tpl: 'src/app/**/*.tpl.html',
-        jsTpl: ['<%= distdir %>/work/templates/**/*.js'],
-        specs: ['test/**/*.spec.js'],
-        scenarios: ['test/**/*.scenario.js'],
-        html: ['src/index.html'],
-
-        less: ['src/less/stylesheet.less'], // recess:build doesn't accept ** in its file patterns
-        lessWatch: ['src/less/**/*.less']
+      clean: {
+        asserts: {
+          src: ["target/dist/assert/"]
+        },
+        css: {
+          src: ["target/dist/css/"]
+        },
+        html: {
+          src: ["target/dist/html/"]
+        },
+        lib: {
+          src: ["target/dist/lib/"]
+        },
+        appJs: {
+          src: [
+            "target/dist/js/<%= pkg.name %>.app*.js"
+          ]
+        },
+        viewsJs: {
+          src: [
+            "target/dist/js/<%= pkg.name %>.views*.js"
+          ]
+        },
+        allJs: {
+          src: [
+            "target/dist/js/<%= pkg.name %>.all*.js"
+          ]
+        },
+        index: {
+          src: ["target/dist/index.html"]
+        }
       },
-
-      clean: ['<%= distdir %>/*'],
 
       copy: {
         assets: {
@@ -54,158 +78,208 @@ module.exports = function (grunt) {
             {
               expand: true,
               cwd: 'src/assets/',
-              dest: '<%= distdir %>',
+              dest: 'target/dist/assets',
               src: '**'
-            },
-            {
-              expand: true,
-              cwd: 'src/app',
-              src: '**/*.json',
-              dest: '<%= distdir %>'
             }
           ]
-
         },
-        angular: {
+        html: {
           files: [
             {
               expand: true,
-              cwd: 'bower_components/angular',
-              src: '*.min.*',
-              dest: '<%= distdir %>/libs/angular/'
-            },
+              cwd: 'src/html/',
+              dest: 'target/dist/html',
+              src: '**'
+            }
+          ]
+        },
+        lib: {
+          files: [
             {
               expand: true,
-              cwd: 'bower_components/angular-resource',
-              src: '*.min.*',
-              dest: '<%= distdir %>/libs/angular-resource/'
-            },
-            {
-              expand: true,
-              cwd: 'bower_components/angular-route',
-              src: '*.min.*',
-              dest: '<%= distdir %>/libs/angular-route/'
-            },
-            {
-              expand: true,
-              cwd: 'bower_components/angular-ui/build/',
-              src: '*.min.*',
-              dest: '<%= distdir %>/libs/angular-ui/'
-            },
-            {
-              expand: true,
-              cwd: 'bower_components/bootstrap/dist/css/',
-              src: '*.min.*',
-              dest: '<%= distdir %>/libs/bootstrap/css/'
-            },
-            {
-              expand: true,
-              cwd: 'bower_components/bootstrap/dist/fonts/',
-              src: '*',
-              dest: '<%= distdir %>/libs/bootstrap/fonts/'
-            },
-            {
-              expand: true,
-              cwd: 'bower_components/bootstrap/dist/js/',
-              src: '*.min.*',
-              dest: '<%= distdir %>/libs/bootstrap/js/'
-            },
-            {
-              expand: true,
-              cwd: 'bower_components/jquery/dist/',
-              src: '*.min.*',
-              dest: '<%= distdir %>/libs/jquery/'
+              cwd: 'src/lib/',
+              dest: 'target/dist/lib',
+              src: '**'
             }
           ]
         }
       },
 
+      htmlmin: {
+        views: {
+          options: {
+            removeComments: true,
+            collapseWhitespace: true
+          },
+          files: [{
+            expand: true,
+            cwd: 'src/app/views',
+            src: '**/*.html',
+            dest: 'target/work/htmlmin.views'
+          }]
+        },
+        index: {
+          options: {
+            removeComments: true,
+            collapseWhitespace: true
+          },
+          files: [{
+            expand: true,
+            cwd: 'src',
+            src: 'index.html',
+            dest: 'target/dist/'
+          }]
+        }
+      },
 
       html2js: {
-        app: {
+        viewsJs: {
           options: {
-            base: 'src/app'
+            base: 'target/work/htmlmin.views'
           },
-          src: ['<%= src.tpl %>'],
-          dest: '<%= distdir %>/work/templates/app.js',
-          module: 'jujn-www-front.templates'
+          src: ['target/work/htmlmin.views/**/*.html'],
+          dest: 'target/dist/<%= pkg.name %>.views.js',
+          module: '<%= pkg.name %>.views'
         }
       },
 
       concat: {
-        dist: {
+        appJs: {
+          src: [
+            'src/app/app.js',
+            'src/app/services/*.js',
+            'src/app/controllers/*.js'
+          ],
+          dest: 'target/dist/<%= pkg.name %>.app.js'
+        },
+
+        allJs: {
           options: {
             banner: "<%= banner %>"
           },
-          src: ['<%= src.js %>', '<%= src.jsTpl %>'],
-          dest: '<%= distdir %>/<%= pkg.name %>.js'
-        },
-
-        index: {
-          src: ['src/index.html'],
-          dest: '<%= distdir %>/index.html',
-          options: {
-            process: true
-          }
+          src: [
+            'target/dist/<%= pkg.name %>.app.js',
+            'target/dist/<%= pkg.name %>.views.js'
+          ],
+          dest: 'target/dist/<%= pkg.name %>.all.js'
         }
       },
 
       uglify: {
-        dist: {
+        appJs: {
           options: {
             banner: "<%= banner %>",
             sourceMap: true,
             sourceMapName: function (path) {
               return path.replace(/\.js$/, ".map")
             }
-          },
-          src: ['<%= distdir %>/<%= pkg.name %>.js'],
-          dest: '<%= distdir %>/<%= pkg.name %>.min.js'
+          }
+          ,
+          src: 'target/dist/<%= pkg.name %>.app.js',
+          dest: 'target/dist/<%= pkg.name %>.app.min.js'
+        },
+        viewJs: {
+          options: {
+            banner: "<%= banner %>",
+            sourceMap: true,
+            sourceMapName: function (path) {
+              return path.replace(/\.js$/, ".map")
+            }
+          }
+          ,
+          src: 'target/dist/<%= pkg.name %>.view.js',
+          dest: 'target/dist/<%= pkg.name %>.view.min.js'
+        },
+        allJs: {
+          options: {
+            banner: "<%= banner %>",
+            sourceMap: true,
+            sourceMapName: function (path) {
+              return path.replace(/\.js$/, ".map")
+            }
+          }
+          ,
+          src: 'target/dist/<%= pkg.name %>.all.js',
+          dest: 'target/dist/<%= pkg.name %>.all.min.js'
         }
       },
 
-      recess: {
-        build: {
-          files: {
-            '<%= distdir %>/<%= pkg.name %>.css': ['<%= src.less %>']
-          },
+      less: {
+        css: {
           options: {
-            compile: true
+            strictMath: true,
+            sourceMap: true,
+            outputSourceFiles: true,
+            sourceMapURL: '<%= pkg.name %>.css.map',
+            sourceMapFilename: 'target/dist/css/<%= pkg.name %>.css.map'
           }
+          ,
+          src: 'src/css/index.less',
+          dest: 'target/dist/css/<%= pkg.name %>.css'
+        }
+      },
+
+      cssmin: {
+        options: {
+          shorthandCompacting: false,
+          roundingPrecision: -1
         },
-        min: {
-          files: {
-            '<%= distdir %>/<%= pkg.name %>.css': ['<%= src.less %>']
-          },
-          options: {
-            compress: true
-          }
+        css: {
+          files: [{
+            expand: false,
+            src: 'target/dist/css/<%= pkg.name %>.css',
+            dest: 'target/dist/css/<%= pkg.name %>.min.css'
+          }]
         }
       },
 
       watch: {
-        all: {
-          files: ['src/**/*'],
-          tasks: ['default']
+        assets: {
+          files: ['src/assets/**/*'],
+          tasks: ['clean:assets', 'copy:assets']
+        },
+        css: {
+          files: 'src/css/**/*',
+          tasks: ['less:css', 'cssmin:css']
+        },
+        appJs: {
+          files: ['src/app/**/*.js'],
+          tasks: ['jshint:appJs',
+            'clean:appJs', 'concat:appJs', 'uglify:appJs',
+            'clean:allJs', 'concat:allJs', 'uglify:allJs'
+          ]
+        },
+        viewsJs: {
+          files: 'src/app/views/**/*.html',
+          tasks: ['clean:viewJs', 'htmlmin:views', 'html2js:viewsJs',
+            'clean:allJs', 'concat:allJs', 'uglify:allJs'
+          ]
+        },
+        index: {
+          files: 'src/index.html',
+          tasks: ['clean:index', 'htmlmin:index']
         }
       },
 
       jshint: {
-        files: ['gruntFile.js', '<%= src.js %>', '<%= src.jsTpl %>', '<%= src.specs %>', '<%= src.scenarios %>'],
-        options: {
-          curly: true,
-          eqeqeq: true,
-          immed: true,
-          latedef: true,
-          newcap: true,
-          noarg: true,
-          sub: true,
-          boss: true,
-          eqnull: true,
-          globals: {}
+        appJs: {
+          files: [
+            'src/app/**/*.js'
+          ],
+          options: {
+            curly: true,
+            eqeqeq: true,
+            immed: true,
+            latedef: true,
+            newcap: true,
+            noarg: true,
+            sub: true,
+            boss: true,
+            eqnull: true,
+            globals: {}
+          }
         }
       }
     }
   );
-
 };

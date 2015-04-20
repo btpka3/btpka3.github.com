@@ -24,6 +24,9 @@ npm install --save-dev grunt-bower-task
 
 npm install --save-dev grunt-usemin
 
+npm install --save express
+npm install --save jade
+
 npm install -g bower
 bower init
 vi .bowerrc
@@ -64,3 +67,6 @@ src/app/${domain}/${domain}Service.js
 
 
 
+
+
+https://github.com/focusaurus/express_code_structure

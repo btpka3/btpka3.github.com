@@ -1,5 +1,5 @@
 {
-  "name": "my-angular",
+  "name": "myApp",
   "version": "1.0.0",
   "description": "..",
   "main": "index.js",
@@ -25,5 +25,9 @@
     "grunt-html2js": "^0.3.0",
     "grunt-recess": "^1.0.1",
     "grunt-usemin": "^3.0.0"
+  },
+  "dependencies": {
+    "express": "^4.12.3",
+    "jade": "^1.9.2"
   }
 }
