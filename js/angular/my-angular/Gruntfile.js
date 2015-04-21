@@ -1,6 +1,7 @@
 module.exports = function (grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-compress');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
@@ -11,9 +12,13 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-html2js');
   grunt.loadNpmTasks('grunt-usemin');
+  grunt.loadNpmTasks('grunt-filerev');
 
   // Default task.
   grunt.registerTask('default', [
+
+    'useminPrepare',
+
     'clean',
     'copy',
 
@@ -22,8 +27,12 @@ module.exports = function (grunt) {
     'concat',
     'uglify',
 
+
     'less',
-    'cssmin'
+    'cssmin',
+
+    'filerev',
+    'usemin'
 
   ]);
 
@@ -103,6 +112,56 @@ module.exports = function (grunt) {
               src: '**'
             }
           ]
+        }
+      },
+
+      jshint: {
+        appJs: {
+          files: {
+            src: [
+              'src/app/**/*.js'
+            ]
+          },
+          options: {
+            curly: true,
+            eqeqeq: true,
+            immed: true,
+            latedef: true,
+            newcap: true,
+            noarg: true,
+            sub: true,
+            boss: true,
+            eqnull: true,
+            globals: {}
+          }
+        }
+      },
+
+      useminPrepare: {
+        index: {
+          src: ['index.html']
+        },
+        options: {
+          flow: {
+            index: {
+              steps: {
+                js: ['concat', 'uglify'],
+                css: ['cssmin']
+              },
+              post: {}
+            }
+          }
+        }
+      },
+      usemin: {
+        js: '*.js',
+        options: {
+          assetsDirs: 'images',
+          patterns: {
+            js: [
+              [/(image\.png)/, 'Replacing reference to image.png']
+            ]
+          }
         }
       },
 
@@ -234,6 +293,18 @@ module.exports = function (grunt) {
         }
       },
 
+      compress: {
+        main: {
+          options: {
+            archive: 'target/<%= pkg.name %>.tar.gz',
+            mode: "tgz"
+          },
+          files: [
+            {expand: true, cwd: 'target/dist/', src: ['**'], dest: '<%= pkg.name%>/'}
+          ]
+        }
+      },
+
       watch: {
         assets: {
           files: ['src/assets/**/*'],
@@ -262,25 +333,13 @@ module.exports = function (grunt) {
         }
       },
 
-      jshint: {
+      filerev: {
         appJs: {
-          files: {
-            src: [
-              'src/app/**/*.js'
-            ]
-          },
           options: {
-            curly: true,
-            eqeqeq: true,
-            immed: true,
-            latedef: true,
-            newcap: true,
-            noarg: true,
-            sub: true,
-            boss: true,
-            eqnull: true,
-            globals: {}
-          }
+            algorithm: 'md5',
+            length: 8
+          },
+          src: ['target/dist/js/<%= pkg.name%>*.js']
         }
       }
     }
