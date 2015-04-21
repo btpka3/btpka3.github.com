@@ -4,6 +4,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-htmlmin');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -29,7 +30,6 @@ module.exports = function (grunt) {
 
   // Project configuration.
   grunt.initConfig({
-      distdir: 'dist',
 
       pkg: grunt.file.readJSON('package.json'),
 
@@ -57,8 +57,9 @@ module.exports = function (grunt) {
             "target/dist/js/<%= pkg.name %>.app*.js"
           ]
         },
-        viewsJs: {
+        viewJs: {
           src: [
+            "target/work/htmlmin.views/**/*",
             "target/dist/js/<%= pkg.name %>.views*.js"
           ]
         },
@@ -133,12 +134,12 @@ module.exports = function (grunt) {
       },
 
       html2js: {
-        viewsJs: {
+        viewJs: {
           options: {
             base: 'target/work/htmlmin.views'
           },
           src: ['target/work/htmlmin.views/**/*.html'],
-          dest: 'target/dist/<%= pkg.name %>.views.js',
+          dest: 'target/dist/js/<%= pkg.name %>.views.js',
           module: '<%= pkg.name %>.views'
         }
       },
@@ -150,7 +151,7 @@ module.exports = function (grunt) {
             'src/app/services/*.js',
             'src/app/controllers/*.js'
           ],
-          dest: 'target/dist/<%= pkg.name %>.app.js'
+          dest: 'target/dist/js/<%= pkg.name %>.app.js'
         },
 
         allJs: {
@@ -158,10 +159,10 @@ module.exports = function (grunt) {
             banner: "<%= banner %>"
           },
           src: [
-            'target/dist/<%= pkg.name %>.app.js',
-            'target/dist/<%= pkg.name %>.views.js'
+            'target/dist/js/<%= pkg.name %>.app.js',
+            'target/dist/js/<%= pkg.name %>.views.js'
           ],
-          dest: 'target/dist/<%= pkg.name %>.all.js'
+          dest: 'target/dist/js/<%= pkg.name %>.all.js'
         }
       },
 
@@ -175,8 +176,8 @@ module.exports = function (grunt) {
             }
           }
           ,
-          src: 'target/dist/<%= pkg.name %>.app.js',
-          dest: 'target/dist/<%= pkg.name %>.app.min.js'
+          src: 'target/dist/js/<%= pkg.name %>.app.js',
+          dest: 'target/dist/js/<%= pkg.name %>.app.min.js'
         },
         viewJs: {
           options: {
@@ -187,8 +188,8 @@ module.exports = function (grunt) {
             }
           }
           ,
-          src: 'target/dist/<%= pkg.name %>.view.js',
-          dest: 'target/dist/<%= pkg.name %>.view.min.js'
+          src: 'target/dist/js/<%= pkg.name %>.views.js',
+          dest: 'target/dist/js/<%= pkg.name %>.views.min.js'
         },
         allJs: {
           options: {
@@ -199,8 +200,8 @@ module.exports = function (grunt) {
             }
           }
           ,
-          src: 'target/dist/<%= pkg.name %>.all.js',
-          dest: 'target/dist/<%= pkg.name %>.all.min.js'
+          src: 'target/dist/js/<%= pkg.name %>.all.js',
+          dest: 'target/dist/js/<%= pkg.name %>.all.min.js'
         }
       },
 
@@ -251,7 +252,7 @@ module.exports = function (grunt) {
         },
         viewsJs: {
           files: 'src/app/views/**/*.html',
-          tasks: ['clean:viewJs', 'htmlmin:views', 'html2js:viewsJs',
+          tasks: ['clean:viewJs', 'htmlmin:views', 'html2js:viewJs',
             'clean:allJs', 'concat:allJs', 'uglify:allJs'
           ]
         },
@@ -263,9 +264,11 @@ module.exports = function (grunt) {
 
       jshint: {
         appJs: {
-          files: [
-            'src/app/**/*.js'
-          ],
+          files: {
+            src: [
+              'src/app/**/*.js'
+            ]
+          },
           options: {
             curly: true,
             eqeqeq: true,

@@ -11,9 +11,9 @@ app.set('view engine', 'jade');
 
 ////////////////////////////////////////////// route
 
-app.use('/', express.static('targe/dist'));
+app.use('/', express.static('target/dist'));
 
-app.use(require("mock/app/user/router"));
+app.use(require("./user/router"));
 
 
 app.use(function(err, req, res, next) {

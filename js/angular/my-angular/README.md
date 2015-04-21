@@ -12,15 +12,18 @@ npm init
 npm install -g grunt-cli
 npm install --save-dev grunt
 npm install --save-dev grunt-html2js
+npm install --save-dev grunt-contrib-compress
+npm install --save-dev grunt-contrib-concat
+npm install --save-dev grunt-contrib-connect
+npm install --save-dev grunt-contrib-clean
+npm install --save-dev grunt-contrib-cssmin
 npm install --save-dev grunt-contrib-jshint
+npm install --save-dev grunt-contrib-htmlmin
 npm install --save-dev grunt-contrib-nodeunit
 npm install --save-dev grunt-contrib-uglify
 npm install --save-dev grunt-contrib-watch
-npm install --save-dev grunt-contrib-clean
-npm install --save-dev grunt-contrib-connect
-npm install --save-dev grunt-contrib-compress
-npm install --save-dev grunt-contrib-concat
 npm install --save-dev grunt-bower-task
+npm install --save-dev grunt-contrib-less
 
 npm install --save-dev grunt-usemin
 
@@ -39,6 +42,7 @@ bower install --save angular-route
 bower install --save angular-ui-router
 bower install --save bootstrap
 bower install --save angular-ui-ace\#bower
+
 ```
 
 ## 目录结构说明
@@ -53,6 +57,12 @@ src/app/${domain}/${domain}Service.js
 
 
 
+
+```
+grunt
+node mock/app/server.js
+grunt watch
+```
 
 
 

@@ -3,38 +3,43 @@
 <head>
   <title>test user list</title>
   <meta charset="utf-8">
-  <link href="libs/bootstrap/css/bootstrap.min.css">
-  <link href="libs/angular-ui/angular-ui.min.css">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="lib/bootstrap/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="lib/angular-ui/angular-ui.min.css">
+  <link rel="stylesheet" href="css/myApp.min.css">
 </head>
 <body>
-<div class="view-container">
-  aaa
-  <div ui-view class="container slide" style="border: 1px solid blue;"></div>
-  bbb
+<header ng-include="'common/header.html'"></header>
+
+<div class="container-fluid" style="padding:0; height: 100%;">
+  <div class="col-lg-2 sidebar" ng-include="'common/sidebar.html'" style="padding:5px;"></div>
+  <div class="view-container">
+    <div class="col-lg-10" ui-view></div>
+  </div>
 </div>
 
-<hr>
-    <pre>
-      <!-- Here's some values to keep an eye on in the sample in order to understand $state and $stateParams -->
-      $state = {{$state.current.name}}
-      $stateParams = {{$stateParams}}
-      $state full url = {{ $state.$current.url.source }}
-      <!-- $state.$current is not a public api, we are using it to
-           display the full url for learning purposes-->
-    </pre>
+<footer ng-include="'common/footer.html'"></footer>
 
+<hr/>
+<pre>
+  <!-- Here's some values to keep an eye on in the sample in order to understand $state and $stateParams -->
+  $state = {{$state.current.name}}
+  $stateParams = {{$stateParams}}
+  $state full url = {{ $state.$current.url.source }}
+  <!-- $state.$current is not a public api, we are using it to
+       display the full url for learning purposes-->
+</pre>
 
-aaabc
-<div ng-include="'user/detail.tpl.html'"></div>
-
-<script src="libs/jquery/jquery.min.js"></script>
-<script src="libs/bootstrap/js/bootstrap.min.js"></script>
-<script src="libs/angular/angular.min.js"></script>
-<script src="libs/angular-resource/angular-resource.min.js"></script>
-<script src="libs/angular-route/angular-route.min.js"></script>
-<script src="libs/angular-ui/angular-ui.min.js"></script>
-<script src="libs/angular-ui/angular-ui-ieshiv.min.js"></script>
-<script src="libs/angular-ui-router/angular-ui-router.min.js"></script>
-<script src="myApp.js"></script>
+<script src="lib/jquery/jquery.min.js"></script>
+<script src="lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="lib/angular/angular.min.js"></script>
+<script src="lib/angular-resource/angular-resource.min.js"></script>
+<!--<script src="libs/angular-route/angular-route.min.js"></script>-->
+<script src="lib/angular-ui/angular-ui.min.js"></script>
+<script src="lib/angular-ui/angular-ui-ieshiv.min.js"></script>
+<script src="lib/angular-ui-router/angular-ui-router.min.js"></script>
+<script src="js/myApp.all.js"></script>
 </body>
 </html>
