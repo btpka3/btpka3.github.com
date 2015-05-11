@@ -9,7 +9,7 @@
 npm config set registry http://registry.npm.taobao.org/
 npm init
 
-npm install -g grunt-cli
+sudo npm install -g grunt-cli
 npm install --save-dev grunt
 npm install --save-dev grunt-html2js
 npm install --save-dev grunt-contrib-clean
@@ -26,11 +26,14 @@ npm install --save-dev grunt-bower-task
 npm install --save-dev grunt-contrib-less
 npm install --save-dev grunt-filerev
 npm install --save-dev grunt-usemin
+npm install --save-dev time-grunt
 
 npm install --save express
 npm install --save jade
 
-npm install -g bower
+npm update
+
+sudo npm install -g bower
 bower init
 vi .bowerrc
 
@@ -73,6 +76,7 @@ target/${pkg.name}.tar.gz                   # 最终发布包
 
 
 
+# 运行 http 服务器和 mock 数据
 
 ```
 grunt

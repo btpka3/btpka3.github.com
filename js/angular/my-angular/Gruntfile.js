@@ -1,5 +1,7 @@
 module.exports = function (grunt) {
 
+  require('time-grunt')(grunt);
+
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-compress');
   grunt.loadNpmTasks('grunt-contrib-concat');
@@ -17,7 +19,7 @@ module.exports = function (grunt) {
   // Default task.
   grunt.registerTask('default', [
 
-    'useminPrepare',
+   // 'useminPrepare',
 
     'clean',
     'copy',
@@ -112,6 +114,26 @@ module.exports = function (grunt) {
               src: '**'
             }
           ]
+        },
+        index: {
+          files: [
+            {
+              expand: true,
+              cwd: 'src/',
+              dest: 'target/dist',
+              src: 'index.html'
+            }
+          ]
+        },
+        css: {
+          files: [
+            {
+              expand: true,
+              cwd: 'src/css/',
+              dest: 'target/dist/css',
+              src: '**'
+            }
+          ]
         }
       },
 
@@ -137,31 +159,32 @@ module.exports = function (grunt) {
         }
       },
 
-      useminPrepare: {
-        index: {
-          src: ['index.html']
-        },
-        options: {
-          flow: {
-            index: {
-              steps: {
-                js: ['concat', 'uglify'],
-                css: ['cssmin']
-              },
-              post: {}
-            }
-          }
-        }
-      },
+      //useminPrepare: {
+      //  index: {
+      //    src: ['index.html']
+      //  },
+      //  options: {
+      //    flow: {
+      //      index: {
+      //        steps: {
+      //          js: ['concat', 'uglifyjs'],
+      //          css: ['cssmin']
+      //        },
+      //        post: {}
+      //      }
+      //    }
+      //  }
+      //},
       usemin: {
-        js: '*.js',
+        html: 'target/dist/index.html',
         options: {
-          assetsDirs: 'images',
-          patterns: {
-            js: [
-              [/(image\.png)/, 'Replacing reference to image.png']
-            ]
-          }
+          assetsDirs: ['target/dist']
+          //,
+          //patterns: {
+          //  js: [
+          //    [/(myApp\.all\.js)/, 'Replacing reference to image.png']
+          //  ]
+          //}
         }
       },
 
@@ -177,19 +200,20 @@ module.exports = function (grunt) {
             src: '**/*.html',
             dest: 'target/work/htmlmin.views'
           }]
-        },
-        index: {
-          options: {
-            removeComments: true,
-            collapseWhitespace: true
-          },
-          files: [{
-            expand: true,
-            cwd: 'src',
-            src: 'index.html',
-            dest: 'target/dist/'
-          }]
         }
+        //,
+        //index: {
+        //  options: {
+        //    removeComments: true,
+        //    collapseWhitespace: true
+        //  },
+        //  files: [{
+        //    expand: true,
+        //    cwd: 'src',
+        //    src: 'index.html',
+        //    dest: 'target/dist/'
+        //  }]
+        //}
       },
 
       html2js: {
@@ -229,12 +253,8 @@ module.exports = function (grunt) {
         appJs: {
           options: {
             banner: "<%= banner %>",
-            sourceMap: true,
-            sourceMapName: function (path) {
-              return path.replace(/\.js$/, ".map")
-            }
-          }
-          ,
+            sourceMap: true
+          },
           src: 'target/dist/js/<%= pkg.name %>.app.js',
           dest: 'target/dist/js/<%= pkg.name %>.app.min.js'
         },
@@ -242,21 +262,15 @@ module.exports = function (grunt) {
           options: {
             banner: "<%= banner %>",
             sourceMap: true,
-            sourceMapName: function (path) {
-              return path.replace(/\.js$/, ".map")
-            }
-          }
-          ,
+            mangle : true
+          },
           src: 'target/dist/js/<%= pkg.name %>.views.js',
           dest: 'target/dist/js/<%= pkg.name %>.views.min.js'
         },
         allJs: {
           options: {
             banner: "<%= banner %>",
-            sourceMap: true,
-            sourceMapName: function (path) {
-              return path.replace(/\.js$/, ".map")
-            }
+            sourceMap: true
           }
           ,
           src: 'target/dist/js/<%= pkg.name %>.all.js',
@@ -269,12 +283,13 @@ module.exports = function (grunt) {
           options: {
             strictMath: true,
             sourceMap: true,
-            outputSourceFiles: true,
+            compress: true,
+            outputSourceFiles: false,
             sourceMapURL: '<%= pkg.name %>.css.map',
-            sourceMapFilename: 'target/dist/css/<%= pkg.name %>.css.map'
-          }
-          ,
-          src: 'src/css/index.less',
+            sourceMapFilename: 'target/dist/css/<%= pkg.name %>.css.map',
+            sourceMapBasepath: "target/dist/css"
+          },
+          src: 'target/dist/css/index.less',
           dest: 'target/dist/css/<%= pkg.name %>.css'
         }
       },
@@ -282,7 +297,8 @@ module.exports = function (grunt) {
       cssmin: {
         options: {
           shorthandCompacting: false,
-          roundingPrecision: -1
+          roundingPrecision: -1,
+          sourceMap: true
         },
         css: {
           files: [{
@@ -337,9 +353,12 @@ module.exports = function (grunt) {
         appJs: {
           options: {
             algorithm: 'md5',
-            length: 8
+            length: 8,
+            sourceMap:true
           },
-          src: ['target/dist/js/<%= pkg.name%>*.js']
+          src: [
+            'target/dist/js/<%= pkg.name%>*.js',
+            'target/dist/css/<%= pkg.name%>*.css']
         }
       }
     }
