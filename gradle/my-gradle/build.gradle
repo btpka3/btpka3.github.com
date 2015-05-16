@@ -1,0 +1,94 @@
+buildscript {
+    ext {
+        springBootVersion = '1.2.3.RELEASE'
+    }
+    repositories {
+        // mavenLocal()
+        mavenCentral()
+        // maven { url "https://repo.spring.io/libs-release" }
+        // mavenRepo url: "http://repo.maven.apache.org/maven2"
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("io.spring.gradle:dependency-management-plugin:0.5.1.RELEASE")
+        classpath 'org.springframework:springloaded:1.2.3.RELEASE')
+    }
+}
+
+apply plugin: 'groovy'
+apply plugin: 'eclipse-wtp'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+apply plugin: 'io.spring.dependency-management'
+
+//apply plugin: 'war'
+//war {
+//    baseName = 'my-gradle'
+//    version = '0.0.1-SNAPSHOT'
+//}
+
+jar {
+    baseName = 'my-gradle'
+    version = '0.0.1-SNAPSHOT'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+
+configurations {
+    providedRuntime
+}
+
+repositories {
+    //mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    //compile("org.springframework.boot:spring-boot-starter-actuator")
+    //compile("org.springframework.boot:spring-boot-starter-amqp")
+    compile("org.springframework.boot:spring-boot-starter-aop")
+    //compile("org.springframework.boot:spring-boot-starter-data-elasticsearch")
+    compile("org.springframework.boot:spring-boot-starter-data-mongodb")
+    compile("org.springframework.boot:spring-boot-starter-data-rest")
+    compile("org.springframework.boot:spring-boot-starter-groovy-templates")
+    //compile("org.springframework.boot:spring-boot-starter-jdbc")
+    //compile("org.springframework.boot:spring-boot-starter-mail")
+    //compile("org.springframework.boot:spring-boot-starter-redis")
+    //compile("org.springframework.boot:spring-boot-starter-remote-shell")
+    //compile("org.springframework.boot:spring-boot-starter-security")
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.codehaus.groovy:groovy")
+    //runtime("mysql:mysql-connector-java")
+    //runtime("com.h2database:h2") // 1.4.187
+    providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+}
+
+
+eclipse {
+    classpath {
+        downloadSources = true
+        containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
+        containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
+    }
+}
+
+idea {
+    module {
+        downloadJavadoc = false
+        downloadSources = true
+
+        inheritOutputDirs = false
+        outputDir = file("$buildDir/classes/main/")
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.3'
+}
+
+//applicationDefaultJvmArgs = [
+//    "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005"
+//]
