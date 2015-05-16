@@ -11,7 +11,7 @@ buildscript {
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
         classpath("io.spring.gradle:dependency-management-plugin:0.5.1.RELEASE")
-        classpath 'org.springframework:springloaded:1.2.3.RELEASE')
+        classpath('org.springframework:springloaded:1.2.3.RELEASE')
     }
 }
 
@@ -45,6 +45,11 @@ repositories {
     mavenCentral()
 }
 
+ext {
+    // groovyVersion = '2.3.7'
+    grailsVersion = '2.4.4'
+}
+
 dependencies {
     //compile("org.springframework.boot:spring-boot-starter-actuator")
     //compile("org.springframework.boot:spring-boot-starter-amqp")
@@ -59,7 +64,18 @@ dependencies {
     //compile("org.springframework.boot:spring-boot-starter-remote-shell")
     //compile("org.springframework.boot:spring-boot-starter-security")
     compile("org.springframework.boot:spring-boot-starter-web")
+
+    // GSP
+    compile("org.grails:grails-gsp-spring-boot:1.0.0")
+    compile("org.grails:grails-web-gsp:${grailsVersion}")
+    compile("org.grails:grails-web-gsp-taglib:${grailsVersion}")
+    compile("org.grails:grails-web-jsp:${grailsVersion}")
+    compile("org.grails:grails-validation:${grailsVersion}")
+    compile("org.hibernate:hibernate-validator")
+    compile("org.apache.tomcat.embed:tomcat-embed-el")
+
     compile("org.codehaus.groovy:groovy")
+
     //runtime("mysql:mysql-connector-java")
     //runtime("com.h2database:h2") // 1.4.187
     providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")

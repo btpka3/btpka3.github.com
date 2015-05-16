@@ -61,6 +61,8 @@
     1. Gradle project 为该Gradle工程根目录中的 build.gradle
     1. Tasks 为 `bootRun`
     1. 根据需要运行或调试
+    1. 建议：使用命令行来运行，可以配合SpringLoader自动重新编译, 使用Idea的远程debug来调试
+    1. 如果觉得麻烦，可以每次保存之后，使用 Ctrl+Shift+F9 重新编译，之后就可以看到编译后的效果了
 
 1. 打包，之后就可以在 `build/distributions` 中找到相应的压缩包
 
