@@ -74,3 +74,7 @@
 # 参考
 
 * [Building an Application with Spring Boot](http://spring.io/guides/gs/spring-boot/)
+* [在Grails工程外使用GSP](https://github.com/grails/grails-boot/tree/master/sample-apps/gsp/gsp-example)
+* [Accessing MongoDB Data with GORM](https://github.com/spring-guides/deprecate-gs-accessing-data-gorm-mongodb)
+* [Accessing Data with GORM](https://github.com/spring-guides/deprecate-gs-accessing-data-gorm)
+

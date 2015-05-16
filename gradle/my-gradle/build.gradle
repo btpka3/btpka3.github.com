@@ -58,7 +58,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-data-mongodb")
     compile("org.springframework.boot:spring-boot-starter-data-rest")
     compile("org.springframework.boot:spring-boot-starter-groovy-templates")
-    //compile("org.springframework.boot:spring-boot-starter-jdbc")
+    compile("org.springframework.boot:spring-boot-starter-jdbc")
     //compile("org.springframework.boot:spring-boot-starter-mail")
     //compile("org.springframework.boot:spring-boot-starter-redis")
     //compile("org.springframework.boot:spring-boot-starter-remote-shell")
@@ -74,10 +74,13 @@ dependencies {
     compile("org.hibernate:hibernate-validator")
     compile("org.apache.tomcat.embed:tomcat-embed-el")
 
+    // GORM
+    compile("org.grails:gorm-hibernate4-spring-boot:1.1.0.RELEASE")
+
     compile("org.codehaus.groovy:groovy")
 
     //runtime("mysql:mysql-connector-java")
-    //runtime("com.h2database:h2") // 1.4.187
+    runtime("com.h2database:h2") // 1.4.187
     providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
     testCompile("org.springframework.boot:spring-boot-starter-test")
 }
