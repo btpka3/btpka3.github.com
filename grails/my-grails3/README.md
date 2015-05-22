@@ -1,0 +1,1 @@
+本工程是初次尝试使用 Grails 3， 并尝试其使用 H2 数据库和 MongoDB。目前 MongoDB 还无法成功。
