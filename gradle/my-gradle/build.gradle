@@ -4,6 +4,7 @@ buildscript {
     }
     repositories {
         // mavenLocal()
+        //maven { url "http://mvn.kingsilk.xyz/content/groups/public/" }
         mavenCentral()
         // maven { url "https://repo.spring.io/libs-release" }
         // mavenRepo url: "http://repo.maven.apache.org/maven2"
@@ -20,6 +21,7 @@ apply plugin: 'eclipse-wtp'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'project-report'
 
 //apply plugin: 'war'
 //war {
@@ -42,12 +44,14 @@ configurations {
 
 repositories {
     //mavenLocal()
+    //maven { url "http://mvn.kingsilk.xyz/content/groups/public/" }
     mavenCentral()
 }
 
 ext {
     // groovyVersion = '2.3.7'
     grailsVersion = '2.4.4'
+//    grailsVersion = '3.0.1'
 }
 
 dependencies {
@@ -55,6 +59,7 @@ dependencies {
     //compile("org.springframework.boot:spring-boot-starter-amqp")
     compile("org.springframework.boot:spring-boot-starter-aop")
     //compile("org.springframework.boot:spring-boot-starter-data-elasticsearch")
+    //compile("org.springframework.boot:spring-boot-starter-data-jpa")
     compile("org.springframework.boot:spring-boot-starter-data-mongodb")
     compile("org.springframework.boot:spring-boot-starter-data-rest")
     compile("org.springframework.boot:spring-boot-starter-groovy-templates")
@@ -74,8 +79,18 @@ dependencies {
     compile("org.hibernate:hibernate-validator")
     compile("org.apache.tomcat.embed:tomcat-embed-el")
 
+    // GORM Spring Boot plugins
+    // https://github.com/grails/grails-data-mapping/tree/master/boot-plugins
+
     // GORM
     compile("org.grails:gorm-hibernate4-spring-boot:1.1.0.RELEASE")
+
+    // GORM - mongodb
+    //compile("org.grails:gorm-mongodb-spring-boot:1.1.0.RELEASE")
+    //compile("org.grails:grails-datastore-gorm-mongodb:4.0.0.RELEASE")
+    //compile("org.grails:grails-datastore-gorm-mongodb:3.1.4.RELEASE")
+
+    compile("io.projectreactor:reactor-stream:2.0.3.RELEASE")
 
     compile("org.codehaus.groovy:groovy")
 

@@ -13,13 +13,18 @@ class User {
 
     String name
     Integer age
-
+    Date dateCreated
+    Date lastUpdated
 
     @Override
     public String toString() {
         return "User{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", age=" + age +
+                ", dateCreated=" + dateCreated +
+                ", lastUpdated=" + lastUpdated +
+                ", version=" + version +
                 '}';
     }
 }

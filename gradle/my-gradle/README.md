@@ -26,7 +26,7 @@
 
     ```
     gradle tasks
-    gradle cleanIdea idea  # 如果进行了合理配置，这一步骤会下载源码jar包的
+    gradle cleanIdea idea clean projectReport  # 如果进行了合理配置，这一步骤会下载源码jar包的
     ```
 
 1. 编写一个 Controller（比如HiController）
