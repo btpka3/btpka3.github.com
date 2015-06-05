@@ -14,7 +14,7 @@ app.config([
 
     $stateProvider.state('user.list', {
       url: '',
-      templateUrl: 'user/list.html',
+      templateUrl: 'views/user/list.html',
       //views: {
       //  "@": {
       //    templateUrl: 'user/list.html'
@@ -39,7 +39,7 @@ app.config([
 
     $stateProvider.state('user.detail', {
       url: '/{userId}',
-      templateUrl: 'user/detail.html',
+      templateUrl: 'views/user/detail.html',
       //views: {
       //  "@": {
       //    templateUrl: 'user/list.html'
