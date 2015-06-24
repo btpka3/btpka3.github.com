@@ -9,19 +9,21 @@ class Cart {
 
     String id
     String userName
-    Address addr
+    me.test.domain.cart.Address addr
 
     // List : 元素类型需要明确声明
-    List<Address> addrList
+    List<me.test.domain.cart.Address> addrList
 
     // Map : Key只能是String? Value的类型需要明确声明?
-    Map<String, Address> addrMap
+    Map<String, me.test.domain.cart.Address> addrMap
 
-    static class Address {
-        String id
-
-        String province
-        String city
-        String zipCode
-    }
+    // Grails 2.4.5 不能使用domain类中的 inner class，否则当更新时，报错：
+    // java.lang.IncompatibleClassChangeError ： Class ... does not implement the requested interface java.util.Map
+//    static class Address {
+//        String id
+//
+//        String province
+//        String city
+//        String zipCode
+//    }
 }

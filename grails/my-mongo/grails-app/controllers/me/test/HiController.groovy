@@ -3,6 +3,7 @@ package me.test
 import me.test.domain.Cart.Address
 import me.test.domain.Cart
 import me.test.domain.Item
+import me.test.domain.cart.Address
 import org.grails.datastore.mapping.mongo.query.MongoQuery
 
 class HiController {
@@ -214,7 +215,7 @@ class HiController {
         def cartList = Cart.createCriteria().list(max: 1, offset: 1) {
         }
         Cart cart = cartList[0];
-        cart.addr.city = '郑州11'
+        cart.addr.city = '郑州111'
         cart.save(flush:true)
         render "update1 <br/>\n"
     }

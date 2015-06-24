@@ -58,12 +58,13 @@ environments {
 
 grails {
     mongo {
-        replicaSet = ["s81:27017", "s83:27017", "s85:27017"]
+        //replicaSet = ["s81:27017", "s83:27017", "s85:27017"]
         // host = "mongo1.dev.lizi.com,mongo2.dev.lizi.com,mongo3.dev.lizi.com"
+        host = "192.168.0.12"
         // port = 27017
-        username = "lizidbAdmin"
-        password = "nalanala"
-        databaseName = "lizidb"
+        username = "test"
+        password = "test"
+        databaseName = "test"
         options {
             autoConnectRetry = true
             connectTimeout = 300

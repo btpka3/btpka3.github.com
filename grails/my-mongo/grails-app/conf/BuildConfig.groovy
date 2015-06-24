@@ -51,24 +51,26 @@ grails.project.dependency.resolution = {
         // runtime 'mysql:mysql-connector-java:5.1.27'
         // runtime 'org.postgresql:postgresql:9.3-1100-jdbc41'
         test "org.grails:grails-datastore-test-support:1.0-grails-2.3"
-        compile "org.mongodb:mongo-java-driver:2.12.4"
+        compile "org.mongodb:mongo-java-driver:2.13.2"
     }
 
     plugins {
-        
-        compile ":mongodb:3.0.2"
+
+        compile ":mongodb:3.0.3"
         
         // plugins for the build system only
-        build ":tomcat:7.0.54"
+        build ":tomcat:7.0.55.2"
 
         // plugins for the compile step
-        compile ":scaffolding:2.0.3"
-        compile ':cache:1.1.7'
+        compile ":scaffolding:2.1.2"
+        compile ':cache:1.1.8'
+        compile ":asset-pipeline:2.1.5"
 
         // plugins needed at runtime but not for compilation
         // runtime ":hibernate:3.6.10.16" // or ":hibernate4:4.3.5.4"
         // runtime ":database-migration:1.4.0"
         runtime ":jquery:1.11.1"
+        compile ':cookie:1.4'
         runtime ":resources:1.2.8"
         // Uncomment these (or add new ones) to enable additional resources capabilities
         //runtime ":zipped-resources:1.0.1"
