@@ -4,6 +4,7 @@ target
 .classpath
 .settings
 bin
+!os/linux/prod-app-dir/app/apache-tomcat-x.x.x/bin
 *.log
 /owasp/first-AntiSamy/cleanResult
 .pmd
