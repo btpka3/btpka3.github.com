@@ -3,13 +3,13 @@
 
 ######################################################### config
 
-APP=qh-wap
+APP=qh-wap-front
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 BAK_DIR=${DIR}/bak
 UPLOAD_DIR=${DIR}/upload
-TOMCAT_DIR=${DIR}/apache-tomcat-8.0.23
-WAR=${APP}*.war                        # 注意，含有通配符 '*' 的哦
+TAR=${APP}*.tar.gz
+dataStr=$(date +%Y%m%d%H%M%S)
 
 # 检查文件数量， 确保 upload 目录下只有一个最新的war包
 checkFileCount(){
@@ -36,25 +36,23 @@ checkFileCount(){
     }   
 }
 
-checkFileCount "${UPLOAD_DIR}/${WAR}"
+checkFileCount "${UPLOAD_DIR}/${TAR}"
 
-# 停止并清空tomcat
-#service $APP stop
-systemctl stop $APP
-rm -fr $TOMCAT_DIR/logs/*
-rm -fr $TOMCAT_DIR/work/*
+#service tengine stop
+#systemctl stop tengine
 
 # 解压
 cd "$UPLOAD_DIR"
-rm -fr ROOT
-unzip -q -d ROOT $WAR 
+rm -fr $APP
+tar zxf $TAR
 
 if [ -e $DIR/conf/* ] ; then
-    cp -fr $DIR/conf/* ROOT
+    cp -fr $DIR/conf/* $APP
 fi
 
-rm -fr $TOMCAT_DIR/webapps/ROOT
-mv ROOT $TOMCAT_DIR/webapps/
-#service $APP start
-systemctl start $APP
+rm -fr $DIR/html/*
+mv $APP/* $DIR/html
+rmdir $APP
+#service tengine start
+#systemctl start tengine
 
