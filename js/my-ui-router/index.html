@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>my-ui-router</title>
+    <script src="lib/angular/angular.min.js"></script>
+    <script src="lib/angular-ui/angular-ui.min.js"></script>
+    <script src="lib/angular-ui/angular-ui-ieshiv.min.js"></script>
+    <script src="lib/angular-ui-router/angular-ui-router.min.js"></script>
+
+    <script src="index.js"></script>
+</head>
+<body>
+<div>请访问 <a ui-sref="user">这里</a></div>
+
+
+<!-- 该以下内容都是属于 root state -->
+<div id="id_1" ui-view></div>
+<div id="id_2" ui-view="view2"></div>
+</body>
+</html>
