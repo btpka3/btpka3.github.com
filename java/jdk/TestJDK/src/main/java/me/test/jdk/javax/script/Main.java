@@ -1,15 +1,12 @@
 package me.test.jdk.javax.script;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
-
-import sun.org.mozilla.javascript.internal.NativeJavaObject;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class Main {
@@ -33,7 +30,7 @@ public class Main {
         engine.put("a", 4);
         engine.put("b", 6);
         Object maxNum = engine.eval("function max_num(a,b){return (a>b)?a:b;}max_num(a,b);");
-        System.out.println("max_num:" + maxNum);
+        System.out.println("max_num:" + maxNum + ", (class = " + maxNum.getClass() + ")");
 
         @SuppressWarnings("rawtypes")
         Map m = new HashMap();
@@ -41,7 +38,6 @@ public class Main {
         engine.put("m", m);
 
         engine.eval("var x= max_num(a,m.get('c'));");
-        NativeJavaObject x = (NativeJavaObject) engine.get("x");
-        System.out.println("max_num:" + x.unwrap());
+        System.out.println("max_num:" + engine.get("x"));
     }
 }
