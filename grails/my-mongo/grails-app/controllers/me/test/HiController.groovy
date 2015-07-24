@@ -265,4 +265,44 @@ class HiController {
         cart.save(flush: true)
         render "~~~~~~#!!" + System.currentTimeMillis() + "    " + cart
     }
+
+    def itemMap() {
+        def now = Calendar.getInstance().getTime()
+
+        def item1 = new Item(name: "yy面膜1", count: 3, createTime: now)
+        item1.save(flush: true);
+        def item2 = new Item(name: "yy面膜2", count: 3, createTime: now)
+        item2.save(flush: true);
+        def item3 = new Item(name: "yy面膜3", count: 3, createTime: now)
+        item3.save(flush: true);
+
+        Cart cart = new Cart();
+        cart.userName = "zhang3"
+        cart.itemListMap = [
+                i1: item1,
+                i2: item2,
+                i3: item3
+        ]
+
+        cart.save(flush: true)
+        render "~~~~~~#~~~~" + System.currentTimeMillis() + "    " + cart
+    }
+
+    def itemList() {
+        def now = Calendar.getInstance().getTime()
+
+        def item1 = new Item(name: "yy面膜1", count: 3, createTime: now)
+        item1.save(flush: true);
+        def item2 = new Item(name: "yy面膜2", count: 3, createTime: now)
+        item2.save(flush: true);
+        def item3 = new Item(name: "yy面膜3", count: 3, createTime: now)
+        item3.save(flush: true);
+
+        Cart cart = new Cart();
+        cart.userName = "zhang3"
+        cart.itemList = [item1, item2, item3]
+
+        cart.save(flush: true)
+        render "~~~~~~#~~~#~" + System.currentTimeMillis() + "    " + cart
+    }
 }
