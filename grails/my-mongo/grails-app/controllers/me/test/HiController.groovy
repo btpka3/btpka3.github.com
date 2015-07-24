@@ -1,6 +1,5 @@
 package me.test
 
-import me.test.domain.Cart.Address
 import me.test.domain.Cart
 import me.test.domain.Item
 import me.test.domain.cart.Address
@@ -216,8 +215,54 @@ class HiController {
         }
         Cart cart = cartList[0];
         cart.addr.city = '郑州111'
-        cart.save(flush:true)
+        cart.save(flush: true)
         render "update1 <br/>\n"
     }
 
+
+    def addrListMap() {
+        Cart cart = new Cart();
+        cart.userName = "zhang3"
+        cart.addrListMap = [:]
+        2.times { i ->
+            def list = []
+            cart.addrListMap.put("key_" + i, list)
+            3.times { num ->
+
+                list.add(new Address(
+                        province: "河南${num}",
+                        city: "郑州${num}",
+                        zipCode: "11133${num}"
+                ))
+            }
+        }
+        cart.save(flush: true)
+        render "~~~~~~#" + System.currentTimeMillis()
+    }
+
+    def itemListMap() {
+        def now = Calendar.getInstance().getTime()
+
+        def item1 = new Item(name: "yy面膜1", count: 3, createTime: now)
+        item1.save(flush: true);
+        def item2 = new Item(name: "yy面膜2", count: 3, createTime: now)
+        item2.save(flush: true);
+        def item3 = new Item(name: "yy面膜3", count: 3, createTime: now)
+        item3.save(flush: true);
+
+
+
+        Cart cart = new Cart();
+        cart.userName = "zhang3"
+        cart.itemListMap = [:]
+        2.times { i ->
+            def list = []
+            cart.itemListMap.put("key_" + i, list)
+            list.add(item1)
+            list.add(item2)
+            list.add(item3)
+        }
+        cart.save(flush: true)
+        render "~~~~~~#!!" + System.currentTimeMillis() + "    " + cart
+    }
 }

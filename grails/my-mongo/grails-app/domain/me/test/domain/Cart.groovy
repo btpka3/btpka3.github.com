@@ -3,9 +3,19 @@ package me.test.domain
 @groovy.transform.ToString(includeNames = true)
 class Cart {
 
-    static embedded = ['addr', 'addrList', 'addrMap']
+    static embedded = ['addr', 'addrList', 'addrMap', 'addrListMap', 'itemListMap']
     static hasMany = [items: Item]
-    static mapping = { userName index: true }
+    static mapping = {
+        userName index: true
+    }
+    static constraints = {
+        addrListMap nullable: true
+        addrMap nullable: true
+        addrList nullable: true
+        addr nullable: true
+        userName nullable: true
+        itemListMap nullable: true
+    }
 
     String id
     String userName
@@ -16,6 +26,12 @@ class Cart {
 
     // Map : Key只能是String? Value的类型需要明确声明?
     Map<String, me.test.domain.cart.Address> addrMap
+
+    // Map : List<非Domain类型>
+    Map<String, List<me.test.domain.cart.Address>> addrListMap
+
+    // Map : List<Domain类型>
+    Map<String, List<Item>> itemListMap
 
     // Grails 2.4.5 不能使用domain类中的 inner class，否则当更新时，报错：
     // java.lang.IncompatibleClassChangeError ： Class ... does not implement the requested interface java.util.Map
