@@ -1,36 +1,32 @@
 package com.github.btpka3.lucene.analysis;
 
+import net.sourceforge.pinyin4j.PinyinHelper;
+import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
+import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.synonym.SynonymFilter;
+import org.apache.lucene.analysis.synonym.SynonymMap;
+import org.apache.lucene.util.CharsRef;
+
 import java.io.IOException;
 import java.io.Reader;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.pinyin4j.PinyinHelper;
-import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
-import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
-
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.TokenStream;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.analysis.synonym.SynonymFilter;
-import org.apache.lucene.analysis.synonym.SynonymMap;
-import org.apache.lucene.util.CharsRef;
-
 public class PinyinAbbrAnalyzer extends Analyzer {
 
-    
+
     private SynonymMap pinyinSynonymMap;
     private HanyuPinyinOutputFormat defaultFormat = new HanyuPinyinOutputFormat();
     private SynonymFilter synonymFilter;
-    
-    
+
 
     private void setupSynonymMap()
             throws IOException, BadHanyuPinyinOutputFormatCombination {
 
         char[][] chineseChars = {
                 // {from, to}
-                { '\u4e00', '\u9fa5' }
+                {'\u4e00', '\u9fa5'}
         };
 
         SynonymMap.Builder builder = new SynonymMap.Builder(true);
@@ -43,7 +39,7 @@ public class PinyinAbbrAnalyzer extends Analyzer {
                     continue;
                 }
                 addTo(builder,
-                        new String[] { Character.toString(c) },
+                        new String[]{Character.toString(c)},
                         flattenPinyinArr(pinyinArr));
             }
         }
@@ -104,11 +100,11 @@ public class PinyinAbbrAnalyzer extends Analyzer {
         }
         return false;
     }
-    
+
     @Override
     protected TokenStreamComponents createComponents(String fieldName, Reader reader) {
-        
-        
+
+
         return new TokenStreamComponents(null);
     }
 

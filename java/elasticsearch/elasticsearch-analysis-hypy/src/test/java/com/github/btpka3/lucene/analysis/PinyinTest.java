@@ -1,14 +1,13 @@
 package com.github.btpka3.lucene.analysis;
 
-import java.util.Arrays;
-
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
 import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType;
-
 import org.junit.Test;
+
+import java.util.Arrays;
 
 public class PinyinTest {
     @Test

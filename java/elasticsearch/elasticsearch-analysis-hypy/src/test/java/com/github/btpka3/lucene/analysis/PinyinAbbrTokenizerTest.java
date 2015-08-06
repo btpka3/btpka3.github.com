@@ -1,20 +1,13 @@
 package com.github.btpka3.lucene.analysis;
 
+import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.tokenattributes.*;
+import org.apache.lucene.util.Attribute;
+import org.junit.Test;
+
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.Iterator;
-
-import org.apache.lucene.analysis.TokenStream;
-import org.apache.lucene.analysis.ngram.EdgeNGramTokenizer;
-import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
-import org.apache.lucene.analysis.tokenattributes.OffsetAttribute;
-import org.apache.lucene.analysis.tokenattributes.PositionIncrementAttribute;
-import org.apache.lucene.analysis.tokenattributes.PositionLengthAttribute;
-import org.apache.lucene.analysis.tokenattributes.TermToBytesRefAttribute;
-import org.apache.lucene.analysis.tokenattributes.TypeAttribute;
-import org.apache.lucene.util.Attribute;
-import org.junit.Assert;
-import org.junit.Test;
 
 public class PinyinAbbrTokenizerTest {
 
@@ -25,7 +18,7 @@ public class PinyinAbbrTokenizerTest {
         print(ts);
         ts.close();
     }
-    
+
     private void print(TokenStream ts) throws IOException {
         Iterator<Class<? extends Attribute>> it = ts.getAttributeClassesIterator();
         while (it.hasNext()) {
@@ -49,7 +42,7 @@ public class PinyinAbbrTokenizerTest {
                     posLenAtt.getPositionLength(),
                     new String(byteRefAtt.getBytesRef().bytes),
                     termAtt.toString()
-                    );
+            );
 
         }
     }

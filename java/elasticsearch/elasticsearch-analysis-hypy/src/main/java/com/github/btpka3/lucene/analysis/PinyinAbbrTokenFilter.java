@@ -1,26 +1,21 @@
 package com.github.btpka3.lucene.analysis;
 
-import java.io.IOException;
-import java.util.Set;
-import java.util.TreeSet;
-
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
 import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType;
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
-
 import org.apache.lucene.analysis.TokenFilter;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.synonym.SynonymFilter;
 import org.apache.lucene.analysis.synonym.SynonymMap;
-import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
-import org.apache.lucene.analysis.tokenattributes.OffsetAttribute;
-import org.apache.lucene.analysis.tokenattributes.PositionIncrementAttribute;
-import org.apache.lucene.analysis.tokenattributes.PositionLengthAttribute;
-import org.apache.lucene.analysis.tokenattributes.TypeAttribute;
+import org.apache.lucene.analysis.tokenattributes.*;
 import org.apache.lucene.util.CharsRef;
+
+import java.io.IOException;
+import java.util.Set;
+import java.util.TreeSet;
 
 
 public class PinyinAbbrTokenFilter extends TokenFilter {
@@ -40,7 +35,7 @@ public class PinyinAbbrTokenFilter extends TokenFilter {
 
         char[][] chineseChars = {
                 // {from, to}
-                { '\u4e00', '\u9fa5' }
+                {'\u4e00', '\u9fa5'}
         };
 
         SynonymMap.Builder builder = new SynonymMap.Builder(true);
@@ -53,7 +48,7 @@ public class PinyinAbbrTokenFilter extends TokenFilter {
                     continue;
                 }
                 addTo(builder,
-                        new String[] { Character.toString(c) },
+                        new String[]{Character.toString(c)},
                         flattenPinyinArr(pinyinArr));
             }
         }

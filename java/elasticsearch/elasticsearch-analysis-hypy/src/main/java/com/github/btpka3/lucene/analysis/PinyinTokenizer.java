@@ -93,8 +93,7 @@ public class PinyinTokenizer extends Tokenizer {
             } else if (first_letter.equals("append")) {
                 termAtt.append(stringBuilder.toString());
                 if (this.padding_char.length() > 0) {
-                    if(!stringBuilder.toString().endsWith(this.padding_char))
-                    {
+                    if (!stringBuilder.toString().endsWith(this.padding_char)) {
                         termAtt.append(this.padding_char);
                     }
                 }

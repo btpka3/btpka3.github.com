@@ -1,14 +1,14 @@
 package com.github.btpka3.lucene.analysis;
 
-import java.io.IOException;
-import java.io.StringReader;
-
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.core.WhitespaceTokenizer;
 import org.apache.lucene.analysis.ngram.EdgeNGramTokenFilter;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.io.IOException;
+import java.io.StringReader;
 
 public class EdgeNGramTokenFilterTest {
 

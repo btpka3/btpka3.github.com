@@ -20,6 +20,7 @@ public class PinyinTokenFilter extends TokenFilter {
     private HanyuPinyinOutputFormat format = new HanyuPinyinOutputFormat();
     private String padding_char;
     private String first_letter;
+
     @Override
     public final boolean incrementToken() throws IOException {
         if (!input.incrementToken()) {
@@ -92,7 +93,7 @@ public class PinyinTokenFilter extends TokenFilter {
     @Override
     public final void end() throws IOException {
         // set final offset
-      super.end();
+        super.end();
     }
 
     @Override

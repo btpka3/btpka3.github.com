@@ -1,32 +1,27 @@
 package com.github.btpka3.lucene.analysis;
 
-import java.io.IOException;
-import java.io.Reader;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.regex.Pattern;
-
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
 import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType;
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
-
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.Tokenizer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.analysis.synonym.SynonymFilter;
 import org.apache.lucene.analysis.synonym.SynonymMap;
-import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
-import org.apache.lucene.analysis.tokenattributes.OffsetAttribute;
-import org.apache.lucene.analysis.tokenattributes.PositionIncrementAttribute;
-import org.apache.lucene.analysis.tokenattributes.PositionLengthAttribute;
-import org.apache.lucene.analysis.tokenattributes.TypeAttribute;
+import org.apache.lucene.analysis.tokenattributes.*;
 import org.apache.lucene.util.CharsRef;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.io.Reader;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.regex.Pattern;
 
 public class PinyinAbbrTokenizer extends Tokenizer {
     private Logger logger = LoggerFactory.getLogger(PinyinAbbrTokenizer.class);
@@ -40,7 +35,7 @@ public class PinyinAbbrTokenizer extends Tokenizer {
 
         char[][] chineseChars = {
                 // {from, to}
-                { '\u4e00', '\u9fa5' }
+                {'\u4e00', '\u9fa5'}
         };
 
         SynonymMap.Builder builder = new SynonymMap.Builder(true);
@@ -53,7 +48,7 @@ public class PinyinAbbrTokenizer extends Tokenizer {
                     continue;
                 }
                 addTo(builder,
-                        new String[] { Character.toString(c) },
+                        new String[]{Character.toString(c)},
                         flattenPinyinArr(pinyinArr));
             }
         }
@@ -185,7 +180,7 @@ public class PinyinAbbrTokenizer extends Tokenizer {
     // }
 
     @Override
-    public boolean incrementToken() throws IOException {
+    public final boolean incrementToken() throws IOException {
 
         boolean hasMore = synonymFilter.incrementToken();
 

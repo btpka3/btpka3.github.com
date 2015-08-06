@@ -1,21 +1,15 @@
 package com.github.btpka3.lucene.analysis;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.Iterator;
-
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
-import org.apache.lucene.analysis.tokenattributes.OffsetAttribute;
-import org.apache.lucene.analysis.tokenattributes.PositionIncrementAttribute;
-import org.apache.lucene.analysis.tokenattributes.PositionLengthAttribute;
-import org.apache.lucene.analysis.tokenattributes.TermToBytesRefAttribute;
-import org.apache.lucene.analysis.tokenattributes.TypeAttribute;
+import org.apache.lucene.analysis.tokenattributes.*;
 import org.apache.lucene.util.Attribute;
-import org.junit.Assert;
 import org.junit.Test;
+
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.Iterator;
 
 public class StandardAnalyzerTest {
     @Test
@@ -57,7 +51,7 @@ public class StandardAnalyzerTest {
         print(ts);
         analyzer.close();
     }
-    
+
 
     private void print(TokenStream ts) throws IOException {
         Iterator<Class<? extends Attribute>> it = ts.getAttributeClassesIterator();
@@ -82,7 +76,7 @@ public class StandardAnalyzerTest {
                     posLenAtt.getPositionLength(),
                     new String(byteRefAtt.getBytesRef().bytes),
                     termAtt.toString()
-                    );
+            );
 
         }
     }

@@ -1,38 +1,28 @@
 package com.github.btpka3.lucene.analysis;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
-
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
 import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType;
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
-
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.analysis.synonym.SynonymFilter;
 import org.apache.lucene.analysis.synonym.SynonymFilterFactory;
 import org.apache.lucene.analysis.synonym.SynonymMap;
-import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
-import org.apache.lucene.analysis.tokenattributes.OffsetAttribute;
-import org.apache.lucene.analysis.tokenattributes.PositionIncrementAttribute;
-import org.apache.lucene.analysis.tokenattributes.PositionLengthAttribute;
-import org.apache.lucene.analysis.tokenattributes.TermToBytesRefAttribute;
-import org.apache.lucene.analysis.tokenattributes.TypeAttribute;
+import org.apache.lucene.analysis.tokenattributes.*;
 import org.apache.lucene.analysis.util.FilesystemResourceLoader;
 import org.apache.lucene.util.Attribute;
 import org.apache.lucene.util.CharsRef;
 import org.apache.lucene.util.Version;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.*;
 
 // http://www.hankcs.com/program/java/lucene-synonymfilterfactory.html
 public class SynonymFilterTest {
@@ -53,11 +43,11 @@ public class SynonymFilterTest {
         TokenStream ts0 = analyzer.tokenStream("name", strReader);
 
         SynonymMap.Builder builder = new SynonymMap.Builder(true);
-        addEq(builder, new String[] { "love", "喜欢", "爱" });
-        addEq(builder, new String[] { "i", "我", "偶" });
+        addEq(builder, new String[]{"love", "喜欢", "爱"});
+        addEq(builder, new String[]{"i", "我", "偶"});
         addTo(builder,
-                new String[] { "中" },
-                new String[] { "z", "zh", "zho", "zhon", "zhong" });
+                new String[]{"中"},
+                new String[]{"z", "zh", "zho", "zhon", "zhong"});
         SynonymMap synonymMap = builder.build();
 
         SynonymFilter ts = new SynonymFilter(ts0, synonymMap, true);
@@ -105,7 +95,7 @@ public class SynonymFilterTest {
                     posLenAtt.getPositionLength(),
                     new String(byteRefAtt.getBytesRef().bytes),
                     termAtt.toString()
-                    );
+            );
 
         }
     }
@@ -138,14 +128,14 @@ public class SynonymFilterTest {
 
         SynonymMap.Builder builder = new SynonymMap.Builder(true);
         addTo(builder,
-                new String[] { "zhu" },
-                new String[] { "z", "zh", "zhu" });
+                new String[]{"zhu"},
+                new String[]{"z", "zh", "zhu"});
         addTo(builder,
-                new String[] { "zhi" },
-                new String[] { "z", "zh", "zhi" });
+                new String[]{"zhi"},
+                new String[]{"z", "zh", "zhi"});
         addTo(builder,
-                new String[] { "中" },
-                new String[] { "中", "z", "zh", "zho", "zhon", "zhong" });
+                new String[]{"中"},
+                new String[]{"中", "z", "zh", "zho", "zhon", "zhong"});
         SynonymMap synonymMap = builder.build();
 
         SynonymFilter ts = new SynonymFilter(ts0, synonymMap, true);
@@ -190,7 +180,7 @@ public class SynonymFilterTest {
 
         char[][] chineseChars = {
                 // {from, to}
-                { '\u4e00', '\u9fa5' }
+                {'\u4e00', '\u9fa5'}
         };
 
         SynonymMap.Builder builder = new SynonymMap.Builder(true);
@@ -203,7 +193,7 @@ public class SynonymFilterTest {
                     continue;
                 }
                 addTo(builder,
-                        new String[] { Character.toString(c) },
+                        new String[]{Character.toString(c)},
                         flattenPinyinArr(pinyinArr));
             }
         }
