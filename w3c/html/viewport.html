@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html ng-app="myApp" lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>viewport test</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="//cdn.bootcss.com/angular.js/1.4.5/angular.min.js"></script>
+    <script>
+        angular
+                .module('myApp', [])
+                .controller('myController', ["$scope", "$log", function ($scope, $log) {
+
+
+                    $scope.s = {
+                        devicePixelRatio: window.devicePixelRatio,
+                        screenWidth: screen.width,
+                        screenHeight: screen.height,
+                        screenPixelDepth: screen.pixelDepth,
+                        screenDeviceXDPI: screen.deviceXDPI,
+                        screenLogicalXDPI: screen.logicalXDPI,
+                        cssWidth: document.body.clientWidth,
+                        cssHeight: document.body.clientHeight,
+                        radio: function () {
+                            var w = this.screenWidth;
+                            var h = this.screenHeight;
+                            if (w < h) {
+                                var t = w;
+                                w = h;
+                                h = t;
+                            }
+                            var r = h / w;
+                            if (r === 1) {
+                                return "1:1"
+                            } else if (r === 0.75) {
+                                return "4:3"
+                            } else if (r === 0.5625) {
+                                return "16:9"
+                            } else if (r === 0.625) {
+                                return "16:10"
+                            } else {
+                                return r;
+                            }
+                        }
+                        /*,
+                         dpi: function () {
+
+                         //                            if (window.screen.deviceXDPI != undefined) {
+                         //                                return window.screen.deviceXDPI;
+                         //                            }
+                         //                            var tmpNode = document.createElement("DIV");
+                         //                            tmpNode.style.cssText = "width:1in;height:1in;position:absolute;left:0px;top:0px;z-index:99;visibility:hidden";
+                         //                            document.body.appendChild(tmpNode);
+                         //                            return parseInt(tmpNode.offsetWidth);
+                         return window.devicePixelRatio * 96;
+                         }*/
+                    };
+                }]);
+
+
+    </script>
+</head>
+<body>
+
+<div ng-controller="myController">
+    <table class="table">
+        <caption>屏幕尺寸信息</caption>
+        <thead>
+        <tr>
+            <th>项目</th>
+            <th>值</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>screen宽度</td>
+            <td>{{s.screenWidth}}</td>
+        </tr>
+        <tr>
+            <td>screen高度</td>
+            <td>{{s.screenHeight}}</td>
+        </tr>
+        <tr>
+            <td>screen比例</td>
+            <td>{{s.radio()}}</td>
+        </tr>
+        <tr>
+            <td>css宽度</td>
+            <td>{{s.cssWidth}}</td>
+        </tr>
+        <tr>
+            <td>css高度</td>
+            <td>{{s.cssHeight}}</td>
+        </tr>
+        <!--
+        <tr>
+            <td>DPI/PPI</td>
+            <td>{{s.dpi()}}</td>
+        </tr>
+        -->
+        <tr>
+            <td>devicePixelRatio</td>
+            <td>{{s.devicePixelRatio}}</td>
+        </tr>
+        </tbody>
+
+    </table>
+
+    <div>
+        <h2>img-font</h2>
+
+        <div><img src="img-font.jpg" style="width: 100%;"/></div>
+        <div style="font-size:8px; font-family:'宋体'; padding-left:48px;">8px - abcdefg中国</div>
+        <div style="font-size:10px; font-family:'宋体'; padding-left:48px;">10px - abcdefg中国</div>
+        <div style="font-size:16px; font-family:'宋体'; padding-left:48px;">16px - abcdefg中国</div>
+        <div style="font-size:24px; font-family:'宋体'; padding-left:48px;">24px - abcdefg中国</div>
+        <div style="font-size:32px; font-family:'宋体'; padding-left:48px;">32px - abcdefg中国</div>
+        <div style="font-size:40px; font-family:'宋体'; padding-left:48px;">40px - abcdefg中国</div>
+        <div style="font-size:48px; font-family:'宋体'; padding-left:48px;">48px - abcdefg中国</div>
+        <div style="font-size:56px; font-family:'宋体'; padding-left:48px;">56px - abcdefg中国</div>
+        <div style="font-size:64px; font-family:'宋体'; padding-left:48px;">64px - abcdefg中国</div>
+
+    </div>
+</div>
+
+<div>
+
+</div>
+
+</body>
+</html>
