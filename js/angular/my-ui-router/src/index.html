@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="zh-CN" ng-app="myApp">
+<head>
+    <title>钱皇商城</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="lib/angular-ui/angular-ui.min.css">
+
+</head>
+<body>
+
+<div id="id_1" ui-view></div>
+<div id="id_2" ui-view="view2"></div>
+
+
+<script src="lib/jquery/jquery.min.js"></script>
+<script src="lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="lib/angular/angular.min.js"></script>
+<script src="lib/angular-resource/angular-resource.min.js"></script>
+<script src="lib/angular-ui/angular-ui.min.js"></script>
+<script src="lib/angular-ui/angular-ui-ieshiv.min.js"></script>
+<script src="lib/angular-ui-router/angular-ui-router.min.js"></script>
+
+<!-- 以下自己写的js脚本,在正常开发时,应当合并到一个文件中 -->
+<script src="index.js"></script>
+<script src="config.js"></script>
+<script src="controllers/user.js"></script>
+
+</body>
+</html>
