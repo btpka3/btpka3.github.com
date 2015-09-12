@@ -9,6 +9,7 @@
 npm config set registry http://registry.npm.taobao.org/
 npm init
 
+sudo npm install -g nodemon
 sudo npm install -g grunt-cli
 npm install --save-dev grunt
 npm install --save-dev grunt-html2js
@@ -79,10 +80,9 @@ target/${pkg.name}.tar.gz                   # 最终发布包
 # 运行 http 服务器和 mock 数据
 
 ```
-grunt                  # 先编译一遍
-node mock/index.js     # 独立命令行窗口：启动 mock api
-grunt watch:all        # 独立命令行窗口：监测文件修改
-# 通过浏览器访问  http://localhost:3000/
+nodemon mock/index.js           # 独立命令行窗口：启动 mock api
+grunt ; grunt watch:all         # 独立命令行窗口：监测文件修改
+                                # 通过浏览器访问  http://localhost:3000/
 ```
 
 
