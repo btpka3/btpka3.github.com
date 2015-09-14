@@ -7,6 +7,7 @@ import java.util.concurrent.ExecutionException;
 import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
+import org.elasticsearch.action.admin.indices.mapping.put.PutMappingResponse
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.index.IndexRequest.OpType;
 import org.elasticsearch.action.search.SearchResponse;
@@ -88,6 +89,64 @@ public class EsTest {
                 .execute()
                 .actionGet();
         System.out.println("create index : " + createIndexResponse);
+
+        // 明确指明索引
+//        String mappingJsonStr =  XContentFactory.jsonBuilder()
+//                .startObject()
+//                    .startObject("general")
+//                        .startObject("properties")
+//                            .startObject("message")
+//                                .field("type", "string")
+//                                .field("index", "not_analyzed")
+//                            .endObject()
+//                            .startObject("source")
+//                                .field("type", "string")
+//                            .endObject()
+//                        .endObject()
+//                    .endObject()
+//                .endObject()
+//                .string();
+
+        // 请使用上述方法或者更合理的方法创建Json字符串
+        String mappingJsonStr = "" +
+                "{" +
+                "    \"properties\": {" +
+                "        \"_all\" : {" +
+                "            \"type\":\"string\"," +
+                "            \"index\": \"analyzed\"," +
+                "            \"analyzer\": \"standard\"" +
+                "        }," +
+                "        \"title\" : {" +
+                "            \"type\":\"string\"," +
+                "            \"index\": \"analyzed\"," +
+                "            \"analyzer\": \"standard\"" +
+                "        }," +
+                "        \"origin\" : {" +
+                "            \"type\":\"string\"," +
+                "            \"index\": \"analyzed\"," +
+                "            \"analyzer\": \"standard\"" +
+                "        }," +
+                "        \"description\" : {" +
+                "            \"type\":\"string\"," +
+                "            \"index\": \"analyzed\"," +
+                "            \"analyzer\": \"standard\"" +
+                "        }," +
+                "        \"sales_count\" : {" +
+                "            \"type\":\"long\"" +
+                "        }," +
+                "        \"price\" : {" +
+                "            \"type\":\"long\"" +
+                "        }" +
+                "    }" +
+                "}"
+        PutMappingResponse putMappingResponse = esClient.admin()
+                .indices()
+                .preparePutMapping(index)
+                .setType(index)
+                .setSource(mappingJsonStr)
+                .execute()
+                .actionGet();
+        System.out.println("create mapping : " + putMappingResponse);
     }
 
     // 索引要搜索的文档
