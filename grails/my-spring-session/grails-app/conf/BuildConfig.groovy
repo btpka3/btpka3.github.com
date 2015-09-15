@@ -6,6 +6,10 @@ grails.project.work.dir = "target/work"
 grails.project.target.level = 1.6
 grails.project.source.level = 1.6
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
+
+grails.plugin.location.'my-spring-session-plugin' = "../my-spring-session-plugin"
+
+
 /*
 grails.project.fork = [
     // configure settings for compilation JVM, note that if you alter the Groovy version forked compilation is required
@@ -54,6 +58,7 @@ grails.project.dependency.resolution = {
         test "org.grails:grails-datastore-test-support:1.0.2-grails-2.4"
         compile "org.springframework.session:spring-session:1.0.2.RELEASE"
         compile "org.springframework.session:spring-session-data-redis:1.0.2.RELEASE"
+        compile "org.apache.commons:commons-lang3:3.4"
     }
 
     plugins {

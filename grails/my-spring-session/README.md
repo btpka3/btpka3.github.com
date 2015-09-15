@@ -1,5 +1,9 @@
+# 说明
+1. 因为Grails 应用中无法独立在 web.xml中设定 filter，因此引入一个Grails Plugin工程完成该设定。
+1. 修改完 session 中的对象之后，必须重新调用 HttpSession#setAttribute(String, Object) 才能完成保存
+1. 分布式session中的对象值都必须实现 Serializable
 
-
+# 演示
 1. 修改 nginx 的配置文件 nginx.conf 并重新启动
 
     ```
@@ -36,5 +40,5 @@
 
     ```text
     http://localhost/my-spring-session/test
-    http://localhost/my-spring-session/update
+    http://localhost/my-spring-session/test/update
     ```

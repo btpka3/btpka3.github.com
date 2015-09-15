@@ -116,3 +116,10 @@ log4j.main = {
            'net.sf.ehcache.hibernate'
     debug  "org.springframework"
 }
+
+
+
+
+
+
+springSession.enabled = true
