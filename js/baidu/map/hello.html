@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head lang="zh_CN">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+    <style type="text/css">
+        body, html, #allmap {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            margin: 0;
+            font-family: "微软雅黑";
+        }
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=AA9iQNKiR6Dp8YKZnMQjGSev"></script>
+    <script type="text/javascript" src="//cdn.bootcss.com/angular.js/1.4.5/angular.js"></script>
+    <title>地图展示</title>
+</head>
+<body>
+
+<div ng-controller="MyCtrl" style="height: 100%;width: 100%;">
+
+    <div id="allmap" style="height: 80%;"></div>
+    <div style="height: 20%;">
+        <div><input type="text" ng-model="searchKeyword">
+            <button ng-click="search()">搜索</button>
+        </div>
+        <div>经度 = {{geocoderResult.point.lng}}</div>
+        <div>纬度 = {{geocoderResult.point.lat}}</div>
+        <div>地址 = {{geocoderResult.address}}</div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    // 参考：
+    //      百度开放平台API：Javascript类参考v2.0
+    //      http://developer.baidu.com/map/reference/index.php
+    //      百度开放平台API：示例
+    //      http://developer.baidu.com/map/jsdemo.htm
+
+    var app = angular.module('myApp', []);
+    app.controller('MyCtrl', ['$scope', "$log", function ($scope, $log) {
+        initBaidu();
+
+        function initBaidu() {
+
+            // 创建Map实例
+            var map = new BMap.Map("allmap");
+            var geocoder = new BMap.Geocoder();
+            var localSearch = new BMap.LocalSearch(map, {
+                renderOptions:{map: map}
+            });
+
+            // 开启鼠标滚轮缩放
+            map.enableScrollWheelZoom(true);
+
+            //添加地图类型控件
+            map.addControl(new BMap.MapTypeControl());
+
+            // 设置地图显示的城市 此项是必须设置的
+            map.setCurrentCity("北京");
+
+            // 为Map添加onClick事件
+            map.addEventListener("click", renewMarker);
+
+            // 默认显示一个区域
+            var initPoint = new BMap.Point(116.403119, 39.914935);
+            map.centerAndZoom(initPoint, 11);  // 初始化地图,设置中心点坐标和地图级别
+
+            // 默认创建一个标注点
+            var marker = new BMap.Marker(initPoint);
+            marker.enableDragging();
+            map.addOverlay(marker);
+            marker.addEventListener("dragend", updateMarkerPos);
+
+            // 获取用户当前的坐标（如果支持的话），并移动至此
+            var geolocation = new BMap.Geolocation();
+            geolocation.getCurrentPosition(function (r) {
+                if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+                    marker.setPosition(r.point);
+                    map.panTo(r.point, {noAnimation: false});
+                    updateMarkerPos();
+                }
+            }, {enableHighAccuracy: true});
+
+            function updateMarkerPos() {
+                geocoder.getLocation(marker.getPosition(), function (geocoderResult) {
+                    $scope.geocoderResult = geocoderResult;
+                    $scope.$apply();
+                });
+            };
+            updateMarkerPos();
+
+            function renewMarker(e) {
+                marker.setPosition(e.point);
+                updateMarkerPos();
+            };
+
+            $scope.search = function () {
+                $log.info("~~~~~~~###");
+                localSearch.search($scope.searchKeyword);
+            };
+
+        };
+    }]);
+
+
+</script>
+
+</body>
+</html>
