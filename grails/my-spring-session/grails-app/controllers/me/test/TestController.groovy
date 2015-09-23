@@ -28,6 +28,7 @@ class TestController {
             session.bbb.push(session.bbb.size())
             // 注意：以下这一步是必须
             session.bbb = session.bbb
+
         }
         Thread.sleep(10 * 1000)
 

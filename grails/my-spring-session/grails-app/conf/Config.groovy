@@ -114,7 +114,7 @@ log4j.main = {
            'org.springframework',
            'org.hibernate',
            'net.sf.ehcache.hibernate'
-    debug  "org.springframework"
+    info  "org.springframework"
 }
 
 
@@ -123,3 +123,9 @@ log4j.main = {
 
 
 springSession.enabled = true
+springSession.fixClassLoader = true  // TO SEE ClassNotFoundException bug , change to false
+
+grails.plugin.springsecurity.password.algorithm = 'MD5'
+grails.plugin.springsecurity.password.hash.iterations = 1
+grails.plugin.springsecurity.rejectIfNoRule = false
+grails.plugin.springsecurity.fii.rejectPublicInvocations = false
