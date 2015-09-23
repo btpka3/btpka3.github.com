@@ -123,7 +123,7 @@ log4j.main = {
 
 
 springSession.enabled = true
-springSession.fixClassLoader = true  // TO SEE ClassNotFoundException bug , change to false
+springSession.fixClassLoader = false  // TO SEE ClassNotFoundException bug , change to false
 
 grails.plugin.springsecurity.password.algorithm = 'MD5'
 grails.plugin.springsecurity.password.hash.iterations = 1

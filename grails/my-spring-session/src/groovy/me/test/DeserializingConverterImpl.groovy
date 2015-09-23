@@ -7,7 +7,7 @@ import org.springframework.core.serializer.support.SerializationFailedException
 import org.springframework.util.Assert
 
 /**
- * copy {@link org.springframework.core.serializer.support.SerializingConverter}
+ * copy {@link org.springframework.core.serializer.support.DeserializingConverter}
  */
 @CompileStatic
 class DeserializingConverterImpl implements Converter<byte[], Object> {

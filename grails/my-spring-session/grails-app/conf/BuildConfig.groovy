@@ -59,6 +59,10 @@ grails.project.dependency.resolution = {
         compile "org.springframework.session:spring-session:1.0.2.RELEASE"
         compile "org.springframework.session:spring-session-data-redis:1.0.2.RELEASE"
         compile "org.apache.commons:commons-lang3:3.4"
+
+        // DefaultDeserializer add new interface FIXME why sun.misc.VM.latestUserDefinedLoader() return changed ?
+        // compile "org.springframework:spring-core:4.2.1.RELEASE"
+        compile "org.springframework.data:spring-data-redis:1.5.1.RELEASE"
     }
 
     plugins {
