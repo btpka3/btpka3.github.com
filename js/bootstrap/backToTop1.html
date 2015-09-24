@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+    <style>
+
+        #toTop.affix-top {
+            visibility: hidden;
+            height: 0px;
+        }
+
+        #toTop.affix {
+            bottom: 320px;
+            right: 10px;
+            height: auto;
+        }
+
+        #toTop.affix-bottom {
+            position: absolute;
+            height: auto;
+            right: 10px;
+        }
+
+    </style>
+
+    <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+    <script>
+        $(function () {
+            $('#toTop').affix({
+                offset: {top: 100, bottom: 100},
+                target: "#ccc"
+            }).on("affixed.bs.affix", function () {
+                console.log("affixed.bs.affix")
+            }).on("affixed-bottom.bs.affix", function () {
+                console.log("affixed-bottom.bs.affix")
+            })
+        });
+    </script>
+</head>
+<body>
+
+<div id="aaa" style="width: 100%;height: 3000px; border: 1px solid aquamarine;   ">
+
+
+    <div id="ccc" style="top:100px; left:100px; height:600px; width:300px; overflow: scroll; border:1px solid red; position: relative; ">
+        <div id="toTop" class="bg-danger">
+            <div style="height:50px; width:50px;">xxx</div>
+        </div>
+
+        <div class="bg-primary" style="height:100px;">header</div>
+        <ol>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+            <li>1111111111111</li>
+        </ol>
+        <div class="bg-primary" style="height:100px;">footer</div>
+
+    </div>
+</div>
+</body>
+</html>

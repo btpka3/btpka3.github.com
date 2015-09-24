@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+    <style>
+        #toTop.affix-top {
+            visibility: hidden;
+            height: 0px;
+        }
+
+        #toTop.affix {
+            bottom: 10px;
+            right: 10px;
+            height: auto;
+        }
+
+        #toTop.affix-bottom {
+            position: absolute;
+            height: auto;
+            right: 10px;
+        }
+    </style>
+
+    <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+
+</head>
+<body>
+<!--
+FIXME 如何对于一个容器而非window作出此效果？比如div1包含div2，两者均有滚动条，需要在div2内显示bakToTop
+
+-->
+
+    <div id="toTop" data-spy="affix" data-offset-top="100" data-offset-bottom="100"
+         class="bg-danger">
+        <div style="height:50px; width:50px;">xxx</div>
+    </div>
+
+    <!-- data-target="#ccc"-->
+    <div class="bg-primary" style="height:100px;">header</div>
+    <ol>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+        <li>1111111111111</li>
+    </ol>
+    <div class="bg-primary" style="height:100px;">footer</div>
+    <!--<div id="ccc" style="height:600px; width:200px; overflow: scroll; border:1px solid red; position: absolute;">-->
+<!--</div>-->
+
+</body>
+</html>
