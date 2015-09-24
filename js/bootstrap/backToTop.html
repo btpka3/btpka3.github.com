@@ -39,8 +39,13 @@
             border: 1px solid #9999FF;
             font-size: 20px;
         }
-        #toTop > a:hover{
-            text-decoration:none;
+
+        #toTop > a:hover {
+            text-decoration: none;
+        }
+
+        #toTop > a:active {
+            outline: none;
         }
     </style>
 
@@ -54,7 +59,7 @@ FIXME 如何对于一个容器而非window作出此效果？比如div1包含div2
 -->
 
 <div id="toTop" data-spy="affix" data-offset-top="100" data-offset-bottom="100">
-    <a href="#top" class="bg-danger glyphicon glyphicon-arrow-up" style=""></a>
+    <a href="#top" class="bg-danger glyphicon glyphicon-arrow-up"></a>
 </div>
 
 <div id="top" class="bg-primary" style="height:100px;">header</div>
