@@ -1,0 +1,13 @@
+{
+  "title": "url-filter",
+  "name": "url-filter",
+  "version": "0.0.1",
+  "description": "change url",
+  "main": "index.js",
+  "author": "btpka3@163.com",
+  "engines": {
+    "firefox": ">=38.0a1",
+    "fennec": ">=38.0a1"
+  },
+  "license": "MIT"
+}
