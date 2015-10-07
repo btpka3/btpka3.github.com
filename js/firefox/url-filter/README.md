@@ -3,7 +3,18 @@ This is a firefox addon
 
 
 
+```
+./
+./package.json
+./README.md
+./test
+./e2e-tests
+./data
 
+```
+page scripts
+content script
+addon script
 
 
 
@@ -21,14 +32,24 @@ jpm run -b `which firefox`
 
 jpm xpi
 ```
-
+https://github.com/mozilla/addon-sdk/tree/master/examples
+https://developer.mozilla.org/en-US/Add-ons/SDK/Guides/Content_Scripts
+https://developer.mozilla.org/en-US/Add-ons/SDK/Guides/Content_Scripts/Interacting_with_page_scripts
 https://developer.mozilla.org/en-US/docs/Observer_Notifications
 https://developer.mozilla.org/en-US/docs/Setting_HTTP_request_headers
 https://addons.mozilla.org/en-us/firefox/addon/url-swap/
-
-
-
-
+https://developer.mozilla.org/en-US/Add-ons/SDK/High-Level_APIs/simple-prefs#Type-Specific_Attributes
+https://developer.mozilla.org/en-US/docs/Xray_vision
+https://developer.mozilla.org/en-US/Firefox/Multiprocess_Firefox/Which_URIs_load_where
+https://developer.mozilla.org/En/Custom_about:_URLs
+https://developer.mozilla.org/en-US/Add-ons/SDK/Tutorials/Chrome_Authority
+https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Language_Bindings/Components_object
+https://developer.mozilla.org/en-US/docs/Mozilla/JavaScript_code_modules/XPCOMUtils.jsm
+https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface
+https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIWebBrowserPersist?redirectlocale=en-US&redirectslug=nsIWebBrowserPersist
+https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIDOMStorage
+https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIDOMWindow#Attributes
+https://developer.mozilla.org/en-US/Add-ons/SDK/High-Level_APIs/windows#browserWindows
 
 
 # angular-seed — the seed for AngularJS apps

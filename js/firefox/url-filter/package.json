@@ -9,5 +9,22 @@
     "firefox": ">=38.0a1",
     "fennec": ">=38.0a1"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "fullName": "Example Add-on",
+  "preferences": [
+    {
+      "name": "somePreference",
+      "title": "Some preference title",
+      "description": "Some short description for the preference",
+      "type": "string",
+      "value": "this is the default string value"
+    },
+    {
+      "description": "How many of them we have.",
+      "name": "myInteger",
+      "type": "integer",
+      "value": 8,
+      "title": "How Many?"
+    }
+  ]
 }
