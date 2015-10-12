@@ -51,6 +51,10 @@ https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/
 https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIDOMWindow#Attributes
 https://developer.mozilla.org/en-US/Add-ons/SDK/High-Level_APIs/windows#browserWindows
 
+https://developer.mozilla.org/en-US/docs/Mozilla/JavaScript_code_modules
+
+https://developer.mozilla.org/en-US/Add-ons/Code_snippets
+
 
 # angular-seed — the seed for AngularJS apps
 
