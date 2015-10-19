@@ -32,6 +32,8 @@ jpm run -b `which firefox`
 
 jpm xpi
 ```
+
+
 https://github.com/mozilla/addon-sdk/tree/master/examples
 https://developer.mozilla.org/en-US/Add-ons/SDK/Guides/Content_Scripts
 https://developer.mozilla.org/en-US/Add-ons/SDK/Guides/Content_Scripts/Interacting_with_page_scripts
@@ -45,7 +47,7 @@ https://developer.mozilla.org/En/Custom_about:_URLs
 https://developer.mozilla.org/en-US/Add-ons/SDK/Tutorials/Chrome_Authority
 https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Language_Bindings/Components_object
 https://developer.mozilla.org/en-US/docs/Mozilla/JavaScript_code_modules/XPCOMUtils.jsm
-https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface
+
 https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIWebBrowserPersist?redirectlocale=en-US&redirectslug=nsIWebBrowserPersist
 https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIDOMStorage
 https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIDOMWindow#Attributes
@@ -55,6 +57,10 @@ https://developer.mozilla.org/en-US/docs/Mozilla/JavaScript_code_modules
 
 https://developer.mozilla.org/en-US/Add-ons/Code_snippets
 
+
+
+https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XUL/XUL_Reference
+https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface
 
 # angular-seed — the seed for AngularJS apps
 

@@ -14,7 +14,6 @@ exports.dummy = dummy;
 //require('./data/about.addon');
 //require('./data/pageMod.addon');
 //require('./data/httpRequestObserver.addon');
-
 //require('./data/DOMOfflineResourceList.addon');
 
 //require('./data/localFile.addon');

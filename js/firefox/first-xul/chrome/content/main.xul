@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+
+<window
+        id="findfile-window"
+        title="My App"
+        width="300"
+        height="300"
+        orient="horizontal"
+        xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+    <!-- Other elements go here -->
+    <script type="application/javascript" src="chrome://first-xul/content/main.js"/>
+
+    <caption label="Hello World"/>
+    <separator/>
+    <button label="More >>" oncommand="alert(1);showMore();"/>
+    <separator/>
+    <description id="more-text" hidden="true">This is a simple XULRunner</description>
+</window>

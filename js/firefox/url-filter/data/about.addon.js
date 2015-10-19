@@ -41,8 +41,8 @@ function Factory(component) {
         return new component();
     };
     this.register = function () {
-        Cm.registerFactory(component.prototype.classID, component.prototype.classDescription, component.prototype.contractID, this);
-    };
+        Cm.registerFactory(component.prototype.classID, componeprototype.classDescription, component.prototype.contractID, this);
+    };nt.
     this.unregister = function () {
         Cm.unregisterFactory(component.prototype.classID, this);
     };

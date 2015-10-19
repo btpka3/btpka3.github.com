@@ -1,0 +1,2 @@
+content first-xul chrome/content/
+manifest chrome/chrome.manifest
