@@ -10,5 +10,16 @@ url: "http://yourdomain.com" # the base hostname & protocol for your site
 twitter_username: jekyllrb
 github_username:  jekyll
 
+timezone: Asia/Shanghai
+encoding: UTF-8
+
+#highlighter: pygments
+
 # Build settings
 markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: 'codehilite'
+    line_numbers: true
