@@ -39,6 +39,8 @@ print_hi('Tom')
 
 
 # test auto code block
+<script>console.log("XSS")</script>
+<div style="color:red;z-index:111;">aaaaaaaaaaaaaaaaaaaa</div>
 
 ```
 <?xml version="1.0" encoding="UTF-8"?>
