@@ -70,7 +70,7 @@ print_hi('Tom')
 * == {{tag}}
 {% endfor %}
 
-### test MathJax
+### <i class="glyphicon glyphicon-music"></i> test MathJax
 
 $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
 
