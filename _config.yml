@@ -10,5 +10,6 @@ exclude:
   - os
   - owasp
   - rfc
+  - ruby
   - ShapeContext
   - w3c
