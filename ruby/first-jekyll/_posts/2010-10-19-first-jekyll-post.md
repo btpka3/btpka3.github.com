@@ -66,6 +66,10 @@ print_hi('Tom')
 
 ### 中Eng混合标题2
 
+<kbd>Ctrl+[</kbd> and <kbd>Ctrl+]</kbd>
+
+---
+
 {% for tag in page.tags %}
 * == {{tag}}
 {% endfor %}
