@@ -18,3 +18,5 @@ target-eclipse
 node_modules 
 build
 .gradle
+_site
+.jekyll-metadata
