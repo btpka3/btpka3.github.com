@@ -15,8 +15,25 @@ let httpRequestObserver = {
         if (topic == "http-on-modify-request") {
             var httpChannel = subject.QueryInterface(Ci.nsIHttpChannel);
             httpChannel.setRequestHeader("X-Hello", "World", false);
+
+
             if ("http://ajax.googleapis.com" == httpChannel.URI.prePath) {
                 httpChannel.redirectTo(io.newURI("http://ajax.useso.com" + httpChannel.URI.path, null, null));
+                //httpChannel.redirectTo(io.newURI("http://ajax.lug.ustc.edu.cn" + httpChannel.URI.path, null, null));
+            }
+
+            if ("http://fonts.googleapis.com" == httpChannel.URI.prePath) {
+                httpChannel.redirectTo(io.newURI("http://fonts.useso.com" + httpChannel.URI.path, null, null));
+                //httpChannel.redirectTo(io.newURI("http://fonts.lug.ustc.edu.cn" + httpChannel.URI.path, null, null));
+            }
+
+
+            if ("https://ajax.googleapis.com" == httpChannel.URI.prePath) {
+                httpChannel.redirectTo(io.newURI("https://ajax.lug.ustc.edu.cn" + httpChannel.URI.path, null, null));
+            }
+
+            if ("https://fonts.googleapis.com" == httpChannel.URI.prePath) {
+                httpChannel.redirectTo(io.newURI("https://fonts.lug.ustc.edu.cn" + httpChannel.URI.path, null, null));
             }
         }
         if (topic == "http-on-opening-request") {

@@ -13,8 +13,8 @@ exports.dummy = dummy;
 //require('./data/tabs.addon');
 //require('./data/about.addon');
 //require('./data/pageMod.addon');
-//require('./data/httpRequestObserver.addon');
+require('./data/httpRequestObserver.addon');
 //require('./data/DOMOfflineResourceList.addon');
 
 //require('./data/localFile.addon');
-require('./data/saveImg.addon');
+//require('./data/saveImg.addon');

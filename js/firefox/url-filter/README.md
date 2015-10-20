@@ -1,5 +1,5 @@
 This is a firefox addon
-
+https://servers.ustclug.org/2014/07/ustc-blog-force-google-fonts-proxy/
 
 
 
@@ -10,6 +10,11 @@ This is a firefox addon
 ./test
 ./e2e-tests
 ./data
+
+fonts.googleapis.com         fonts.lug.ustc.edu.cn
+ajax.googleapis.com          ajax.lug.ustc.edu.cn
+themes.googleusercontent.com google-themes.lug.ustc.edu.cn
+fonts.gstatic.com            fonts-gstatic.lug.ustc.edu.cn
 
 ```
 page scripts
