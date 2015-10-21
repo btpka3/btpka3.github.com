@@ -15,7 +15,7 @@ bin
 .idea
 .DS_Store
 target-eclipse
-node_modules 
+node_modules
 build
 .gradle
 _site
