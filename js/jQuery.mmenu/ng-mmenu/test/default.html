@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html ng-app="mmenuDefault">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="author" content="www.frebsite.nl"/>
+    <meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes"/>
+
+    <title>jQuery.mmenu demo</title>
+
+    <link type="text/css" rel="stylesheet" href="css/demo.css"/>
+    <link type="text/css" rel="stylesheet" href="../src/lib/jQuery.mmenu/css/jquery.mmenu.all.css"/>
+
+    <script type="text/javascript" src="../src/lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="../src/lib/angular/angular.js"></script>
+
+    <script type="text/javascript" src="../src/lib/jQuery.mmenu/js/jquery.mmenu.min.all.js"></script>
+
+
+    <script type="text/javascript" src="../src/ng-mmenu.js"></script>
+
+    <script type="text/javascript">
+        angular
+                .module("mmenuDefault", ["ng-mmenu"])
+                .controller("myCtrl", ["$scope", "$log", function ($scope, $log) {
+                    $scope.user = {
+                        name: "zhang3"
+                    };
+                    $scope.mmenuOpt = {
+                        slidingSubmenus: false,
+                        aaa: "aaa"
+                    };
+                    $scope.mmenuOpt1 = {
+                        slidingSubmenus: true,
+                        bbb: "bbb"
+                    };
+
+                    $scope.openMenu = function () {
+//                        var api = angular.element("#menu").data("mmenu");
+//                        api.bind("openPanel", function (panel) {
+//                            console.log("This panel is now opened:" + panel.attr("id"));
+//                        });
+//                        api.openPanel(angular.element("#panel"));
+                        $("#menu").openPanel();
+                        $log.log("open panel")
+                    };
+                }]);
+    </script>
+</head>
+<body ng-controller="myCtrl">
+<div id="page">
+    <div class="header">
+        <a href="#menu"></a>
+        Demo
+    </div>
+    <div class="content">
+        <p><strong>This is a angular plugin demo for <a href="http://mmenu.frebsite.nl" target="_blank">mmenu.frebsite.nl</a>.</strong><br/>
+            Click the menu icon to open the menu.</p>
+
+        <p>
+            <button ng-click="openMenu()">openMenu</button>
+        </p>
+    </div>
+
+
+    <nav id="menu" mmenu="" mmenu-opt="mmenuOpt1">
+        {{user.name}}
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#about">About us</a>
+                <ul>
+                    <li><a href="#about/history">History</a></li>
+                    <li><a href="#about/team">The team</a>
+                        <ul>
+                            <li><a href="#about/team/management">Management</a></li>
+                            <li><a href="#about/team/sales">Sales</a></li>
+                            <li><a href="#about/team/development">Development</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#about/address">Our address</a></li>
+                </ul>
+            </li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+</div>
+</body>
+</html>
