@@ -15,6 +15,7 @@ bin
 .idea
 .DS_Store
 target-eclipse
+bower_components
 node_modules
 build
 .gradle
