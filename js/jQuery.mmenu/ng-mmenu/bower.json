@@ -17,7 +17,7 @@
   ],
   "dependencies": {
     "jquery": "1.11.3",
-    "jQuery.mmenu": "~5.5.2",
+    "jQuery.mmenu": "~5.3.4",
     "angular": "~1.4.7"
   }
 }

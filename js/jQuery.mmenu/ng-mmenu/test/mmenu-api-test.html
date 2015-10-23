@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="author" content="www.frebsite.nl"/>
+    <meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes"/>
+
+    <title>jQuery.mmenu demo</title>
+    <script type="text/javascript" src="../src/lib/jquery/jquery.min.js"></script>
+
+
+    <link type="text/css" rel="stylesheet" href="css/demo.css"/>
+
+    <link type="text/css" rel="stylesheet" href="../src/lib/jQuery.mmenu/css/jquery.mmenu.all.css"/>
+    <script type="text/javascript" src="../src/lib/jQuery.mmenu/js/jquery.mmenu.min.all.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+
+            $("#menu").mmenu({});
+
+            var api = $("#menu").data("mmenu");
+            api.bind("openPanel", function () {
+                console.log("This panel is now opened~~~", arguments.length);
+            });
+            api.bind("open", function () {
+                console.log("This panel is now opened", arguments.length);
+            });
+
+            var i = -1;
+            var panels = $("#menu > div ");
+            $("#jqOpen").click(function () {
+                i++;
+                i = i % panels.length;
+                api.openPanel($(panels.get(i)));
+                api.open();
+            });
+        });
+
+    </script>
+</head>
+<body ng-controller="myCtrl">
+<div id="page">
+    <div class="header">
+        <a href="#menu"></a>
+        Demo
+    </div>
+    <div class="content">
+        <p>
+            <strong>This is a test page for invoke jQueyr.mmenu</strong>
+        </p>
+
+        <p>
+            <button id="jqOpen">open</button>
+        </p>
+    </div>
+
+
+    <nav id="menu">
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#about">About us</a>
+                <ul>
+                    <li><a href="#about/history">History</a></li>
+                    <li><a href="#about/team">The team</a>
+                        <ul>
+                            <li><a href="#about/team/management">Management</a></li>
+                            <li><a href="#about/team/sales">Sales</a></li>
+                            <li><a href="#about/team/development">Development</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#about/address">Our address</a></li>
+                </ul>
+            </li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+</div>
+</body>
+</html>

@@ -6,44 +6,81 @@
     <meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes"/>
 
     <title>jQuery.mmenu demo</title>
+    <script type="text/javascript" src="../src/lib/jquery/jquery.min.js"></script>
+
 
     <link type="text/css" rel="stylesheet" href="css/demo.css"/>
+
     <link type="text/css" rel="stylesheet" href="../src/lib/jQuery.mmenu/css/jquery.mmenu.all.css"/>
-
-    <script type="text/javascript" src="../src/lib/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="../src/lib/angular/angular.js"></script>
-
     <script type="text/javascript" src="../src/lib/jQuery.mmenu/js/jquery.mmenu.min.all.js"></script>
 
 
-    <script type="text/javascript" src="../src/ng-mmenu.js"></script>
+    <!--<link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jQuery.mmenu/5.3.4/css/jquery.mmenu.all.min.css"/>-->
+    <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jQuery.mmenu/5.3.4/js/jquery.mmenu.min.js"></script>-->
 
+
+    <!--
+        <script type="text/javascript" src="../src/lib/angular/angular.js"></script>
+
+
+        <script type="text/javascript" src="../src/ng-mmenu.js"></script>
+    -->
     <script type="text/javascript">
-        angular
-                .module("mmenuDefault", ["ng-mmenu"])
-                .controller("myCtrl", ["$scope", "$log", function ($scope, $log) {
-                    $scope.user = {
-                        name: "zhang3"
-                    };
-                    $scope.mmenuOpt = {
-                        slidingSubmenus: false,
-                        aaa: "aaa"
-                    };
-                    $scope.mmenuOpt1 = {
-                        slidingSubmenus: true,
-                        bbb: "bbb"
-                    };
+        //        angular
+        //                .module("mmenuDefault", ["ng-mmenu"])
+        //                .controller("myCtrl", ["$scope", "$log", function ($scope, $log) {
+        //                    $scope.user = {
+        //                        name: "zhang3"
+        //                    };
+        //                    $scope.mmenuOpt = {
+        //                        slidingSubmenus: false,
+        //                        aaa: "aaa"
+        //                    };
+        //                    $scope.mmenuOpt1 = {
+        //                        slidingSubmenus: true,
+        //                        bbb: "bbb"
+        //                    };
+        //
+        //                    $scope.openMenu = function () {
+        ////                        var api = angular.element("#menu").data("mmenu");
+        ////                        api.bind("openPanel", function (panel) {
+        ////                            console.log("This panel is now opened:" + panel.attr("id"));
+        ////                        });
+        ////                        api.openPanel(angular.element("#panel"));
+        //                        $("#menu").openPanel();
+        //                        $log.log("open panel")
+        //                    };
+        //                }]);
+        $(function () {
 
-                    $scope.openMenu = function () {
-//                        var api = angular.element("#menu").data("mmenu");
-//                        api.bind("openPanel", function (panel) {
-//                            console.log("This panel is now opened:" + panel.attr("id"));
-//                        });
-//                        api.openPanel(angular.element("#panel"));
-                        $("#menu").openPanel();
-                        $log.log("open panel")
-                    };
-                }]);
+            $("#menu").mmenu({
+                //extensions: ["theme-dark"]
+//                offCanvas: false
+            });
+
+            var api = $("#menu").data("mmenu");
+            api.bind("open", function () {
+                console.log("This panel is now opened", arguments.length);
+            });
+            var i = -1;
+            var panels = $("#menu > div ");
+            $("#jqOpen").click(function () {
+                console.log(panels.length);
+                //api.openPanel($("#menu>div").get(0));
+
+
+                i++;
+                i = i % panels.length;
+                console.log(panels.length, i, $(panels.get(i)).attr("id"));
+                api.openPanel($(panels.get(i)));
+
+                api.open();
+                //api.setPage(panels.get(i));
+                console.log(11);
+            });
+
+        });
+
     </script>
 </head>
 <body ng-controller="myCtrl">
@@ -58,12 +95,14 @@
 
         <p>
             <button ng-click="openMenu()">openMenu</button>
+        <hr>
+        <h6>test for jQuery.mmenu's Off-canvas plugin</h6>
+        <button id="jqOpen">open</button>
         </p>
     </div>
 
 
-    <nav id="menu" mmenu="" mmenu-opt="mmenuOpt1">
-        {{user.name}}
+    <nav id="menu" mmenu-opt="mmenuOpt1">
         <ul>
             <li><a href="#">Home</a></li>
             <li><a href="#about">About us</a>
