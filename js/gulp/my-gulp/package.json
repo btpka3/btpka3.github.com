@@ -1,0 +1,34 @@
+{
+  "name": "my-gulp",
+  "version": "1.0.0",
+  "description": "``` npm config set registry http://registry.npm.taobao.org/ npm init npm update",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp-angular-templatecache": "^1.7.0",
+    "gulp-autoprefixer": "^2.3.1",
+    "gulp-beautify": "^1.1.2",
+    "gulp-cached": "^1.1.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-csso": "^1.0.0",
+    "gulp-gzip": "^1.1.0",
+    "gulp-header": "^1.2.2",
+    "gulp-htmlmin": "^1.1.3",
+    "gulp-if": "^1.2.5",
+    "gulp-ignore": "^1.2.1",
+    "gulp-jscs": "^1.6.0",
+    "gulp-jshint": "^1.11.2",
+    "gulp-less": "^3.0.3",
+    "gulp-load-plugins": "^1.0.0-rc.1",
+    "gulp-minify-css": "^1.2.0",
+    "gulp-preprocess": "^1.2.0",
+    "gulp-rev": "^5.1.0",
+    "gulp-sourcemaps": "^1.5.2",
+    "gulp-uglify": "^1.2.0",
+    "yargs": "^3.15.0"
+  }
+}
