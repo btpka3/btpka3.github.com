@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>手机APP顶部菜单</title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.css">
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <style>
+        body {
+            background-color: #00b3ee;
+        }
+
+        .header {
+            width: 100%;
+            height: 44px;
+            line-height: 44px;
+            border: none;
+            border-radius: 0;
+            margin-bottom: 0;
+            min-height: inherit;
+        }
+
+        .header .nav {
+            text-align: center;
+            margin: 0;
+        }
+
+        .header .nav > li > a {
+            line-height: inherit;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header .title {
+            margin: 0;
+            padding: 0;
+        }
+
+        .header-left {
+            float: left;
+            background-color: #eb9316;
+        }
+
+        .header-icon {
+            margin: auto;
+            padding: auto;
+            width: 44px;
+            text-align: center;
+        }
+
+        .header-right {
+            float: right;
+            margin-right: 0;
+            background-color: #c1e2b3;
+        }
+
+    </style>
+</head>
+<body class="app">
+
+<nav class="navbar navbar-default header">
+
+    <ul class="nav navbar-nav header-left" role="search">
+        <li><a href="#" class="header-icon"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></li>
+    </ul>
+    <ul class="nav navbar-nav header-right">
+        <li><a href="#" class="header-icon"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></li>
+    </ul>
+    <div class="nav">
+        <!--<li><a href="#" class="title">header</a></li>-->
+        <div><a class="title ">header</a></div>
+    </div>
+</nav>
+<br>
+<br>
+<br>
+<ul>
+    <li>使用bootstrap的navbar, nav 进行布局</li>
+</ul>
+
+
+</body>
+</html>

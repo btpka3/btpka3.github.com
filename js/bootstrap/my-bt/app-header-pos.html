@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>手机APP顶部菜单</title>
+
+    <style>
+        .header {
+            position: relative;
+            line-height: 44px;
+            min-height: 44px;
+            background-color: #F7E5F7;
+        }
+
+        .left {
+            display: block;
+            position: absolute;
+            width: 44px;
+            height: 44px;
+            background-color: #EEEE11;
+            overflow: hidden;
+        }
+
+        .center {
+            display: block;
+            padding: 0;
+            margin: 0 44px 0 44px;
+            height: 44px;
+            background-color: #FCCFD8;
+        }
+
+        .center .title {
+            width: 80%;
+            text-align: center;
+            margin: 0 auto;
+            background-color: #e4b9b9;
+        }
+
+        .right {
+            display: block;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 44px;
+            height: 44px;
+            background-color: #EEEE11;
+        }
+    </style>
+</head>
+<body class="app">
+<header>
+    <div class="header">
+        <div class="left">right</div>
+        <div class="center">
+            <div class="title">center</div>
+        </div>
+        <div class="right">left</div>
+    </div>
+</header>
+
+<br>
+<br>
+<br>
+<ul>
+    <li>使用 css 的 position + right 完成布局</li>
+    <li>缺点：需要明确指明中间元素的margin</li>
+</ul>
+
+<br>
+
+
+</body>
+</html>

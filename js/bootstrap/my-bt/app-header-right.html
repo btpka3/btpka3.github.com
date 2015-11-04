@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>手机APP顶部菜单</title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.css">
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            height: 44px;
+            line-height: 44px;
+        }
+
+        .header .icon {
+            width: 44px;
+            text-align: center;
+            background-color: #eb9316;
+        }
+
+        .header .left {
+            display: inline-block;
+            width: 25%;
+            background-color: #67b168;
+        }
+
+        .header .right {
+            display: inline-block;
+            width: 25%;
+            background-color: #67b168;
+        }
+
+        .header .center {
+            display: inline-block;
+            text-align: center;
+            background-color: #bce8f1;
+            width: 50%;
+        }
+
+        .a {
+            display: block;
+        }
+
+        .a div {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body class="app">
+
+<nav class="header">
+    <div class="left">
+        <div class="icon">left</div>
+    </div>
+    <div class="center">
+        <div><a class="title">header</a></div>
+    </div>
+    <div class="right">
+        <div class="icon">right</div>
+    </div>
+</nav>
+<br>
+<br>
+<br>
+<ul>A
+    <li>注意：这是一个失败的例子</li>
+    <li>使用 css的 left, right 完成布局</li>
+</ul>
+
+<br>
+
+<div class="a">
+    <div style="width: 25%;">left</div>
+    <div style="width: 50%;">center</div>
+    <div style="width: 25%;">right</div>
+</div>
+
+<div style="width: 100%;">
+    <div style="display: inline-block;width: 50%; background-color: #67b168; margin: 0; padding:0;">a</div>
+    <div style="display: inline-block;width: 50%; background-color: #e4b9b9; margin: 0; padding:0;">b</div>
+</div>
+<br/>
+
+<div style="width: 100%;"><span style="display: inline-block;width: 180px; background-color: #67b168; margin: 0; padding:0; border:none;">a
+    </span><span style="display: inline-block;width: 180px; background-color: #e4b9b9; margin: 0; padding:0; border:none;">b</span>
+</div>
+<br/>
+
+<div style="width: 204px; margin: 0; padding:0; border:none;">
+    <div style="display: inline-block;width: 100px; background-color: #67b168; margin: 0; padding:0; border:none;">a</div>
+    <div style="display: inline-block;width: 100px; background-color: #e4b9b9; margin: 0; padding:0; border:none;">b</div>
+</div>
+</body>
+</html>

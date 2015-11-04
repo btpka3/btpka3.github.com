@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>手机APP顶部菜单</title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.css">
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!--
+
+1. 不使用bootstrap的nav， navbar 等class
+2. 使用bootstrap的pull-right等使用float布局
+-->
+    <style>
+        body {
+            background-color: #00b3ee;
+        }
+
+        .header {
+            background-color: #bce8f1;
+            line-height: 44px;
+        }
+
+        .header .icon {
+            display: inline-block;
+            width: 44px;
+            text-align: center;
+            background-color: #eb9316;
+        }
+
+        .header .center-block {
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="app">
+
+<nav class="header clearfix">
+    <div class="pull-left">
+        <a href="#" class="icon"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
+    </div>
+    <div class="pull-right">
+        <a href="#" class="icon"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
+    </div>
+    <div class="center-block">
+        <div>header</div>
+    </div>
+</nav>
+<br>
+<br>
+<br>
+
+
+</body>
+</html>
