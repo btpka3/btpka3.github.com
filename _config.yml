@@ -6,7 +6,6 @@ exclude:
   - grails
   - images
   - java
-  - js
   - os
   - owasp
   - rfc
