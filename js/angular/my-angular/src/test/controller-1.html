@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh-CN" ng-app="myApp">
+<head>
+    <title>钱皇商城</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../../bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="../../bower_components/angular/angular.js"></script>
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', ['$scope', function ($scope) {
+            $scope.arr = {
+                num: 3
+            };
+            $scope.add = function () {
+                $scope.arr.num++;
+            }
+        }]);
+
+    </script>
+</head>
+<body>
+<div ng-controller="myCtrl">
+    {{arr.num}}
+
+    <button ng-click="add(this);">add</button>
+    <input type="text" ng-model="arr.num"/>
+
+</div>
+</body>
+</html>

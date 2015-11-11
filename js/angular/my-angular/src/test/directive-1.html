@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="zh-CN" ng-app="myApp">
+<head>
+    <title>test directive</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../../bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="../../bower_components/angular/angular.js"></script>
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', ['$scope', function ($scope) {
+
+            $scope.ctrlObj = {
+                c: "ccc"
+            };
+            $scope.init = function (obj) {
+                $scope.obj = obj;
+                console.log("in controller: the obj directive exposed is : ", obj);
+            };
+            $scope.add = function () {
+                // 从 Controller 中修改 directive 内部对象
+                if ($scope.obj) {
+                    $scope.obj.a = $scope.obj.a + "a";
+                    $scope.obj.b = $scope.obj.b + "b";
+                }
+
+                // 在 Controller 中修改自身作用域内的对象
+                if ($scope.ctrlObj) {
+                    $scope.ctrlObj.c = $scope.ctrlObj.c + "c";
+                }
+            };
+
+            $scope.leave = function () {
+                if (!$scope.obj) {
+                    return;
+                }
+                // 从 Controller 中调用 directive 提供的方法
+                $scope.obj.leave();
+            }
+
+        }]);
+        app.directive('myDirective', function () {
+
+
+            function link(scope, element, attr) {
+                scope.obj = {
+                    a: "aaa",
+                    b: "bbb",
+                    leave: function () {
+                        scope.obj.a = "aaa";
+                        scope.obj.b = "bbb";
+                    }
+                };
+
+                scope.dirAdd = function () {
+                    console.log("==== scope.opts : ", scope.opts);
+                    scope.opts.add();
+                };
+
+                // fire init function
+                console.log("scope.initFn = ", scope.initFn);
+                console.log("scope.obj = ", scope.obj);
+                // 注意：这里是传入一个对象，属性可以作为参数
+                scope.initFn({obj: scope.obj});
+            }
+
+            return {
+                restrict: 'AEC',
+                template: '' +
+                '<span>' +
+                '  <span style="color: red;">{{obj.a}}</span> ' +
+                '  <span ng-transclude></span>' +
+                '  <span style="color:#0040D0">{{obj.b}}</span>' +
+                '  <button ng-click="dirAdd()">dirAdd</button>' +
+                '</span>',
+                // templateUrl:"a.html",
+                scope: {
+                    'initFn': '&',
+                    'opts': "="
+                },
+                replace: true,
+                transclude: true,
+                link: link
+            };
+        });
+
+    </script>
+</head>
+<body>
+<div ng-controller="myCtrl">
+    <button ng-click="add()">add</button>
+    <button ng-click="leave()">leave</button>
+    <div id="i1">
+        111
+        <div my-directive class="xxx" init-fn="init(obj)" opts="{add:add}">
+            {{ctrlObj.c}}
+            <button ng-click="add()">ctrlAdd</button>
+            <!-- 这里这里访问到外部controller中的对象 -->
+        </div>
+        222
+    </div>
+</div>
+</body>
+</html>

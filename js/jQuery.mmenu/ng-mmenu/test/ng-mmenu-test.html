@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes"/>
+
+    <title>jQuery.mmenu angular directive test</title>
+
+    <link type="text/css" rel="stylesheet" href="../src/lib/jQuery.mmenu/css/jquery.mmenu.all.css"/>
+    <link type="text/css" rel="stylesheet" href="css/demo.css"/>
+
+    <script type="text/javascript" src="../src/lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="../src/lib/jQuery.mmenu/js/jquery.mmenu.min.all.js"></script>
+
+    <script type="text/javascript" src="../src/lib/angular/angular.js"></script>
+    <script type="text/javascript" src="../src/lib/angular-ui-router/angular-ui-router.min.js"></script>
+    <script type="text/javascript" src="../src/mmenu.js"></script>
+
+    <script type="text/ng-template" id="views/a/index.root.html">
+        this is status "a".  scope.obj = {{obj}}
+        <button ng-click="addLeft()">addLeft</button>
+        <button ng-click="minusRight()">minusRight</button>
+        <div>
+            <a href="#mmenuLeft">left@a</a>
+            <a href="#mmenuRight">right@a</a>
+        </div>
+        <div>
+            <button ng-click="mmenuLeftOpen()">left@a</button>
+        </div>
+        <div ui-view=""><!-- when access url "#/a1", here will insert template "views/a/a1/index.a.html" --></div>
+
+        <nav mmenu="mmenuLeftConf" id="mmenuLeft">
+            <ul>
+                <li><a>Left {{obj.left}}</a></li>
+                <li><a>Left {{obj.left}}</a></li>
+                <li><a>Left {{obj.left}}</a></li>
+            </ul>
+        </nav>
+    </script>
+
+    <script type="text/ng-template" id="views/a/a1/index.a.html">
+
+        this is status "a.a1".
+
+        <div>
+            <a href="#mmenuLeft">left@a.a1</a>
+            <a href="#mmenuRight">right@a.a1</a>
+        </div>
+        <div>
+            <button ng-click="mmenuLeftOpen()">left@a.a1</button>
+            <button ng-click="mmenuRightOpen()">right@a.a1</button>
+        </div>
+
+        <nav mmenu="mmenuRightConf" id="mmenuRight">
+            <ul>
+                <li><a>Right {{obj.right}}</a></li>
+                <li><a>Right {{obj.right}}</a></li>
+                <li><a>Right {{obj.right}}</a></li>
+            </ul>
+        </nav>
+    </script>
+
+
+    <script type="text/ng-template" id="views/b/index.root.html">
+
+        <div>
+            this is status "b".
+        </div>
+
+    </script>
+
+    <script type="text/javascript">
+        var app = angular.module('app', [
+            'ui.router',
+            'mmenu'
+        ]);
+        app.config(['$urlRouterProvider', '$urlMatcherFactoryProvider', '$stateProvider', function ($urlRouterProvider, $urlMatcherFactoryProvider, $stateProvider) {
+
+            $urlMatcherFactoryProvider.strictMode(false);
+            $urlRouterProvider.otherwise('/');
+
+
+            $stateProvider
+                    .state("a", {
+                        url: "/",
+                        resolve: {
+                            onExitCallBacks: function () {
+                                return [];
+                            }
+                        },
+                        onExit: ['$rootScope', '$log', 'onExitCallBacks', function ($rootScope, $log, onExitCallBacks) {
+                            $log.debug("============== onExit");
+                            angular.forEach(onExitCallBacks, function (fn) {
+                                $log.debug("============== onExit fn", arguments);
+                                fn();
+                            });
+                            onExitCallBacks.length = 0;
+                        }],
+                        views: {
+                            "@": {
+                                templateUrl: 'views/a/index.root.html',
+                                controller: ['$log', '$scope', 'onExitCallBacks', function ($log, $scope, onExitCallBacks) {
+                                    $scope.obj = {
+                                        left: 1,
+                                        right: -1
+                                    };
+
+                                    $scope.addLeft = function () {
+                                        $scope.obj.left++;
+                                    };
+
+                                    $scope.minusRight = function () {
+                                        $scope.obj.right--;
+                                    };
+
+
+                                    $scope.mmenuLeftConf = {
+                                        opts: {
+                                            slidingSubmenus: false,
+                                            onClick: {
+                                                close: true
+                                            }
+                                        },
+                                        init: function (mmenuLeftApi) {
+
+                                            $scope.mmenuLeftOpen = function () {
+                                                var $ele = mmenuLeftApi.element;
+                                                var api = $ele.data("mmenu");
+                                                var panels = $ele.find(" > div ");
+                                                api.openPanel($(panels.get(0)));
+                                                api.open();
+                                            };
+
+                                            $log.debug("--------------- doMmenu");
+                                            onExitCallBacks.push(function () {
+                                                $scope.mmenuLeftApi = mmenuLeftApi;
+                                                mmenuLeftApi.remove();
+                                                $log.debug("--------------- doMmenu remove");
+                                            });
+                                        }
+                                    };
+                                }]
+                            }
+                        }
+                    })
+
+                    .state("a.a1", {
+                        url: "a1",
+                        resolve: {
+                            onExitCallBacks: function () {
+                                return [];
+                            }
+                        },
+                        onExit: ['$rootScope', '$log', 'onExitCallBacks', function ($rootScope, $log, onExitCallBacks) {
+                            $log.debug("============== onExit");
+                            angular.forEach(onExitCallBacks, function (fn) {
+                                $log.debug("============== onExit fn", arguments);
+                                fn();
+                            });
+                            onExitCallBacks.length = 0;
+                        }],
+                        views: {
+                            "@a": {
+                                templateUrl: 'views/a/a1/index.a.html',
+                                controller: ['$log', '$scope', 'onExitCallBacks', function ($log, $scope, onExitCallBacks) {
+
+                                    $scope.mmenuRightConf = {
+                                        opts: {
+                                            slidingSubmenus: false,
+                                            onClick: {
+                                                close: true
+                                            },
+                                            offCanvas: {
+                                                "position": "right"
+                                            }
+                                        },
+                                        init: function (mmenuLeftApi) {
+                                            $scope.mmenuRightOpen = function () {
+                                                var $ele = mmenuLeftApi.element;
+                                                var api = $ele.data("mmenu");
+                                                var panels = $ele.find(" > div ");
+                                                api.openPanel($(panels.get(0)));
+                                                api.open();
+                                            };
+
+                                            $log.debug("--------------- doMmenu");
+                                            onExitCallBacks.push(function () {
+                                                $scope.mmenuLeftApi = mmenuLeftApi;
+                                                mmenuLeftApi.remove();
+                                                $log.debug("--------------- doMmenu remove");
+                                            });
+                                        }
+                                    };
+                                }]
+                            }
+                        }
+                    })
+
+                    .state("b", {
+                        url: "/b",
+                        views: {
+                            "@": {
+                                templateUrl: 'views/b/index.root.html',
+                                controller: ['$log', '$scope', function ($log, $scope) {
+                                    $log.debug("=---------------- b")
+                                }]
+                            }
+                        }
+                    })
+        }]);
+    </script>
+
+
+</head>
+
+<body>
+
+<div class="aaa mmenu-page" style="background-color: #93cbf9;border:1px solid red;">
+    <ul>
+        <li><a ui-sref="a">a</a></li>
+        <li><a ui-sref="a.a1">a.a1</a></li>
+        <li><a ui-sref="b">b</a></li>
+    </ul>
+    <div ui-view=""><!--
+    when access url "#/", here will insert template "views/a/index.root.html"
+    when access url "#/b", here will insert template "views/b/index.root.html"
+    --></div>
+</div>
+
+
+</body>
+</html>

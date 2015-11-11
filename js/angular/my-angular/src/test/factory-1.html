@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN" ng-app="myApp">
+<head>
+    <title>test factory</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../../bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="../../bower_components/angular/angular.js"></script>
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl1', ['$scope', '$log', 'myFac', function ($scope, $log, myFac) {
+            $log.log(myFac.a);
+            $scope.arr = myFac.a;
+
+            $scope.add = function () {
+                $scope.arr.push("a" + $scope.arr.length);
+            };
+            $scope.add();
+
+
+        }]);
+        app.controller('myCtrl2', ['$scope', 'myFac', function ($scope, myFac) {
+            $scope.arr = myFac.a;
+            $scope.add = function () {
+                var str = "";
+                for (var i = 0; i < $scope.arr.length; i++) {
+                    str += "a";
+                }
+                $scope.arr.push(str);
+            };
+            $scope.add();
+        }]);
+        app.factory('myFac', ['$log', '$window', function ($log, $window) {
+
+            if (typeof $window._i === 'undefined') {
+                $window._i = 100;
+            } else {
+                $window._i++;
+            }
+
+
+            $log.debug("myFac constructor is invoked " + new Date());
+            return {a: ["a" + $window._i, "a1"]};
+        }]);
+
+    </script>
+</head>
+<body>
+<div ng-controller="myCtrl1">
+    <button ng-click="add()">add</button>
+    {{arr}}
+</div>
+<div ng-controller="myCtrl2">
+    <button ng-click="add()">add</button>
+    {{arr}}
+</div>
+</body>
+</html>

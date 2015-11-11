@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="author" content="www.frebsite.nl"/>
+    <meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes"/>
+
+    <title>jQuery.mmenu demo</title>
+    <script type="text/javascript" src="../src/lib/jquery/jquery.min.js"></script>
+
+
+    <link type="text/css" rel="stylesheet" href="css/demo.css"/>
+
+    <link type="text/css" rel="stylesheet" href="../src/lib/jQuery.mmenu/css/jquery.mmenu.all.css"/>
+    <script type="text/javascript" src="../src/lib/jQuery.mmenu/js/jquery.mmenu.min.all.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+
+            $("#leftMenu").mmenu({
+                "offCanvas": {
+                    "zposition": "front"
+                },
+                "header": {
+                    "title": "Left Menu Header",
+                    "add": true,
+                    "update": true
+                },
+                "footer": {
+                    "add": true,
+                    "title": "Left Menu Footer"
+                }
+            });
+
+            $("#rightMenu").mmenu({
+                "offCanvas": {
+                    "zposition": "front",
+                    "position": "right"
+                },
+                "header": {
+                    "title": "Right Menu Header",
+                    "add": true,
+                    "update": true
+                },
+                "footer": {
+                    "add": true,
+                    "title": "Right Menu Footer"
+                }
+            });
+        });
+
+    </script>
+</head>
+<body ng-controller="myCtrl">
+<div id="page">
+    <div class="header">
+        <a href="#menu"></a>
+        Demo
+    </div>
+    <div class="content">
+        <a href="#leftMenu">
+            <button>Left</button>
+        </a>
+        <a href="#rightMenu">
+            <button>Right</button>
+        </a>
+    </div>
+
+</div>
+
+<nav id="leftMenu">
+    <ul>
+        <li><a href="#">Left</a></li>
+        <li><a href="#about">About us</a>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</nav>
+
+<nav id="rightMenu">
+    <ul>
+        <li><a href="#">right</a></li>
+        <li><a href="#about">About us</a>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</nav>
+</body>
+</html>

@@ -18,6 +18,7 @@
   "dependencies": {
     "jquery": "1.11.3",
     "jQuery.mmenu": "~5.3.4",
-    "angular": "~1.4.7"
+    "angular": "~1.4.7",
+    "angular-ui-router": "~0.2.15"
   }
 }

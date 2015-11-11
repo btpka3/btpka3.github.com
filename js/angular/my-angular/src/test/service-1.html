@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN" ng-app="myApp">
+<head>
+    <title>test service</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../../bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="../../bower_components/angular/angular.js"></script>
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl1', ['$scope', '$log', 'myService', function ($scope, $log, myService) {
+            $log.log(myService.a);
+            $scope.arr = myService.a;
+
+            $scope.add = function () {
+                $scope.arr.push("a" + $scope.arr.length);
+            };
+            $scope.add();
+
+
+        }]);
+        app.controller('myCtrl2', ['$scope', 'myService', function ($scope, myService) {
+            $scope.arr = myService.a;
+            $scope.add = function () {
+                var str = "";
+                for (var i = 0; i < $scope.arr.length; i++) {
+                    str += "a";
+                }
+                $scope.arr.push(str);
+            };
+            $scope.add();
+        }]);
+        app.service('myService', ['$log', function ($log) {
+            this.a = ["a0", "a1"];
+            $log.debug("myService constructor is invoked");
+        }]);
+
+    </script>
+</head>
+<body>
+<div ng-controller="myCtrl1">
+    <button ng-click="add()">add</button>
+    {{arr}}
+</div>
+<div ng-controller="myCtrl2">
+    <button ng-click="add()">add</button>
+    {{arr}}
+</div>
+</body>
+</html>
