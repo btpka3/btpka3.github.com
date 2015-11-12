@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>js var scope</title>
+
+    <script>
+        (function (t) {
+
+
+            console.log("1.", t);
+            var arr = [111];
+
+
+            if (true) {
+                setTimeout(function () {
+                    console.log("2.", t, arr);
+                    var t = 2;
+                    console.log("3.", t);
+                }, 1000);
+
+                var t = 3;
+                console.log("4.", t);
+
+                setTimeout(function () {
+                    console.log("5.", t, arr);
+                    var t = 4;
+                    console.log("6.", t);
+                }, 1000);
+            }
+            console.log("7.", t);
+
+            function a() {
+                console.log("8.", t);
+                var t = 5;
+                console.log("9.", t);
+            }
+
+            a();
+            console.log("10.", t);
+        })(1);
+    </script>
+</head>
+<body>
+
+
+</body>
+</html>
