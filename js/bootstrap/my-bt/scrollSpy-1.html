@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Bootstrap 附加导航（Affix）插件</title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <style type="text/css">
+        body {
+            position: relative;
+        }
+
+        #tab {
+            background-color: #fff;
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+
+        #tab > li.active {
+
+        }
+    </style>
+</head>
+<body data-spy="scroll">
+
+<ul id="tab" class="nav nav-pills nav-justified">
+    <li><a href="#a1" data-toggle="tab">a1</a></li>
+    <li><a href="#a5" data-toggle="tab">a5</a></li>
+    <li><a href="#a10" data-toggle="tab">a10</a></li>
+    <li><a href="#a15" data-toggle="tab">a15</a></li>
+</ul>
+
+<ol style="padding-top:100px;">
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li id="a1">aaa == a1</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li id="a5">aaa == a5</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li id="a10">aaa == a10</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li id="a15">aaa == a15</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li id="a20">aaa == a20</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+    <li>aaa</li>
+</ol>
+
+</body>
+</html> 
