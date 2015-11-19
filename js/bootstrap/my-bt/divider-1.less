@@ -1,0 +1,97 @@
+// with .nav .nav-justified
+.nav-my-tabs {
+  a {
+    color: inherit;
+  }
+  > li {
+    //display: block;
+    &.active {
+      border-bottom: 2px solid #EE124B;
+      color: #EE124B;
+    }
+  }
+  > li + li {
+
+    &:before {
+      content: "";
+      display: block;
+      position: absolute;
+      height: 50%;
+      top: 10px;
+      background: #dadada;
+      border: 1px solid red;
+      line-height: 20px;
+    }
+  }
+}
+
+// with .nav
+.nav-my-tabs1 {
+
+  a {
+    color: inherit;
+  }
+  > li {
+    display: table-cell;
+    width: 1%;
+    text-align: center;
+
+    &.active {
+      border-bottom: 2px solid #EE124B;
+      color: #EE124B;
+    }
+  }
+  > li + li {
+
+    &:before {
+      content: "";
+      display: block;
+      position: absolute;
+      height: 50%;
+      top: 10px;
+      background: #dadada;
+      border: 1px solid red;
+      line-height: 20px;
+    }
+  }
+}
+
+// with nothing
+.nav-my-tabs2 {
+
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: outside none none;
+
+  a {
+    position: relative;
+    display: block;
+    color: inherit;
+    padding: 10px 0;
+
+    &:hover, &:focus {
+      text-decoration: none;
+    }
+  }
+  > li {
+    position: relative;
+    display: table-cell;
+    width: 1%;
+    text-align: center;
+
+    &.active {
+      border-bottom: 2px solid #EE124B;
+      color: #EE124B;
+    }
+  }
+  > li + li:before {
+    content: "";
+    display: block;
+    position: absolute;
+    height: 50%;
+    top: 10px;
+    background: #dadada;
+    width: 1px;
+    line-height: 20px;
+  }
+}
