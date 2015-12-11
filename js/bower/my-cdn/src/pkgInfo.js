@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Created by zll on 15-11-22.
+ * 测试如何通过bower获取package信息
  */
 'use strict';
 

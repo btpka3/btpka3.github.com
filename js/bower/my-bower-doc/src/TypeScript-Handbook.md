@@ -194,7 +194,7 @@ function createSquare(config: SquareConfig): {color: string; area: number} {
 var mySquare = createSquare({color: "black"});
 ```
 
-### 函数类型
+### Function 类型
 
 接口除了可以描述JavaScript对象属性，还可以描述函数类型。
 
@@ -241,7 +241,7 @@ mySearch = function(src: string, sub: string) {
 注意：我们函数表达式省略了返回值类型，因为按照接口的约定，已经暗指它要返回 boolean 类型了。
 如果它内部返回了其他类型（比如数值型），则将会报错。
 
-### 数组类型
+### Array 类型
 
 同如何通过接口描述函数类型一样，我们也可以用接口来描述数组。
 数组类型有一个 `index` 类型来描述可以用来索引对象的类型，
@@ -270,16 +270,278 @@ interface Dictionary {
 ```
 
 
+### Class 类型
+
+#### 实现一个接口
+这是也是像其他编程语言（比如C#、Java）中最长用的一种方式。
+这种方式可以明确指明一个类必须要满足的结构约定。
+
+```js
+interface ClockInterface {
+    currentTime: Date;
+}
+
+class Clock implements ClockInterface  {
+    currentTime: Date;
+    constructor(h: number, m: number) { }
+}
+```
+
+你可以约定接口中要实现的方法，就像下面例子中的 `setTime` 函数：
+
+```js
+interface ClockInterface {
+    currentTime: Date;
+    setTime(d: Date);
+}
+
+class Clock implements ClockInterface  {
+    currentTime: Date;
+    setTime(d: Date) {
+        this.currentTime = d;
+    }
+    constructor(h: number, m: number) { }
+}
+```
+
+接口约束了类的公开部分，而不包含私有的部分。
+因此，你不可以用接口来类必须实现特定的私有结构。
 
 
+#### 类的静态部分与实例部分约束的差别
 
+当使用类和接口的时候，需要了解到——一个类包含了两种类型的成员：
+类的静态成员、类的实例的成员。如果你在接口中声明了一个构造函数的签名，
+并且尝试创建一个实现该接口的类时，将会报错：
 
+```js
+interface ClockInterface {
+    new (hour: number, minute: number);
+}
 
+class Clock implements ClockInterface  {
+    currentTime: Date;
+    constructor(h: number, m: number) { }
+}
+```
 
+这是因为当类实现接口时，只检查类的实例的成员。
+因为构造函数是位于类的静态成员中的，因此它不会被检查。
 
+如果你确定需要约束类的静态成员，你需要直接操作类。如下例所示：
 
+```js
+interface ClockStatic {
+    new (hour: number, minute: number);
+}
 
+class Clock  {
+    currentTime: Date;
+    constructor(h: number, m: number) { }
+}
 
+var cs: ClockStatic = Clock; // Clock 没有实现接口，但是变量cs通过声明是接口类型加以约束。
+var newClock = new cs(7, 30);
+```
+
+### 对接口进行扩展
+
+像类一样，接口也可以相互扩展。
+这会将一个接口的成员拷贝到另一个接口上，让你更自由的创建可重用的组件。
+
+```js
+
+interface Shape {
+    color: string;
+}
+
+interface Square extends Shape {
+    sideLength: number;
+}
+
+var square = <Square>{};
+square.color = "blue";
+square.sideLength = 10;
+```
+
+一个接口可以扩展多个接口， 从而将扩展的所有接口合并起来。
+
+```js
+interface Shape {
+    color: string;
+}
+
+interface PenStroke {
+    penWidth: number;
+}
+
+interface Square extends Shape, PenStroke {
+    sideLength: number;
+}
+
+var square = <Square>{};
+square.color = "blue";
+square.sideLength = 10;
+square.penWidth = 5.0;
+```
+
+### Hybrid 类型（混合类型）
+
+就像早前提到过的一样，TypeScript可以用来描述JavaScript真实世界中存在的各种类型。
+由于JavaScript天然的动态性和灵活性，有时候你可能会遇到一个对象就像上面多种类型的组合一样。
+
+比如，一个对象既是一个函数，又是一个对象（相比函数而言，多了一些额外属性）
+
+```js
+interface Counter {
+    (start: number): string;
+    interval: number;
+    reset(): void;
+}
+
+var c: Counter;
+c(10);
+c.reset();
+c.interval = 5.0;
+```
+
+当与第三方JavaScript类库互动时，你也许需要类似上面的例子那样完整描述相应类型的轮廓。
+
+## 类
+关于类，传统的JavaScript主要使用函数和基于原型链的继承来构建可重用的组件。
+这对那些更熟悉面向对象方法的编程人员而言，会更显得笨拙一点。
+面向对象方法，通常是指由类来继承功能性，而对象都是从类上构建起来的。
+从下一代JavaScript——ECMAScript 6 开始，
+JavaScript程序员将能够使用这种面向对象、基于类的方式来构建他们的应用。
+在TypeScript中，我们允许开发者现在就使用这些技术，并能够编译出可运行于目前绝大多数主流浏览器和平台的JavaScript代码，
+而不用等到这些浏览器、平台开始支持 ECMAScript 6。
+
+### 类
+让我们看一个基于类的简单例子：
+
+```js
+class Greeter {
+    greeting: string;
+    constructor(message: string) {
+        this.greeting = message;
+    }
+    greet() {
+        return "Hello, " + this.greeting;
+    }
+}
+
+var greeter = new Greeter("world");
+```
+
+如果你熟悉 C# 或者 Java，上面的语法会看起来非常熟悉。
+我们声明了一个新的类 `Greeter`， 它有3个成员：
+一个名称是 `greeting` 的属性、
+一个构造函数 和一个名称为 `greet` 的函数。
+
+你将注意到，在类的声明中，如果要引用类的成员，我们需要在其前面添加 `this.` 限定。
+这被记述为 成员访问。
+
+上例的最后一行，我们通过 `new` 关键字创建了一个 Greeter 类的实例对象。
+这会创建一个 Greeter 轮廓的新对象，并用 `constructor` 来初始化它。
+
+### 继承
+在TypeScript中，我们可以使用常见的面向对象模式。
+当然，在基于类的编程中，一个最基础的模式就是通过继承的方式扩展一个既有的类。
+
+举例：
+
+```js
+class Animal {
+    name:string;
+    constructor(theName: string) { this.name = theName; }
+    move(meters: number = 0) {
+        alert(this.name + " moved " + meters + "m.");
+    }
+}
+
+class Snake extends Animal {
+    constructor(name: string) { super(name); }
+    move(meters = 5) {
+        alert("Slithering...");
+        super.move(meters);
+    }
+}
+
+class Horse extends Animal {
+    constructor(name: string) { super(name); }
+    move(meters = 45) {
+        alert("Galloping...");
+        super.move(meters);
+    }
+}
+
+var sam = new Snake("Sammy the Python");
+var tom: Animal = new Horse("Tommy the Palomino");
+
+sam.move();
+tom.move(34);
+```
+
+这个例子覆盖了TypeScript中关于继承的相当多的知识，而这在其他编程语言中很常见。
+这里，我们可以看到：通过使用 `extends` 关键字创建了子类。
+两个子类 `Horse` 和 `Snake` 继承了父类 `Animal` 并能够访问自己相应的特性。
+
+该例子也展示了如何重写父类中的方法。在这里 `Horse` 和 `Snake` 都新创建了一个
+覆盖 `Animal` 的 `move`方法的一个新的 `move` 方法。
+
+### Private/Public 修饰符
+
+#### 默认使用 public
+
+你可能注意到，上例中我们甚至不需要使用 `public` 来要求类的成员可访问。
+比如，在 C# 语言中，需要每个类成员明确地使用 `public`，它们才能被外部直接访问。
+而在 TypeScript 中，类成员默认就是 public 的。
+
+但你仍然可以明确指明成员是 private 的。因此，你仍然可以控制哪些类成员可以外部直接访问。
+我们可以把上例中的 `Animal` 类如下重新定义：
+
+```js
+class Animal {
+    private name:string;
+    constructor(theName: string) { this.name = theName; }
+    move(meters: number) {
+        alert(this.name + " moved " + meters + "m.");
+    }
+}
+```
+
+#### 理解 private
+
+TypeScript 是一个结构类型系统。当我们比较两个不同的类型，无论它们来自何处，
+如果每个成员的类型都相互是兼容的，此时，我们就说这两个类型是兼容的。
+
+但是当参与比较的类型有 `private` 成员，我们会做不同的处理。
+如果两个类型相比较，其中一个有私有成员，则另外一个所拥有的私有成员必须和第一个来自同一处声明时，才认为两者兼容。
+
+如下例所示：
+
+```js
+class Animal {
+    private name:string;
+    constructor(theName: string) { this.name = theName; }
+}
+
+class Rhino extends Animal {
+	constructor() { super("Rhino"); }
+}
+
+class Employee {
+    private name:string;
+    constructor(theName: string) { this.name = theName; }
+}
+
+var animal = new Animal("Goat");
+var rhino = new Rhino();
+var employee = new Employee("Bob");
+
+animal = rhino;
+animal = employee; // 错误： Animal 和 Employee 不兼容
+```
 
 
 
