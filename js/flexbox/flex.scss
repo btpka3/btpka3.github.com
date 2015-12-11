@@ -1,0 +1,228 @@
+// http://sassmeister.com/
+// https://developer.mozilla.org/en-US/docs/Web/CSS/Mozilla_Extensions
+// http://qooxdoo.org/docs/general/webkit_css_styles
+// http://webdesign.about.com/od/css/a/css-extensions_4.htm
+// http://ued.ctrip.com/webkitcss/prop/flex-direction.html
+// https://msdn.microsoft.com/en-us/library/hh673531%28v=vs.85%29.aspx
+// https://msdn.microsoft.com/en-us/library/windows/apps/hh453474.aspx
+
+/*
+Mozilla uses -moz-,
+Opera -o-
+Safari/WebKit uses -webkit-
+*/
+
+// --------------------------------- flexbox 2009
+/*
+
+|Property           |Values                                                         |Initial      |Applies to                       |Inh. |Percentages  |Media  |
+|-------------------|---------------------------------------------------------------|-------------|---------------------------------|-----|-------------|-------|
+|box-orient         |horizontal \| vertical \| inline-axis \| block-axis \| inherit |inline-axis  |box elements                     |no   |no           |visual |
+|box-pack           |start \| end \| center \| justify                              |start        |box elements                     |no   |no           |visual |
+|box-align          |start \| end \| center \| baseline \| stretch                  |stretch      |box elements                     |no   |no           |visual |
+|box-direction      |normal \| reverse \| inherit                                   |normal       |box elements                     |no   |no           |visual |
+|box-lines          |single \| multiple                                             |single       |box elements                     |no   |no           |visual |
+|box-ordinal-group  |\<integer\>                                                    |1            |children of box elements         |no   |no           |visual |
+|box-flex           |\<number\>                                                     |0.0          |in-flow children of box elements |no   |no           |visual |
+|box-flex-group     |\<integer\>                                                    |1            |in-flow children of box elements |no   |no           |visual |
+*/
+
+// ------------ box container
+
+@mixin display-box() {
+  display: -moz-box; // Firefox
+  display: -webkit-box; //Safari,Opera,Chrome
+  display: box;
+}
+
+@mixin box-orient($v) {
+  -moz-box-orient: $v;
+  -webkit-box-orient: $v;
+  box-orient: $v;
+}
+
+@mixin box-pack($v) {
+  -moz-box-pack: $v;
+  -webkit-box-pack: $v;
+  box-pack: $v;
+}
+
+@mixin box-align($v) {
+  -moz-box-align: $v;
+  -webkit-box-align: $v;
+  box-align: $v;
+}
+
+@mixin box-direction($v) {
+  -moz-box-direction: $v;
+  -webkit-box-direction: $v;
+  box-direction: $v;
+}
+
+@mixin box-lines($v) {
+  -webkit-box-lines: $v;
+  box-lines: $v;
+}
+
+// ------------ children of box container
+@mixin box-ordinal-groups($v) {
+  -moz-box-ordinal-group: $v;
+  -webkit-box-ordinal-group: $v;
+  box-ordinal-group: $v;
+}
+
+@mixin box-flex($v) {
+  -moz-box-flex: $v;
+  -webkit-box-flex: $v;
+  box-flex: $v;
+}
+
+@mixin box-flex-group($v) {
+  -webkit-box-flex-group: $v;
+  box-flex-group: $v;
+}
+
+// --------------------------------- flexbox 2015
+
+/*
+|Name               |Value                                                                        |Initial                    |Applies to                                                       |Inh.                       |%ages                                            |Media                      |Animatable                 |Canonical order  |Computed value                                                       |
+|-------------------|-----------------------------------------------------------------------------|---------------------------|-----------------------------------------------------------------|---------------------------|-------------------------------------------------|---------------------------|---------------------------|-----------------|---------------------------------------------------------------------|
+|flex-direction     |row \| row-reverse \| column \| column-reverse                               |row                        |flex containers                                                  |no                         |n/a                                              |visual                     |no                         |                 |specified value                                                      |
+|flex-wrap          |nowrap \| wrap \| wrap-reverse                                               |nowrap                     |flex containers                                                  |no                         |n/a                                              |visual                     |no                         |                 |specified value                                                      |
+|flex-flow          |\<flex-direction\> \|\| \<flex-wrap\>                                        |see individual properties  |see individual properties                                        |see individual properties  |see individual properties                        |see individual properties  |see individual properties  |                 |see individual properties                                            |
+|justify-content    |flex-start \| flex-end \| center \| space-between \| space-around            |flex-start                 |flex containers                                                  |no                         |n/a                                              |visual                     |no                         |                 |specified value                                                      |
+|align-items        |flex-start \| flex-end \| center \| baseline \| stretch                      |stretch                    |flex containers                                                  |no                         |n/a                                              |visual                     |no                         |                 |specified value                                                      |
+|align-content      |flex-start \| flex-end \| center \| space-between \| space-around \| stretch |stretch                    |multi-line flex containers                                       |no                         |n/a                                              |visual                     |no                         |                 |specified value                                                      |
+|order              |\<integer\>                                                                  |0                          |flex items and absolutely-positioned children of flex containers |no                         |n/a                                              |visual                     |yes                        |                 |specified value                                                      |
+|flex-grow          |\<number\>                                                                   |0                          |flex items                                                       |no                         |n/a                                              |visual                     |yes                        |                 |specified value                                                      |
+|flex-shrink        |\<number\>                                                                   |1                          |flex items                                                       |no                         |n/a                                              |visual                     |yes                        |                 |specified value                                                      |
+|flex-basis         |content \| \<'width'\>                                                       |auto                       |flex items                                                       |no                         |relative to the flex container’s inner main size |visual                     |as width                   |                 |as specified, with lengths made absolute                             |
+|flex               |none \| [ \<'flex-grow'\> \<'flex-shrink'\>? \|\| <'flex-basis'> ]           |see individual properties  |flex items                                                       |see individual properties  |n/a                                              |visual                     |no                         |per grammar      |see individual properties                                            |
+|align-self         |auto \| flex-start \| flex-end \| center \| baseline \| stretch              |auto                       |flex items                                                       |no                         |n/a                                              |visual                     |no                         |                 |auto computes to parent’s align-items value; otherwise as specified  |
+*/
+
+// ------------ box container
+@mixin display-flex() {
+  @include display-box();
+  display: -ms-flexbox;
+  display: $v;
+}
+
+@mixin flex-direction($v) {
+  @if $v == "row" {
+    @include box-orient(horizontal);
+    @include box-direction(normal);
+  }
+  @if $v == "row-reverse" {
+    @include box-orient(horizontal);
+    @include box-direction(reverse);
+  }
+  @if $v == "column" {
+    @include box-orient(vertical);
+    @include box-direction(normal);
+  }
+  @if $v == "column-reverse" {
+    @include box-orient(vertical);
+    @include box-direction(reverse);
+  }
+  -webkit-flex-direction: $v;
+  -ms-flex-direction: $v;
+  flex-direction: $v;
+}
+
+@mixin flex-wrap($v) {
+  @if $v == "nowrap" {
+    @include box-lines(single);
+    -ms-flex-wrap: none;
+  } @else {
+    @include box-lines(multiple);
+    -ms-flex-wrap: $v;
+  }
+  -webkit-flex-wrap: $v;
+  flex-wrap: $v;
+}
+
+//@mixin flex-flow($flex-direction,$flex-wrap) {
+//  @include flex-direction($flex-direction);
+//  @include flex-wrap($flex-wrap);
+//}
+
+@mixin justify-content($v) {
+  @if $v == "flex-start" {
+    @include box-pack(start);
+    -ms-flex-pack: start;
+  } @else if $v == "flex-end" {
+    @include box-pack(end);
+    -ms-flex-pack: end;
+  } @else if $v == "center" {
+    @include box-pack(center);
+    -ms-flex-pack: center;
+  } @else {
+    @include box-pack(justify);
+    -ms-flex-pack: justify;
+  }
+
+  -webkit-justify-content: $v;
+  justify-content: $v;
+}
+
+@mixin align-items($v) {
+  @if $v == "flex-start" {
+    @include box-align(start)
+  } @else if $v == "flex-end" {
+    @include box-align(end)
+  } @else {
+    @include box-align($v)
+  }
+
+  @if $v == "flex-start" {
+    -ms-flex-align: start;
+  } @else if $v == "flex-end" {
+    -ms-flex-align: end;
+  } @else {
+    -ms-flex-align: $v;
+  }
+  -webkit-align-items: $v;
+  align-items: $v;
+}
+
+@mixin align-content($v) {
+  -webkit-align-content: $v;
+  align-content: $v;
+}
+
+// ------------ children of box container
+@mixin order($v) {
+  @include box-ordinal-group($v);
+  order: $v;
+}
+
+@mixin flex-grow($v) {
+  @include box-flex($v);
+
+  -webkit-flex-grow: $v;
+  flex-grow: $v;
+}
+
+@mixin flex-shrink($v) {
+  -webkit-flex-shrink: $v;
+  flex-shrink: $v;
+}
+
+@mixin flex-basis($v) {
+  -webkit-flex-basis: $v;
+  flex-basis: $v;
+}
+
+@mixin flex($v) {
+  @debug "DO NOT USE @mixin flex"; // FIXME
+  -webkit-flex: $v;
+  -ms-flex: $v;
+  flex: $v;
+}
+
+@mixin align-self($v) {
+  -webkit-align-self: $v;
+  align-self: $v;
+}
+
