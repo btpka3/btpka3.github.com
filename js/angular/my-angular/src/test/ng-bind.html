@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN" ng-app="myApp">
+<head>
+    <title>test service</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="http://cdn.bootcss.com/angular.js/1.3.15/angular.min.js"></script>
+    <script src="http://cdn.bootcss.com/angular.js/1.3.15/angular-sanitize.min.js"></script>
+    <script>
+        /*
+         ng-bind: 当作字符串显示，特殊字符会html转义
+         ng-bind-html: 当作html显示，但会移除按照白名单，移除不安全的内容
+         ng-bind-template : 当作字符串，但是字符串中允许 {{varName}}  这样的变量
+         */
+        var app = angular.module('myApp', ['ngSanitize']);
+        app.controller('myCtrl1', ['$scope', '$log', '$templateCache', function ($scope, $log, $templateCache) {
+            $scope.myStr = '11 <img onload="console.log(\'img loaded\')" src="http://developer.qiniu.com/resource/gogopher.jpg?imageView2/1/w/100/h/100" /> -- <img ng-src="http://developer.qiniu.com/resource/gogopher.jpg?imageView2/1/w/100/h/100" />aa';
+            $scope.cacheKey = "__myStr";
+            $templateCache.put($scope.cacheKey, $scope.myStr);
+            $scope.d1 = new Date();
+        }]);
+    </script>
+</head>
+<body>
+<div ng-controller="myCtrl1">
+
+    <div><h2>ng-bind</h2> : <span ng-bind="myStr"></span></div>
+
+    <div><h2>ng-bind-html</h2> : <span ng-bind-html="myStr"></span></div>
+
+    <div><h2>ng-bind-template</h2> : <span ng-bind-template="myStr {{myStr}} <div ng-bind='d1' ></div>"></span></div>
+
+    <div><h2>ng-bind-include</h2> : <span ng-include="cacheKey"></span></div>
+</div>
+</body>
+</html>

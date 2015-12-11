@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head lang="zh-CN">
+    <meta charset="UTF-8">
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+    <script>
+        // http://api.jquery.com/jQuery.cssHooks/
+
+        $(function () {
+
+            if (!$.cssHooks) {
+                throw( new Error("jQuery 1.4.3 or above is required for this plugin to work") );
+            }
+            $.cssHooks["display"] = {
+//                get: function (elem, computed, extra) {
+//                },
+                set: function (elem, value) {
+                    console.log(1, elem);
+                    console.log(2, $(elem));
+
+                    if ("flex" !== value && "inline-flex" !== value) {
+                        elem.style["display"] = value;
+                        return;
+                    }
+                    var values;
+                    if ("flex" === value) {
+                        values = ["-moz-box", "-webkit-box", "box", "-webkit-flex", "flex"];
+                    }
+                    if ("inline-flex" === value) {
+                        values = ["-moz-box", "-webkit-box", "box", "-webkit-inline-flex", "inline-flex"];
+                    }
+
+                    $.each(values, function (i, value) {
+                        elem.style["display"] = value;
+                        $("#txt").append("after : " + value + " = " + elem.style["display"] + "<br/>");
+                    });
+
+                }
+            };
+            $("#a").css("display", "flex");
+            $("#txt").append("finally : style = " + $("#a").attr("style") + "<br/>");
+            $("#txt").append("get : display = " + $("#a").css("display") + "<br/>");
+        });
+    </script>
+</head>
+<body>
+
+<div id="a">
+    aaa
+</div>
+
+<div id="txt"></div>
+</body>
+</html>
+

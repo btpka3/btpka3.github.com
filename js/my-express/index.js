@@ -15,6 +15,10 @@ app.get('/hi', function (req, res) {
   res.send('Hello World!');
 });
 
+app.post('/form', function (req, res) {
+  res.send('Hello World! form');
+});
+
 app.use('/img', express.static('src/assets'));
 
 ////////////////////////////////////////////// views

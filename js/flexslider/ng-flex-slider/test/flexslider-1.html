@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>flexslider test</title>
+    <link rel="stylesheet" type="text/css" href="../bower_components/flexslider/flexslider.css"/>
+    <style>
+        .flexslider {
+            width: 500px;
+        }
+    </style>
+    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="../bower_components/flexslider/jquery.flexslider.js"></script>
+    <script>
+        $(function () {
+            $('.flexslider').flexslider({
+                animation: "slide",
+                touch: true
+            });
+        });
+    </script>
+</head>
+<body>
+
+<div class="flexslider">
+    <ul class="slides">
+        <li>
+            <img src="http://flexslider.woothemes.com/images/kitchen_adventurer_cheesecake_brownie.jpg"/>
+        </li>
+        <li>
+            <img src="http://flexslider.woothemes.com/images/kitchen_adventurer_lemon.jpg"/>
+        </li>
+        <li>
+            <img src="http://flexslider.woothemes.com/images/kitchen_adventurer_donut.jpg"/>
+        </li>
+        <li>
+            <img src="http://flexslider.woothemes.com/images/kitchen_adventurer_caramel.jpg"/>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

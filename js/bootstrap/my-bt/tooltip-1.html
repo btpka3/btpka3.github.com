@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>tooltip</title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <style>
+
+        * {
+            box-sizing: content-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-image: url("bg.jpg");
+            background-size: cover;
+        }
+
+        .b {
+            position: relative;
+            top: 100px;
+            left: 100px;
+            height: 300px;
+            width: 600px;
+            background-color: RGBA(0, 0, 0, 0.2);
+            box-shadow: 5px 5px 5px #222;
+            /*opacity: 0.3;*/
+            border-radius: 4px;
+            color: #FFF;
+
+        }
+
+        .b .tooltip {
+            opacity: 1 !important;
+        }
+        .b .tooltip-inner {
+            max-width: 400px !important;
+            width:400px !important;
+            height:150px;
+            text-align: left !important;
+        }
+
+        .c .tooltip {
+            opacity: 1 !important;
+        }
+        .c .tooltip-inner{
+            width:250px;
+            height:100px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="b">
+    <div class="tooltip left" role="tooltip">
+        <div class="tooltip-arrow"></div>
+        <div class="tooltip-inner">
+            中文提示
+            Tooltip on the left
+        </div>
+    </div>
+
+</div>
+
+<div class="c">
+    <div class="tooltip left" role="tooltip">
+        <div class="tooltip-arrow"></div>
+        <div class="tooltip-inner">
+            中文提示
+            Tooltip on the left
+        </div>
+    </div>
+
+</div>
+
+    <div class="tooltip left" role="tooltip">
+        <div class="tooltip-arrow"></div>
+        <div class="tooltip-inner">
+            中文提示
+            Tooltip on the left
+        </div>
+    </div>
+</body>
+</html>

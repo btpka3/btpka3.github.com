@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="author" content="www.frebsite.nl"/>
+    <meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes"/>
+
+    <title>jQuery.mmenu demo</title>
+    <script type="text/javascript" src="../src/lib/jquery/jquery.min.js"></script>
+
+
+    <script type="text/javascript">
+        $(function () {
+
+            var a = $("p");
+            a.remove();
+            console.log(a.length);
+
+            a.empty();
+
+            console.log(a.length,a, a instanceof Array);
+
+            a.length=0;
+            console.log(a.length,a, a instanceof Array)
+
+            var b = $();
+            console.log(b.length,b);
+
+
+        });
+
+    </script>
+</head>
+<body ng-controller="myCtrl">
+<p>Hello</p> how are <p>you?</p>
+</body>
+</html>
