@@ -80,7 +80,7 @@ public class TestSocksProxy {
         System.out.println(respStr);
     }
 
-    private static class PlainConnectionSocketFactoryEx extends PlainConnectionSocketFactory {
+    public static class PlainConnectionSocketFactoryEx extends PlainConnectionSocketFactory {
         private Proxy proxy;
 
         public PlainConnectionSocketFactoryEx() {
