@@ -1,34 +1,40 @@
 package me.test;
 
-import java.io.IOException;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.concurrent.ExecutionException;
-
 import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
 import org.elasticsearch.action.admin.indices.mapping.put.PutMappingResponse;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.index.IndexRequest.OpType;
+import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.search.SearchType;
+import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.io.stream.OutputStreamStreamOutput;
 import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.elasticsearch.common.unit.TimeValue;
+import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.index.query.FilterBuilders;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
+
+import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 public class EsTest {
 
     private static final String index = "lizi";
     private static final String type = "item";
 
-    @SuppressWarnings({ "resource" })
+    @SuppressWarnings({"resource"})
     public static void main(String[] args) throws InterruptedException, ExecutionException {
 
         // 创建Es的Client对象
@@ -46,9 +52,16 @@ public class EsTest {
             recreateIndex(client);
             doIndex(client);
 
+            doCreate(client);
+
+
             // 搜索全部
             searchAll(client); // 第一次是无法立即查出结果的，毕竟不是真正的实时系统
             Thread.sleep(1000 * 1);
+
+            doUpdate(client);
+            Thread.sleep(1000 * 1);
+
             searchAll(client); // 一秒钟之后就可以查询到了
 
             //            // 关键词查询
@@ -68,6 +81,7 @@ public class EsTest {
 
         } catch (Exception e) {
             System.out.println("00000 " + e);
+            e.printStackTrace();
         } finally {
             if (client != null) {
                 client.close();
@@ -84,7 +98,12 @@ public class EsTest {
                     .indices()
                     .delete(new DeleteIndexRequest(index))
                     .actionGet();
-            System.out.println("delete index : " + deleteIndexResponse);
+
+            if (!deleteIndexResponse.isAcknowledged()) {
+                System.out.println("delete index : error, index not existed" + deleteIndexResponse);
+            } else {
+                System.out.println("delete index : " + deleteIndexResponse);
+            }
         }
 
         // 创建索引
@@ -93,65 +112,73 @@ public class EsTest {
                 .prepareCreate(index)
                 .execute()
                 .actionGet();
-        System.out.println("create index : " + createIndexResponse);
+        if (!createIndexResponse.isAcknowledged()) {
+            System.out.println("create index : error : " + createIndexResponse);
+        } else {
+            System.out.println("create index : " + createIndexResponse);
+        }
 
-        // 明确指明索引
-        //        String mappingJsonStr =  XContentFactory.jsonBuilder()
-        //                .startObject()
-        //                    .startObject("general")
-        //                        .startObject("properties")
-        //                            .startObject("message")
-        //                                .field("type", "string")
-        //                                .field("index", "not_analyzed")
-        //                            .endObject()
-        //                            .startObject("source")
-        //                                .field("type", "string")
-        //                            .endObject()
-        //                        .endObject()
-        //                    .endObject()
-        //                .endObject()
-        //                .string();
+//        // 明确指明索引 ERROR
+//                String mappingJsonStr0 =  XContentFactory.jsonBuilder()
+//                        .startObject()
+//                        .startArray("dynamic_templates")
+//                        .value(XContentFactory.jsonBuilder().startObject("props_tpl")
+//                                .field("path_match", "props.*")
+//                                .field("index", "{dynamic_type}")
+//                                .field("index", "not_analyzed")
+//                                .endObject().map())
+//                        .endArray()
+//                        .endObject()
+//                        .string();
 
         // 请使用上述方法或者更合理的方法创建Json字符串
         String mappingJsonStr = "" +
                 "{" +
-                "    \"dynamic_templates\": {" +
-                "        \"props_tpl\" : {" +
-                "            \"path_match\":\"props.*\"," +
-                "            \"mapping\": {" +
-                "                \"type\": \"{dynamic_type}\"," +
-                "                \"index\": \"{not_analyzed}\"" +
-                "            }" +
-                "        }" +
-                "    }," +
-                "    \"properties\": {" +
-                "        \"title\" : {" +
-                "            \"type\":\"string\"," +
-                "            \"index\": \"analyzed\"," +
-                "            \"analyzer\": \"standard\"" +
-                "        }," +
-                "        \"origin\" : {" +
-                "            \"type\":\"string\"," +
-                "            \"index\": \"analyzed\"," +
-                "            \"analyzer\": \"standard\"" +
-                "        }," +
-                "        \"description\" : {" +
-                "            \"type\":\"string\"," +
-                "            \"index\": \"analyzed\"," +
-                "            \"analyzer\": \"standard\"" +
-                "        }," +
-                "        \"sales_count\" : {" +
-                "            \"type\":\"long\"" +
-                "        }," +
-                "        \"price\" : {" +
-                "            \"type\":\"long\"" +
-                "        }" +
-                "    }" +
+                "       \"dynamic_templates\": [{" +
+                "           \"props_tpl\" : {" +
+                "               \"path_match\":\"props.*\"," +
+                "               \"mapping\": {" +
+                "                   \"type\": \"{dynamic_type}\"," +
+                "                   \"index\": \"not_analyzed\"" +
+                "               }" +
+                "           }" +
+                "       }]," +
+                "       \"properties\": {" +
+                "           \"_all\" : {" +
+                "               \"type\":\"string\"," +
+                "               \"index\": \"analyzed\"," +
+                "               \"analyzer\": \"standard\"" +
+                "           }," +
+                "           \"title\" : {" +
+                "               \"type\":\"string\"," +
+                "               \"index\": \"analyzed\"," +
+                "               \"analyzer\": \"standard\"" +
+                "           }," +
+                "           \"origin\" : {" +
+                "               \"type\":\"string\"," +
+                "               \"index\": \"analyzed\"," +
+                "               \"analyzer\": \"standard\"" +
+                "           }," +
+                "           \"description\" : {" +
+                "               \"type\":\"string\"," +
+                "               \"index\": \"analyzed\"," +
+                "               \"analyzer\": \"standard\"" +
+                "           }," +
+                "           \"sales_count\" : {" +
+                "               \"type\":\"long\"" +
+                "           }," +
+                "           \"price\" : {" +
+                "               \"type\":\"long\"" +
+                "           }" +
+                "       }" +
                 "}";
+        System.out.println("=======================\n"+mappingJsonStr);
+
+
         PutMappingResponse putMappingResponse = client.admin()
                 .indices()
                 .preparePutMapping(index)
-                .setType(index)
+                .setType(type)
                 .setSource(mappingJsonStr)
                 .execute()
                 .actionGet();
@@ -160,7 +187,7 @@ public class EsTest {
     }
 
     // 索引要搜索的文档
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({"rawtypes", "unchecked"})
     private static void doIndex(final Client client) {
 
         Map s11 = new LinkedHashMap();
@@ -195,17 +222,17 @@ public class EsTest {
         props.put("尺寸", "180*200cm");
         props.put("季节", "秋季");
         s21.put("props", props);
-
-        Map s22 = new LinkedHashMap();
-        s22.put("title", "SKINFOOD思亲肤番茄西红柿面霜40g");
-        s22.put("origin", "美国");
-        s22.put("description", "跳楼价，最后一天啦");
-        s22.put("sales_count", 777);
-        s22.put("price", 8800);
-        props = new LinkedHashMap();
-        props.put("尺寸", "200*220cm");
-        props.put("季节", "冬季");
-        s22.put("props", props);
+//
+//        Map s22 = new LinkedHashMap();
+//        s22.put("title", "SKINFOOD思亲肤番茄西红柿面霜40g");
+//        s22.put("origin", "美国");
+//        s22.put("description", "跳楼价，最后一天啦");
+//        s22.put("sales_count", 777);
+//        s22.put("price", 8800);
+//        props = new LinkedHashMap();
+//        props.put("尺寸", "200*220cm");
+//        props.put("季节", "冬季");
+//        s22.put("props", props);
 
         // 批量索引文件
 
@@ -213,7 +240,7 @@ public class EsTest {
                 .add(client.prepareIndex(index, type).setId("11").setSource(s11).setOpType(OpType.INDEX).request())
                 .add(client.prepareIndex(index, type).setId("12").setSource(s12).setOpType(OpType.INDEX).request())
                 .add(client.prepareIndex(index, type).setId("21").setSource(s21).setOpType(OpType.INDEX).request())
-                .add(client.prepareIndex(index, type).setId("22").setSource(s22).setOpType(OpType.INDEX).request())
+                //.add(client.prepareIndex(index, type).setId("22").setSource(s22).setOpType(OpType.INDEX).request())
                 .execute()
                 .actionGet();
 
@@ -225,16 +252,103 @@ public class EsTest {
 
     }
 
+    // create / index
+    private static void doCreate(final Client client) throws IOException {
+
+        Map s22 = new LinkedHashMap();
+        s22.put("title", "SKINFOOD思亲肤番茄西红柿面霜40g");
+        s22.put("origin", "美国");
+        s22.put("description", "跳楼价，最后一天啦");
+        s22.put("sales_count", 777);
+        s22.put("price", 8800);
+        Map props = new LinkedHashMap();
+        props.put("尺寸", "200*220cm");
+        props.put("季节", "冬季");
+        s22.put("props", props);
+
+        IndexResponse indexResponse = client.prepareIndex()
+                .setIndex(index)
+                .setType(type)
+                .setId("22")
+                .setSource(s22)
+                .execute()
+                .actionGet();
+        if (indexResponse.isCreated()) {
+            System.err.println("index docs single [ERROR] : " + indexResponse);
+            //indexResponse.writeTo(new OutputStreamStreamOutput(System.out));
+        } else {
+            System.out.println("index docs single : " + indexResponse);
+        }
+
+    }
+
+    // partial update
+    private static void doUpdate(final Client client) throws IOException {
+
+        SearchResponse response = client.prepareSearch(index)
+                .setQuery(QueryBuilders.termQuery("季节", "冬季"))
+                .setSearchType(SearchType.SCAN)
+                .setScroll(new TimeValue(60000))
+                .setSize(100)
+                .setExplain(true)
+                .execute()
+                .actionGet();
+        System.out.println("doUpdate : found : " + response.getHits().totalHits());
+        while (true) {
+
+            for (SearchHit hit : response.getHits().getHits()) {
+                //Handle the hit...
+
+                Map updateMap = new LinkedHashMap();
+                System.out.println("doUpdate : id="+hit.getId()+" : description = " + hit.getSource().get("description"));
+                updateMap.put("description", hit.getSource().get("description") + "~~~!!!");
+
+                UpdateResponse updateResponse = client.prepareUpdate()
+                        .setIndex(index)
+                        .setType(type)
+                        .setId(hit.getId())
+                        .setDoc(updateMap)
+                        .execute()
+                        .actionGet();
+                System.out.println("doUpdate : updated : " + updateResponse);
+            }
+            response = client.prepareSearchScroll(response.getScrollId()).setScroll(new TimeValue(600000)).execute().actionGet();
+            //Break condition: No hits are returned
+            if (response.getHits().getHits().length == 0) {
+                break;
+            }
+        }
+    }
+
     // 查询所有
     private static void searchAll(Client client) {
 
         SearchResponse response = client.prepareSearch(index)
                 .setQuery(QueryBuilders.matchAllQuery())
+                .setSearchType(SearchType.SCAN)
+                .setScroll(new TimeValue(60000))
+                .setSize(100)
                 .setExplain(true)
                 .execute()
                 .actionGet();
 
         System.out.println("searchAll : " + response);
+
+        if (response.getHits().totalHits() < 0) {
+            System.out.println("searchAll : date not found : " + response);
+        } else {
+            while (true) {
+                for (SearchHit hit : response.getHits().getHits()) {
+                    //Handle the hit...
+                    System.out.println("============" + hit.getSource());
+                }
+                response = client.prepareSearchScroll(response.getScrollId()).setScroll(new TimeValue(600000)).execute().actionGet();
+                //Break condition: No hits are returned
+                if (response.getHits().getHits().length == 0) {
+                    break;
+                }
+            }
+        }
     }
 
     // 关键词查询
