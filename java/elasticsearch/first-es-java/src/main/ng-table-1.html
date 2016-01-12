@@ -1,0 +1,240 @@
+<!doctype html>
+<html ng-app="aaa">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+    <script src="http://cdn.bootcss.com/angular.js/1.3.15/angular.js"></script>
+    <script src="https://raw.githubusercontent.com/mongodb/js-bson/master/browser_build/bson.js"></script>
+    <style>
+        .selected {
+            color: red;
+        }
+    </style>
+    <script>
+        angular.module('aaa', []);
+
+
+        var aaa = angular.module('aaa');
+
+        aaa.controller('MyCtrl', ['$scope', function ($scope) {
+            var bsonImpl = bson();
+            console.log(new bsonImpl.ObjectID().toString());
+
+            // 模拟从后台API Ajax获取的数据
+            $scope.specs = [{
+                propId: new bsonImpl.ObjectID().toString(),
+                propName: "颜色分类",
+                values: [{
+                    propValueId: new bsonImpl.ObjectID().toString(),
+                    propValueName: "乳白色"
+                }, {
+                    propValueId: new bsonImpl.ObjectID().toString(),
+                    propValueName: "白色"
+                }]
+            }, {
+                propId: new bsonImpl.ObjectID().toString(),
+                propName: "尺寸",
+                values: [{
+                    propValueId: new bsonImpl.ObjectID().toString(),
+                    propValueName: "欧码"
+                }, {
+                    propValueId: new bsonImpl.ObjectID().toString(),
+                    propValueName: "均码"
+                }, {
+                    propValueId: new bsonImpl.ObjectID().toString(),
+                    propValueName: "中国码"
+                }]
+            }, {
+                propId: new bsonImpl.ObjectID().toString(),
+                propName: "服务",
+                values: [{
+                    propValueId: new bsonImpl.ObjectID().toString(),
+                    propValueName: "正品保证"
+                }, {
+                    propValueId: new bsonImpl.ObjectID().toString(),
+                    propValueName: "7天退货"
+                }]
+            }];
+
+            /*
+             * [{
+             *      skuId: new bsonImpl.ObjectID().toString(),
+             *      order: 0,               // 画面上显示的顺序
+             *      specs: [{
+             *        propId        : "",
+             *        propName      : "",
+             *        propValueId   : "",
+             *        propValueName : ""
+             *      },{},{}]
+             *
+             *      price: 0
+             * }, {}, {}]
+             */
+            $scope.skus = [];
+
+            $scope.updateSkus = function () {
+                var newSkus = generateSkus();
+                console.log("----------------", newSkus);
+                var oldSkus = $scope.skus;
+
+                for (var i = 0; i < newSkus.length; i++) {
+                    var newSku = newSkus[i];
+
+                    for (var j = 0; j < oldSkus.length; j++) {
+                        // 使用旧记录（数据库中的，或者画面上已经修改但未提交）的对象，防止价格等信息丢失
+                        var oldSku = oldSkus[j];
+                        if (isSkuSpecsMatched(newSku, oldSku)) {
+                            newSkus[i] = oldSku;
+                            break;
+                        }
+                    }
+                }
+                $scope.skus = newSkus;
+            };
+
+
+            // about Scope.$watch
+            // http://bennadel.github.io/JavaScript-Demos/demos/watch-vs-watch-collection/
+            $scope.$watch("specs", $scope.updateSkus, true);
+
+            function isSkuSpecsMatched(sku1, sku2) {
+                if (!sku1 || !sku2 || !sku1.specs || !sku2.specs || sku1.specs.length !== sku2.specs.length) {
+                    return false;
+                }
+                var matchedSpecCount = 0;
+                for (var i = 0; i < sku1.specs.length; i++) {
+                    var curSku1Spec = sku1.specs[i];
+
+                    var foundInSku2 = 0;
+                    for (var j = 0; j < sku2.specs.length; j++) {
+                        var curSku2Spec = sku2.specs[j];
+                        if (curSku1Spec.propId === curSku2Spec.propId && curSku1Spec.propValueId === curSku2Spec.propValueId) {
+                            foundInSku2 = true;
+                            break
+                        }
+                    }
+                    if (foundInSku2) {
+                        matchedSpecCount++;
+                    }
+                }
+                return matchedSpecCount === sku1.specs.length;
+
+            }
+
+            function filterSelectedSpecs() {
+                var specs = [];
+
+                // 确保每个规格都至少选中一个值
+                for (var i = 0; i < $scope.specs.length; i++) {
+                    var spec = $scope.specs[i];
+                    var clonedSpec = {
+                        propId: spec.propId,
+                        propName: spec.propName,
+                        values: []
+                    };
+                    for (var j = 0; j < spec.values.length; j++) {
+                        var specValue = spec.values[j];
+
+                        if (specValue.selected) {
+                            clonedSpec.values.push({
+                                propValueId: specValue.propValueId,
+                                propValueName: specValue.propValueName
+                            });
+                        }
+                    }
+                    if (clonedSpec.values.length > 0) {
+                        specs.push(clonedSpec);
+                    }
+                }
+                console.log("===========filterSelectedSpecs", specs);
+                return specs;
+            }
+
+            function generateSkus() {
+                var specs = filterSelectedSpecs();
+                if (specs.length != $scope.specs.length) {
+                    return [];
+                }
+
+                var rows = 1;
+                var cols = specs.length;
+                specs.forEach(function (spec) {
+                    rows *= spec.values.length;
+                });
+                console.info(rows);
+
+
+                var skus = [];
+                for (var i = 0; i < rows; i++) {
+
+                    // 生成显示要显示的SKU
+                    var sku = {
+                        skuId: new bsonImpl.ObjectID().toString(),
+                        order: i,
+                        specs: [],
+                        price: 0
+                    };
+
+                    for (var j = 0; j < cols; j++) {
+
+                        var m = 1;
+                        specs.forEach(function (spec, index) {
+                            if (index <= j) {
+                                return;
+                            }
+                            m *= spec.values.length;
+                        });
+
+                        var v = Math.floor(1.0 * i / m) % specs[j].values.length;
+
+                        sku.specs.push({
+                            propId: specs[j].propId,
+                            propName: specs[j].propName,
+                            propValueId: specs[j].values[v].propValueId,
+                            propValueName: specs[j].values[v].propValueName
+                        });
+                    }
+                    skus.push(sku);
+                }
+
+                return skus;
+            }
+
+        }])
+        ;
+    </script>
+
+</head>
+
+<body>
+<div ng-controller="MyCtrl">
+    <ol>
+        <li ng-repeat="spec in specs">
+            <ul> {{spec.propName}}
+                <li ng-repeat="v in spec.values" ng-class="{selected : v.selected}" ng-click="v.selected = !v.selected"><span>{{v.propValueName}} </span></li>
+            </ul>
+        </li>
+    </ol>
+
+    <!--<button ng-click="generateSkus();">generateTable</button>-->
+
+    <table class="table">
+        <tbody>
+        <tr ng-repeat="sku in skus ">
+            <td>{{sku.skuId}}</td>
+            <td ng-repeat="spec in sku.specs"><span title="{{spec.propId}} = {{spec.propName}}, {{spec.propValueId}} = {{spec.propValueName}}">{{spec.propValueName}}</span></td>
+            <td><input type="text" ng-model="sku.price"/></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <pre ng-bind="specs|json"></pre>
+</div>
+
+</body>
+</html>
