@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>flexbox</title>
+    <script src="https://cdn.bootcss.com/angular.js/1.4.8/angular.js"></script>
+    <script>
+
+        /*
+         http://www.w3.org/TR/2015/WD-css-flexbox-1-20150514
+
+         |Name               |Value                                                                        |Initial                    |Applies to                                                       |Inh.                       |%ages                                            |Media                      |Animatable                 |Canonical order  |Computed value                                                       |
+         |-------------------|-----------------------------------------------------------------------------|---------------------------|-----------------------------------------------------------------|---------------------------|-------------------------------------------------|---------------------------|---------------------------|-----------------|---------------------------------------------------------------------|
+         |flex-direction     |row \| row-reverse \| column \| column-reverse                               |row                        |flex containers                                                  |no                         |n/a                                              |visual                     |no                         |                 |specified value                                                      |
+         |flex-wrap          |nowrap \| wrap \| wrap-reverse                                               |nowrap                     |flex containers                                                  |no                         |n/a                                              |visual                     |no                         |                 |specified value                                                      |
+         |flex-flow          |\<flex-direction\> \|\| \<flex-wrap\>                                        |see individual properties  |see individual properties                                        |see individual properties  |see individual properties                        |see individual properties  |see individual properties  |                 |see individual properties                                            |
+         |justify-content    |flex-start \| flex-end \| center \| space-between \| space-around            |flex-start                 |flex containers                                                  |no                         |n/a                                              |visual                     |no                         |                 |specified value                                                      |
+         |align-items        |flex-start \| flex-end \| center \| baseline \| stretch                      |stretch                    |flex containers                                                  |no                         |n/a                                              |visual                     |no                         |                 |specified value                                                      |
+         |align-content      |flex-start \| flex-end \| center \| space-between \| space-around \| stretch |stretch                    |multi-line flex containers                                       |no                         |n/a                                              |visual                     |no                         |                 |specified value                                                      |
+         |order              |\<integer\>                                                                  |0                          |flex items and absolutely-positioned children of flex containers |no                         |n/a                                              |visual                     |yes                        |                 |specified value                                                      |
+         |flex-grow          |\<number\>                                                                   |0                          |flex items                                                       |no                         |n/a                                              |visual                     |yes                        |                 |specified value                                                      |
+         |flex-shrink        |\<number\>                                                                   |1                          |flex items                                                       |no                         |n/a                                              |visual                     |yes                        |                 |specified value                                                      |
+         |flex-basis         |content \| \<'width'\>                                                       |auto                       |flex items                                                       |no                         |relative to the flex container’s inner main size |visual                     |as width                   |                 |as specified, with lengths made absolute                             |
+         |flex               |none \| [ \<'flex-grow'\> \<'flex-shrink'\>? \|\| <'flex-basis'> ]           |see individual properties  |flex items                                                       |see individual properties  |n/a                                              |visual                     |no                         |per grammar      |see individual properties                                            |
+         |align-self         |auto \| flex-start \| flex-end \| center \| baseline \| stretch              |auto                       |flex items                                                       |no                         |n/a                                              |visual                     |no                         |                 |auto computes to parent’s align-items value; otherwise as specified  |
+         */
+
+        var myApp = angular.module('myApp', []);
+        myApp.controller('MyCtrl', ['$scope', function ($scope) {
+            $scope.cssValue = {
+                container: {
+                    "flex-direction": [
+                        "row",
+                        "row-reverse",
+                        "column",
+                        "column-reverse"
+                    ],
+                    "flex-wrap": [
+                        "nowrap",
+                        "wrap",
+                        "wrap-reverse"
+                    ],
+                    "justify-content": [
+                        "flex-start",
+                        "flex-end",
+                        "center",
+                        "space-between",
+                        "space-around"
+                    ],
+                    "align-items": [
+                        "flex-start",
+                        "flex-end",
+                        "center",
+                        "baseline",
+                        "stretch"
+                    ],
+
+                    "align-content": [
+                        "flex-start",
+                        "flex-end",
+                        "center",
+                        "space-between",
+                        "space-around",
+                        "stretch"
+                    ]
+                },
+                /*
+                 |order              |\<integer\>                                                                  |0                          |flex items and absolutely-positioned children of flex containers |no                         |n/a                                              |visual                     |yes                        |                 |specified value                                                      |
+                 |flex-grow          |\<number\>                                                                   |0                          |flex items                                                       |no                         |n/a                                              |visual                     |yes                        |                 |specified value                                                      |
+                 |flex-shrink        |\<number\>                                                                   |1                          |flex items                                                       |no                         |n/a                                              |visual                     |yes                        |                 |specified value                                                      |
+                 |flex-basis         |content \| \<'width'\>                                                       |auto                       |flex items                                                       |no                         |relative to the flex container’s inner main size |visual                     |as width                   |                 |as specified, with lengths made absolute                             |
+                 |flex               |none \| [ \<'flex-grow'\> \<'flex-shrink'\>? \|\| <'flex-basis'> ]           |see individual properties  |flex items                                                       |see individual properties  |n/a                                              |visual                     |no                         |per grammar      |see individual properties                                            |
+                 |align-self         |auto \| flex-start \| flex-end \| center \| baseline \| stretch              |auto                       |flex items                                                       |no                         |n/a                                              |visual                     |no                         |                 |auto computes to parent’s align-items value; otherwise as specified  |
+
+                 * */
+                item: {
+                    order: 0,
+                    "flex-grow": 0.0,
+                    "flex-shrink": 1.0,
+                    "flex-basis": null,
+                    //"flex":
+                    "align-self": [
+                        "auto",
+                        "flex-start",
+                        "flex-end",
+                        "center",
+                        "baseline",
+                        "stretch"
+                    ]
+                }
+            };
+            $scope.selectedValue = {
+                container: {
+                    "flex-direction": null,
+                    "flex-wrap": null,
+                    "justify-content": null,
+                    "align-items": null,
+                    "align-content": null
+                },
+                item: {
+                    order: null,
+                    "flex-grow": null,
+                    "flex-shrink": null,
+                    "flex-basis": null,
+                    "align-self": null
+                }
+            };
+            $scope.container = {
+                style: {
+                    "flex-direction": null,
+                    "flex-wrap": null,
+                    "justify-content": null,
+                    "align-items": null,
+                    "align-content": null
+                }
+            };
+
+            // http://wiki.jikexueyuan.com/project/material-design/style/color.html
+            $scope.colors = [
+                // red - 200
+                "#f69988",
+                // Purple - 300
+                "#ba68c8",
+                // Lime - 300
+                "#dce775",
+                // Blue - 400
+                "#738ffe",
+                // Orange - 300
+                "#ffb74d",
+                // Brown - 500
+                "#795548",
+                // Yellow - 300
+                "#fff176",
+                // Green - 200
+                "#72d572"
+            ];
+            $scope.items = [];
+
+
+            $scope.selectItemConf = {};
+            $scope.addItem = function () {
+                $scope.items.push({
+                    text: $scope.items.length,
+                    style: {
+                        "background-color": $scope.colors[$scope.items.length % $scope.colors.length],
+
+                        order: null,
+                        "flex-grow": null,
+                        "flex-shrink": null,
+                        "flex-basis": null,
+                        "align-self": null
+                    }
+                });
+                if ($scope.selectItemConf.index === null) {
+                    $scope.setItemIndex(0);
+                }
+            };
+            $scope.deleteItem = function () {
+                if ($scope.selectItemConf.index >= 0 && $scope.selectItemConf.index < $scope.items.length) {
+                    console.log("---------------------", $scope.selectItemConf.index, $scope.items.length);
+                    $scope.items.splice($scope.selectItemConf.index, 1);
+                    $scope.selectItemConf.index--;
+                    if ($scope.selectItemConf.index < 0) {
+                        $scope.selectItemConf.index = 0
+                    }
+                    $scope.setItemIndex($scope.selectItemConf.index);
+                }
+            };
+
+            $scope.addItem();
+            $scope.addItem();
+            $scope.addItem();
+            $scope.setItemIndex = function (newIndex) {
+                $scope.selectItemConf = {
+                    index: newIndex >= 0 && newIndex < $scope.items.length ? newIndex : null,
+                    style: {
+                        "background-color": newIndex >= 0 && newIndex < $scope.items.length ? $scope.items[newIndex].style["background-color"] : "#FFFFFF"
+                    }
+                }
+            };
+            $scope.setItemIndex(0);
+        }]);
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            background-color: #5677fc;
+            height: 300px;
+            border: 1px solid red;
+            text-align: center;
+            display: flex;
+        }
+
+        .container .item {
+        }
+
+        .container .item:hover {
+            box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+        }
+
+        /****/
+        .conf {
+            display: flex;
+            flex-direction: row;
+            text-align: center;
+            justify-content: center;
+            align-items: stretch;
+            margin-bottom: 10px;
+        }
+
+        .conf > div:first-child {
+            flex-grow: 1;
+            background-color: #18ffff;
+        }
+
+        .conf > div:last-child {
+            flex-grow: 1;
+        }
+
+        .conf > div > div > label {
+            text-align: left;
+            display: inline-block;
+            width: 150px;
+        }
+
+        .conf > div > div > select {
+            width: 150px;
+        }
+
+        .conf > div > div > input {
+            width: 150px;
+        }
+
+        .conf > div > div > .itemIndex {
+            display: inline-block;
+            width: 150px;
+        }
+
+    </style>
+</head>
+<body ng-controller="MyCtrl">
+<h1>css3 flexbox 演示demo</h1>
+<div class="conf">
+    <div>
+        <div><h5>container</h5></div>
+        <div>
+            <label>flex-direction</label>
+            <select ng-options="value for value in cssValue.container['flex-direction']" ng-model="container.style['flex-direction']">
+                <option value="">---请选择---</option>
+            </select>
+        </div>
+        <div>
+            <label>flex-wrap</label>
+            <select ng-options="value for value in cssValue.container['flex-wrap']" ng-model="container.style['flex-wrap']">
+                <option value="">---请选择---</option>
+            </select>
+        </div>
+        <div>
+            <label>justify-content</label>
+            <select ng-options="value for value in cssValue.container['justify-content']" ng-model="container.style['justify-content']">
+                <option value="">---请选择---</option>
+            </select>
+        </div>
+        <div>
+            <label>align-items</label>
+            <select ng-options="value for value in cssValue.container['align-items']" ng-model="container.style['align-items']">
+                <option value="">---请选择---</option>
+            </select>
+        </div>
+        <div>
+            <label>align-content</label>
+            <select ng-options="value for value in cssValue.container['align-content']" ng-model="container.style['align-content']">
+                <option value="">---请选择---</option>
+            </select>
+        </div>
+    </div>
+    <div ng-style="selectItemConf.style">
+        <div><h5>item</h5></div>
+        <div>
+            <label>序号</label>
+            <div class="itemIndex">{{selectItemConf.index}}</div>
+        </div>
+        <div>
+            <label>文本</label>
+            <input type="text" ng-model="items[selectItemConf.index]['text']" step="1"/>
+        </div>
+        <div>
+            <label>order</label>
+            <input type="number" ng-model="items[selectItemConf.index].style['order']" step="1"/>
+        </div>
+        <div>
+            <label>flex-grow</label>
+            <input type="number" ng-model="items[selectItemConf.index].style['flex-grow']" step="0.01"/>
+        </div>
+        <div>
+            <label>flex-shrink</label>
+            <input type="number" ng-model="items[selectItemConf.index].style['flex-shrink']" step="0.01"/>
+        </div>
+        <div>
+            <label>flex-basis</label>
+            <input type="number" ng-model="items[selectItemConf.index].style['flex-basis']"/>
+        </div>
+        <div>
+            <label>align-self</label>
+            <select ng-options="value for value in cssValue.item['align-self']" ng-model="items[selectItemConf.index].style['align-self']">
+                <option value="">---请选择---</option>
+            </select>
+        </div>
+        <div>
+            <button ng-click="addItem()">add</button>
+            <button ng-click="deleteItem()">delete</button>
+        </div>
+    </div>
+</div>
+
+
+<div id="container" class="container" ng-style="container.style">
+    <div class="item" ng-repeat="item in items track by $index" ng-style="item.style" ng-click="setItemIndex($index)">
+        {{item.text}}
+    </div>
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html ng-app="myApp" class="no-js">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>flex 2011</title>
+
+    <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.js"></script>
+
+    <style>
+        /*
+        http://www.w3.org/TR/2011/WD-css3-flexbox-20111129/
+
+        |Property       |Values                                                                         |Initial    |Applies to             |Inh.   |Percentages |Media|
+        |---------------|-------------------------------------------------------------------------------|-----------|-----------------------|-------|-------------------|-------|
+        |display        |flexbox \| inline-flexbox                                                      |           |                       |       |                   |       |
+        |flex-flow      |[ row \| row-reverse \| column \| column-reverse ] [ wrap \| wrap-reverse ]?   |row        |flexboxes              |no     |specified value    |visual |
+        |flex-pack      |start \| end \| center \| justify                                              |start      |flexboxes              |no     |specified value    |visual |
+        |flex-line-pack |start \| end \| center \| justify                                              |start      |multi-line flexboxes   |no     |specified value    |visual |
+        |flex-align     |start \| end \| center \| baseline \| stretch                                  |stretch    |flexbox items          |no     |specified value    |visual |
+        |flex-order     |\<number\>                                                                     |0          |flexbox items          |no     |specified value    |visual |
+        */
+
+        .js.flexboxtweener .flex1 {
+            border: 1px solid red;
+            /*height: 300px;*/
+            width: 100%;
+
+            display: -ms-flexbox;
+            display: flexbox;
+
+            -ms-flex-pack: justify;
+            flex-pack: justify;
+        }
+
+        .js.flexboxtweener .flex1 .item {
+            text-align: center;
+
+            -ms-flex-align: stretch;
+            flex-align: stretch;
+        }
+
+        .js.flexboxtweener .flex1 .item:nth-child(2) {
+        }
+
+    </style>
+    <script type="text/javascript" src="http://sandbox.runjs.cn/uploads/rs/157/jm4x0l1q/modernizr-custom.js"></script>
+    <script>
+        // http://www.w3.org/TR/2009/WD-css3-flexbox-20090723/
+        var myApp = angular.module('myApp', ['ngMaterial']);
+        myApp.controller('MyCtrl', ['$scope', function ($scope) {
+
+        }]);
+    </script>
+</head>
+<body ng-controller="MyCtrl">
+
+<div class="flex1">
+    <div class="item" style="background-color: #b2dba1">
+        <div>a</div>
+    </div>
+    <div class="item" style="background-color: #e4b9c0">b
+        <div>111</div>
+        <div>111</div>
+        <div>111</div>
+        <div>111</div>
+        <div>111</div>
+        <div>111</div>
+        <div>111</div>
+        <div>111</div>
+        <div>111</div>
+        <div>111</div>
+        <div>111</div>
+        <div>111</div>
+    </div>
+    <div class="item" style="background-color: cornflowerblue">
+        <div style="border :1px solid #63ff1e; vertical-align: middle;">c
+            无法垂直居中
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

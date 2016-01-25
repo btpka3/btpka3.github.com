@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>flexbox</title>
+    <script src="https://cdn.bootcss.com/angular.js/1.4.8/angular.js"></script>
+    <script>
+
+        var myApp = angular.module('myApp', []);
+        myApp.controller('MyCtrl', ['$scope', function ($scope) {
+            $scope.arr = ['AAA', 'BBB', 'CCC'];
+            $scope.itemIndex = 0;
+        }]);
+    </script>
+    <style>
+    </style>
+</head>
+<body ng-controller="MyCtrl">
+
+<div ng-repeat="item in items track by $index">
+    <div>{{item}}</div>
+</div>
+
+<div id="container" class="container" ng-style="container.style">
+    <div class="item" ng-repeat="item in items track by $index" ng-style="item.style" ng-click="setItemIndex($index)">{{item.text}}</div>
+    <button ng-click="console.log(222)">ss</button>
+</div>
+<button ng-click="console.log(333)">dd</button>
+<pre>{{container}}</pre>
+{{itemIndex}}
+
+
+</body>
+</html>
