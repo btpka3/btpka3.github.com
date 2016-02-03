@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp" class="no-js">
+<head>
+    <meta charset="UTF-8">
+    <title>flexbox 2015 热门搜索</title>
+    <style>
+        /*
+        http://www.w3.org/TR/2015/WD-css-flexbox-1-20150514
+
+        |Name               |Value                                                                        |Initial                    |Applies to                                                       |Inh.                       |%ages                                            |Media                      |Animatable                 |Canonical order  |Computed value                                                       |
+        |-------------------|-----------------------------------------------------------------------------|---------------------------|-----------------------------------------------------------------|---------------------------|-------------------------------------------------|---------------------------|---------------------------|-----------------|---------------------------------------------------------------------|
+        |flex-direction     |row \| row-reverse \| column \| column-reverse                               |row                        |flex containers                                                  |no                         |n/a                                              |visual                     |no                         |                 |specified value                                                      |
+        |flex-wrap          |nowrap \| wrap \| wrap-reverse                                               |nowrap                     |flex containers                                                  |no                         |n/a                                              |visual                     |no                         |                 |specified value                                                      |
+        |flex-flow          |\<flex-direction\> \|\| \<flex-wrap\>                                        |see individual properties  |see individual properties                                        |see individual properties  |see individual properties                        |see individual properties  |see individual properties  |                 |see individual properties                                            |
+        |justify-content    |flex-start \| flex-end \| center \| space-between \| space-around            |flex-start                 |flex containers                                                  |no                         |n/a                                              |visual                     |no                         |                 |specified value                                                      |
+        |align-items        |flex-start \| flex-end \| center \| baseline \| stretch                      |stretch                    |flex containers                                                  |no                         |n/a                                              |visual                     |no                         |                 |specified value                                                      |
+        |align-content      |flex-start \| flex-end \| center \| space-between \| space-around \| stretch |stretch                    |multi-line flex containers                                       |no                         |n/a                                              |visual                     |no                         |                 |specified value                                                      |
+        |order              |\<integer\>                                                                  |0                          |flex items and absolutely-positioned children of flex containers |no                         |n/a                                              |visual                     |yes                        |                 |specified value                                                      |
+        |flex-grow          |\<number\>                                                                   |0                          |flex items                                                       |no                         |n/a                                              |visual                     |yes                        |                 |specified value                                                      |
+        |flex-shrink        |\<number\>                                                                   |1                          |flex items                                                       |no                         |n/a                                              |visual                     |yes                        |                 |specified value                                                      |
+        |flex-basis         |content \| \<'width'\>                                                       |auto                       |flex items                                                       |no                         |relative to the flex container’s inner main size |visual                     |as width                   |                 |as specified, with lengths made absolute                             |
+        |flex               |none \| [ \<'flex-grow'\> \<'flex-shrink'\>? \|\| <'flex-basis'> ]           |see individual properties  |flex items                                                       |see individual properties  |n/a                                              |visual                     |no                         |per grammar      |see individual properties                                            |
+        |align-self         |auto \| flex-start \| flex-end \| center \| baseline \| stretch              |auto                       |flex items                                                       |no                         |n/a                                              |visual                     |no                         |                 |auto computes to parent’s align-items value; otherwise as specified  |
+        */
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .flex1 {
+            background-color: #424242;
+            height: 320px;
+            width: 320px;
+
+            display: -webkit-flex;
+            display: flex;
+
+            -webkit-flex-direction: row;
+            -ms-flex-direction: row;
+            flex-direction: row;
+
+            -ms-flex-wrap: nowrap;
+            -webkit-flex-wrap: nowrap;
+            flex-wrap: nowrap;
+
+            -webkit-justify-content：flex-start;
+            justify-content: flex-start;
+
+            align-items: stretch;
+        }
+
+        .flex1 .item1 {
+            text-align: center;
+
+            flex-grow: 1;
+            flex-shrink: 1;
+        }
+
+        /**************/
+
+        .flex1 .flex1_1 {
+            background-color: #b2dba1;
+
+            display: -webkit-flex;
+            display: flex;
+
+            -webkit-flex-direction: row;
+            -ms-flex-direction: row;
+            flex-direction: row;
+
+            -ms-flex-wrap: nowrap;
+            -webkit-flex-wrap: nowrap;
+            flex-wrap: nowrap;
+
+            -webkit-justify-content：flex-start;
+            justify-content: flex-start;
+
+            align-items: stretch;
+        }
+
+        .flex1 .flex1_1 .item1_1 {
+            flex-grow: 1;
+
+            background-color: #f69988;
+        }
+
+        .flex1 .flex1_1 .item1_1 img {
+            width: 20%;
+            height: 20%;
+        }
+
+        /**************/
+        .flex1 .flex1_2 {
+            background-color: #e4b9c0;
+
+            display: -webkit-flex;
+            display: flex;
+
+            -webkit-flex-direction: column;
+            -ms-flex-direction: column;
+            flex-direction: column;
+
+            -ms-flex-wrap: nowrap;
+            -webkit-flex-wrap: nowrap;
+            flex-wrap: nowrap;
+
+            -webkit-justify-content：flex-start;
+            justify-content: flex-start;
+
+            align-items: stretch;
+        }
+
+        .flex1 .flex1_2 .item1_2 {
+
+            background-color: #90A4ae;
+            flex-grow: 1;
+
+        }
+
+        .flex1 .flex1_2 .flex1_2_1 {
+
+            display: -webkit-flex;
+            display: flex;
+
+            -webkit-flex-direction: row;
+            -ms-flex-direction: row;
+            flex-direction: row;
+
+            -ms-flex-wrap: nowrap;
+            -webkit-flex-wrap: nowrap;
+            flex-wrap: nowrap;
+
+            -webkit-justify-content：flex-start;
+            justify-content: flex-start;
+
+            align-items: stretch;
+
+        }
+
+        .flex1 .flex1_2 .flex1_2_1 .item1_2_1 {
+            background-color: #795548;
+            flex-grow: 1;
+        }
+
+        .flex1 .flex1_2 .flex1_2_1 .item1_2_1 img {
+            width: 20%;
+            height: 20%;
+        }
+    </style>
+    <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.js"></script>
+    <script src="http://sandbox.runjs.cn/uploads/rs/157/jm4x0l1q/modernizr-custom.js"></script>
+    <script src="https://cdn.bootcss.com/placeholder.js/2.0.1/placeholder.js"></script>
+</head>
+<body>
+<ul><h1>目标</h1>
+    <li>要求使用 <a href="http://www.w3.org/TR/2015/WD-css-flexbox-1-20150514" target="_blank">Flexbox-2015</a>来完成（主要针对微信X5内核）</li>
+    <li>顶层容器内部分为左右两栏</li>
+    <li>左边栏为一个全高、全宽的图片，图片周围有一定空白</li>
+    <li>右边栏为3行图片，每行2个，每个均为正方型（或原型）</li>
+    <li>优化目标：顶层容器宽度100%，且能跟随着窗口大小自动调节、</li>
+</ul>
+<br/>
+
+<div class="flex1" style="">
+    <div class="item1 flex1_1" style="">
+        <div class="item1_1" style=""><img options="size=2000x2000&text=L" class="placeholder"/></div>
+    </div>
+    <div class="item1 flex1_2" style="">
+        <div class="item1_2 flex1_2_1">
+            <div class="item1_2_1" style=""><img options="size=2000x2000&text=1" class="placeholder"/></div>
+            <div class="item1_2_1" style=""><img options="size=2000x2000&text=2" class="placeholder"/></div>
+        </div>
+        <div class="item1_2 flex1_2_1">
+            <div class="item1_2_1" style=""><img options="size=2000x2000&text=3" class="placeholder"/></div>
+            <div class="item1_2_1" style=""><img options="size=2000x2000&text=4" class="placeholder"/></div>
+        </div>
+        <div class="item1_2 flex1_2_1">
+            <div class="item1_2_1" style=""><img options="size=2000x2000&text=5" class="placeholder"/></div>
+            <div class="item1_2_1" style=""><img options="size=2000x2000&text=6" class="placeholder"/></div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

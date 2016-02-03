@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyApp" ng-controller="DemoCtrl as ctrl" layout="column" ng-cloak="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <title>study md-icon</title>
+    <link rel="stylesheet" href="../bower_components/material-design-icons/iconfont/material-icons.css">
+    <link rel="stylesheet" href="../bower_components/angular-material/angular-material.min.css"/>
+    <link rel="stylesheet" href="../bower_components/angular-material-icons/angular-material-icons.css"/>
+</head>
+<body>
+<md-toolbar layout="row">
+    <h1>Angular Material - Starter App</h1>
+</md-toolbar>
+<div flex layout="row">
+
+    <md-sidenav md-is-locked-open="true" class="md-whiteframe-z2">
+        <md-list>
+
+            <md-item>
+                <md-button>
+                    Lia Luogo
+                </md-button>
+            </md-item>
+
+            <md-item>
+                <md-button>
+                    Lawrence Ray
+                </md-button>
+            </md-item>
+
+        </md-list>
+
+    </md-sidenav>
+
+    <md-content flex id="content">
+
+        <md-icon class="glyphicon glyphicon-wrench"></md-icon>
+        <md-icon md-font-icon="apple"/>
+        <md-icon md-font-set="material-icons">accessibility</md-icon>
+
+        <ng-md-icon icon="{{icons[iconIndex]}}" ng-style="{fill: colors[colorIndex], width:'48px', height:'48px'}" size="48" ng-click="changeIcon()"></ng-md-icon>
+
+        <h2>Lia Luogo</h2>
+        <p>
+            I love cheese...
+        </p>
+    </md-content>
+
+</div>
+
+</body>
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="../bower_components/angular-aria/angular-aria.min.js"></script>
+<script src="../bower_components/angular-messages/angular-messages.min.js"></script>
+<script src="../bower_components/angular-material/angular-material.min.js"></script>
+<script src="../bower_components/angular-material-icons/angular-material-icons.min.js"></script>
+<script src="../bower_components/svg-morpheus/compile/minified/svg-morpheus.js"></script>
+<script>
+    (function () {
+        'use strict';
+        angular
+                .module('MyApp', ['ngMaterial', 'ngMessages', 'ngMdIcons'])
+                .controller('DemoCtrl', ['$scope', function ($scope) {
+
+                    $scope.icons = ['office', 'facebook', 'twitter', 'apple', 'whatsapp', 'linkedin', 'windows'];
+                    $scope.colors = ['lightgreen', 'pink', 'wheat', '#cc99ff', '#abcdef'];
+
+                    $scope.changeIcon = function () {
+                        $scope.iconIndex = Math.floor(Math.random() * $scope.icons.length);
+                        $scope.colorIndex = Math.floor(Math.random() * $scope.colors.length);
+                    };
+                    $scope.changeIcon();
+                }]);
+    })();
+
+</script>
+</html>

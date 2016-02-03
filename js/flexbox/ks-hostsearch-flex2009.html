@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>flex 2009 - 热门搜索</title>
+    <style>
+        /*
+        http://www.w3.org/TR/2009/WD-css3-flexbox-20090723/
+
+        |Property           |Values                                                         |Initial      |Applies to                       |Inh. |Percentages  |Media  |
+        |-------------------|---------------------------------------------------------------|-------------|---------------------------------|-----|-------------|-------|
+        |box-orient         |horizontal \| vertical \| inline-axis \| block-axis \| inherit |inline-axis  |box elements                     |no   |no           |visual |
+        |box-direction      |normal \| reverse \| inherit                                   |normal       |box elements                     |no   |no           |visual |
+        |box-pack           |start \| end \| center \| justify                              |start        |box elements                     |no   |no           |visual |
+        |box-align          |start \| end \| center \| baseline \| stretch                  |stretch      |box elements                     |no   |no           |visual |
+        |box-lines          |single \| multiple                                             |single       |box elements                     |no   |no           |visual |
+        |box-ordinal-group  |\<integer\>                                                    |1            |children of box elements         |no   |no           |visual |
+        |box-flex           |\<number\>                                                     |0.0          |in-flow children of box elements |no   |no           |visual |
+        |box-flex-group     |\<integer\>                                                    |1            |in-flow children of box elements |no   |no           |visual |
+        */
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .flex1 {
+            background-color: #424242;
+            height: 320px;
+            width: 320px;
+
+            display: -moz-box;
+            display: -webkit-box;
+            /*display: box;*/
+
+            -moz-box-orient: horizontal; /*Firefox*/
+            -webkit-box-orient: horizontal; /*Safari,Opera,Chrome*/
+            box-orient: horizontal;
+
+            -moz-box-direction: normal;
+            -webkit-box-direction: normal;
+            box-direction: normal;
+
+            -moz-box-pack: justify;
+            -webkit-box-pack: justify;
+            box-pack: justify;
+
+            -moz-box-align: stretch;
+            -webkit-box-align: stretch;
+            box-align: stretch;
+
+            -webkit-box-lines: single;
+            box-lines: single;
+        }
+
+        .flex1 .item1 {
+            text-align: center;
+
+            -moz-box-flex: 1;
+            -webkit-box-flex: 1;
+            box-flex: 1;
+        }
+
+        /**************/
+
+        .flex1 .flex1_1 {
+            background-color: #b2dba1;
+
+            display: -moz-box;
+            display: -webkit-box;
+        }
+
+        .flex1 .flex1_1 .item1_1 {
+            -moz-box-flex: 1;
+            -webkit-box-flex: 1;
+            box-flex: 1;
+
+            background-color: #f69988;
+        }
+
+        .flex1 .flex1_1 .item1_1 img {
+            width: 20%;
+            height: 20%;
+        }
+
+        /**************/
+        .flex1 .flex1_2 {
+            background-color: #e4b9c0;
+
+            display: -moz-box;
+            display: -webkit-box;
+
+            -moz-box-orient: vertical; /*Firefox*/
+            -webkit-box-orient: vertical; /*Safari,Opera,Chrome*/
+            box-orient: vertical;
+
+            -moz-box-direction: normal;
+            -webkit-box-direction: normal;
+            box-direction: normal;
+
+            -moz-box-pack: justify;
+            -webkit-box-pack: justify;
+            box-pack: justify;
+
+            -moz-box-align: stretch;
+            -webkit-box-align: stretch;
+            box-align: stretch;
+
+            -webkit-box-lines: single;
+            box-lines: single;
+        }
+
+        .flex1 .flex1_2 .item1_2 {
+
+            background-color: #90A4ae;
+
+            -moz-box-flex: 1;
+            -webkit-box-flex: 1;
+            box-flex: 1;
+
+            /*width: 50%;*/
+            /*margin: 10px;*/
+
+        }
+
+        .flex1 .flex1_2 .flex1_2_1 {
+
+            display: -moz-box;
+            display: -webkit-box;
+
+            -moz-box-orient: horizontal; /*Firefox*/
+            -webkit-box-orient: horizontal; /*Safari,Opera,Chrome*/
+            box-orient: horizontal;
+
+            -moz-box-direction: normal;
+            -webkit-box-direction: normal;
+            box-direction: normal;
+
+            -moz-box-pack: justify;
+            -webkit-box-pack: justify;
+            box-pack: justify;
+
+            -moz-box-align: stretch;
+            -webkit-box-align: stretch;
+            box-align: stretch;
+
+            -webkit-box-lines: single;
+            box-lines: single;
+
+        }
+
+        .flex1 .flex1_2 .flex1_2_1 .item1_2_1 {
+            background-color: #795548;
+
+            -moz-box-flex: 1;
+            -webkit-box-flex: 1;
+            box-flex: 1;
+
+            /*!*width: 50%;*!*/
+            /*margin: 10px;*/
+            /*height:100%;*/
+
+        }
+
+        .flex1 .flex1_2 .flex1_2_1 .item1_2_1 img {
+            width: 20%;
+            height: 20%;
+        }
+    </style>
+    <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.js"></script>
+    <script src="http://sandbox.runjs.cn/uploads/rs/157/jm4x0l1q/modernizr-custom.js"></script>
+    <script src="https://cdn.bootcss.com/placeholder.js/2.0.1/placeholder.js"></script>
+</head>
+
+<body>
+<ul><h1>目标</h1>
+    <li>要求使用 <a href="http://www.w3.org/TR/2009/WD-css3-flexbox-20090723/" target="_blank">Flexbox-2009</a>来完成（主要针对微信X5内核）</li>
+    <li>顶层容器内部分为左右两栏</li>
+    <li>左边栏为一个全高、全宽的图片，图片周围有一定空白</li>
+    <li>右边栏为3行图片，每行2个，每个均为正方型（或原型）</li>
+    <li>优化目标：顶层容器宽度100%，且能跟随着窗口大小自动调节、</li>
+</ul>
+<br/>
+
+<div class="flex1" style="">
+    <div class="item1 flex1_1" style="">
+        <div class="item1_1" style=""><img options="size=2000x2000&text=L" class="placeholder"/></div>
+    </div>
+    <div class="item1 flex1_2" style="">
+        <div class="item1_2 flex1_2_1">
+            <div class="item1_2_1" style=""><img options="size=2000x2000&text=1" class="placeholder"/></div>
+            <div class="item1_2_1" style=""><img options="size=2000x2000&text=2" class="placeholder"/></div>
+        </div>
+        <div class="item1_2 flex1_2_1">
+            <div class="item1_2_1" style=""><img options="size=2000x2000&text=3" class="placeholder"/></div>
+            <div class="item1_2_1" style=""><img options="size=2000x2000&text=4" class="placeholder"/></div>
+        </div>
+        <div class="item1_2 flex1_2_1">
+            <div class="item1_2_1" style=""><img options="size=2000x2000&text=5" class="placeholder"/></div>
+            <div class="item1_2_1" style=""><img options="size=2000x2000&text=6" class="placeholder"/></div>
+        </div>
+    </div>
+</div>
+
+<br/>
+
+<ul>FIXME
+    <li>子元素垂直居中</li>
+    <li>box嵌套box</li>
+    <li>高度100%</li>
+</ul>
+</body>
+</html>
