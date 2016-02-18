@@ -12,5 +12,6 @@ cordova run browser
 cordova platform add android
 # cordova run android
 cordova emulate android
+cordova emulate android
 ```
 
