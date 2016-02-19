@@ -18,25 +18,25 @@
  */
 var app = {
     // Application Constructor
-    initialize: function() {
+    initialize: function () {
         this.bindEvents();
     },
     // Bind Event Listeners
     //
     // Bind any events that are required on startup. Common events are:
     // 'load', 'deviceready', 'offline', and 'online'.
-    bindEvents: function() {
+    bindEvents: function () {
         document.addEventListener('deviceready', this.onDeviceReady, false);
     },
     // deviceready Event Handler
     //
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'app.receivedEvent(...);'
-    onDeviceReady: function() {
+    onDeviceReady: function () {
         app.receivedEvent('deviceready');
     },
     // Update DOM on a Received Event
-    receivedEvent: function(id) {
+    receivedEvent: function (id) {
         var parentElement = document.getElementById(id);
         var listeningElement = parentElement.querySelector('.listening');
         var receivedElement = parentElement.querySelector('.received');
@@ -55,14 +55,14 @@ app.initialize();
 (function () {
     'use strict';
     angular
-        .module('MyApp', ['ngMaterial', 'ngMessages', ])
+        .module('MyApp', ['ngMaterial', 'ngMessages',])
         .controller('DemoCtrl', DemoCtrl);
 
-    function DemoCtrl($timeout, $q, $log, $window) {
+    function DemoCtrl($timeout, $q, $log, $window, $scope) {
         var self = this;
 
-        $log.info("------ $window.location.href = "+$window.location.href);
-        $log.info("------ window.location.href = "+window.location.href);
+        $log.info("------ $window.location.href = " + $window.location.href);
+        $log.info("------ window.location.href = " + window.location.href);
 
         self.url = $window.location.href;
 
@@ -142,5 +142,28 @@ app.initialize();
             };
 
         }
+
+        $scope.ua = navigator.userAgent;
+        $scope.imgSrc = "http://img3.cache.netease.com/www/v2013/img/newsapp_logo.png";
+        $scope.callCamera = function () {
+            function onSuccess(imageURI) {
+                console.log("btpka3 : =====================1, " + imageURI);
+                //alert("success" + imageURI);
+                $scope.imgSrc = imageURI;
+            }
+
+            function onFail(message) {
+                console.log("btpka3 : =====================2，" + message);
+                //alert('Failed because: ' + message);
+            }
+
+            console.log("btpka3 : =====================0, " + $scope.imgSrc);
+            navigator.camera.getPicture(onSuccess, onFail, {
+                quality: 50,
+                destinationType: Camera.DestinationType.FILE_URI
+            });
+
+
+        };
     }
 })();

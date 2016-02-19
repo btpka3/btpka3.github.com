@@ -1,12 +1,17 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="net.kingsilk" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="io.github.btpka3" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <preference name="loglevel" value="DEBUG" />
     <feature name="Whitelist">
         <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
         <param name="onload" value="true" />
     </feature>
+    <preference name="CodePushDeploymentKey" value="YDJU7p8wa2U1fzIPljL6IzAoSomurVkwGr_yix" />
     <allow-intent href="market:*" />
-    <name>HelloCordova</name>
+    <name short="my-cordova">My Cordova</name>
+    <preference name="apikey" readonly="true" value="ea31ad3a23fd2f" />
+    <preference name="Fullscreen" value="false" />
+    <preference name="DisallowOverscroll" value="false" />
+    <preference name="BackgroundColor" value="0xff0000ff" />
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
     </description>
@@ -21,4 +26,7 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    <license>
+        XXX
+    </license>
 </widget>

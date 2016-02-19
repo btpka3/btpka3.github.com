@@ -71,9 +71,12 @@
 
         <md-button class="md-raised">Button</md-button>
         <md-button class="md-raised md-primary">Primary</md-button>
-        <md-button class="md-raised md-warn">Warn</md-button>
+        <md-button class="md-raised md-warn" ng-click="callCamera()">Warn</md-button>
 
+        <div><img ng-src="{{imgSrc}}" style="border:1px solid red; width:100%;" /></div>
+        <div style="border:1px solid red; width:100%; height:20px;overflow: hidden;" >{{imgSrc}}</div>
         <div>url = {{ctrl.url}}</div>
+        <div>ua = {{ua}}</div>
 
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>

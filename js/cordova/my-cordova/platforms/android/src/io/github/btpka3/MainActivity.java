@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /*
        Licensed to the Apache Software Foundation (ASF) under one
        or more contributor license agreements.  See the NOTICE file
@@ -17,9 +15,31 @@
        KIND, either express or implied.  See the License for the
        specific language governing permissions and limitations
        under the License.
-*/
+ */
 
-// Coho updates this line:
-var VERSION = "4.0.0";
+package io.github.btpka3;
 
-console.log(VERSION);
+import android.app.Activity;
+import android.content.pm.ApplicationInfo;
+import android.os.Build;
+import android.os.Bundle;
+import android.util.Log;
+import android.webkit.WebView;
+import org.apache.cordova.*;
+
+public class MainActivity extends CordovaActivity
+{
+    @Override
+    public void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        // Set by <content src="index.html" /> in config.xml
+        loadUrl(launchUrl);
+//        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+//            if(0 != (getApplicationInfo().flags = ApplicationInfo.FLAG_DEBUGGABLE)){
+//                //Log.i("Your app", "Disable web debugging");
+//                WebView.setWebContentsDebuggingEnabled(true);
+//            }
+//        }
+    }
+}

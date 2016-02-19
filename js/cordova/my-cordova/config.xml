@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 
 <!-- 该配置文件中，只有 widget 元素是必须的，其子元素、属性都是可选的, 子元素的顺序无关。-->
-<widget id="net.kingsilk" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="io.github.btpka3" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
 
     <!-- * -->
     <name short="my-cordova">My Cordova</name>
@@ -45,6 +45,10 @@
 
     <!-- 该APP可以访问的外部网站 -->
     <access origin="*"/>
+    <!--
+    <access origin="https://codepush.azurewebsites.net" />
+    <access orogin="https://codepush.blob.core.windows.net" />
+    -->
     <allow-intent href="http://*/*"/>
     <allow-intent href="https://*/*"/>
     <allow-intent href="tel:*"/>
@@ -52,9 +56,21 @@
     <allow-intent href="mailto:*"/>
     <allow-intent href="geo:*"/>
     <platform name="android">
+        <!--
+        MyApp-Android
+        Production │ DJU7p8wa2U1fzIPljL6IzAoSomurVkwGr_yix
+        Staging    │ S6BO_a-du9AEMkZgfsJZPqPV5WY_VkwGr_yix
+        -->
+        <preference name="CodePushDeploymentKey" value="YDJU7p8wa2U1fzIPljL6IzAoSomurVkwGr_yix" />
         <allow-intent href="market:*"/>
     </platform>
     <platform name="ios">
+        <!--
+          MyApp-iOS
+          Production │ NSPii4Gdwh2OGzUZFB3cu1lrLOvrVkwGr_yix
+          Staging    │ r-00pXhpQ4Bo1U_xfnQ1k5rLBdyqVkwGr_yix
+        -->
+        <preference name="CodePushDeploymentKey" value="NSPii4Gdwh2OGzUZFB3cu1lrLOvrVkwGr_yix" />
         <allow-intent href="itms:*"/>
         <allow-intent href="itms-apps:*"/>
     </platform>
