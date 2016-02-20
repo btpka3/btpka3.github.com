@@ -32,8 +32,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class HttpLogin {
 
     private static AnnotationConfigApplicationContext ctx = null;
-    private static String userName = "18888952190";
-    private static String pwd = "zhangyao99";
+    private static String userName = "xxx";
+    private static String pwd = "xxx";
 
     public static void main(String[] args) throws JsonParseException, JsonMappingException, IOException {
         ctx = new AnnotationConfigApplicationContext();
