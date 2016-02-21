@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+</head>
+<body style="width: 100%; height: 100%; border:1px solid red;">
+<h1>Hello World!</h1>
+
+<p>
+    <script>
+        // get the system platform using node.js
+        var os = require('os');
+        document.write('You are running on ', os.platform());
+    </script>
+</p>
+<div><input type="text" id="keyword"/></div>
+<div>
+    <button id="set">set keyword</button>
+</div>
+<div>
+    <button id="search">search</button>
+</div>
+<script>
+    var nw = require('nw.gui');
+
+    // test: 通过 全局 node 环境传递共享变量
+    nw.arr = [111];
+    console.log("################## nw.arr : " + JSON.stringify(nw.arr));
+
+
+    // Get the current window
+    var win = nw.Window.get();
+    console.log("################## cur win html body length : " + $(win.window.document.body).html().length);
+
+
+    // Listen to the minimize event
+    win.on('minimize', function () {
+        console.log('Window is minimized');
+    });
+
+    // Create a new window and get it
+    var url = "http://btpka3.github.io/test.html";
+    //    var url = "./test.html";
+    var new_win = nw.Window.open(url, {
+        position: 'center',
+        'inject-js-end': './test.js'
+    }, function (w) {
+        console.log("################## window loaded.");
+    });
+
+
+    // And listen to new window's focus event
+    new_win.on('focus', function () {
+        console.log("################## new_win is focused : ");
+        console.log("################## new_win html body length : " + $(new_win.window.document.body).html().length);
+    });
+
+    //    $(new_win.window.document).load(function(){
+    //        console.log("################## new_win html body length : " + $(new_win.window.document.body).html().length);
+    //    });
+
+
+</script>
+</body>
+</html>

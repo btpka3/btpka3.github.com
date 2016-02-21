@@ -1,0 +1,21 @@
+{
+  "name": "my-first-nw",
+  "description": "",
+  "main": "index.html",
+  "authors": [
+    "btpka3 <btpka3@163.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/btpka3/btpka3.github.com",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^2.2.0"
+  }
+}

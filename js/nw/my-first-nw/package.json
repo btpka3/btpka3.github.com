@@ -1,0 +1,6 @@
+{
+  "name": "helloworld",
+  "main": "index.html",
+  "chromium-args": "--disable-setuid-sandbox",
+  "node-remote": "http://btpka3.github.io"
+}
