@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+    <script src="http://ajax.useso.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script>
+        $(function () {
+            console.log("================== page loaded.");
+
+            $("#kw").keyup(function (e) {
+                console.log("================== kw : " + $(e.target).val());
+            });
+            $("#submitBtn").click(function () {
+                console.log("================== submitBtn clicked.");
+                $("#f").submit(function () {
+                    console.log("================== form submited.");
+                    alert("submited");
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+<form id="f">
+
+    <div>
+        <input type="text" name="kw" id="kw"/>
+    </div>
+    <div>
+        <button id="submitBtn"> submit</button>
+    </div>
+</form>
+
+</body>
+</html>
