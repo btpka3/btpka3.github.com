@@ -3,7 +3,10 @@ package me.test;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +20,7 @@ import org.apache.http.config.RegistryBuilder;
 import org.apache.http.conn.util.PublicSuffixMatcher;
 import org.apache.http.conn.util.PublicSuffixMatcherLoader;
 import org.apache.http.cookie.ClientCookie;
+import org.apache.http.cookie.Cookie;
 import org.apache.http.cookie.CookieSpecProvider;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.HttpClients;
@@ -46,6 +50,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -67,9 +72,13 @@ public class HttpLogin {
         /** 手机数码 */
         MOBILE("1002"),
         /** 电脑办公 */
-        PC("1003   "),
+        PC("1003"),
         /** 电脑办公 */
-        APPLIANCE("1004");
+        APPLIANCE("1004"),
+        /** 女神良品 */
+        WOMEN("1005"),
+        /** 男士专区 */
+        MEN("1006");
         // TODO 未完待续
 
         private Category(String code) {
@@ -120,31 +129,48 @@ public class HttpLogin {
 
         String userName = "xx";
         String pwd = "xx";
-        String toBuyItemId = "1161";
+        String toBuyItemId = "xx";
 
         ctx = new AnnotationConfigApplicationContext();
         ctx.register(HttpLogin.class);
         ctx.refresh();
 
         // 测试1： 获取特定分类的商品列表
-        getItemsByCategory(Category.MOBILE, 1);
-        printItem(Category.MOBILE);
+        getItemsByCategory(Category.MEN, 1);
+        printItem(Category.MEN);
 
         // 测试2： 登录
         isLogined();
         index();
         login(userName, pwd);
         isLogined();
+        //
+        //        // 测试3： 单品直接下单：
+        //        // seq,     id,     code,      price, name
+        //        //   1,   1160,   342825,    7769.00, (第122期)佳能 EOS 70D 套机
+        //        //  29,   1161,   256386,     189.00, (第706期)丽芙 LifeVC 无线蓝牙天籁耳机
+        //        getItemRemainCount(toBuyItemId);
+        //        buy(toBuyItemId, 1);
+        //
 
-        // 测试3： 下单：
+        // 测试4： 通过购物车批量下单
         // seq,     id,     code,      price, name
-        //   1,   1160,   342825,    7769.00, (第122期)佳能 EOS 70D 套机
-        //  29,   1161,   256386,     189.00, (第706期)丽芙 LifeVC 无线蓝牙天籁耳机
-        getItemRemainCount(toBuyItemId);
-        buy(toBuyItemId, 1);
+        //  10,   1165,   237474,      99.00, (第1134期)小米手环
+        //  11,   1219,   300325,     149.00, (第234期)zippo打火机黑冰150zl
 
-        // 测试4： 检查下单结果
-        // TODO
+        getItemRemainCount("1165");
+        addToCartCookie("1165", 1);
+        syncCartCookieToServer();
+
+        getItemRemainCount("1219");
+        addToCartCookie("1219", 2);
+        syncCartCookieToServer();
+
+        listCart();
+        submitCart();
+        payCart();
+
+        // 测试5： 检查下单结果
         getUserBoughtList(0, (String) data.get("userId"), null, null, null);
 
     }
@@ -358,9 +384,9 @@ public class HttpLogin {
             String selectTime,
             String startDate,
             String endDate)
-                    throws JsonParseException,
-                    JsonMappingException,
-                    IOException {
+            throws JsonParseException,
+            JsonMappingException,
+            IOException {
 
         selectTime = selectTime == null ? "0" : selectTime;
 
@@ -377,7 +403,8 @@ public class HttpLogin {
                 .encode("UTF-8")
                 .toUri();
 
-        logger.debug("=================" + uri);
+        logger.debug("最新夺宝记录如下：");
+
         // get
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-Requested-With", "XMLHttpRequest");
@@ -385,7 +412,7 @@ public class HttpLogin {
         ResponseEntity<String> resp = restTemplate.exchange(uri, HttpMethod.GET, reqEntity, String.class);
         Assert.isTrue(HttpStatus.OK == resp.getStatusCode());
         String respStr = resp.getBody();
-        logger.debug("@@@\n" + respStr);
+        logger.debug(respStr);
 
     }
 
@@ -443,10 +470,235 @@ public class HttpLogin {
         logger.debug("对商品 {} 下单结果为 ： {} ", itemId, respStr);
     }
 
+    public static void clearCartCookie() {
+        CookieStore cookieStore = ctx.getBean(CookieStore.class);
+
+        // 找到既有的 "products" cookie
+        List<Cookie> cookies = cookieStore.getCookies();
+        BasicClientCookie productsCookie = null;
+        for (Cookie c : cookies) {
+            if ("products".equals(c.getName())) {
+                productsCookie = (BasicClientCookie) c;
+                break;
+            }
+        }
+        if (productsCookie != null) {
+            cookies.remove(productsCookie);
+        }
+    }
+
+    public static void listCart() throws JsonParseException, JsonMappingException, IOException {
+
+        List<Map> products = getCartFromCookie();
+
+        logger.debug("目前购物车列表下：");
+        logger.debug(String.format("%4s, %6s, %4s",
+                "seq",
+                "id",
+                "num"));
+
+        int i = 0;
+        for (Map item : products) {
+            logger.debug(String.format("%4s, %6s, %4s",
+                    i,
+                    item.get("pId"),
+                    item.get("num")));
+            i++;
+        }
+    }
+
+    // 加入购物车（Ajax）
+    // http://www.qmduobao.com/mycart/getShopResult.action?id=1137&moneyCount=1
+
+    // COOKIE :
+    // products=%5B%7B%22pId%22%3A1137%2C%22num%22%3A2%7D%2C%7B%22pId%22%3A1092%2C%22num%22%3A1%7D%2C%7B%22pId%22%3A1112%2C%22num%22%3A1%7D%5D
+    // products=[{"pId":1137,"num":2},{"pId":1092,"num":1},{"pId":1112,"num":1}]
+    @SuppressWarnings("unchecked")
+    public static void addToCartCookie(
+            String itemId,
+            int num) throws JsonParseException, JsonMappingException, IOException {
+
+        CookieStore cookieStore = ctx.getBean(CookieStore.class);
+
+        // 找到既有的 "products" cookie
+        List<Cookie> cookies = cookieStore.getCookies();
+        BasicClientCookie productsCookie = null;
+        for (Cookie c : cookies) {
+            if ("products".equals(c.getName())) {
+                productsCookie = (BasicClientCookie) c;
+                break;
+            }
+        }
+        if (productsCookie == null) {
+            productsCookie = new BasicClientCookie("products", URLEncoder.encode("[]", "UTF-8"));
+            productsCookie.setDomain(".qmduobao.com");
+            productsCookie.setPath("/");
+            productsCookie.setAttribute(ClientCookie.PATH_ATTR, "/");
+            productsCookie.setAttribute(ClientCookie.DOMAIN_ATTR, ".qmduobao.com");
+            cookieStore.addCookie(productsCookie);
+        }
+
+        String jsonStr = productsCookie.getValue();
+        jsonStr = URLDecoder.decode(jsonStr, "UTF-8");
+
+        ObjectMapper objectMapper = ctx.getBean(ObjectMapper.class);
+        List products = objectMapper.readValue(jsonStr, List.class);
+        logger.debug(" ===== " + products);
+
+        // 找到既有的商品
+        Map product = null;
+        for (Object p : products) {
+            if (itemId.equals(((Map) p).get("pId"))) {
+                product = (Map) p;
+                break;
+            }
+        }
+
+        if (product == null) {
+            product = new LinkedHashMap();
+            products.add(product);
+            product.put("pId", itemId);
+            product.put("num", 0);
+        }
+
+        product.put("num", ((Integer) product.get("num")) + num);
+
+        // list -> json -> url encode -> cookie
+        ObjectMapper objectMapper1 = ctx.getBean(ObjectMapper.class);
+        String newCookieValue = objectMapper1.writeValueAsString(products);
+        String newCookieValueEncoded = URLEncoder.encode(newCookieValue, "UTF-8");
+        productsCookie.setValue(newCookieValueEncoded);
+        logger.debug(" ### " + newCookieValue + ", encoded as : " + newCookieValueEncoded);
+    }
+
+    public static void syncCartCookieToServer() throws UnsupportedEncodingException {
+
+        RestTemplate restTemplate = ctx.getBean(RestTemplate.class);
+
+        URI uri = UriComponentsBuilder
+                .fromHttpUrl("http://www.qmduobao.com/mycart/buyProductClick.html")
+                .queryParam("date", System.currentTimeMillis())
+                .build()
+                .encode("UTF-8")
+                .toUri();
+        logger.debug("---  " + uri);
+
+        // get
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-Requested-With", "XMLHttpRequest");
+        HttpEntity<Void> reqEntity = new HttpEntity<Void>(null, headers);
+        ResponseEntity<String> resp = restTemplate.exchange(uri, HttpMethod.GET, reqEntity, String.class);
+        Assert.isTrue(HttpStatus.OK == resp.getStatusCode());
+
+        String respStr = resp.getBody();
+        logger.debug("同步购物车， 结果为 ： {} ", respStr);
+    }
+
+    // 提交购物车
+    public static void submitCart() throws JsonParseException, JsonMappingException, IOException {
+        RestTemplate restTemplate = ctx.getBean(RestTemplate.class);
+
+        List<Map> products = getCartFromCookie();
+        Assert.isTrue(products.size() > 0, "购物车为空，无法下单");
+        logger.debug("提交购物车");
+
+        StringBuilder buf = new StringBuilder();
+        int money = 0;
+        for (Map item : products) {
+            buf.append(item.get("pId"));
+            buf.append(",");
+
+            money += (Integer) item.get("num");
+        }
+        buf.setLength(buf.length() - 1);
+        String ids = buf.toString();
+
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
+        params.add("hidLogined", data.get("userId").toString());
+        params.add("hidCartState", "1");
+        params.add("userPayType", "");
+        params.add("hidTotalMoney", Integer.toString(money));
+        params.add("id", ids);
+
+        URI uri = UriComponentsBuilder
+                .fromHttpUrl("http://www.qmduobao.com/mycart/payment.html")
+                .queryParam("date", System.currentTimeMillis())
+                .build()
+                .encode("UTF-8")
+                .toUri();
+
+        ResponseEntity<String> resp = restTemplate.postForEntity(uri, params, String.class);
+        Assert.isTrue(HttpStatus.OK == resp.getStatusCode());
+
+    }
+
+    // 支付购物车 (Ajax)
+    public static void payCart() throws JsonParseException, JsonMappingException, IOException {
+
+        List<Map> products = getCartFromCookie();
+        Assert.isTrue(products.size() > 0, "购物车为空，无法下单");
+        logger.debug("支付购物车");
+
+        StringBuilder buf = new StringBuilder();
+        int money = 0;
+        for (Map item : products) {
+            buf.append(item.get("pId"));
+            buf.append(",");
+
+            money += (Integer) item.get("num");
+        }
+        buf.setLength(buf.length() - 1);
+        String ids = buf.toString();
+
+        RestTemplate restTemplate = ctx.getBean(RestTemplate.class);
+
+        URI uri = UriComponentsBuilder
+                .fromHttpUrl("http://www.qmduobao.com/mycart/goPay.action")
+                .queryParam("integral", "0")
+                .queryParam("moneyCount", money)
+                .queryParam("hidUseBalance", "1")
+                .queryParam("bankMoney", "0")
+                .queryParam("id", ids)
+                .build()
+                .encode("UTF-8")
+                .toUri();
+
+        // get
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-Requested-With", "XMLHttpRequest");
+        HttpEntity<Void> reqEntity = new HttpEntity<Void>(null, headers);
+        ResponseEntity<String> resp = restTemplate.exchange(uri, HttpMethod.GET, reqEntity, String.class);
+        Assert.isTrue(HttpStatus.OK == resp.getStatusCode());
+    }
+
+    private static List getCartFromCookie() throws JsonParseException, JsonMappingException, IOException {
+
+        CookieStore cookieStore = ctx.getBean(CookieStore.class);
+
+        // 找到既有的 "products" cookie
+        List<Cookie> cookies = cookieStore.getCookies();
+        BasicClientCookie productsCookie = null;
+        for (Cookie c : cookies) {
+            if ("products".equals(c.getName())) {
+                productsCookie = (BasicClientCookie) c;
+                break;
+            }
+        }
+
+        if (productsCookie == null) {
+            return Collections.emptyList();
+        }
+
+        String jsonStr = URLDecoder.decode(productsCookie.getValue(), "UTF-8");
+        ObjectMapper objectMapper = ctx.getBean(ObjectMapper.class);
+        List products = objectMapper.readValue(jsonStr, List.class);
+        return products;
+    }
+
     // ------------------------------------------------------- Spring Bean 配置区域
 
     @Bean
-    @Scope("singleton")
+    @Scope("prototype")
     public ObjectMapper objectMapper() {
         return new ObjectMapper();
     }
