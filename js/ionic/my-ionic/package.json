@@ -1,7 +1,7 @@
 {
-  "name": "myapp",
+  "name": "my-ionic",
   "version": "1.1.1",
-  "description": "myApp: An Ionic project",
+  "description": "my-ionic: An Ionic project",
   "dependencies": {
     "gulp": "^3.5.6",
     "gulp-sass": "^2.0.4",
@@ -23,6 +23,9 @@
     "ionic-plugin-keyboard"
   ],
   "cordovaPlatforms": [
-    "android"
+    {
+      "platform": "android",
+      "locator": "browser"
+    }
   ]
 }
