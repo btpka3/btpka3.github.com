@@ -7,8 +7,14 @@
         "files": {}
     },
     "installed_plugins": {
+        "cordova-hot-code-push-plugin": {
+            "PACKAGE_NAME": "io.github.btpka3"
+        },
         "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "io.cordova.hellocordova"
+            "PACKAGE_NAME": "io.github.btpka3"
+        },
+        "cordova-hot-code-push-local-dev-addon": {
+            "PACKAGE_NAME": "io.github.btpka3"
         }
     },
     "dependent_plugins": {}

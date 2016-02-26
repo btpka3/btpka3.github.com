@@ -1,0 +1,8 @@
+{
+  "name": "my-cordova",
+  "ios_identifier": "",
+  "android_identifier": "io.github.btpka3",
+  "update": "now",
+  "content_url": "https://2ec2458.ngrok.com",
+  "release": "2016.02.22-17.56.14"
+}

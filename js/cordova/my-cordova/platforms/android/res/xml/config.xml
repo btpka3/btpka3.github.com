@@ -1,32 +1,45 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="io.github.btpka3" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <preference name="loglevel" value="DEBUG" />
-    <feature name="Whitelist">
-        <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
-        <param name="onload" value="true" />
-    </feature>
-    <preference name="CodePushDeploymentKey" value="YDJU7p8wa2U1fzIPljL6IzAoSomurVkwGr_yix" />
-    <allow-intent href="market:*" />
-    <name short="my-cordova">My Cordova</name>
-    <preference name="apikey" readonly="true" value="ea31ad3a23fd2f" />
-    <preference name="Fullscreen" value="false" />
-    <preference name="DisallowOverscroll" value="false" />
-    <preference name="BackgroundColor" value="0xff0000ff" />
-    <description>
+  <preference name="loglevel" value="DEBUG"/>
+  <preference name="loadUrlTimeoutValue" value="60000"/>
+  <preference name="CodePushDeploymentKey" value="YDJU7p8wa2U1fzIPljL6IzAoSomurVkwGr_yix"/>
+  <preference name="apikey" readonly="true" value="ea31ad3a23fd2f"/>
+  <preference name="Fullscreen" value="false"/>
+  <preference name="DisallowOverscroll" value="false"/>
+  <preference name="BackgroundColor" value="0xff0000ff"/>
+  <feature name="HotCodePush">
+    <param name="android-package" value="com.nordnetab.chcp.main.HotCodePushPlugin"/>
+    <param name="onload" value="true"/>
+  </feature>
+  <feature name="Whitelist">
+    <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin"/>
+    <param name="onload" value="true"/>
+  </feature>
+  <feature name="HotCodePushLocalDevMode">
+    <param name="android-package" value="com.nordnetab.chcp.localdev.HotCodePushLocalDevPlugin"/>
+    <param name="onload" value="true"/>
+  </feature>
+  <allow-intent href="market:*"/>
+  <allow-intent href="http://*/*"/>
+  <allow-intent href="https://*/*"/>
+  <allow-intent href="tel:*"/>
+  <allow-intent href="sms:*"/>
+  <allow-intent href="mailto:*"/>
+  <allow-intent href="geo:*"/>
+  <name short="my-cordova">My Cordova</name>
+  <description>
         A sample Apache Cordova application that responds to the deviceready event.
     </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
+  <author email="dev@cordova.apache.org" href="http://cordova.io">
         Apache Cordova Team
     </author>
-    <content src="index.html" />
-    <access origin="*" />
-    <allow-intent href="http://*/*" />
-    <allow-intent href="https://*/*" />
-    <allow-intent href="tel:*" />
-    <allow-intent href="sms:*" />
-    <allow-intent href="mailto:*" />
-    <allow-intent href="geo:*" />
-    <license>
+  <content src="index.html"/>
+  <access origin="*"/>
+  <chcp>
+    <config-file url="https://65395645.ngrok.com/chcp.json"/>
+    <local-development enabled="true"/>
+  </chcp>
+  <license>
         XXX
     </license>
 </widget>

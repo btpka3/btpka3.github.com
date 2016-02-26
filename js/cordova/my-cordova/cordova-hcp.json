@@ -1,0 +1,7 @@
+{
+  "name": "my-cordova",
+  "ios_identifier": "",
+  "android_identifier": "io.github.btpka3",
+  "update": "resume",
+  "content_url": "http://pub-zll.kingsilk.xyz/my-cordova/"
+}

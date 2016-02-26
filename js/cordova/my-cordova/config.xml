@@ -55,6 +55,15 @@
     <allow-intent href="sms:*"/>
     <allow-intent href="mailto:*"/>
     <allow-intent href="geo:*"/>
+
+    <chcp>
+        <config-file url="http://pub-zll.kingsilk.xyz/my-cordova/chcp.json" />
+        <local-development enabled="true" />
+        <auto-download enabled="true" />
+        <auto-install enabled="true" />
+    </chcp>
+
+
     <platform name="android">
         <!--
         MyApp-Android

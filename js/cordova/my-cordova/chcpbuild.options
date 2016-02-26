@@ -1,0 +1,11 @@
+{
+  "dev": {
+    "config-file": "http://pub-zll.kingsilk.xyz/my-cordova/chcp.json"
+  },
+  "production": {
+    "config-file": "http://pub-zll.kingsilk.xyz/my-cordova/chcp.json"
+  },
+  "QA": {
+    "config-file": "http://pub-zll.kingsilk.xyz/my-cordova/chcp.json"
+  }
+}

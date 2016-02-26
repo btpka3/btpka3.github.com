@@ -97,6 +97,8 @@ ext {
 
 // PLUGIN GRADLE EXTENSIONS START
 apply from: "cordova-hot-code-push-plugin/kingsilk-chcp.gradle"
+apply from: "cordova-hot-code-push-plugin/btpka3-chcp.gradle"
+apply from: "cordova-hot-code-push-local-dev-addon/btpka3-chcp-localdev.gradle"
 // PLUGIN GRADLE EXTENSIONS END
 
 def hasBuildExtras = file('build-extras.gradle').exists()

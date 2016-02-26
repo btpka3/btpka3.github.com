@@ -129,8 +129,21 @@ bower_components
 www
 platforms/android/assets/www
 platforms/ios/www
+```
 
 
+# <del>开发时热部署</del>
+
+```
+cd my-cordova
+cordova plugin add cordova-hot-code-push-plugin
+cordova plugin add cordova-hot-code-push-local-dev-addon
+npm install -g cordova-hot-code-push-cli
+cordova-hcp init
+# 之后,修改成成 cordova-hcp.json
+
+cordova-hcp server
 
 
+cordova run android --device
 ```

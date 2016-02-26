@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试文件协议</title>
+
+    <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+
+    <script>
+
+        $(function () {
+            $.ajax({
+                url: "http://kingsilk.net/qh/mall/api/status",
+                success: function (data, textStatus, jqXHR) {
+                    console.log("success : ", data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log("error : ", errorThrown);
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>
