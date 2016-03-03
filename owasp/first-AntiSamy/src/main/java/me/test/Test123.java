@@ -1,11 +1,10 @@
 package me.test;
 
 import com.google.common.base.Throwables;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
-import org.owasp.html.Handler;
-import org.owasp.html.HtmlSanitizer;
-import org.owasp.html.HtmlStreamRenderer;
+import org.owasp.html.*;
 import org.owasp.html.examples.EbayPolicyExample;
 import org.owasp.validator.html.*;
 
@@ -15,10 +14,11 @@ import java.io.InputStream;
 
 public class Test123 {
     static final String drityInput = "<script>alert(1)</script>"
-            + "<a href='#bb' data-one='1' class='aa bb' style='z-index:999; width:100%;       aa:bb;display:block;overflow:hidden;color:red;' onclick='xxx'>aa</a>"
+            + "<a href='#bb' data-one='1' class='aa bb' style='z-index:999; width:100%;       aa:bb;display:block;overflow:hidden;color:red;' onclick='xxx'>aa 汉字。「，，，</a>"
             + "<p align='center' style='z-index:999; width:100%; align:left;display:block;overflow:hidden;color:red;'>1111 &nbsp; </p>"
             + "<iframe src='javascript:xxx'></iframe>"
-            + "<xxx>xxx</xxx>";
+            + "<xxx>xxx 中文。「，，，=&nbsp;="
+            + "&lt;script/&gt;alert('111');&lt;script/&gt; </xxx>";
 
     public static void main(String[] args) throws ScanException, PolicyException {
         System.out.println("------------------------------------------ testJsoup()");
@@ -50,8 +50,9 @@ public class Test123 {
     }
 
     public static void testHtmlSanitizer() {
+        StringBuilder buf = new StringBuilder();
         HtmlStreamRenderer renderer = HtmlStreamRenderer.create(
-                System.out,
+                buf,
                 // Receives notifications on a failure to write to the output.
                 new Handler<IOException>() {
                     public void handle(IOException ex) {
@@ -66,5 +67,7 @@ public class Test123 {
                     }
                 });
         HtmlSanitizer.sanitize(drityInput, EbayPolicyExample.POLICY_DEFINITION.apply(renderer));
+        System.out.println(buf);
+        System.out.println(StringEscapeUtils.unescapeHtml4(buf.toString()));
     }
 }
