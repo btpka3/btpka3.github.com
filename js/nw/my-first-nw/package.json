@@ -1,6 +1,80 @@
 {
-  "name": "helloworld",
   "main": "index.html",
+  "name": "helloworld",
+  "description": "my first nw.js app",
+  "version": "0.1.0",
+  "keywords": [
+    "demo",
+    "node-webkit"
+  ],
+  "maintainers": [
+    {
+      "name": "btpka3",
+      "email": "btpka3@163.com",
+      "web": "http://btpka3.github.io"
+    }
+  ],
+  "contributors": [
+    {
+      "name": "btpka3",
+      "email": "btpka3@163.com",
+      "web": "http://btpka3.github.io"
+    }
+  ],
+  "bugs": "http://test.me/",
+  "licenses": [
+    {
+      "type": "GPLv2",
+      "url": "http://www.example.com/licenses/gpl.html"
+    }
+  ],
+  "author": {
+    "name": "btpka3",
+    "email": "btpka3@163.com",
+    "web": "http://btpka3.github.io"
+  },
+  "repositories": [
+    {
+      "type": "git",
+      "url": "http://github.com/example.git",
+      "path": "packages/mypackage"
+    }
+  ],
+  "nodejs": true,
+  "node-main": "index.js",
+  "single-instance": true,
+  "window": {
+    "title": "node-webkit demo",
+    "icon": "link.png",
+    "toolbar": true,
+    "frame": true,
+    "width": 800,
+    "height": 500,
+    "position": "mouse",
+    "min_width": 400,
+    "min_height": 200,
+    "max_width": 800,
+    "max_height": 600,
+    "resizable": true,
+    "always-on-top": false,
+    "show_in_taskbar": true,
+    "show": true,
+    "kiosk": false
+  },
+  "webkit": {
+    "plugin": true,
+    "java": true,
+    "page-cache": false,
+    "user-agent": "%name %ver, node-webkit %nwver, WebKit %webkit_ver, OS %osinfo"
+  },
   "chromium-args": "--disable-setuid-sandbox",
-  "node-remote": "http://btpka3.github.io"
+  "node-remote": "http://btpka3.github.io",
+  "js-flags": "",
+  "inject-js-start": "",
+  "inject-js-end": "",
+  "dom_storage_quota": 128,
+  "no-edit-menu": false,
+  "dependencies": {
+    "colors": "^1.1.2"
+  }
 }

@@ -7,7 +7,9 @@
 </head>
 <body style="width: 100%; height: 100%; border:1px solid red;">
 <h1>Hello World!</h1>
-
+<p>We are using node.js
+    <script>document.write(process.version)</script>
+</p>
 <p>
     <script>
         // get the system platform using node.js
@@ -20,14 +22,22 @@
     <button id="set">set keyword</button>
 </div>
 <div>
-    <button id="search">search</button>
+    <button id="search">search it</button>
+    <button id="submitBtn"> submit it</button>
 </div>
 <script>
     var nw = require('nw.gui');
+    var m = require("./m");
 
-    // test: 通过 全局 node 环境传递共享变量
-    nw.arr = [111];
-    console.log("################## nw.arr : " + JSON.stringify(nw.arr));
+    setInterval(function () {
+                global.arr[1]++;
+                m.arr[1]++;
+                console.log("=================== browser1 :"
+                        + " global.arr = " + JSON.stringify(global.arr)
+                        + " m.arr = " + JSON.stringify(m.arr))
+            },
+            3000
+    );
 
 
     // Get the current window
@@ -45,7 +55,8 @@
     //    var url = "./test.html";
     var new_win = nw.Window.open(url, {
         position: 'center',
-        'inject-js-end': './test.js'
+        'inject-js-start': './test-start.js',
+        'inject-js-end': './test-end.js'
     }, function (w) {
         console.log("################## window loaded.");
     });
