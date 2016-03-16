@@ -1,0 +1,32 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>div#d1.width=?</title>
+        <style>
+
+            #d1 {
+                margin: 10px;
+                padding: 11px;
+                border: 2px solid red;
+                outline: 5px dotted #555500;
+                display: inline-block;
+            }
+
+            #d2 {
+                box-sizing: content-box;
+                margin: 1px;
+                padding: 2px;
+                border: 1px solid blue;
+                outline: 3px dotted #555500;
+                background-color: aquamarine;
+                width: 100px;
+            }
+        </style>
+    </head>
+    <body>
+    <div id="d1">
+        <div id="d2">XXX</div>
+    </div>
+    </body>
+    </html>
