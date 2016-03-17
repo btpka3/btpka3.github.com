@@ -1,11 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="app">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
+    <link rel="stylesheet" href="https://cdn.bootcss.com/angular-material/1.0.6/angular-material.min.css">
+    <!--
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+    -->
+
     <script src="http://echarts.baidu.com/dist/echarts.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+    <!--<script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
+    <script src="https://cdn.bootcss.com/angular.js/1.5.0/angular.js"></script>
+    <script src="https://cdn.bootcss.com/angular.js/1.5.0/angular-animate.min.js"></script>
+    <script src="https://cdn.bootcss.com/angular.js/1.5.0/angular-aria.min.js"></script>
+
+    <script src="https://cdn.bootcss.com/angular-material/1.0.6/angular-material.min.js"></script>
+
+    <script src="app.js"></script>
     <script>
-        var option = {
+        var optionSample = {
 
             legend: {
                 data: ['qh-core', 'qh-domain', 'qh-service', 'qh-admin', 'qh-wap', 'qh-wap-front']
@@ -62,13 +78,13 @@
         };
     </script>
 </head>
-<body>
-<div id="main" style="width: 600px; height:400px;"></div>
-<script>
-    // 基于准备好的dom，初始化echarts实例
-    var myChart = echarts.init(document.getElementById('main'));
-    // 使用刚指定的配置项和数据显示图表。
-    myChart.setOption(option);
-</script>
+<body ng-controller="MyCtrl as vm">
+
+<md-select  ng-model="vm.curStat" ng-change="vm.updateChart()" style="min-width: 200px;" >
+    <md-option ng-value="stat" ng-repeat="stat in vm.stats">{{stat.label}}</md-option>
+</md-select>
+
+
+<div id="main" style="width: 100%; height:400px;"></div>
 </body>
 </html>

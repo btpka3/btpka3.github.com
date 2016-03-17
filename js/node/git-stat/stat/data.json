@@ -1,0 +1,810 @@
+{
+  "qh-domain": {
+    "config": {
+      "projectName": "qh-domain",
+      "repoPath": "/home/zll/work/git-repo/kingsilk/qh-domain/",
+      "commitFrom": "2015-01-01T06:48:00.000Z",
+      "commitTo": "2016-02-29T16:00:00.000Z",
+      "matchPaths": [
+        "grails-app/domain/**/*",
+        "src/groovy/**/*",
+        "src/java/**/*",
+        "src/doc/**/*",
+        "src/js/**/*",
+        ".gitignore",
+        "**/README.md"
+      ],
+      "ignoreUsers": [
+        "小梅",
+        "小宋"
+      ],
+      "branches": [
+        "refs/heads/master"
+      ],
+      "committerAlias": {
+        "陈丽": "可可",
+        "chenli": "可可",
+        "btpka3": "般若",
+        "张亮亮": "般若",
+        "swx": "唐印",
+        "hechengwen": "胡杨",
+        "何承文": "胡杨",
+        "wangjh": "青蒿",
+        "王俊辉": "青蒿",
+        "yech": "南瓜",
+        "叶晨浩": "南瓜",
+        "fuguotao": "菩提",
+        "Ricardo-M": "小梅",
+        "梅梦遥": "小梅",
+        "sqz": "小宋"
+      }
+    },
+    "repoResult": {
+      "胡杨": {
+        "committerAlias": "胡杨",
+        "commits": 49,
+        "addedLines": 641,
+        "deletedLines": 219,
+        "unMergedCount": 0,
+        "unMergedCommits": [],
+        "unRebasedCount": 0,
+        "unRebasedCommits": [],
+        "firstCommit": "8c2d0d8608a9abae7c0e7091e157c8067cdaa18c",
+        "lastCommit": "f1680ea93afc324084c83245b6b1769048a226c5"
+      },
+      "可可": {
+        "committerAlias": "可可",
+        "commits": 21,
+        "addedLines": 606,
+        "deletedLines": 62,
+        "unMergedCount": 0,
+        "unMergedCommits": [],
+        "unRebasedCount": 0,
+        "unRebasedCommits": [],
+        "firstCommit": "fc14541dfdf97876b0e82dc7d38744b9c6b9def6",
+        "lastCommit": "114b7949b580ad1bc821a36cac61d51d458daa3e"
+      },
+      "般若": {
+        "committerAlias": "般若",
+        "commits": 183,
+        "addedLines": 17402,
+        "deletedLines": 3259,
+        "unMergedCount": 0,
+        "unMergedCommits": [],
+        "unRebasedCount": 0,
+        "unRebasedCommits": [],
+        "firstCommit": "e7646bfe00fa97c952cb20b558a332cbaba4314a",
+        "lastCommit": "8a23664690a77d00c4d98f7af89b234ca3065d4c"
+      },
+      "唐印": {
+        "committerAlias": "唐印",
+        "commits": 24,
+        "addedLines": 503,
+        "deletedLines": 245,
+        "unMergedCount": 0,
+        "unMergedCommits": [],
+        "unRebasedCount": 0,
+        "unRebasedCommits": [],
+        "firstCommit": "0be4fe911d0b037b4b91330ed111564d2a3c30a7",
+        "lastCommit": "77f6a59f4e62ccfe98637dfe0561efcc45bf0330"
+      },
+      "青蒿": {
+        "committerAlias": "青蒿",
+        "commits": 21,
+        "addedLines": 4381,
+        "deletedLines": 4102,
+        "unMergedCount": 0,
+        "unMergedCommits": [],
+        "unRebasedCount": 0,
+        "unRebasedCommits": [],
+        "firstCommit": "bc5621309e26b86f0af8d3f7276e51473f2e28de",
+        "lastCommit": "eeef08ece560afeda19078ae942712c13d872ead"
+      }
+    }
+  },
+  "qh-wap": {
+    "config": {
+      "projectName": "qh-wap",
+      "repoPath": "/home/zll/work/git-repo/kingsilk/qh-wap/",
+      "commitFrom": "2015-01-01T06:48:00.000Z",
+      "commitTo": "2016-02-29T16:00:00.000Z",
+      "matchPaths": [
+        "grails-app/jobs/**/*",
+        "grails-app/services/**/*",
+        "grails-app/conf/spring/resources.groovy",
+        "grails-app/conf/xyz/kingsilk/**/*",
+        "grails-app/controllers/**/*",
+        "src/groovy/**/*",
+        "src/java/**/*",
+        "src/doc/**/*",
+        "src/js/**/*",
+        "test/jmeter/*",
+        ".gitignore",
+        "**/README.md"
+      ],
+      "ignoreUsers": [
+        "小梅",
+        "小宋"
+      ],
+      "branches": [
+        "refs/heads/master"
+      ],
+      "committerAlias": {
+        "陈丽": "可可",
+        "chenli": "可可",
+        "btpka3": "般若",
+        "张亮亮": "般若",
+        "swx": "唐印",
+        "hechengwen": "胡杨",
+        "何承文": "胡杨",
+        "wangjh": "青蒿",
+        "王俊辉": "青蒿",
+        "yech": "南瓜",
+        "叶晨浩": "南瓜",
+        "fuguotao": "菩提",
+        "Ricardo-M": "小梅",
+        "梅梦遥": "小梅",
+        "sqz": "小宋"
+      }
+    },
+    "repoResult": {
+      "胡杨": {
+        "committerAlias": "胡杨",
+        "commits": 39,
+        "addedLines": 3259,
+        "deletedLines": 1051,
+        "unMergedCount": 0,
+        "unMergedCommits": [],
+        "unRebasedCount": 0,
+        "unRebasedCommits": [],
+        "firstCommit": "a9ed14fbece7a73532e01651e3ec1080be891776",
+        "lastCommit": "da4f44499f45d21723bc218c7915d551ff5e0a95"
+      },
+      "青蒿": {
+        "committerAlias": "青蒿",
+        "commits": 12,
+        "addedLines": 3031,
+        "deletedLines": 33,
+        "unMergedCount": 0,
+        "unMergedCommits": [],
+        "unRebasedCount": 0,
+        "unRebasedCommits": [],
+        "firstCommit": "3a6882d7f0e45bae9a41424c5a679a44859f9442",
+        "lastCommit": "732e8b49912fc7ee44eec6a3bcab5aa08fadf7b3"
+      },
+      "般若": {
+        "committerAlias": "般若",
+        "commits": 67,
+        "addedLines": 4038,
+        "deletedLines": 655,
+        "unMergedCount": 0,
+        "unMergedCommits": [],
+        "unRebasedCount": 0,
+        "unRebasedCommits": [],
+        "firstCommit": "1029148c341edfde9351348275078591fc1c3a7b",
+        "lastCommit": "bc022eda8495f9a6128a3fdf4d5d1be8978e41cb"
+      },
+      "唐印": {
+        "committerAlias": "唐印",
+        "commits": 333,
+        "addedLines": 21763,
+        "deletedLines": 8588,
+        "unMergedCount": 4,
+        "unMergedCommits": [
+          "ac8d5ea371ef66232dd18f72216691eb741ffb44",
+          "97e3a016e4acff853c0445914ae6cd8119f3bae0",
+          "a6387f269e8a3a7c06d02a71374c613742d2f770",
+          "a6387f269e8a3a7c06d02a71374c613742d2f770"
+        ],
+        "unRebasedCount": 3,
+        "unRebasedCommits": [
+          "a6387f269e8a3a7c06d02a71374c613742d2f770",
+          "8ecc2a83c2acd610e5a049f37a89463f23df7c0f",
+          "1d793fce813b6e5ba22c094958af86efe01a1a57"
+        ],
+        "firstCommit": "fbb9df24076fd0d6eac273b2474ff794f88933da",
+        "lastCommit": "d61279b2fe56408092407e2ba4a99101d6147476"
+      },
+      "可可": {
+        "committerAlias": "可可",
+        "commits": 292,
+        "addedLines": 32880,
+        "deletedLines": 15508,
+        "unMergedCount": 44,
+        "unMergedCommits": [
+          "604a5ea1a9feb1c47454dafc2759fe7cb68a8751",
+          "ebf62f631d6ada4e09eddeaaf8e05d70f790c750",
+          "062c35776d9b041aa922fb5df4f7c14dedc245e0",
+          "062c35776d9b041aa922fb5df4f7c14dedc245e0",
+          "062c35776d9b041aa922fb5df4f7c14dedc245e0",
+          "062c35776d9b041aa922fb5df4f7c14dedc245e0",
+          "9f607fca8888b1a4e843fba20269ad27cc6961a9",
+          "9f607fca8888b1a4e843fba20269ad27cc6961a9",
+          "98dacf1d7477707729dc0a7fc3c2169e71321efd",
+          "98dacf1d7477707729dc0a7fc3c2169e71321efd",
+          "98dacf1d7477707729dc0a7fc3c2169e71321efd",
+          "98dacf1d7477707729dc0a7fc3c2169e71321efd",
+          "98dacf1d7477707729dc0a7fc3c2169e71321efd",
+          "98dacf1d7477707729dc0a7fc3c2169e71321efd",
+          "98dacf1d7477707729dc0a7fc3c2169e71321efd",
+          "51a14c82040c58c16dfc9b447090f24b64cc45b4",
+          "51a14c82040c58c16dfc9b447090f24b64cc45b4",
+          "51a14c82040c58c16dfc9b447090f24b64cc45b4",
+          "51a14c82040c58c16dfc9b447090f24b64cc45b4",
+          "9be92d6d957b3d804ad288653ecd32e0426c2929",
+          "9be92d6d957b3d804ad288653ecd32e0426c2929",
+          "9b94c93d3c38b792b6a041529ba55c3bdfd7c71b",
+          "9b94c93d3c38b792b6a041529ba55c3bdfd7c71b",
+          "ff0d859990f340f6baee6bb455da15438e0358e1",
+          "ff0d859990f340f6baee6bb455da15438e0358e1",
+          "cfc9499dd67c48737eeb2abae8e7a2444cde950e",
+          "cfc9499dd67c48737eeb2abae8e7a2444cde950e",
+          "cfc9499dd67c48737eeb2abae8e7a2444cde950e",
+          "cfc9499dd67c48737eeb2abae8e7a2444cde950e",
+          "cfc9499dd67c48737eeb2abae8e7a2444cde950e",
+          "cfc9499dd67c48737eeb2abae8e7a2444cde950e",
+          "cfc9499dd67c48737eeb2abae8e7a2444cde950e",
+          "cfc9499dd67c48737eeb2abae8e7a2444cde950e",
+          "cfc9499dd67c48737eeb2abae8e7a2444cde950e",
+          "cfc9499dd67c48737eeb2abae8e7a2444cde950e",
+          "cfc9499dd67c48737eeb2abae8e7a2444cde950e",
+          "7197d097f20fb1358236616d77c38f73028be853",
+          "7197d097f20fb1358236616d77c38f73028be853",
+          "7197d097f20fb1358236616d77c38f73028be853",
+          "7197d097f20fb1358236616d77c38f73028be853",
+          "7197d097f20fb1358236616d77c38f73028be853",
+          "7197d097f20fb1358236616d77c38f73028be853",
+          "7197d097f20fb1358236616d77c38f73028be853",
+          "7197d097f20fb1358236616d77c38f73028be853"
+        ],
+        "unRebasedCount": 4,
+        "unRebasedCommits": [
+          "cfc9499dd67c48737eeb2abae8e7a2444cde950e",
+          "2775e7f1524b6331d4edc8c230d1fa833c0c7b17",
+          "3cd2b54fe5ee751822354a05e056eab0f47b13f8",
+          "a6d75574453297af557fe5b4d7d3d85c64010dea"
+        ],
+        "firstCommit": "0bb27c7869d897ce535beffadc5bb804914d5fa4",
+        "lastCommit": "8d76704c0c75e44b8c9af4989b33645a6b349ab1"
+      },
+      "南瓜": {
+        "committerAlias": "南瓜",
+        "commits": 6,
+        "addedLines": 18,
+        "deletedLines": 5,
+        "unMergedCount": 0,
+        "unMergedCommits": [],
+        "unRebasedCount": 0,
+        "unRebasedCommits": [],
+        "firstCommit": "d5fda4ab5833fa1f5b10b4f8454dd42e150ce70e",
+        "lastCommit": "577d3e64c1bae904a971813250a573645962e122"
+      }
+    }
+  },
+  "qh-core": {
+    "config": {
+      "projectName": "qh-core",
+      "repoPath": "/home/zll/work/git-repo/kingsilk/qh-core/",
+      "commitFrom": "2015-01-01T06:48:00.000Z",
+      "commitTo": "2016-02-29T16:00:00.000Z",
+      "matchPaths": [
+        "src/groovy/**/*",
+        "src/java/**/*",
+        "src/doc/**/*",
+        "src/js/**/*",
+        ".gitignore",
+        "**/README.md"
+      ],
+      "ignoreUsers": [
+        "小梅",
+        "小宋"
+      ],
+      "branches": [
+        "refs/heads/master"
+      ],
+      "committerAlias": {
+        "陈丽": "可可",
+        "chenli": "可可",
+        "btpka3": "般若",
+        "张亮亮": "般若",
+        "swx": "唐印",
+        "hechengwen": "胡杨",
+        "何承文": "胡杨",
+        "wangjh": "青蒿",
+        "王俊辉": "青蒿",
+        "yech": "南瓜",
+        "叶晨浩": "南瓜",
+        "fuguotao": "菩提",
+        "Ricardo-M": "小梅",
+        "梅梦遥": "小梅",
+        "sqz": "小宋"
+      }
+    },
+    "repoResult": {
+      "胡杨": {
+        "committerAlias": "胡杨",
+        "commits": 36,
+        "addedLines": 321,
+        "deletedLines": 136,
+        "unMergedCount": 2,
+        "unMergedCommits": [
+          "08c713b706ea6995e70fbc016977607184b8a67e",
+          "25d52b7568ed62171f44d786f1e67ca9e5410915"
+        ],
+        "unRebasedCount": 0,
+        "unRebasedCommits": [],
+        "firstCommit": "e104916e7546ee74499b79bb655bc98677584e6f",
+        "lastCommit": "8f484672d8f0d0de2f145a081ab88b70d9464b1a"
+      },
+      "般若": {
+        "committerAlias": "般若",
+        "commits": 48,
+        "addedLines": 1626,
+        "deletedLines": 156,
+        "unMergedCount": 0,
+        "unMergedCommits": [],
+        "unRebasedCount": 0,
+        "unRebasedCommits": [],
+        "firstCommit": "fee3aeb0e9541d663e743423590701826d1f9041",
+        "lastCommit": "82dca8373c1149b39e1279fff859de16468526d9"
+      },
+      "唐印": {
+        "committerAlias": "唐印",
+        "commits": 13,
+        "addedLines": 45,
+        "deletedLines": 24,
+        "unMergedCount": 0,
+        "unMergedCommits": [],
+        "unRebasedCount": 0,
+        "unRebasedCommits": [],
+        "firstCommit": "33042d8de102c4bdd4f0a768197733cd2add03bf",
+        "lastCommit": "1e99fc48507ac9722930eae373aa08503df94f36"
+      },
+      "青蒿": {
+        "committerAlias": "青蒿",
+        "commits": 25,
+        "addedLines": 149,
+        "deletedLines": 55,
+        "unMergedCount": 0,
+        "unMergedCommits": [],
+        "unRebasedCount": 0,
+        "unRebasedCommits": [],
+        "firstCommit": "961d8de9a466f886bbf27209fc92ff2a44409616",
+        "lastCommit": "73778748e7699acddb24583206f105e5f67ff827"
+      },
+      "可可": {
+        "committerAlias": "可可",
+        "commits": 10,
+        "addedLines": 342,
+        "deletedLines": 12,
+        "unMergedCount": 0,
+        "unMergedCommits": [],
+        "unRebasedCount": 0,
+        "unRebasedCommits": [],
+        "firstCommit": "a2fd134387b135c24909935d21e0d75e62777106",
+        "lastCommit": "1e45ac8ac1ec9ee72bd0831058e697765aa7eb17"
+      }
+    }
+  },
+  "qh-admin": {
+    "config": {
+      "projectName": "qh-admin",
+      "repoPath": "/home/zll/work/git-repo/kingsilk/qh-admin/",
+      "commitFrom": "2015-01-01T06:48:00.000Z",
+      "commitTo": "2016-02-29T16:00:00.000Z",
+      "matchPaths": [
+        "grails-app/assets/javascripts/**/*",
+        "grails-app/assets/stylesheets/**/*",
+        "grails-app/conf/spring/resources.groovy",
+        "grails-app/conf/xyz/kingsilk/**/*",
+        "grails-app/controllers/**/*",
+        "grails-app/services/**/*",
+        "grails-app/views/**/*",
+        "src/groovy/**/*",
+        "src/java/**/*",
+        "src/doc/**/*",
+        "src/js/**/*",
+        ".gitignore",
+        "**/README.md"
+      ],
+      "ignoreUsers": [
+        "小梅",
+        "小宋"
+      ],
+      "branches": [
+        "refs/heads/master"
+      ],
+      "committerAlias": {
+        "陈丽": "可可",
+        "chenli": "可可",
+        "btpka3": "般若",
+        "张亮亮": "般若",
+        "swx": "唐印",
+        "hechengwen": "胡杨",
+        "何承文": "胡杨",
+        "wangjh": "青蒿",
+        "王俊辉": "青蒿",
+        "yech": "南瓜",
+        "叶晨浩": "南瓜",
+        "fuguotao": "菩提",
+        "Ricardo-M": "小梅",
+        "梅梦遥": "小梅",
+        "sqz": "小宋"
+      }
+    },
+    "repoResult": {
+      "胡杨": {
+        "committerAlias": "胡杨",
+        "commits": 390,
+        "addedLines": 53719,
+        "deletedLines": 27706,
+        "unMergedCount": 13,
+        "unMergedCommits": [
+          "408f03748ba1dfcc9f6c16e10835b644e72cc0e0",
+          "408f03748ba1dfcc9f6c16e10835b644e72cc0e0",
+          "2709fc60763b787ff5e760894f4a0eddff94d41c",
+          "2709fc60763b787ff5e760894f4a0eddff94d41c",
+          "2709fc60763b787ff5e760894f4a0eddff94d41c",
+          "2709fc60763b787ff5e760894f4a0eddff94d41c",
+          "2709fc60763b787ff5e760894f4a0eddff94d41c",
+          "24da9d2f21be190e792c9b285a82f2a2df81702e",
+          "34d006d8d26a2833a09a44985298b2e7a678ea89",
+          "34d006d8d26a2833a09a44985298b2e7a678ea89",
+          "7c1d64aa0b1128a6bf53906b01641e5c1a7b2dad",
+          "7c1d64aa0b1128a6bf53906b01641e5c1a7b2dad",
+          "e3aa3cf16661569d1240f0398e3427d680a433b5"
+        ],
+        "unRebasedCount": 3,
+        "unRebasedCommits": [
+          "d7fcc503d0e9cb610fb2f8cf0a547934fb5a3874",
+          "b4a4ad6c51e936a9bc6d11abb9506cd61229cf39",
+          "4aeb26e48fc67c9c9b4e3d618670749582154de9"
+        ],
+        "firstCommit": "998e971bccd81390360fdbddec56be8014ca65dc",
+        "lastCommit": "76fd571b3b94c6f3560ee4beef8beb6750812f64"
+      },
+      "青蒿": {
+        "committerAlias": "青蒿",
+        "commits": 377,
+        "addedLines": 46277,
+        "deletedLines": 24969,
+        "unMergedCount": 8,
+        "unMergedCommits": [
+          "752ab600f07139cbd431522f2f472d5c15a1587a",
+          "752ab600f07139cbd431522f2f472d5c15a1587a",
+          "556a89c684d8f03ed2aef69ca37200f4abdb12a1",
+          "556a89c684d8f03ed2aef69ca37200f4abdb12a1",
+          "556a89c684d8f03ed2aef69ca37200f4abdb12a1",
+          "556a89c684d8f03ed2aef69ca37200f4abdb12a1",
+          "2a543af36bc839becbc165d29e4dffe931bb2df0",
+          "1a80dfe4ab864e7395d2368b81f1da0219a25baf"
+        ],
+        "unRebasedCount": 1,
+        "unRebasedCommits": [
+          "46f858c0b4d00dc4745d4699b41bdbfa4f089700"
+        ],
+        "firstCommit": "25ed6aaba765683e02780e0399738469d2810de5",
+        "lastCommit": "c8bcee1e1ca8c0ddb4203ae431a1fa04db2a80f4"
+      },
+      "唐印": {
+        "committerAlias": "唐印",
+        "commits": 8,
+        "addedLines": 78,
+        "deletedLines": 29,
+        "unMergedCount": 0,
+        "unMergedCommits": [],
+        "unRebasedCount": 0,
+        "unRebasedCommits": [],
+        "firstCommit": "c811e6bafb24a17f2dee4e05092ba210c44c55a8",
+        "lastCommit": "e17e47ba9758b77ec7092e526ecfadfd5c494e61"
+      },
+      "般若": {
+        "committerAlias": "般若",
+        "commits": 73,
+        "addedLines": 9384,
+        "deletedLines": 1466,
+        "unMergedCount": 0,
+        "unMergedCommits": [],
+        "unRebasedCount": 0,
+        "unRebasedCommits": [],
+        "firstCommit": "70fff6a946eff103dde5affed7a1511a38018803",
+        "lastCommit": "a40bfe570234df383f6d47b7df2d214f7b7a6d51"
+      },
+      "可可": {
+        "committerAlias": "可可",
+        "commits": 24,
+        "addedLines": 1006,
+        "deletedLines": 229,
+        "unMergedCount": 0,
+        "unMergedCommits": [],
+        "unRebasedCount": 0,
+        "unRebasedCommits": [],
+        "firstCommit": "b4f44e5b5e7d85a94d0672d96d823b1a96ca2819",
+        "lastCommit": "54014e1d79fd7bb7f199841253302c19fa0eccf5"
+      }
+    }
+  },
+  "qh-service": {
+    "config": {
+      "projectName": "qh-service",
+      "repoPath": "/home/zll/work/git-repo/kingsilk/qh-service/",
+      "commitFrom": "2015-01-01T06:48:00.000Z",
+      "commitTo": "2016-02-29T16:00:00.000Z",
+      "matchPaths": [
+        "grails-app/services/**/*",
+        "grails-app/jobs/**/*",
+        "src/groovy/**/*",
+        "src/java/**/*",
+        "src/doc/**/*",
+        "src/js/**/*",
+        ".gitignore",
+        "**/README.md"
+      ],
+      "ignoreUsers": [
+        "小梅",
+        "小宋"
+      ],
+      "branches": [
+        "refs/heads/master"
+      ],
+      "committerAlias": {
+        "陈丽": "可可",
+        "chenli": "可可",
+        "btpka3": "般若",
+        "张亮亮": "般若",
+        "swx": "唐印",
+        "hechengwen": "胡杨",
+        "何承文": "胡杨",
+        "wangjh": "青蒿",
+        "王俊辉": "青蒿",
+        "yech": "南瓜",
+        "叶晨浩": "南瓜",
+        "fuguotao": "菩提",
+        "Ricardo-M": "小梅",
+        "梅梦遥": "小梅",
+        "sqz": "小宋"
+      }
+    },
+    "repoResult": {
+      "唐印": {
+        "committerAlias": "唐印",
+        "commits": 208,
+        "addedLines": 9297,
+        "deletedLines": 4530,
+        "unMergedCount": 3,
+        "unMergedCommits": [
+          "da8a50d237a9cc647062d000e69d96094c232ba2",
+          "3d768c7f14cda48115a4303c77da105c2519ba1b",
+          "3d768c7f14cda48115a4303c77da105c2519ba1b"
+        ],
+        "unRebasedCount": 2,
+        "unRebasedCommits": [
+          "3d768c7f14cda48115a4303c77da105c2519ba1b",
+          "91c5afbc91a2dc06a1e7027ba321d871985b4226"
+        ],
+        "firstCommit": "3aeed2a09787d3994559a53d365aa636e6feb039",
+        "lastCommit": "bf2bb3f630aa80d960b16a3190712dbafdd5918b"
+      },
+      "胡杨": {
+        "committerAlias": "胡杨",
+        "commits": 48,
+        "addedLines": 2113,
+        "deletedLines": 1007,
+        "unMergedCount": 0,
+        "unMergedCommits": [],
+        "unRebasedCount": 0,
+        "unRebasedCommits": [],
+        "firstCommit": "c0453d7841f9ff4767dc01f06167d4be97eba7f4",
+        "lastCommit": "9c6f19f7210110fafcb77279ef8d59d586a85c08"
+      },
+      "青蒿": {
+        "committerAlias": "青蒿",
+        "commits": 23,
+        "addedLines": 954,
+        "deletedLines": 813,
+        "unMergedCount": 7,
+        "unMergedCommits": [
+          "07cba68234cca5b8696d3f9e0d54877689942b20",
+          "07cba68234cca5b8696d3f9e0d54877689942b20",
+          "07cba68234cca5b8696d3f9e0d54877689942b20",
+          "0e7c90cbb46086df22a524781094413470f201d1",
+          "0e7c90cbb46086df22a524781094413470f201d1",
+          "0e7c90cbb46086df22a524781094413470f201d1",
+          "0e7c90cbb46086df22a524781094413470f201d1"
+        ],
+        "unRebasedCount": 0,
+        "unRebasedCommits": [],
+        "firstCommit": "aaa643a61abc976d541cc0a2ca1693e0e1d0907e",
+        "lastCommit": "070ce6e57ab68e41494ebf2f3c3eae235dcb7da2"
+      },
+      "可可": {
+        "committerAlias": "可可",
+        "commits": 193,
+        "addedLines": 10668,
+        "deletedLines": 5605,
+        "unMergedCount": 0,
+        "unMergedCommits": [],
+        "unRebasedCount": 0,
+        "unRebasedCommits": [],
+        "firstCommit": "3645f2e8ed769442b4ec52285334dae4c381ba4c",
+        "lastCommit": "b5afbc38586bcf1386713f789c5a09aa39dac7ff"
+      },
+      "般若": {
+        "committerAlias": "般若",
+        "commits": 37,
+        "addedLines": 8513,
+        "deletedLines": 3762,
+        "unMergedCount": 0,
+        "unMergedCommits": [],
+        "unRebasedCount": 0,
+        "unRebasedCommits": [],
+        "firstCommit": "840f03263af4e0bff11c3372c3b0610929365feb",
+        "lastCommit": "3e3d167d41e1c00f055d14cddfe0c9d93f96ecd2"
+      }
+    }
+  },
+  "qh-wap-front": {
+    "config": {
+      "projectName": "qh-wap-front",
+      "repoPath": "/home/zll/work/git-repo/kingsilk/qh-wap-front/",
+      "commitFrom": "2015-01-01T06:48:00.000Z",
+      "commitTo": "2016-02-29T16:00:00.000Z",
+      "matchPaths": [
+        "mock/**/*",
+        "src/assets/**/*",
+        "src/controllers/**/*",
+        "src/directives/**/*",
+        "src/filters/**/*",
+        "src/less/**/*",
+        "src/lib/lib.less",
+        "src/ROOT/**/*",
+        "src/services/**/*",
+        "src/views/**/*",
+        "src/views/**/*",
+        "src/config.js",
+        "src/index.html",
+        "src/index.js",
+        "**/.gitignore",
+        "**/.jshintrc",
+        "**/README.md"
+      ],
+      "ignoreUsers": [
+        "小梅",
+        "小宋"
+      ],
+      "branches": [
+        "refs/heads/master"
+      ],
+      "committerAlias": {
+        "陈丽": "可可",
+        "chenli": "可可",
+        "btpka3": "般若",
+        "张亮亮": "般若",
+        "swx": "唐印",
+        "hechengwen": "胡杨",
+        "何承文": "胡杨",
+        "wangjh": "青蒿",
+        "王俊辉": "青蒿",
+        "yech": "南瓜",
+        "叶晨浩": "南瓜",
+        "fuguotao": "菩提",
+        "Ricardo-M": "小梅",
+        "梅梦遥": "小梅",
+        "sqz": "小宋"
+      }
+    },
+    "repoResult": {
+      "南瓜": {
+        "committerAlias": "南瓜",
+        "commits": 279,
+        "addedLines": 25641,
+        "deletedLines": 14328,
+        "unMergedCount": 19,
+        "unMergedCommits": [
+          "7f9bc287ec62c0172d0ccd43ad5b978bac7ed985",
+          "b52c021dec7e005ce1676a38bd79b6ba7acebe9c",
+          "0fb365a8d920854d99c74f28ef99d05b82891bfa",
+          "ae7445c8bd3e2044febdc1b680f7986a80f14e01",
+          "c59ce30c1485dd30efd46db8284f5f854af9c15b",
+          "b716140cea6711081e82f2cacbd8bf4eafb767bf",
+          "33f8db358e4201a02bc71e5332e674f94c1b4974",
+          "33f8db358e4201a02bc71e5332e674f94c1b4974",
+          "03c757c4f6bab952ebf03596f5ed5fb2eff9f728",
+          "03c757c4f6bab952ebf03596f5ed5fb2eff9f728",
+          "03c757c4f6bab952ebf03596f5ed5fb2eff9f728",
+          "03c757c4f6bab952ebf03596f5ed5fb2eff9f728",
+          "daa2a31105775bf51347562a9b300918a4166747",
+          "daa2a31105775bf51347562a9b300918a4166747",
+          "daa2a31105775bf51347562a9b300918a4166747",
+          "fd0f9ff9d492e01cc0499b0e0944a9c6b4ab4e57",
+          "fd0f9ff9d492e01cc0499b0e0944a9c6b4ab4e57",
+          "f8a4d269a8439cc5d33dbdd78d1e75822b309ec1",
+          "f8a4d269a8439cc5d33dbdd78d1e75822b309ec1"
+        ],
+        "unRebasedCount": 0,
+        "unRebasedCommits": [],
+        "firstCommit": "af76dcd5fd4552d0dee81917b6fc1294dd9c45dd",
+        "lastCommit": "f8a4d269a8439cc5d33dbdd78d1e75822b309ec1"
+      },
+      "菩提": {
+        "committerAlias": "菩提",
+        "commits": 335,
+        "addedLines": 61368,
+        "deletedLines": 17479,
+        "unMergedCount": 15,
+        "unMergedCommits": [
+          "2a56d35be4e2d0e1e6da882096f12a2bcee340b6",
+          "47c1bbcc31afb7c6d4045d45339bcc7ab8227bd9",
+          "341453e617371d3a1c414d2ac8e7d8d86d1182d2",
+          "341453e617371d3a1c414d2ac8e7d8d86d1182d2",
+          "c1ee259affa6cfadef398a9f70d1318a9e89db83",
+          "7cb9799c3b99b2176273e774b33dc419c4d7876e",
+          "5948a395edb1ec11863601f3c9217cf1fdf922be",
+          "956c26a2e7317898af26b49eff270e8a4a455a46",
+          "70a356b10f44d7cc69e4d07a8eb64105f90c6516",
+          "a7adc48e35ecacc51faf53ca939a6d0a0165569f",
+          "a7adc48e35ecacc51faf53ca939a6d0a0165569f",
+          "e4132c5abf299e53971d54257c0b5e54dd0fc6a1",
+          "e4132c5abf299e53971d54257c0b5e54dd0fc6a1",
+          "6332fa6b053548570fed933bd877ab99827b889a",
+          "2dc2a12841c9c050d08974b9e0938e31d855d68a"
+        ],
+        "unRebasedCount": 3,
+        "unRebasedCommits": [
+          "36a3ea686ed1d12928e3fc5dafbc20fb56c9704b",
+          "6c9632dd2fd393dd56027c251ed72ddc3fce3ed7",
+          "eb530bd632a25d815a4fa5f594efd84951020095"
+        ],
+        "firstCommit": "12368f85bcdf0ef9261e7d0954d9ecfe78158d76",
+        "lastCommit": "704d75c418c2449ed694aeb8bc81cd6a802d6b78"
+      },
+      "唐印": {
+        "committerAlias": "唐印",
+        "commits": 334,
+        "addedLines": 42534,
+        "deletedLines": 47059,
+        "unMergedCount": 10,
+        "unMergedCommits": [
+          "5549a78e2a5f11b54523cf63ae1193fe3c8b0ea0",
+          "5549a78e2a5f11b54523cf63ae1193fe3c8b0ea0",
+          "34f382d291a29c5d5ceff2bbbb6c09367f418608",
+          "34f382d291a29c5d5ceff2bbbb6c09367f418608",
+          "97b782616c6580aba06b353b78b6c035e271527d",
+          "97b782616c6580aba06b353b78b6c035e271527d",
+          "97b782616c6580aba06b353b78b6c035e271527d",
+          "97b782616c6580aba06b353b78b6c035e271527d",
+          "a24550cd0ec7af2f1c812b6a400311aff72ab41a",
+          "a24550cd0ec7af2f1c812b6a400311aff72ab41a"
+        ],
+        "unRebasedCount": 0,
+        "unRebasedCommits": [],
+        "firstCommit": "385d09700a898db3c00a15bce45803b1004a3ad5",
+        "lastCommit": "bb4d3f0eba375c28d2e21e803fc6e4fbadd858c8"
+      },
+      "般若": {
+        "committerAlias": "般若",
+        "commits": 88,
+        "addedLines": 8917,
+        "deletedLines": 5010,
+        "unMergedCount": 0,
+        "unMergedCommits": [],
+        "unRebasedCount": 0,
+        "unRebasedCommits": [],
+        "firstCommit": "60d663cc534a730c0c6a5cc7e463db88c74a55ca",
+        "lastCommit": "8ca165eb77801e00a21df279cb4b14cc6f269419"
+      },
+      "可可": {
+        "committerAlias": "可可",
+        "commits": 10,
+        "addedLines": 206,
+        "deletedLines": 78,
+        "unMergedCount": 0,
+        "unMergedCommits": [],
+        "unRebasedCount": 0,
+        "unRebasedCommits": [],
+        "firstCommit": "cba7d66d0e1bfc3b5ea72eb5862261df468a1652",
+        "lastCommit": "ffb65b2474f9ead20a40a64bbd05ff0124dcd5a4"
+      }
+    }
+  }
+}

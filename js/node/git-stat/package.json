@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "minimatch": "^3.0.0",
+    "node-glob": "^1.2.0",
     "nodegit": "^0.11.9",
     "q": "^1.4.1"
   }
