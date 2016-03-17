@@ -4,6 +4,8 @@ const Q = require("q");
 //const ls = spawn('ls', ['-lh', '/usr']);
 const exec = require('child_process').exec;
 const ls = exec('ls -lh /usr ');
+const fs = require('fs');
+
 
 var G = require("nodegit");
 
@@ -32,11 +34,11 @@ var G = require("nodegit");
 //console.log(new Date("2011-10-10T14:48:00+08:00"));
 Q.onerror = (err)=> {
     console.log("---Q.onerror : ", err);
-}
+};
 const configs = [{
     projectName: "qh-domain",
     repoPath: "/home/zll/work/git-repo/kingsilk/qh-domain/",
-    commitFrom: new Date("2015-07-10T14:48:00+08:00"),
+    commitFrom: new Date("2015-01-01T14:48:00+08:00"),
     commitTo: new Date("2016-03-01T00:00:00+08:00"),
     ignoreFiles: ["src/lib/**/*"], // GLOB
     ignoreUsers: ["sqz"],
@@ -95,7 +97,6 @@ configs.forEach(cfg => {
                         let stat = repoResult[committerAlias];
                         if (!stat) {
                             stat = {
-                                //
                                 committerAlias: committerAlias,
                                 commits: 0,
                                 addedLines: 0,
@@ -103,11 +104,17 @@ configs.forEach(cfg => {
                                 unMergedCount: 0,
                                 unMergedCommits: [],
                                 unRebasedCount: 0,
-                                unRebasedCommits: []
-
+                                unRebasedCommits: [],
+                                firstCommit: null,
+                                lastCommit: null
                             };
                             repoResult[committerAlias] = stat;
                         }
+
+                        if (!stat.firstCommit) {
+                            stat.firstCommit = commit.sha();
+                        }
+                        stat.lastCommit = commit.sha();
 
                         // 统计 提交的commit的次数
                         stat.commits++;
@@ -146,15 +153,15 @@ configs.forEach(cfg => {
 
                                                         let lineContent = line.content().trim();
                                                         if (!r.unMerged && (
-                                                                lineContent.indexOf(">>>>>>>") > 0 ||
-                                                                lineContent.indexOf("<<<<<<<") > 0 ||
-                                                                lineContent.indexOf("=======") > 0
+                                                                lineContent.indexOf(">>>>>>>") === 0 ||
+                                                                lineContent.indexOf("<<<<<<<") === 0 ||
+                                                                lineContent.indexOf("=======") === 0
                                                             )) {
                                                             r.unMerged = true;
                                                         }
                                                         if ("+" === String.fromCharCode(line.origin())) {
                                                             r.added++;
-                                                        } else {
+                                                        } else if ("-" === String.fromCharCode(line.origin())) {
                                                             r.deleted++;
                                                         }
                                                     });
@@ -221,5 +228,14 @@ Q.allSettled(repoPromies).then((arr) => {
         }
     });
 
+    let resultJsonStr  = JSON.stringify(results, null, "  ");
     console.log("================ results = ", JSON.stringify(results, null, "  "));
+
+    fs.writeFile("/tmp/data.json", resultJsonStr, function(err) {
+        if(err) {
+            return console.log(err);
+        }
+
+        console.log("The file was saved!");
+    });
 });
