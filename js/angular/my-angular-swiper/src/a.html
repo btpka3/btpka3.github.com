@@ -88,21 +88,22 @@
 
         <!-- test 静态的 -->
         <div class="myslides" style="margin-top: 25px;">
-            <ks-swiper-container loop="true" show-nav-buttons="true" slides-per-view="1" space-between="5" pagination-clickable="false">
+            <ks-swiper-container id="xxx" loop="true" show-nav-buttons="true" slides-per-view="1" space-between="5" pagination-clickable="true"
+                                 pagination-is-active="true" override-parameters="{ pagination: '#xxx .swiper-pagination'}">
                 <ks-swiper-slide>
-                    <img ng-src="http://api.randomuser.me/portraits/thumb/women/1.jpg">
+                    <img ng-src="http://api.randomuser.me/portraits/thumb/women/1.jpg">1
                 </ks-swiper-slide>
                 <ks-swiper-slide>
-                    <img ng-src="http://api.randomuser.me/portraits/thumb/women/2.jpg">
+                    <img ng-src="http://api.randomuser.me/portraits/thumb/women/2.jpg">2
                 </ks-swiper-slide>
                 <ks-swiper-slide>
-                    <img ng-src="http://api.randomuser.me/portraits/thumb/women/3.jpg">
+                    <img ng-src="http://api.randomuser.me/portraits/thumb/women/3.jpg">3
                 </ks-swiper-slide>
                 <ks-swiper-slide>
-                    <img ng-src="http://api.randomuser.me/portraits/thumb/women/4.jpg">
+                    <img ng-src="http://api.randomuser.me/portraits/thumb/women/4.jpg">4
                 </ks-swiper-slide>
                 <ks-swiper-slide>
-                    <img ng-src="http://api.randomuser.me/portraits/thumb/women/5.jpg">
+                    <img ng-src="http://api.randomuser.me/portraits/thumb/women/5.jpg">5
                 </ks-swiper-slide>
             </ks-swiper-container>
         </div>
