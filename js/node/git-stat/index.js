@@ -272,6 +272,8 @@ configs.forEach(cfg => {
                         });
                         eventPromises.push(parentsP);
 
+                        let unMerged = false;
+
                         let diffP = commit.getDiff().then(arrayDiff => {
 
                             let patchPromises = [];
@@ -307,7 +309,7 @@ configs.forEach(cfg => {
                                             hunks.forEach(hunk => {
                                                 let lineP = hunk.lines().then(function (lines) {
                                                     let r = {
-                                                        unMerged: false,
+                                                        //unMerged: false,
                                                         added: 0,
                                                         deleted: 0
                                                     };
@@ -315,12 +317,12 @@ configs.forEach(cfg => {
                                                     lines.forEach(line => {
 
                                                         let lineContent = line.content().trim();
-                                                        if (!r.unMerged && (
+                                                        if (!unMerged && (
                                                                 lineContent.indexOf(">>>>>>>") === 0 ||
                                                                 lineContent.indexOf("<<<<<<<") === 0 ||
                                                                 lineContent.indexOf("=======") === 0
                                                             )) {
-                                                            r.unMerged = true;
+                                                            unMerged = true;
                                                         }
                                                         if ("+" === String.fromCharCode(line.origin())) {
                                                             r.added++;
@@ -329,14 +331,10 @@ configs.forEach(cfg => {
                                                         }
                                                     });
 
-                                                    if (r.unMerged) {
-                                                        stat.unMergedCount++;
-                                                        stat.unMergedCommits.push(commit.sha());
-                                                    }
                                                     stat.addedLines += r.added;
                                                     stat.deletedLines += r.deleted;
 
-                                                    return Q();
+                                                    //return Q();
                                                 });
 
                                                 linePromises.push(lineP);
@@ -345,11 +343,25 @@ configs.forEach(cfg => {
                                         });
                                         hunkPromises.push(hunkP);
                                     });
+
+
                                     return Q.allSettled(hunkPromises);
                                 });
                                 patchPromises.push(patchP);
                             });
-                            return Q.allSettled(patchPromises);
+
+
+                            return Q.allSettled(patchPromises).then((arr)=> {
+                                for (let r of arr) {
+                                    if (r.state === "rejected") {
+                                        return Q.reject(r.reason);
+                                    }
+                                }
+                                if (unMerged) {
+                                    stat.unMergedCount++;
+                                    stat.unMergedCommits.push(commit.sha());
+                                }
+                            });
                         });
                         eventPromises.push(diffP);
                     } catch (err) {

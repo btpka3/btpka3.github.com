@@ -1,0 +1,21 @@
+{
+  "name": "my-angular-swiper",
+  "homepage": "https://github.com/btpka3/btpka3.github.com",
+  "authors": [
+    "btpka3 <btpka3@163.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-swiper": "^0.3.2"
+  }
+}

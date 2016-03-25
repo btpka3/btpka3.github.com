@@ -2,7 +2,7 @@
 <html lang="en" ng-app="app">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Git 统计</title>
 
     <link rel="stylesheet" href="https://cdn.bootcss.com/angular-material/1.0.6/angular-material.min.css">
     <!--
@@ -80,11 +80,11 @@
 </head>
 <body ng-controller="MyCtrl as vm">
 
-<md-select  ng-model="vm.curStat" ng-change="vm.updateChart()" style="min-width: 200px;" >
+<md-select ng-model="vm.curStat" ng-change="vm.updateChart()" style="min-width: 200px;">
     <md-option ng-value="stat" ng-repeat="stat in vm.stats">{{stat.label}}</md-option>
 </md-select>
 
-
 <div id="main" style="width: 100%; height:400px;"></div>
+<div>详情请看 <a href="data.json" target="_blank">data.json</a></div>
 </body>
 </html>
