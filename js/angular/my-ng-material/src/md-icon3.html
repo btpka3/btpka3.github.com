@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-CN" ng-app="MyApp">
+<head>
+    <title>使用淘宝提供的 iconfont </title>
+    <meta charset="utf-8">
+
+    <!--
+    说明：
+    该目录下仅仅可做效果图，不强调业务逻辑
+    -->
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+
+    <link rel="stylesheet" href="https://cdn.bootcss.com/angular-material/1.0.6/angular-material.css"/>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/material-design-icons/2.2.0/iconfont/material-icons.css"/>
+    <link rel="stylesheet" href="ks/style.css"/>
+    <link rel="stylesheet" href="iconfont/zzz.css"/>
+</head>
+
+<body ng-controller="DemoCtrl" ng-cloak>
+
+<ol>
+    <li><md-icon md-font-set="material-icons">3d_rotation</md-icon></li>
+    <li><div class="material-icons">3d_rotation</div></li>
+</ol>
+
+
+<ol> iconfont
+    <li><md-icon md-font-set="zzz">uniE637</md-icon></li>
+    <li><md-icon md-font-set="zzz">fire</md-icon></li>
+    <li><md-icon md-font-set="zzz">icon-fire</md-icon></li>
+    <li><div class="zzz">uniE637</div></li>
+    <li><div class="zzz">fire</div></li>
+    <li><div class="zzz">icon-fire</div></li>
+    <li><div class="zzz icon-fire"></div></li>
+</ol>
+
+<ol> icomoon
+    <li><md-icon md-font-set="kkk">icon-aaa</md-icon></li>
+    <li><div class="kkk">icon-aaa</div></li>
+
+    <li><md-icon md-font-set="kkk">aaa</md-icon></li>
+    <li><div class="kkk">home2</div></li>
+    <li><div class="kkk">中</div></li>
+    <li><div class="kkk icon-aaa"></div></li>
+</ol>
+
+<script src="https://cdn.bootcss.com/angular.js/1.5.0/angular.js"></script>
+<script src="https://cdn.bootcss.com/angular.js/1.5.0/angular-animate.js"></script>
+<script src="https://cdn.bootcss.com/angular.js/1.5.0/angular-aria.js"></script>
+<script src="https://cdn.bootcss.com/angular.js/1.5.0/angular-messages.js"></script>
+<script src="https://cdn.bootcss.com/angular-material/1.0.6/angular-material.js"></script>
+
+<script>
+    angular
+            .module('MyApp', ['ngMaterial', 'ngMessages'])
+            .controller('DemoCtrl', ['$scope', function ($scope) {
+            }]);
+</script>
+
+</body>
+
+</html>

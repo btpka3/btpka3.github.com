@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="sidenavDemo1">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport"
+          content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <title>tabs</title>
+    <link rel="stylesheet" href="../bower_components/angular-material/angular-material.min.css"/>
+    <link rel="stylesheet" href="../bower_components/material-design-icons/iconfont/material-icons.css">
+    <link rel="stylesheet" href="../bower_components/angular-material-icons/angular-material-icons.css"/>
+    <link rel="stylesheet" href="https://material.angularjs.org/1.1.0-rc1/docs.css"/>
+
+</head>
+<body>
+
+
+<div ng-controller="AppCtrl" class="sample" layout="column" ng-cloak>
+
+    <md-content class="md-padding" >
+        <md-tabs md-selected="selectedIndex" md-border-bottom md-autoselect md-dynamic-height md-no-ink>
+            <md-tab ng-repeat="tab in tabs"
+                    ng-disabled="tab.disabled"
+                    label="{{tab.title}}">
+                <div class="demo-tab tab{{$index%4}}" style="padding: 25px; text-align: center;">
+                    <div ng-bind-html="tab.content"></div>
+                    --{{tab.content}}==
+                    <br/>
+                    <md-button class="md-primary md-raised" ng-click="removeTab( tab )" ng-disabled="tabs.length <= 1">Remove Tab</md-button>
+                </div>
+            </md-tab>
+        </md-tabs>
+    </md-content>
+    <form ng-submit="addTab(tTitle,tContent)" layout="column" class="md-padding" style="padding-top: 0;">
+        <div layout="row" layout-sm="column">
+            <div flex style="position: relative;">
+                <h2 class="md-subhead"
+                    style="position: absolute; bottom: 0; left: 0; margin: 0; font-weight: 500; text-transform: uppercase; line-height: 35px; white-space: nowrap;">Add a new
+                    Tab:</h2>
+            </div>
+            <md-input-container>
+                <label for="label">Label</label>
+                <input type="text" id="label" ng-model="tTitle">
+            </md-input-container>
+            <md-input-container>
+                <label for="content">Content</label>
+                <input type="text" id="content" ng-model="tContent">
+            </md-input-container>
+            <md-button class="add-tab md-primary md-raised" ng-disabled="!tTitle || !tContent" type="submit" style="margin-right: 0;">Add Tab</md-button>
+        </div>
+    </form>
+</div>
+
+
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="../bower_components/angular-aria/angular-aria.min.js"></script>
+<script src="../bower_components/angular-messages/angular-messages.min.js"></script>
+<script src="../bower_components/angular-material/angular-material.min.js"></script>
+<script src="../bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+
+<script>
+    angular
+            .module('sidenavDemo1', ['ngMaterial', 'ngSanitize'])
+            .config(function ($provide) {
+                $provide.decorator("$sanitize", function ($delegate, $log) {
+                    return function (text, target) {
+
+                        var result = $delegate(text, target);
+                        $log.info("$sanitize input: " + text);
+                        $log.info("$sanitize output: " + result);
+                        return result;
+                    };
+                });
+            })
+            .controller('AppCtrl', AppCtrl);
+
+    function AppCtrl($scope, $log) {
+        var tabs = [
+                    {title: 'One', content: "Tabs will become paginated if there isn't enough room for them."},
+                    {title: 'Two', content: "You can swipe left and right on a mobile device to change tabs."},
+                    {title: 'Three', content: "You can bind the selected tab via the selected attribute on the md-tabs element."},
+                    {title: 'Four', content: "If you set the selected tab binding to -1, it will leave no tab selected."},
+                    {title: 'Five', content: "If you remove a tab, it will try to select a new one."},
+                    {title: 'Six', content: "There's an ink bar that follows the selected tab, you can turn it off if you want."},
+                    {
+                        title: 'Seven',
+                        content: "If you set ng-disabled on a tab, it becomes unselectable. If the currently selected tab becomes disabled, it will try to select the next tab."
+                    },
+                    {title: 'Eight', content: "If you look at the source, you're using tabs to look at a demo for tabs. Recursion!"},
+                    {
+                        title: 'Nine',
+                        content: "If you set md-theme=\"green\" on 1 <div onclick='alert(1)'>aaa</div>  <br/>" +
+                        "1<br/>1<br/>1<br/>1<br/>1<br/>1<br/>1<br/>" +
+                        "1<br/>1<br/>1<br/>1<br/>1<br/>1<br/>1<br/>" +
+                        "1<br/>1<br/>1<br/>1<br/>1<br/>1<br/>1<br/>" +
+                        "the md-tabs element, you'll get green tabs."
+                    },
+                    {title: 'Ten', content: "If you're still reading this, you should just go check out the API docs for tabs!"}
+                ],
+                selected = null,
+                previous = null;
+        $scope.tabs = tabs;
+        $scope.selectedIndex = 2;
+        $scope.$watch('selectedIndex', function (current, old) {
+            previous = selected;
+            selected = tabs[current];
+            if (old + 1 && (old != current)) $log.debug('Goodbye ' + previous.title + '!');
+            if (current + 1)                $log.debug('Hello ' + selected.title + '!');
+        });
+        $scope.addTab = function (title, view) {
+            view = view || title + " Content View";
+            tabs.push({title: title, content: view, disabled: false});
+        };
+        $scope.removeTab = function (tab) {
+            var index = tabs.indexOf(tab);
+            tabs.splice(index, 1);
+        };
+    }
+</script>
+</body>
+</html>

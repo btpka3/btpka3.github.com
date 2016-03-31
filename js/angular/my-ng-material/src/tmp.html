@@ -1,0 +1,47 @@
+<!doctype html>
+<html ng-app="aaa">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+
+
+    <script src="http://cdn.bootcss.com/angular.js/1.3.15/angular.js"></script>
+    <script src="https://cdn.bootcss.com/angular-sanitize/1.5.0/angular-sanitize.js"></script>
+
+    <script>
+        angular
+                .module('aaa', ['ngSanitize'])
+                .config(function ($provide) {
+                    $provide.decorator("$sanitize", function ($delegate, $log) {
+                        return function (text, target) {
+
+                            var result = $delegate(text, target);
+                            $log.info("$sanitize input: " + text);
+                            $log.info("$sanitize output: " + result);
+                            return result;
+                        };
+                    });
+                })
+
+                .controller('MyCtrl', ['$scope', '$window', function ($scope, $window) {
+                    $scope.myHtml= "aaa<div onclick='alert(1)'>" +
+                            "div</div> <xxx>xxx</xxx> <md-tabs>md-tabs</md-tabs>" +
+                            "<a href='javascript:void(0);'> a link</a>";
+
+                }]);
+    </script>
+
+</head>
+
+<body>
+<div ng-controller="MyCtrl">
+    {{myHtml}}
+    <div ng-bind-html="myHtml">
+
+    </div>
+
+</div>
+
+</body>
+</html>
