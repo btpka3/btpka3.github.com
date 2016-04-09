@@ -19,7 +19,7 @@ dependencies {
     compile 'commons-io:commons-io:2.4'
 
     compile 'org.slf4j:slf4j-api:1.7.20'
-    compile 'org.slf4j:jcl-over-slf4:1.7.20'
+    compile 'org.slf4j:jcl-over-slf4j:1.7.20'
     compile 'org.slf4j:log4j-over-slf4j:1.7.20'
     compile 'ch.qos.logback:logback-classic:1.1.7'
 

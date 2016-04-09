@@ -17,10 +17,13 @@ class OssDemo {
 
     static void main(String[] args) {
 
+        Properties props = new Properties()
+        props.load(new FileInputStream(new File(System.getProperty("user.home"), ".aliyun")))
+
         def endpoint = "oss-cn-hangzhou.aliyuncs.com"
-        def accessKeyId = "???"
-        def accessKeySecret = "???"
-        def bucketName = "???"
+        def accessKeyId = props.accessKeyId
+        def accessKeySecret = props.accessKeySecret
+        def bucketName = "btpka3"
         def key = "dir/my-first-key"
 
         OSSClient ossClient = new OSSClient(endpoint, accessKeyId, accessKeySecret);
