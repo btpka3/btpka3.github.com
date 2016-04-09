@@ -4,8 +4,9 @@ import com.aliyun.openservices.ons.api.*
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-class OnsConsumer {
-    static Logger log = LoggerFactory.getLogger(OnsConsumer)
+class OnsConsumerUnsubscribe {
+
+    static Logger log = LoggerFactory.getLogger(OnsConsumerUnsubscribe)
 
     static void main(String[] args) {
 
@@ -15,7 +16,7 @@ class OnsConsumer {
         def accessKeyId = props.accessKeyId
         def accessKeySecret = props.accessKeySecret
 
-        def consumerId = "c1"
+        def consumerId = "c04"
         def topic = "btpka3"
         def tag = "*"
 
@@ -23,15 +24,10 @@ class OnsConsumer {
         properties.put(PropertyKeyConst.ConsumerId, consumerId);
         properties.put(PropertyKeyConst.AccessKey, accessKeyId);
         properties.put(PropertyKeyConst.SecretKey, accessKeySecret);
-        properties.put(PropertyKeyConst.MessageModel, PropertyValueConst.BROADCASTING);
+        //properties.put(PropertyKeyConst.MessageModel, PropertyValueConst.BROADCASTING);
         Consumer consumer = ONSFactory.createConsumer(properties);
-        consumer.subscribe(topic, tag, new MessageListener() {
-            public Action consume(Message message, ConsumeContext context) {
-                log.info("${consumerId} - Receive: " + message);
-                return Action.CommitMessage;
-            }
-        });
-        consumer.start();
-        log.info "Consumer ${consumerId} started"
+        consumer.unsubscribe(topic);
+
+        log.info ("Consumer unsubscribe");
     }
 }

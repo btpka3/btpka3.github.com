@@ -1,19 +1,30 @@
 package me.test.ons
 
 import com.aliyun.openservices.ons.api.*
+import groovy.json.JsonOutput
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 class OnsProducer {
+
+    static Logger log = LoggerFactory.getLogger(OnsProducer)
+
     static void main(String[] args) {
-        def producerId = "ddd"
-        def accessKey = "1p4282qt4px8kfz8t4vga673"
-        def secretKey = "FeHSGRK8iNU4RbfB924Wgf6Jgqc="
+
+        Properties props = new Properties()
+        props.load(new FileInputStream(new File(System.getProperty("user.home"), ".aliyun")))
+
+        def accessKeyId = props.accessKeyId
+        def accessKeySecret = props.accessKeySecret
+
+        def producerId = "p1"
         def topic = "btpka3"
-        def tag = "aaa"
+        def tag = "a,b,c"
 
         Properties properties = new Properties();
         properties.put(PropertyKeyConst.ProducerId, producerId);
-        properties.put(PropertyKeyConst.AccessKey, accessKey);
-        properties.put(PropertyKeyConst.SecretKey, secretKey);
+        properties.put(PropertyKeyConst.AccessKey, accessKeyId);
+        properties.put(PropertyKeyConst.SecretKey, accessKeySecret);
         Producer producer = ONSFactory.createProducer(properties);
         // 在发送消息前，必须调用start方法来启动Producer，只需调用一次即可。
         producer.start();
@@ -35,11 +46,10 @@ class OnsProducer {
         msg.setKey("ORDERID_100 : " + new Date());
         // 发送消息，只要不抛异常就是成功
         SendResult sendResult = producer.send(msg);
-        System.out.println(sendResult);
+        log.info "send OK : ${JsonOutput.toJson(sendResult)}"
 
         // 在应用退出前，销毁Producer对象
         // 注意：如果不销毁也没有问题
         producer.shutdown();
-        println "done."
     }
 }
