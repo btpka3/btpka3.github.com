@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyApp" ng-controller="DemoCtrl as ctrl" layout="column" ng-cloak="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <title>study ng-material</title>
+    <link rel="stylesheet" href="../bower_components/material-design-icons/iconfont/material-icons.css">
+    <link rel="stylesheet" href="../bower_components/angular-material/angular-material.min.css"/>
+    <link rel="stylesheet" href="../bower_components/angular-material-icons/angular-material-icons.css"/>
+</head>
+<body>
+<md-content class="md-padding">
+    <form ng-submit="$event.preventDefault()">
+        <p>Use <code>md-autocomplete</code> to search for matches from local or remote data sources.</p>
+        <md-autocomplete ng-disabled="ctrl.isDisabled"
+                         md-no-cache="ctrl.noCache"
+                         md-selected-item="ctrl.selectedItem"
+                         md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
+                         md-search-text="ctrl.searchText"
+                         md-selected-item-change="ctrl.selectedItemChange(item)"
+                         md-items="item in ctrl.querySearch(ctrl.searchText)"
+                         md-item-text="item.display"
+                         md-min-length="0"
+                         placeholder="What is your favorite US state?">
+            <md-item-template>
+                <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
+            </md-item-template>
+            <md-not-found>
+                No states matching "{{ctrl.searchText}}" were found.
+                <a ng-click="ctrl.newState(ctrl.searchText)">Create a new one!</a>
+            </md-not-found>
+        </md-autocomplete>
+        <br>
+        <md-checkbox ng-model="ctrl.simulateQuery">Simulate query for results?</md-checkbox>
+        <md-checkbox ng-model="ctrl.noCache">Disable caching of queries?</md-checkbox>
+        <md-checkbox ng-model="ctrl.isDisabled">Disable the input?</md-checkbox>
+
+        <p>By default, <code>md-autocomplete</code> will cache results when performing a query. After the initial call
+            is performed, it will use the cached results to eliminate
+            unnecessary server requests or lookup logic. This can be disabled above.</p>
+    </form>
+</md-content>
+</body>
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="../bower_components/angular-aria/angular-aria.min.js"></script>
+<script src="../bower_components/angular-messages/angular-messages.min.js"></script>
+<script src="../bower_components/angular-material/angular-material.min.js"></script>
+<script>
+    (function () {
+        'use strict';
+        angular
+                .module('MyApp', ['ngMaterial', 'ngMessages'])
+                .controller('DemoCtrl', DemoCtrl);
+
+        function DemoCtrl($timeout, $q, $log) {
+            var self = this;
+
+            self.simulateQuery = false;
+            self.isDisabled = false;
+
+            // list of `state` value/display objects
+            self.states = loadAll();
+            self.querySearch = querySearch;
+            self.selectedItemChange = selectedItemChange;
+            self.searchTextChange = searchTextChange;
+
+            self.newState = newState;
+
+            function newState(state) {
+                alert("Sorry! You'll need to create a Constituion for " + state + " first!");
+            }
+
+            // ******************************
+            // Internal methods
+            // ******************************
+
+            /**
+             * Search for states... use $timeout to simulate
+             * remote dataservice call.
+             */
+            function querySearch(query) {
+                var results = query ? self.states.filter(createFilterFor(query)) : self.states,
+                        deferred;
+                if (self.simulateQuery) {
+                    deferred = $q.defer();
+                    $timeout(function () {
+                        deferred.resolve(results);
+                    }, Math.random() * 2000, false);
+                    return deferred.promise;
+                } else {
+                    return results;
+                }
+            }
+
+            function searchTextChange(text) {
+                $log.info('Text changed to ' + text);
+            }
+
+            function selectedItemChange(item) {
+                $log.info('Item changed to ' + JSON.stringify(item));
+            }
+
+            /**
+             * Build `states` list of key/value pairs
+             */
+            function loadAll() {
+                var allStates = 'Alabama, Alaska, Arizona, Arkansas, California, Colorado, Connecticut, Delaware,\
+              Florida, Georgia, Hawaii, Idaho, Illinois, Indiana, Iowa, Kansas, Kentucky, Louisiana,\
+              Maine, Maryland, Massachusetts, Michigan, Minnesota, Mississippi, Missouri, Montana,\
+              Nebraska, Nevada, New Hampshire, New Jersey, New Mexico, New York, North Carolina,\
+              North Dakota, Ohio, Oklahoma, Oregon, Pennsylvania, Rhode Island, South Carolina,\
+              South Dakota, Tennessee, Texas, Utah, Vermont, Virginia, Washington, West Virginia,\
+              Wisconsin, Wyoming';
+
+                return allStates.split(/, +/g).map(function (state) {
+                    return {
+                        value: state.toLowerCase(),
+                        display: state
+                    };
+                });
+            }
+
+            /**
+             * Create filter function for a query string
+             */
+            function createFilterFor(query) {
+                var lowercaseQuery = angular.lowercase(query);
+
+                return function filterFn(state) {
+                    return (state.value.indexOf(lowercaseQuery) === 0);
+                };
+
+            }
+        }
+    })();
+
+</script>
+</html>
