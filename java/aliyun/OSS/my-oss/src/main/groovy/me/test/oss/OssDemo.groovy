@@ -1,4 +1,4 @@
-package me.test.ons
+package me.test.oss
 
 import com.aliyun.oss.OSSClient
 import com.aliyun.oss.model.Bucket
