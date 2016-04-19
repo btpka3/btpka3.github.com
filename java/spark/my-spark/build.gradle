@@ -43,6 +43,8 @@ dependencies {
 
     compile 'com.aliyun.oss:aliyun-sdk-oss:2.2.1'
     compile 'commons-io:commons-io:2.4'
+    compile 'org.apache.commons:commons-math3:3.6.1'
+    compile 'joda-time:joda-time:2.9.3'
 
     compile 'org.slf4j:slf4j-api:1.7.20'
     compile 'org.slf4j:jcl-over-slf4j:1.7.20'

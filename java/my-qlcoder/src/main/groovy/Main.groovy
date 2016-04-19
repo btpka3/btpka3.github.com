@@ -11,20 +11,23 @@ import java.util.concurrent.Executors
 class Main {
 
     static foundPassed = false
+
  // 24: 000001014040120120201022
+ // 26: 102110301130201001000012
+ // 27: 10000100102001041120110300
+
     static void main(String[] args) {
 
         def jsonStr = """
-  {"level":24,"modu":"2","map":["01010","10100","01101","11101","00111","01011"],"pieces":["XX.,.XX","X,X,X,X","X.XX,XXX.,.X..,.XX.","XXX,.X.","XXX..,X.XXX","..X.,XXXX",".X,XX,XX,X.",".XXX,.XX.,..X.,XXX.,..X.","...X,...X,XXXX","..X,XXX","..XX.,XXXXX,XX..X","X..,X..,XXX,.X."]}
 """
+        jsonStr = args[0]
+
+        println "------------------------------------------ map"
+        println jsonStr
 
         def jsonObj = new JsonSlurper().parseText(jsonStr)
         int modu = Integer.valueOf(jsonObj.modu)
 
-        println "aaa = " + jsonObj
-
-
-        println "------------------------------------------ map"
         def map = genMap(jsonObj.map)
         println printMap(map)
 

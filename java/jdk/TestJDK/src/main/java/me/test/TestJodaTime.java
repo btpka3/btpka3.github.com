@@ -1,15 +1,14 @@
 package me.test;
 
 import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.ISODateTimeFormat;
+import org.joda.time.Period;
+import org.joda.time.format.*;
 
 import java.util.Calendar;
 import java.util.Locale;
 
 public class TestJodaTime {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
         // JDK Caendar, Date -> Joda DateTime
         System.out.println(new DateTime(Calendar.getInstance()));
@@ -48,6 +47,26 @@ public class TestJodaTime {
         // parse : pattern
         DateTime dt2 = fmt.parseDateTime("2000/01/02 03:04:05.006 +0800");
         System.out.println(dt2);
+
+        // duration
+        // in prod env, consider using StopWatch (from commons-lang3, guava, spring-core etc)
+        long start = System.currentTimeMillis();
+        //Thread.sleep(3456);
+        long end = System.currentTimeMillis();
+        Period period = new Period(start, end + 1000 * 1000 + 3456);
+        System.out.println("~~~~~~~~~~~~~~~~~");
+        System.out.println(ISOPeriodFormat.standard().print(period));
+        PeriodFormatter periodFormatter = new PeriodFormatterBuilder()
+                .appendDays()
+                .appendSuffix(" minute", " minutes")
+                .appendSeparator(" ")
+                .appendSeconds()
+                .appendSuffix(" second", " seconds")
+                .appendSeparator(" ")
+                .appendMillis()
+                .appendSuffix(" ms")
+                .toFormatter();
+        System.out.println(periodFormatter.print(period));
     }
 
 }

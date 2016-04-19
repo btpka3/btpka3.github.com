@@ -13,3 +13,11 @@ target=android-21
 ionic build android
 ionic emulate --target=test2 android
 ```
+
+
+## 浏览器
+
+```
+ionic serve
+```
+
