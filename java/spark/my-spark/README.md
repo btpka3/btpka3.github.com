@@ -16,7 +16,16 @@
 ```
 
 
+# questions
+* Q:spark 如何数据量分裂增值？比如给出一个数据，变成10条数据。
+ 
+    答案：使用 FlatMapFunction
+* Q:spark 如何使用 Iterator？而不用预先生成海量的数据记录？由算法生成
+* Q:Iterator 是能否被分布式分片执行？
+* Q:job找到答案后，如何中止其他job？
 
+
+    
 
 
 
