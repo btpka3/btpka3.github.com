@@ -1,22 +1,17 @@
 package me.test.spark;
 
-import org.apache.spark.Accumulable;
-import org.apache.spark.AccumulableParam;
-import org.apache.spark.Accumulator;
-import org.apache.spark.SparkConf;
+import org.apache.spark.*;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
-import org.apache.spark.api.java.function.FlatMapFunction;
-import org.apache.spark.api.java.function.Function;
-import org.apache.spark.api.java.function.Function2;
-import org.apache.spark.api.java.function.PairFunction;
+import org.apache.spark.api.java.function.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import scala.Tuple2;
 
 import java.security.SecureRandom;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
 public class SparkTest {
@@ -126,30 +121,22 @@ public class SparkTest {
      */
     public static void stopAll() {
 
-        SparkConf conf = new SparkConf()
-                .setAppName("btpka3")
-                .setMaster("local[4]");
+        //String master = "local[4]";
+//        String master = "spark://127.0.0.1:7077";
+//        SparkConf conf = new SparkConf()
+//                .setAppName("btpka3")
+//                .setMaster(master);
+
+        SparkConf conf = new SparkConf();
 
         final JavaSparkContext jsc = new JavaSparkContext(conf);
         final Accumulator<Integer> acc1 = jsc.accumulator(0);
         final Accumulator<Integer> acc2 = jsc.accumulator(0);
+        final AtomicInteger actualSeconds = new AtomicInteger();
+        // 不行， JavaRDD#foreachPartition 是分布式执行的。
+        //final AtomicInteger expectedSeconds = new AtomicInteger();
+        final Accumulator<Integer> expectedSeconds1 = jsc.accumulator(0);
 
-        new Thread() {
-            public void run() {
-                System.out.println("----- started at : " + new Date());
-                try {
-                    while (acc2.value() == 0) {
-                        Thread.sleep(500);
-                    }
-                    jsc.cancelAllJobs();
-                    System.out.println("watching thread exited on success");
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                    System.out.println("watching thread exited on error");
-                }
-                System.out.println("----- finished at : " + new Date());
-            }
-        }.start();
 
         //final Accumulator<Integer> accMap = jsc.accumulator(new HashMap<String, Integer>(), new MapAccumulator());
         final Accumulable<Map<String, Integer>, Map<String, Integer>> accMap1 = jsc.accumulable(new HashMap<String, Integer>(), new MapAccumulable());
@@ -168,6 +155,56 @@ public class SparkTest {
 
 
         JavaRDD<Integer> distData = jsc.parallelize(data);
+        // 默认是4, 为了测试，将其分片为 4*5=20片，
+        // 即：100个数据，4个worker的话，每片应当有5个数据，共需5次循环即可完成，最长执行时间为5*5=秒。
+        // 则实际任务执行时间估计是（不包含任务分配所花费的时间） :
+        // i + 5*n 秒。其中 i是在特定分片数据中的位置（下标）。n是0~4。鉴于在执行的任务不能被终止，理想的任务执行时间是 5*(n+1) 秒
+        // FIXME: 如何确定每片数据的内容——即确定i的值
+        log.info("partition's default count = " + distData.getNumPartitions());
+        distData = distData.repartition(4 * 5);
+        System.out.println("partition's new     count = " + distData.getNumPartitions());
+
+        distData.foreachPartition(new VoidFunction<Iterator<Integer>>() {
+            @Override
+            public void call(Iterator<Integer> intIterator) throws Exception {
+//                if (expectedSeconds.get() > 0) {
+//                    return;
+//                }
+                int i = 0;
+                while (intIterator.hasNext()) {
+                    int v = intIterator.next();
+                    if (v < 0) {
+                        expectedSeconds1.add(i + 1);
+                        //expectedSeconds.set(i + 1);
+                    }
+                    i++;
+                }
+            }
+        });
+
+        new Thread() {
+            public void run() {
+                Date start = new Date();
+                System.out.println("----- started at : " + start);
+                int i = 0;
+                try {
+                    while (acc2.value() == 0 && i < 60) {
+                        i++;
+                        Thread.sleep(500);
+                    }
+                    jsc.cancelAllJobs();
+                    System.out.println("watching thread exited on success");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                    System.out.println("watching thread exited on error");
+                }
+                Date end = new Date();
+                actualSeconds.addAndGet((int) (end.getTime() - start.getTime()) / 1000);
+                System.out.println("----- finished at : " + end + ", cost " + actualSeconds + " seconds");
+                // cancel：只能cancel尚未被调度的任务？已经在执行的不能被终止？
+                System.out.println("expected secondes is " + expectedSeconds1 + ", actual is " + actualSeconds);
+            }
+        }.start();
 
         JavaRDD<Integer> counts = distData.map(new Function<Integer, Integer>() {
 
@@ -196,15 +233,16 @@ public class SparkTest {
         try {
             System.out.println(counts.toArray());
         } catch (Exception e) {
-            e.printStackTrace();
-            log.error("toArray err");
+            log.error("toArray err", e);
         }
-        System.out.println(a);
-        System.out.println(acc1.value());
+        System.out.println("local list a = " + a);
+        System.out.println("acc1 = " + acc1.value());
         System.out.println("accMap1 = " + accMap1);
         System.out.println("accMap2 = " + accMap2);
+
+
         System.out.println("---------------------------------------");
-        jsc.stop();
+        //jsc.stop();
     }
 
     // NOTICE: MapAccumulator是scala的tratit，并实现了部分方法，是否因此无法被Java类实现？

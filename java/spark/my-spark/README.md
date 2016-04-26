@@ -1,4 +1,7 @@
 
+# 参考
+
+* [配置属性](http://spark.apache.org/docs/latest/configuration.html#spark-properties)
 
 # start spark standalone cluster
 
@@ -6,18 +9,32 @@
 ```
 # 启动master
 # 可以访问 http://localhost:8080/
-./sbin/start-master.sh
+./sbin/start-master.sh -h 127.0.0.1
+./sbin/stop-master.sh
 
 # 单独启动一个Worker
 # 可以访问 http://localhost:8081/
 # 可以访问 http://localhost:8082/
-./bin/spark-class org.apache.spark.deploy.worker.Worker  spark://z:7077 -c 1 -m 512M
-./bin/spark-class org.apache.spark.deploy.worker.Worker  spark://z:7077 -c 1 -m 512M
+./bin/spark-class org.apache.spark.deploy.worker.Worker spark://127.0.0.1:7077 -c 1 -m 512M
+./bin/spark-class org.apache.spark.deploy.worker.Worker spark://127.0.0.1:7077 -c 1 -m 512M
+
+# 一次启动多个worker
+env SPARK_WORKER_INSTANCES=4 ./sbin/start-slave.sh spark://127.0.0.1:7077 -c 1 -m 512m
+env SPARK_WORKER_INSTANCES=4 ./sbin/stop-slave.sh  spark://127.0.0.1:7077
+
+```
+
+## 打包
+
+```
+gradle shadowJar
+cd $SPARK_HOME
+./bin/spark-submit --class me.test.spark.SparkTest --master spark://127.0.0.1:7077 /path/to/jar
 ```
 
 
 # questions
-* Q:spark 如何数据量分裂增值？比如给出一个数据，变成10条数据。
+* Q:spark 如何数据量分裂增值？比如给出一个数据，变成10条数据。11
  
     答案：使用 FlatMapFunction
 * Q:spark 如何使用 Iterator？而不用预先生成海量的数据记录？由算法生成
