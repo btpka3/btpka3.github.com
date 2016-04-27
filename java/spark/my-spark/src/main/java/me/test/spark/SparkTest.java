@@ -1,6 +1,9 @@
 package me.test.spark;
 
-import org.apache.spark.*;
+import org.apache.spark.Accumulable;
+import org.apache.spark.AccumulableParam;
+import org.apache.spark.Accumulator;
+import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
@@ -22,7 +25,8 @@ public class SparkTest {
 
         //hello();
         //withIterator();
-        stopAll();
+        //stopAll();
+        cartesian();
     }
 
     /**
@@ -122,12 +126,15 @@ public class SparkTest {
     public static void stopAll() {
 
         //String master = "local[4]";
-//        String master = "spark://127.0.0.1:7077";
-//        SparkConf conf = new SparkConf()
-//                .setAppName("btpka3")
-//                .setMaster(master);
+        String master = "spark://127.0.0.1:7077";
+        SparkConf conf = new SparkConf()
+                .setAppName("btpka3")
+                .set("spark.driver.cores", "1")
+                .set("spark.driver.memory", "5120m")
+                .set("spark.executor.memory", "512m")
+                .setMaster(master);
 
-        SparkConf conf = new SparkConf();
+        //SparkConf conf = new SparkConf();
 
         final JavaSparkContext jsc = new JavaSparkContext(conf);
         final Accumulator<Integer> acc1 = jsc.accumulator(0);
@@ -160,6 +167,7 @@ public class SparkTest {
         // 则实际任务执行时间估计是（不包含任务分配所花费的时间） :
         // i + 5*n 秒。其中 i是在特定分片数据中的位置（下标）。n是0~4。鉴于在执行的任务不能被终止，理想的任务执行时间是 5*(n+1) 秒
         // FIXME: 如何确定每片数据的内容——即确定i的值
+        System.out.println("11111111111111111111111111111111111111");
         log.info("partition's default count = " + distData.getNumPartitions());
         distData = distData.repartition(4 * 5);
         System.out.println("partition's new     count = " + distData.getNumPartitions());
@@ -244,6 +252,32 @@ public class SparkTest {
         System.out.println("---------------------------------------");
         //jsc.stop();
     }
+
+
+    /**
+     * 笛卡尔乘积。
+     */
+    public static void cartesian() {
+
+        SparkConf conf = new SparkConf()
+                .setAppName("btpka3")
+                .setMaster("local[2]");
+
+        JavaSparkContext jsc = new JavaSparkContext(conf);
+
+        JavaRDD<String> rdd1 = jsc.parallelize(Arrays.asList("a", "b", "c"));
+        JavaRDD<String> rdd2 = jsc.parallelize(Arrays.asList("1", "2", "3"));
+        JavaRDD<String> rdd3 = jsc.parallelize(Arrays.asList("x", "y", "z"));
+
+        JavaPairRDD<String, String> s1 = rdd1.cartesian(rdd2);
+        JavaPairRDD<Tuple2<String, String>, String> s2 = s1.cartesian(rdd3);
+        System.out.println("=======================================");
+        System.out.println(s1.collect());
+        System.out.println(s2.collect());
+        System.out.println("---------------------------------------");
+        jsc.stop();
+    }
+
 
     // NOTICE: MapAccumulator是scala的tratit，并实现了部分方法，是否因此无法被Java类实现？
 

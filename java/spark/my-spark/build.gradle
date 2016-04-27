@@ -14,26 +14,33 @@ apply plugin: 'java'
 //apply plugin: 'scala'
 apply plugin: 'idea'
 apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'application'
+
+
+
+if (!project.hasProperty("mainClass")) {
+    ext.mainClass = "me.test.spark.SparkTest"
+}
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-// http://stackoverflow.com/questions/34898695/gradle-provided-dependencies-with-intellij
-configurations {
-    provided
-    //provided.extendsFrom(compile)
-}
-
-sourceSets {
-    main.compileClasspath += configurations.provided
-    test.compileClasspath += configurations.provided
-    test.runtimeClasspath += configurations.provided
-}
-idea {
-    module {
-        scopes.PROVIDED.plus += [configurations.provided]
-    }
-}
+//// http://stackoverflow.com/questions/34898695/gradle-provided-dependencies-with-intellij
+//configurations {
+//    provided
+//    provided.extendsFrom(compile)
+//}
+//
+//sourceSets {
+//    main.compileClasspath += configurations.provided
+//    test.compileClasspath += configurations.provided
+//    test.runtimeClasspath += configurations.provided
+//}
+//idea {
+//    module {
+//        scopes.PROVIDED.plus += [configurations.provided]
+//    }
+//}
 repositories {
 //    maven {
 //        url "http://maven.oschina.net/content/groups/public/"
@@ -43,8 +50,11 @@ repositories {
 
 dependencies {
 
-    provided 'org.apache.spark:spark-core_2.10:1.6.1'
-    provided 'org.apache.spark:spark-streaming_2.10:1.6.1'
+//    provided 'org.apache.spark:spark-core_2.10:1.6.1'
+//    provided 'org.apache.spark:spark-streaming_2.10:1.6.1'
+
+    compileOnly 'org.apache.spark:spark-core_2.10:1.6.1'
+    compileOnly 'org.apache.spark:spark-streaming_2.10:1.6.1'
 
     //compile 'org.scala-lang:scala-library:2.11.4'
 
@@ -74,4 +84,22 @@ shadowJar {
     manifest {
         attributes 'Test-Entry': 'PASSED'
     }
+//    dependencies {
+//        exclude(dependency('org.apache.spark:spark-core_2.10:1.6.1'))
+//        exclude(dependency('org.apache.spark:spark-streaming_2.10:1.6.1'))
+//    }
+}
+
+// ./gradlew -PmainClass=me.test.spark.SparkTest execute
+//task execute(type:JavaExec) {
+//    main = mainClass
+//    classpath += sourceSets.main.runtimeClasspath
+//    classpath += sourceSets.main.compileClasspath
+//}
+
+mainClassName = mainClass
+// ./gradlew -PmainClass=me.test.spark.SparkTest run
+run {
+    classpath += sourceSets.main.runtimeClasspath
+    classpath += sourceSets.main.compileClasspath
 }

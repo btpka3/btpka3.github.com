@@ -9,6 +9,7 @@
 ```
 # 启动master
 # 可以访问 http://localhost:8080/
+cd $SPARK_HOME
 ./sbin/start-master.sh -h 127.0.0.1
 ./sbin/stop-master.sh
 
