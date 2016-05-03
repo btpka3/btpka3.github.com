@@ -11,6 +11,7 @@ object A {
     val m = DenseMatrix.zeros[Int](5, 5)
     println("-------------------------2")
     println(m)
+    println(DenseMatrix)
 
     val m1 = DenseMatrix(
       (1, 0, 0, 0, 0),
@@ -28,11 +29,57 @@ object A {
     println("-------------------------1")
     println(m1)
 
-    println("-------------------------1")
-    println(m1 + m + m1)
+    println("-------------------------2")
+    println(m1 + m1)
+    println(m1)
 
-    println("-------------------------1")
-    println(m1 + m2)
+    println("-------------------------2.1")
+    println(m2.reshape(2, 8))
+    println(m2)
+
+    println("-------------------------2.2")
+    m2(::, 2) := 5
+    println(m2)
+
+    println("-------------------------2.3")
+    println(m2(0, 2))
+    println(m2)
+
+    println("-------------------------2.4")
+    println(m2(1, ::))
+    println(m2)
+
+    println("-------------------------2.5")
+    m2(1 to 2, 1 to 2) := 4
+    println(m2)
+
+    println("-------------------------3")
+    //    println(m1 + m2)
+    println(DenseVector.fill(5) {
+      5.0
+    })
+
+
+
+    println("-------------------------4")
+    println(DenseMatrix.ones[Int](5, 5))
+
+    println("-------------------------5")
+    println(diag(DenseVector(1, 2, 3)))
+
+    println("-------------------------6")
+    val m3 = DenseMatrix.eye[Int](4)
+    println(m3)
+    val m4 = DenseMatrix.eye[Int](2) * 2
+    println(m4)
+    println("-------------------------6.1")
+    m3(2 to 3, 1 to 2) += m4
+    println(m3)
+
+    println("-------------------------7")
+    println(linspace(0, 20, 11).toDenseMatrix)
+
+    println("-------------------------8")
 
     println("Hello, world!5")
   }
