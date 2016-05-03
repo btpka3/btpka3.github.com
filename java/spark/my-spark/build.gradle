@@ -11,7 +11,7 @@ buildscript {
 
 //apply plugin: 'groovy'
 apply plugin: 'java'
-//apply plugin: 'scala'
+apply plugin: 'scala'
 apply plugin: 'idea'
 apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'application'
@@ -53,8 +53,9 @@ dependencies {
 //    provided 'org.apache.spark:spark-core_2.10:1.6.1'
 //    provided 'org.apache.spark:spark-streaming_2.10:1.6.1'
 
-    compileOnly 'org.apache.spark:spark-core_2.10:1.6.1'
-    compileOnly 'org.apache.spark:spark-streaming_2.10:1.6.1'
+    compileOnly 'org.apache.spark:spark-core_2.11:1.6.1'
+    compileOnly 'org.apache.spark:spark-streaming_2.11:1.6.1'
+    compileOnly 'org.apache.spark:spark-mllib_2.11:1.6.1'
 
     //compile 'org.scala-lang:scala-library:2.11.4'
 
@@ -99,7 +100,11 @@ shadowJar {
 
 mainClassName = mainClass
 // ./gradlew -PmainClass=me.test.spark.SparkTest run
-run {
-    classpath += sourceSets.main.runtimeClasspath
-    classpath += sourceSets.main.compileClasspath
+//run {
+//    classpath += sourceSets.main.runtimeClasspath
+//    classpath += sourceSets.main.compileClasspath
+//}
+
+idea {
+    targetVersion = "15"
 }
