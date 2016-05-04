@@ -24,9 +24,9 @@ public class SparkTest {
     public static void main(String[] args) {
 
         //hello();
-        //withIterator();
+        withIterator();
         //stopAll();
-        cartesian();
+//        cartesian();
     }
 
     /**
@@ -90,6 +90,7 @@ public class SparkTest {
                     }
                 }
         );
+        System.out.println("======: " + rdd.collect());
 
         // NOTICE: 将数据重新分片，否则仅会在当前worker上执行，不会分给其他worker执行。
         rdd = rdd.repartition(4);

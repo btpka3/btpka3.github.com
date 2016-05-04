@@ -2,9 +2,28 @@ package me.test.scala
 
 import breeze.linalg._
 
+import scala.collection.mutable
+
 object A {
 
   def main(args: Array[String]): Unit = {
+
+    println("-------------------------0")
+    println(Array(1, 2, 3).getClass)
+    println("01010".map(c => c - 48).toArray.getClass)
+    println(DenseMatrix(
+      Array(//mutable.WrappedArray
+        Array(1, 0, 0, 0, 0),
+        Array(0, 1, 0, 0, 0)
+      )
+    ))
+    println(DenseMatrix(
+      Array(1, 0, 0, 0, 0),
+      Array(0, 1, 0, 0, 0),
+      Array(0, 0, 1, 0, 0),
+      Array(0, 0, 0, 1, 0),
+      Array(0, 0, 0, 0, 1)
+    ))
 
     val m = DenseMatrix.zeros[Int](5, 5)
     println("-------------------------2")
@@ -83,12 +102,12 @@ object A {
   }
 
   def main1(args: Array[String]): Unit = {
-//    val conf = new SparkConf()
-//      .setMaster("spark://localhost:7077")
-//      .setAppName("NetworkWordCount")
-//
-//    val ssc = new StreamingContext(conf, Seconds(1))
-//    val lines = ssc.socketTextStream("localhost", 9999)
+    //    val conf = new SparkConf()
+    //      .setMaster("spark://localhost:7077")
+    //      .setAppName("NetworkWordCount")
+    //
+    //    val ssc = new StreamingContext(conf, Seconds(1))
+    //    val lines = ssc.socketTextStream("localhost", 9999)
 
     println("Hello, world!")
   }
