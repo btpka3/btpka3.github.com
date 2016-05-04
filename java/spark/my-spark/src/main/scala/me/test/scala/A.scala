@@ -1,8 +1,6 @@
 package me.test.scala
 
 import breeze.linalg._
-import org.apache.spark._
-import org.apache.spark.streaming._
 
 object A {
 
@@ -81,16 +79,16 @@ object A {
 
     println("-------------------------8")
 
-    println("Hello, world!5")
+    println("Hello, world!6")
   }
 
   def main1(args: Array[String]): Unit = {
-    val conf = new SparkConf()
-      .setMaster("spark://localhost:7077")
-      .setAppName("NetworkWordCount")
-
-    val ssc = new StreamingContext(conf, Seconds(1))
-    val lines = ssc.socketTextStream("localhost", 9999)
+//    val conf = new SparkConf()
+//      .setMaster("spark://localhost:7077")
+//      .setAppName("NetworkWordCount")
+//
+//    val ssc = new StreamingContext(conf, Seconds(1))
+//    val lines = ssc.socketTextStream("localhost", 9999)
 
     println("Hello, world!")
   }

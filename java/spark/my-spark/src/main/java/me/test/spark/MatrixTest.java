@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Modulo
  */
-public class Modulo {
+public class MatrixTest {
 
     public static void main1(String[] args) {
 
