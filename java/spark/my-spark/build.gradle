@@ -57,7 +57,7 @@ dependencies {
     compileOnly 'org.apache.spark:spark-streaming_2.11:1.6.1'
     compileOnly 'org.apache.spark:spark-mllib_2.11:1.6.1'
 
-    //compile 'org.scala-lang:scala-library:2.11.4'
+    compile 'org.scala-lang:scala-library:2.11.8'
 
     //compile 'org.codehaus.groovy:groovy-all:2.3.11'
 
