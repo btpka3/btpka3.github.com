@@ -90,8 +90,11 @@ object A {
     val m4 = DenseMatrix.eye[Int](2) * 2
     println(m4)
     println("-------------------------6.1")
+    val m31 = m3.copy
     m3(2 to 3, 1 to 2) += m4
     println(m3)
+    println("-------------------------6.2")
+    println(m31)
 
     println("-------------------------7")
     println(linspace(0, 20, 11).toDenseMatrix)
