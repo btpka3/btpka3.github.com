@@ -1,4 +1,4 @@
-package me.test.scala
+package me.test
 //import breeze.linalg._
 import org.junit.Assert._
 import org.junit.Test

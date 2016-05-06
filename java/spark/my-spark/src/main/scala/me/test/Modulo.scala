@@ -1,11 +1,12 @@
-package me.test.scala
+package me.test
 
 import Array._
 import breeze.linalg.{DenseMatrix, Matrix}
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.node.ArrayNode
+import me.test._
 import org.apache.spark.rdd.RDD
-import org.apache.spark.{SparkConf, SparkContext}
+import org.apache.spark.{Accumulable, AccumulableParam, SparkConf, SparkContext}
 
 import scala.collection.mutable.ListBuffer
 import collection.JavaConverters._
@@ -14,7 +15,6 @@ import collection.JavaConverters._
   * Created by zll on 16-5-4.
   */
 object Modulo {
-
   def main9(args: Array[String]): Unit = {
     val m = DenseMatrix(
       (2, 0, 0, 0),
@@ -39,6 +39,7 @@ object Modulo {
 
     val map: Matrix[Int] = mapToMatrix(moduloLevel.map)
     val pieces: Array[Matrix[Int]] = moduloLevel.pieces.map(pieceToMatrix(_))
+    val modu = moduloLevel.modu
 
     println("=========================map")
     println(map)
@@ -50,7 +51,7 @@ object Modulo {
       .setMaster("local[4]")
 
     val sc = new SparkContext(conf)
-    val foundResult = sc.accumulator(0, "foundResult")
+    val foundResult: Accumulable[ModuResults, ModuResult] = sc.accumulable(new ModuResults())
     //    val mapMatrix = sc.broadcast(map)
 
     println("=========================pieces.head.pos")
@@ -64,11 +65,24 @@ object Modulo {
       if (rdd == rdds.head) {
         r = rdd.map(Array(_))
       } else {
-        r = r.cartesian(rdd.map(Array(_))).map(t2 => concat(t2._1, t2._2))
+        r = r.cartesian(rdd).map(t2 => concat(t2._1, Array(t2._2)))
       }
       //val leftRdd = if (r == null) rdds.head else rdd
       //r = leftRdd.map(Array(_)).cartesian(rdd.map(Array(_))).map(t2 => concat(t2._1, t2._2))
     }
+    println("=========================" + r.getNumPartitions)
+    r = r.repartition(4)
+    r.foreach(moduResult => {
+      val tmpMap = map.copy
+      moduResult.foreach(piecePos => {
+        addPieceToMap(tmpMap, piecePos._1, piecePos._2)
+      })
+      if (isValidResult(tmpMap, modu)) {
+        foundResult.add(moduResult)
+      }
+    })
+
+
     println("----------------------------")
     r.collect().foreach(l => l.foreach(println(_)))
     //    println(rdd.collect())
@@ -212,5 +226,22 @@ object Modulo {
   /*
   1. 1
     */
+
+
+  implicit object PiecePosAccParam extends AccumulableParam[ModuResults, ModuResult] {
+
+    def addAccumulator(r: ModuResults, t: ModuResult): ModuResults = {
+      r += t
+      r
+    }
+
+    def addInPlace(r1: ModuResults, r2: ModuResults): ModuResults = {
+      r1 ++= r2
+    }
+
+    def zero(initialValue: ModuResults): ModuResults = {
+      initialValue
+    }
+  }
 
 }
