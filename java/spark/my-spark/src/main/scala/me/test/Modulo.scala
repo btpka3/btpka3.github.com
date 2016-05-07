@@ -31,7 +31,7 @@ object Modulo {
 
     //val json = """{"level":18,"modu":"2","map":["1010","0011","0101","1101","1110"],"pieces":["XX,.X",".X.,.X.,XXX","X.,XX,X.",".X..,XX..,.XXX,.XX.",".X.,XXX",".X..,XX..,XXXX,.X..",".X,.X,XX","X..,X..,XXX,XX.,X..","X.,X.,XX","X.,XX,.X"]}"""
     val json =
-      """{"level":5,"modu":"2","map":["100","100","101"],"pieces":["X,X","XX,.X,.X","XXX","XX","XXX"]}"""
+      """{"level":20,"modu":"2","map":["111011","001110","001000","110110","110100"],"pieces":["X.X.,XXX.,..XX,..X.","XX.,.X.,XXX,X..","X...,XXXX,.X..,.X..","....XX,XXXXX.,...X..,...X..","X..,X..,XXX","...X.,XXXXX,.X...,.X...","XXX,X..","XXX.,..XX,...X,..XX,..X.",".X,XX","XX,.X,.X"]}"""
     val mapper = new ObjectMapper()
     val moduloLevel = mapper.readValue(json, classOf[ModuleLevel])
     println(moduloLevel)

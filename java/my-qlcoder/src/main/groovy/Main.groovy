@@ -14,7 +14,7 @@ class Main {
     // 24: 000001014040120120201022
     static void main(String[] args) {
 
-        def jsonStr = """{"level":5,"modu":"2","map":["100","100","101"],"pieces":["X,X","XX,.X,.X","XXX","XX","XXX"]}"""
+        def jsonStr = """{"level":20,"modu":"2","map":["111011","001110","001000","110110","110100"],"pieces":["X.X.,XXX.,..XX,..X.","XX.,.X.,XXX,X..","X...,XXXX,.X..,.X..","....XX,XXXXX.,...X..,...X..","X..,X..,XXX","...X.,XXXXX,.X...,.X...","XXX,X..","XXX.,..XX,...X,..XX,..X.",".X,XX","XX,.X,.X"]}"""
 
         def jsonObj = new JsonSlurper().parseText(jsonStr)
         int modu = Integer.valueOf(jsonObj.modu)
