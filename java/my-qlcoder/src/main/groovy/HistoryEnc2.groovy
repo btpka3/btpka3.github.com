@@ -100,9 +100,6 @@ class HistoryEnc2 {
 
     public static boolean checkKey(byte[] enc3Bytes, long key) {
 
-        for (int j = 0; j < encBytes.length; j += 3) {
-
-        }
         return false
     }
 }
