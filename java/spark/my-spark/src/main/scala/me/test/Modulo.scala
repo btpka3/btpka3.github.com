@@ -1,15 +1,15 @@
 package me.test
 
-import Array._
+import java.util.Date
+import java.util.concurrent.atomic.AtomicInteger
+
 import breeze.linalg.{DenseMatrix, Matrix}
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.databind.node.ArrayNode
-import me.test._
 import org.apache.spark.rdd.RDD
 import org.apache.spark.{Accumulable, AccumulableParam, SparkConf, SparkContext}
 
+import scala.Array._
 import scala.collection.mutable.ListBuffer
-import collection.JavaConverters._
 
 /**
   * Created by zll on 16-5-4.
@@ -40,6 +40,7 @@ object Modulo {
     val map: Matrix[Int] = mapToMatrix(moduloLevel.map)
     val pieces: Array[Matrix[Int]] = moduloLevel.pieces.map(pieceToMatrix(_))
     val modu = moduloLevel.modu
+    val actualSeconds = new AtomicInteger
 
     println("=========================map")
     println(map)
@@ -51,7 +52,7 @@ object Modulo {
       .setMaster("local[4]")
 
     val sc = new SparkContext(conf)
-    val foundResult: Accumulable[ModuResults, ModuResult] = sc.accumulable(new ModuResults())
+    val foundResult: Accumulable[ModuResults, ModuResult] = sc.accumulable(new ModuResults())(PiecePosAccParam)
     //    val mapMatrix = sc.broadcast(map)
 
     println("=========================pieces.head.pos")
@@ -83,8 +84,37 @@ object Modulo {
     })
 
 
+    new Thread() {
+      override def run {
+        val start: Date = new Date
+        System.out.println("----- started at : " + start)
+        var i: Int = 0
+        try {
+          while (foundResult.value.length > 0 && i < 60) {
+            {
+              i += 1
+              Thread.sleep(500)
+            }
+          }
+          sc.cancelAllJobs
+          println("watching thread exited on success")
+        }
+        catch {
+          case e: InterruptedException => {
+            e.printStackTrace
+            println("watching thread exited on error")
+          }
+        }
+        val end: Date = new Date
+        actualSeconds.addAndGet((end.getTime - start.getTime).toInt / 1000)
+        println("----- finished at : " + end + ", cost " + actualSeconds + " seconds")
+        println("----- finished at : " + moduResultToString(foundResult.value.head))
+      }
+    }.start
+
+
     println("----------------------------")
-    r.collect().foreach(l => l.foreach(println(_)))
+    //r.collect().foreach(l => l.foreach(println(_)))
     //    println(rdd.collect())
     //rdd.repartition(4)
 
@@ -187,6 +217,15 @@ object Modulo {
 
   def isValidResult(filledMap: Matrix[Int], modu: Int): Boolean = {
     filledMap.forall(_ % modu == 0)
+  }
+
+  def moduResultToString(moduResult: ModuResult): String = {
+    val buf = new StringBuilder
+    moduResult.foreach(a => {
+      buf.append(a._2._1.toString)
+      buf.append(a._2._2.toString)
+    })
+    buf.toString()
   }
 
 
