@@ -2,12 +2,12 @@ import groovy.json.JsonSlurper
 
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import java.util.concurrent.atomic.AtomicInteger
+import java.util.concurrent.atomic.AtomicLong
 
 /**
  * Created by zll on 3/14/16.
  */
-
-
 class Main {
 
     static foundPassed = false
@@ -52,32 +52,33 @@ class Main {
 //
 //        }
 
-
-        ExecutorService pool = Executors.newFixedThreadPool(8)
-
-        def availPos0 = calcAvailPos(map, pieces.get(0))
+        // 多线程
+//        ExecutorService pool = Executors.newFixedThreadPool(8)
+//
+//        def availPos0 = calcAvailPos(map, pieces.get(0))
+//        println "=============================== start @@ " + new Date()
+//        def final count = new AtomicInteger()
 //        availPos0.size().times { i ->
-//            println "==== $i"
+//            pool.submit {
+//                def map1 = genMap(jsonObj.map)
+//                def result = [] as LinkedList
+//                if (calc(result, map1, modu, pieces, 0, i, i + 1)) {
+//                    println "------------------------------ result $i: true : " + toResultStr(result) + " ,  i =  $i"
+//                    println "=============================== end @ " + new Date()
+//                    pool.shutdownNow()
+//                }
+//            }
 //        }
-        println "=============================== start @ " + new Date()
-        availPos0.size().times { i ->
-            pool.submit {
-                def map1 = genMap(jsonObj.map)
-                def result = [] as LinkedList
-                println "==== $i"
-                if (calc(result, map1, modu, pieces, 0, i, i + 1)) {
-                    println "------------------------------ result $i: true : " + toResultStr(result)
-                    println "=============================== end @ " + new Date()
-                    pool.shutdownNow()
-                }
-            }
-        }
-//        def passed = calc(result, map, modu, pieces, 0)
-//
-//
-//        println "------------------------------ result : $passed"
-//        println toResultStr(result)
 
+        // 单线程
+        def result = [] as LinkedList
+        println "----------------- start at " + new Date()
+        def passed = calc(result, map, modu, pieces, 0)
+        println "------------------------------ result : ${toResultStr(result)}, loopCount : $cc, "
+        println "----------------- end  at " + new Date()
+
+        // REC1 : loopCount =  52095470, time :  65s,  801468/s
+        // REC2 : loopCount = 327918037, time : 389s,  842976/s
 //
 //        Map result = [:]
 //        while (true) {
@@ -99,7 +100,8 @@ class Main {
 //        }
 
     }
-//
+
+//    static def c = 0L
 //
 //    static List calc(String mapStr, List pieces) {
 //        def result = [] as LinkedList
@@ -107,9 +109,12 @@ class Main {
 //        List map = genMap(mapStr)
 //        def availPos = calcAvailPos(map, pieces.get(0))
 //        for (List pos : availPos) {
+//            c++
+//            println "=====$c"
 //            result.push(pos)
 //            if (pieces.size() > 1) {
 //                if (calc(result, map, pieces, 1, pos[0], pos[1])) {
+//                    println "------------------------loop $c ,then found result : $result"
 //                    return result
 //                }
 //            } else {
@@ -147,12 +152,15 @@ class Main {
         return buf.toString()
     }
 
+    static def cc = 0L
+
     static boolean calc(List result, List map, int modu, List pieces, int p, int startPos = 0, int endPos = Integer.MAX_VALUE) {
         def piece = pieces.get(p)
         def availPos = calcAvailPos(map, piece)
         endPos = Math.min(availPos.size(), endPos)
 
         for (int i = startPos; i < Math.min(availPos.size(), endPos); i++) {
+            cc++
             if (foundPassed) {
                 return false;
             }
