@@ -11,4 +11,3 @@ exclude:
   - rfc
   - ruby
   - ShapeContext
-  - w3c
