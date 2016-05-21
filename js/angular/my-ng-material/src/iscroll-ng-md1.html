@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyApp" ng-controller="DemoCtrl as ctrl" layout="column" ng-cloak="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <title>iscroll test</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/angular-material/1.0.6/angular-material.css"/>
+
+    <style>
+        .iscroll-on .iscroll-wrapper {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            /*height: 600px !important;*/
+            overflow: hidden;
+            background-color: #ccc;
+            border: 1px solid blue;
+        }
+
+        .iscroll-on .iscroll-scroller {
+            position: absolute;
+            width: 100%;
+            min-height: 100%;
+            background-color: #fff;
+        }
+
+        .header {
+            background-color: #84ffff;
+            height: 60px;
+        }
+
+        .footer {
+            background-color: #b9f6ca;
+            height: 60px;
+        }
+    </style>
+</head>
+<body ng-controller="DemoCtrl as vm" class="iscroll-on" layout="column">
+<div class="header">header</div>
+<div flex class="iscroll-wrapper" iscroll="vm.iscrollParam" iscroll-instance="instance">
+    <div class="iscroll-scroller">
+        <ol>
+            <li>aaa instance.options： -
+                <pre>{{instance.options | json}}</pre>
+                -
+            </li>
+            <li>aaa iScrollState ： {{vm.iScrollState}}</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+        </ol>
+    </div>
+</div>
+<div class="footer">footer</div>
+</body>
+<script src="https://cdn.bootcss.com/angular.js/1.5.0/angular.js"></script>
+<script src="https://cdn.bootcss.com/angular.js/1.5.0/angular-animate.js"></script>
+<script src="https://cdn.bootcss.com/angular.js/1.5.0/angular-aria.js"></script>
+<script src="https://cdn.bootcss.com/angular.js/1.5.0/angular-messages.js"></script>
+<script src="../bower_components/angular-material/angular-material.js"></script>
+<script src="../bower_components/platform/platform.js"></script>
+<script src="../bower_components/iscroll/build/iscroll.js"></script>
+<script src="../bower_components/angular-iscroll/dist/lib/angular-iscroll.js"></script>
+<script>
+    (function () {
+
+        document.addEventListener('touchmove', function (e) {
+            e.preventDefault();
+        }, false);
+        angular
+                .module('MyApp', ['ngMaterial', 'ngMessages', 'angular-iscroll'])
+                .config(function (iScrollServiceProvider) {
+                    iScrollServiceProvider.configureDefaults({
+//                        iScroll: {
+//                            // Passed through to the iScroll library
+//                            scrollbars: true,
+//                            fadeScrollbars: true,
+//                            bounce: true
+//                        },
+//                        directive: {
+//                            // Interpreted by the directive
+//                            refreshInterval: 500
+//                        }
+                    });
+                })
+                .controller('DemoCtrl', ['$scope', 'iScrollService', function ($scope, iScrollService) {
+                    var vm = this;
+                    vm.iscrollParam = {
+                        mouseWheel: true,
+                        bounce: true,
+                        //scrollX: false,
+                        scrollY: true,  // FIXM: 不能 scrollX 和 scrollY 不能一个为true，一个为false？
+                        //freeScroll: true,
+                        scrollbars: true,
+                        fadeScrollbars: true,
+                        asyncRefreshDelay: 500  // NOTICE: 如果没有这一行，初始无法使用 iscoll，除非window resize 等事件发生
+                    };
+                    vm.iScrollState = iScrollService.state;
+                    vm.iScrollState.useIScroll = true;
+                    iScrollService.enable();
+                }]);
+    })();
+
+</script>
+</html>

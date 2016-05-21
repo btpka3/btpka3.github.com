@@ -23,6 +23,8 @@
     "svg-morpheus": "~0.1.8",
     "angular-swiper": "^0.3.2",
     "angular-sanitize": "^1.5.3",
-    "angular-material-data-table": "^0.10.9"
+    "angular-material-data-table": "^0.10.9",
+    "angular-iscroll": "^3.2.0",
+    "iscroll": "5.1.3"
   }
 }
