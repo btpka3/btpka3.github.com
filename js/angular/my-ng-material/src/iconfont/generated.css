@@ -1,0 +1,8 @@
+@font-face {
+    font-family: "MySuperFont";
+    src: url("iconfont20160317.svg") format("svg"),
+         url("iconfont20160317.ttf") format("ttf"),
+         url("iconfont20160317.woff") format("woff"),
+         url("iconfont20160317.eot") format("eot");
+}
+
