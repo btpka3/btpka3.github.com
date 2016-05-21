@@ -17,50 +17,29 @@
 
     <link rel="stylesheet" href="https://cdn.bootcss.com/angular-material/1.0.6/angular-material.css"/>
     <link rel="stylesheet" href="https://cdn.bootcss.com/material-design-icons/2.2.0/iconfont/material-icons.css"/>
-    <style>
-        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-            display: none !important;
-        }
-
-        md-grid-tile:hover {
-            background-color: #b9f6ca;
-        }
-
-        md-grid-tile-footer {
-            height: 24px !important;
-            font-size:12px !important;
-            color:#212121 !important;
-            background-color: transparent !important;
-        }
-
-        h1.c {
-            text-align: center;
-        }
-
-        md-icon {
-            font-size: 48px !important;
-        }
-
-        figcaption {
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
-    </style>
 </head>
 
-<body ng-controller="DemoCtrl" ng-cloak>
-<h1 class="c">material-design-icons v2.2.0 字体列表</h1>
-<md-grid-list md-cols-xs="4" md-cols-sm="8" md-cols-gt-md="12"   md-row-height="1:1">
-    <md-grid-tile md-colspan="1" md-rowspan="1" ng-repeat="icon in icons">
-        <md-icon md-font-set="material-icons">{{icon.name}}</md-icon>
-        <md-grid-tile-footer>
-            {{icon.name}}
-        </md-grid-tile-footer>
-    </md-grid-tile>
-</md-grid-list>
+<body ng-controller="DemoCtrl" ng-cloak layout="row">
 
-<div class="material-icons">warning</div>
+<div flex layout="column">
+    <md-input-container flex>
+        <label>AAA</label>
+        <md-select ng-model="aaa">
+            <md-option value="A01">A01</md-option>
+            <md-option value="A02">A02</md-option>
+            <md-option value="A03">A03</md-option>
+        </md-select>
+    </md-input-container>
+
+    <md-input-container flex>
+        <label>BBB</label>
+        <md-select ng-model="bbb">
+            <md-option value="A01">A01</md-option>
+            <md-option value="A02">A02</md-option>
+            <md-option value="A03">A03</md-option>
+        </md-select>
+    </md-input-container>
+</div>
 
 
 <script src="https://cdn.bootcss.com/angular.js/1.5.0/angular.js"></script>
