@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyApp" ng-controller="DemoCtrl as ctrl" layout="column" ng-cloak="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <title>study ng-material</title>
+    <link rel="stylesheet" href="../bower_components/material-design-icons/iconfont/material-icons.css">
+    <link rel="stylesheet" href="../bower_components/angular-material/angular-material.min.css"/>
+    <link rel="stylesheet" href="../bower_components/angular-material-icons/angular-material-icons.css"/>
+    <style type="text/css">
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+            display: none !important;
+        }
+
+        .main {
+            max-width: 640px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .header h1 {
+            text-align: center;
+        }
+
+        .footer .md-button > .md-ripple-container {
+            border-radius: 0;
+        }
+
+    </style>
+    <script>
+        // http://stackoverflow.com/questions/29120841/angular-material-when-adding-a-ripple-it-will-fill-instead-of-disappearing
+    </script>
+</head>
+<body ng-cloak>
+
+<div>111</div>
+<div>222</div>
+<div md-ink-ripple="#03A9F4" style="border:1px solid blue; height:80px; position: relative;">
+    // so in an active state this will fill "myDiv" with color and stay fully sized
+</div>
+<div>333</div>
+<div>444</div>
+</body>
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="../bower_components/angular-aria/angular-aria.min.js"></script>
+<script src="../bower_components/angular-messages/angular-messages.min.js"></script>
+<script src="../bower_components/angular-material/angular-material.min.js"></script>
+<script src="../bower_components/angular-material-icons/angular-material-icons.min.js"></script>
+<script src="../bower_components/svg-morpheus/compile/minified/svg-morpheus.js"></script>
+<script>
+    (function () {
+        'use strict';
+        angular
+                .module('MyApp', ['ngMaterial', 'ngMessages', 'ngMdIcons'])
+                .controller('DemoCtrl', ['$scope', '$mdSidenav', function ($scope, $mdSidenav) {
+                }]);
+    })();
+
+</script>
+</html>

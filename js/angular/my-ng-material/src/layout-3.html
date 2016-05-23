@@ -12,13 +12,114 @@
         [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
             display: none !important;
         }
+
+        .main {
+            max-width: 640px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .header h1 {
+            text-align: center;
+        }
+
+        .footer .md-button > .md-ripple-container {
+            border-radius: 0;
+        }
     </style>
 </head>
-<body   ng-cloak="">
-<div layout="row">
-    <div  style="margin-left:auto;">First item in row</div>
-    <div  style="box-sizing: border-box;font-size:14px;line-height:20px;">Second item in row</div>
+<body ng-cloak layout="row">
+<div flex layout="column" class="md-whiteframe-z2 main">
+    <md-toolbar layout="row" class="header">
+        <div class="md-toolbar-tools">
+            <md-button class="md-icon-button">
+                <md-icon md-font-set="material-icons">menu</md-icon>
+            </md-button>
+            <h1 flex>btpka3</h1>
+            <md-button class="md-icon-button">
+                <md-icon md-font-set="material-icons">favorite</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <md-content flex>
+        <md-button> button</md-button>
+        <ol>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+            <li>aaa</li>
+        </ol>
+    </md-content>
+    <md-toolbar layout="row" class="footer" layout-align="center stretch">
+        <div flex layout="column" layout-align="center center" md-ink-ripple
+             style="position: relative;">
+            <md-icon md-font-set="material-icons">menu
+            </md-icon
+            ><span class="md-grid-text">Menu</span
+        ></div>
+
+        <div flex layout="column" layout-align="center center" md-ink-ripple
+             style="position: relative;">
+            <md-icon md-font-set="material-icons">menu
+            </md-icon
+            ><span class="md-grid-text">Menu</span
+        ></div>
+
+        <div flex layout="column" layout-align="center center" md-ink-ripple
+             style="position: relative;">
+            <md-icon md-font-set="material-icons">menu
+            </md-icon
+            ><span class="md-grid-text">Menu</span
+        ></div>
+
+        <md-button flex class="md-icon-button" layout="column" layout-align="center center" style="position: relative;">
+            <md-icon md-font-set="material-icons">menu</md-icon>
+            <span class="md-grid-text">Button</span>
+        </md-button>
+    </md-toolbar>
 </div>
+
 </body>
 <script src="../bower_components/jquery/dist/jquery.min.js"></script>
 <script src="../bower_components/angular/angular.js"></script>
