@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyApp" ng-controller="DemoCtrl as ctrl" layout="column" ng-cloak="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <title>study md-icon</title>
+    <link rel="stylesheet" href="../bower_components/material-design-icons/iconfont/material-icons.css">
+    <link rel="stylesheet" href="../bower_components/angular-material/angular-material.min.css"/>
+    <link rel="stylesheet" href="../bower_components/angular-material-icons/angular-material-icons.css"/>
+</head>
+<body>
+
+<md-button class="md-primary md-raised" ng-click="showConfirm($event)">
+    showConfirm
+</md-button>
+
+<md-button class="md-primary md-raised" ng-click="showAdvanced($event)">
+    showAdvanced
+</md-button>
+
+</body>
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="../bower_components/angular-aria/angular-aria.min.js"></script>
+<script src="../bower_components/angular-messages/angular-messages.min.js"></script>
+<script src="../bower_components/angular-material/angular-material.min.js"></script>
+<script src="../bower_components/angular-material-icons/angular-material-icons.min.js"></script>
+<script src="../bower_components/svg-morpheus/compile/minified/svg-morpheus.js"></script>
+<script>
+    (function () {
+        'use strict';
+        angular
+                .module('MyApp', ['ngMaterial', 'ngMessages', 'ngMdIcons'])
+                .controller('DemoCtrl', ['$scope', '$mdDialog', '$mdMedia', function ($scope, $mdDialog, $mdMedia) {
+
+                    $scope.showConfirm = function (ev) {
+                        // Appending dialog to document.body to cover sidenav in docs app
+                        var confirm = $mdDialog.confirm()
+                                .title('Would you like to delete your debt?')
+                                .textContent('All of the banks have agreed to forgive you your debts.')
+                                .ariaLabel('Lucky day')
+                                .targetEvent(ev)
+                                .ok('Please do it!')
+                                .cancel('Sounds like a scam');
+                        $mdDialog.show(confirm).then(function () {
+                            $scope.status = 'You decided to get rid of your debt.';
+                        }, function () {
+                            $scope.status = 'You decided to keep your debt.';
+                        });
+                    };
+
+                    $scope.showAdvanced = function (ev) {
+                        var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && $scope.customFullscreen;
+                        $mdDialog.show({
+                            controller: DialogController,
+                            templateUrl: 'dialog1.tmpl.html',
+                            parent: angular.element(document.body),
+                            targetEvent: ev,
+                            clickOutsideToClose: true,
+                            fullscreen: useFullScreen
+                        }).then(function (answer) {
+                            $scope.status = 'You said the information was "' + answer + '".';
+                        }, function () {
+                            $scope.status = 'You cancelled the dialog.';
+                        });
+                        $scope.$watch(function () {
+                            return $mdMedia('xs') || $mdMedia('sm');
+                        }, function (wantsFullScreen) {
+                            $scope.customFullscreen = (wantsFullScreen === true);
+                        });
+                    };
+                }]);
+
+        function DialogController($scope, $mdDialog) {
+            $scope.search = {
+                type: "商品分类"
+            };
+            $scope.sysTypes = [{
+                name: "蚕丝被",
+                code: '111'
+            }, {
+                name: "胎套",
+                code: '222'
+            }];
+
+
+            $scope.hide = function () {
+                $mdDialog.hide();
+            };
+            $scope.cancel = function () {
+                $mdDialog.cancel();
+            };
+            $scope.answer = function (answer) {
+                $mdDialog.hide(answer);
+            };
+        }
+    })();
+
+</script>
+<script type="text/ng-template" id="dialog1.tmpl.html">
+    <md-dialog aria-label="Mango (Fruit)" ng-cloak>
+        <form>
+            <md-toolbar>
+                <div class="md-toolbar-tools">
+                    <h2>新增/更新分类</h2>
+                    <span flex></span>
+                    <md-button class="md-icon-button" ng-click="cancel()">
+                        <md-icon md-font-set="material-icons">close</md-icon>
+                    </md-button>
+                </div>
+            </md-toolbar>
+            <md-dialog-content>
+                <div class="md-dialog-content" >
+                    <form layout="column">
+                        <div flex layout="row">
+                            <md-input-container class="md-block" flex>
+                                <label>类别</label>
+                                <input ng-model="search.type" disabled>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex>
+                                <label>系统分类</label>
+                                <md-select ng-model="search.sysType">
+                                    <md-option ng-repeat="sysType in sysTypes" value="{{sysType.code}}">
+                                        {{sysType.name}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                        <div flex layout="row">
+                            <md-input-container class="md-block" flex>
+                                <label>分类名称</label>
+                                <input ng-model="search.userId">
+                            </md-input-container>
+                            <md-input-container class="md-block" flex>
+                                <label>自定义编码</label>
+                                <input ng-model="search.userId">
+                            </md-input-container>
+                        </div>
+                        <div>
+                            <md-input-container class="md-block" flex>
+                                <label>描述</label>
+                                <textarea ng-model="search.userId"></textarea>
+                            </md-input-container>
+                        </div>
+
+                    </form>
+                </div>
+
+            </md-dialog-content>
+            <md-dialog-actions layout="row">
+                <md-button ng-click="answer('not useful')">
+                    Not Useful
+                </md-button>
+                <md-button ng-click="answer('useful')">
+                    Useful
+                </md-button>
+            </md-dialog-actions>
+        </form>
+    </md-dialog>
+
+
+</script>
+</html>

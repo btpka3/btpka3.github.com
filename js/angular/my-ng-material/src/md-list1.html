@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyApp" ng-controller="DemoCtrl as ctrl" layout="column" ng-cloak="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <title>study md-icon</title>
+    <link rel="stylesheet" href="../bower_components/material-design-icons/iconfont/material-icons.css">
+    <link rel="stylesheet" href="../bower_components/angular-material/angular-material.min.css"/>
+    <link rel="stylesheet" href="../bower_components/angular-material-icons/angular-material-icons.css"/>
+</head>
+<body>
+<md-toolbar layout="row">
+    <h1>Angular Material - Starter App</h1>
+</md-toolbar>
+
+
+<md-list flex>
+    <md-subheader class="md-no-sticky">3 line item (with hover)</md-subheader>
+    <md-list-item class="md-3-line" ng-repeat="item in todos" ng-click="null">
+        <img ng-src="{{item.face}}?{{$index}}" class="md-avatar" alt="{{item.who}}"/>
+        <div class="md-list-item-text" layout="column">
+            <h3>{{ item.who }}</h3>
+            <h4>{{ item.what }}</h4>
+            <p>{{ item.notes }}</p>
+        </div>
+    </md-list-item>
+</md-list>
+
+
+<md-list-item ng-repeat="person in people" ng-click="goToPerson(person.name, $event)" class="noright">
+    <img alt="{{ person.name }}" ng-src="{{ person.img }}" class="md-avatar"/>
+    <p>{{ person.name }}</p>
+    <md-checkbox class="md-secondary" ng-model="person.selected"></md-checkbox>
+    <md-icon md-svg-icon="communication:email" ng-click="doSecondaryAction($event)" aria-label="Send Email" class="md-secondary md-hue-3"></md-icon>
+    <md-icon class="md-secondary" ng-click="doSecondaryAction($event)" aria-label="Chat" md-svg-icon="communication:message"></md-icon>
+</md-list-item>
+<md-content flex layout="row">
+
+    <md-list flex>
+        <md-list-item class="md-3-line noright" ng-click="null">
+            <img ng-src="https://material.angularjs.org/latest/img/list/60.jpeg" class="md-avatar"/>
+            <div class="md-list-item-text" layout="column">
+                <h3>AAA</h3>
+                <h4>444</h4>
+                <p>xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx </p>
+            </div>
+            <md-button class="md-secondary">More Info</md-button>
+            <md-button class="md-secondary">More Info</md-button>
+            <md-button class="md-secondary md-icon-button">
+                <md-icon md-font-set="material-icons">android</md-icon>
+            </md-button>
+            <md-button class="md-secondary md-icon-button">
+                <md-icon md-font-set="material-icons">apps</md-icon>
+            </md-button>
+
+        </md-list-item>
+        <md-list-item class="md-3-line" ng-click="null">
+            <img ng-src="https://material.angularjs.org/latest/img/list/60.jpeg" class="md-avatar"/>
+            <div class="md-list-item-text" layout="column">
+                <h3>AAA</h3>
+                <h4>444</h4>
+                <p>xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx </p>
+            </div>
+            <md-button class="md-secondary md-icon-button">
+                <md-icon md-font-set="material-icons">android</md-icon>
+            </md-button>
+            <md-button class="md-secondary md-icon-button">
+                <md-icon md-font-set="material-icons">apps</md-icon>
+            </md-button>
+
+        </md-list-item>
+    </md-list>
+
+
+    <md-list flex>
+        <md-list-item class="md-3-line">
+            <div class="md-list-item-text" layout="column">
+                <h3>AAA</h3>
+                <h4>444</h4>
+                <p>xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx </p>
+            </div>
+        </md-list-item>
+        <md-list-item class="md-3-line">
+            <div class="md-list-item-text" layout="column">
+                <h3>AAA</h3>
+                <h4>444</h4>
+                <p>xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx </p>
+            </div>
+        </md-list-item>
+    </md-list>
+
+
+    <md-list flex>
+        <md-list-item class="md-3-line">
+            <div class="md-list-item-text" layout="column">
+                <h3>AAA</h3>
+                <h4>444</h4>
+                <p>xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx </p>
+            </div>
+        </md-list-item>
+        <md-list-item class="md-3-line">
+            <div class="md-list-item-text" layout="column">
+                <h3>AAA</h3>
+                <h4>444</h4>
+                <p>xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx </p>
+            </div>
+        </md-list-item>
+    </md-list>
+
+
+    <md-list flex>
+        <md-list-item class="md-3-line">
+            <div class="md-list-item-text" layout="column">
+                <h3>AAA</h3>
+                <h4>444</h4>
+                <p>xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx </p>
+            </div>
+        </md-list-item>
+        <md-divider></md-divider>
+        <md-list-item class="md-3-line">
+            <div class="md-list-item-text" layout="column">
+                <h3>AAA</h3>
+                <h4>444</h4>
+                <p>xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx </p>
+            </div>
+        </md-list-item>
+    </md-list>
+</md-content>
+
+</body>
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="../bower_components/angular-aria/angular-aria.min.js"></script>
+<script src="../bower_components/angular-messages/angular-messages.min.js"></script>
+<script src="../bower_components/angular-material/angular-material.min.js"></script>
+<script src="../bower_components/angular-material-icons/angular-material-icons.min.js"></script>
+<script src="../bower_components/svg-morpheus/compile/minified/svg-morpheus.js"></script>
+<script>
+    (function () {
+        'use strict';
+        angular
+                .module('MyApp', ['ngMaterial', 'ngMessages', 'ngMdIcons'])
+                .controller('DemoCtrl', ['$scope', function ($scope) {
+
+                    var imagePath = 'https://material.angularjs.org/latest/img/list/60.jpeg';
+
+                    $scope.todos = [
+                        {
+                            face: imagePath,
+                            what: 'Brunch this weekend?',
+                            who: 'Min Li Chan',
+                            when: '3:08PM',
+                            notes: " I'll be in your neighborhood doing errands"
+                        },
+                        {
+                            face: imagePath,
+                            what: 'Brunch this weekend?',
+                            who: 'Min Li Chan',
+                            when: '3:08PM',
+                            notes: " I'll be in your neighborhood doing errands"
+                        },
+                        {
+                            face: imagePath,
+                            what: 'Brunch this weekend?',
+                            who: 'Min Li Chan',
+                            when: '3:08PM',
+                            notes: " I'll be in your neighborhood doing errands"
+                        },
+                        {
+                            face: imagePath,
+                            what: 'Brunch this weekend?',
+                            who: 'Min Li Chan',
+                            when: '3:08PM',
+                            notes: " I'll be in your neighborhood doing errands"
+                        },
+                        {
+                            face: imagePath,
+                            what: 'Brunch this weekend?',
+                            who: 'Min Li Chan',
+                            when: '3:08PM',
+                            notes: " I'll be in your neighborhood doing errands"
+                        }
+                    ];
+                    $scope.people = [
+                        {name: 'Janet Perkins', img: 'img/100-0.jpeg', newMessage: true},
+                        {name: 'Mary Johnson', img: 'img/100-1.jpeg', newMessage: false},
+                        {name: 'Peter Carlsson', img: 'img/100-2.jpeg', newMessage: false}
+                    ];
+                }]);
+
+    })();
+
+</script>
+</html>
