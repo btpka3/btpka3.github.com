@@ -1,0 +1,12 @@
+.a.b, .b.x {
+  color: red; }
+
+.a .c, .x .c {
+  color: blue; }
+
+.x {
+  font-size: 16px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  border-radius: 4px; }

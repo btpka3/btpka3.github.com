@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyApp" ng-controller="DemoCtrl as vm" layout="column" ng-cloak="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <title>study md-icon</title>
+    <link rel="stylesheet" href="../bower_components/material-design-icons/iconfont/material-icons.css">
+    <link rel="stylesheet" href="../bower_components/angular-material/angular-material.min.css"/>
+    <link rel="stylesheet" href="../bower_components/angular-material-icons/angular-material-icons.css"/>
+</head>
+<body>
+<div layout="column">
+    <md-progress-circular md-mode="determinate"
+                          value="{{vm.determinateValue}}"></md-progress-circular>
+    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+
+    <div layout="row" layout-sm="column" layout-align="space-around">
+        <md-progress-circular class="md-hue-2" md-diameter="20px"></md-progress-circular>
+        <md-progress-circular class="md-accent" md-diameter="40"></md-progress-circular>
+        <md-progress-circular class="md-accent md-hue-1" md-diameter="60"></md-progress-circular>
+        <md-progress-circular class="md-warn md-hue-3" md-diameter="70"></md-progress-circular>
+        <md-progress-circular md-diameter="96"></md-progress-circular>
+    </div>
+</div>
+
+
+</body>
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="../bower_components/angular-aria/angular-aria.min.js"></script>
+<script src="../bower_components/angular-messages/angular-messages.min.js"></script>
+<script src="../bower_components/angular-material/angular-material.min.js"></script>
+<script src="../bower_components/angular-material-icons/angular-material-icons.min.js"></script>
+<script src="../bower_components/svg-morpheus/compile/minified/svg-morpheus.js"></script>
+<script>
+    (function () {
+        'use strict';
+        angular
+                .module('MyApp', ['ngMaterial', 'ngMessages', 'ngMdIcons'])
+                .controller('DemoCtrl', ['$scope', '$mdDialog', '$mdMedia', '$interval', function ($scope, $mdDialog, $mdMedia, $interval) {
+
+                    var vm = this;
+
+                    // ---------------------------------- 演示 determinate
+                    vm.determinateValue = 0;
+                    $interval(function () {
+                        vm.determinateValue += 1;
+                        if (vm.determinateValue > 100) {
+                            vm.determinateValue = 30;
+                        }
+                    }, 100, 0, true);
+
+                    // ---------------------------------- 演示 buffer
+                    vm.determinateValue2 = 0;
+                    $interval(function () {
+                        vm.determinateValue2 += 1.5;
+                        if (vm.determinateValue2 > 100) {
+                            vm.determinateValue2 = 30
+                        }
+                    }, 100, 0, true);
+                }]);
+
+    })();
+
+</script>
+</html>

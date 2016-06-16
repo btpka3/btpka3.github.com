@@ -1,0 +1,21 @@
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
+  border-radius: $radius;
+}
+
+.a {
+  &.b {
+    color: red;
+  }
+  .c {
+    color: blue;
+  }
+}
+
+.x {
+  @extend .a;
+  font-size: 16px;
+  @include border-radius(4px);
+}

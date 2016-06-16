@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyApp" ng-controller="DemoCtrl as ctrl" layout="column" ng-cloak="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <title>study md-icon</title>
+    <link rel="stylesheet" href="../bower_components/material-design-icons/iconfont/material-icons.css">
+    <link rel="stylesheet" href="../bower_components/angular-material/angular-material.min.css"/>
+    <link rel="stylesheet" href="../bower_components/angular-material-icons/angular-material-icons.css"/>
+</head>
+<body>
+
+<md-chips ng-model="ctrl.selectedVegetables">
+
+    <!--md-items="item in ctrl.getData()"-->
+    <md-autocomplete
+            md-items="item in ctrl.states |filter:ctrl.f"
+            md-no-cache="true"
+            md-min-length="0"
+            placeholder="Search for a vegetable">
+        <span md-highlight-text="ctrl.searchText">{{item.name}} :: {{item.type}}</span>
+    </md-autocomplete>
+
+    <md-chip-template>
+        <span>
+          <strong>{{$chip.name}}</strong>
+          <em>({{$chip.type}})</em>
+        </span>
+    </md-chip-template>
+</md-chips>
+
+{{ctrl.selectedVegetables}}==={{ctrl.selectedItem}}
+
+</body>
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="../bower_components/angular-aria/angular-aria.min.js"></script>
+<script src="../bower_components/angular-messages/angular-messages.min.js"></script>
+<script src="../bower_components/angular-material/angular-material.min.js"></script>
+<script src="../bower_components/angular-material-icons/angular-material-icons.min.js"></script>
+<script src="../bower_components/svg-morpheus/compile/minified/svg-morpheus.js"></script>
+<script>
+    (function () {
+        angular
+                .module('MyApp', ['ngMaterial', 'ngMessages', 'ngMdIcons'])
+                .controller('DemoCtrl', ['$scope', function ($scope) {
+
+                    var self = this;
+                    self.selectedVegetables = [];
+
+                    $scope.f = self.f = function (value, index, array) {
+                        return self.selectedVegetables.indexOf(value) < 0;
+                    };
+                    self.states = [{
+                        name: "AAA",
+                        type: "AAA1"
+                    }, {
+                        name: "BBB",
+                        type: "BBB1"
+                    }, {
+                        name: "CCC",
+                        type: "CCC1"
+                    }, {
+                        name: "CCC2",
+                        type: "CCC22"
+                    }, {
+                        name: "CCC3",
+                        type: "CCC33"
+                    }, {
+                        name: "CCC4",
+                        type: "CCC44"
+                    }, {
+                        name: "CCC5",
+                        type: "CCC55"
+                    }, {
+                        name: "CCC6",
+                        type: "CCC66"
+                    }, {
+                        name: "CCC7",
+                        type: "CCC77"
+                    }, {
+                        name: "CCC8",
+                        type: "CCC88"
+                    }, {
+                        name: "CCC9",
+                        type: "CCC99"
+                    }];
+
+                    self.selectedVegetables.push(self.states[0]);
+                    self.selectedVegetables.push(self.states[3]);
+
+                    self.getData = function () {
+                        return self.states.filter(function (element, index, array) {
+                            return self.selectedVegetables.indexOf(element) < 0;
+                        })
+                    };
+                }]);
+    })();
+
+</script>
+</html>

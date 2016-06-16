@@ -11,10 +11,21 @@
 </head>
 <body>
 
-<md-button class="md-raised" ng-click="aaa(true,true)">resolve-resolve</md-button>
-<md-button class="md-raised md-primary" ng-click="aaa(true,false)">resolve-reject</md-button>
-<md-button class="md-raised md-accent" ng-click="aaa(false,true)">reject-resolve</md-button>
-<md-button class="md-raised md-warn" ng-click="aaa(false,false)">reject-reject</md-button>
+
+<md-list>
+    <md-list-item>
+        <md-button class="md-raised" ng-click="aaa(true,true)">resolve-resolve</md-button>
+        <md-button class="md-raised md-primary" ng-click="aaa(true,false)">resolve-reject</md-button>
+        <md-button class="md-raised md-accent" ng-click="aaa(false,true)">reject-resolve</md-button>
+        <md-button class="md-raised md-warn" ng-click="aaa(false,false)">reject-reject</md-button>
+    </md-list-item>
+    <md-list-item>
+        <md-button class="md-raised" ng-click="bbb(true,true)">resolve-resolve</md-button>
+        <md-button class="md-raised md-primary" ng-click="bbb(true,false)">resolve-reject</md-button>
+        <md-button class="md-raised md-accent" ng-click="bbb(false,true)">reject-resolve</md-button>
+        <md-button class="md-raised md-warn" ng-click="bbb(false,false)">reject-reject</md-button>
+    </md-list-item>
+</md-list>
 
 </body>
 <script src="../bower_components/jquery/dist/jquery.min.js"></script>
@@ -29,7 +40,7 @@
     (function () {
         angular
                 .module('MyApp', ['ngMaterial', 'ngMessages', 'ngMdIcons'])
-                .controller('DemoCtrl', ['$scope', function ($scope) {
+                .controller('DemoCtrl', ['$scope', "$q", function ($scope, $q) {
 
                     $scope.aaa = function (should1Resolve, should2Resolve) {
                         console.log("0 clicked");
@@ -79,6 +90,101 @@
                             return data;
 
                         });
+
+                        // N 久前的，已经 resolve 的promise 是否可以再次注册 then 回调？
+
+                        setTimeout(function () {
+                            p.then(function (data) {
+                                console.log("3 resolve : ", data);
+                                data.resolved3 = true;
+                                return data;
+                            }, function (data) {
+                                console.log("3 rejected : ", data);
+                                data.rejected3 = true;
+                                return data;
+                            });
+                        }, 6000);
+
+                        setTimeout(function () {
+                            p.then(function (data) {
+                                console.log("4 resolve : ", data);
+                            }, function (data) {
+                                console.log("4 rejected : ", data);
+                            });
+                        }, 9000);
+                    };
+
+
+                    $scope.bbb = function (should1Resolve, should2Resolve) {
+                        console.log("0 clicked");
+                        var p = new $q(function (resolve, reject) {
+
+                            var data = {
+                                a: "aaa"
+                            };
+
+                            setTimeout(function () {
+                                if (should1Resolve) {
+                                    resolve(data);
+                                } else {
+                                    reject(data);
+                                }
+                            }, 3000);
+                        });
+
+                        p.then(function (data) {
+                            console.log("1 resolve : ", data);
+                            data.resolved1 = true;
+
+                            if (should2Resolve) {
+                                return $q.resolve(data);
+                            } else {
+                                return $q.reject(data);
+                            }
+
+                        }, function (data) {
+                            console.log("1 rejected : ", data);
+                            data.rejected1 = true;
+
+                            if (should2Resolve) {
+                                return $q.resolve(data);
+                            } else {
+                                return $q.reject(data);
+                            }
+
+                        }).then(function (data) {
+                            console.log("2 resolve : ", data);
+                            data.resolved2 = true;
+                            return data;
+
+                        }, function (data) {
+                            console.log("2 rejected : ", data);
+                            data.rejected2 = true;
+                            return data;
+
+                        });
+
+                        // N 久前的，已经 resolve 的promise 是否可以再次注册 then 回调？
+
+                        setTimeout(function () {
+                            p.then(function (data) {
+                                console.log("3 resolve : ", data);
+                                data.resolved3 = true;
+                                return data;
+                            }, function (data) {
+                                console.log("3 rejected : ", data);
+                                data.rejected3 = true;
+                                return data;
+                            });
+                        }, 6000);
+
+                        setTimeout(function () {
+                            p.then(function (data) {
+                                console.log("4 resolve : ", data);
+                            }, function (data) {
+                                console.log("4 rejected : ", data);
+                            });
+                        }, 9000);
                     };
                 }]);
     })();
