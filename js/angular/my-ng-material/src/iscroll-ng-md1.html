@@ -8,7 +8,13 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/angular-material/1.0.6/angular-material.css"/>
 
     <style>
-        .iscroll-on .iscroll-wrapper {
+
+        .main {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .iscroll-wrapper {
             position: relative;
             z-index: 1;
             width: 100%;
@@ -18,7 +24,7 @@
             border: 1px solid blue;
         }
 
-        .iscroll-on .iscroll-scroller {
+        .iscroll-scroller {
             position: absolute;
             width: 100%;
             min-height: 100%;
@@ -36,74 +42,79 @@
         }
     </style>
 </head>
-<body ng-controller="DemoCtrl as vm" class="iscroll-on" layout="column">
-<div class="header">header</div>
-<div flex class="iscroll-wrapper" iscroll="vm.iscrollParam" iscroll-instance="instance">
-    <div class="iscroll-scroller">
-        <ol>
-            <li>aaa instance.options： -
-                <pre>{{instance.options | json}}</pre>
-                -
-            </li>
-            <li>aaa iScrollState ： {{vm.iScrollState}}</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-        </ol>
+
+<body ng-controller="DemoCtrl  " layout="">
+
+<div layout="column" flex="" class="main ">
+    <div class="header">header</div>
+
+    <div flex class="iscroll-wrapper" iscroll="iscrollParam" iscroll-instance="instance">
+        <div class="iscroll-scroller">
+            <ol>
+                <li>aaa instance.options： -
+                    <pre>{{instance.options | json}}</pre>
+                    -
+                </li>
+                <li>aaa iScrollState ： {{iScrollState}}</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+            </ol>
+        </div>
     </div>
+    <div class="footer">footer</div>
 </div>
-<div class="footer">footer</div>
 </body>
 <script src="https://cdn.bootcss.com/angular.js/1.5.0/angular.js"></script>
 <script src="https://cdn.bootcss.com/angular.js/1.5.0/angular-animate.js"></script>
@@ -136,20 +147,20 @@
                     });
                 })
                 .controller('DemoCtrl', ['$scope', 'iScrollService', function ($scope, iScrollService) {
-                    var vm = this;
-                    vm.iscrollParam = {
+                    $scope.iscrollParam = {
                         mouseWheel: true,
                         bounce: true,
                         //scrollX: false,
-                        scrollY: true,  // FIXM: 不能 scrollX 和 scrollY 不能一个为true，一个为false？
+                        scrollY: true,  // FIXME: 不能 scrollX 和 scrollY 不能一个为true，一个为false？
                         //freeScroll: true,
                         scrollbars: true,
                         fadeScrollbars: true,
                         asyncRefreshDelay: 500  // NOTICE: 如果没有这一行，初始无法使用 iscoll，除非window resize 等事件发生
                     };
-                    vm.iScrollState = iScrollService.state;
-                    vm.iScrollState.useIScroll = true;
-                    iScrollService.enable();
+                    iScrollService.state.useIScroll = true;
+                    //iScrollService.enable();
+
+                    $scope.iScrollState = iScrollService.state;
                 }]);
     })();
 

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyApp" ng-controller="DemoCtrl as ctrl" layout="column" ng-cloak="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <title>study ng-material</title>
+    <link rel="stylesheet" href="../bower_components/material-design-icons-font/iconfont/material-icons.css">
+    <link rel="stylesheet" href="../bower_components/angular-material/angular-material.min.css"/>
+    <link rel="stylesheet" href="../bower_components/angular-material-icons/angular-material-icons.css"/>
+    <style type="text/css">
+        .main {
+            border: 1px solid red;
+            width: 300px;
+        }
+
+        .a {
+            margin: 30px;
+            background-color: #84ffff;
+        }
+
+        .b {
+            margin: 60px;
+            background-color: #008800;
+        }
+
+        .main2 {
+            border: 1px solid red;
+            width: 300px;
+        }
+
+        /* 奇数 */
+        .main2 > div:nth-child(odd) > div {
+            border: 2px solid red;
+            margin: 5px 5px 5px 10px;
+        }
+
+        /* 偶数 */
+        .main2 > div:nth-child(even) > div {
+            border: 2px solid greenyellow;
+            margin: 5px 10px 5px 5px;
+        }
+
+        /* 前两个 */
+        .main2 > div:nth-child(-n+2) > div {
+            margin-top: 10px;
+        }
+
+        /* 倒数第二个并且是基数、最后一个元素并且是偶数 */
+        .main2 > div:nth-last-child(-n+2):nth-child(odd) > div, .main2 > div:last-child:nth-child(even) > div {
+            margin-bottom: 10px;
+        }
+
+        .i {
+            background-color: #007aff;
+        }
+
+        /* 前两个 */
+        .ok > li:nth-child(-n+2) {
+            color: red;
+        }
+
+        /* 倒数第二个 */
+        .ok > li:nth-last-child(-n+2):nth-child(odd) {
+            color: blue;
+        }
+    </style>
+</head>
+<body ng-cloak="">
+
+
+<ol class="ok">
+    <li>aa</li>
+    <li>aa</li>
+    <li>aa</li>
+    <li>aa</li>
+    <li>aa</li>
+    <li>aa</li>
+</ol>
+
+<div class="main">
+    <div class="a"> aaa</div>
+    <div class="b"> bbb</div>
+</div>
+
+<div class="main2" layout="row" layout-wrap="">
+    <div flex="50" layout>
+        <div flex class="i">aa</div>
+    </div>
+    <div flex="50" layout>
+        <div flex class="i">aa</div>
+    </div>
+    <div flex="50" layout>
+        <div flex class="i">aa</div>
+    </div>
+    <div flex="50" layout>
+        <div flex class="i">aa</div>
+    </div>
+    <div flex="50" layout>
+        <div flex class="i">aa</div>
+    </div>
+    <div flex="50" layout>
+        <div flex class="i">aa</div>
+    </div>
+</div>
+
+
+</body>
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="../bower_components/angular-aria/angular-aria.min.js"></script>
+<script src="../bower_components/angular-messages/angular-messages.min.js"></script>
+<script src="../bower_components/angular-material/angular-material.min.js"></script>
+<script src="../bower_components/angular-material-icons/angular-material-icons.min.js"></script>
+<script src="../bower_components/svg-morpheus/compile/minified/svg-morpheus.js"></script>
+<script>
+    (function () {
+        'use strict';
+        angular
+                .module('MyApp', ['ngMaterial', 'ngMessages', 'ngMdIcons'])
+                .controller('DemoCtrl', ['$scope', '$mdSidenav', function ($scope, $mdSidenav) {
+
+                    $scope.openLeftMenu = function () {
+                        $mdSidenav('left').toggle();
+                    };
+
+                    $scope.icons = ['office', 'facebook', 'twitter', 'apple', 'whatsapp', 'linkedin', 'windows'];
+                    $scope.colors = ['lightgreen', 'pink', 'wheat', '#cc99ff', '#abcdef'];
+
+                    $scope.changeIcon = function () {
+                        $scope.iconIndex = Math.floor(Math.random() * $scope.icons.length);
+                        $scope.colorIndex = Math.floor(Math.random() * $scope.colors.length);
+                    };
+                    $scope.changeIcon();
+                }]);
+    })();
+
+</script>
+</html>
