@@ -8,32 +8,58 @@
     <link rel="stylesheet" href="../bower_components/material-design-icons-font/iconfont/material-icons.css">
     <link rel="stylesheet" href="../bower_components/angular-material/angular-material.min.css"/>
     <link rel="stylesheet" href="../bower_components/angular-material-icons/angular-material-icons.css"/>
+    <style type="text/css">
+        .x > .groupX {
+            font-size: 16px;
+            margin: 20px 0;
+            padding: 3px 15px 3px 15px;
+            color: rgb(49, 46, 46);
+            background-color: rgba(224, 224, 224, 0.96);
+            text-transform: none;
+            font-weight: 400;
+            min-width: 100px;
+        }
+
+        .x > .groupX.md-button {
+            border-radius: 0;
+            border-left: 1px solid rgba(230, 230, 230, 0.96);
+            border-right: 1px solid rgba(230, 230, 230, 0.96);
+        }
+
+        .x > .groupX.md-button:first-child {
+            border-radius: 10px 0 0 10px;
+        }
+
+        .x > .groupX.md-button:last-child {
+            border-radius: 0 10px 10px 0;
+        }
+
+        .x > .groupX.md-button:not([disabled]):hover {
+            background-color: rgba(193, 193, 193, 0.96);
+            color: rgba(44, 65, 164, 0.96);
+            transition: 0.3s;
+        }
+    </style>
+
 </head>
 <body>
 
 <div>
-    default:
-    <md-button class="md-primary md-raised">md-primary</md-button>
-    <md-button class="md-accent md-raised">accent</md-button>
-    <md-button class="md-warn md-raised">md-warn</md-button>
+    <section layout="row" layout-align="center center" class="x">
+        <md-button class="groupX left">Apple</md-button>
+        <md-button class="groupX middle">Samsung</md-button>
+        <md-button class="groupX middle">Sony</md-button>
+        <md-button class="groupX right">B&amp;O</md-button>
+    </section>
 
-    <md-button class="md-primary md-raised" md-theme="btpka3" md-no-ink>md-primary</md-button>
 
-    <md-button class="md-raised">md-primary</md-button>
 </div>
-<md-content md-theme="btpka3">
-    btpka3( by [md-theme]="btpka3"):
-    <md-button class="md-primary md-raised">md-primary</md-button>
-    <md-button class="md-accent md-raised">accent</md-button>
-    <md-button class="md-warn md-raised">md-warn</md-button>
-</md-content>
-<md-content>
-    mixed ( by .md-btpka3-theme):
-    <md-button class="md-primary md-raised md-btpka3-theme">md-primary  <md-icon md-font-set="material-icons">android</md-icon>
-    </md-button>
-    <md-button class="md-accent md-raised">accent</md-button>
-    <md-button class="md-warn md-raised">md-warn</md-button>
-</md-content>
+<div>
+    <md-button class="md-primary">Click me</md-button>
+    <md-button class="md-primary md-hue-1">Click me</md-button>
+    <md-button class="md-primary md-hue-2">Click me</md-button>
+    <md-button class="md-primary md-hue-3">Click me</md-button>
+</div>
 
 
 </body>

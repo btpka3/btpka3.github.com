@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyApp" ng-controller="DemoCtrl as ctrl" layout="column" ng-cloak="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <title>study ng-material</title>
+    <link rel="stylesheet" href="../bower_components/material-design-icons-font/iconfont/material-icons.css">
+    <link rel="stylesheet" href="../bower_components/angular-material/angular-material.min.css"/>
+    <link rel="stylesheet" href="../bower_components/angular-material-icons/angular-material-icons.css"/>
+    <style type="text/css">
+        html, body {
+            font-family: "Helvetica Neue", "Hiragino Sans GB", "Heiti SC", "Roboto", "Droid Sans", "Noto Sans CJK SC", "Droid Sans Fallback", Tahoma, Arial, Simsun, sans-self;
+        }
+
+        /* 颜色渐变 */
+        .c {
+            font-size: 200px;
+            border: 1px solid red;
+
+
+            background: linear-gradient(to bottom, red, #f5f5f5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body>
+
+<div class="c">
+    中国
+</div>
+
+
+<div>
+
+
+</div>
+</body>
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="../bower_components/angular-aria/angular-aria.min.js"></script>
+<script src="../bower_components/angular-messages/angular-messages.min.js"></script>
+<script src="../bower_components/angular-material/angular-material.min.js"></script>
+<script src="../bower_components/angular-material-icons/angular-material-icons.min.js"></script>
+<script src="../bower_components/svg-morpheus/compile/minified/svg-morpheus.js"></script>
+<script>
+    (function () {
+        'use strict';
+        angular
+                .module('MyApp', ['ngMaterial', 'ngMessages', 'ngMdIcons'])
+                .controller('DemoCtrl', ['$scope', '$mdSidenav', function ($scope, $mdSidenav) {
+
+
+                }]);
+    })();
+
+</script>
+</html>

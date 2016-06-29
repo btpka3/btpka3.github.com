@@ -83,6 +83,8 @@
     <div class="b"> bbb</div>
 </div>
 
+<md-checkbox ng-model="showLast">show last element</md-checkbox>
+
 <div class="main2" layout="row" layout-wrap="">
     <div flex="50" layout>
         <div flex class="i">aa</div>
@@ -99,8 +101,8 @@
     <div flex="50" layout>
         <div flex class="i">aa</div>
     </div>
-    <div flex="50" layout>
-        <div flex class="i">aa</div>
+    <div flex="50" layout ng-if="showLast">
+        <div flex class="i">bb</div>
     </div>
 </div>
 
@@ -121,18 +123,7 @@
                 .module('MyApp', ['ngMaterial', 'ngMessages', 'ngMdIcons'])
                 .controller('DemoCtrl', ['$scope', '$mdSidenav', function ($scope, $mdSidenav) {
 
-                    $scope.openLeftMenu = function () {
-                        $mdSidenav('left').toggle();
-                    };
-
-                    $scope.icons = ['office', 'facebook', 'twitter', 'apple', 'whatsapp', 'linkedin', 'windows'];
-                    $scope.colors = ['lightgreen', 'pink', 'wheat', '#cc99ff', '#abcdef'];
-
-                    $scope.changeIcon = function () {
-                        $scope.iconIndex = Math.floor(Math.random() * $scope.icons.length);
-                        $scope.colorIndex = Math.floor(Math.random() * $scope.colors.length);
-                    };
-                    $scope.changeIcon();
+                    $scope.showLast = false;
                 }]);
     })();
 

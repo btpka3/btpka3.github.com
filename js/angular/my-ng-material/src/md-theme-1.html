@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyApp" ng-controller="DemoCtrl as ctrl" layout="column" ng-cloak="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <title>study md-icon</title>
+    <link rel="stylesheet" href="../bower_components/material-design-icons-font/iconfont/material-icons.css">
+    <link rel="stylesheet" href="../bower_components/angular-material/angular-material.min.css"/>
+    <link rel="stylesheet" href="../bower_components/angular-material-icons/angular-material-icons.css"/>
+    <style type="text/css">
+        .xx .md-button.md-accent.md-raised {
+            background-color: #ba9f6e;
+        }
+
+        .xx .md-button.md-accent.md-raised:hover {
+            background-color: #ba9f6e;
+        }
+
+        .xx .md-button.md-accent.md-raised:active {
+            background-color: #c59147;
+        }
+
+        .xx md-checkbox.md-checked .md-ink-ripple {
+            color: #ba9f6e !important;
+        }
+
+        .xx md-checkbox.md-checked.md-focused ._md-container:before {
+            background-color: rgba(186, 159, 110, 0.26);
+        }
+
+        .xx md-checkbox.md-checked .md-ripple {
+            color: #ba9f6e !important;
+        }
+
+        .xx md-checkbox.md-checked ._md-icon {
+            background-color: #ba9f6e !important;;
+        }
+
+        /* 单选 */
+        .xx md-radio-group .md-checked .md-ink-ripple {
+            color: rgba(186, 159, 110, 0.26);
+        }
+
+        .xx md-radio-button ._md-off {
+            border-color: rgba(186, 159, 110, 0.54);
+        }
+
+        .xx md-radio-button.md-checked ._md-off {
+            border-color: rgba(186, 159, 110, 0.87);
+        }
+
+        .xx md-radio-button ._md-on {
+            background-color: rgba(186, 159, 110, 0.87);
+        }
+
+        .xx md-radio-group.md-focused:not(:empty) .md-checked ._md-container:before{
+           background-color: rgba(186, 159, 110, 0.26);
+        }
+
+        /* 开关 */
+        .xx md-switch.md-checked ._md-bar {
+            background-color: rgba(186, 159, 110, 0.5);
+        }
+
+        .xx md-switch.md-checked ._md-thumb {
+            background-color: #c59147;
+        }
+
+        .xx md-switch.md-checked .md-ink-ripple {
+            color: #ba9f6e;
+        }
+        .xx md-switch.md-checked.md-focused ._md-thumb:before{
+            background-color: rgba(186, 159, 110, 0.26);
+        }
+
+        #test {
+            border: 1px solid red;
+            color: black;
+            font-size: 30px;
+        }
+
+        #test:active {
+            color: red;
+        }
+
+        #test:hover {
+            color: blue;
+        }
+
+        #test:focus {
+            color: #93004e;
+        }
+
+        #test:visited {
+            color: #ba9f6e;
+        }
+    </style>
+</head>
+<body layout="">
+
+
+<div id="test">
+    color
+</div>
+<div layout="column" flex="">
+    <h1>default</h1>
+    <div>
+        <md-button class="md-primary md-raised">md-primary</md-button>
+        <md-button class="md-accent md-raised">accent</md-button>
+        <md-button class="md-warn md-raised">md-warn</md-button>
+    </div>
+    <div>
+        <md-checkbox>aaa</md-checkbox>
+    </div>
+</div>
+
+<div md-theme="btpka3" layout="column" flex="">
+    <h1>btpka3</h1>
+    <div>
+        <md-button class="md-primary md-raised">md-primary</md-button>
+        <md-button class="md-accent md-raised" md-no-ink="">accent</md-button>
+        <md-button class="md-warn md-raised">md-warn</md-button>
+    </div>
+    <div>
+        <md-checkbox>aaa</md-checkbox>
+    </div>
+</div>
+<div layout="column" flex="" class="xx">
+    <h1>css override</h1>
+    <div>
+        <md-button class="md-primary md-raised">md-primary</md-button>
+        <md-button class="md-accent md-raised md-cornered">accent</md-button>
+        <md-button class="md-warn md-raised">md-warn</md-button>
+    </div>
+    <div>
+        <md-checkbox>aaa</md-checkbox>
+    </div>
+    <div>
+        <md-radio-group>
+            <md-radio-button flex ng-value="1" ng-model="vs.checked" class="">aaa</md-radio-button>
+            <md-radio-button flex ng-value="2" ng-model="vs.checked" class="">bbb</md-radio-button>
+        </md-radio-group>
+    </div>
+    <div>
+        <md-switch>aaa</md-switch>
+    </div>
+</div>
+
+</body>
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="../bower_components/angular-aria/angular-aria.min.js"></script>
+<script src="../bower_components/angular-messages/angular-messages.min.js"></script>
+<script src="../bower_components/angular-material/angular-material.min.js"></script>
+<script src="../bower_components/angular-material-icons/angular-material-icons.min.js"></script>
+<script src="../bower_components/svg-morpheus/compile/minified/svg-morpheus.js"></script>
+<script>
+    (function () {
+        angular
+                .module('MyApp', ['ngMaterial', 'ngMessages', 'ngMdIcons'])
+                .controller('DemoCtrl', ['$scope', function ($scope) {
+                }])
+                .config(['$mdThemingProvider', function ($mdThemingProvider) {
+
+                    var ksGoldMap = $mdThemingProvider.extendPalette('brown', {
+                        'A200': '#ba9f6e',
+                        'A700': '#c59147'
+                    });
+                    // Register the new color palette map with the name <code>neonRed</code>
+                    $mdThemingProvider.definePalette('ksGold', ksGoldMap);
+                    // Use that theme for the primary intentions
+
+                    $mdThemingProvider
+                            .theme('btpka3')
+                            .primaryPalette('grey', {
+                                'default': '800'
+                            })
+                            .accentPalette('ksGold', {
+                                //default:'500'
+                            })
+                    //.warnPalette('orange')
+//                            .backgroundPalette('grey', {
+//                                'default': '200'
+//                            });
+                }])
+
+    })();
+</script>
+</html>

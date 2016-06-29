@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyApp" ng-controller="DemoCtrl as ctrl" layout="column" ng-cloak="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <title>study ng-material</title>
+    <link rel="stylesheet" href="../bower_components/material-design-icons-font/iconfont/material-icons.css">
+    <link rel="stylesheet" href="../bower_components/angular-material/angular-material.min.css"/>
+    <link rel="stylesheet" href="../bower_components/angular-material-icons/angular-material-icons.css"/>
+    <style type="text/css">
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+            display: none !important;
+        }
+
+        .main {
+            max-width: 640px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .header h1 {
+            text-align: center;
+        }
+
+        .footer {
+            min-height: 49px !important;
+            height: 49px !important;
+        }
+
+        .footer md-icon {
+
+            font-size: 24px;
+        }
+
+        .footer .md-grid-text {
+            font-size: 11px;
+        }
+
+    </style>
+</head>
+<body ng-cloak layout="row">
+<div flex layout="row">
+    <div flex layout="column" class="md-whiteframe-z2 main">
+        <md-toolbar layout="row" class="header">
+            <div class="md-toolbar-tools">
+                <md-button class="md-icon-button">
+                    <md-icon md-font-set="material-icons">menu</md-icon>
+                </md-button>
+                <h1 flex>btpka3</h1>
+                <md-button class="md-icon-button">
+                    <md-icon md-font-set="material-icons">favorite</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-content flex>
+            <md-button> button</md-button>
+            <ol>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+                <li>aaa</li>
+            </ol>
+        </md-content>
+        <md-toolbar layout="row" class="footer" layout-align="center stretch">
+            <div flex layout="column" layout-align="center center" md-ink-ripple style="position: relative;">
+                <div layout="column">
+                    <md-icon md-font-set="material-icons">menu</md-icon>
+                    <div class="md-grid-text">Menu</div>
+                </div>
+            </div>
+
+            <div flex layout="column" layout-align="center center" md-ink-ripple style="position: relative;">
+                <div layout="column">
+                    <md-icon md-font-set="material-icons">menu</md-icon>
+                    <div class="md-grid-text">Menu</div>
+                </div>
+            </div>
+            <div flex layout="column" layout-align="center center" md-ink-ripple style="position: relative;">
+                <div layout="column">
+                    <md-icon md-font-set="material-icons">menu</md-icon>
+                    <div class="md-grid-text">Menu</div>
+                </div>
+            </div>
+            <div flex layout="column" layout-align="center center" md-ink-ripple style="position: relative;">
+                <div layout="column">
+                    <md-icon md-font-set="material-icons">menu</md-icon>
+                    <div class="md-grid-text">Menu</div>
+                </div>
+            </div>
+        </md-toolbar>
+    </div>
+</div>
+</body>
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="../bower_components/angular-aria/angular-aria.min.js"></script>
+<script src="../bower_components/angular-messages/angular-messages.min.js"></script>
+<script src="../bower_components/angular-material/angular-material.min.js"></script>
+<script src="../bower_components/angular-material-icons/angular-material-icons.min.js"></script>
+<script src="../bower_components/svg-morpheus/compile/minified/svg-morpheus.js"></script>
+<script>
+    (function () {
+        'use strict';
+        angular
+                .module('MyApp', ['ngMaterial', 'ngMessages', 'ngMdIcons'])
+                .controller('DemoCtrl', ['$scope', '$mdSidenav', function ($scope, $mdSidenav) {
+
+                    $scope.openLeftMenu = function () {
+                        $mdSidenav('left').toggle();
+                    };
+
+                    $scope.icons = ['office', 'facebook', 'twitter', 'apple', 'whatsapp', 'linkedin', 'windows'];
+                    $scope.colors = ['lightgreen', 'pink', 'wheat', '#cc99ff', '#abcdef'];
+
+                    $scope.changeIcon = function () {
+                        $scope.iconIndex = Math.floor(Math.random() * $scope.icons.length);
+                        $scope.colorIndex = Math.floor(Math.random() * $scope.colors.length);
+                    };
+                    $scope.changeIcon();
+                }]);
+    })();
+
+</script>
+</html>

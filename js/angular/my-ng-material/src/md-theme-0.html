@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyApp" ng-controller="DemoCtrl as ctrl" layout="column" ng-cloak="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <title> theme colors</title>
+    <link rel="stylesheet" href="../bower_components/material-design-icons-font/iconfont/material-icons.css">
+    <link rel="stylesheet" href="../bower_components/angular-material/angular-material.min.css"/>
+    <link rel="stylesheet" href="../bower_components/angular-material-icons/angular-material-icons.css"/>
+    <style type="text/css">
+
+    </style>
+</head>
+<body layout="">
+<md-list ng-repeat="(color, cv) in $mdColorPalette">
+    <md-subheader class="md-no-sticky">{{color}}</md-subheader>
+    <md-list-item ng-repeat="(shade,sv) in cv "
+                  ng-style="{'background-color': rgba(sv.value)}">
+        <span flex="">{{shade}}</span>
+        <span ng-style="{color:rgba(sv.contrast)}">{{$mdColorUtil.rgbaToHex(rgba(sv.value))}}</span>
+    </md-list-item>
+</md-list>
+
+
+</body>
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="../bower_components/angular-aria/angular-aria.min.js"></script>
+<script src="../bower_components/angular-messages/angular-messages.min.js"></script>
+<script src="../bower_components/angular-material/angular-material.min.js"></script>
+<script src="../bower_components/angular-material-icons/angular-material-icons.min.js"></script>
+<script src="../bower_components/svg-morpheus/compile/minified/svg-morpheus.js"></script>
+<script>
+    (function () {
+
+        function rgba(rgbArray, opacity) {
+            if (!rgbArray) return "rgb('0,0,0')";
+
+            if (rgbArray.length == 4) {
+                rgbArray = angular.copy(rgbArray);
+                opacity ? rgbArray.pop() : opacity = rgbArray.pop();
+            }
+            return opacity && (typeof opacity == 'number' || (typeof opacity == 'string' && opacity.length)) ?
+            'rgba(' + rgbArray.join(',') + ',' + opacity + ')' :
+            'rgb(' + rgbArray.join(',') + ')';
+        }
+
+
+        angular
+                .module('MyApp', ['ngMaterial', 'ngMessages', 'ngMdIcons'])
+                .controller('DemoCtrl', ['$scope', '$mdColorPalette', '$mdTheming', '$mdColorUtil',
+                    function ($scope, $mdColorPalette, $mdTheming, $mdColorUtil) {
+
+                        $scope.rgba = rgba;
+                        $scope.$mdColorUtil = $mdColorUtil;
+                        $scope.$mdColorPalette = $mdColorPalette;
+
+                        console.log("$mdTheming", $mdTheming.THEMES, $mdColorPalette)
+                    }])
+
+
+    })();
+</script>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyApp" ng-controller="DemoCtrl as ctrl" layout="column" ng-cloak="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <title>study ng-material</title>
+    <link rel="stylesheet" href="../bower_components/material-design-icons-font/iconfont/material-icons.css">
+    <link rel="stylesheet" href="../bower_components/angular-material/angular-material.min.css"/>
+    <link rel="stylesheet" href="../bower_components/angular-material-icons/angular-material-icons.css"/>
+    <style type="text/css">
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+<md-button ng-click="load()" class="md-primary md-raised">aaa</md-button>
+</div>
+
+</body>
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="../bower_components/angular-aria/angular-aria.min.js"></script>
+<script src="../bower_components/angular-messages/angular-messages.min.js"></script>
+<script src="../bower_components/angular-material/angular-material.min.js"></script>
+<script src="../bower_components/angular-material-icons/angular-material-icons.min.js"></script>
+<script src="../bower_components/svg-morpheus/compile/minified/svg-morpheus.js"></script>
+<script src="../bower_components/angular-load/angular-load.js"></script>
+<script>
+    (function () {
+        angular
+                .module('MyApp', ['ngMaterial', 'angularLoad'])
+                .controller('DemoCtrl', ['$scope', 'angularLoad', function ($scope, angularLoad) {
+
+                    $scope.load = function () {
+                        angularLoad.loadScript('https:////api.map.baidu.com/api?v=2.0&ak=AA9iQNKiR6Dp8YKZnMQjGSev&s=1')
+                                .then(function () {
+                                    console.log("-------------loaded")
+                                }).catch(function (e) {
+                            console.log("-------------Not loaded", e)
+                        });
+                    };
+                }]);
+    })();
+
+</script>
+</html>

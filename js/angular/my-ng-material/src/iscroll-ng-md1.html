@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
     <title>iscroll test</title>
-    <link rel="stylesheet" href="https://cdn.bootcss.com/angular-material/1.0.6/angular-material.css"/>
+    <link rel="stylesheet" href="../bower_components/angular-material/angular-material.css"/>
 
     <style>
 
@@ -44,7 +44,6 @@
 </head>
 
 <body ng-controller="DemoCtrl  " layout="">
-
 <div layout="column" flex="" class="main ">
     <div class="header">header</div>
 
@@ -56,7 +55,9 @@
                     -
                 </li>
                 <li>aaa iScrollState ： {{iScrollState}}</li>
-                <li>aaa</li>
+                <li>aaa
+                    <md-checkbox aria-label="dd"></md-checkbox>
+                </li>
                 <li>aaa</li>
                 <li>aaa</li>
                 <li>aaa</li>
@@ -113,13 +114,15 @@
             </ol>
         </div>
     </div>
-    <div class="footer">footer</div>
+    <div class="footer">footer
+        <md-checkbox aria-label="dd"></md-checkbox>
+    </div>
 </div>
 </body>
-<script src="https://cdn.bootcss.com/angular.js/1.5.0/angular.js"></script>
-<script src="https://cdn.bootcss.com/angular.js/1.5.0/angular-animate.js"></script>
-<script src="https://cdn.bootcss.com/angular.js/1.5.0/angular-aria.js"></script>
-<script src="https://cdn.bootcss.com/angular.js/1.5.0/angular-messages.js"></script>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/angular-animate/angular-animate.js"></script>
+<script src="../bower_components/angular-aria/angular-aria.js"></script>
+<script src="../bower_components/angular-messages/angular-messages.js"></script>
 <script src="../bower_components/angular-material/angular-material.js"></script>
 <script src="../bower_components/platform/platform.js"></script>
 <script src="../bower_components/iscroll/build/iscroll.js"></script>

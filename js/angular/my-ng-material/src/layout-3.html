@@ -23,9 +23,18 @@
             text-align: center;
         }
 
-        .footer .md-button > .md-ripple-container {
-            border-radius: 0;
+        .footer {
+            height: 49px;
         }
+
+        .footer md-icon {
+            font-size: 24px;
+        }
+
+        .footer .md-grid-text {
+            font-size: 11px;
+        }
+
     </style>
 </head>
 <body ng-cloak layout="row">
@@ -92,31 +101,23 @@
         </ol>
     </md-content>
     <md-toolbar layout="row" class="footer" layout-align="center stretch">
-        <div flex layout="column" layout-align="center center" md-ink-ripple
-             style="position: relative;">
-            <md-icon md-font-set="material-icons">menu
-            </md-icon
-            ><span class="md-grid-text">Menu</span
-        ></div>
-
-        <div flex layout="column" layout-align="center center" md-ink-ripple
-             style="position: relative;">
-            <md-icon md-font-set="material-icons">menu
-            </md-icon
-            ><span class="md-grid-text">Menu</span
-        ></div>
-
-        <div flex layout="column" layout-align="center center" md-ink-ripple
-             style="position: relative;">
-            <md-icon md-font-set="material-icons">menu
-            </md-icon
-            ><span class="md-grid-text">Menu</span
-        ></div>
-
-        <md-button flex class="md-icon-button" layout="column" layout-align="center center" style="position: relative;">
+        <div flex layout="column" layout-align="center center" md-ink-ripple style="position: relative;">
             <md-icon md-font-set="material-icons">menu</md-icon>
-            <span class="md-grid-text">Button</span>
-        </md-button>
+            <div class="md-grid-text">Menu</div>
+        </div>
+
+        <div flex layout="column" layout-align="center center" md-ink-ripple style="position: relative;">
+            <md-icon md-font-set="material-icons">menu</md-icon>
+            <span class="md-grid-text">Menu</span>
+        </div>
+        <div flex layout="column" layout-align="center center" md-ink-ripple style="position: relative;">
+            <md-icon md-font-set="material-icons">menu</md-icon>
+            <span class="md-grid-text">Menu</span>
+        </div>
+        <div flex layout="column" layout-align="center center" md-ink-ripple style="position: relative;">
+            <md-icon md-font-set="material-icons">menu</md-icon>
+            <span class="md-grid-text">Menu</span>
+        </div>
     </md-toolbar>
 </div>
 

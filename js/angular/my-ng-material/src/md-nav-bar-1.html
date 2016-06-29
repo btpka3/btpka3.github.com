@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="sidenavDemo1">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport"
+          content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <title>tabs</title>
+    <link rel="stylesheet" href="../bower_components/angular-material/angular-material.min.css"/>
+    <link rel="stylesheet" href="../bower_components/material-design-icons-font/iconfont/material-icons.css">
+    <link rel="stylesheet" href="../bower_components/angular-material-icons/angular-material-icons.css"/>
+    <link rel="stylesheet" href="https://material.angularjs.org/1.1.0-rc1/docs.css"/>
+
+    <style>
+        .c {
+            border: 1px solid red;
+            width: 320px;
+        }
+
+        .c .md-button._md-nav-button {
+            min-width: 30px;
+            padding: 12px 6px;
+        }
+    </style>
+</head>
+<body>
+
+
+<div ng-controller="AppCtrl" class="sample" layout="column" ng-cloak>
+    <div class="c">
+        <md-content class="">
+            <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
+                <md-nav-item md-nav-click="goto('page1')" name="page1">中国人</md-nav-item>
+                <md-nav-item md-nav-click="goto('page2')" name="page2">中国人</md-nav-item>
+                <md-nav-item md-nav-click="goto('page3')" name="page3">中国人</md-nav-item>
+                <md-nav-item md-nav-click="goto('page3')" name="page3">中国人</md-nav-item>
+                <md-nav-item md-nav-click="goto('page3')" name="page3">中国人</md-nav-item>
+                <!-- these require actual routing with ui-router or ng-route, so they won't work in the demo
+                <md-nav-item md-nav-sref="app.page4" name="page4">Page Four</md-nav-item>
+                <md-nav-item md-nav-href="#page5" name="page5">Page Five</md-nav-item>
+                -->
+            </md-nav-bar>
+            <span>{{currentNavItem}}</span>
+    </div>
+
+</div>
+
+
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="../bower_components/angular-aria/angular-aria.min.js"></script>
+<script src="../bower_components/angular-messages/angular-messages.min.js"></script>
+<script src="../bower_components/angular-material/angular-material.min.js"></script>
+<script src="../bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+
+<script>
+    angular
+            .module('sidenavDemo1', ['ngMaterial', 'ngSanitize'])
+            .config(function ($provide) {
+                $provide.decorator("$sanitize", function ($delegate, $log) {
+                    return function (text, target) {
+
+                        var result = $delegate(text, target);
+                        $log.info("$sanitize input: " + text);
+                        $log.info("$sanitize output: " + result);
+                        return result;
+                    };
+                });
+            })
+            .controller('AppCtrl', AppCtrl);
+
+    function AppCtrl($scope, $log) {
+
+    }
+</script>
+</body>
+</html>

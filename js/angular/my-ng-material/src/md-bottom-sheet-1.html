@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyApp" ng-controller="DemoCtrl as ctrl" layout="column" ng-cloak="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <title>study ng-material</title>
+    <link rel="stylesheet" href="../bower_components/material-design-icons-font/iconfont/material-icons.css">
+    <link rel="stylesheet" href="../bower_components/angular-material/angular-material.min.css"/>
+    <link rel="stylesheet" href="../bower_components/angular-material-icons/angular-material-icons.css"/>
+    <style type="text/css">
+        .c {
+            width: 600px;
+            height: 800px;
+            border: 1px solid red;
+            position: relative;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body ng-cloak="">
+<div class="c">
+    <md-button ng-click="show()">show</md-button>
+</div>
+
+<script type="text/ng-template" id="/tpl.html">
+    <md-bottom-sheet class="md-grid" layout="column" ng-cloak>
+        <md-button ng-click="cc()">aaa</md-button>
+    </md-bottom-sheet>
+</script>
+
+</body>
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="../bower_components/angular-aria/angular-aria.min.js"></script>
+<script src="../bower_components/angular-messages/angular-messages.min.js"></script>
+<script src="../bower_components/angular-material/angular-material.min.js"></script>
+<script src="../bower_components/angular-material-icons/angular-material-icons.min.js"></script>
+<script src="../bower_components/svg-morpheus/compile/minified/svg-morpheus.js"></script>
+<script>
+    (function () {
+        'use strict';
+        angular
+                .module('MyApp', ['ngMaterial', 'ngMessages', 'ngMdIcons'])
+                .controller('DemoCtrl', ['$scope', '$mdBottomSheet', '$element', function ($scope, $mdBottomSheet, $element) {
+                    $scope.show = function () {
+                        console.log("--------show");
+                        $mdBottomSheet.show({
+                            templateUrl: '/tpl.html',
+                            parent: '.c',
+                            controller: BsController
+                        }).then(function (clickedItem) {
+                            console.log("clicked : " + clickedItem)
+                        });
+
+                    }
+                }]);
+
+        // ----------------------------------------------------------------------------
+        BsController.$inject = ['$scope', '$mdBottomSheet'];
+        function BsController($scope, $mdBottomSheet) {
+            console.log("---------------BsController")
+            $scope.cc = function () {
+                return $mdBottomSheet.hide("xxx");
+            }
+        }
+
+    })();
+
+</script>
+</html>

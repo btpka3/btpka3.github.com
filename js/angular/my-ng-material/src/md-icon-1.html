@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="zh-CN" ng-app="MyApp">
+<head>
+    <title>使用淘宝提供的 iconfont </title>
+    <meta charset="utf-8">
+
+    <!--
+    说明：
+    该目录下仅仅可做效果图，不强调业务逻辑
+    -->
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+
+    <link rel="stylesheet" href="../bower_components/angular-material/angular-material.css"/>
+    <link rel="stylesheet" href="../bower_components/material-design-icons-font/iconfont/material-icons.css"/>
+    <link rel="stylesheet" href="ks-iconfont/style.css"/>
+
+    <style>
+        .a {
+            display: inline-block;
+            border: 1px solid red;
+        }
+
+        .a md-icon {
+            line-height: 60px;
+            font-size: 60px;
+        }
+
+        .b {
+            border: 1px solid blue;
+        }
+
+        .b md-icon {
+            width: 60px;
+            height: 60px;
+            font-size: 60px;
+            line-height: 60px;
+        }
+    </style>
+</head>
+
+<body ng-controller="DemoCtrl" ng-cloak>
+
+
+<div class="a">
+    <md-icon md-font-set="material-icons">android</md-icon>
+</div>
+<div class="a">
+    <md-icon md-font-set="ks-icon" md-font-icon="ks-shopping-cart"></md-icon>
+</div>
+
+<div layout="column" layout-align="center center" class="b">
+    <md-icon md-font-set="material-icons">android</md-icon>
+    <md-icon md-font-set="material-icons">android</md-icon>
+    <div>aaaaaaaaaaaaaaaaaaaaaaaaa</div>
+</div>
+
+<div layout="column" layout-align="center center" class="b">
+    <md-icon md-font-set="ks-icon">shopping-cart</md-icon>
+    <md-icon md-font-set="ks-icon" md-font-icon="ks-shopping-cart"></md-icon>
+    <div>aaaaaaaaaaaaaaaaaaaaaaaaa</div>
+</div>
+
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/angular-animate/angular-animate.js"></script>
+<script src="../bower_components/angular-aria/angular-aria.js"></script>
+<script src="../bower_components/angular-messages/angular-messages.js"></script>
+<script src="../bower_components/angular-material/angular-material.js"></script>
+
+<script>
+    angular
+            .module('MyApp', ['ngMaterial', 'ngMessages'])
+            .controller('DemoCtrl', ['$scope', function ($scope) {
+            }]);
+</script>
+
+</body>
+
+</html>

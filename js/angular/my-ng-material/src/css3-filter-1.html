@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyApp" ng-controller="DemoCtrl as ctrl" layout="column" ng-cloak="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <title>study ng-material</title>
+    <link rel="stylesheet" href="../bower_components/material-design-icons-font/iconfont/material-icons.css">
+    <link rel="stylesheet" href="../bower_components/angular-material/angular-material.min.css"/>
+    <link rel="stylesheet" href="../bower_components/angular-material-icons/angular-material-icons.css"/>
+    <style type="text/css">
+        .c img {
+            width: 200px;
+        }
+
+    </style>
+</head>
+<body ng-cloak layout="row">
+<div flex layout="row">
+
+    <div> <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/filter" target="_blank">doc@MDN</a></div>
+    <div class="c">
+        <img src="https://dn-portal-files.qbox.me/sample1.jpg" style="filter:none;">
+        <img src="https://dn-portal-files.qbox.me/sample1.jpg" style="filter:blur(3px)">
+        <img src="https://dn-portal-files.qbox.me/sample1.jpg" style="filter:brightness(1.8)">
+        <img src="https://dn-portal-files.qbox.me/sample1.jpg" style="filter:contrast(1.8)">
+        <img src="https://dn-portal-files.qbox.me/sample1.jpg" style="filter:drop-shadow(16px 16px 20px blue);">
+        <img src="https://dn-portal-files.qbox.me/sample1.jpg" style="filter:grayscale(50%);">
+        <img src="https://dn-portal-files.qbox.me/sample1.jpg" style="filter:hue-rotate(90deg);">
+        <img src="https://dn-portal-files.qbox.me/sample1.jpg" style="filter:invert(75%);">
+        <img src="https://dn-portal-files.qbox.me/sample1.jpg" style="filter:opacity(25%);">
+        <img src="https://dn-portal-files.qbox.me/sample1.jpg" style="filter:saturate(30%);">
+        <img src="https://dn-portal-files.qbox.me/sample1.jpg" style="filter:sepia(30%);">
+        <img src="https://dn-portal-files.qbox.me/sample1.jpg" style="filter:contrast(120%) brightness(50%);">
+    </div>
+</div>
+</body>
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="../bower_components/angular-aria/angular-aria.min.js"></script>
+<script src="../bower_components/angular-messages/angular-messages.min.js"></script>
+<script src="../bower_components/angular-material/angular-material.min.js"></script>
+<script src="../bower_components/angular-material-icons/angular-material-icons.min.js"></script>
+<script src="../bower_components/svg-morpheus/compile/minified/svg-morpheus.js"></script>
+<script>
+    (function () {
+        'use strict';
+        angular
+                .module('MyApp', ['ngMaterial', 'ngMessages', 'ngMdIcons'])
+                .controller('DemoCtrl', ['$scope', '$mdSidenav', function ($scope, $mdSidenav) {
+
+                }]);
+    })();
+
+</script>
+</html>

@@ -1,0 +1,227 @@
+@font-face {
+    font-family: 'ks-iconfont';
+    src:    url('fonts/ks-iconfont_20160620_2.eot?8i2r89');
+    src:    url('fonts/ks-iconfont_20160620_2.eot?8i2r89#iefix') format('embedded-opentype'),
+        url('fonts/ks-iconfont_20160620_2.ttf?8i2r89') format('truetype'),
+        url('fonts/ks-iconfont_20160620_2.woff?8i2r89') format('woff'),
+        url('fonts/ks-iconfont_20160620_2.svg?8i2r89#ks-iconfont') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.ks-icon {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'ks-iconfont' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    
+    /* Enable Ligatures ================ */
+    letter-spacing: 0;
+    -webkit-font-feature-settings: "liga";
+    -moz-font-feature-settings: "liga=1";
+    -moz-font-feature-settings: "liga";
+    -ms-font-feature-settings: "liga" 1;
+    font-feature-settings: "liga";
+    -webkit-font-variant-ligatures: discretionary-ligatures;
+    font-variant-ligatures: discretionary-ligatures;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    width: 1em;
+    height: 1em;
+    font-size: 24px;
+}
+
+.ks-arrow_left:before {
+    content: "\e920";
+}
+.ks-arrow_right:before {
+    content: "\e91b";
+}
+.ks-arrow_down:before {
+    content: "\e90f";
+}
+.ks-r-selected:before {
+    content: "\e91a";
+}
+.ks-r-unselected:before {
+    content: "\e919";
+}
+.ks-c-selected:before {
+    content: "\e921";
+}
+.ks-c-unselected:before {
+    content: "\e922";
+}
+.ks-selected:before {
+    content: "\e91e";
+}
+.ks-success:before {
+    content: "\e916";
+}
+.ks-delete:before {
+    content: "\e906";
+}
+.ks-cancle:before {
+    content: "\e915";
+}
+.ks-close:before {
+    content: "\e91f";
+}
+.ks-trash-can-o:before {
+    content: "\e90c";
+}
+.ks-question:before {
+    content: "\e92d";
+}
+.ks-timing:before {
+    content: "\e907";
+}
+.ks-tag:before {
+    content: "\e902";
+}
+.ks-bell:before {
+    content: "\e928";
+}
+.ks-msg:before {
+    content: "\e929";
+}
+.ks-chat:before {
+    content: "\e917";
+}
+.ks-location:before {
+    content: "\e90e";
+}
+.ks-location-o:before {
+    content: "\e92b";
+}
+.ks-sort:before {
+    content: "\e936";
+}
+.ks-sort-asc:before {
+    content: "\e91c";
+}
+.ks-sort-desc:before {
+    content: "\e91d";
+}
+.ks-card:before {
+    content: "\e911";
+}
+.ks-card-r:before {
+    content: "\e92e";
+}
+.ks-kingsilk-word:before {
+    content: "\e92f";
+}
+.ks-kingsilk-logo:before {
+    content: "\e925";
+}
+.ks-gift:before {
+    content: "\e93b";
+}
+.ks-gift-o:before {
+    content: "\e93e";
+}
+.ks-order:before {
+    content: "\e913";
+}
+.ks-order-o:before {
+    content: "\e93a";
+}
+.ks-shopping-cart:before {
+    content: "\e926";
+}
+.ks-shopping-cart-o:before {
+    content: "\e927";
+}
+.ks-user:before {
+    content: "\e914";
+}
+.ks-user-o:before {
+    content: "\e923";
+}
+.ks-edit:before {
+    content: "\e905";
+}
+.ks-edit-o:before {
+    content: "\e90d";
+}
+.ks-coupon:before {
+    content: "\e90b";
+}
+.ks-coupon-o:before {
+    content: "\e935";
+}
+.ks-alipay:before {
+    content: "\e908";
+}
+.ks-weixin:before {
+    content: "\e909";
+}
+.ks-quilt:before {
+    content: "\e930";
+}
+.ks-more:before {
+    content: "\e931";
+}
+.ks-link:before {
+    content: "\e933";
+}
+.ks-star-o:before {
+    content: "\e934";
+}
+.ks-service:before {
+    content: "\e937";
+}
+.ks-rent-order:before {
+    content: "\e938";
+}
+.ks-done:before {
+    content: "\e939";
+}
+.ks-wallet:before {
+    content: "\e93c";
+}
+.ks-rent-word:before {
+    content: "\e901";
+}
+.ks-maintain:before {
+    content: "\e93d";
+}
+.ks-recovery:before {
+    content: "\e903";
+}
+.ks-delivery:before {
+    content: "\e904";
+}
+.ks-drawer:before {
+    content: "\e932";
+}
+.ks-invoice:before {
+    content: "\e90a";
+}
+.ks-phone:before {
+    content: "\e910";
+}
+.ks-handbag:before {
+    content: "\e912";
+}
+.ks-email:before {
+    content: "\e918";
+}
+.ks-search:before {
+    content: "\e924";
+}
+.ks-qrcode:before {
+    content: "\e92a";
+}
+.ks-bulb:before {
+    content: "\e92c";
+}
+

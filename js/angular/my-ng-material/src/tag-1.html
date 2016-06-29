@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyApp" ng-controller="DemoCtrl as ctrl" layout="column" ng-cloak="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <title>study ng-material</title>
+    <link rel="stylesheet" href="../bower_components/material-design-icons-font/iconfont/material-icons.css">
+    <link rel="stylesheet" href="../bower_components/angular-material/angular-material.min.css"/>
+    <link rel="stylesheet" href="../bower_components/angular-material-icons/angular-material-icons.css"/>
+    <style type="text/css">
+        .c {
+            border: 1px solid red;
+            display: block;
+        }
+
+        .tag {
+            display: inline-block;
+            height: 30px;
+            width: 60px;
+            background-color: #449fdb;
+            position: relative;
+            z-index: 2;
+            line-height: 30px;
+        }
+
+        .tag::after {
+            display: inline-block;
+            box-sizing: border-box;
+            width: 30px;
+            height: 30px;
+            content: '';
+            border-top: 15px solid #449fdb;
+            border-bottom: 15px solid #449fdb;
+            border-left: none;
+            border-right: 15px solid rgba(0, 0, 0, 0);
+            position: absolute;
+            right: -15px;
+        }
+
+        .tag1 {
+            background-color: #449fdb;
+            height: 40px;
+            width: 80px;
+            position: relative;
+            line-height: 40px;
+            padding-left: 10px;
+        }
+
+        .tag1::before {
+            display: inline-block;
+            box-sizing: border-box;
+            width: 20px;
+            height: 20px;
+            content: '';
+            border-style: solid;
+            border-width: 10px;
+            border-color: #449fdb transparent transparent #449fdb;
+            position: absolute;
+            top: 0;
+            right: -20px;
+        }
+
+        .tag1::after {
+            display: inline-block;
+            box-sizing: border-box;
+            width: 20px;
+            height: 20px;
+            content: '';
+            border-style: solid;
+            border-width: 10px;
+            border-color: transparent transparent #449fdb #449fdb;
+            position: absolute;
+            bottom: 0;
+            right: -20px;
+        }
+    </style>
+</head>
+<body ng-cloak="">
+
+<div class="c">
+    <div class="tag">aaa
+    </div>
+</div>
+<div class="c">
+    <div class="tag1">aaa
+    </div>
+</div>
+
+
+</body>
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="../bower_components/angular-aria/angular-aria.min.js"></script>
+<script src="../bower_components/angular-messages/angular-messages.min.js"></script>
+<script src="../bower_components/angular-material/angular-material.min.js"></script>
+<script src="../bower_components/angular-material-icons/angular-material-icons.min.js"></script>
+<script src="../bower_components/svg-morpheus/compile/minified/svg-morpheus.js"></script>
+<script>
+    (function () {
+        'use strict';
+        angular
+                .module('MyApp', ['ngMaterial', 'ngMessages', 'ngMdIcons'])
+                .controller('DemoCtrl', ['$scope', '$mdSidenav', function ($scope, $mdSidenav) {
+
+
+                }]);
+    })();
+
+</script>
+</html>
