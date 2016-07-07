@@ -1,19 +1,17 @@
 buildscript {
-    ext {
-        springBootVersion = '1.2.3.RELEASE'
-    }
-    repositories {
-        // mavenLocal()
-        //maven { url "http://mvn.kingsilk.xyz/content/groups/public/" }
-        mavenCentral()
-        // maven { url "https://repo.spring.io/libs-release" }
-        // mavenRepo url: "http://repo.maven.apache.org/maven2"
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath("io.spring.gradle:dependency-management-plugin:0.5.1.RELEASE")
-        classpath('org.springframework:springloaded:1.2.3.RELEASE')
-    }
+	ext {  springBootVersion = '1.3.6.RELEASE'  }
+	repositories {
+		// mavenLocal()
+		maven { url "http://mvn.kingsilk.xyz/content/groups/public/" }
+		mavenCentral()
+		// maven { url "https://repo.spring.io/libs-release" }
+		// mavenRepo url: "http://repo.maven.apache.org/maven2"
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		//classpath("io.spring.gradle:dependency-management-plugin:0.5.1.RELEASE")
+		//classpath('org.springframework:springloaded:1.2.3.RELEASE')
+	}
 }
 
 apply plugin: 'groovy'
@@ -30,98 +28,107 @@ apply plugin: 'project-report'
 //}
 
 jar {
-    baseName = 'my-gradle'
-    version = '0.0.1-SNAPSHOT'
+	baseName = 'my-gradle'
+	version = '0.0.1-SNAPSHOT'
 }
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 
-configurations {
-    providedRuntime
-}
+configurations { providedRuntime }
 
 repositories {
-    //mavenLocal()
-    //maven { url "http://mvn.kingsilk.xyz/content/groups/public/" }
-    mavenCentral()
+	//mavenLocal()
+	maven { url "http://mvn.kingsilk.xyz/content/groups/public/" }
+	mavenCentral()
 }
 
 ext {
-    // groovyVersion = '2.3.7'
-    grailsVersion = '2.4.4'
-//    grailsVersion = '3.0.1'
+	// groovyVersion = '2.3.7'
+	// grailsVersion = '2.4.4'
+	grailsVersion = '3.1.9'
 }
 
 dependencies {
-    //compile("org.springframework.boot:spring-boot-starter-actuator")
-    //compile("org.springframework.boot:spring-boot-starter-amqp")
-    compile("org.springframework.boot:spring-boot-starter-aop")
-    //compile("org.springframework.boot:spring-boot-starter-data-elasticsearch")
-    //compile("org.springframework.boot:spring-boot-starter-data-jpa")
-    compile("org.springframework.boot:spring-boot-starter-data-mongodb")
-    compile("org.springframework.boot:spring-boot-starter-data-rest")
-    compile("org.springframework.boot:spring-boot-starter-groovy-templates")
-    compile("org.springframework.boot:spring-boot-starter-jdbc")
-    //compile("org.springframework.boot:spring-boot-starter-mail")
-    //compile("org.springframework.boot:spring-boot-starter-redis")
-    //compile("org.springframework.boot:spring-boot-starter-remote-shell")
-    //compile("org.springframework.boot:spring-boot-starter-security")
-    compile("org.springframework.boot:spring-boot-starter-web")
+	//compile("org.springframework.boot:spring-boot-starter-actuator")
+	//compile("org.springframework.boot:spring-boot-starter-amqp")
+	compile("org.springframework.boot:spring-boot-starter-aop")
+	compile('org.springframework.boot:spring-boot-starter-cache')
+	compile("org.springframework.boot:spring-boot-starter-data-elasticsearch")
+	compile("org.springframework.boot:spring-boot-starter-data-jpa")
+	compile("org.springframework.boot:spring-boot-starter-data-mongodb"){
+		exclude group: 'org.mongodb', module: "mongo-java-driver"
+	}
+	compile("org.mongodb:mongodb-driver:3.2.2")
 
-    // GSP
-    compile("org.grails:grails-gsp-spring-boot:1.0.0")
-    compile("org.grails:grails-web-gsp:${grailsVersion}")
-    compile("org.grails:grails-web-gsp-taglib:${grailsVersion}")
-    compile("org.grails:grails-web-jsp:${grailsVersion}")
-    compile("org.grails:grails-validation:${grailsVersion}")
-    compile("org.hibernate:hibernate-validator")
-    compile("org.apache.tomcat.embed:tomcat-embed-el")
+	//compile('org.springframework.boot:spring-boot-starter-redis')
+	compile("org.springframework.boot:spring-boot-starter-data-rest")
+	compile("org.springframework.boot:spring-boot-starter-groovy-templates")
+	compile("org.springframework.boot:spring-boot-starter-jdbc")
+	compile('org.springframework.boot:spring-boot-starter-jooq')
+	compile("org.springframework.boot:spring-boot-starter-mail")
+	compile('org.springframework.retry:spring-retry')
+	//compile("org.springframework.boot:spring-boot-starter-remote-shell")
+	compile("org.springframework.boot:spring-boot-starter-security")
+	compile('org.springframework.session:spring-session')
+	compile('org.springframework.boot:spring-boot-starter-validation')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.boot:spring-boot-starter-websocket')
+	compile('org.codehaus.groovy:groovy')
 
-    // GORM Spring Boot plugins
-    // https://github.com/grails/grails-data-mapping/tree/master/boot-plugins
+//	// GSP
+//	compile("org.grails:grails-gsp-spring-boot:1.0.0")
+//	compile("org.grails:grails-web-gsp:${grailsVersion}")
+//	compile("org.grails:grails-web-gsp-taglib:${grailsVersion}")
+//	compile("org.grails:grails-web-jsp:${grailsVersion}")
+//	compile("org.grails:grails-validation:${grailsVersion}")
+	
+	compile("org.hibernate:hibernate-validator")
+	compile("org.apache.tomcat.embed:tomcat-embed-el")
 
-    // GORM
-    compile("org.grails:gorm-hibernate4-spring-boot:1.1.0.RELEASE")
+	// GORM Spring Boot plugins
+	// https://github.com/grails/grails-data-mapping/tree/master/boot-plugins
 
-    // GORM - mongodb
-    //compile("org.grails:gorm-mongodb-spring-boot:1.1.0.RELEASE")
-    //compile("org.grails:grails-datastore-gorm-mongodb:4.0.0.RELEASE")
-    //compile("org.grails:grails-datastore-gorm-mongodb:3.1.4.RELEASE")
+	// GORM - Hibernate
+	compile("org.grails:gorm-hibernate4-spring-boot:5.0.10.RELEASE")
 
-    compile("io.projectreactor:reactor-stream:2.0.3.RELEASE")
+//	// GORM - mongodb
+//	compile("org.grails:gorm-mongodb-spring-boot:5.0.10.RELEASE")
+	//	compile "org.grails:grails-datastore-gorm-mongodb:5.0.10.RELEASE"
 
-    compile("org.codehaus.groovy:groovy")
+	compile("io.projectreactor:reactor-stream:2.0.3.RELEASE")
 
-    //runtime("mysql:mysql-connector-java")
-    runtime("com.h2database:h2") // 1.4.187
-    providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
-    testCompile("org.springframework.boot:spring-boot-starter-test")
+	runtime("mysql:mysql-connector-java")
+	runtime("com.h2database:h2") // 1.4.187
+	providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
+	testCompile("org.springframework.boot:spring-boot-starter-test")
+
+
+	//	compile('org.grails:grails-core:${grailsVersion}')
+	//	compile('org.grails:grails-web-url-mappings:${grailsVersion}')
 }
 
 
 eclipse {
-    classpath {
-        downloadSources = true
-        containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
-        containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
-    }
+	classpath {
+		downloadSources = true
+		containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
+		containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
+	}
 }
 
 idea {
-    module {
-        downloadJavadoc = false
-        downloadSources = true
+	module {
+		downloadJavadoc = false
+		downloadSources = true
 
-        inheritOutputDirs = false
-        outputDir = file("$buildDir/classes/main/")
-    }
+		inheritOutputDirs = false
+		outputDir = file("$buildDir/classes/main/")
+	}
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.3'
-}
+task wrapper(type: Wrapper) { gradleVersion = '2.13' }
 
 //applicationDefaultJvmArgs = [
 //    "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005"

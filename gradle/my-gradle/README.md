@@ -5,6 +5,10 @@
 * 尝试使用 Groovy 进行开发
 * 尝试取代 Grails 进行开发
 
+	* 独立使用 Gsp .状态:失败
+	* 独立使用 GORM-Hibernate. 状态:进行中
+	* 独立使用 GORM-Mongo. 状态:进行中
+
 
 # 构建
 
@@ -21,6 +25,31 @@
     ```
 
 1. 使用 [Spring Initializr](http://start.spring.io/) 获取初始化配置。
+
+    ```
+    core
+    	security
+    	AOP
+    	cache
+    	Validation
+    	sesion
+    NoSql
+    	MongoDB
+    	Redis
+    	ElasticSearch
+	IO
+		mail
+	Web
+		Web
+		WebSocket
+	SQL
+		JPA
+		JDOQ
+		JDBC
+		H2
+	Cloud Core
+	Cloud Config
+    ```
 
 1. 初始化 IDEA 的项目文件
 
