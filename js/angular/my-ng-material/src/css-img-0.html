@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+          content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
     <title>study ng-material</title>
     <link rel="stylesheet" href="../bower_components/material-design-icons-font/iconfont/material-icons.css">
     <link rel="stylesheet" href="../bower_components/angular-material/angular-material.min.css"/>
@@ -11,11 +11,52 @@
     <style type="text/css">
         .c img {
             width: 200px;
+        }
 
+        .svg-bg {
+            /*
+             * svg dataurl 中的 '#' 需要转义为 '%23'
+             * http://stackoverflow.com/questions/7122760/data-uri-svg-background-in-css-not-working-in-firefox
+             */
+            background-image: radial-gradient(circle at center center, #00FFFF 0%, rgba(0, 0, 255, 0) 50%, #0000FF 95%),
+            url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" version="1.1"><rect style="fill:%23FF00FF;fill-opacity:0.9;" x="0" y="0" width="100%" height="100%"/></svg>');
+
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+
+        .svg-bg1 {
+
+            /*
+             * svg dataurl 中的 '#' 需要转义为 '%23'
+             * http://stackoverflow.com/questions/7122760/data-uri-svg-background-in-css-not-working-in-firefox
+             */
+            background-image: radial-gradient(circle at center center, #00FFFF 0%, rgba(0, 0, 255, 0) 50%, #0000FF 95%),
+                    url('svg/LOGO.svg');
+
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 100%,48px;
         }
 
         img.b {
-            background-color: #007aff
+            background-color: #007aff;
+        }
+
+        .aaa {
+            background-image: url(https://mdn.mozillademos.org/files/11305/firefox.png);
+            background-repeat: no-repeat;
+            background-position: center center;
+            background: -moz-linear-gradient(to right, rgba(30, 75, 115, 1), rgba(255, 255, 255, 0)), -webkit-gradient(to right, rgba(30, 75, 115, 1), rgba(255, 255, 255, 0)), -ms-linear-gradient(to right, rgba(30, 75, 115, 1), rgba(255, 255, 255, 0)), linear-gradient(to right, rgba(30, 75, 115, 1), rgba(255, 255, 255, 0));
+        }
+
+        .multi_bg_example {
+            width: 100%;
+            height: 400px;
+            background-image: url(https://mdn.mozillademos.org/files/11305/firefox.png), url(https://mdn.mozillademos.org/files/11307/bubbles.png), linear-gradient(to right, rgba(30, 75, 115, 1), rgba(255, 255, 255, 0));
+            background-repeat: no-repeat, no-repeat, no-repeat;
+            background-position: bottom right, left, right;
+            background: -moz-linear-gradient(to right, rgba(30, 75, 115, 1), rgba(255, 255, 255, 0)), -webkit-gradient(to right, rgba(30, 75, 115, 1), rgba(255, 255, 255, 0)), -ms-linear-gradient(to right, rgba(30, 75, 115, 1), rgba(255, 255, 255, 0)), linear-gradient(to right, rgba(30, 75, 115, 1), rgba(255, 255, 255, 0));
         }
 
         .i {
@@ -23,7 +64,6 @@
             background-repeat: no-repeat;
             background-position: center center;
         }
-
 
         .i2 {
             background: url(http://pic1.sc.chinaz.com/files/pic/pic9/201605/apic20600.jpg);
@@ -52,7 +92,19 @@
 
         <img src="https://dn-portal-files.qbox.me/sample1.jpg111" style="" class="i2">
 
+        <img src="https://dn-portal-files.qbox.me/sample1.jpg111" style="" class="multi_bg_example">
+        <img src="svg/LOGO.svg" style="width:100px; border: 1px solid red;">
+
+        <div style="width: 300px; height:300px; display: inline-block;" class="svg-bg"> svg-bg</div>
+
         <div class="i" style="width: 300px;">aaa</div>
+
+        <div class="multi_bg_example"></div>
+
+        <div class="svg-bg1" style="width: 300px; height:300px; border:1px solid red;">
+
+        </div>
+
     </div>
 </div>
 </body>

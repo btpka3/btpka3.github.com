@@ -9,15 +9,19 @@
     <link rel="stylesheet" href="../bower_components/angular-material/angular-material.min.css"/>
     <link rel="stylesheet" href="../bower_components/angular-material-icons/angular-material-icons.css"/>
     <style type="text/css">
-        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-            display: none !important;
-        }
+
     </style>
 </head>
-<body>
-<md-button ng-click="load()" class="md-primary md-raised">aaa</md-button>
+<body flex layout ng-cloak style="border:10px solid green;">
+<div flex layout="row" style="border:10px solid red; flex-grow:1;">
+    <div flex="100" layout="column" style="border:10px solid yellow;">
+        <div style="background-color: #008800;height:100px; flex-shrink: 0">aaa</div>
+        <md-content style="background-color: #886aea;" flex="">
+            ssssddf99555
+        </md-content>
+        <div style="background-color: #007aff;height:100px; flex-shrink: 0">bbb</div>
+    </div>
 </div>
-
 </body>
 <script src="../bower_components/jquery/dist/jquery.min.js"></script>
 <script src="../bower_components/angular/angular.js"></script>
@@ -27,21 +31,28 @@
 <script src="../bower_components/angular-material/angular-material.min.js"></script>
 <script src="../bower_components/angular-material-icons/angular-material-icons.min.js"></script>
 <script src="../bower_components/svg-morpheus/compile/minified/svg-morpheus.js"></script>
-<script src="../bower_components/angular-load/angular-load.js"></script>
 <script>
     (function () {
+        'use strict';
         angular
-                .module('MyApp', ['ngMaterial', 'angularLoad'])
-                .controller('DemoCtrl', ['$scope', 'angularLoad', function ($scope, angularLoad) {
+                .module('MyApp', ['ngMaterial', 'ngMessages', 'ngMdIcons'])
+                .controller('DemoCtrl', ['$scope', '$element', function ($scope, $element) {
+                    $scope.vs = {};
+                    $scope.s = function () {
 
-                    $scope.load = function () {
-                        angularLoad.loadScript('https:////api.map.baidu.com/api?v=2.0&ak=AA9iQNKiR6Dp8YKZnMQjGSev&s=1')
-                                .then(function () {
-                                    console.log("-------------loaded")
-                                }).catch(function (e) {
-                            console.log("-------------Not loaded", e)
-                        });
-                    };
+                        $scope.vs.w = window.screen.width;
+                        $scope.vs.h = window.screen.height;
+
+                        $scope.vs.innerWidth = window.innerWidth;
+                        $scope.vs.innerHeight = window.innerHeight;
+
+
+                        $scope.vs.header = angular.element(".header").height();
+                        $scope.vs.content = angular.element(".content").height();
+                        $scope.vs.footer = angular.element(".footer").height();
+
+                        console.log("------------", $scope.vs);
+                    }
                 }]);
     })();
 

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyApp" ng-controller="DemoCtrl as ctrl" layout="column" ng-cloak="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, flexinitial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <title>http get post</title>
+</head>
+<body>
+
+<div>
+    <h1>GET / FORM</h1>
+    <form method="get" action="http://192.168.0.12/xxxxxxxxxxxxxxxxxxx">
+        <div><input type="text" name="name" value="zhang3"></div>
+        <div><input type="text" name="age" value="14"></div>
+        <div><input type="submit" value="GET"></div>
+    </form>
+</div>
+
+<div>
+    <h1>POST / FORM</h1>
+    <form method="post" action="http://192.168.0.12/xxxxxxxxxxxxxxxxxxx">
+        <div><input type="text" name="name" value="zhang3"></div>
+        <div><input type="text" name="age" value="14"></div>
+        <div><input type="submit" value="POST"></div>
+    </form>
+</div>
+<div>
+    <h1>POST / upload</h1>
+    <form method="post" action="http://192.168.0.12/xxxxxxxxxxxxxxxxxxx" enctype="multipart/form-data">
+        <div><input type="text" name="name" value="zhang3"></div>
+        <div><input type="text" name="age" value="14"></div>
+        <div><input type="file" name="my-file" ></div>
+        <div><input type="submit" value="POST"></div>
+    </form>
+</div>
+</body>
+<script>
+
+</script>
+</html>

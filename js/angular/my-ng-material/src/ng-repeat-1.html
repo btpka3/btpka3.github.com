@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+          content="width=device-width, flexinitial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
     <title>study ng-repeat</title>
     <link rel="stylesheet" href="../bower_components/material-design-icons-font/iconfont/material-icons.css">
     <link rel="stylesheet" href="../bower_components/angular-material/angular-material.min.css"/>
@@ -24,7 +24,12 @@
     <li ng-repeat="ccc in list2 | filter:expr">{{ccc}}</li>
 </ul>
 
-
+<ul> 索引正序
+    <li ng-repeat="ccc in list2 | orderBy:$index:false">{{ccc}}</li>
+</ul>
+<ul> 索引逆序
+    <li ng-repeat="ccc in list2 | orderBy:$index:true">{{ccc}}</li>
+</ul>
 </body>
 <script src="../bower_components/jquery/dist/jquery.min.js"></script>
 <script src="../bower_components/angular/angular.js"></script>

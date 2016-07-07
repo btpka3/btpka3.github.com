@@ -3,13 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+          content="width=device-width, flexinitial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
     <title>study md-icon</title>
     <link rel="stylesheet" href="../bower_components/material-design-icons-font/iconfont/material-icons.css">
     <link rel="stylesheet" href="../bower_components/angular-material/angular-material.min.css"/>
     <link rel="stylesheet" href="../bower_components/angular-material-icons/angular-material-icons.css"/>
+    <style>
+        /* disable animation */
+        .a md-dialog._md-transition-in, .a md-dialog._md-transition-out {
+            transition: none;
+            transform: none;
+        }
+    </style>
 </head>
-<body>
+<body class="a">
 
 <md-button class="md-primary md-raised" ng-click="showConfirm($event)">
     showConfirm
@@ -57,7 +64,7 @@
                             controller: DialogController,
                             templateUrl: 'dialog1.tmpl.html',
                             parent: angular.element(document.body),
-                            targetEvent: ev,
+                            //targetEvent: ev, // disable animation from
                             clickOutsideToClose: true,
                             fullscreen: useFullScreen
                         }).then(function (answer) {
@@ -112,7 +119,7 @@
                 </div>
             </md-toolbar>
             <md-dialog-content>
-                <div class="md-dialog-content" >
+                <div class="md-dialog-content">
                     <form layout="column">
                         <div flex layout="row">
                             <md-input-container class="md-block" flex>

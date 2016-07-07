@@ -3,19 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+          content="width=device-width, flexinitial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
     <title>study ng-material</title>
     <link rel="stylesheet" href="../bower_components/material-design-icons-font/iconfont/material-icons.css">
     <link rel="stylesheet" href="../bower_components/angular-material/angular-material.min.css"/>
     <link rel="stylesheet" href="../bower_components/angular-material-icons/angular-material-icons.css"/>
     <style type="text/css">
-        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-            display: none !important;
-        }
+
     </style>
 </head>
-<body>
-<md-button ng-click="load()" class="md-primary md-raised">aaa</md-button>
+<body ng-cloak layout="row">
+<div flex layout="row" style="height:400px;">
+    <div flex layout="column">
+        <div flex style="background-color: #7C2845">aaa</div>
+        <div flex style="background-color: #008800">bbb</div>
+    </div>
+    <div flex="" style="background-color: #007aff">
+        ccc
+    </div>
+    <div flex="" style="background-color: #00FFFF">
+        ddd
+    </div>
 </div>
 
 </body>
@@ -27,21 +35,14 @@
 <script src="../bower_components/angular-material/angular-material.min.js"></script>
 <script src="../bower_components/angular-material-icons/angular-material-icons.min.js"></script>
 <script src="../bower_components/svg-morpheus/compile/minified/svg-morpheus.js"></script>
-<script src="../bower_components/angular-load/angular-load.js"></script>
 <script>
     (function () {
+        'use strict';
         angular
-                .module('MyApp', ['ngMaterial', 'angularLoad'])
-                .controller('DemoCtrl', ['$scope', 'angularLoad', function ($scope, angularLoad) {
+                .module('MyApp', ['ngMaterial', 'ngMessages', 'ngMdIcons'])
+                .controller('DemoCtrl', ['$scope', '$mdSidenav', function ($scope, $mdSidenav) {
 
-                    $scope.load = function () {
-                        angularLoad.loadScript('https:////api.map.baidu.com/api?v=2.0&ak=AA9iQNKiR6Dp8YKZnMQjGSev&s=1')
-                                .then(function () {
-                                    console.log("-------------loaded")
-                                }).catch(function (e) {
-                            console.log("-------------Not loaded", e)
-                        });
-                    };
+
                 }]);
     })();
 

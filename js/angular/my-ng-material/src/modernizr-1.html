@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html ng-app="myApp" class="no-js">
+<head lang="zh-CN">
+    <meta charset="UTF-8">
+
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+    <script>
+        $(function(){
+            $("#txt").text($("html").attr("class"));
+            $("#ua").text(navigator.userAgent);
+        });
+    </script>
+    <script type="text/javascript" src="http://sandbox.runjs.cn/uploads/rs/157/jm4x0l1q/modernizr-custom.js"></script>
+</head>
+
+<body>
+<div id="txt">
+
+</div>
+<div id="ua">
+
+</div>
+
+<br/>
+<br/>
+<div id="a">
+    <table>
+        <tr><td>platform</td><td>flexboxlagacy</td><td>fleboxtweener</td><td>flexbox</td><td>flexwrap</td></tr>
+        <tr><td>微信 6.3.9 </td><td>Yes</td><td>Yes</td><td>No</td><td>Yes</td></tr>
+        <tr class=r><td>微信 6.3.15 </td><td>Yes</td><td>No</td><td>Yes</td><td>Yes</td></tr>
+        <tr><td>QQ 6.2.0.2655 </td><td>Yes</td><td>Yes</td><td>No</td><td>Yes</td></tr>
+        <tr class=r><td>QQ 6.2.3.2700 </td><td>Yes</td><td>No</td><td>Yes</td><td>Yes</td></tr>
+        <tr class=r><td>支付宝 9.5.1.011302 </td><td>Yes</td><td>No</td><td>Yes</td><td>Yes</td></tr>
+    </table>
+</div>
+
+<button id="btn">
+    show css
+</button>
+
+</body>
+</html>
+
