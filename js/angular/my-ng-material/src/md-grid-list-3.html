@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, flexinitial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <title>study ng-material</title>
+    <link rel="stylesheet" href="../bower_components/material-design-icons-font/iconfont/material-icons.css">
+    <link rel="stylesheet" href="../bower_components/angular-material/angular-material.min.css"/>
+    <link rel="stylesheet" href="../bower_components/angular-material-icons/angular-material-icons.css"/>
+    <style>
+
+
+        .gridListdemoBasicUsage .gray {
+            background: #f5f5f5;
+        }
+
+        .gridListdemoBasicUsage .green {
+            background: #b9f6ca;
+        }
+
+        .gridListdemoBasicUsage .yellow {
+            background: #ffff8d;
+        }
+
+        .gridListdemoBasicUsage .blue {
+            background: #84ffff;
+        }
+
+        .gridListdemoBasicUsage .purple {
+            background: #b388ff;
+        }
+
+        .gridListdemoBasicUsage .red {
+            background: #ff8a80;
+        }
+
+        .gridListdemoBasicUsage md-grid-tile {
+            transition: all 400ms ease-out 50ms;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<div ng-app="MyApp" class="gridListdemoBasicUsage" ng-controller="AppCtrl as appCtrl" ng-cloak="" style="position: relative;">
+
+    <md-grid-list flex
+                  md-cols="10"
+                  md-row-height="1:1"
+                  md-gutter="3px">
+
+        <md-grid-tile class="gray" md-rowspan="2" md-colspan="5">
+            <md-grid-tile-footer>
+                <h3>#1: (3r x 2c)</h3>
+            </md-grid-tile-footer>
+        </md-grid-tile>
+        <md-grid-tile class="red" md-rowspan="8" md-colspan="5" >
+            <div flex style="border:2px solid blue;" layout-fill layout="column">
+                <div  style="background-color: #886aea; height: 300px;">111</div>
+                <div flex>222</div>
+            </div>
+        </md-grid-tile>
+        <md-grid-tile class="purple" md-rowspan="8" md-colspan="5">
+
+        </md-grid-tile>
+        <md-grid-tile class="yellow" md-rowspan="8" md-colspan="5">
+
+        </md-grid-tile>
+        <md-grid-tile class="blue" md-rowspan="8" md-colspan="5">
+
+        </md-grid-tile>
+        <md-grid-tile class="green" md-rowspan="8" md-colspan="5">
+
+        </md-grid-tile>
+        <md-grid-tile class="red" md-rowspan="8" md-colspan="5">
+
+        </md-grid-tile>
+        <md-grid-tile class="purple" md-rowspan="8" md-colspan="5">
+
+        </md-grid-tile>
+        <md-grid-tile class="yellow" md-rowspan="8" md-colspan="5">
+
+        </md-grid-tile>
+        <md-grid-tile class="blue" md-rowspan="8" md-colspan="5">
+
+        </md-grid-tile>
+        <md-grid-tile class="green" md-rowspan="8" md-colspan="5">
+
+        </md-grid-tile>
+
+    </md-grid-list>
+    bbb
+</div>
+</body>
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="../bower_components/angular-aria/angular-aria.min.js"></script>
+<script src="../bower_components/angular-messages/angular-messages.min.js"></script>
+<script src="../bower_components/angular-material/angular-material.min.js"></script>
+<script>
+    (function () {
+        'use strict';
+        angular
+                .module('MyApp', ['ngMaterial', 'ngMessages'])
+                .controller('AppCtrl', function ($scope) {
+                });
+    })();
+
+</script>
+</html>

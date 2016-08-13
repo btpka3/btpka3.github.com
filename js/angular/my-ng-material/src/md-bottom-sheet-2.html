@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyApp" ng-controller="DemoCtrl as ctrl" layout="column" ng-cloak="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, flexinitial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <title>md-content with layout</title>
+    <link rel="stylesheet" href="../bower_components/angular-material/angular-material.min.css"/>
+
+    <style type="text/css">
+        .c {
+            width: 600px;
+            height: 800px;
+            border: 1px solid red;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header, .footer {
+            background-color: #00FFFF;
+            height: 40px;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body ng-cloak="">
+<div class="c" layout="column">
+    <div class="header">HEADER</div>
+
+    <md-content flex="" layout="column">
+        <div>
+            <div>aaaa</div>
+            <div>aaaa</div>
+            <div>aaaa</div>
+            <div>aaaa</div>
+            <div>aaaa</div>
+            <div>aaaa</div>
+            <div>aaaa</div>
+            <div>aaaa</div>
+            <div>aaaa</div>
+            <div>aaaa</div>
+            <div>aaaa</div>
+            <div>aaaa</div>
+            <div>aaaa</div>
+            <div>aaaa</div>
+            <div>aaaa</div>
+            <div>aaaa</div>
+            <div>aaaa</div>
+            <div>aaaa</div>
+            <div>aaaa</div>
+            <div>aaaa</div>
+            <div>aaaa</div>
+            <div>aaaa</div>
+            <div>aaaa</div>
+            <div>aaaa</div>
+            <div>aaaa</div>
+            <div>aaaa</div>
+            <div>aaaa</div>
+            <div>aaaa</div>
+            <div>aaaa</div>
+            <div>aaaa</div>
+            <div>aaaa</div>
+            <div>aaaa</div>
+            <div>aaaa</div>
+            <div>aaaa</div>
+            <div>aaaa</div>
+            <div>aaaa</div>
+        </div>
+
+        <div>bbbb</div>
+        <div>bbbb</div>
+        <div>bbbb</div>
+        <div>bbbb</div>
+
+        <div layout="" style="background-color: #ba9f6e;border: 3px solid darkblue;">
+            <textarea flex="" style="height:300px;background: none;border-radius: 0;    color: #101010;    resize: none;height: 70px;" placeholder="sss">
+
+            </textarea>
+        </div>
+
+        <div>cccc</div>
+        <div>cccc</div>
+        <div>cccc</div>
+        <div>cccc</div>
+    </md-content>
+
+    <div class="footer">FOOTER</div>
+</div>
+
+
+</body>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="../bower_components/angular-aria/angular-aria.min.js"></script>
+<script src="../bower_components/angular-messages/angular-messages.min.js"></script>
+<script src="../bower_components/angular-material/angular-material.min.js"></script>
+<script>
+    (function () {
+        angular
+                .module('MyApp', ['ngMaterial'])
+                .controller('DemoCtrl', ['$scope', function ($scope) {
+                }]);
+    })();
+
+</script>
+</html>

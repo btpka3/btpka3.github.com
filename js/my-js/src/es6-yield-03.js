@@ -4,36 +4,25 @@
  */
 
 'use strict';
-function sleep(time) {
-    return new Promise((resolve, reject)=> {
-        setTimeout(function () {
-            resolve(111);
-        }, time);
-    });
-}
 
-function myAwait(p) {
-    p.then(function (date) {
-
-    }, function (err) {
-
-    });
-}
-function* ccc() {
-    yield 1;
-    yield 2;
+function aaa(done) {
     console.log(new Date(), "aaa");
-    yield sleep(1000);
+    done("aaa");
+    return "aaa1";
+}
+
+function bbb(done) {
     console.log(new Date(), "bbb");
-    yield 3;
+    done("bbb");
 }
 
 
-let enumerator = ccc();
-console.log(new Date(), enumerator.next());
-console.log(new Date(), enumerator.next());
-console.log(new Date(), enumerator.next());
-console.log(new Date(), enumerator.next());
-console.log(new Date(), enumerator.next());
-
-
+function*xxx(){
+    console.log(new Date(), "--------aaa" );
+     yield  bbb();
+    console.log(new Date(), "--------bbb" );
+}
+var eee = xxx();
+eee.next();
+eee.next();
+eee.next();

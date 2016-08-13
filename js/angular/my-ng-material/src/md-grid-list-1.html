@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, flexinitial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <title>study ng-material</title>
+    <link rel="stylesheet" href="../bower_components/material-design-icons-font/iconfont/material-icons.css">
+    <link rel="stylesheet" href="../bower_components/angular-material/angular-material.min.css"/>
+    <link rel="stylesheet" href="../bower_components/angular-material-icons/angular-material-icons.css"/>
+    <style>
+
+
+        .gridListdemoBasicUsage md-grid-list {
+            margin: 8px;
+        }
+
+        .gridListdemoBasicUsage .gray {
+            background: #f5f5f5;
+        }
+
+        .gridListdemoBasicUsage .green {
+            background: #b9f6ca;
+        }
+
+        .gridListdemoBasicUsage .yellow {
+            background: #ffff8d;
+        }
+
+        .gridListdemoBasicUsage .blue {
+            background: #84ffff;
+        }
+
+        .gridListdemoBasicUsage .purple {
+            background: #b388ff;
+        }
+
+        .gridListdemoBasicUsage .red {
+            background: #ff8a80;
+        }
+
+        .gridListdemoBasicUsage md-grid-tile {
+            transition: all 400ms ease-out 50ms;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<div ng-app="MyApp" class="gridListdemoBasicUsage" ng-controller="AppCtrl as appCtrl" ng-cloak="">
+    <div>
+
+
+        <md-grid-list md-cols-xs="1"
+                      md-cols-sm="2"
+                      md-cols-md="4"
+                      md-cols-gt-md="6"
+                      md-row-height-gt-md="1:1"
+                      md-row-height="2:2"
+                      md-gutter="12px"
+                      md-gutter-gt-sm="8px">
+
+            <md-grid-tile class="gray"
+                          md-rowspan="3"
+                          md-colspan="2"
+                          md-colspan-sm="1"
+                          md-colspan-xs="1">
+                <md-grid-tile-footer>
+                    <h3>#1: (3r x 2c)</h3>
+                </md-grid-tile-footer>
+            </md-grid-tile>
+
+            <md-grid-tile class="green">
+                <md-grid-tile-footer>
+                    <h3>#2: (1r x 1c)</h3>
+                </md-grid-tile-footer>
+            </md-grid-tile>
+
+            <md-grid-tile class="yellow">
+                <md-grid-tile-footer>
+                    <h3>#3: (1r x 1c)</h3>
+                </md-grid-tile-footer>
+            </md-grid-tile>
+
+            <md-grid-tile class="blue"
+                          md-rowspan="2">
+                <md-grid-tile-footer>
+                    <h3>#4: (2r x 1c)</h3>
+                </md-grid-tile-footer>
+            </md-grid-tile>
+
+            <md-grid-tile class="red"
+                          md-rowspan="2" md-colspan="2" md-colspan-sm="1" md-colspan-xs="1">
+                <md-grid-tile-footer>
+                    <h3>#5: (2r x 2c)</h3>
+                </md-grid-tile-footer>
+            </md-grid-tile>
+
+            <md-grid-tile class="green"
+                          md-rowspan="2">
+                <md-grid-tile-footer>
+                    <h3>#6: (2r x 1c)</h3>
+                </md-grid-tile-footer>
+            </md-grid-tile>
+        </md-grid-list>
+    </div>
+    aaa
+</div>
+</body>
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="../bower_components/angular-aria/angular-aria.min.js"></script>
+<script src="../bower_components/angular-messages/angular-messages.min.js"></script>
+<script src="../bower_components/angular-material/angular-material.min.js"></script>
+<script>
+    (function () {
+        'use strict';
+        angular
+                .module('MyApp', ['ngMaterial', 'ngMessages'])
+                .controller('AppCtrl', function ($scope) {
+                });
+    })();
+
+</script>
+</html>

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <!--
+qh-admin 使用的配置为
+grails.plugin.springsecurity.password.algorithm = 'bcrypt'
+grails.plugin.springsecurity.password.encodeHashAsBase64 = true
+grails.plugin.springsecurity.password.bcrypt.logrounds = 7
+
+示例为：
+'123456' -> '$2a$07$J0nVfg8forldbvGesD1CROWapDMmu4E91vpOVFybbLhb5Yitobe1O'
+'ABCDE'  -> '$2a$07$JVYSn83gkOtCDddYmOUHyeETa6ZSVs.e49s8/ZfLBTRcN3ELDmx2e'
+'中国人'  -> '$2a$07$XtApBY6IQCeJ4tl87vwyL.6y.g.Km5aICQ3Iw/yd9mFMStgbf0b1y'
+
+    -->
+    <script src="../bower_components/javascript-bcrypt/bCrypt.js"></script>
+    <script>
+
+        function crypt() {
+
+            var arr = [
+
+                ['123456', '$2a$07$J0nVfg8forldbvGesD1CROWapDMmu4E91vpOVFybbLhb5Yitobe1O'],
+                ['ABCDE', '$2a$07$JVYSn83gkOtCDddYmOUHyeETa6ZSVs.e49s8/ZfLBTRcN3ELDmx2e'],
+                ['中国人', '$2a$07$XtApBY6IQCeJ4tl87vwyL.6y.g.Km5aICQ3Iw/yd9mFMStgbf0b1y'],
+            ];
+
+
+            arr.forEach(function (v, i, thisArr) {
+                console.log(" --------------> " + v[0]);
+                var plaintext = v[0];
+                var salt = gensalt(7);
+                hashpw(
+                        plaintext,
+                        salt,
+                        function (hash) {
+                            console.log(v[0] + " -> " + hash);
+                            checkpw(v[0], hash, function (ok) {
+                                console.log(v[0] + " -> " + hash + ": " + ok);
+                            });
+                            checkpw(v[0], hash, function (ok) {
+                                console.log(v[0] + " --> " + v[1] + ": " + ok);
+                            });
+                        });
+
+            });
+        }
+        crypt();
+    </script>
+</head>
+
+</html>
