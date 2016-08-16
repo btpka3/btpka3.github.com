@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<catalog id="iii">
+    <person>
+        <name>A</name>
+        <surname>AAA</surname>
+    </person>
+    <person>
+        <name>B</name>
+        <surname>BBB</surname>
+    </person>
+    <person>
+        <name>C</name>
+        <surname>CCC</surname>
+    </person>
+    <!-- this is comment -->
+</catalog>
