@@ -8,8 +8,8 @@ import java.nio.channels.Pipe;
 
 /**
  * 测试管道
- * a->A, B-B,
- * 0->1, 1->2 etc.
+ * <p>
+ * R 负责读取(模拟数据), ToUpper 负责数据处理 ( 'a' -> 'A' ), W 负责结果输出(控制台)
  */
 public class PipeChannelTest {
 
@@ -25,18 +25,97 @@ public class PipeChannelTest {
     }
 
 
-    static class ToUpper implements Runnable, In, Out {
-        Pipe.SourceChannel src;
+    static class R implements Runnable, Out {
+
         Pipe.SinkChannel sink;
+
+        @Override
+        public void run() {
+            ByteBuffer buf = ByteBuffer.allocate(5);
+            try {
+                final int COUNT = 11;
+                int c = 0;
+                while (c < COUNT) {
+
+                    // 生成长度为N数据
+                    for (int i = buf.position(); i < buf.limit() && c < COUNT; i++) {
+                        System.out.println("R : " + i);
+                        c++;
+                        buf.put((byte) 'a');
+                    }
+
+                    buf.flip();
+                    sink.write(buf);
+                    buf.compact();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        @Override
+        public void setSink(Pipe.SinkChannel sink) {
+            this.sink = sink;
+        }
+    }
+
+    static class W implements Runnable, In {
+        Pipe.SourceChannel src;
 
 
         @Override
         public void run() {
-            ByteBuffer buf = ByteBuffer.allocate(1024);
+            ByteBuffer buf = ByteBuffer.allocate(6);
 
             try {
-                while(-1!= src.read(buf)){
+                while (src.read(buf) != -1) {
+                    buf.flip();
+                    while (buf.hasRemaining()) {
+                        int i = buf.position();
+                        System.out.println("W    : " + i + " : " + ((char) buf.get()));
+                    }
+                    buf.compact();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
+        @Override
+        public void setSource(Pipe.SourceChannel src) {
+            this.src = src;
+        }
+
+
+    }
+
+
+    static class ToUpper implements Runnable, In, Out {
+        Pipe.SourceChannel src;
+        Pipe.SinkChannel sink;
+
+        @Override
+        public void run() {
+            ByteBuffer buf = ByteBuffer.allocate(4);
+
+            byte diff = 'a' - 'A';
+            try {
+                while (-1 != src.read(buf)) {
+                    buf.flip();
+                    buf.mark();
+                    while (buf.hasRemaining()) {
+                        int i = buf.position();
+                        byte b = buf.get();
+                        System.out.println("T        : " + i + " : " + ((char) b));
+                        if (b >= 'a' && b <= 'z') {
+                            byte upper = (byte) (b - diff);
+                            buf.put(i, upper);
+                        }
+                    }
+                    buf.reset();
+                    sink.write(buf);
+                    buf.compact();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -56,97 +135,44 @@ public class PipeChannelTest {
         }
     }
 
-    static class ToNextDigit {
-
-    }
 
     public static void main(String[] args) throws IOException {
 
-        // InputStream in = new ByteBuffe
-        ByteBuffer buf = ByteBuffer.allocate(48);
 
+//        test1();
+        test2();
 
+    }
+
+    public static void test1() throws IOException {
+        R r = new R();
+        W w = new W();
         Pipe pipe = Pipe.open();
+        r.setSink(pipe.sink());
+        w.setSource(pipe.source());
 
-        Pipe.SinkChannel sink = pipe.sink();
-
-//        pipe.source()
-//
-//        PipedOutputStream out = new PipedOutputStream();
-//        PipedInputStream in = new PipedInputStream(out);
-//
-//        R r = new R();
-//        W w = new W();
-//
-//
-//        ByteBuffer buf = ByteBuffer.allocate(1024);
-//
-//        r.in = in;
-//        w.out = out;
-//
-//        r
-//
-//        r.start();
-//        w.start();
-
+        new Thread(r).start();
+        new Thread(w).start();
     }
 
 
-    static class R extends Thread {
-        Pipe.SinkChannel sink;
+    public static void test2() throws IOException {
 
+        R r = new R();
+        ToUpper t = new ToUpper();
+        W w = new W();
 
-        public void run() {
+        Pipe p1 = Pipe.open();
+        r.setSink(p1.sink());
+        t.setSource(p1.source());
 
-//
-//            sink.write()
-//            byte[] buf = new byte[1024];
-//            int len;
-//
-//            try {
-//                while ((len = in.read(buf)) != -1) {
-//
-//                    System.out.println(new String(buf, 0, len));
-//
-//                }
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            } finally {
-//                try {
-//                    in.close();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//            System.out.println("R end");
-        }
+        Pipe p2 = Pipe.open();
+        t.setSink(p2.sink());
+        w.setSource(p2.source());
+
+        new Thread(r).start();
+        new Thread(t).start();
+        new Thread(w).start();
     }
 
-    static class W extends Thread {
-        PipedOutputStream out = new PipedOutputStream();
-
-
-        public void run() {
-            long l = 0;
-            try {
-                while (l < 10) {
-                    out.write(("W-" + l + " ;").getBytes());
-                    l++;
-                    Thread.sleep(1000);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    out.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            System.out.println("W end");
-        }
-    }
 }
