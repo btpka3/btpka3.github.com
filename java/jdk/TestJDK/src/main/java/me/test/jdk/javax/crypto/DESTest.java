@@ -1,19 +1,14 @@
 package me.test.jdk.javax.crypto;
 
-
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import javax.crypto.*;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.Security;
-
-import javax.xml.bind.DatatypeConverter;
 
 // NOT USING "Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files 6"
 // http://bouncycastle.org/wiki/display/JA1/Provider+Installation
