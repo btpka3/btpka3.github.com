@@ -3,22 +3,30 @@
 
 ```
 npm install -g cordova 
+npm update -g cordova
+
 cordova create my-app 
 cd my-app
 sudo ln -s /usr/bin/chromium-browser /usr/bin/google-chrome
-cordova platform add browser
+cordova platform add --save browser 
+cordova platform add --save android
+cordova platform add --save ios 
 cordova run browser
  
-cordova platform add android
+ 
 # cordova run android
 cordova emulate android --target test1
 
-cordova plugin add cordova-plugin-camera
-cordova plugin add cordova-hot-code-push-local-dev-addon
+cordova plugin add --save cordova-plugin-camera
+cordova plugin add --save cordova-hot-code-push-local-dev-addon
 
-#cordova plugin add cordova-plugin-app-update
-cordova plugin add cordova-plugin-dynamic-update
+#cordova plugin add --save cordova-plugin-app-update
+cordova plugin add --save cordova-plugin-dynamic-update
 
+
+#.gitignore `platforms` and `plugins` directory
+# 以下命令会根据 config.xml 自动创建出以上两个目录
+cordova prepare
 
 cordova build --release android
 ```

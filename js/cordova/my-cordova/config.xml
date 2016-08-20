@@ -1,94 +1,52 @@
 <?xml version='1.0' encoding='utf-8'?>
-
-<!-- 该配置文件中，只有 widget 元素是必须的，其子元素、属性都是可选的, 子元素的顺序无关。-->
 <widget id="io.github.btpka3" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-
-    <!-- * -->
     <name short="my-cordova">My Cordova</name>
-
-    <!-- * -->
     <feature name="http://example.com/camera">
-        <param name="autofocus" value="true"/>
+        <param name="autofocus" value="true" />
     </feature>
-
-    <!-- * -->
-    <preference name="apikey" value="ea31ad3a23fd2f" readonly="true"/>
-
-    <preference name="Fullscreen" value="false"/>
-
-    <preference name="DisallowOverscroll" value="false"/>
-    <preference name="BackgroundColor" value="0xff0000ff"/>
-
-    <!-- * -->
+    <preference name="apikey" readonly="true" value="ea31ad3a23fd2f" />
+    <preference name="Fullscreen" value="false" />
+    <preference name="DisallowOverscroll" value="false" />
+    <preference name="BackgroundColor" value="0xff0000ff" />
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
     </description>
-
-    <!-- ? -->
-    <author email="dev@cordova.apache.org"
-            href="http://cordova.io">
+    <author email="dev@cordova.apache.org" href="http://cordova.io">
         Apache Cordova Team
     </author>
-
-    <!-- * -->
-    <!--
-    <icon src="icons/example.png"/>
-    <icon src="icons/boo.png"/>
-    -->
-
-    <!-- ? -->
-    <!-- 开始文件（Start File） -->
-    <content src="index.html"/>
-
-
-    <plugin name="cordova-plugin-whitelist" spec="1"/>
-
-    <!-- 该APP可以访问的外部网站 -->
-    <access origin="*"/>
-    <!--
-    <access origin="https://codepush.azurewebsites.net" />
-    <access orogin="https://codepush.blob.core.windows.net" />
-    -->
-    <allow-intent href="http://*/*"/>
-    <allow-intent href="https://*/*"/>
-    <allow-intent href="tel:*"/>
-    <allow-intent href="sms:*"/>
-    <allow-intent href="mailto:*"/>
-    <allow-intent href="geo:*"/>
-
+    <content src="index.html" />
+    <access origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
     <chcp>
         <config-file url="http://pub-zll.kingsilk.xyz/my-cordova/chcp.json" />
         <local-development enabled="true" />
         <auto-download enabled="true" />
         <auto-install enabled="true" />
     </chcp>
-
-
     <platform name="android">
-        <!--
-        MyApp-Android
-        Production │ DJU7p8wa2U1fzIPljL6IzAoSomurVkwGr_yix
-        Staging    │ S6BO_a-du9AEMkZgfsJZPqPV5WY_VkwGr_yix
-        -->
         <preference name="CodePushDeploymentKey" value="YDJU7p8wa2U1fzIPljL6IzAoSomurVkwGr_yix" />
-        <allow-intent href="market:*"/>
+        <allow-intent href="market:*" />
     </platform>
     <platform name="ios">
-        <!--
-          MyApp-iOS
-          Production │ NSPii4Gdwh2OGzUZFB3cu1lrLOvrVkwGr_yix
-          Staging    │ r-00pXhpQ4Bo1U_xfnQ1k5rLBdyqVkwGr_yix
-        -->
         <preference name="CodePushDeploymentKey" value="NSPii4Gdwh2OGzUZFB3cu1lrLOvrVkwGr_yix" />
-        <allow-intent href="itms:*"/>
-        <allow-intent href="itms-apps:*"/>
+        <allow-intent href="itms:*" />
+        <allow-intent href="itms-apps:*" />
     </platform>
     <platform name="windows">
-        <preference name="BackgroundColor" value="turquoise"/>
+        <preference name="BackgroundColor" value="turquoise" />
     </platform>
-
-    <!-- * -->
     <license>
         XXX
     </license>
+    <engine name="browser" spec="~4.1.0" />
+    <engine name="android" spec="~5.2.1" />
+    <plugin name="cordova-hot-code-push-local-dev-addon" spec="~0.2.2" />
+    <plugin name="cordova-hot-code-push-plugin" spec="~1.4.0" />
+    <plugin name="cordova-plugin-splashscreen" spec="~3.2.2" />
+    <plugin name="cordova-plugin-whitelist" spec="~1.2.2" />
 </widget>
