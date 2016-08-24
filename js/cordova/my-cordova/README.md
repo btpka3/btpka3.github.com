@@ -29,6 +29,13 @@ cordova plugin add --save cordova-plugin-dynamic-update
 cordova prepare
 
 cordova build --release android
+
+
+# udpate plugins
+cordova plugin list
+npm install -g cordova-check-plugins
+cordova-check-plugins --update=auto
+
 ```
 
 # 真机测试

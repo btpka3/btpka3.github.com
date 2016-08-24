@@ -49,4 +49,5 @@
     <plugin name="cordova-hot-code-push-plugin" spec="~1.4.0" />
     <plugin name="cordova-plugin-splashscreen" spec="~3.2.2" />
     <plugin name="cordova-plugin-whitelist" spec="~1.2.2" />
+    <plugin name="cordova-plugin-inappbrowser" spec="~1.4.0" />
 </widget>

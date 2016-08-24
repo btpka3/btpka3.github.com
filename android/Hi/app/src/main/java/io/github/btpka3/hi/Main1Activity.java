@@ -40,6 +40,7 @@ public class Main1Activity extends AppCompatActivity {
         View v = this.findViewById(android.R.id.content);
         Log.v("Hi", v.toString());
 
+        // 找到所需的可视组件,并更新文本。
         ContentFrameLayout contentFrameLayout = (ContentFrameLayout) v;
         CoordinatorLayout coordinatorLayout = (CoordinatorLayout) contentFrameLayout.getChildAt(0);
         RelativeLayout relativeLayout = (android.widget.RelativeLayout) coordinatorLayout.getChildAt(1);
