@@ -17,3 +17,6 @@ include 'services:webservice'
 */
 
 rootProject.name = 'my-gradle-java'
+include 'sub-module-a'
+include 'sub-module-b'
+
