@@ -21,12 +21,9 @@ bower_components
 
 *.zip
 .gradle
-platforms/android/CordovaLib/build/*
-#!platforms/android/CordovaLib/build/.gitkeep
-platforms/android/assets/www/*
-platforms/ios/www/*
-www/*
-!www/.gitkeep
+platforms
+plugins
+
 
 
 ######################################### Created by https://www.gitignore.io/api/swift,xcode‌​,cobjective-c,osx
