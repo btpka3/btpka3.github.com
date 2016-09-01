@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="demoApp">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Demos</title>
+
+    <link rel="stylesheet" href="../bower_components/swiper/dist/css/swiper.min.css">
+
+
+    <script src="../bower_components/swiper/dist/js/swiper.js"></script>
+    <script src="../bower_components/angular/angular.js"></script>
+    <script src="../bower_components/angular-swiper/dist/angular-swiper.js"></script>
+
+    <script src="swiper.js"></script>
+</head>
+<body ng-cloak="" layout md-no-ink >
+<div flex layout="row" ng-controller="TestCtrl">
+
+
+    <div flex="" layout="column" class="ks-main">
+
+        <md-toolbar class="md-menu-toolbar ks-header">
+            <div class="md-toolbar-tools">
+                <h1 flex>swiper</h1>
+            </div>
+        </md-toolbar>
+
+        <md-content flex layout="column" class="top-border">
+
+            <ks-swiper-container swiper="swiper"
+                                 initial-slide="1"
+                                 loop="true"
+                                 show-nav-buttons="false"
+                                 pagination-is-active="true"
+                                 pagination-clickable="false"
+                                 slides-per-view="1"
+                                 space-between="5">
+
+                <ks-swiper-slide class="swiper-slide" ng-repeat="s in imgs">
+                    <img ng-src="{{s.img}}">
+                </ks-swiper-slide>
+
+            </ks-swiper-container>
+
+            <md-button class="md-raised md-primary" ng-click="remove()">remove</md-button>
+            <md-button class="md-raised md-primary" ng-click="change()">add</md-button>
+
+            <div>{{imgs.length}}</div>
+            <div>{{toAdd.length}}</div>
+        </md-content>
+
+
+        <div ks-footer-menu cur="'cart'"></div>
+    </div>
+</div>
+
+
+</body>
+</html>
+
