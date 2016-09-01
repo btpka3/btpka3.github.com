@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+
+    </style>
+</head>
+<body>
+
+<span>A 'span' outside will not with red color.</span>
+<div class="widget">Hello, <span>world</span>!</div>
+
+<script>
+
+    var host = document.querySelector('.widget');
+    var root = host.createShadowRoot();
+
+    // 插入普通文本
+    root.textContent = "I'm John! ";
+
+    // 插入html
+    var header = document.createElement('span');
+    header.textContent = 'Nice to meet you ~';
+    root.appendChild(header);
+
+    // 使用模板绑定原始内容
+    var tpl = document.createElement('template');
+    tpl.innerHTML=" <b>---<content></content>---</b>";
+    root.appendChild(document.importNode(tpl.content, true));
+
+    root.innerHTML += '<style>span { color: red; } :host{border: 1px solid blue;}</style>';
+
+
+</script>
+</body>
+</html>
