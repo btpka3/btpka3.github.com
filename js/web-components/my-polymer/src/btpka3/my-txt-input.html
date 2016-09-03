@@ -1,0 +1,38 @@
+<dom-module id="my-txt-input">
+    <template>
+        <input type="text"/> <span></span> 222
+
+    </template>
+
+    <script>
+        var MyTxtInput = Polymer({
+            is: 'my-txt-input',
+            extends: 'input',
+            properties: {
+                user: String,
+                count: {
+                    type: Number,
+                    readOnly: true,
+                    notify: true
+                }
+            },
+            _says: 'meow',
+            speak: function() {
+                console.log(this._says);
+            },
+
+            // 自定义构造函数。只有通过js中用new关键调用 `new MyTxtInput()` 才会被调用
+            factoryImpl: function (foo, bar) {
+                this.foo = foo;
+                this.configureWithBar(bar);
+                console.log("--------factoryImpl;")
+            },
+
+            created: function () {
+                console.log("--------created;")
+                this.style.border = '1px solid red';
+            }
+
+        });
+    </script>
+</dom-module>

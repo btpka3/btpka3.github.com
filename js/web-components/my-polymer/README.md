@@ -1,3 +1,14 @@
+
+# XXX
+学习的话,最好的方式就是直接看  `bower_components/iron-localstorage/**/demo/*.html`
+
+# FIXME
+
+1. css @apply, var 是如何被转化的?
+1. 
+
+
+
 # Polymer App Toolbox - Starter Kit
 
 [![Build Status](https://travis-ci.org/PolymerElements/polymer-starter-kit.svg?branch=master)](https://travis-ci.org/PolymerElements/polymer-starter-kit)
