@@ -18,13 +18,13 @@ let httpRequestObserver = {
 
 
             if ("http://ajax.googleapis.com" == httpChannel.URI.prePath) {
-                httpChannel.redirectTo(io.newURI("http://ajax.useso.com" + httpChannel.URI.path, null, null));
-                //httpChannel.redirectTo(io.newURI("http://ajax.lug.ustc.edu.cn" + httpChannel.URI.path, null, null));
+                //httpChannel.redirectTo(io.newURI("http://ajax.useso.com" + httpChannel.URI.path, null, null));
+                httpChannel.redirectTo(io.newURI("http://ajax.lug.ustc.edu.cn" + httpChannel.URI.path, null, null));
             }
 
             if ("http://fonts.googleapis.com" == httpChannel.URI.prePath) {
-                httpChannel.redirectTo(io.newURI("http://fonts.useso.com" + httpChannel.URI.path, null, null));
-                //httpChannel.redirectTo(io.newURI("http://fonts.lug.ustc.edu.cn" + httpChannel.URI.path, null, null));
+                //httpChannel.redirectTo(io.newURI("http://fonts.useso.com" + httpChannel.URI.path, null, null));
+                httpChannel.redirectTo(io.newURI("http://fonts.lug.ustc.edu.cn" + httpChannel.URI.path, null, null));
             }
 
 

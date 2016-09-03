@@ -1,7 +1,7 @@
 {
   "title": "url-filter",
   "name": "url-filter",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "change url",
   "main": "index.js",
   "author": "btpka3@163.com",
