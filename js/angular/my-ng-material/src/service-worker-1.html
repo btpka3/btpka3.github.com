@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyApp" ng-controller="DemoCtrl as ctrl" layout="column" ng-cloak="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, flexinitial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <title>study ng-material</title>
+    <link rel="stylesheet" href="../bower_components/material-design-icons-font/iconfont/material-icons.css">
+    <link rel="stylesheet" href="../bower_components/angular-material/angular-material.min.css"/>
+
+    <style type="text/css">
+        /*
+
+        chrome://inspect/#service-workers
+
+        cache-polyfill:
+            https://github.com/dominiccooney/cache-polyfill
+
+
+        http://www.html5rocks.com/en/tutorials/service-worker/introduction/
+
+
+        http://www.w3ctech.com/topic/866
+
+
+        GoogleChrome Samples
+            https://github.com/GoogleChrome/samples
+            https://www.chromestatus.com/samples
+        */
+
+    </style>
+</head>
+<body ng-cloak>
+<img ng-src="{{imgUrl}}" ng-if="imgUrl" style="width:100px;"/>
+<md-button class="md-primary md-raised" ng-click="reg()">reg</md-button>
+
+<md-button class="md-primary md-raised" ng-click="cacheImg()">缓存图片</md-button>
+
+<md-button class="md-primary md-raised" ng-click="loadImg()">show image</md-button>
+
+
+<div>检查 service workers : <span>chrome://inspect/#service-workers</span></div>
+</body>
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/cache-polyfill/index.js"></script>
+
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="../bower_components/angular-aria/angular-aria.min.js"></script>
+<script src="../bower_components/angular-messages/angular-messages.min.js"></script>
+<script src="../bower_components/angular-material/angular-material.min.js"></script>
+<script>
+    (function () {
+        angular
+                .module('MyApp', ['ngMaterial'])
+                .controller('DemoCtrl', ['$scope', function ($scope) {
+
+                    // 启用 serviceWorker
+                    $scope.reg = function () {
+                        console.log("-----------------reg");
+                        if ('serviceWorker' in navigator) {
+
+                            navigator.serviceWorker.addEventListener('message', function (event) {
+                                console.log("---------message", event);
+                            });
+
+                            navigator.serviceWorker.ready.then(function (serviceWorkerRegistration) {
+                                console.log('--------ready  : ', serviceWorkerRegistration);
+                            });
+
+                            navigator.serviceWorker.register('service-worker-1.js').then(function (registration) {
+                                console.log('ServiceWorker registration successful with scope:: ', registration.scope, navigator.serviceWorker);
+                                return navigator.serviceWorker.ready;
+                            }).catch(function (err) {
+                                // registration failed :(
+                                console.log('ServiceWorker registration failed: ', err);
+                            });
+                        }
+                    };
+
+                    $scope.loadImg = function () {
+                        $scope.imgUrl = "svg/LOGO.svg";
+                    };
+
+
+                    $scope.cacheImg = function () {
+
+                        sendMessage({
+                            command: 'cacheImg',
+                            url: "svg/LOGO.svg"
+                        }).then(function (d) {
+                            console.log("缓存成功", d);
+                        }).catch(function (err) {
+                            console.log('缓存失败: ', err);
+                        })
+
+                    };
+
+                    function sendMessage(message) {
+                        // This wraps the message posting/response in a promise, which will resolve if the response doesn't
+                        // contain an error, and reject with the error if it does. If you'd prefer, it's possible to call
+                        // controller.postMessage() and set up the onmessage handler independently of a promise, but this is
+                        // a convenient wrapper.
+                        return new Promise(function (resolve, reject) {
+                            var messageChannel = new MessageChannel();
+                            messageChannel.port1.onmessage = function (event) {
+                                if (event.data.error) {
+                                    reject(event.data.error);
+                                } else {
+                                    resolve(event.data);
+                                }
+                            };
+
+                            // This sends the message data as well as transferring messageChannel.port2 to the service worker.
+                            // The service worker can then use the transferred port to reply via postMessage(), which
+                            // will in turn trigger the onmessage handler on messageChannel.port1.
+                            // See https://html.spec.whatwg.org/multipage/workers.html#dom-worker-postmessage
+                            navigator.serviceWorker.controller.postMessage(message,
+                                    [messageChannel.port2]);
+                        });
+                    }
+                }]);
+
+
+    })();
+
+</script>
+</html>
