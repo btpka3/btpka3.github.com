@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='utf-8'?><widget id="com.your.company.mychromeapp" version="0.1.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>my-chrome-app</name>
+    <description>A Sample Chrome App</description>
+    <author>Author Name &lt;a@b.com></author>
+    <preference name="KeyboardShrinksView" value="true"/>
+    <preference name="StatusBarOverlaysWebView" value="false"/>
+    <preference name="StatusBarBackgroundColor" value="#000000"/>
+    <preference name="iosPersistentFileLocation" value="Library"/>
+    <preference name="AndroidPersistentFileLocation" value="Internal"/>
+    <content src="plugins/cordova-plugin-chrome-apps-bootstrap/chromeapp.html"/>
+    <preference name="android-minSdkVersion" value="14"/>
+    
+    <platform name="android">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    <icon src="www/assets/icons/icon144.png"/><icon src="www/assets/icons/icon16.png" width="16"/><icon src="www/assets/icons/icon36.png" width="36"/><icon src="www/assets/icons/icon48.png" width="48"/><icon src="www/assets/icons/icon57.png" width="57"/><icon src="www/assets/icons/icon72.png" width="72"/><icon src="www/assets/icons/icon96.png" width="96"/><icon src="www/assets/icons/icon114.png" width="114"/><icon src="www/assets/icons/icon128.png" width="128"/><icon src="www/assets/icons/icon144.png" width="144"/></platform>
+    <platform name="ios">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    <icon src="www/assets/icons/icon144.png"/><icon src="www/assets/icons/icon16.png" width="16"/><icon src="www/assets/icons/icon36.png" width="36"/><icon src="www/assets/icons/icon48.png" width="48"/><icon src="www/assets/icons/icon57.png" width="57"/><icon src="www/assets/icons/icon72.png" width="72"/><icon src="www/assets/icons/icon96.png" width="96"/><icon src="www/assets/icons/icon114.png" width="114"/><icon src="www/assets/icons/icon128.png" width="128"/><icon src="www/assets/icons/icon144.png" width="144"/></platform>
+    
+    <preference name="xwalkCommandLine" value="--disable-pull-to-refresh-effect"/>
+    <preference name="xwalkMode" value="embedded"/>
+    <preference name="xwalkMultipleApk" value="true"/>
+<access origin="*"/></widget>
