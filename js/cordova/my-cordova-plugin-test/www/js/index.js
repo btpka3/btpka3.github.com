@@ -18,25 +18,25 @@
  */
 var app = {
     // Application Constructor
-    initialize: function() {
+    initialize: function () {
         this.bindEvents();
     },
     // Bind Event Listeners
     //
     // Bind any events that are required on startup. Common events are:
     // 'load', 'deviceready', 'offline', and 'online'.
-    bindEvents: function() {
+    bindEvents: function () {
         document.addEventListener('deviceready', this.onDeviceReady, false);
     },
     // deviceready Event Handler
     //
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'app.receivedEvent(...);'
-    onDeviceReady: function() {
+    onDeviceReady: function () {
         app.receivedEvent('deviceready');
     },
     // Update DOM on a Received Event
-    receivedEvent: function(id) {
+    receivedEvent: function (id) {
         var parentElement = document.getElementById(id);
         var listeningElement = parentElement.querySelector('.listening');
         var receivedElement = parentElement.querySelector('.received');
@@ -45,7 +45,24 @@ var app = {
         receivedElement.setAttribute('style', 'display:block;');
 
         console.log('Received Event: ' + id);
+
+        //
+        regAdd();
     }
 };
 
 app.initialize();
+
+// ---------------------------
+function regAdd() {
+    document.getElementById("addBtn").addEventListener("click", function () {
+        var myPlugin = cordova.require("my-cordova-plugin.MyCordovaPlugin");
+
+        myPlugin.add(1, 2, function (result) {
+            console.log("-------- browser : MyCordovaPlugin#add(1,2)", result);
+        }, function (err) {
+            console.log("-------- browser : MyCordovaPlugin#add(1,2) : ERROR : ", err);
+        });
+
+    });
+}

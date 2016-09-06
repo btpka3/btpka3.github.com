@@ -10,7 +10,28 @@
     <keywords>cordova,demo</keywords>
     <author>btpka3</author>
 
+    <!-- 各个平台都需要实现的接口JS模块 -->
+    <!-- 使用 cordova.require("...") 时,参数为 "${pluginId}.${jsModuleName}" -->
+    <js-module src="www/MyCordovaPlugin.js" name="MyCordovaPlugin">
+        <runs/>
+    </js-module>
 
+    <!-- browser -->
+    <platform name="browser">
+        <config-file target="config.xml" parent="/*">
+            <!-- FIXME 以下被注释掉的代码意义何在, 参考文档何在? -->
+            <!--<feature name="MyCordovaPlugin">-->
+                <!--<param name="browser-package" value="MyCordovaPlugin" />-->
+            <!--</feature>-->
+        </config-file>
+
+        <!-- JS接口实现代码 -->
+        <js-module src="src/browser/MyCordovaPluginProxy.js" name="MyCordovaPluginProxy" >
+            <runs />
+        </js-module>
+    </platform>
+
+    <!-- android -->
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="MyCordovaPlugin" >
@@ -23,9 +44,6 @@
     </platform>
 
 
-    <js-module src="www/MyCordovaPlugin.js" name="add">
-        <runs/>
-    </js-module>
 
     <engines>
         <engine name="cordova" version="&gt;=1.7.0" />
