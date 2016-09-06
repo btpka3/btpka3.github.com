@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="my-cordova-plugin"
+        version="0.1.0">
+
+    <name>my-cordova-plugin</name>
+    <description>My first demo Cordova Plugin</description>
+    <license>Apache 2.0</license>
+    <keywords>cordova,demo</keywords>
+    <author>btpka3</author>
+
+
+
+    <asset src="www/foo.js" target="foo.js" />
+
+    <js-module src="www/add.js" name="add">
+
+        <!-- 可以有多个clobbers, 用来指明在window对象下已怎样的命名空间暴露出该js模块。
+         -  window对象下面不存在是,就创建。如果已存在该对象,则什么也不做。
+         -->
+        <clobbers target="my.add" />
+
+        <!-- 同上,但是如果window下面已经存在该对象,则用该插件中的属性值一一覆盖原有值。 -->
+        <merges target="chrome.socket" />
+
+        <!-- 不会在window对象下创建相应的引用,只能通过 "cordova.require" 来引用该JS模块
+         - 此时,上面的 clobbers 和  merges 都是多余的。
+         -->
+        <runs/>
+    </js-module>
+
+
+    <!-- 用来指明当前插件 -->
+    <dependency id="cordova-plugin-someplugin"
+                url="https://github.com/myuser/someplugin"
+                commit="428931ada3891801"
+                subdir="some/path/here" />
+
+
+    <!-- 为特定的平台指定要特别处理的数据 -->
+    <platform name="ios">
+
+        <!-- config-file 只允许向指定的文件中 append 特定的配置 -->
+        <config-file target="config.xml" parent="/*">
+            <feature name="Device">
+                <param name="ios-package" value="CDVDevice"/>
+            </feature>
+        </config-file>
+
+
+        <!-- 用来修改已有的配置文件。 如果多个插件都要修改同一个配置,解决方法有两个:
+            - 1. 撤销插件2对配置的修改, 将修改转移到插件1中。
+            - 2. 通过强制安装插件2, 该操作会用回滚到插件1修改的状态。
+            -->
+        <edit-config file="AndroidManifest.xml"
+                target="/manifest/uses-sdk"
+                mode="merge">
+            <uses-sdk android:minSdkVersion="16" android:maxSdkVersion="23" />
+        </edit-config>
+
+
+        <!-- 在 iOS 环境中向 AppInfo.plist 中追加特定的key-value。-->
+        <plugins-plist key="Foo" string="CDVFoo" />
+
+        <header-file src="src/ios/CDVDevice.h" />
+        <source-file src="src/ios/CDVDevice.m" />
+        <resource-file src="FooPluginStrings.xml" target="res/values/FooPluginStrings.xml" />
+
+
+        <lib-file src="src/BlackBerry10/native/device/libfoo.so" arch="device" />
+        <lib-file src="src/BlackBerry10/native/simulator/libfoo.so" arch="simulator" />
+
+
+        <!-- 用来指定需要依赖特定的框架. 如果是在Android,则会使用Gradle管理依赖 -->
+        <framework src="libsqlite3.dylib" />
+        <framework src="social.framework" weak="true" />
+        <framework src="relative/path/to/my.framework" custom="true" />
+
+
+
+    </platform>
+
+    <!-- 指明该插件支持的 cordova 的版本
+        - 注意:在 Cordova 6.1.0+ 之后, 建议在 package.json 中指定 platform, plugin, CLI依赖
+        -->
+    <engines>
+        <engine name="cordova" version="&gt;=1.7.0" />
+        <engine name="cordova-android" version="&gt;=1.8.0" />
+        <engine name="cordova-ios" version="&gt;=1.7.1" />
+    </engines>
+
+
+    <!-- 补充信息,会在安装插件的时候在控制台打印出来。 -->
+    <info>
+        xxx
+    </info>
+
+    <!-- 添加特定的hook -->
+    <hook type="after_plugin_install" src="scripts/afterPluginInstall.js" />
+
+
+    <uses-permission android:name="my-app-id.permission.C2D_MESSAGE"/>
+
+    <preference name="MY_CUSTOM_STRING" default="default-value" />
+
+</plugin>

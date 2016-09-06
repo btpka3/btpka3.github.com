@@ -1,0 +1,29 @@
+{
+  "name": "my-cordova-plugin",
+  "version": "0.1.0",
+  "description": "My first demo Cordova Plugin",
+  "cordova": {
+    "id": "my-cordova-plugin",
+    "platforms": [
+      "android"
+    ]
+  },
+  "keywords": [
+    "cordova",
+    "demo",
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=1.7.0"
+    },
+    {
+      "name": "cordova-android",
+      "version": ">=1.8.0"
+    }
+  ],
+  "author": "",
+  "license": "Apache 2.0"
+}

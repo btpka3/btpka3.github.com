@@ -1,0 +1,4 @@
+
+
+include "cordova-android"
+project(":cordova-android").projectDir = new File("/Users/zll/.cordova/lib/npm_cache/cordova-android/5.2.1/package/framework")

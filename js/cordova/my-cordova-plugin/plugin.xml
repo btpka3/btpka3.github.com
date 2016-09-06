@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="my-cordova-plugin"
+        version="0.1.0">
+
+    <name>my-cordova-plugin</name>
+    <description>My first demo Cordova Plugin</description>
+    <license>Apache 2.0</license>
+    <keywords>cordova,demo</keywords>
+    <author>btpka3</author>
+
+
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="MyCordovaPlugin" >
+                <param name="android-package" value="io.github.btpka3.my_cordova_plugin.MyCordovaPlugin"/>
+            </feature>
+        </config-file>
+
+        <source-file src="src/android/src/main/java/io/github/btpka3/my_cordova_plugin/MyAdd.java"
+            target-dir="src/io/github/btpka3/my_cordova_plugin" />
+    </platform>
+
+
+    <js-module src="www/MyCordovaPlugin.js" name="add">
+        <runs/>
+    </js-module>
+
+    <engines>
+        <engine name="cordova" version="&gt;=1.7.0" />
+        <engine name="cordova-android" version="&gt;=1.8.0" />
+        <!--<engine name="cordova-ios" version="&gt;=1.7.1" />-->
+    </engines>
+</plugin>
