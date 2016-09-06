@@ -14,4 +14,10 @@ rm -fr platforms plugins
 cordova prepare
 cordova run browser
 
+
+# 运行 android 的话, 可以
+1. 命令行: `cordova run android`
+2. 通过 Android Studio : File : New : Import Project ... : ./platforms/android 进行debug
+3. 无论上面哪种方式,都可以通过 Chrome 浏览器 `chrome://inspect/#devices` 来远程 debug。
+
 ```

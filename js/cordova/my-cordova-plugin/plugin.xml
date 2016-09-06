@@ -39,7 +39,7 @@
             </feature>
         </config-file>
 
-        <source-file src="src/android/src/main/java/io/github/btpka3/my_cordova_plugin/MyAdd.java"
+        <source-file src="src/android/src/main/java/io/github/btpka3/my_cordova_plugin/MyCordovaPlugin.java"
             target-dir="src/io/github/btpka3/my_cordova_plugin" />
     </platform>
 

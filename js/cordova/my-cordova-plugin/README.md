@@ -27,4 +27,12 @@ cordova plugin add --save ../my-cordova-plugin
 ```
 
 
+# browser
+
+# android
+
+为了方便能在 android studio中进行编译, 代码提示,
+在 src/android/settings.gradle 中引入了 cordova-android 的源代码,
+在 src/android/build.gradle 中对其进行了依赖。
+
 
