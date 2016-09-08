@@ -1,0 +1,22 @@
+{
+  "name": "my-sjcl",
+  "homepage": "https://github.com/btpka3/btpka3.github.com",
+  "authors": [
+    "btpka3 <btpka3@163.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "sjcl": "^1.0.4",
+    "angular-material": "^1.1.1",
+    "jquery": "^3.1.0"
+  }
+}
