@@ -9,7 +9,7 @@ gradle build
 
 ```
 
-* [spring boot gradle plugin(https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-gradle-plugin.html)
+* [spring boot gradle plugin](https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-gradle-plugin.html)
 
 
 # 提供静态资源
@@ -22,3 +22,13 @@ private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {
 ```
 
 也可以看看 `ResourceHandlerRegistry` 的源码,条件追加了 `classpath:/META-INF/resources/webjars/` 这个路径
+
+|test page                    | test for                        |
+|-----------------------------|---------------------------------|
+|http://localhost:8080/a.txt  |`classpath:/META-INF/resources/` |
+|http://localhost:8080/a.html |`classpath:/resources/`          |
+|http://localhost:8080/a.css  |`lasspath:/static/`              |
+|http://localhost:8080/a.js   |`classpath:/public/`             |
+ 
+
+

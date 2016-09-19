@@ -1,0 +1,8 @@
+security.basic.enabled: false
+security.user.password: 123456
+
+logging.level.org.springframework.web: INFO
+logging.level.org.springframework.security: INFO
+logging.level.org.springframework.boot.actuate.audit.listener.AuditListener: DEBUG
+
+spring.devtools.restart.exclude: static/**,public/**
