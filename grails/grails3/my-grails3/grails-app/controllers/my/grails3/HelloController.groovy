@@ -1,5 +1,6 @@
 package my.grails3
 
+import com.mongodb.DBCursor
 import grails.converters.JSON
 
 class HelloController {
@@ -8,18 +9,16 @@ class HelloController {
 
     def myCalcService
 
+    // gsp 测试
     def index() {
-        render "aaa " + System.currentTimeMillis()
+        println("hello" + System.currentTimeMillis())
+        render(view: "index", model: [a: "aaa", b: "bbb", c: "ccc"])
+        //render "aaa " + System.currentTimeMillis()
     }
 
+    // 服务调用测试
     def add() {
         render "myCalcService : " + myCalcService.add(1, 2) + ", " + System.currentTimeMillis()
-    }
-
-
-    def gsp() {
-        println("hello" + System.currentTimeMillis())
-        render(view: "gsp", model: [a: "aaa", b: "bbb", c: "ccc"])
     }
 
     def insert() {
@@ -38,6 +37,11 @@ class HelloController {
             ge("age", 15)
         }
         render(list as JSON)
+    }
+
+    def clear() {
+
+        render("all deleted." + (User.where {}.deleteAll()))
     }
 
     def insertMongo() {
@@ -59,7 +63,11 @@ class HelloController {
     }
 
     def testMongo() {
-        print mongo.getDB("test").aa.find()
-        render "aaaaaaaaaa " + System.currentTimeMillis()
+        DBCursor c = mongo.getDB("zll").user.find()
+        def rec
+        if (c.hasNext()) {
+            rec = c.next()
+        }
+        render "aaaaaaaaaa " + System.currentTimeMillis() + " === " + rec
     }
 }
