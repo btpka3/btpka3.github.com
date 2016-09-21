@@ -24,4 +24,5 @@ _site
 *.xpi
 gradle/my-gradle/data
 js/my-ts/dist
+.tmp
 
