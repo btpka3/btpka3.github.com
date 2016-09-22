@@ -3,9 +3,9 @@ import org.springframework.security.web.access.expression.DefaultWebSecurityExpr
 
 beans = {
 
-    userDetailsService(MyUserDetails){
-        println "-------------------------- this worked"
-    }
+//    userDetailsService(MyUserDetails){
+//        println "-------------------------- this worked in resources.groovy"
+//    }
 
     webExpressionHandler(DefaultWebSecurityExpressionHandler){
         defaultRolePrefix = ""

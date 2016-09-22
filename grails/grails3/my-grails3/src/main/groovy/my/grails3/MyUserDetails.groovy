@@ -10,9 +10,14 @@ import org.springframework.security.provisioning.MutableUser
 import org.springframework.security.core.userdetails.User as SecUser
 import org.springframework.stereotype.Service
 
-@Service("userDetailsService")
-// FIXME not work
+// FIXME : 如果指定了该名称, 且已经有了 因为容器中已经有了同名的服务了么?
+//@Service("userDetailsService")
+//@Service
 class MyUserDetails implements UserDetailsService {
+
+    public MyUserDetails(){
+        println "================----------------- MyUserDetails constructor"
+    }
 
 
     @Override

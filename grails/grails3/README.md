@@ -2,4 +2,33 @@
 
 * [GORM for MongoDB](http://gorm.grails.org/latest/mongodb/manual/)
 * [GORM for Hibernate](http://gorm.grails.org/latest/hibernate/manual/)
+* [Spring Security Core Plugin](https://grails-plugins.github.io/grails-spring-security-core/v3/index.html)
 
+
+```
+# 以下命令会为关系数据库生成6个domain类:
+# Role, RoleGroup, RoleGroupRole, User, UserGroup, UserRoleGroup
+# 该示例工程中,上述几个类并没有使用到。
+grails s2-quickstart my.grails3 User Role Requestmap --groupClassName=RoleGroup
+grails s2-create-persistent-token my.grails3.PersistentLogin
+grails s2-create-role-hierarchy-entry my.grails3.RoleHierarchyEntry
+```
+
+# Embedding mongodb
+使用[de.flapdoodle.embed.mongo](https://github.com/flapdoodle-oss/de.flapdoodle.embed.mongo) 
+的相关 [gralde 插件](https://github.com/sourcemuse/GradleMongoPlugin) 之后,
+会将mongodb下载到 `~/.embedmongo/osx/mongodb-osx-x86_64-3.2.9.tgz`, 之后通过
+以下命令启停mongodb
+
+```
+./gradlew :my-grails3:startManagedMongoDb
+./gradlew :my-grails3:startMongoDb
+./gradlew :my-grails3:stopMongoDb
+```
+
+
+# Remember Me
+
+相关类: PersistentTokenBasedRememberMeServices, GormPersistentTokenRepository, PersistentRememberMeToken,
+ 
+其中token的默认有效期为 2周, 计时起始时间为上次自动登录的时间。

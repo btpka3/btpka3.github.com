@@ -12,11 +12,14 @@ class HelloController {
 
     def userDetailsService
 
+    def myTestSrv
+
     // gsp 测试
     def index() {
+        println "=================== index : " + myTestSrv
         render(view: "index", model: [
                 a: "aaa" + grailsApplication.mainContext.getBean(MyUserDetails),
-                b: "bbb" + grailsApplication.mainContext.getBean(SecurityExpressionHandler)?.defaultRolePrefix +"---",
+                b: "bbb" + grailsApplication.mainContext.getBean(SecurityExpressionHandler)?.defaultRolePrefix + "---",
                 c: "ccc" + userDetailsService?.class
         ])
     }
