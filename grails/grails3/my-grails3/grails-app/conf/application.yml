@@ -138,16 +138,19 @@ environments:
 ---
 grails:
     mongodb:
-        host: 192.168.0.12
-        port: 27017
+        #host: 192.168.0.12
+        #port: 27017
         #replicaSet:
         #    - "localhost:27017"
         #    - "localhost:27018"
+        #connectionString: "mongodb://192.168.0.12:27017/zll"
 
-        #connectionString: "mongodb://localhost/mydb"
-        username: zll
-        password: zll
-        databaseName: zll
+        host: 127.0.0.1
+        port: 12345
+        #connectionString: "mongodb://localhost:12345/local"
+        #username: zll
+        #password: zll
+        databaseName: local
         options:
             #ssl: true
             autoConnectRetry: true
@@ -155,3 +158,50 @@ grails:
         default:
             mapping:
                 version: true
+
+---
+# Spring Security 相关配置
+#
+#grails:
+#    plugin:
+#        springsecurity:
+#            logout:
+#                postOnly: false
+#            password:
+#                algorithm: 'bcrypt'
+#                encodeHashAsBase64: true
+#                bcrypt:
+#                  logrounds: 7
+#            userLookup:
+#                userDomainClassName: "my.grails3.MyUser"
+#            rejectIfNoRule: false
+#            fii:
+#                rejectPublicInvocations: false
+#            securityConfigType: "Annotation"
+#            successHandler:
+#                defaultTargetUrl: "/"
+#            providerNames:
+#                - "daoAuthenticationProvider"
+#                - "anonymousAuthenticationProvider"
+#                - "rememberMeAuthenticationProvider"
+#            secureChannel:
+#                useHeaderCheckChannelSecurity: true
+#            useSecurityEventListener: true
+#            useSessionFixationPrevention: true
+#            exceptionMappings:
+#                'org.springframework.security.authentication.LockedException'             : '/user/accountLocked'
+#                'org.springframework.security.authentication.DisabledException'           : '/user/accountDisabled'
+#                'org.springframework.security.authentication.AccountExpiredException'     : '/user/accountExpired'
+#                'org.springframework.security.authentication.CredentialsExpiredException' : '/user/passwordExpired'
+#            useRoleGroups: false
+#            authority:
+#              groupAuthorityNameField:
+
+environments:
+   development:
+      grails.logging.jul.usebridge: true
+      grails.plugin.springsecurity.debug.useFilter: true
+   production:
+      grails.logging.jul.usebridge: false
+
+

@@ -1,20 +1,49 @@
 package my.grails3
 
-class User {
+import groovy.transform.EqualsAndHashCode
+import groovy.transform.ToString
 
-    // 限定该Domain智能适用MongoDB进行保存
-    static mapWith = "mongo"
-    static constraints = {
-        memo nullable: true
-    }
+@EqualsAndHashCode(includes='username')
+@ToString(includes='username', includeNames=true, includePackage=false)
+class User implements Serializable {
 
-    String id
-    Date dateCreated
-    Date lastUpdated
+	private static final long serialVersionUID = 1
 
+	transient springSecurityService
 
-    String username
-    int age
-    String memo
+	String username
+	String password
+	boolean enabled = true
+	boolean accountExpired
+	boolean accountLocked
+	boolean passwordExpired
 
+	Set<RoleGroup> getAuthorities() {
+		UserRoleGroup.findAllByUser(this)*.roleGroup
+	}
+
+	def beforeInsert() {
+		encodePassword()
+	}
+
+	def beforeUpdate() {
+		if (isDirty('password')) {
+			encodePassword()
+		}
+	}
+
+	protected void encodePassword() {
+		password = springSecurityService?.passwordEncoder ? springSecurityService.encodePassword(password) : password
+	}
+
+	static transients = ['springSecurityService']
+
+	static constraints = {
+		password blank: false, password: true
+		username blank: false, unique: true
+	}
+
+	static mapping = {
+		password column: '`password`'
+	}
 }

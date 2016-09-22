@@ -3,13 +3,16 @@ buildscript {
 //        grailsVersion = project.grailsVersion
 //    }
     repositories {
-//        mavenLocal()
+        mavenLocal()
+        mavenCentral()
         maven { url "https://repo.grails.org/grails/core" }
     }
     dependencies {
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
         classpath "com.bertramlabs.plugins:asset-pipeline-gradle:2.11.1"
         classpath "org.grails.plugins:hibernate5:6.0.0.RC2"
+
+        classpath 'com.sourcemuse.gradle.plugin:gradle-mongo-plugin:0.13.0'
     }
 }
 
@@ -25,6 +28,9 @@ apply plugin: "org.grails.grails-gsp"
 apply plugin: "asset-pipeline"
 apply plugin: 'project-report'
 
+apply plugin: 'mongo'
+
+
 //ext {
 //    grailsVersion = project.grailsVersion
 //    gradleWrapperVersion = project.gradleWrapperVersion
@@ -32,6 +38,7 @@ apply plugin: 'project-report'
 
 repositories {
     mavenLocal()
+    mavenCentral()
     maven { url "https://repo.grails.org/grails/core" }
 }
 
@@ -60,21 +67,30 @@ dependencies {
     console "org.grails:grails-console"
     profile "org.grails.profiles:web"
     runtime "com.bertramlabs.plugins:asset-pipeline-grails:2.11.1"
-    runtime "com.h2database:h2"
+    //runtime "com.h2database:h2"
+    compile "com.h2database:h2"
     testCompile "org.grails:grails-plugin-testing"
     testCompile "org.grails.plugins:geb"
     testRuntime "org.seleniumhq.selenium:selenium-htmlunit-driver:2.47.1"
     testRuntime "net.sourceforge.htmlunit:htmlunit:2.18"
 
 
-
+    // 同时适用mongodb和hibernate的话, 如果要保存到mongodb中,必须明确设置 mapWith
     compile 'org.grails.plugins:mongodb'
 
-//    compile 'org.grails.plugins:spring-security-core:3.1.1'
+    compile 'org.grails.plugins:spring-security-core:3.1.1'
 }
 
 
 assets {
     minifyJs = true
     minifyCss = true
+}
+
+
+mongo {
+    port 12345
+    logging 'console'
+    // 默认会下载到 `~/.embedmongo/osx/mongodb-osx-x86_64-3.2.9.tgz`
+    mongoVersion = '3.2.9'
 }

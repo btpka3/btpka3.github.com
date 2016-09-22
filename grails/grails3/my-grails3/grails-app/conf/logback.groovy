@@ -12,6 +12,8 @@ appender('STDOUT', ConsoleAppender) {
 root(ERROR, ['STDOUT'])
 
 if(Environment.current == Environment.DEVELOPMENT) {
+    logger("grails.plugin.springsecurity.web.filter.DebugFilter", INFO)
+
     def targetDir = BuildSettings.TARGET_DIR
     if(targetDir) {
 
