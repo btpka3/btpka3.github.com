@@ -1,11 +1,282 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="MyApp">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css"/>
+
+    <!--<script src="bower_components/jquery/dist/jquery.min.js"></script>-->
+
+
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.js"></script>
+    <script src="bower_components/angular-material/angular-material.js"></script>
+
+    <!-- 需参考 bower_components/sjcl/config.mk 中合并顺序 -->
+    <script src="bower_components/sjcl/core/sjcl.js"></script>
+    <script src="bower_components/sjcl/core/bitArray.js"></script>
+    <script src="bower_components/sjcl/core/codecString.js"></script>
+    <script src="bower_components/sjcl/core/codecHex.js"></script>
+    <script src="bower_components/sjcl/core/sha1.js"></script>
+
+    <script src="bower_components/crypto-js/crypto-js.js"></script>
+
+
+    <script src="bower_components/SparkMD5/spark-md5.js"></script>
+
+    <script src="stringview.js"></script>
+
+    <style>
+        /* 参考: https://md5file.com/calculator */
+        .dropbox {
+            min-height: 100px;
+            border: 3px dashed silver;
+            position: relative;
+            /*display: flex;*/
+        }
+
+        .dropbox.dragging {
+            background-color: #5bc0de;
+        }
+
+        .dropbox .file {
+            opacity: 0;
+            z-index: 1;
+            background-color: #99aaff;
+        }
+
+        .tip {
+
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            border: 1px solid red;
+            background-color: transparent;
+        }
+
+        .tip .txt {
+            font-size: 36px;
+            color: silver;
+        }
+
+    </style>
 </head>
-<body>
-aaa<span style="color:red;">ddddddddddd</span>a
+<body ng-controller="DemoCtrl as ctrl">
+
+<md-button class="md-raised md-primary" draggable="true" ng-click="ctrl.selectFile()">select file</md-button>
+
+<div class="dropbox" ng-class="{dragging:ctrl.vm.dragging}" layout>
+    <input type="file" class="file" flex onchange="angular.element(this).controller().handleClickFiles(this)"/>
+
+    <div class="tip" layout="row" layout-align="center center">
+        <span class="txt">drag or drop</span>
+    </div>
+</div>
+
+
+<pre>{{ctrl.vm|json}}</pre>
+
+<script>
+    angular
+            .module('MyApp', ['ngMaterial', 'ngMessages'])
+            .controller('DemoCtrl', DemoCtrl);
+
+    DemoCtrl.$inject = ['$timeout', '$q', '$log', '$element', '$window', "$scope"];
+    function DemoCtrl($timeout, $q, $log, $element, $window, $scope) {
+        var self = this;
+        self.vm = {
+            dragging: false // 是否正在拖拽
+        };
+        $log.log("----------------", $element[0]);
+        $log.log($element.find(".dropbox"));
+
+
+        var srcData = "abc张";
+        var srcDataStrView = new StringView(srcData);
+        $log.log("----------------222 ", srcDataStrView);
+
+
+        // ---------------------------------------------- CryptoJS
+        var subtle = crypto ? (crypto.webkitSubtle) || crypto.subtle : null;
+        if (window.TextEncoder) {
+            $log.log("-----", new TextEncoder("UTF-8").encode(srcData));
+        }
+        if (subtle) {
+            subtle.digest("SHA-1", srcDataStrView.buffer).then(function(){
+                $log.log("Crypto : SHA1  : ", arguments, arguments);
+            })
+        }
+
+
+        // ---------------------------------------------- CryptoJS
+        var enc1 = CryptoJS.SHA1(srcData);
+        $log.log("CryptoJS : SHA1 : ", enc1.toString(), enc1);
+        var enc2 = CryptoJS.MD5(srcData);
+        $log.log("CryptoJS : MD5  : ", enc2.toString(), enc2);
+
+        // 一个字节的话, 是占据int型的高位的。
+        var wordArr = CryptoJS.enc.Utf8.parse(srcData);
+        $log.log("CryptoJS : string -> wordArray : ", wordArr);
+
+        // ---------------------------------------------- sjcl
+        // FIXME SJCL 中一个字节如何表示?
+        var intArr = sjcl.hash.sha1.hash(srcData);
+        var sjclSha1Hex = sjcl.codec.hex.fromBits(intArr);
+        $log.log("sjcl     : SHA1 : ", sjclSha1Hex, intArr);
+
+        // ---------------------------------------------- SparkMD5
+        $log.log("SparkMD5 : MD5 : ", SparkMD5.hash(srcData), SparkMD5.hash(srcData, true));
+
+
+        // angular.element 不支持通过class名或id来find。
+        var dropbox = $element[0].getElementsByClassName('dropbox');
+        dropbox = angular.element(dropbox);
+        // var dropbox = $element.find(".dropbox");
+
+
+        dropbox.on("dragenter", function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            self.vm.dragging = true;
+            $log.log("--------dragenter");
+            $scope.$apply();
+        });
+        dropbox.on("dragleave", function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            self.vm.dragging = false;
+            $log.log("--------dragleave");
+            $scope.$apply();
+        });
+        dropbox.on("dragover", function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            //$log.log("--------dragover " + new Date()); // 1秒钟会打印40、50次。
+        });
+        dropbox.on("drop", function (e) {
+            $log.log("--------drop");
+            e.stopPropagation();
+            e.preventDefault();
+            self.vm.dragging = false;
+
+            if (e.originalEvent) {
+                e = e.originalEvent
+            }
+            $log.log(e.dataTransfer.files);
+
+            benchmarkSeq(e.dataTransfer.files[0]);
+            $scope.$apply();
+        });
+        $log.log(dropbox);
+
+        self.handleClickFiles = function (domFileInput) {
+            console.log("========111", domFileInput);
+            if (domFileInput.files && domFileInput.files[0]) {
+                benchmarkSeq(domFileInput.files[0]);
+            }
+        };
+
+        self.selectFile = function () {
+            var domFileInput = $element[0].getElementsByClassName('file')[0];
+            console.log("========222 selectFile", domFileInput);
+
+
+            var event; // The custom event that will be created
+
+            event = new Event("click", { // ??? CustomEvent
+                "bubbles": true,
+                "cancelable": false
+            });
+            // event = document.createEvent("click"); // Deprecated
+            // event.initEvent("click", true, true); // Deprecated
+
+            // event = document.createEventObject(); // IE
+            // event.eventType = "click"; // IE
+
+            event.bubbles = true;
+            event.cancelable = true;
+
+            //            event.eventName = "click";
+            //domFileInput.fireEvent("on" + event.eventType, event); // IE
+            $timeout(function () {
+                domFileInput.dispatchEvent(event);
+            });
+
+            // domFileInput.fireEvent("on" + event.eventType, event); // IE
+
+            //$element[0].getElementsByClassName('file').click();
+        };
+
+
+        // FIXME 点击选择文件
+
+        /**
+         * @param {File} file 要计算Hash值的文件
+         * @param {Function} 计算hash值的方法,该函数签名要求为: TODO
+         * @param {Object} opts (可选) 选项:
+         *      chunkSize : 文件切片大小,防止占用太多内存。默认:4M
+         *
+         */
+        function benchmarkSeq(file, hashFn, opts) {
+
+            if (!file) {
+                return;
+            }
+            var defaultOpts = {
+                chunkSize: 4 * 1024 * 1024
+            };
+
+            var opts = angular.extend({}, defaultOpts, opts);
+            var blobSlice = File.prototype.mozSlice || File.prototype.webkitSlice || File.prototype.slice;
+            var chunks = Math.ceil(file.size / opts.chunkSize);
+            var currentChunk = 0;
+
+            //var spark = fileReader.readAsBinaryString ? new SparkMD5() : new SparkMD5.ArrayBuffer();
+            var spark = new SparkMD5.ArrayBuffer();
+
+            function frOnload(e) {
+                console.log("=========== onload", e);
+                spark.append(e.target.result);
+                currentChunk++;
+
+                if (currentChunk < chunks) {
+                    loadNext();
+                    $log.log("--------getState() : " + spark.getState());
+
+                } else {
+
+                    self.vm.md5.md5 = spark.end();
+                    self.vm.md5.endDate = new Date();
+                    self.vm.elapsed = self.vm.md5.endDate - self.vm.md5.startDate;
+
+                    $log.log("--------md5 : " + self.vm.md5.md5);
+                    $scope.$apply();
+                }
+            }
+
+            function loadNext() {
+
+                var start = currentChunk * opts.chunkSize;
+                var end = (start + opts.chunkSize) >= file.size ? file.size : start + opts.chunkSize;
+                var fileReader = new FileReader();
+                fileReader.onload = frOnload;
+                fileReader.readAsArrayBuffer(blobSlice.call(file, start, end));
+            }
+
+            self.vm.md5 = {
+                startDate: new Date()
+            };
+            loadNext();
+        }
+
+    }
+
+
+</script>
 </body>
 </html>

@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyApp">
+<head>
+    <meta charset="UTF-8">
+    <title>七牛云直传</title>
+
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css"/>
+
+    <!--<script src="bower_components/jquery/dist/jquery.min.js"></script>-->
+
+
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.js"></script>
+    <script src="bower_components/angular-material/angular-material.js"></script>
+
+    <script src="stringview.js"></script>
+
+    <style>
+        /* 参考: https://md5file.com/calculator */
+        .dropbox {
+            min-height: 100px;
+            border: 3px dashed silver;
+            position: relative;
+        }
+
+        .dropbox.dragging {
+            background-color: #5bc0de;
+        }
+
+        .dropbox .file {
+            opacity: 0;
+            z-index: 1;
+            background-color: #99aaff;
+        }
+
+        .tip {
+
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            border: 1px solid red;
+            background-color: transparent;
+        }
+
+        .tip .txt {
+            font-size: 36px;
+            color: silver;
+        }
+
+    </style>
+</head>
+<body ng-controller="DemoCtrl as ctrl">
+
+
+<md-button class="md-raised md-primary" draggable="true" ng-click="ctrl.selectFile()">select file</md-button>
+
+<div class="dropbox" ng-class="{dragging:ctrl.vm.dragging}" layout>
+    <input type="file" class="file" flex onchange="angular.element(this).controller().handleClickFiles(this)"/>
+
+    <div class="tip" layout="row" layout-align="center center">
+        <span class="txt">drag or drop</span>
+    </div>
+</div>
+
+
+<pre>{{ctrl.vm|json}}</pre>
+
+
+<div><label for="qiniuToken">token</label><input type="text" id="qiniuToken" ng-model="ctrl.vm.qiniu.token"></div>
+<!--<div><label for="qiniuFile">file</label><input type="text" id="qiniuFile" ng-model="ctrl.vm.qiniu.file"> </div>-->
+<!--<div><label for="qiniuFileBinaryData">fileBinaryData</label><input type="text" id="qiniuFileBinaryData" ng-model="ctrl.vm.qiniu.fileBinaryData"> </div>-->
+<div><label for="qiniuKey">key</label><input type="text" id="qiniuKey" ng-model="ctrl.vm.qiniu.key"></div>
+
+<md-button class="md-raised md-primary" ng-click="ctrl.upload()">upload</md-button>
+
+
+<pre>
+// node http://developer.qiniu.com/code/v6/sdk/nodejs.html
+var qiniu = require("qiniu");
+qiniu.conf.ACCESS_KEY = 'xxx';
+qiniu.conf.SECRET_KEY = 'yyy';
+
+// http://developer.qiniu.com/code/v6/sdk/nodejs.html#io-put
+
+var bucket = 'test';
+var key = "c219f8dad901957a01d9b9b6baeac042823d9665";
+
+var scope = bucket + ":" + key;
+// var deadline =new Date().getTime()+ 3600;
+
+
+var putPolicy = new qiniu.rs.PutPolicy2({scope: scope});
+
+console.log(putPolicy.token());
+// putPolicy.expires = 3600;
+</pre>
+<script>
+    angular
+            .module('MyApp', ['ngMaterial', 'ngMessages'])
+            .controller('DemoCtrl', DemoCtrl);
+
+    DemoCtrl.$inject = ['$timeout', '$q', '$log', '$element', '$window', "$scope", "$http"];
+    function DemoCtrl($timeout, $q, $log, $element, $window, $scope, $http) {
+        var self = this;
+        self.vm = {
+            dragging: false, // 是否正在拖拽
+            qiniu: {
+                token: null,
+                fileBinaryData: null,
+                key: null,
+                file: "112233"
+            }
+        };
+        $log.log("----------------", $element[0]);
+        $log.log($element.find(".dropbox"));
+
+
+        // angular.element 不支持通过class名或id来find。
+        var dropbox = $element[0].getElementsByClassName('dropbox');
+        dropbox = angular.element(dropbox);
+
+
+        dropbox.on("dragenter", function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            self.vm.dragging = true;
+            $log.log("--------dragenter");
+            $scope.$apply();
+        });
+        dropbox.on("dragleave", function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            self.vm.dragging = false;
+            $log.log("--------dragleave");
+            $scope.$apply();
+        });
+        dropbox.on("dragover", function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            //$log.log("--------dragover " + new Date()); // 1秒钟会打印40、50次。
+        });
+
+        // 文件拖拽
+        dropbox.on("drop", function (e) {
+            $log.log("--------drop");
+            e.stopPropagation();
+            e.preventDefault();
+            self.vm.dragging = false;
+
+            if (e.originalEvent) {
+                e = e.originalEvent
+            }
+            $log.log(e.dataTransfer.files);
+
+            upload2Qiniu(e.dataTransfer.files[0]);
+            $scope.$apply();
+        });
+        $log.log(dropbox);
+
+        // 通过 CSS overlay 一个 input[type='file'] 来触发选择文件
+        self.handleClickFiles = function (domFileInput) {
+            console.log("======== handleClickFiles ", domFileInput);
+            if (domFileInput.files && domFileInput.files[0]) {
+                upload2Qiniu(domFileInput.files[0]);
+            }
+        };
+
+        // 通过别的按钮触发选择文件。
+        self.selectFile = function () {
+            var domFileInput = $element[0].getElementsByClassName('file')[0];
+            console.log("======== selectFile", domFileInput);
+
+
+            var event = new Event("click", {
+                "bubbles": true,
+                "cancelable": false
+            });
+
+            domFileInput.dispatchEvent(event);
+        };
+
+        self.upload = function () {
+
+            // http://uncorkedstudios.com/blog/multipartformdata-file-upload-with-angularjs
+            var fd = new FormData();
+            fd.append('token', self.vm.qiniu.token);
+//            fd.append('file', self.vm.qiniu.file);
+//            fd.append('fileBinaryData', self.vm.qiniu.fileBinaryData);
+            fd.append('file', self.vm.qiniu.fileBinaryData);
+            fd.append('fileBinaryData', self.vm.qiniu.file);
+            fd.append('key', self.vm.qiniu.key);
+
+
+            $http.post("http://upload.qiniu.com", fd, {
+                transformRequest: angular.identity,
+                headers: {'Content-Type': undefined}
+            }).success(function () {
+                console.log("upload success :", arguments);
+            }).error(function () {
+                console.log("upload error :", arguments);
+            });
+        };
+
+        /**
+         * @param {File} file 要计算Hash值的文件
+         * @param {Object} opts (可选) 选项:
+         *      chunkSize : 文件切片大小,防止占用太多内存。默认:4M
+         *
+         */
+        function upload2Qiniu(file, opts) {
+
+            if (!file) {
+                return;
+            }
+            console.log("======== upload2Qiniu ", file);
+            var subtle = crypto ? (crypto.webkitSubtle) || crypto.subtle : null;
+            if (!subtle) {
+                alert("Web Cryptography API not supported, change browser please.");
+                return;
+            }
+
+            self.vm.hash = {
+                startDate: new Date()
+            };
+
+
+            self.vm.qiniu.fileBinaryData = file;
+            mySha1(file, function (sha1) {
+                console.log("sha1 ==== ", sha1, sha1.byteLength);
+                self.vm.hash.sha1 = hex(sha1);
+                self.vm.hash.endDate = new Date();
+                self.vm.elapsed = self.vm.hash.endDate - self.vm.hash.startDate;
+
+                self.vm.qiniu.key = self.vm.hash.sha1;
+                $scope.$apply();
+            });
+
+        }
+    }
+
+    // 一次性读取文件的所有内容。并计算sha1。潜在问题——大文件内存占用过高。
+    function mySha1(_blob, cb) {
+        var fileReader = new FileReader();
+        fileReader.onload = function (e) {
+
+            var subtle = crypto ? (crypto.webkitSubtle) || crypto.subtle : null;
+            if (!subtle) {
+                alert("Web Cryptography API not supported, change browser please.");
+                return;
+            }
+
+            console.log("======== upload2Qiniu onload ", e);
+            subtle.digest({name: "SHA-1"}, e.target.result) // {name: "SHA-1"}
+                    .then(function (/** ArrayBuffer */ hash) {
+                        console.log("hash ==== ", hash);
+                        cb(hash);
+                    })
+                    .catch(function (err) {
+                        console.error(err);
+                    });
+        };
+        fileReader.readAsArrayBuffer(_blob);
+    }
+
+    // qiniuEtag
+    function mySha2(_file, cb, opts) {
+
+        if (!opts.chunkSize) {
+            opts.chunkSize = 4 * 1024 * 1024;
+        }
+
+        var blobSlice = File.prototype.mozSlice || File.prototype.webkitSlice || File.prototype.slice;
+        var chunks = Math.ceil(file.size / opts.chunkSize);
+
+        // $index = i, value = promise
+        var chunksSha1PromiseArr = new Array(chunks);
+
+        for (var i = 0; i < _file.size; i += opts.chunkSize) {
+            var curChunk = i;
+            var start = curChunk * opts.chunkSize;
+            var end = (start + opts.chunkSize) >= _file.size ? _file.size : start + opts.chunkSize;
+
+            var chunk = blobSlice.call(_file, start, end);
+
+            chunksSha1PromiseArr[curChunk] = new Promise(function (resolve, reject) {
+                mySha1(chunk, resolve);
+            });
+        }
+
+        Promise.all(chunksSha1PromiseArr).then(function (/** array of ArrayBuffer */hashs) {
+            var srcData = hashs.join("");
+            var srcDataStrView = new StringView(srcData);
+            var subtle = crypto ? (crypto.webkitSubtle) || crypto.subtle : null;
+            return subtle.digest("SHA-1", srcDataStrView.buffer).then(function (hash) {
+                return hex(hash)
+            })
+        });
+
+
+        var fileReader = new FileReader();
+        fileReader.onload = function (e) {
+
+            var subtle = crypto ? (crypto.webkitSubtle) || crypto.subtle : null;
+            if (!subtle) {
+                alert("Web Cryptography API not supported, change browser please.");
+                return;
+            }
+
+            console.log("======== upload2Qiniu onload ", e);
+            subtle.digest("SHA-1", e.target.result)
+                    .then(function (hash) {
+                        cb(hex(hash));
+                    });
+        };
+        fileReader.readAsArrayBuffer(_file);
+    }
+
+    // 将 ArrayBuffer 变更为 Hex 字符串(小写)
+    // 参考: https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest
+    function hex(buffer) {
+        var hexCodes = [];
+        var view = new DataView(buffer);
+        for (var i = 0; i < view.byteLength; i += 4) {
+            // Using getUint32 reduces the number of iterations needed (we process 4 bytes each time)
+            var value = view.getUint32(i)
+            // toString(16) will give the hex representation of the number without padding
+            var stringValue = value.toString(16)
+            // We use concatenation and slice for padding
+            var padding = '00000000'
+            var paddedValue = (padding + stringValue).slice(-padding.length)
+            hexCodes.push(paddedValue);
+        }
+
+        // Join all the hex strings into one
+        return hexCodes.join("");
+    }
+
+</script>
+</body>
+</html>

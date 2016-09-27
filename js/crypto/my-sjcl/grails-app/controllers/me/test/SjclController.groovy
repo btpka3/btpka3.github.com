@@ -18,4 +18,9 @@ class SjclController {
         // 该方法因为URL未变更,故不采用
         //render file: myResource.inputStream, contentType: MediaType.TEXT_HTML
     }
+
+    // 在java中使用公钥私钥加密解密
+    def javaCertTest(){
+
+    }
 }

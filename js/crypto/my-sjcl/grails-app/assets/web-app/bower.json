@@ -15,8 +15,11 @@
     "tests"
   ],
   "dependencies": {
-    "sjcl": "^1.0.4",
     "angular-material": "^1.1.1",
-    "jquery": "^3.1.0"
+    "jquery": "^3.1.0",
+    "crypto-js": "^3.1.6",
+    "sjcl": "^1.0.6",
+    "SparkMD5": "^2.0.2",
+    "text-encoding": "^0.6.1"
   }
 }
