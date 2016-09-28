@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <title>七牛云直传</title>
 
-    <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css"/>
+    <link rel="stylesheet" href="../bower_components/angular-material/angular-material.min.css"/>
 
     <!--<script src="bower_components/jquery/dist/jquery.min.js"></script>-->
 
 
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.js"></script>
-    <script src="bower_components/angular-aria/angular-aria.js"></script>
-    <script src="bower_components/angular-messages/angular-messages.js"></script>
-    <script src="bower_components/angular-material/angular-material.js"></script>
+    <script src="../bower_components/angular/angular.js"></script>
+    <script src="../bower_components/angular-animate/angular-animate.js"></script>
+    <script src="../bower_components/angular-aria/angular-aria.js"></script>
+    <script src="../bower_components/angular-messages/angular-messages.js"></script>
+    <script src="../bower_components/angular-material/angular-material.js"></script>
 
-    <script src="stringview.js"></script>
+    <script src="../stringview.js"></script>
 
     <style>
         /* 参考: https://md5file.com/calculator */
@@ -79,24 +79,7 @@
 
 
 <pre>
-// node http://developer.qiniu.com/code/v6/sdk/nodejs.html
-var qiniu = require("qiniu");
-qiniu.conf.ACCESS_KEY = 'xxx';
-qiniu.conf.SECRET_KEY = 'yyy';
 
-// http://developer.qiniu.com/code/v6/sdk/nodejs.html#io-put
-
-var bucket = 'test';
-var key = "c219f8dad901957a01d9b9b6baeac042823d9665";
-
-var scope = bucket + ":" + key;
-// var deadline =new Date().getTime()+ 3600;
-
-
-var putPolicy = new qiniu.rs.PutPolicy2({scope: scope});
-
-console.log(putPolicy.token());
-// putPolicy.expires = 3600;
 </pre>
 <script>
     angular

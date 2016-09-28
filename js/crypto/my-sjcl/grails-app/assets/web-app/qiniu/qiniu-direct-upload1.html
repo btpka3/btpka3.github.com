@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyApp">
+<head>
+    <meta charset="UTF-8">
+    <title>七牛云直传</title>
+
+    <link rel="stylesheet" href="../bower_components/angular-material/angular-material.min.css"/>
+
+    <!--<script src="bower_components/jquery/dist/jquery.min.js"></script>-->
+
+
+    <script src="../bower_components/angular/angular.js"></script>
+    <script src="../bower_components/angular-animate/angular-animate.js"></script>
+    <script src="../bower_components/angular-aria/angular-aria.js"></script>
+    <script src="../bower_components/angular-messages/angular-messages.js"></script>
+    <script src="../bower_components/angular-material/angular-material.js"></script>
+
+    <script src="../stringview.js"></script>
+    <script src="etag.browser.js"></script>
+
+
+    <style>
+        /* 参考: https://md5file.com/calculator */
+        .dropbox {
+            min-height: 100px;
+            border: 3px dashed silver;
+            position: relative;
+        }
+
+        .dropbox.dragging {
+            background-color: #5bc0de;
+        }
+
+        .dropbox .file {
+            opacity: 0;
+            z-index: 1;
+            background-color: #99aaff;
+        }
+
+        .tip {
+
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            border: 1px solid red;
+            background-color: transparent;
+        }
+
+        .tip .txt {
+            font-size: 36px;
+            color: silver;
+        }
+
+    </style>
+</head>
+<body ng-controller="DemoCtrl as ctrl">
+
+
+<md-button class="md-raised md-primary" draggable="true" ng-click="ctrl.selectFile()">select file</md-button>
+
+<div class="dropbox" ng-class="{dragging:ctrl.vm.dragging}" layout>
+    <input type="file" class="file" flex onchange="angular.element(this).controller().handleClickFiles(this)"/>
+
+    <div class="tip" layout="row" layout-align="center center">
+        <span class="txt">drag or drop</span>
+    </div>
+</div>
+
+
+<pre>{{ctrl.vm|json}}</pre>
+
+
+<div><label for="qiniuToken">token</label><input type="text" id="qiniuToken" ng-model="ctrl.vm.qiniu.token"></div>
+<!--<div><label for="qiniuFile">file</label><input type="text" id="qiniuFile" ng-model="ctrl.vm.qiniu.file"> </div>-->
+<!--<div><label for="qiniuFileBinaryData">fileBinaryData</label><input type="text" id="qiniuFileBinaryData" ng-model="ctrl.vm.qiniu.fileBinaryData"> </div>-->
+<div><label for="qiniuKey">key</label><input type="text" id="qiniuKey" ng-model="ctrl.vm.qiniu.key"></div>
+
+<md-button class="md-raised md-primary" ng-click="ctrl.upload()">upload</md-button>
+
+
+<pre>
+
+</pre>
+<script>
+    angular
+            .module('MyApp', ['ngMaterial', 'ngMessages'])
+            .controller('DemoCtrl', DemoCtrl);
+
+    DemoCtrl.$inject = ['$timeout', '$q', '$log', '$element', '$window', "$scope", "$http"];
+    function DemoCtrl($timeout, $q, $log, $element, $window, $scope, $http) {
+
+//        var p = new Uint8Array(1);
+//        p.set( [0x12]  );
+//        window.qiniu.mergeArrayBuffer(
+//                [ Uint8Array.from([1,2]), Uint8Array.from([3,4]) ],
+//p
+//                ).then(function(h){
+//            console.log("0000:", h, h.hex());
+//        });
+
+        var self = this;
+        self.vm = {
+            dragging: false, // 是否正在拖拽
+            hash: {},
+            qiniu: {
+                token: null,
+                //fileBinaryData: null,
+                key: null,
+                file: "112233"
+            }
+        };
+        $log.log("----------------", $element[0]);
+        $log.log($element.find(".dropbox"));
+
+
+        // angular.element 不支持通过class名或id来find。
+        var dropbox = $element[0].getElementsByClassName('dropbox');
+        dropbox = angular.element(dropbox);
+
+
+        dropbox.on("dragenter", function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            self.vm.dragging = true;
+            $log.log("--------dragenter");
+            $scope.$apply();
+        });
+        dropbox.on("dragleave", function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            self.vm.dragging = false;
+            $log.log("--------dragleave");
+            $scope.$apply();
+        });
+        dropbox.on("dragover", function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            //$log.log("--------dragover " + new Date()); // 1秒钟会打印40、50次。
+        });
+
+        // 文件拖拽
+        dropbox.on("drop", function (e) {
+            $log.log("--------drop");
+            e.stopPropagation();
+            e.preventDefault();
+            self.vm.dragging = false;
+
+            if (e.originalEvent) {
+                e = e.originalEvent
+            }
+            $log.log(e.dataTransfer.files);
+
+            calcFileHash(e.dataTransfer.files[0]);
+
+        });
+        $log.log(dropbox);
+
+        // 通过 CSS overlay 一个 input[type='file'] 来触发选择文件
+        self.handleClickFiles = function (domFileInput) {
+            console.log("======== handleClickFiles ", domFileInput);
+            if (domFileInput.files && domFileInput.files[0]) {
+                calcFileHash(domFileInput.files[0]);
+            }
+        };
+
+        // 通过别的按钮触发选择文件。
+        self.selectFile = function () {
+            var domFileInput = $element[0].getElementsByClassName('file')[0];
+            console.log("======== selectFile", domFileInput);
+
+
+            var event = new Event("click", {
+                "bubbles": true,
+                "cancelable": false
+            });
+
+            domFileInput.dispatchEvent(event);
+        };
+
+        self.upload = function () {
+
+            // http://uncorkedstudios.com/blog/multipartformdata-file-upload-with-angularjs
+            var fd = new FormData();
+            fd.append('token', self.vm.qiniu.token);
+            fd.append('file', self.vm.qiniu.fileBinaryData);
+            fd.append('key', self.vm.qiniu.key);
+
+
+            $http.post("http://upload.qiniu.com", fd, {
+                transformRequest: angular.identity,
+                headers: {'Content-Type': undefined}
+            }).success(function () {
+                console.log("upload success :", arguments);
+            }).error(function () {
+                console.log("upload error :", arguments);
+            });
+        };
+
+        /**
+         * @param {File} file 要计算Hash值的文件
+         * @param {Object} opts (可选) 选项:
+         *      chunkSize : 文件切片大小,防止占用太多内存。默认:4M
+         *
+         */
+        function calcFileHash(file, opts) {
+
+            if (!file) {
+                return;
+            }
+            console.log("======== upload2Qiniu ", file);
+            self.vm.hash.startDate = new Date();
+            self.vm.qiniu.fileBinaryData = file;
+
+            $window.qiniu.etag(file).then(function (sha1) {
+                console.log("sha1 ==== ", sha1, sha1.hex());
+                self.vm.hash.sha1 = $window.qiniu.etagToUrlSafeBase64(sha1);
+                self.vm.hash.endDate = new Date();
+                self.vm.elapsed = self.vm.hash.endDate - self.vm.hash.startDate;
+                self.vm.qiniu.key = self.vm.hash.sha1;
+                $scope.$apply();
+            });
+
+        }
+    }
+
+</script>
+</body>
+</html>
