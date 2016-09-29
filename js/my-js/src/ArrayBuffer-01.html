@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ArrayBuffer Test</title>
+    <script src="stringview.js"></script>
+    <script>
+
+        /**
+         ArrayBuffer 是一个一般目的的,固定长度的二进制buffer——即代表字节数组。
+
+         不能直接修改ArrayBuffer中的内容,只能通过 ArrayBufferView 来修改内容。
+         ArrayBufferView :
+         - TypedArray
+         - DataView
+
+         TypedArray :
+         - Int8Array   // 8 bit
+         - Uint8Array
+         - Uint8ClampedArray
+         - Int16Array
+         - Uint16Array
+         - Int32Array
+         - Int32Array
+         - Float32Array
+         - Float64Array
+
+         参考:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int8Array
+         */
+                //
+        var buffer = new ArrayBuffer(8);
+        var view = new Int8Array(buffer);
+        view[0] = 128; // 实际是-128。 只能设置一个byte。
+        view[1] = 256 + 1; // 实际是-128。 只能设置一个byte。
+        console.log("-----", view, view.length, view.buffer === buffer, buffer.byteLength);
+
+        // 如果元素类型无法转换为指定的type, 则初始化为0.
+        view = Int32Array.from([1, 2, 1.1, 1.5, 'a', 'bc', "张", true, false, null, undefined, NaN, 1024]);
+        console.log("-----", view, view.length, view.byteLength, view.buffer.byteLength);
+
+        // 0x01020408 === 16909320 : big endian             : 低地址存放最高有效字节（MSB)
+        // 0x08040201 === 134480385 : little endian (字节序) : 低地址存放最低有效字节 (LSB)
+        // 数值的表达方式: 从左向右: 最高有效字节->最低有效字节: 0x01020408 ( 0x01 就是最高有效字节 )
+        // 内存的表达方式: 从左向右: 低地址 -> 高地址
+        // big endian : PowerPC系列CPU, Java、网络协议则统一为 Big endian;
+        // little endian : Intel的x86系列CPU
+        // 根据平台变化:  C/C++, JavaScript Typed Array。
+        // Big endian 判断一个数的正负很方便, 只要取offset0处的一个字节就能确认
+        var byteView = Int8Array.from([8, 4, 2, 1]);
+        var intView = new Int32Array(byteView.buffer);
+        // DataView 提供了一个与平台无关(字节序)的读取和设置数值的方式, 默认使用
+        var dataView = new DataView(byteView.buffer);
+        console.log("============== intView : ", byteView, intView, intView.length, intView.byteLength);
+        console.log("============== dataView : ", byteView, dataView, dataView.getInt8(0), dataView.getInt16(0), dataView.getInt32(0));
+
+        // Bob 测试多个
+
+        var strView1 = new StringView("abc张", "UTF-8");
+        var strView2 = new StringView("123中", "UTF-8");
+
+        console.log("--- strView1 : ", strView1.bufferView);
+        console.log("--- strView2 : ", strView2.bufferView);
+        var blob = new Blob([strView1.buffer, strView2.buffer]);
+        var fileReader = new FileReader();
+        fileReader.onload = function(e){
+            console.log("--- strView1 + strView2 : ", new Uint8Array(e.target.result));
+        };
+        fileReader.readAsArrayBuffer(blob);
+
+    </script>
+
+</head>
+<body>
+please see the console output~
+</body>
+</html>
