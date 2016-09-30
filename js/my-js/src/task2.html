@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ArrayBuffer Test</title>
+    <title>promise test</title>
     <script src="stringview.js"></script>
     <script>
 
@@ -10,15 +10,6 @@
          * task 2
          * 参考: http://git.oschina.net/btpka3/btpka3/wikis/task
          */
-        function fn(num, i) {
-            return new Promise((resolve, reject) => {
-                setTimeout(() => {
-                    var result = Math.pow(num, 2) + 1;
-                    console.log(`fn      : ${new Date()} : fn(intArr[${i}]) = fn(${num}) = ${result}`);
-                    resolve(result);
-                }, num * 1000)
-            });
-        }
 
         /**
          * 0. 打印系统时间（开始时间）。
@@ -39,13 +30,11 @@
             var startTime = new Date();
             console.log(`myTask1 : ${startTime} : start`);
 
-            var promiseArr = intArr.map(fn);
-
-            Promise.all(promiseArr)
+            Promise.all(intArr.map(fn))
                     .then((resultArr) => {
                         return resultArr.reduce((pre, cur) => {
                             return pre + cur;
-                        })
+                        }, 0)
                     })
                     .then((sum)=> {
                         var endTime = new Date();
@@ -75,6 +64,25 @@
                         var endTime = new Date();
                         console.log(`myTask2 : ${endTime} : end. sum = ${sum}, ${(endTime - startTime) / 1000.0} second(s)`);
                     });
+        }
+
+
+        /**
+         * 步骤1中的处理内容。
+         *
+         * @param num 数组中第 i 位上的自然数
+         * @param i   数组下标。在该方法中无有效作用,仅仅用来打印日志。
+         *
+         * @return 一个Promise, 解决的数值是计算结果。
+         */
+        function fn(num, i) {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    var result = Math.pow(num, 2) + 1;
+                    console.log(`fn      : ${new Date()} : fn(intArr[${i}]) = fn(${num}) = ${result}`);
+                    resolve(result);
+                }, num * 1000)
+            });
         }
 
     </script>
