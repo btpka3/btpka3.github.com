@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="grails.plugin.springsecurity.SpringSecurityUtils" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title>index</title>
@@ -25,6 +25,7 @@
             <li>初始化用户 <g:link action="setupUsers">setupUsers</g:link></li>
             <li>sec <g:link action="sec">sec</g:link></li>
             <li>admin <g:link action="admin">admin</g:link></li>
+            <li>logout <g:link uri="${grails.plugin.springsecurity.SpringSecurityUtils.securityConfig.logout.filterProcessesUrl}" >logout</g:link></li>
         </ul>
     </li>
 </ol>

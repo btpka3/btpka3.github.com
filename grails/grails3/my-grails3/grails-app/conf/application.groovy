@@ -62,6 +62,15 @@ grails.plugin.springsecurity.failureHandler.exceptionMappings = [
         [exception: 'org.springframework.security.authentication.CredentialsExpiredException', url: '/user/passwordExpired']
 ]
 
+// 为老工程保留 springsecurity 插件 2.x 版本的配置路径。
+grails.plugin.springsecurity.apf.filterProcessesUrl = "/j_spring_security_check"
+grails.plugin.springsecurity.apf.usernameParameter = "/j_username"
+grails.plugin.springsecurity.apf.passwordParameter = "/j_password"
+grails.plugin.springsecurity.logout.filterProcessesUrl = "/j_spring_security_logout"
+grails.plugin.springsecurity.rememberMe.parameter =  "_spring_security_remember_me"
+grails.plugin.springsecurity.switchUser.switchUserUrl = "/j_spring_security_switch_user"
+grails.plugin.springsecurity.switchUser.exitUserUrl = "/j_spring_security_exit_user"
+
 //grails.plugin.springsecurity.failureHandler.exceptionMappings = [
 //        [exception: LockedException.name,             url: '/user/accountLocked'],
 //        [exception: DisabledException.name,           url: '/user/accountDisabled'],
