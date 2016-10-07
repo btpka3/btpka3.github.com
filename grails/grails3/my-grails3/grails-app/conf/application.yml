@@ -197,6 +197,7 @@ grails:
 #            authority:
 #              groupAuthorityNameField:
 
+a.b.c: "abc111"
 environments:
    development:
       grails.logging.jul.usebridge: true
@@ -205,3 +206,12 @@ environments:
       grails.logging.jul.usebridge: false
 
 
+spring.data.elasticsearch:
+    cluster-name: "elasticsearch"
+    cluster-nodes: "test13.kingsilk.xyz:9300"
+    properties:
+        "client.transport.ignore_cluster_name": true
+        "client.transport.nodes_sampler_interval": "5s"
+        "client.transport.ping_timeout": "5s"
+        "client.transport.sniff": true
+    repositories.enabled: false

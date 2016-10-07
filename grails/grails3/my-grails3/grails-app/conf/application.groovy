@@ -67,7 +67,7 @@ grails.plugin.springsecurity.apf.filterProcessesUrl = "/j_spring_security_check"
 grails.plugin.springsecurity.apf.usernameParameter = "/j_username"
 grails.plugin.springsecurity.apf.passwordParameter = "/j_password"
 grails.plugin.springsecurity.logout.filterProcessesUrl = "/j_spring_security_logout"
-grails.plugin.springsecurity.rememberMe.parameter =  "_spring_security_remember_me"
+grails.plugin.springsecurity.rememberMe.parameter = "_spring_security_remember_me"
 grails.plugin.springsecurity.switchUser.switchUserUrl = "/j_spring_security_switch_user"
 grails.plugin.springsecurity.switchUser.exitUserUrl = "/j_spring_security_exit_user"
 
@@ -78,6 +78,15 @@ grails.plugin.springsecurity.switchUser.exitUserUrl = "/j_spring_security_exit_u
 //        [exception: CredentialsExpiredException.name, url: '/user/passwordExpired']
 //]
 
+
+qh {
+    es {
+        clusterName = "elasticsearch"
+        // 多个服务器的话，逗号分隔
+        clusterNodes = "test13.kingsilk.xyz:9300"
+    }
+}
+x.y.z = "xyz123"
 
 
 

@@ -84,6 +84,9 @@ dependencies {
     // spring session
     // compile 'org.springframework.session:spring-session-data-mongo:1.2.2.RELEASE'
     compile 'org.springframework.session:spring-session-data-redis:1.2.2.RELEASE'
+
+    // elasticsearch
+    compile "org.springframework.data:spring-data-elasticsearch:2.0.4.RELEASE"
 }
 
 
