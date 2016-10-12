@@ -1,8 +1,8 @@
-// groovy RecursionTest.groovy
+// groovy Factorial.groovy
 // 斐波那契数列(Fibonaci)
 // [0,1,1,2,3,5,8,...]
 // 五大常用算法：分治、动态规划、贪心、回溯、分支限界
-class RecursionTest {
+class Factorial {
 
     static void main(String[] args) {
 
@@ -10,14 +10,13 @@ class RecursionTest {
 
         println "------------------------ 递归"
         println "start  : " + new Date();
-        println "result : " + factorial(n) + ",  cc = $count"
+        println "result : " + factorial(n) + ", count = $count"
         println "end    : " + new Date();
 
         println "------------------------ 尾递归"
-
         count = 0
         println "start  : " + new Date();
-        println "result : " + factorial1(n) + ",  cc = $count"
+        println "result : " + factorial1(n) + ", count = $count"
         println "end    : " + new Date();
 
         println "------------------------ 通项公式"
@@ -31,9 +30,10 @@ class RecursionTest {
         println "end    : " + new Date();
     }
 
+    // 方法执行了多少次
     static def count = 0;
 
-
+    // 递归
     static factorial(int n, def accu = 1G) {
         if (n <= 2) return accu
 

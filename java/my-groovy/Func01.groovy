@@ -6,6 +6,8 @@
 当n>1时，f(n) = 2*f(n-1)+3*2^(n-1)
 当 n = 10000 时 ， f(n)是?
 
+运行: groovy Func01.groovy
+
 参考:
     http://edu.163.com/13/0409/16/8S1JVRU400294LNK.html
 */
