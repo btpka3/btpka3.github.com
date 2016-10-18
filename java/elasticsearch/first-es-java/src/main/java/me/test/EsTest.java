@@ -1,5 +1,11 @@
 package me.test;
 
+import java.io.IOException;
+import java.net.InetAddress;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
+
 import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
@@ -13,21 +19,13 @@ import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.io.stream.OutputStreamStreamOutput;
-import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.common.unit.TimeValue;
-import org.elasticsearch.common.xcontent.XContentFactory;
-import org.elasticsearch.index.query.FilterBuilders;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
-
-import java.io.IOException;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 public class EsTest {
 
@@ -41,13 +39,16 @@ public class EsTest {
 
         Client client = null;
         try {
-            Settings settings = ImmutableSettings.settingsBuilder()
+            Settings settings = Settings.settingsBuilder()
+            		.put("cluster.name", "my-es")
                     .put("client.transport.ignore_cluster_name", true)
                     .put("client.transport.sniff", true)
                     .build();
 
-            client = new TransportClient(settings)
-                    .addTransportAddress(new InetSocketTransportAddress("test13.kingsilk.xyz", 9300));
+            client = TransportClient.builder()
+            		.settings(settings)
+            		.build()
+                    .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("localhost"), 9300));
 
             recreateIndex(client);
             doIndex(client);
@@ -143,12 +144,12 @@ public class EsTest {
                 "               }" +
                 "           }" +
                 "       }]," +
+                "       \"_all\" : {" +
+                "           \"type\":\"string\"," +
+                "           \"index\": \"analyzed\"," +
+                "           \"analyzer\": \"standard\"" +
+                "       }," +
                 "       \"properties\": {" +
-                "           \"_all\" : {" +
-                "               \"type\":\"string\"," +
-                "               \"index\": \"analyzed\"," +
-                "               \"analyzer\": \"standard\"" +
-                "           }," +
                 "           \"title\" : {" +
                 "               \"type\":\"string\"," +
                 "               \"index\": \"analyzed\"," +
@@ -364,11 +365,11 @@ public class EsTest {
 
     // 数值型范围过滤
     private static void searchRange(Client client) {
-
+    	// http://stackoverflow.com/questions/23599682/filtered-query-in-elasticsearch-java-api
+    	
         SearchResponse response = client.prepareSearch(index)
-                .setQuery(QueryBuilders.filteredQuery(
-                        QueryBuilders.matchAllQuery(),
-                        FilterBuilders.rangeFilter("price").gte(1200)))
+                .setQuery(QueryBuilders.boolQuery().must(QueryBuilders.matchAllQuery())
+                		.filter(QueryBuilders.boolQuery().must(QueryBuilders.rangeQuery("price").gte(1200))))
                 .execute()
                 .actionGet();
 

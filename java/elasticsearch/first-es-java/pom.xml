@@ -9,7 +9,7 @@
     <dependency>
       <groupId>org.elasticsearch</groupId>
       <artifactId>elasticsearch</artifactId>
-      <version>1.4.1</version>
+      <version>2.4.1</version>
     </dependency>
     <dependency>
       <groupId>ch.qos.logback</groupId>
@@ -17,4 +17,21 @@
       <version>1.1.2</version>
     </dependency>
   </dependencies>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.5.1</version>
+					<configuration>
+						<source>1.8</source>
+						<target>1.8</target>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
+	</build>
 </project>
