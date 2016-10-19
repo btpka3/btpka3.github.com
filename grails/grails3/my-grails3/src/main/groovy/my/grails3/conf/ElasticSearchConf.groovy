@@ -3,6 +3,7 @@ package my.grails3.conf
 import org.elasticsearch.client.Client
 import org.elasticsearch.client.transport.TransportClient
 import org.elasticsearch.common.settings.Settings
+import org.elasticsearch.common.transport.InetSocketTransportAddress
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -19,7 +20,7 @@ import org.elasticsearch.node.NodeBuilder
  *  https://www.elastic.co/guide/index.html
  *  https://www.elastic.co/guide/en/elasticsearch/client/java-api/current/client.html
  *  https://github.com/spring-projects/spring-data-elasticsearch
- *
+ *  org.springframework.boot.autoconfigure.data.elasticsearch.ElasticsearchAutoConfiguration
  */
 @Configuration
 class ElasticSearchConf {
@@ -27,10 +28,13 @@ class ElasticSearchConf {
     // https://github.com/grails/grails-core/issues/9806
     @Bean
     public SimpleElasticsearchMappingContext esMappingContext() {
-
         return new SimpleElasticsearchMappingContext();
     }
 
+//    @Bean
+//    public ElasticsearchOperations elasticsearchTemplate(Client client) {
+//        return new ElasticsearchTemplate(client);
+//    }
 
     @Bean
     String testConf(
@@ -43,10 +47,20 @@ class ElasticSearchConf {
         return s
     }
 
-    @Bean
-    public ElasticsearchOperations elasticsearchTemplate(Client client) {
-        return new ElasticsearchTemplate(client);
-    }
+//    @Bean
+//    public ElasticsearchTemplate elasticsearchTemplate() throws UnknownHostException {
+//        String server = clusterNodes.split(":")[0];
+//        Integer port = Integer.parseInt(clusterNodes.split(":")[1]);
+//        Settings settings = Settings.settingsBuilder()
+//                .put("cluster.name", clusterName).build();
+//        TransportClient client = TransportClient.builder()
+//                .settings(settings)
+//                .build()
+//                .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(server), port));
+//
+//        return new ElasticsearchTemplate(client);
+//
+//    }
 
 //    @Bean
 //    public TransportClient esClient1(@Value('${grails.logging.jul.usebridge}' )boolean a,

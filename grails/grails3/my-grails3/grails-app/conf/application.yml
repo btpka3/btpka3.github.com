@@ -207,11 +207,14 @@ environments:
 
 
 spring.data.elasticsearch:
-    cluster-name: "elasticsearch"
-    cluster-nodes: "test13.kingsilk.xyz:9300"
+    cluster-name: "my-es"
+    #cluster-nodes: "test13.kingsilk.xyz:9300"
+    #cluster-nodes: "192.168.0.13:9300"
+    #cluster-nodes: "192.168.0.40:9300"
+    cluster-nodes: "localhost:9300"
     properties:
         "client.transport.ignore_cluster_name": true
         "client.transport.nodes_sampler_interval": "5s"
         "client.transport.ping_timeout": "5s"
-        "client.transport.sniff": true
+        "client.transport.sniff": false
     repositories.enabled: false

@@ -148,12 +148,12 @@ class HelloController {
 
         String mappingJsonStr = "" +
                 "{" +
+                "    \"_all\" : {" +
+                "        \"type\":\"string\"," +
+                "        \"index\": \"analyzed\"," +
+                "        \"analyzer\": \"standard\"" +
+                "    }," +
                 "    \"properties\": {" +
-                "        \"_all\" : {" +
-                "            \"type\":\"string\"," +
-                "            \"index\": \"analyzed\"," +
-                "            \"analyzer\": \"standard\"" +
-                "        }," +
                 "        \"title\" : {" +
                 "            \"type\":\"string\"," +
                 "            \"index\": \"analyzed\"," +
@@ -177,7 +177,7 @@ class HelloController {
                 "        }" +
                 "    }" +
                 "}"
-        PutMappingResponse putMappingResponse = esClient.admin()
+        PutMappingResponse putMappingResponse = elasticsearchClient.admin()
                 .indices()
                 .preparePutMapping(index)
                 .setType(index)

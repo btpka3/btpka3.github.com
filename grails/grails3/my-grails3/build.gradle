@@ -87,6 +87,7 @@ dependencies {
 
     // elasticsearch
     compile "org.springframework.data:spring-data-elasticsearch:2.0.4.RELEASE"
+    compile "org.elasticsearch:elasticsearch:2.4.1"
 }
 
 

@@ -12,6 +12,8 @@
 grails s2-quickstart my.grails3 User Role Requestmap --groupClassName=RoleGroup
 grails s2-create-persistent-token my.grails3.PersistentLogin
 grails s2-create-role-hierarchy-entry my.grails3.RoleHierarchyEntry
+
+./gradlew :my-grails3:dependencies > my-grails3/.tmp/dep.txt
 ```
 
 # Embedding mongodb
@@ -26,6 +28,30 @@ grails s2-create-role-hierarchy-entry my.grails3.RoleHierarchyEntry
 ./gradlew :my-grails3:stopMongoDb
 ```
 
+# ElasticSearch
+
+```
+# docker cp my-es:/usr/share/elasticsearch/config /Users/zll/tmp/es-conf
+docker stop my-es
+docker rm my-es
+docker run -itd \
+        --name my-es \
+        -p 9200:9200 \
+        -p 9300:9300 \
+        -v "/Users/zll/tmp/es-conf":/usr/share/elasticsearch/config \
+        -v /Users/zll/tmp/es-data:/usr/share/elasticsearch/data \
+        elasticsearch:2.4.1
+docker start my-es
+
+docker exec -it my-es bash
+
+vi /Users/zll/tmp/es-conf/elasticsearch.yml 
+cluster.name: "my-es"
+node.name: "local"
+index.number_of_shards: 1
+index.number_of_replicas: 0
+
+```
 
 # Remember Me
 
