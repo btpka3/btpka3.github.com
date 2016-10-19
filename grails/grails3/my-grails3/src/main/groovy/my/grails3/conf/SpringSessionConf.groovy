@@ -15,9 +15,9 @@ import redis.clients.jedis.JedisShardInfo
 @EnableRedisHttpSession
 class SpringSessionConf {
 
-    @Bean
-    public JedisConnectionFactory connectionFactory() {
-        return new JedisConnectionFactory(new JedisShardInfo("redis://192.168.0.12:6379"));
-    }
+//    @Bean
+//    public JedisConnectionFactory connectionFactory() {
+//        return new JedisConnectionFactory(new JedisShardInfo("redis://192.168.0.12:6379"));
+//    }
 
 }

@@ -208,9 +208,6 @@ environments:
 
 spring.data.elasticsearch:
     cluster-name: "my-es"
-    #cluster-nodes: "test13.kingsilk.xyz:9300"
-    #cluster-nodes: "192.168.0.13:9300"
-    #cluster-nodes: "192.168.0.40:9300"
     cluster-nodes: "localhost:9300"
     properties:
         "client.transport.ignore_cluster_name": true
@@ -218,3 +215,31 @@ spring.data.elasticsearch:
         "client.transport.ping_timeout": "5s"
         "client.transport.sniff": false
     repositories.enabled: false
+
+spring.session:
+    store-type: redis
+    redis:
+        flush-mode:
+        namespace:
+
+# org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
+spring.redis:
+    host: localhost
+    port: 6379
+    password:
+    timeout: 0
+    database: 0
+    #cluster:
+    #    max-redirects:
+    #   nodes:
+    pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: -1
+        min-idle: 0
+    #sentinel:
+    #   master:
+    #   nodes:
+
+
+
