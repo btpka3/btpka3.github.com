@@ -42,7 +42,7 @@ public class EsTest {
             Settings settings = Settings.settingsBuilder()
             		.put("cluster.name", "my-es")
                     .put("client.transport.ignore_cluster_name", true)
-                    .put("client.transport.sniff", true)
+                    .put("client.transport.sniff", false)
                     .build();
 
             client = TransportClient.builder()
