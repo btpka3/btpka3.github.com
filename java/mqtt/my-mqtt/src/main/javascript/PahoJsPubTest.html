@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css"/>
+
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.min.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.min.js"></script>
+    <script src="bower_components/angular-material/angular-material.min.js"></script>
+
+    <!-- http://www.eclipse.org/paho/files/jsdoc/index.html -->
+    <script src="mqttws31.js"></script>
+
+</head>
+<body ng-controller="DemoCtrl as vm">
+
+<md-button ng-click="vm.publishMsg()" class="md-primary md-raised">publish</md-button>
+
+<script>
+    angular
+            .module('MyApp', ['ngMaterial', 'ngMessages'])
+            .controller('DemoCtrl', DemoCtrl);
+
+    function DemoCtrl($timeout, $q, $log, $scope) {
+
+        var MQTT_WS_HOST = "localhost"; // location.hostname
+        var MQTT_WS_PORT = 15675; // location.port
+        var MQTT_WS_PATH = "/ws"; // location.port
+        var MQTT_CLIENT_ID = "PahoJsPubTest";
+        var MQTT_TOPIC = "/my/mqtt";
+        var MQTT_COUNT = 10;
+
+        // ------------------
+
+
+        var self = this;
+
+        var client = new Paho.MQTT.Client(MQTT_WS_HOST, MQTT_WS_PORT, MQTT_WS_PATH, MQTT_CLIENT_ID);
+        self.client = client;
+
+        function mqttInit() {
+
+            client.onConnectionLost = function (responseObject) {
+                if (responseObject.errorCode !== 0) {
+                    console.log("onConnectionLost:" + responseObject.errorMessage);
+                }
+            };
+
+            client.onMessageArrived = function (message) {
+                console.log("onMessageArrived:" + message.payloadString);
+            };
+
+            client.connect({onSuccess: onConnect});
+            function onConnect() {
+                console.log("mqtt server connected.");
+            }
+        }
+        mqttInit();
+
+        self.publishMsg = function () {
+
+            $log.log("-----start  publishing messages");
+            for (var i = 0; i < MQTT_COUNT; i++) {
+                var message = new Paho.MQTT.Message("PahoJsPubTest " + i);
+                message.destinationName = MQTT_TOPIC;
+                client.send(message);
+            }
+            $log.log("-----end    publishing messages");
+        }
+    }
+</script>
+</body>
+</html>
