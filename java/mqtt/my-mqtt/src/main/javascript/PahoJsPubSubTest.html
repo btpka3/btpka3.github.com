@@ -59,10 +59,23 @@
             client.connect({onSuccess: onConnect});
             function onConnect() {
                 console.log("mqtt server connected.");
+
+                // test for subscribe
+                client.subscribe(MQTT_TOPIC, {
+                    qos: 0,
+                    timeout: 5,
+                    onSuccess: function (resp) {
+                        console.log("============ msg : onSuccess : ", resp)
+                    },
+                    onFailure: function (resp) {
+                        console.log("============ msg : onFailure : ", resp)
+                    }
+                });
             }
         }
         mqttInit();
 
+        // test for publish
         self.publishMsg = function () {
 
             $log.log("-----start  publishing messages");
