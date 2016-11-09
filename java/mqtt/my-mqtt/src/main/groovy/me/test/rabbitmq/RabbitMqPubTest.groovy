@@ -24,7 +24,7 @@ class RabbitMqPubTest {
         Channel channel = conn.createChannel();
 
         // 获取预定义的 exchange（这里是默认的，配置值默认的必须保持一致）
-        channel.exchangeDeclare(AMQP_EXCHANGE_NAME, "topic", true);
+        // channel.exchangeDeclare(AMQP_EXCHANGE_NAME, "topic", true);
 
         // 发送消息
         println "start sending msg."

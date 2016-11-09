@@ -29,7 +29,7 @@ class RabbitMqSubTest {
         Channel channel = conn.createChannel();
 
         // 获取预定义的 exchange（这里是默认的，配置值默认的必须保持一致）
-        channel.exchangeDeclare(AMQP_EXCHANGE_NAME, "topic", true);
+        // channel.exchangeDeclare(AMQP_EXCHANGE_NAME, "topic", true);
 
         String queueName = channel.queueDeclare().getQueue();
         println "queue [$queueName] has been declared."

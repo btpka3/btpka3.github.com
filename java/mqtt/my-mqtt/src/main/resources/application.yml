@@ -1,0 +1,22 @@
+
+# 错误处理相关
+server.error.include-stacktrace: on_trace_param
+
+
+logging.level.org.springframework.context.support: DEBUG
+logging.level.org.springframework.amqp.rabbit.connection: DEBUG
+logging.level.org.springframework.amqp.rabbit.listener: DEBUG
+
+spring.devtools.restart.exclude: static/**,public/**
+
+
+
+# RABBIT (RabbitProperties)
+# org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration
+spring.rabbitmq.addresses: localhost
+spring.rabbitmq.port: 5672
+spring.rabbitmq.username: guest
+spring.rabbitmq.password: guest
+spring.rabbitmq.ssl.enabled: false
+spring.rabbitmq.virtual-host: /
+

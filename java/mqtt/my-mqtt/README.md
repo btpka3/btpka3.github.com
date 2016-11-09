@@ -102,5 +102,26 @@ cat /etc/rabbitmq/enabled_plugins
 ```
 /src/main/groovy/me/test/paho       // 使用 Eclipse paho 的Java客户端订阅、发送。
 /src/main/groovy/me/test/rabbitmq   // 使用 RabbitMq 客户端订阅、发送。（使用AMQP协议）
+/src/main/groovy/me/test/spring     // 使用 Spring AMQP 客户端订阅、发送。（使用AMQP协议）
 /src/main/javascript                // 使用 Eclipse paho 的JavaScript客户端订阅、发送。
+```
+
+
+## spring amqp
+
+```
+SimpleMessageListenerContainer#start()
+    SimpleMessageListenerContainer#doStart()
+        SimpleAsyncTaskExecutor#execute(AsyncMessageProcessingConsumer); 
+        
+AsyncMessageProcessingConsumer(BlockingQueueConsumer)
+AsyncMessageProcessingConsumer#run()
+    SimpleMessageListenerContainer#doReceiveAndExecute
+        BlockingQueueConsumer#nextMessage(1000) # 每秒检查一次消息
+            BlockingQueueConsumer.InternalConsumer#handleDelivery()
+        AbstractMessageListenerContainer#executeListener
+            AbstractMessageListenerContainer#invokeListener
+        
+1. 通过 BlockingQueueConsumer.InternalConsumer 将消息存储的 BlockingQueue 中
+2. 通过 
 ```
