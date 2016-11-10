@@ -14,7 +14,10 @@
     <script src="bower_components/angular-messages/angular-messages.min.js"></script>
     <script src="bower_components/angular-material/angular-material.min.js"></script>
 
-    <!-- http://www.eclipse.org/paho/files/jsdoc/index.html -->
+    <!--
+    http://www.eclipse.org/paho/clients/js/
+    http://www.eclipse.org/paho/files/jsdoc/index.html
+    -->
     <script src="mqttws31.js"></script>
 
 </head>
@@ -41,6 +44,8 @@
 
         var self = this;
 
+        console.log("controller is inited.");
+
         var client = new Paho.MQTT.Client(MQTT_WS_HOST, MQTT_WS_PORT, MQTT_WS_PATH, MQTT_CLIENT_ID);
         self.client = client;
 
@@ -56,7 +61,14 @@
                 console.log("onMessageArrived:" + message.payloadString);
             };
 
-            client.connect({onSuccess: onConnect});
+            console.log("start connecting...");
+            client.connect({
+                userName: "guest",
+                password: "guest",
+                useSSL: false, // FIXME: 如何配置才能使用 SSL？
+                onSuccess: onConnect
+            });
+
             function onConnect() {
                 console.log("mqtt server connected.");
 
@@ -73,6 +85,7 @@
                 });
             }
         }
+
         mqttInit();
 
         // test for publish

@@ -50,6 +50,11 @@ touch Dockerfile  # 文件内容见后面
 docker build -t btpka3/my-mq:1.0 .
 docker images
 
+mkdir -p ~/tmp/mq/conf/
+mkdir -p ~/tmp/mq/data/
+echo '[ { rabbit, [ { loopback_users, [ ] } ] } ].' > ~/tmp/mq/conf/rabbitmq.config
+touch ~/tmp/mq/conf/rabbitmq-env.conf
+
 docker run -d \
     --name mq \
     -p 4369:4369 \
@@ -61,6 +66,9 @@ docker run -d \
     -p 1883:1883 \
     -p 8883:8883 \
     -p 15675:15675 \
+    -v ~/tmp/mq/data/:/var/lib/rabbitmq \
+    -v ~/tmp/mq/conf/rabbitmq.config:/etc/rabbitmq/rabbitmq.config \
+    -v ~/tmp/mq/conf/rabbitmq-env.conf:/etc/rabbitmq/rabbitmq-env.conf \
     btpka3/my-mq:1.0
 
 docker exec -it mq bash
@@ -76,6 +84,8 @@ cat /etc/rabbitmq/enabled_plugins
 # 通过浏览器访问
 # http://localhost:15672
 ```
+
+
 
 # RabbitMQ mqtt plugin
 
@@ -124,4 +134,181 @@ AsyncMessageProcessingConsumer#run()
         
 1. 通过 BlockingQueueConsumer.InternalConsumer 将消息存储的 BlockingQueue 中
 2. 通过 
+```
+
+
+# SSL 证书
+
+
+## openssl.cnf
+
+
+```
+[ req ]
+distinguished_name = root_ca_distinguished_name
+
+[ root_ca_distinguished_name ]
+commonName = hostname
+
+[ root_ca_extensions ]
+basicConstraints = CA:true
+keyUsage = keyCertSign, cRLSign
+
+[ client_ca_extensions ]
+basicConstraints = CA:false
+keyUsage = digitalSignature
+extendedKeyUsage = 1.3.6.1.5.5.7.3.2
+
+[ server_ca_extensions ]
+basicConstraints = CA:false
+keyUsage = keyEncipherment
+extendedKeyUsage = 1.3.6.1.5.5.7.3.1
+```
+
+## 自签名的 CA 证书
+
+```sh
+openssl req \
+    -x509 \
+    -newkey rsa:2048 \
+    -days 3650 \
+    -sha256 \
+    -config openssl.cnf \
+    -extensions root_ca_extensions \
+    -subj "/CN=myca/" \
+    -outform PEM \
+    -out myca.pem.cer \
+    -keyout myca.pem.key \
+    -nodes
+    
+# 将私钥和证书 合并成单个的 PKCS#12 格式的证书
+openssl pkcs12 \
+   -export \
+   -in myca.pem.cer \
+   -inkey myca.pem.key \
+   -out myca.p12 \
+   -passout pass:123456 \
+   -name myca
+
+# 将 PKCS#12 格式的证书 转换为 JKS 格式的
+keytool -importkeystore \
+   -srcstoretype PKCS12 \
+   -srckeystore myca.p12 \
+   -srcstorepass 123456 \
+   -srcalias myca \
+   -deststoretype JKS \
+   -destkeystore myca.jks \
+   -deststorepass 123456 \
+   -destalias myca \
+   -destkeypass 456789
+```
+
+## 生成server端证书
+  
+```sh
+# 生成一个公钥私钥对儿
+openssl genrsa \
+    -out server.pem.key \
+    2048
+
+# 生成 生成一个CSR (Certificate Signing Request)
+openssl req \
+    -new \
+    -key server.pem.key \
+    -out server.pem.csr \
+    -subj "/CN=server/"
+
+# 签名
+openssl x509 \
+    -req \
+    -days 3650 \
+    -in server.pem.csr \
+    -CA myca.pem.cer \
+    -CAkey myca.pem.key \
+    -CAcreateserial \
+    -extfile openssl.cnf \
+    -extensions server_ca_extensions \
+    -out server.pem.cer
+
+# 将私钥和证书 合并成单个的 PKCS#12 格式的证书
+openssl pkcs12 \
+    -export \
+    -in server.pem.cer \
+    -inkey server.pem.key \
+    -out server.p12 \
+    -passout pass:123456 \
+    -name server
+
+# 将 PKCS#12 格式的证书 转换为 JKS 格式的
+keytool -importkeystore \
+    -srcstoretype PKCS12 \
+    -srckeystore server.p12 \
+    -srcstorepass 123456 \
+    -srcalias server \
+    -deststoretype JKS \
+    -destkeystore server.jks \
+    -deststorepass 123456 \
+    -destalias server \
+    -destkeypass 456789
+
+# 检查
+openssl verify \
+    -verbose \
+    -CAfile myca.pem.cer \
+    server.pem.cer
+```
+
+## 生成 client 端证书
+     
+```sh
+# 生成一个公钥私钥对儿
+openssl genrsa \
+   -out client.pem.key \
+   2048
+
+# 生成 生成一个CSR (Certificate Signing Request)
+openssl req \
+   -new \
+   -key client.pem.key \
+   -out client.pem.csr \
+   -subj "/CN=client/"
+
+# 签名
+openssl x509 \
+   -req \
+   -days 3650 \
+   -in client.pem.csr \
+   -CA myca.pem.cer \
+   -CAkey myca.pem.key \
+   -CAcreateserial \
+   -extfile openssl.cnf \
+   -extensions client_ca_extensions \
+   -out client.pem.cer
+
+# 将私钥和证书 合并成单个的 PKCS#12 格式的证书
+openssl pkcs12 \
+   -export \
+   -in client.pem.cer \
+   -inkey client.pem.key \
+   -out client.p12 \
+   -passout pass:123456 \
+   -name client
+
+# 将 PKCS#12 格式的证书 转换为 JKS 格式的
+keytool -importkeystore \
+   -srcstoretype PKCS12 \
+   -srckeystore client.p12 \
+   -srcstorepass 123456 \
+   -srcalias client \
+   -deststoretype JKS \
+   -destkeystore client.jks \
+   -deststorepass 123456 \
+   -destalias client \
+   -destkeypass 456789
+   
+# 检查
+openssl verify \
+    -verbose \
+    -CAfile myca.pem.cer \
+    client.pem.cer
 ```

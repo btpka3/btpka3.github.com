@@ -3,22 +3,32 @@ package me.test.paho
 import org.eclipse.paho.client.mqttv3.*
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence
 
+import javax.net.ssl.SSLContext
+import javax.net.ssl.SSLSocketFactory
+
 import static me.test.MY.*
 
 // 参考： https://github.com/eclipse/paho.mqtt.java/blob/master/org.eclipse.paho.client.mqttv3/src/main/java/org/eclipse/paho/client/mqttv3/internal/wire/MqttSubscribe.java
 class PahoSubTest {
 
     static void main(String[] args) {
+
+        SSLContext sslContext = getClientSslContext(false)
+        SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory()
+
+        MqttConnectOptions connOpts = new MqttConnectOptions();
+        connOpts.setUserName(MQTT_USER)
+        connOpts.setPassword(MQTT_PWD.toCharArray())
+        connOpts.setCleanSession(true);
+        connOpts.setSocketFactory(sslSocketFactory)
+
         String clientId = "PahoSubTest";
         MemoryPersistence persistence = new MemoryPersistence();
 
         try {
             MqttClient sampleClient = new MqttClient(MQTT_SERVER, clientId, persistence);
 
-            MqttConnectOptions connOpts = new MqttConnectOptions();
-            connOpts.setUserName(MQTT_USER)
-            connOpts.setPassword(MQTT_PWD.toCharArray())
-            connOpts.setCleanSession(true);
+
 
             System.out.println("Connecting to broker: " + MQTT_SERVER);
             sampleClient.connect(connOpts);
