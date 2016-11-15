@@ -146,11 +146,11 @@ grails:
         #connectionString: "mongodb://192.168.0.12:27017/zll"
 
         host: 127.0.0.1
-        port: 12345
+        port: 27017
         #connectionString: "mongodb://localhost:12345/local"
         #username: zll
         #password: zll
-        databaseName: local
+        databaseName: test
         options:
             #ssl: true
             autoConnectRetry: true
@@ -209,11 +209,11 @@ environments:
 spring.data.elasticsearch:
     cluster-name: "my-es"
     cluster-nodes: "localhost:9300"
-    properties:
-        "client.transport.ignore_cluster_name": true
-        "client.transport.nodes_sampler_interval": "5s"
-        "client.transport.ping_timeout": "5s"
-        "client.transport.sniff": false
+#    properties:
+#        "client.transport.ignore_cluster_name": true
+#        "client.transport.nodes_sampler_interval": "5s"
+#        "client.transport.ping_timeout": "5s"
+#        "client.transport.sniff": false
     repositories.enabled: false
 
 spring.session:
@@ -243,3 +243,29 @@ spring.redis:
 
 
 
+spring.application.name: my-grails3
+
+
+spring.cloud.zookeeper:
+    connect-string: localhost:2181
+    dependencies:
+        newsletter:
+            path: /path/where/newsletter/has/registered/in/zookeeper
+            loadBalancerType: ROUND_ROBIN
+            contentTypeTemplate: application/vnd.newsletter.$version+json
+            version: v1
+            headers:
+              header1:
+                  - value1
+              header2:
+                  - value2
+            required: false
+            stubs: org.springframework:foo:stubs
+    dependency:
+        enabled: true
+
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/

@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetailsService
 
 //@EnableAutoConfiguration
 @ComponentScan("my.grails3")
+//@EnableDiscoveryClient
+//@EnableEurekaClient
 //@SpringBootApplication
 @Configuration
 class Application extends GrailsAutoConfiguration {

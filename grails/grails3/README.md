@@ -26,6 +26,9 @@ grails s2-create-role-hierarchy-entry my.grails3.RoleHierarchyEntry
 ./gradlew :my-grails3:startManagedMongoDb
 ./gradlew :my-grails3:startMongoDb
 ./gradlew :my-grails3:stopMongoDb
+
+# 使用docker
+
 ```
 
 # ElasticSearch
@@ -52,6 +55,17 @@ index.number_of_shards: 1
 index.number_of_replicas: 0
 
 ```
+
+# redis
+
+```
+docker run -itd \
+        --name my-redis \
+        -p 6379:6379 \
+        -v /Users/zll/tmp/my-redis/data/:/data \
+        redis:3.2.4
+```
+
 
 # Remember Me
 

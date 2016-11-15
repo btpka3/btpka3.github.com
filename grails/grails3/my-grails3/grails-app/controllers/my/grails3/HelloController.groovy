@@ -11,6 +11,7 @@ import org.elasticsearch.action.index.IndexRequest
 import org.elasticsearch.action.search.SearchResponse
 import org.elasticsearch.client.Client
 import org.elasticsearch.index.query.QueryBuilders
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.access.expression.SecurityExpressionHandler
 import org.elasticsearch.action.index.IndexRequest.OpType;
@@ -25,6 +26,9 @@ class HelloController {
 
     def myTestSrv
 
+//    @Autowired
+//    DiscoveryClient discoveryClient;
+
 
     @Value('${a.b.c}')
     Object ymlConf
@@ -36,6 +40,13 @@ class HelloController {
 
 
     Client elasticsearchClient
+
+
+//    def testZk() {
+//        List<ServiceInstance> list = discoveryClient.getInstances("STORES");
+//
+//        render "=========zk test : " + list ? list.get(0).uri : ""
+//    }
 
     // config 测试
     def conf() {

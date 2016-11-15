@@ -28,7 +28,7 @@ apply plugin: "org.grails.grails-gsp"
 apply plugin: "asset-pipeline"
 apply plugin: 'project-report'
 
-apply plugin: 'mongo'
+//apply plugin: 'mongo'
 
 
 //ext {
@@ -88,6 +88,16 @@ dependencies {
     // elasticsearch
     compile "org.springframework.data:spring-data-elasticsearch:2.0.4.RELEASE"
     compile "org.elasticsearch:elasticsearch:2.4.1"
+
+    // zookeeper
+
+    //compile "org.springframework.cloud:spring-cloud-zookeeper:1.0.3.RELEASE"
+    //compile "org.springframework.cloud:spring-cloud-starter-zookeeper-discovery:1.0.3.RELEASE"
+
+
+    //compile "org.springframework.cloud:spring-cloud-starter-config:1.2.1.RELEASE"
+    //compile "org.springframework.cloud:spring-cloud-starter-eureka:1.2.1.RELEASE"
+
 }
 
 
@@ -97,9 +107,9 @@ assets {
 }
 
 
-mongo {
-    port 12345
-    logging 'console'
-    // 默认会下载到 `~/.embedmongo/osx/mongodb-osx-x86_64-3.2.9.tgz`
-    mongoVersion = '3.2.9'
-}
+//mongo {
+//    port 12345
+//    logging 'console'
+//    // 默认会下载到 `~/.embedmongo/osx/mongodb-osx-x86_64-3.2.9.tgz`
+//    mongoVersion = '3.2.9'
+//}

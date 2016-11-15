@@ -1,1 +1,1 @@
-include 'my-grails3', 'my-grails3-plugin'
+include 'my-grails3', 'my-grails3-plugin', 'my-gorm-hibernate'
