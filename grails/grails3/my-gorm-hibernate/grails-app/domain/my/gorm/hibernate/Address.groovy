@@ -1,10 +1,8 @@
 package my.gorm.hibernate
 
-import grails.gorm.annotation.Entity
 import groovy.transform.ToString
 
 /** 收货地址 */
-@Entity
 @ToString(excludes=['user'])
 class Address {
 

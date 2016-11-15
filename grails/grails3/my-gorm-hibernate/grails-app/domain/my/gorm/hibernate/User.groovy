@@ -1,10 +1,8 @@
 package my.gorm.hibernate
 
-import grails.gorm.annotation.Entity
 import groovy.transform.ToString
 
 /** 用户 */
-@Entity
 @ToString
 class User {
 
