@@ -161,7 +161,7 @@ extendedKeyUsage = 1.3.6.1.5.5.7.3.2
 
 [ server_ca_extensions ]
 basicConstraints = CA:false
-keyUsage = keyEncipherment
+keyUsage = keyEncipherment, digitalSignature
 extendedKeyUsage = 1.3.6.1.5.5.7.3.1
 ```
 
