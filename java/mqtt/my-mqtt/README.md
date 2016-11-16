@@ -312,3 +312,72 @@ openssl verify \
     -CAfile myca.pem.cer \
     client.pem.cer
 ```
+
+
+# nginx 反向代理
+
+docker安装nginx（需要版本1.9.0之后的）
+
+```
+docker run \
+    --name my-nginx \
+    -d \
+    -p 80:80 \
+    -p 443:443 \
+    -p 11883:11883 \
+    -p 18883:18883 \
+    -p 19883:19883 \
+    --link mq:mq \
+    -v ~/tmp/my-nginx/conf/nginx.conf:/etc/nginx/nginx.conf:ro \
+    -v ~/tmp/my-nginx/conf/conf.d:/etc/nginx/conf.d:ro \
+    nginx:1.10.2
+
+```
+
+修改nginx.conf
+
+```
+# 最后一行追加以下配置
+stream {
+    include /etc/nginx/conf.d/*.conf.stream;
+}
+```
+
+创建 $NGINX_HOME/conf/conf.d/mq.conf.stream
+
+```
+upstream mqtt_1883 {
+    server mq:1883;
+}   
+upstream mqtts_8883 {
+    server mq:8883;
+}
+
+# 完全 tcp 转发   
+server {
+    listen 11883;
+    proxy_connect_timeout       20s;
+    proxy_timeout               5m; 
+    proxy_pass                  mqtt_1883;
+}
+server {
+    listen 18883;
+    proxy_connect_timeout       20s;
+    proxy_timeout               5m; 
+    proxy_pass                  mqtts_8883;
+}
+
+# 代为TSL
+server {
+    listen 19883 ssl;
+    ssl_certificate             conf.d/mq/server.pem.cer;
+    ssl_certificate_key         conf.d/mq/server.pem.key;
+    ssl_session_cache           shared:SSL:10m;
+    ssl_session_timeout         10m;
+    #ssl_ciphers                HIGH:!aNULL:!MD5;
+    #ssl_prefer_server_ciphers  on; 
+    proxy_connect_timeout       20s;
+    proxy_timeout               5m; 
+    proxy_pass                  mqtt_1883;
+}
+```
