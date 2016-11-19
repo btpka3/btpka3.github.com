@@ -1,0 +1,26 @@
+{
+  "lang": "zh_CN",
+  "dir": "ltr",
+  "name": "我的PWA",
+  "short_name": "my-pwa",
+  "description": "学习测试用的WPA.",
+  "scope": "./",
+  "start_url": ".",
+  "display": "standalone",
+  "orientation": "landscape",
+  "theme_color": "aliceblue",
+  "background_color": "#fff",
+  "icons": [
+    {
+      "src": "images/bubble.svg",
+      "type": "image/svg+xml"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "screenshots/splash.jpg",
+      "sizes": "1280x920",
+      "type": "image/jpeg"
+    }
+  ]
+}
