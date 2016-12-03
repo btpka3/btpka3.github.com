@@ -29,12 +29,9 @@ repositories {
 
 dependencies {
     compile('org.codehaus.groovy:groovy')
-    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-security')
     compile('org.springframework.boot:spring-boot-starter-thymeleaf')
-    compile('org.springframework.boot:spring-boot-starter-groovy-templates')
-    compile('com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.8.4')
-    compile('org.apache.httpcomponents:httpclient:4.5.2')
-
+    compile('org.springframework.boot:spring-boot-starter-web')
     testCompile('org.springframework.boot:spring-boot-starter-test')
 
 
@@ -45,27 +42,14 @@ bootRun {
     addResources = true
 }
 
+
 // gradle bootRun
 springBoot {
     mainClass = System.properties['mainClass']
 }
 
-test {
-    include 'me/test/**'
-    testLogging.showStandardStreams = false
-    // listen to events in the test execution lifecycle
-//    beforeTest { descriptor ->
-//        logger.lifecycle("Running test: " + descriptor)
-//    }
-//
-//    // listen to standard out and standard error of the test JVM(s)
-//    onOutput { descriptor, event ->
-//        logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message )
-//    }
-}
-
 // gradle -DmainClass=me.test.Example execute
-task execute(type: JavaExec) {
+task execute(type:JavaExec) {
     main = System.getProperty('mainClass')
     classpath = sourceSets.main.runtimeClasspath
 }

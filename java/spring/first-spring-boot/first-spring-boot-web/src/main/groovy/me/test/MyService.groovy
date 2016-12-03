@@ -9,5 +9,4 @@ class MyService {
         println "a+b = $a + $b = ${a + b}"
         a + b
     }
-
 }

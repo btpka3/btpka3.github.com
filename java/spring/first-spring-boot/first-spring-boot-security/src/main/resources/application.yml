@@ -1,0 +1,9 @@
+# security.basic.enabled: false
+
+logging.level.org.springframework.security: INFO
+logging.level.org.springframework.boot.actuate.audit.listener.AuditListener: DEBUG
+logging.level.org.springframework.security.config.annotation.authentication.configuration: DEBUG
+logging.level.org.springframework.security.web.access: DEBUG
+logging.level.org.springframework.security.access: DEBUG
+
+spring.devtools.restart.exclude: static/**,public/**,templates/**

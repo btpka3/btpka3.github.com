@@ -1,1 +1,2 @@
-console.log("hello world~ 404");
+/* a.js */
+console.log("====== a.js");
