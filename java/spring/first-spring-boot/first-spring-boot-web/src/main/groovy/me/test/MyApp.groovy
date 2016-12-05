@@ -19,9 +19,6 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView
 //@EnableAutoConfiguration // 该注解 @SpringBootApplication 已经启用了
 class MyApp {
 
-    // TODO XML
-    // TODO JSON
-    // TODO 404 错误
     // TODO filters
     // TODO interceptor
 

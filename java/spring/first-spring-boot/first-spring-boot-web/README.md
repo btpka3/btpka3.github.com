@@ -67,6 +67,7 @@ private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {
             #httpPutFormContentFilter()         // 注册 bean : OrderedHttpPutFormContentFilter.class
             WebMvcAutoConfigurationAdapter      // 实现了 WebMvcConfigurer/WebMvcConfigurerAdapter
                 #configureContentNegotiation()  // 仅仅从 appliction.yml 中读取 `spring.mvc.media-types.*`
+                #addResourceHandlers()          // 追加 "/webjars/**" 静态资源路径
             EnableWebMvcConfiguration           // 实现了 DelegatingWebMvcConfiguration, 追加多种 bean
             
             #defaultViewResolver()
@@ -140,3 +141,4 @@ HandlerMapping
     WebMvcConfigurationSupport$EmptyHandlerMapping
 ```
 
+FIXME: 静态资源 Response 的 http 头： Content-Type 是如何自动设定的？

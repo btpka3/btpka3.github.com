@@ -20,4 +20,4 @@ logging.level.org.springframework.web.servlet.mvc.method.RequestMappingInfoHandl
 # 用来追踪 restTemplate 请求
 logging.level.org.apache.http: DEBUG
 
-spring.devtools.restart.exclude: static/**,public/**
+spring.devtools.restart.exclude: static/**,public/**,templates/**,resources/**

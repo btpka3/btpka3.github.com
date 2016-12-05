@@ -4,6 +4,9 @@ logging.level.org.springframework.security: INFO
 logging.level.org.springframework.boot.actuate.audit.listener.AuditListener: DEBUG
 logging.level.org.springframework.security.config.annotation.authentication.configuration: DEBUG
 logging.level.org.springframework.security.web.access: DEBUG
+logging.level.org.springframework.security.web.csrf: DEBUG
 logging.level.org.springframework.security.access: DEBUG
+# 用来追踪 restTemplate 请求
+logging.level.org.apache.http: DEBUG
 
-spring.devtools.restart.exclude: static/**,public/**,templates/**
+spring.devtools.restart.exclude: static/**,public/**,templates/**,resources/**

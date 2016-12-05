@@ -37,7 +37,6 @@ class WebMvcConf extends WebMvcConfigurerAdapter {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/login").setViewName("login");
-        registry.addViewController("/public").setViewName("public");
     }
 
 }
@@ -56,7 +55,7 @@ class WebMvcConf extends WebMvcConfigurerAdapter {
 //    }
 //}
 
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity(debug = false)
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 class SecConf {
 
@@ -89,13 +88,13 @@ class SecConf {
             protected void configure(HttpSecurity http) throws Exception {
                 // @formatter:off
                 http.authorizeRequests()
-                        .antMatchers("/static/pub.html")
+                        .antMatchers("/SecConf/pub.html")
                         .permitAll()
 
-                        .antMatchers("/static/sec.html")
+                        .antMatchers("/SecConf/sec.html")
                         .authenticated()
 
-                        .antMatchers("/static/adm.html")
+                        .antMatchers("/SecConf/adm.html")
                         .access("isAuthenticated() && hasAnyRole('ADMIN')")
 
                         .antMatchers("/login")
@@ -106,19 +105,19 @@ class SecConf {
 
                     .and()
                         .formLogin()
-                        //.loginPage("/login")
-                        //.failureUrl("/login?error")
+                        .loginPage("/login")  // 这个如果不明确调用，会通过 DefaultLoginPageConfigurer 注册 DefaultLoginPageGeneratingFilter
+//                        .failureUrl("/login?error")
 
                     //.and()                    // 默认值
                         //.logout()
                         //.logoutUrl("/logout")
                         //.logoutSuccessUrl("/login?logout")
 
-                    .and()
-                        .exceptionHandling()
-                        .accessDeniedPage("/access?error")
 //                    .and()
-//                        .httpBasic()
+//                        .exceptionHandling()  // 默认已经配置
+//                        .accessDeniedPage("/access?error")  // 如果没设置，则会通过错误码去找相应的错误画面。
+                    .and()
+                        .httpBasic()
                 // @formatter:on
             }
 

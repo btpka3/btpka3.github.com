@@ -1,2 +1,2 @@
-
-console.log("--------------------- a.js");
+/* a.js */
+console.log("====== a.js");

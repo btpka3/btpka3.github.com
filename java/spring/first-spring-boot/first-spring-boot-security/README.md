@@ -7,7 +7,6 @@ gradle bootRun
 # 使用 spring-boot-devtools 可以自动重启。可手动触发IDE生成新的class。
 # 如果是命令行,可以
 gradle build
-
 ```
  
 
@@ -77,7 +76,9 @@ spring security 的 "springSecurityFilterChain" 是在哪里注册配置的？
 ## spring 扩展点
 
 
-BeanPostProcessor: (BPP)  能在实例化其他 bean 的前后进行一些自定义操作。
+* BeanPostProcessor: (BPP)  
+
+    能在实例化其他 bean 的前后进行一些自定义操作。
     能通过 bean 定义判断出该类型的bean，并优先初始化，在其他bean创建之前应用他们。
     因此，在使用 @Bean方法来返回一个 BeanPostProcessor 对象时，该方法的返回类型必须是 BeanPostProcessor 或其子类。
     对 BeanPostProcessor 设置为 lazy-init 是无效的
@@ -85,45 +86,55 @@ BeanPostProcessor: (BPP)  能在实例化其他 bean 的前后进行一些自定
     因为  AOP是用 BeanPostProcessor 实现的，所以，BeanPostProcessor 以及他们直接引用的bean都不会被proxy。
     但是，如果你的 BeanPostProcessor 中通过 @Autowired 或 @Resource 来依赖注入其他 bean，则这些bean可能会回退为自动封装的。
     常见子类：
-        AbstractAdvisingBeanPostProcessor
+    
+    * AbstractAdvisingBeanPostProcessor
 
 
-BeanFactoryPostProcessor: (BFPP) 
+* BeanFactoryPostProcessor: (BFPP) 
+
     类似 BeanPostProcessor。
     实现该接口的类名大多是 XxxConfigurer。在bean初始化前，修改 bean 定义。
-    常见子类：BeanDefinitionRegistryPostProcessor
+    常见子类：
     
-FactoryBean: (FB)
+    * BeanDefinitionRegistryPostProcessor
+    
+* FactoryBean: (FB)
+
     特定的工厂类，用来创建特定的bean。
     常见子类：
         ProxyFactoryBean —— 用于AOP，创建特定bean 的 Proxy bean。
         AbstractSingletonProxyFactoryBean
 
-BeanFactory: (BF)
-创建 BeanFactory 的流程
-1. BeanNameAware's setBeanName
-2. BeanClassLoaderAware's setBeanClassLoader
-3. BeanFactoryAware's setBeanFactory
-4. EnvironmentAware's setEnvironment
-5. EmbeddedValueResolverAware's setEmbeddedValueResolver
-6. ResourceLoaderAware's setResourceLoader (only applicable when running in an application context)
-7. ApplicationEventPublisherAware's setApplicationEventPublisher (only applicable when running in an application context)
-8. MessageSourceAware's setMessageSource (only applicable when running in an application context)
-9. ApplicationContextAware's setApplicationContext (only applicable when running in an application context)
-10. ServletContextAware's setServletContext (only applicable when running in a web application context)
-11. postProcessBeforeInitialization methods of BeanPostProcessors
-12. InitializingBean's afterPropertiesSet
-13. a custom init-method definition
-14. postProcessAfterInitialization methods of BeanPostProcessors
+* BeanFactory: (BF)
 
-关闭 BeanFactory 的流程
-1. postProcessBeforeDestruction methods of DestructionAwareBeanPostProcessors
-2. DisposableBean's destroy
-3. a custom destroy-method definition
+    创建 BeanFactory 的流程
+        
+    1. BeanNameAware's setBeanName
+    2. BeanClassLoaderAware's setBeanClassLoader
+    3. BeanFactoryAware's setBeanFactory
+    4. EnvironmentAware's setEnvironment
+    5. EmbeddedValueResolverAware's setEmbeddedValueResolver
+    6. ResourceLoaderAware's setResourceLoader (only applicable when running in an application context)
+    7. ApplicationEventPublisherAware's setApplicationEventPublisher (only applicable when running in an application context)
+    8. MessageSourceAware's setMessageSource (only applicable when running in an application context)
+    9. ApplicationContextAware's setApplicationContext (only applicable when running in an application context)
+    10. ServletContextAware's setServletContext (only applicable when running in a web application context)
+    11. postProcessBeforeInitialization methods of BeanPostProcessors
+    12. InitializingBean's afterPropertiesSet
+    13. a custom init-method definition
+    14. postProcessAfterInitialization methods of BeanPostProcessors
+
+    关闭 BeanFactory 的流程
+    
+    1. postProcessBeforeDestruction methods of DestructionAwareBeanPostProcessors
+    2. DisposableBean's destroy
+    3. a custom destroy-method definition
 
 ## AOP
 
 # 类关系
+
+```
 ProxyConfig
     AbstractSingletonProxyFactoryBean       // FB,
         CacheProxyFactoryBean
@@ -163,20 +174,20 @@ AnnotationAwareAspectJAutoProxyCreator
             #findEligibleAdvisors()
                 #findCandidateAdvisors()
         #createProxy()                      // 使用上述所有的 Advisor 创建 Proxy
-
+```
 
  
  
 ## Java config
 
+
+```
 @Component
     @Repository
     @Configuration
     @Service
     @Controller
         @RestController
-
-
 
 SpringApplication
     #initialize()
@@ -262,9 +273,10 @@ AnnotationConfigUtils.registerAnnotationConfigProcessors()  // 注册各种 Bean
 AnnotationConfigApplicationContext
     AnnotatedBeanDefinitionReader#registerBean()        // @Primary, @Lazy
         ConditionEvaluator#shouldSkip()                 // @Conditional @Bean
-    
+```
 
 ## EnableAutoConfiguration
+
 
 @EnableAutoConfiguration
 主要扫描@Configuration + 
@@ -274,6 +286,7 @@ AnnotationConfigApplicationContext
     @AutoConfigureAfter
 配合的bean。
 
+```
 @EnableAutoConfiguration
     -> SpringBootWebSecurityConfiguration
         #ignoredPathsWebSecurityConfigurerAdapter()     // 创建 WebSecurityConfigurer，对特定路径不进行安全设置。
@@ -354,11 +367,15 @@ WebSecurityConfigurerAdapter        // 在实现是请设置 @Order，参考 Sec
 @Order
     同 Ordered 接口。数值越小，优先级越高。
     没有使用 @Order 注解，且 没有实现 Ordered 接口，则默认是最低优先级（最后处理，整数的最大值）
- 
-AbstractSecurityInterceptor
+```
+
+##AbstractSecurityInterceptor
+
+主要子类有：
     ChannelSecurityInterceptor
     FilterSecurityInterceptor
     MethodSecurityInterceptor
+
 1. 从 SecurityContextHolder 中获取 Authentication
 1. 查询 SecurityMetadataSource ，确认请求是公共的，还是受保护的资源
 1. 如果是受保护的资源：
@@ -376,7 +393,7 @@ AbstractSecurityInterceptor
 
     
     
- FIXME: authentioncationManager 是何时注册到 applicationContenxt 中的？
+FIXME: authentioncationManager 是何时注册到 applicationContenxt 中的？
  
  
 ## 如何自定义配置  WebSecurity、HttpSecurity、
@@ -413,6 +430,7 @@ AbstractSecurityInterceptor
                             
 ## 类关系
 
+```
 SecurityBuilder
     HttpSecurityBuilder<H>
     ProviderManagerBuilder<B>
@@ -459,11 +477,15 @@ SecurityConfigurer                          // 初始化并配置 SecurityBuilde
                     InMemoryUserDetailsManagerConfigurer
                     JdbcUserDetailsManagerConfigurer
                     
-                    
+```
+             
 ## Web 请求顺序
+
+```
 DelegatingFilterProxy
     -> FilterChainProxy
         -> DefaultSecurityFilterChain (多个)
+```
 
 ## filter-stack
 Spring security 的 filter-stack 在[这里](http://docs.spring.io/spring-security/site/docs/4.2.0.RELEASE/reference/htmlsingle/#filter-stack)。
@@ -486,7 +508,7 @@ Spring security 的 filter-stack 在[这里](http://docs.spring.io/spring-securi
 |FORM_LOGIN_FILTER              |UsernamePasswordAuthenticationFilter       |http/form-login                        |#formLogin()           |
 |OPENID_FILTER                  |OpenIDAuthenticationFilter                 |                                       |#openidLogin()         |
 |LOGIN_PAGE_FILTER              |DefaultLoginPageGeneratingFilter           |                                       |                       |
-|DIGEST_AUTH_FILTER             |DigestAuthenticationFilter                 |                                       |                       |
+|DIGEST_AUTH_FILTER             |DigestAuthenticationFilter                 |                                        |                       |
 |BASIC_AUTH_FILTER              |BasicAuthenticationFilter                  |http/http-basic                        |#httpBasic()           |
 |REQUEST_CACHE_FILTER           |RequestCacheAwareFilter                    |                                       |#requestCache()        |
 |SERVLET_API_SUPPORT_FILTER     |SecurityContextHolderAwareRequestFilter    |http/@servlet-api-provision            |#servletApi()          |
@@ -498,6 +520,3 @@ Spring security 的 filter-stack 在[这里](http://docs.spring.io/spring-securi
 |FILTER_SECURITY_INTERCEPTOR    |FilterSecurityInterceptor                  |http                                   |#                      |
 |SWITCH_USER_FILTER             |SwitchUserFilter                           |N/A                                    |#addFilter...()        |
 |LAST                           |                                           |                                       |                       |
-
-
-

@@ -19,6 +19,7 @@ apply plugin: 'spring-boot'
 //    baseName = 'demo'
 //    version = '0.0.1-SNAPSHOT'
 //}
+
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
@@ -26,22 +27,25 @@ repositories {
     mavenCentral()
 }
 
-
 dependencies {
     compile('org.codehaus.groovy:groovy')
-    compile('org.springframework.boot:spring-boot-starter-security')
-    compile('org.springframework.boot:spring-boot-starter-thymeleaf')
     compile('org.springframework.boot:spring-boot-starter-web')
-    testCompile('org.springframework.boot:spring-boot-starter-test')
-
-
+    compile('org.springframework.boot:spring-boot-starter-thymeleaf')
     compile("org.springframework.boot:spring-boot-devtools")
+    compile('org.apache.httpcomponents:httpclient:4.5.2')
+    compile('org.springframework.boot:spring-boot-starter-security')
+
+    testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
 bootRun {
     addResources = true
 }
 
+test {
+    include 'me/test/**'
+    testLogging.showStandardStreams = false
+}
 
 // gradle bootRun
 springBoot {
