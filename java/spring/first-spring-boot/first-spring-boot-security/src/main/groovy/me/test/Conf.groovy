@@ -55,10 +55,9 @@ class WebMvcConf extends WebMvcConfigurerAdapter {
 //    }
 //}
 
-@EnableWebSecurity(debug = false)
+// @EnableWebSecurity(debug = false) 有该注解的话，就不会对 SpringBootWebSecurityConfiguration 进行配置了
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 class SecConf {
-
 
     @Autowired
     void configAuthenticationManager(AuthenticationManagerBuilder auth) {
@@ -73,7 +72,13 @@ class SecConf {
                 .withUser("user")
                 .password("user")
                 .authorities("UUU")
-                .roles("USER");
+                .roles("USER")
+
+            .and()
+                .withUser("basic")
+                .password("basic")
+                .authorities("UUU")
+                .roles("U");
         // @formatter:on
     }
 
@@ -87,7 +92,14 @@ class SecConf {
             @Override
             protected void configure(HttpSecurity http) throws Exception {
                 // @formatter:off
-                http.authorizeRequests()
+                http.requestMatchers()
+                        .antMatchers("/SecConf/pub.html") // 只匹配这几个请求的URL路径
+                        .antMatchers("/SecConf/sec.html")
+                        .antMatchers("/SecConf/adm.html")
+                        .antMatchers("/login")
+
+                    .and()
+                        .authorizeRequests()
                         .antMatchers("/SecConf/pub.html")
                         .permitAll()
 
@@ -100,7 +112,7 @@ class SecConf {
                         .antMatchers("/login")
                         .permitAll()
 
-//                        .anyRequest()
+//                        .anyRequest()   // 禁用该配置，以方便测试默认的 http basic 认证
 //                        .authenticated()
 
                     .and()
@@ -118,6 +130,8 @@ class SecConf {
 //                        .accessDeniedPage("/access?error")  // 如果没设置，则会通过错误码去找相应的错误画面。
                     .and()
                         .httpBasic()
+                        .realmName("MySecApp")
+
                 // @formatter:on
             }
 

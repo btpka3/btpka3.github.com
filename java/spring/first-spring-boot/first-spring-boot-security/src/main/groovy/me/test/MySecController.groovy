@@ -7,20 +7,13 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseBody
 
 @Controller
-class MyTestController {
+class MySecController {
 
     @RequestMapping("/")
     @PreAuthorize("permitAll")
     @ResponseBody
     String index() {
         return "Hello World!~ " + new Date();
-    }
-
-    @RequestMapping("/403")
-    @PreAuthorize("permitAll")
-    @ResponseBody
-    String access() {
-        return "access denied! " + new Date();
     }
 
 
@@ -42,6 +35,16 @@ class MyTestController {
     @ResponseBody
     String adm() {
         return "/controller/adm";
+    }
+
+
+    // 该路径没有在 SecConf 中明确配置，故交给默认的 http basic 认证配置
+    // 浏览器访问该路径，应当只会弹出 basic 认证的输入框，而不会跳转到表单登录画面
+    @RequestMapping("/controller/basic")
+    @PreAuthorize("isAuthenticated()")
+    @ResponseBody
+    String basic() {
+        return "/controller/basic";
     }
 
 }

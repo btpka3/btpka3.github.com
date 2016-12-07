@@ -88,6 +88,7 @@ spring security 的 "springSecurityFilterChain" 是在哪里注册配置的？
     常见子类：
     
     * AbstractAdvisingBeanPostProcessor
+    * ConfigurationPropertiesBindingPostProcessor
 
 
 * BeanFactoryPostProcessor: (BFPP) 
@@ -97,6 +98,27 @@ spring security 的 "springSecurityFilterChain" 是在哪里注册配置的？
     常见子类：
     
     * BeanDefinitionRegistryPostProcessor
+    * ConfigurationClassPostProcessor
+    
+    ```
+    @Conditional
+        @ConditionalOnBean
+        @ConditionalOnMissingBean
+        @ConditionalOnClass
+        @ConditionalOnMissingClass
+        @ConditionalOnEnabledResourceChain
+        @ConditionalOnExpression
+        @ConditionalOnInitializedRestarter
+        @ConditionalOnJava
+        @ConditionalOnJndi
+        @ConditionalOnWebApplication
+        @ConditionalOnNotWebApplication
+        @ConditionalOnProperty
+        @ConditionalOnResource
+        @ConditionalOnSingleCandidate
+    ```
+        
+            
     
 * FactoryBean: (FB)
 
@@ -257,6 +279,7 @@ AnnotationConfigUtils.registerAnnotationConfigProcessors()  // 注册各种 Bean
             ImportAwareBeanPostProcessor            // BPP: 处理 ImportAware
             EnhancedConfigurationBeanPostProcessor  // BPP: 处理
             #processConfigBeanDefinitions
+                ConfigurationClassParser#parse()    
     AutowiredAnnotationBeanPostProcessor        // @Autowired, @Value
     RequiredAnnotationBeanPostProcessor         // @Required
     CommonAnnotationBeanPostProcessor           // JSR-250 注解
@@ -269,13 +292,27 @@ AnnotationConfigUtils.registerAnnotationConfigProcessors()  // 注册各种 Bean
 
     ConfigurationClassBeanDefinitionReader
 
-
+ConfigurationClassParser#parse()
+    #processDeferredImportSelectors()   // 查找所有 @Conditional 标记的注解的信息
+    EnableAutoConfigurationImportSelector#selectImports()   // 从 @SpringBootApplication 查找起
+        SpringFactoriesLoader.loadFactoryNames()    // 从 spring-boot-autoconfigure.jar!META-INF/spring.factories 中
+                                                    // 查找 EnableAutoConfiguration 要加载的类。
+    #processConfigurationClass()
+        #doProcessConfigurationClass()  // 级联从 @Import 中读取要 import 的类
+            
+    
 AnnotationConfigApplicationContext
     AnnotatedBeanDefinitionReader#registerBean()        // @Primary, @Lazy
         ConditionEvaluator#shouldSkip()                 // @Conditional @Bean
 ```
 
-## EnableAutoConfiguration
+## @@SpringBootApplication
+
+```
+EnableAutoConfigurationImportSelector
+```
+
+## @EnableAutoConfiguration
 
 
 @EnableAutoConfiguration
@@ -288,20 +325,13 @@ AnnotationConfigApplicationContext
 
 ```
 @EnableAutoConfiguration
+SecurityAutoConfiguration
     -> SpringBootWebSecurityConfiguration
         #ignoredPathsWebSecurityConfigurerAdapter()     // 创建 WebSecurityConfigurer，对特定路径不进行安全设置。
         .ApplicationNoWebSecurityConfigurerAdapter()    // 创建 WebSecurityConfigurer，当没有 security.basic.enabled 时创建，不对任何路径进行basic认证。
         .ApplicationWebSecurityConfigurerAdapter()      // 创建 WebSecurityConfigurer，当 security.basic.enabled 时创建，
                                                         // 根据 application.yml 中 "security.*" 进行相应的设置。
         -> EnableWebSecurity
-            -> WebSecurityConfiguration
-                #autowiredWebSecurityConfigurersIgnoreParents() // 从当前spring 容器中获取 webSecurityConfigurer/WebSecurityConfigurerAdapter
-                #setFilterChainProxySecurityConfigurer()        // 创建 webSecurity, 并应用上述所有 webSecurityConfigurer
-                #springSecurityFilterChain()                    // 通过 webSecurity 注册 filter bean "springSecurityFilterChain"
-                    :webSecurity.build()
-            -> ObjectPostProcessorConfiguration                 // 创建 ObjectPostProcessor Bean
-            -> SpringWebMvcImportSelector
-                -> WebMvcSecurityConfiguration
     -> BootGlobalAuthenticationConfiguration
         #bootGlobalAuthenticationConfigurationAdapter()     // 优先初始化 @EnableAutoConfiguration 的 bean
     -> AuthenticationManagerConfiguration                   // 如果不存在 AuthenticationManager，则创建一个。
@@ -318,7 +348,15 @@ AnnotationConfigApplicationContext
     -> @EnableGlobalAuthentication 
         -> AuthenticationConfiguration
 
-
+@EnableWebSecurity
+    -> WebSecurityConfiguration
+        #autowiredWebSecurityConfigurersIgnoreParents() // 从当前spring 容器中获取 webSecurityConfigurer/WebSecurityConfigurerAdapter
+        #setFilterChainProxySecurityConfigurer()        // 创建 webSecurity, 并应用上述所有 webSecurityConfigurer
+        #springSecurityFilterChain()                    // 通过 webSecurity 注册 filter bean "springSecurityFilterChain"
+            :webSecurity.build()
+    -> ObjectPostProcessorConfiguration                 // 创建 ObjectPostProcessor Bean
+    -> SpringWebMvcImportSelector
+        -> WebMvcSecurityConfiguration
 
 
 AuthenticationConfiguration

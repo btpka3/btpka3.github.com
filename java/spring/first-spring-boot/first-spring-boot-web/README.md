@@ -101,7 +101,6 @@ DelegatingWebMvcConfiguration                   // 会提供许多bean，
 @EnableWebMvc                                   // 如果启用该注解，则要完全手动配置 MVC 各个方面。
     DelegatingWebMvcConfiguration
 
-
 DispatcherServlet#doService()
     #doDispatch()
         #checkMultipart()

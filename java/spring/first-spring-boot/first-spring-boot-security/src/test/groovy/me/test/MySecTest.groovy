@@ -91,7 +91,7 @@ public class MySecTest {
         assertThat(respEntity.body).contains("<title>SecConf-sec</title>");
     }
 
-    /** SecConf 测试 : `/SecConf/adm.html` 测试 */
+    /** SecConf 测试 : `/SecConf/adm.html` 测试  - admin 用户 */
     @Test
     public void secCondAdm01() {
         HttpHeaders headers = new HttpHeaders();
@@ -112,7 +112,7 @@ public class MySecTest {
         assertThat(respEntity.body).contains("<title>SecConf-adm</title>");
     }
 
-    /** SecConf 测试 : `/SecConf/adm.html` 测试 */
+    /** SecConf 测试 : `/SecConf/adm.html` 测试 - user 用户*/
     @Test
     public void secCondAdm02() {
         HttpHeaders headers = new HttpHeaders();
@@ -130,8 +130,79 @@ public class MySecTest {
         ResponseEntity<String> respEntity = restTemplate.exchange(path,
                 HttpMethod.GET, reqEntity, String.class);
 
+
         assertThat(respEntity.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN)
         assertThat(respEntity.body).contains("<div>4xx.html: 403</div>");
+    }
+
+    /** SecConf 测试 : `/SecConf/adm.html` 测试 - 未设置用户名密码 */
+    @Test
+    public void secCondAdm03() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept([MediaType.TEXT_HTML])
+
+        String path = UriComponentsBuilder.fromPath("/SecConf/adm.html")
+                .build()
+                .toUri()
+                .toString()
+
+        HttpEntity<Void> reqEntity = new HttpEntity<Void>(null, headers);
+
+        ResponseEntity<String> respEntity = restTemplate.exchange(path,
+                HttpMethod.GET, reqEntity, String.class);
+
+        // 需要表单登录
+        assertThat(respEntity.getStatusCode()).isEqualTo(HttpStatus.FOUND)
+        assertThat(respEntity.headers.getLocation().toString()).isEqualTo("http://localhost:${port}/login".toString())
+    }
+
+    /** SecConf 测试 : `/SecConf/adm.html` 测试 - 用户名密码错误 */
+    @Test
+    public void secCondAdm04() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept([MediaType.TEXT_HTML])
+        String token = Base64Utils.encodeToString(("admin:admin1").getBytes("UTF-8"));
+        headers.add("Authorization", "Basic " + token);
+
+        String path = UriComponentsBuilder.fromPath("/SecConf/adm.html")
+                .build()
+                .toUri()
+                .toString()
+
+        HttpEntity<Void> reqEntity = new HttpEntity<Void>(null, headers);
+
+        ResponseEntity<String> respEntity = restTemplate.exchange(path,
+                HttpMethod.GET, reqEntity, String.class);
+
+        // 默认走了 HttpBasicConfigurer 中配置的 BasicAuthenticationEntryPoint
+        assertThat(respEntity.headers.get("WWW-Authenticate").get(0)).isEqualTo('Basic realm="MySecApp"')
+        assertThat(respEntity.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED)
+        assertThat(respEntity.body).contains("<div>4xx.html: 401</div>");
+    }
+    /** SecConf 测试 : `/SecConf/adm.html` 测试 - 模拟 XHR  */
+    @Test
+    public void secCondAdm05() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept([MediaType.TEXT_HTML])
+        String token = Base64Utils.encodeToString(("admin:admin1").getBytes("UTF-8"));
+        headers.add("Authorization", "Basic " + token);
+        headers.set("X-Requested-With", "XMLHttpRequest")
+
+        String path = UriComponentsBuilder.fromPath("/SecConf/adm.html")
+                .build()
+                .toUri()
+                .toString()
+
+        HttpEntity<Void> reqEntity = new HttpEntity<Void>(null, headers);
+
+        ResponseEntity<String> respEntity = restTemplate.exchange(path,
+                HttpMethod.GET, reqEntity, String.class);
+
+        // 默认走了 HttpBasicConfigurer 中配置的 HttpStatusEntryPoint
+        assertThat(respEntity.headers.get("WWW-Authenticate")).isNull()
+        assertThat(respEntity.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED)
+        assertThat(respEntity.body).isNull()
+
     }
 
     /** 登录测试: 获取登录画面 */
@@ -168,6 +239,71 @@ public class MySecTest {
         assertThat(respEntity.body).contains("<div>4xx.html: 403</div>");
 
     }
+
+    /** 默认 basic 认证测试 : `/controller/basic` 测试 - 没有 basic 认证 */
+    @Test
+    public void defaultBasic01() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept([MediaType.TEXT_HTML])
+        headers.set("X-Requested-With", "XMLHttpRequest")
+
+        String path = UriComponentsBuilder.fromPath("/controller/basic")
+                .build()
+                .toUri()
+                .toString()
+
+        HttpEntity<Void> reqEntity = new HttpEntity<Void>(null, headers);
+
+        ResponseEntity<String> respEntity = restTemplate.exchange(path,
+                HttpMethod.GET, reqEntity, String.class);
+
+        assertThat(respEntity.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED)
+        assertThat(respEntity.body).contains("<div>4xx.html: 401</div>");
+    }
+
+    /** 默认 basic 认证测试 : `/controller/basic` 测试 - 有 basic 认证，有 USER 权限 */
+    @Test
+    public void defaultBasic02() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept([MediaType.TEXT_HTML])
+        String token = Base64Utils.encodeToString(("user:user").getBytes("UTF-8"));
+        headers.add("Authorization", "Basic " + token);
+
+        String path = UriComponentsBuilder.fromPath("/controller/basic")
+                .build()
+                .toUri()
+                .toString()
+
+        HttpEntity<Void> reqEntity = new HttpEntity<Void>(null, headers);
+
+        ResponseEntity<String> respEntity = restTemplate.exchange(path,
+                HttpMethod.GET, reqEntity, String.class);
+
+        assertThat(respEntity.getStatusCode()).isEqualTo(HttpStatus.OK)
+        assertThat(respEntity.body).contains("/controller/basic");
+    }
+    /** 默认 basic 认证测试 : `/controller/basic` 测试 - 有 basic 认证，无 USER 权限 */
+    @Test
+    public void defaultBasic03() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept([MediaType.TEXT_HTML])
+        String token = Base64Utils.encodeToString(("basic:basic").getBytes("UTF-8"));
+        headers.add("Authorization", "Basic " + token);
+
+        String path = UriComponentsBuilder.fromPath("/controller/basic")
+                .build()
+                .toUri()
+                .toString()
+
+        HttpEntity<Void> reqEntity = new HttpEntity<Void>(null, headers);
+
+        ResponseEntity<String> respEntity = restTemplate.exchange(path,
+                HttpMethod.GET, reqEntity, String.class);
+
+        assertThat(respEntity.getStatusCode()).isEqualTo(HttpStatus.OK)
+        assertThat(respEntity.body).contains("/controller/basic");
+    }
+
 
     // TODO : restTemplate 使用cookie跟随302跳转，获取新的 csrf token 并登陆成功。
 //assertThat(respEntity.headers.location.toString()).isEqualTo("http://localhost:${port}/")

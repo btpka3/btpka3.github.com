@@ -1,4 +1,5 @@
 # security.basic.enabled: false
+security.basic.authorize-mode: AUTHENTICATED
 
 logging.level.org.springframework.security: INFO
 logging.level.org.springframework.boot.actuate.audit.listener.AuditListener: DEBUG
