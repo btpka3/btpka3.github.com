@@ -1,5 +1,8 @@
 # security.basic.enabled: false
 security.basic.authorize-mode: AUTHENTICATED
+# 如果 SESSION 是 IF_REQUIRED 则在浏览器访问已经登录，
+# 直接访问 `/controller/basic` (没有 http basic 认证头）的情况下仍然可以访问。
+security.sessions: IF_REQUIRED
 
 logging.level.org.springframework.security: INFO
 logging.level.org.springframework.boot.actuate.audit.listener.AuditListener: DEBUG

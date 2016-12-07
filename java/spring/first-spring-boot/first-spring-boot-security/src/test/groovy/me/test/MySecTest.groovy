@@ -304,15 +304,6 @@ public class MySecTest {
         assertThat(respEntity.body).contains("/controller/basic");
     }
 
-
     // TODO : restTemplate 使用cookie跟随302跳转，获取新的 csrf token 并登陆成功。
-//assertThat(respEntity.headers.location.toString()).isEqualTo("http://localhost:${port}/")
-//    /** SecConf 测试 : `/SecConf/sec.html` 测试 */
-//    @Test
-//    public void secConfSec01() {
-//        String body = restTemplate.getForObject("/SecConf/sec.html", String.class);
-//        assertThat(body).contains("<title>SecConf-sec</title>");
-//    }
-
 
 }

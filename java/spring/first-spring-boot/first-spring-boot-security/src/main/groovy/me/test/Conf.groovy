@@ -97,6 +97,10 @@ class SecConf {
                         .antMatchers("/SecConf/sec.html")
                         .antMatchers("/SecConf/adm.html")
                         .antMatchers("/login")
+                        .antMatchers("/")
+                        .antMatchers("/controller/pub")
+                        .antMatchers("/controller/sec")
+                        .antMatchers("/controller/adm")
 
                     .and()
                         .authorizeRequests()
