@@ -17,4 +17,6 @@ include 'services:webservice'
 */
 
 rootProject.name = 'first-spring-boot'
-include 'first-spring-boot-security', 'first-spring-boot-web'
+
+include 'first-spring-boot-security'
+include 'first-spring-boot-web'

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.context.embedded.EmbeddedWebApplicationContext
 import org.springframework.boot.context.embedded.LocalServerPort
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.web.client.LocalHostUriTemplateHandler
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
@@ -212,9 +213,41 @@ public class MySecTest {
         assertThat(body).contains("<title>my login form</title>");
     }
 
+//    // 如果对login 启用 csrf 的时候，可以执行该测试
+//    /** 登录测试: 提交表单登录信息 - CSRF token 无效 */
+//    @Test
+//    public void login02() {
+//
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setAccept([MediaType.TEXT_HTML])
+//
+//        MultiValueMap reqMsg = new LinkedMultiValueMap()
+//        reqMsg.username = "admin"
+//        reqMsg.password = "admin"
+//        reqMsg._csrf = "not_existed_csrf_token"
+//
+//        HttpEntity<Void> reqEntity = new HttpEntity<Void>(reqMsg, headers);
+//
+//        String path = UriComponentsBuilder.fromPath("/login")
+//                .build()
+//                .toUri()
+//                .toString()
+//
+//        ResponseEntity<String> respEntity = restTemplate.exchange(path,
+//                HttpMethod.POST, reqEntity, String.class);
+//
+//        // 因为 CSRF token 不存在， 故 CsrfFilter 会做相应的处理
+//        assertThat(respEntity.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN)
+//        assertThat(respEntity.body).contains("<div>4xx.html: 403</div>");
+//
+//    }
+
     /** 登录测试: 提交表单登录信息 - CSRF token 无效 */
     @Test
-    public void login02() {
+    public void login03() {
+
+        TestRestTemplate tmpRestTemplate = new TestRestTemplate(TestRestTemplate.HttpClientOption.ENABLE_COOKIES);
+        tmpRestTemplate.setUriTemplateHandler( new LocalHostUriTemplateHandler(applicationContext.getEnvironment()));
 
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept([MediaType.TEXT_HTML])
@@ -222,7 +255,7 @@ public class MySecTest {
         MultiValueMap reqMsg = new LinkedMultiValueMap()
         reqMsg.username = "admin"
         reqMsg.password = "admin"
-        reqMsg._csrf = "not_existed_csrf_token"
+        //reqMsg._csrf = "not_existed_csrf_token"
 
         HttpEntity<Void> reqEntity = new HttpEntity<Void>(reqMsg, headers);
 
@@ -231,14 +264,31 @@ public class MySecTest {
                 .toUri()
                 .toString()
 
-        ResponseEntity<String> respEntity = restTemplate.exchange(path,
+        ResponseEntity<String> respEntity = tmpRestTemplate.exchange(path,
                 HttpMethod.POST, reqEntity, String.class);
 
         // 因为 CSRF token 不存在， 故 CsrfFilter 会做相应的处理
-        assertThat(respEntity.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN)
-        assertThat(respEntity.body).contains("<div>4xx.html: 403</div>");
+        assertThat(respEntity.getStatusCode()).isEqualTo(HttpStatus.FOUND)
+        assertThat(respEntity.headers.getLocation().toString()).isEqualTo("http://localhost:${port}/".toString())
 
+        // 检查 restTemplate 是否配置OK，能否保留 Cookie
+        HttpHeaders headers1 = new HttpHeaders();
+        headers1.setAccept([MediaType.TEXT_HTML])
+
+        String path1 = UriComponentsBuilder.fromPath("/SecConf/adm.html")
+                .build()
+                .toUri()
+                .toString()
+
+        HttpEntity<Void> reqEntity1 = new HttpEntity<Void>(null, headers);
+        ResponseEntity<String> respEntity1 = tmpRestTemplate.exchange(path1,
+                HttpMethod.GET, reqEntity1, String.class);
+
+        assertThat(respEntity1.getStatusCode()).isEqualTo(HttpStatus.OK)
+        assertThat(respEntity1.body).contains("<title>SecConf-adm</title>");
     }
+
+
 
     /** 默认 basic 认证测试 : `/controller/basic` 测试 - 没有 basic 认证 */
     @Test
@@ -282,6 +332,7 @@ public class MySecTest {
         assertThat(respEntity.getStatusCode()).isEqualTo(HttpStatus.OK)
         assertThat(respEntity.body).contains("/controller/basic");
     }
+
     /** 默认 basic 认证测试 : `/controller/basic` 测试 - 有 basic 认证，无 USER 权限 */
     @Test
     public void defaultBasic03() {
@@ -305,5 +356,6 @@ public class MySecTest {
     }
 
     // TODO : restTemplate 使用cookie跟随302跳转，获取新的 csrf token 并登陆成功。
+
 
 }

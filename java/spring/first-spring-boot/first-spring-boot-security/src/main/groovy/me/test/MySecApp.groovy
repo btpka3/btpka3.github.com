@@ -20,7 +20,7 @@ class MySecApp {
         SpringApplication.run(MySecApp.class, args);
     }
 
-    /** 自定义html格式的错误画面 */
+    /** 自定义错误画面 */
     @Bean(name = ["error"])
     View error(ObjectMapper objectMapper) {
         return new MappingJackson2JsonView(objectMapper)

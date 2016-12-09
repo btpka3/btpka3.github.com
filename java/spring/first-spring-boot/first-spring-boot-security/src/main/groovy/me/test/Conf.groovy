@@ -92,7 +92,7 @@ class SecConf {
             @Override
             protected void configure(HttpSecurity http) throws Exception {
                 // @formatter:off
-                http.requestMatchers()
+                http.requestMatchers()                    // 如果不配置，则默认匹配所有请求
                         .antMatchers("/SecConf/pub.html") // 只匹配这几个请求的URL路径
                         .antMatchers("/SecConf/sec.html")
                         .antMatchers("/SecConf/adm.html")
@@ -135,6 +135,10 @@ class SecConf {
                     .and()
                         .httpBasic()
                         .realmName("MySecApp")
+
+                    .and()
+                        .csrf()
+                        .ignoringAntMatchers("/login")
 
                 // @formatter:on
             }
