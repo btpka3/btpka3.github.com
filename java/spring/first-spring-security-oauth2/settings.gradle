@@ -1,0 +1,5 @@
+
+rootProject.name = 'first-spring-security-oauth2'
+include 'oauth2-authorization-server'
+include 'oauth2-client-app'
+//include 'oauth2-resource-server'

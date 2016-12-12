@@ -1,0 +1,62 @@
+buildscript {
+    ext {
+        springBootVersion = '1.4.0.RELEASE'
+    }
+    repositories {
+        mavenLocal()
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+version "0.0.1"
+group "me.test"
+
+apply plugin: 'groovy'
+apply plugin: "spring-boot"
+apply plugin: "eclipse"
+apply plugin: "idea"
+apply plugin: 'project-report'
+
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenLocal()
+    maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+    mavenCentral()
+}
+
+dependencies {
+    compile('org.codehaus.groovy:groovy')
+    compile('org.springframework.boot:spring-boot-starter-security')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+
+    compile("org.springframework.boot:spring-boot-devtools")
+
+    compile ('org.springframework.security.oauth:spring-security-oauth2')
+    compile ('org.springframework.security:spring-security-jwt:1.0.6.RELEASE')
+
+}
+
+bootRun {
+    addResources = true
+}
+
+eclipse {
+    classpath {
+        downloadSources=true
+    }
+}
+
+idea {
+    module {
+        //downloadJavadoc = true
+        downloadSources = true
+    }
+}

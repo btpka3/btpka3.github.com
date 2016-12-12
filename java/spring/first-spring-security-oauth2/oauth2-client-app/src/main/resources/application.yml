@@ -1,0 +1,13 @@
+server.port: 10002
+
+
+my.oauth2:
+  auth:
+    port: 10001
+  resource:
+    id: MY_RSC
+    accessTokenUri:         http://localhost:10001/oauth/token
+    userAuthorizationUri:   http://localhost:10001/oauth/authorize
+  client:
+    id: MY_CLIENT
+    secret: secret
