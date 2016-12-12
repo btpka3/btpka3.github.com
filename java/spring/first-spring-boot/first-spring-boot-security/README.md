@@ -483,6 +483,10 @@ SecurityConfigurer                          // 初始化并配置 SecurityBuilde
     WebSecurityConfigurer
         WebSecurityConfigurerAdapter        // : #getHttp() , 创建 httpSecurity
                                             // 新建内部 AuthenticationManagerBuilder
+            SpringBootWebSecurityConfiguration.ApplicationNoWebSecurityConfigurerAdapter
+            SpringBootWebSecurityConfiguration.ApplicationWebSecurityConfigurerAdapter
+            ResourceServerConfiguration
+        SpringBootWebSecurityConfiguration.IgnoredPathsWebSecurityConfigurerAdapter    
     SecurityConfigurerAdapter
         AbstractHttpConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, B>
             AbstractAuthenticationFilterConfigurer,
@@ -514,6 +518,7 @@ SecurityConfigurer                          // 初始化并配置 SecurityBuilde
                 UserDetailsManagerConfigurer
                     InMemoryUserDetailsManagerConfigurer
                     JdbcUserDetailsManagerConfigurer
+        ResourceServerSecurityConfigurer
                     
 ```
              

@@ -1,4 +1,4 @@
-package me.test
+package me.test.controller
 
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
@@ -36,7 +36,6 @@ class MySecController {
     String adm() {
         return "/controller/adm";
     }
-
 
     // 该路径没有在 SecConf 中明确配置，故交给默认的 http basic 认证配置
     // 浏览器访问该路径，应当只会弹出 basic 认证的输入框，而不会跳转到表单登录画面

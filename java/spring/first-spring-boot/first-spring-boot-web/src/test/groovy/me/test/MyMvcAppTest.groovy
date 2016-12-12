@@ -17,9 +17,9 @@ import org.springframework.web.util.UriComponentsBuilder
 import static org.assertj.core.api.Assertions.assertThat
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = [MyApp.class], webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = [MyMvcApp.class], webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 //@TestConfiguration // 该配置仅仅影响当前测试使用的环境
-public class MyTest {
+public class MyMvcAppTest {
 
     @Autowired
     EmbeddedWebApplicationContext applicationContext;

@@ -1,5 +1,6 @@
-package me.test
+package me.test.controller
 
+import me.test.service.MyService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType

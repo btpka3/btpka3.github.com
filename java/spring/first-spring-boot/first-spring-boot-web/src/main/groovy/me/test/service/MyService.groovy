@@ -1,4 +1,4 @@
-package me.test
+package me.test.service
 
 import org.springframework.stereotype.Service
 

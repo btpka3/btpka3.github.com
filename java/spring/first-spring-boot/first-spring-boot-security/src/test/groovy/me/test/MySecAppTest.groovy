@@ -8,25 +8,18 @@ import org.springframework.boot.context.embedded.LocalServerPort
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.LocalHostUriTemplateHandler
 import org.springframework.boot.test.web.client.TestRestTemplate
-import org.springframework.http.HttpEntity
-import org.springframework.http.HttpHeaders
-import org.springframework.http.HttpMethod
-import org.springframework.http.HttpStatus
-import org.springframework.http.MediaType
-import org.springframework.http.ResponseEntity
+import org.springframework.http.*
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 import org.springframework.util.Base64Utils
 import org.springframework.util.LinkedMultiValueMap
 import org.springframework.util.MultiValueMap
 import org.springframework.web.util.UriComponentsBuilder
 
-import java.nio.charset.Charset
-
 import static org.assertj.core.api.Assertions.assertThat
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = [MySecApp.class], webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class MySecTest {
+public class MySecAppTest {
 
     @Autowired
     EmbeddedWebApplicationContext applicationContext;
@@ -247,7 +240,7 @@ public class MySecTest {
     public void login03() {
 
         TestRestTemplate tmpRestTemplate = new TestRestTemplate(TestRestTemplate.HttpClientOption.ENABLE_COOKIES);
-        tmpRestTemplate.setUriTemplateHandler( new LocalHostUriTemplateHandler(applicationContext.getEnvironment()));
+        tmpRestTemplate.setUriTemplateHandler(new LocalHostUriTemplateHandler(applicationContext.getEnvironment()));
 
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept([MediaType.TEXT_HTML])
@@ -267,7 +260,6 @@ public class MySecTest {
         ResponseEntity<String> respEntity = tmpRestTemplate.exchange(path,
                 HttpMethod.POST, reqEntity, String.class);
 
-        // 因为 CSRF token 不存在， 故 CsrfFilter 会做相应的处理
         assertThat(respEntity.getStatusCode()).isEqualTo(HttpStatus.FOUND)
         assertThat(respEntity.headers.getLocation().toString()).isEqualTo("http://localhost:${port}/".toString())
 
@@ -287,8 +279,6 @@ public class MySecTest {
         assertThat(respEntity1.getStatusCode()).isEqualTo(HttpStatus.OK)
         assertThat(respEntity1.body).contains("<title>SecConf-adm</title>");
     }
-
-
 
     /** 默认 basic 认证测试 : `/controller/basic` 测试 - 没有 basic 认证 */
     @Test
