@@ -1,13 +1,34 @@
 server.port: 10002
 
+logging.level.org.springframework.security: INFO
+logging.level.org.springframework.boot.actuate.audit.listener.AuditListener: DEBUG
+logging.level.org.springframework.security.config.annotation.authentication.configuration: DEBUG
+logging.level.org.springframework.security.web.access: DEBUG
+logging.level.org.springframework.security.web.csrf: DEBUG
+logging.level.org.springframework.security.access: DEBUG
+# 用来追踪 restTemplate 请求
+logging.level.org.apache.http: DEBUG
+logging.level.me.test.oauth2.client: DEBUG
 
 my.oauth2:
   auth:
     port: 10001
-  resource:
-    id: MY_RSC
     accessTokenUri:         http://localhost:10001/oauth/token
     userAuthorizationUri:   http://localhost:10001/oauth/authorize
+  resource:
+    id: MY_RSC
+    port: 10001
+    photoListUri:           http://localhost:10001/o2/photo
+    photoDetailUri:         http://localhost:10001/o2/photo/{id}
   client:
     id: MY_CLIENT
     secret: secret
+    scopes:
+      - read
+      - write
+    authorizedGrantTypes:
+      - authorization_code
+      - implicit
+      - client_credentials
+      - password
+      - refresh_token

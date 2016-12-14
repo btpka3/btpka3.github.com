@@ -1,5 +1,6 @@
 package me.test.oauth2.authorization.conf
 
+import me.test.oauth2.authorization.MyOAuth2Properties
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.security.oauth2.authserver.AuthorizationServerProperties
@@ -39,6 +40,12 @@ public class OAuth2AuthorizationServerConf extends AuthorizationServerConfigurer
     public static final String MY_RESOURCE_ID = "MY_RSC";
 
     // -------------------------- 定义 spring beans
+
+    @Bean
+    MyOAuth2Properties myOAuth2Properties() {
+        return new MyOAuth2Properties()
+    }
+
 
     @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
@@ -88,6 +95,8 @@ public class OAuth2AuthorizationServerConf extends AuthorizationServerConfigurer
     // --------------------------
 //    @Autowired
 //    private AuthorizationServerProperties properties;
+    @Autowired
+    private MyOAuth2Properties myOAuth2Props
 
     @Autowired
     private ClientDetailsService clientDetailsService;
@@ -109,70 +118,78 @@ public class OAuth2AuthorizationServerConf extends AuthorizationServerConfigurer
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 
         clients.inMemory()
-                .withClient("tonr")
-                .resourceIds(MY_RESOURCE_ID)
-                .authorizedGrantTypes("authorization_code", "implicit")
-                .authorities("ROLE_CLIENT")
-                .scopes("read", "write")
-                .secret("secret")
 
-                .and()
-                .withClient("tonr-with-redirect")
-                .resourceIds(MY_RESOURCE_ID)
-                .authorizedGrantTypes("authorization_code", "implicit")
-                .authorities("ROLE_CLIENT")
-                .scopes("read", "write")
-                .secret("secret")
-                .redirectUris(tonrRedirectUri)
-
-                .and()
-                .withClient("my-client-with-registered-redirect")
-                .resourceIds(MY_RESOURCE_ID)
-                .authorizedGrantTypes("authorization_code", "client_credentials")
-                .authorities("ROLE_CLIENT")
-                .scopes("read", "trust")
-                .redirectUris("http://anywhere?key=value")
-
-                .and()
-                .withClient("my-trusted-client")
-                .authorizedGrantTypes("password", "authorization_code", "refresh_token", "implicit")
-                .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
-                .scopes("read", "write", "trust")
-                .accessTokenValiditySeconds(60)
-
-                .and()
-                .withClient("my-trusted-client-with-secret")
-                .authorizedGrantTypes("password", "authorization_code", "refresh_token", "implicit")
-                .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
-                .scopes("read", "write", "trust")
-                .secret("somesecret")
-
-                .and()
-                .withClient("my-less-trusted-client")
-                .authorizedGrantTypes("authorization_code", "implicit")
-                .authorities("ROLE_CLIENT")
-                .scopes("read", "write", "trust")
-
-                .and()
-                .withClient("my-less-trusted-autoapprove-client")
-                .authorizedGrantTypes("implicit")
-                .authorities("ROLE_CLIENT")
-                .scopes("read", "write", "trust")
-                .autoApprove(true);
+                .withClient(myOAuth2Props.client.id)
+                .resourceIds(myOAuth2Props.resource.id)
+                .authorizedGrantTypes(myOAuth2Props.client.authorizedGrantTypes)
+                .authorities(myOAuth2Props.client.authorities)
+                .scopes(myOAuth2Props.client.scopes)
+                .secret(myOAuth2Props.client.secret)
+//
+//                .withClient("tonr")
+//                .resourceIds(MY_RESOURCE_ID)
+//                .authorizedGrantTypes("authorization_code", "implicit")
+//                .authorities("ROLE_CLIENT")
+//                .scopes("read", "write")
+//                .secret("secret")
+//
+//                .and()
+//                .withClient("tonr-with-redirect")
+//                .resourceIds(MY_RESOURCE_ID)
+//                .authorizedGrantTypes("authorization_code", "implicit")
+//                .authorities("ROLE_CLIENT")
+//                .scopes("read", "write")
+//                .secret("secret")
+//                .redirectUris(tonrRedirectUri)
+//
+//                .and()
+//                .withClient("my-client-with-registered-redirect")
+//                .resourceIds(MY_RESOURCE_ID)
+//                .authorizedGrantTypes("authorization_code", "client_credentials")
+//                .authorities("ROLE_CLIENT")
+//                .scopes("read", "trust")
+//                .redirectUris("http://anywhere?key=value")
+//
+//                .and()
+//                .withClient("my-trusted-client")
+//                .authorizedGrantTypes("password", "authorization_code", "refresh_token", "implicit")
+//                .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
+//                .scopes("read", "write", "trust")
+//                .accessTokenValiditySeconds(60)
+//
+//                .and()
+//                .withClient("my-trusted-client-with-secret")
+//                .authorizedGrantTypes("password", "authorization_code", "refresh_token", "implicit")
+//                .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
+//                .scopes("read", "write", "trust")
+//                .secret("somesecret")
+//
+//                .and()
+//                .withClient("my-less-trusted-client")
+//                .authorizedGrantTypes("authorization_code", "implicit")
+//                .authorities("ROLE_CLIENT")
+//                .scopes("read", "write", "trust")
+//
+//                .and()
+//                .withClient("my-less-trusted-autoapprove-client")
+//                .authorizedGrantTypes("implicit")
+//                .authorities("ROLE_CLIENT")
+//                .scopes("read", "write", "trust")
+//                .autoApprove(true);
     }
 
     // AuthorizationServerEndpointsConfiguration#authorizationEndpoint() 已经配置好了
     @Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints)   {
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints.accessTokenConverter(jwtAccessTokenConverter())
                 .tokenStore(jwtTokenStore())
-                //.userApprovalHandler(userApprovalHandler)
-                //.authenticationManager(authenticationManager);
-                //.pathMapping("/oauth/confirm_access","/your/controller") // 可以修改映射路径。
+        //.userApprovalHandler(userApprovalHandler)
+        //.authenticationManager(authenticationManager);
+        //.pathMapping("/oauth/confirm_access","/your/controller") // 可以修改映射路径。
     }
 
     @Override
-    public void configure(AuthorizationServerSecurityConfigurer oauthServer)   {
+    public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
 
         // 通过 application.yml : "security.oauth2.authorization.realm"
         oauthServer.realm("btpka3/oauth2");

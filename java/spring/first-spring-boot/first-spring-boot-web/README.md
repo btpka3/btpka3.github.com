@@ -74,6 +74,7 @@ private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {
             #beanNameViewResolver()
             #viewResolver()                     // 注册 bean : ContentNegotiatingViewResolver.class
             #localeResolver()   
+            #requestContextFilter()             // 注册 bean : OrderedRequestContextFilter.class
         -> HttpMessageConvertersAutoConfiguration
         -> JacksonHttpMessageConvertersConfiguration
         -> JacksonAutoConfiguration
@@ -81,21 +82,23 @@ private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {
         -> GroovyTemplateAutoConfiguration
         
 
-DelegatingWebMvcConfiguration                   // 会提供许多bean，
+DelegatingWebMvcConfiguration/WebMvcConfigurationSupport    // 会提供许多bean，
     #setConfigurers(List<WebMvcConfigurer>)     // 自动依赖注入所有的 WebMvcConfigurer/WebMvcConfigurerAdapter
-    #requestMappingHandlerMapping
-    #mvcContentNegotiationManager()
+
+    super#requestMappingHandlerMapping          // order = 0
+    super#mvcContentNegotiationManager()
         #getDefaultMediaTypes()                 // 默认只注册了 xml 和 json 两种
         #configureContentNegotiation(ContentNegotiationConfigurer) 
             WebMvcConfigurerComposite#configureAsyncSupport()   // 使用所有的 WebMvcConfigurer bean 对 ContentNegotiationConfigurer 进行配置
-    #handlerExceptionResolver()                 // 注册 bean : HandlerExceptionResolver.class
+    super#handlerExceptionResolver()                 // 注册 bean : HandlerExceptionResolver.class
         #addDefaultHandlerExceptionResolvers
             # 加入 ExceptionHandlerExceptionResolver, 处理 @ExceptionHandler
             # 加入 ResponseStatusExceptionResolver, 处理 @ResponseStatus
             # 加入 DefaultHandlerExceptionResolver, 处理特定的异常, 仅仅设定了状态码，而未设置 view
-    #resourceHandlerMapping()
+    super#resourceHandlerMapping()              // order = Integer.MAX_VALUE -1, 提供一堆 SimpleUrlHandlerMapping
         #addResourceHandlers()                  // WebMvcAutoConfigurationAdapter#addResourceHandlers() 追加了 "/webjars/**"
         ResourceHandlerRegistry.getHandlerMapping()
+    super#beanNameHandlerMapping()              // order = 2
         
 
 @EnableWebMvc                                   // 如果启用该注解，则要完全手动配置 MVC 各个方面。
@@ -133,11 +136,17 @@ tomcat -> DispatcherServlet -> view = null  -> 返回到 tomcat -> ErrorPage("/e
 
 
 HandlerMapping
-    SimpleUrlHandlerMapping, 
-    RequestMappingHandlerMapping, 
-    BeanNameUrlHandlerMapping
-    SimpleUrlHandlerMapping, 
-    WebMvcConfigurationSupport$EmptyHandlerMapping
+    AbstractHandlerMapping
+        AbstractUrlHandlerMapping
+            SimpleUrlHandlerMapping,
+            AbstractDetectingUrlHandlerMapping
+                BeanNameUrlHandlerMapping               // order = 2
+        AbstractHandlerMethodMapping
+            RequestMappingInfoHandlerMapping
+                RequestMappingHandlerMapping            // order = 0
+                    FrameworkEndpointHandlerMapping     // order = Ordered.LOWEST_PRECEDENCE - 2 
+        WebMvcConfigurationSupport$EmptyHandlerMapping
+                     
 ```
 
 FIXME: 静态资源 Response 的 http 头： Content-Type 是如何自动设定的？

@@ -62,7 +62,7 @@ class MyAuthController {
     /** 获取所有图片列表 */
     @RequestMapping("/o2/photo")
     @ResponseBody
-    @PreAuthorize("#oauth2.hasScope('photo_list')")  // OAuth2MethodSecurityExpressionHandler
+    @PreAuthorize("#oauth2.hasScope('read')")  // OAuth2MethodSecurityExpressionHandler
     String photos(Principal principal) {
         return photos
     }

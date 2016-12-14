@@ -34,14 +34,12 @@ class WebSecurityConf extends WebSecurityConfigurerAdapter {
         // @formatter:on
     }
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-
-        web.expressionHandler(new OAuth2MethodSecurityExpressionHandler())
-
-        web.ignoring()
-                .antMatchers("/webjars/**")
-    }
+//    @Override
+//    public void configure(WebSecurity web) throws Exception {
+//
+//        web.expressionHandler(new OAuth2MethodSecurityExpressionHandler())
+//
+//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -53,6 +51,7 @@ class WebSecurityConf extends WebSecurityConfigurerAdapter {
                 .antMatchers("/")
                 .antMatchers("/login")
                 .antMatchers("/sec")
+                .antMatchers("/photo/**")
 
             .and()
                 .formLogin()
@@ -73,7 +72,7 @@ class WebSecurityConf extends WebSecurityConfigurerAdapter {
 
             .and()
                 .csrf()
-                .ignoringAntMatchers("/login")
+                .ignoringAntMatchers("/**")
         // @formatter:on
     }
 

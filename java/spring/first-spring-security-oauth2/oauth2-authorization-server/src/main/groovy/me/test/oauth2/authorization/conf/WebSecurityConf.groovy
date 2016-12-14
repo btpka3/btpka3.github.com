@@ -21,14 +21,14 @@ class WebSecurityConf extends WebSecurityConfigurerAdapter {
     void configAuthenticationManager(AuthenticationManagerBuilder auth) {
         // @formatter:off
         auth.inMemoryAuthentication()
-                .withUser("admin")
-                .password("admin")
+                .withUser("a_admin")
+                .password("a_admin")
                 .authorities("AAA")
                 .roles("ADMIN", "USER")
 
             .and()
-                .withUser("user")
-                .password("user")
+                .withUser("a_user")
+                .password("a_user")
                 .authorities("UUU")
                 .roles("USER")
         // @formatter:on
@@ -73,8 +73,10 @@ class WebSecurityConf extends WebSecurityConfigurerAdapter {
                 .realmName("My OAuth2 Auth Server")
 
             .and()
-                .csrf()
+                .csrf() // 仅仅测试用
                 .ignoringAntMatchers("/login")
+                .ignoringAntMatchers("/oauth/confirm_access")
+                .ignoringAntMatchers("/oauth/authorize")
         // @formatter:on
     }
 

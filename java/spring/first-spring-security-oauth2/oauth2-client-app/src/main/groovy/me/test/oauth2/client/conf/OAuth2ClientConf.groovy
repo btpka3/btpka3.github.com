@@ -1,52 +1,39 @@
 package me.test.oauth2.client.conf
 
-import org.springframework.beans.factory.annotation.Value
+import me.test.oauth2.client.MyOAuth2Properties
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.security.config.annotation.web.builders.HttpSecurity
-import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.oauth2.client.OAuth2ClientContext
 import org.springframework.security.oauth2.client.OAuth2RestTemplate
 import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer
-import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter
-import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer
 
 /**
  *
  */
 @Configuration
 @EnableOAuth2Client
-public class OAuth2ClientConf  {
+public class OAuth2ClientConf {
 
+    @Autowired
+    private MyOAuth2Properties myOAuth2Props
 
-    @Value('${my.oauth2.resource.id}')
-    private String resourceId;
-
-    @Value('${my.oauth2.resource.accessTokenUri}')
-    private String accessTokenUri
-
-    @Value('${my.oauth2.resource.userAuthorizationUri}')
-    private String userAuthorizationUri
-
-
-    @Value('${my.oauth2.client.id}')
-    private String clientId;
-
-    @Value('${my.oauth2.client.secret}')
-    private String clientSecret;
+    @Bean
+    MyOAuth2Properties myOAuth2Properties() {
+        return new MyOAuth2Properties()
+    }
 
     @Bean
     public OAuth2ProtectedResourceDetails myRscResourceDetails() {
         AuthorizationCodeResourceDetails details = new AuthorizationCodeResourceDetails();
-        details.setId(resourceId);
-        details.setClientId(clientId);
-        details.setClientSecret("secret");
-        details.setAccessTokenUri(accessTokenUri);
-        details.setUserAuthorizationUri(userAuthorizationUri);
-        details.setScope(Arrays.asList("read", "write"));
+        details.setId(myOAuth2Props.resource.id);
+        details.setClientId(myOAuth2Props.client.id);
+        details.setClientSecret(myOAuth2Props.client.secret);
+        details.setAccessTokenUri(myOAuth2Props.auth.accessTokenUri);
+        details.setUserAuthorizationUri(myOAuth2Props.auth.userAuthorizationUri);
+        details.setScope(Arrays.asList(myOAuth2Props.client.scopes));
         return details;
     }
 

@@ -41,9 +41,12 @@ dependencies {
     compile('org.springframework.security:spring-security-jwt:1.0.6.RELEASE')
     compile('org.apache.httpcomponents:httpclient:4.5.2')
     compile('org.webjars:angular-material:1.1.1')
+    //optional("org.springframework.boot:spring-boot-configuration-processor")
+    compile("org.springframework.boot:spring-boot-configuration-processor")
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
+compileJava.dependsOn(processResources)
 
 bootRun {
     addResources = true

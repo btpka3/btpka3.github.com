@@ -81,12 +81,6 @@ mvn tomcat7:run
 ## 代码分析
 
 ```
-@EnableOAuth2Sso                                
-    -> OAuth2SsoProperties                      // 读取配置 "security.oauth2.sso"
-    -> OAuth2SsoDefaultConfiguration
-    -> OAuth2SsoCustomConfiguration
-    -> ResourceServerTokenServicesConfiguration // 不能和 @EnableAuthorizationServer 一起使用
-    
 @EnableResourceServer
     -> ResourceServerConfiguration  // 实现了 WebSecurityConfigurerAdapter
         #setConfigurers()           // 获取所有 bean : ResourceServerConfigurer/ResourceServerConfigurerAdapter
@@ -102,6 +96,8 @@ mvn tomcat7:run
         #tokenEndpoint()                            // 注册 TokenEndpoint
         #configurers                                // 获取所有 bean : AuthorizationServerConfigurer/AuthorizationServerConfigurerAdapter
         #init()                                     // 调用所有 bean : AuthorizationServerConfigurer/AuthorizationServerConfigurerAdapter
+        #whitelabelApprovalEndpoint()               // 注册 bean : 用以 `/oauth/confirm_access` 生成用户确认授权的表单画面
+        #whitelabelErrorEndpoint()                  // 注册 bean : 用以 `/oauth/error` 生成用户拒绝授权的错误画面
         
     -> AuthorizationServerSecurityConfiguration     // 实现了 WebSecurityConfigurerAdapter
                                                     // 仅仅过滤 /oauth/token, /oauth/token_key, /oauth/check_token 这三个URL
@@ -112,7 +108,19 @@ mvn tomcat7:run
             #clientDetailsServiceConfigurer()       // 注册 bean : ClientDetailsServiceConfigurer
             #clientDetailsService()                 // 注册 bean : ClientDetailsService
         -> AuthorizationServerEndpointsConfiguration
-        
+
+@EnableOAuth2Client
+    -> OAuth2ClientConfiguration
+        #oauth2ClientContextFilter()            // 注册 bean : OAuth2ClientContextFilter
+        #oauth2ClientContext()                  // 注册 bean : session 作用域 : DefaultOAuth2ClientContext
+
+@EnableOAuth2Sso                                
+    -> OAuth2SsoProperties                      // 读取配置 "security.oauth2.sso"
+    -> OAuth2SsoDefaultConfiguration            // 实现了 WebSecurityConfigurerAdapter
+    -> OAuth2SsoCustomConfiguration             // BPP, 通过AOP在调用 WebSecurityConfigurerAdapter#getHttp() 时追加额外配置
+    -> ResourceServerTokenServicesConfiguration // 不能和 @EnableAuthorizationServer 一起使用
+    
+
 @EnableAutoConfiguration
 OAuth2AutoConfiguration
     -> OAuth2ClientProperties                   // 读取配置 "security.oauth2.client"
@@ -126,7 +134,14 @@ OAuth2AutoConfiguration
         -> ResourceServerTokenServicesConfiguration
             #jwtTokenStore()                    // 注册 bean : JwtTokenStore
     -> OAuth2RestOperationsConfiguration
-        -> OAuth2ProtectedResourceDetailsConfiguration
+        -> SessionScopedConfiguration           // 有 bean OAuth2ClientConfiguration 时启用
+            -> OAuth2ProtectedResourceDetailsConfiguration
+                #oauth2RemoteResource()         // 注册 bean : AuthorizationCodeResourceDetails
+            #oauth2ClientFilterRegistration     // 在 servlet 容器中配置 oauth2ClientContextFilter
+            -> ClientContextConfiguration
+                #oauth2ClientContext()          // 注册 bean : session 作用域 : DefaultOAuth2ClientContext
+        -> RequestScopedConfiguration           // 无 bean OAuth2ClientConfiguration 时启用
+            #oauth2ClientContext()              // 注册 bean : request 作用域 : DefaultOAuth2ClientContext
     #resourceServerProperties()                 // 读取配置 "security.oauth2.resource"
 
 FrameworkEndpointHandlerMapping     // 查找所有 @FrameworkEndpoint 作为 controller，并允许自定义路径。 
@@ -144,7 +159,38 @@ FrameworkEndpointHandlerMapping     // 查找所有 @FrameworkEndpoint 作为 co
     WhitelabelApprovalEndpoint
     CheckTokenEndpoint
     TokenEndpoint
+    
+FIXME OAuth2ClientContext 是怎么创建的？
+
+OAuth2RestTemplate
+    #doExecute
+        super#doExcecute()
+            this.createRequest()
+                #getAccessToken()
+                    OAuth2ClientContext#getAccessToken()
+                    #acquireAccessToken()
+                        AccessTokenProvider#obtainAccessToken       // UserRedirectRequiredException
+
+AccessTokenProvider
+    AccessTokenProviderChain
+    AuthorizationCodeAccessTokenProvider 
+    ImplicitAccessTokenProvider
+    ResourceOwnerPasswordAccessTokenProvider
+    ClientCredentialsAccessTokenProvider
+
+
+OAuth2ClientContexFilter                // 用以捕获 UserRedirectRequiredException 并将用户重定向到 auth server
+    #redirectUser
+Oauth2ClientAuthenticationProcessingFilter
+OAuth2AuthenticationProcessingFilter
+TokenEndpointAuthenticationFilter
+ClientCredentialsTokenEndpointFilter
+
 ```
 
 # FIXME
 微信 OAuth 登录
+
+
+DefaultOAuth2AccessToken
+
