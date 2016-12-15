@@ -25,6 +25,7 @@ class MyOAuth2Properties {
     static class Client {
         String id
         String secret
+        int port
         String[] scopes
         String[] authorizedGrantTypes
         String[] authorities

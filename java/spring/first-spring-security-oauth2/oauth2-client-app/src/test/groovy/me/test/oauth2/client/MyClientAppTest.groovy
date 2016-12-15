@@ -1,17 +1,20 @@
 package me.test.oauth2.client
 
-import ch.qos.logback.classic.Logger
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.boot.context.embedded.EmbeddedWebApplicationContext
-import org.springframework.boot.context.embedded.LocalServerPort
+import org.springframework.boot.autoconfigure.security.oauth2.authserver.AuthorizationServerProperties
+import org.springframework.boot.context.properties.EnableConfigurationProperties
+import org.springframework.boot.test.context.ConfigFileApplicationContextInitializer
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.test.web.client.LocalHostUriTemplateHandler
 import org.springframework.boot.test.web.client.TestRestTemplate
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.http.*
+import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 import org.springframework.util.LinkedMultiValueMap
 import org.springframework.util.MultiValueMap
@@ -19,36 +22,68 @@ import org.springframework.web.util.UriComponentsBuilder
 
 import static org.assertj.core.api.Assertions.assertThat
 
+// 使用独立运行的服务进行测试
+
+
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = [MyClientApp.class], webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+//@SpringBootTest(classes = [MyClientApp.class], webEnvironment = SpringBootTest.WebEnvironment.NONE)
+@SpringBootTest(classes = [MyApp.class])
 public class MyClientAppTest {
+
+    @Configuration
+    @EnableConfigurationProperties(AuthorizationServerProperties.class)
+    static class MyApp{
+
+        @Bean
+        MyOAuth2Properties myOAuth2Properties() {
+            return new MyOAuth2Properties()
+        }
+    }
 
     final String logPrefix = "█" * 40 + " "
     final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Autowired
+
     MyOAuth2Properties myOAuth2Props
+    int clientPort
+    int authPort
 
     @Autowired
-    EmbeddedWebApplicationContext applicationContext;
+    void sss(@Value('${my.oauth2.auth.port}') String p){
+        println("----------------sssssssssssssssssssssss : "+p)
+    }
+
 
     @Autowired
-    TestRestTemplate restTemplate;
+    void initProps(MyOAuth2Properties myOAuth2Props) {
+        this.myOAuth2Props = myOAuth2Props
+        clientPort = myOAuth2Props.client.port
+        authPort = myOAuth2Props.auth.port
+    }
 
-    /** 服务的端口号 */
-    @LocalServerPort
-    int clientPort;
+//    @Autowired
+//    EmbeddedWebApplicationContext applicationContext;
 
-    @Value('${my.oauth2.auth.port}')
-    int authPort = 10001;
+//    @Autowired
+//    TestRestTemplate restTemplate;
+
+//    /** 服务的端口号 */
+//    //@LocalServerPort
+//    @Value('${my.oauth2.client.port}')
+//    int clientPort;
+//
+//    @Value('${my.oauth2.auth.port}')
+//    int authPort = 10001;
 
     /** 主页 */
     @Test
     public void home01() {
+        TestRestTemplate restTemplate = new TestRestTemplate()
+
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept([MediaType.TEXT_HTML])
 
-        String path = UriComponentsBuilder.fromPath("/")
+        String path = UriComponentsBuilder.fromHttpUrl("http://localhost:${clientPort}/")
                 .build()
                 .toUri()
                 .toString()
@@ -66,10 +101,12 @@ public class MyClientAppTest {
     /** 需登录才能访问的页面 */
     @Test
     public void sec01() {
+        TestRestTemplate restTemplate = new TestRestTemplate()
+
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept([MediaType.TEXT_HTML])
 
-        String path = UriComponentsBuilder.fromPath("/sec")
+        String path = UriComponentsBuilder.fromHttpUrl("http://localhost:${clientPort}/sec")
                 .build()
                 .toUri()
                 .toString()
@@ -80,7 +117,8 @@ public class MyClientAppTest {
                 HttpMethod.GET, reqEntity, String.class);
 
         assertThat(respEntity.getStatusCode()).isEqualTo(HttpStatus.FOUND)
-        assertThat(respEntity.headers.getLocation().toString()).isEqualTo("http://localhost:${clientPort}/login".toString())
+        assertThat(respEntity.headers.getLocation().toString())
+                .isEqualTo("http://localhost:${clientPort}/login".toString())
     }
 
     /** 登录后才能访问的页面 */
@@ -88,7 +126,6 @@ public class MyClientAppTest {
     public void sec02() {
 
         TestRestTemplate restTemplate = new TestRestTemplate(TestRestTemplate.HttpClientOption.ENABLE_COOKIES);
-        restTemplate.setUriTemplateHandler(new LocalHostUriTemplateHandler(applicationContext.getEnvironment()));
 
         // 登录 client app
         client_login(restTemplate)
@@ -103,8 +140,6 @@ public class MyClientAppTest {
         // 因此，为了防止 JSESSIONID 被覆盖，需要使用独立的 TestRestTemplate
 
         TestRestTemplate clientRestTemplate = new TestRestTemplate(TestRestTemplate.HttpClientOption.ENABLE_COOKIES);
-        clientRestTemplate.setUriTemplateHandler(new LocalHostUriTemplateHandler(applicationContext.getEnvironment()));
-
         TestRestTemplate authRestTemplate = new TestRestTemplate(TestRestTemplate.HttpClientOption.ENABLE_COOKIES);
 
         // 登录 client app
@@ -132,7 +167,6 @@ public class MyClientAppTest {
     @Test
     public void oauth01() {
         TestRestTemplate clientRestTemplate = new TestRestTemplate(TestRestTemplate.HttpClientOption.ENABLE_COOKIES);
-        clientRestTemplate.setUriTemplateHandler(new LocalHostUriTemplateHandler(applicationContext.getEnvironment()));
 
         TestRestTemplate authRestTemplate = new TestRestTemplate(TestRestTemplate.HttpClientOption.ENABLE_COOKIES);
 
@@ -174,9 +208,9 @@ public class MyClientAppTest {
         reqMsg.username = "c_admin"
         reqMsg.password = "c_admin"
 
-        HttpEntity<Void> reqEntity = new HttpEntity<Void>(reqMsg, headers);
+        HttpEntity reqEntity = new HttpEntity(reqMsg, headers);
 
-        String path = UriComponentsBuilder.fromPath("/login")
+        String path = UriComponentsBuilder.fromHttpUrl("http://localhost:${clientPort}/login")
                 .build()
                 .toUri()
                 .toString()
@@ -185,7 +219,8 @@ public class MyClientAppTest {
                 HttpMethod.POST, reqEntity, String.class);
 
         assertThat(respEntity.getStatusCode()).isEqualTo(HttpStatus.FOUND)
-        assertThat(respEntity.headers.getLocation().toString()).isEqualTo("http://localhost:${clientPort}/".toString())
+        assertThat(respEntity.headers.getLocation().toString())
+                .isEqualTo("http://localhost:${clientPort}/".toString())
 
     }
 
@@ -198,7 +233,7 @@ public class MyClientAppTest {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept([MediaType.TEXT_HTML])
 
-        String path = UriComponentsBuilder.fromPath("/sec")
+        String path = UriComponentsBuilder.fromHttpUrl("http://localhost:${clientPort}/sec")
                 .build()
                 .toUri()
                 .toString()
@@ -219,7 +254,7 @@ public class MyClientAppTest {
 
         HttpEntity<Void> reqEntity = new HttpEntity<Void>(null, headers);
 
-        String path = UriComponentsBuilder.fromPath("/photo")
+        String path = UriComponentsBuilder.fromHttpUrl("http://localhost:${clientPort}/photo")
                 .build()
                 .toUri()
                 .toString()
@@ -279,7 +314,7 @@ public class MyClientAppTest {
         reqMsg.username = "a_admin"
         reqMsg.password = "a_admin"
 
-        HttpEntity<Void> reqEntity = new HttpEntity<Void>(reqMsg, headers);
+        HttpEntity reqEntity = new HttpEntity(reqMsg, headers);
 
         ResponseEntity<String> respEntity = restTemplate.exchange(authLoginUri,
                 HttpMethod.POST, reqEntity, String.class);
@@ -321,7 +356,7 @@ public class MyClientAppTest {
         reqMsg.username = "a_admin"
         reqMsg.password = "a_admin"
 
-        HttpEntity<Void> reqEntity = new HttpEntity<Void>(reqMsg, headers);
+        HttpEntity reqEntity = new HttpEntity(reqMsg, headers);
 
         ResponseEntity<String> respEntity = restTemplate.exchange(authLoginUri,
                 HttpMethod.POST, reqEntity, String.class);

@@ -146,7 +146,36 @@ HandlerMapping
                 RequestMappingHandlerMapping            // order = 0
                     FrameworkEndpointHandlerMapping     // order = Ordered.LOWEST_PRECEDENCE - 2 
         WebMvcConfigurationSupport$EmptyHandlerMapping
-                     
+
+
+HttpMessageConvertersAutoConfiguration
+    this()                              // 获取所有 bean : HttpMessageConverter    
+    #messageConverters()                // 注册 bean : HttpMessageConverters
+    #stringHttpMessageConverter()       // 注册 bean : StringHttpMessageConverter
+    -> JacksonHttpMessageConvertersConfiguration
+        #mappingJackson2HttpMessageConverter()      // 注册 bean : MappingJackson2HttpMessageConverter
+        #mappingJackson2XmlHttpMessageConverter()   // 注册 bean : MappingJackson2XmlHttpMessageConverter
+    -> GsonHttpMessageConvertersConfiguration
+        #gsonHttpMessageConverter()                 // 注册 bean : GsonHttpMessageConverter
+
+        
+
+WebClientAutoConfiguration
+    #this()                         // 获取所有 bean : HttpMessageConverters, RestTemplateCustomizer
+    #restTemplateBuilder()          // 注册 bean : RestTemplateBuilder
+
+RestTemplateBuilder
+    #build()
+        #configure()
+            RestTemplateCustomizer#customize()
+    
+        #
+    RestTemplateCustomizer
+HttpMessageConverters
+    this()
+        #getDefaultConverters()     // 从 WebMvcConfigurationSupport 或者 RestTemplate 获取內建的作为默认
+        #getCombinedConverters()
+ 
 ```
 
 FIXME: 静态资源 Response 的 http 头： Content-Type 是如何自动设定的？

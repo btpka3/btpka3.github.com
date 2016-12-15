@@ -331,6 +331,9 @@ ConfigurationClassParser#parse()
 AnnotationConfigApplicationContext
     AnnotatedBeanDefinitionReader#registerBean()        // @Primary, @Lazy
         ConditionEvaluator#shouldSkip()                 // @Conditional @Bean
+
+ConfigFileApplicationListener
+    加载 application.yml, application.properties
 ```
 
 ## @@SpringBootApplication
@@ -507,14 +510,14 @@ SecurityBuilder
 
 SecurityConfigurer                          // 初始化并配置 SecurityBuilder
     GlobalAuthenticationConfigurerAdapter
-    WebSecurityConfigurer
+    WebSecurityConfigurer                   // 该类中 configure()  在 AbstractConfiguredSecurityBuilder 的 configure 阶段调用
         WebSecurityConfigurerAdapter        // : #getHttp() , 创建 httpSecurity
                                             // 新建内部 AuthenticationManagerBuilder
             SpringBootWebSecurityConfiguration.ApplicationNoWebSecurityConfigurerAdapter
             SpringBootWebSecurityConfiguration.ApplicationWebSecurityConfigurerAdapter
             ResourceServerConfiguration
         SpringBootWebSecurityConfiguration.IgnoredPathsWebSecurityConfigurerAdapter    
-    SecurityConfigurerAdapter
+    SecurityConfigurerAdapter               // 该类中 configure()  在 AbstractConfiguredSecurityBuilder 的 configure 阶段调用
         AbstractHttpConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, B>
             AbstractAuthenticationFilterConfigurer,
                 FormLoginConfigurer, 
@@ -538,7 +541,7 @@ SecurityConfigurer                          // 初始化并配置 SecurityBuilde
             SessionManagementConfigurer, 
             UrlAuthorizationConfigurer, 
             X509Configurer
-        LdapAuthenticationProviderConfigurer
+        LdapAuthenticationProviderConfigurer extends SecurityConfigurerAdapter<AuthenticationManager, B>
         UserDetailsAwareConfigurer
             DaoAuthenticationConfigurer, 
             UserDetailsServiceConfigurer
@@ -560,42 +563,50 @@ DelegatingFilterProxy
 ## filter-stack
 Spring security 的 filter-stack 在[这里](http://docs.spring.io/spring-security/site/docs/4.2.0.RELEASE/reference/htmlsingle/#filter-stack)。
 主要是通过 `FilterChainProxy`、`SecurityFilterChain` 来代理各种 filter 的。
+排序请参考 `FilterComparator`
 
-|Order  |SecurityFilters enum           |Filter Class                               |Namespace Element or Attribute         |HttpSecurity#xxx()     |
-|-------|-------------------------------|-------------------------------------------|---------------------------------------|-----------------------|
-|  -MIN |                               |OrderedCharacterEncodingFilter             |                                       |                       |
-|-10000 |                               |OrderedHiddenHttpMethodFilter              |                                       |                       |
-| -9900 |                               |OrderedHttpPutFormContentFilter            |                                       |                       |
-|  -110 |                               |OAuth2ClientContextFilter  ???             |                                       |                       |
-|  -105 |                               |OrderedRequestContextFilter                |                                       |                       |
-|  -100 |                               |DelegatingFilterProxy                      |                                       |                       |
-|       |                               |                                           |                                       |                       |
-|       |                               |                                           |                                       |                       |
-|     0 |FIRST                          |                                           |                                       |                       |
-|   100 |CHANNEL_FILTER                 |ChannelProcessingFilter                    |http/intercept-url@requires-channel    |#requiresChannel()     |
-|   200 |SECURITY_CONTEXT_FILTER        |SecurityContextPersistenceFilter           |http                                   |#securityContext()     |
-|   300 |CONCURRENT_SESSION_FILTER      |ConcurrentSessionFilter                    |session-management/concurrency-control |#sessionManagement()   |
-|   400 |WEB_ASYNC_MANAGER_FILTER       |WebAsyncManagerIntegrationFilter           |                                       |                       |
-|   500 |HEADERS_FILTER                 |HeaderWriterFilter                         |http/headers                           |#headers()             |
-|   600 |CORS_FILTER                    |                                           |                                       |                       |
-|   700 |CSRF_FILTER                    |CsrfFilter                                 |http/csrf                              |#csrf()                |
-|   800 |LOGOUT_FILTER                  |LogoutFilter                               |http/logout                            |#logout()              |
-|   900 |X509_FILTER                    |X509AuthenticationFilter                   |http/x509                              |#x509()                |
-|  1000 |PRE_AUTH_FILTER                |AbstractPreAuthenticatedProcessingFilter   |N/A                                    |#addFilter...()        |
-|  1100 |CAS_FILTER                     |CasAuthenticationFilter                    |N/A                                    |#addFilter...()        |
-|  1200 |FORM_LOGIN_FILTER              |UsernamePasswordAuthenticationFilter       |http/form-login                        |#formLogin()           |
-|  1300 |OPENID_FILTER                  |OpenIDAuthenticationFilter                 |                                       |#openidLogin()         |
-|  1400 |LOGIN_PAGE_FILTER              |DefaultLoginPageGeneratingFilter           |                                       |                       |
-|  1500 |DIGEST_AUTH_FILTER             |DigestAuthenticationFilter                 |                                        |                       |
-|  1600 |BASIC_AUTH_FILTER              |BasicAuthenticationFilter                  |http/http-basic                        |#httpBasic()           |
-|  1700 |REQUEST_CACHE_FILTER           |RequestCacheAwareFilter                    |                                       |#requestCache()        |
-|  1800 |SERVLET_API_SUPPORT_FILTER     |SecurityContextHolderAwareRequestFilter    |http/@servlet-api-provision            |#servletApi()          |
-|  1900 |JAAS_API_SUPPORT_FILTER        |JaasApiIntegrationFilter                   |http/@jaas-api-provision               |#addFilter...()        |
-|  2000 |REMEMBER_ME_FILTER             |RememberMeAuthenticationFilter             |http/remember-me                       |#rememberMe()          |
-|  2100 |ANONYMOUS_FILTER               |AnonymousAuthenticationFilter              |http/anonymous                         |#anonymous()           |
-|  2200 |SESSION_MANAGEMENT_FILTER      |SessionManagementFilter                    |session-management                     |#sessionManagement()   |
-|  2300 |EXCEPTION_TRANSLATION_FILTER   |ExceptionTranslationFilter                 |http                                   |#exceptionHandling()   |
-|  2400 |FILTER_SECURITY_INTERCEPTOR    |FilterSecurityInterceptor                  |http                                   |#                      |
-|  2500 |SWITCH_USER_FILTER             |SwitchUserFilter                           |N/A                                    |#addFilter...()        |
-|  2600 |LAST                           |                                           |                                       |                       |
-|       |                               |                                           |                                       |                       |
+|Order  |SecurityFilters enum                   |Filter Class                               |Namespace Element or Attribute         |HttpSecurity#xxx()     |
+|-------|---------------------------------------|-------------------------------------------|---------------------------------------|-----------------------|
+|  -MIN |                                       |OrderedCharacterEncodingFilter             |                                       |                       |
+|-10000 |                                       |OrderedHiddenHttpMethodFilter              |                                       |                       |
+| -9900 |                                       |OrderedHttpPutFormContentFilter            |                                       |                       |
+|  -110 |                                       |OAuth2ClientContextFilter  ???             |                                       |                       |
+|  -105 |                                       |OrderedRequestContextFilter                |                                       |                       |
+|  -100 |                                       |DelegatingFilterProxy                      |                                       |                       |
+|       |                                       |                                           |                                       |                       |
+|       |                                       |                                           |                                       |                       |
+|     0 |    0 : FIRST                          |                                           |                                       |                       |
+|   100 |  100 : CHANNEL_FILTER                 |ChannelProcessingFilter                    |http/intercept-url@requires-channel    |#requiresChannel()     |
+|   200 |  300 : CONCURRENT_SESSION_FILTER      |ConcurrentSessionFilter                    |session-management/concurrency-control |#sessionManagement()   |
+|   300 |  400 : WEB_ASYNC_MANAGER_FILTER       |WebAsyncManagerIntegrationFilter           |                                       |                       |
+|   400 |  200 : SECURITY_CONTEXT_FILTER        |SecurityContextPersistenceFilter           |http                                   |#securityContext()     |
+|   500 |  500 : HEADERS_FILTER                 |HeaderWriterFilter                         |http/headers                           |#headers()             |
+|   600 |  600 : CORS_FILTER                    |CorsFilter                                 |                                       |                       |
+|   700 |  700 : CSRF_FILTER                    |CsrfFilter                                 |http/csrf                              |#csrf()                |
+|   800 |  800 : LOGOUT_FILTER                  |LogoutFilter                               |http/logout                            |#logout()              |
+|   900 |  900 : X509_FILTER                    |X509AuthenticationFilter                   |http/x509                              |#x509()                |
+|       |                                       |OAuth2AuthenticationProcessingFilter       |                                       |                       |
+|  1000 | 1000 : PRE_AUTH_FILTER                |AbstractPreAuthenticatedProcessingFilter   |N/A                                    |#addFilter...()        |
+|  1100 | 1100 : CAS_FILTER                     |CasAuthenticationFilter                    |N/A                                    |#addFilter...()        |
+|  1200 | 1200 : FORM_LOGIN_FILTER              |UsernamePasswordAuthenticationFilter       |http/form-login                        |#formLogin()           |
+|  1300 |  300 : CONCURRENT_SESSION_FILTER      |ConcurrentSessionFilter                    |session-management/concurrency-control |#sessionManagement()   |
+|  1400 | 1300 : OPENID_FILTER                  |OpenIDAuthenticationFilter                 |                                       |#openidLogin()         |
+|  1500 | 1400 : LOGIN_PAGE_FILTER              |DefaultLoginPageGeneratingFilter           |                                       |                       |
+|  1600 |  300 : CONCURRENT_SESSION_FILTER      |ConcurrentSessionFilter                    |session-management/concurrency-control |#sessionManagement()   |
+|  1700 | 1500 : DIGEST_AUTH_FILTER             |DigestAuthenticationFilter                 |                                        |                       |
+|       |                                       |ClientCredentialsTokenEndpointFilter       |                                       |                       |
+|  1800 | 1600 : BASIC_AUTH_FILTER              |BasicAuthenticationFilter                  |http/http-basic                        |#httpBasic()           |
+|  1900 | 1700 : REQUEST_CACHE_FILTER           |RequestCacheAwareFilter                    |                                       |#requestCache()        |
+|  2000 | 1800 : SERVLET_API_SUPPORT_FILTER     |SecurityContextHolderAwareRequestFilter    |http/@servlet-api-provision            |#servletApi()          |
+|  2100 | 1900 : JAAS_API_SUPPORT_FILTER        |JaasApiIntegrationFilter                   |http/@jaas-api-provision               |#addFilter...()        |
+|  2200 | 2000 : REMEMBER_ME_FILTER             |RememberMeAuthenticationFilter             |http/remember-me                       |#rememberMe()          |
+|  2300 | 2100 : ANONYMOUS_FILTER               |AnonymousAuthenticationFilter              |http/anonymous                         |#anonymous()           |
+|  2400 | 2200 : SESSION_MANAGEMENT_FILTER      |SessionManagementFilter                    |session-management                     |#sessionManagement()   |
+|  2500 | 2300 : EXCEPTION_TRANSLATION_FILTER   |ExceptionTranslationFilter                 |http                                   |#exceptionHandling()   |
+|  2600 | 2400 : FILTER_SECURITY_INTERCEPTOR    |FilterSecurityInterceptor                  |http                                   |#                      |
+|  2700 | 2500 : SWITCH_USER_FILTER             |SwitchUserFilter                           |N/A                                    |#addFilter...()        |
+|  2800 | 2600 : LAST                           |                                           |                                       |                       |
+|       |                                       |                                           |                                       |                       |
+
+
+
