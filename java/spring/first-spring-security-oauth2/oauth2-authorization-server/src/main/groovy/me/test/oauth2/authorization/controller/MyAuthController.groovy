@@ -70,7 +70,7 @@ class MyAuthController {
     /** 获取单个图片信息 */
     @RequestMapping("/o2/photo/{photoId}")
     @ResponseBody
-    @PreAuthorize("#oauth2.hasScope('photo_read')")  // OAuth2MethodSecurityExpressionHandler
+    @PreAuthorize("#oauth2.hasScope('read')")  // OAuth2MethodSecurityExpressionHandler
     String photo(Principal principal, @PathVariable("photoId") String id) {
         return photos.get(id)
     }

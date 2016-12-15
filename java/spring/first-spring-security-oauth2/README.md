@@ -58,8 +58,8 @@ mvn tomcat7:run
 |-----------------------|---------------------------|-------|------------------------------------------------|-------------------------------------|
 |`/oauth/authorize`     |AuthorizationEndpoint      |GET    |client_id,state,redirect_uri,response_type,scope|从Client App将用户引导至此以完成授权的URL|
 |                       |                           |POST   |user_oauth_approval                             |用户确认授权                           |
+|`/oauth/token`         |TokenEndpoint              |POST   | 
 |`/oauth/confirm_access`|WhitelabelApprovalEndpoint |
-|`/oauth/token`         |TokenEndpoint              |
 |`/oauth/token_key`     |TokenKeyEndpoint           |
 |`/oauth/error`         |WhitelabelErrorEndpoint    |
 |`/oauth/check_token`   |CheckTokenEndpoint         |
@@ -85,6 +85,14 @@ mvn tomcat7:run
     -> ResourceServerConfiguration  // 实现了 WebSecurityConfigurerAdapter
         #setConfigurers()           // 获取所有 bean : ResourceServerConfigurer/ResourceServerConfigurerAdapter
         #configure()                // 调用所有 bean : ResourceServerConfigurer/ResourceServerConfigurerAdapter
+            ResourceServerConfigurer#configure(ResourceServerSecurityConfigurer)
+            HttpSecurity#apply(ResourceServerSecurityConfigurer)
+            
+            ResourceServerConfigurer#configure(HttpSecurity)
+            #
+
+ResourceServerSecurityConfigurer
+    #configure(HttpSecurity)        // 注册 OAuth2AuthenticationProcessingFilter
 
 @EnableAuthorizationServer
     -> AuthorizationServerEndpointsConfiguration
@@ -113,13 +121,15 @@ mvn tomcat7:run
     -> OAuth2ClientConfiguration
         #oauth2ClientContextFilter()            // 注册 bean : OAuth2ClientContextFilter
         #oauth2ClientContext()                  // 注册 bean : session 作用域 : DefaultOAuth2ClientContext
+        #accessTokenRequest()                   // 注册 bean : request 作用域 : DefaultAccessTokenRequest
 
 @EnableOAuth2Sso                                
     -> OAuth2SsoProperties                      // 读取配置 "security.oauth2.sso"
     -> OAuth2SsoDefaultConfiguration            // 实现了 WebSecurityConfigurerAdapter
     -> OAuth2SsoCustomConfiguration             // BPP, 通过AOP在调用 WebSecurityConfigurerAdapter#getHttp() 时追加额外配置
     -> ResourceServerTokenServicesConfiguration // 不能和 @EnableAuthorizationServer 一起使用
-    
+
+    ??? SsoSecurityConfigurer.java 
 
 @EnableAutoConfiguration
 OAuth2AutoConfiguration
@@ -178,6 +188,19 @@ AccessTokenProvider
     ResourceOwnerPasswordAccessTokenProvider
     ClientCredentialsAccessTokenProvider
 
+TokenGranter
+    CompositeTokenGranter
+    AbstractTokenGranter
+        AuthorizationCodeTokenGranter
+        RefreshTokenGranter
+        ImplicitTokenGranter
+        ClientCredentialsTokenGranter
+        ResourceOwnerPasswordTokenGranter
+
+OAuth2Authentication    // 包含以下两个字段
+    1. OAuth2Request storedRequest;         // 代表 Client APP
+    2. Authentication userAuthentication;   // 代表 User
+   
 
 OAuth2ClientContexFilter                // 用以捕获 UserRedirectRequiredException 并将用户重定向到 auth server
     #redirectUser
@@ -190,7 +213,17 @@ ClientCredentialsTokenEndpointFilter
 
 # FIXME
 微信 OAuth 登录
-
+OAuth2ClientContext
 
 DefaultOAuth2AccessToken
+
+AuthenticationScheme
+
+JaxbOAuth2AccessTokenMessageConverter
+DefaultClientAuthenticationHandler
+BaseOAuth2ProtectedResourceDetails
+
+SsoSecurityConfigurer
+Oauth2ClientAuthenticationProcessingFilter
+
 
