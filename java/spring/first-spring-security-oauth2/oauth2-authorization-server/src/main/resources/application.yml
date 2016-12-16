@@ -12,21 +12,20 @@ logging.level.org.springframework.security.access: DEBUG
 # 用来追踪 restTemplate 请求
 logging.level.org.apache.http: DEBUG
 
-
 my.oauth2:
   auth:
-    port: 10001
-    accessTokenUri:         http://localhost:10001/oauth/token
-    userAuthorizationUri:   http://localhost:10001/oauth/authorize
+    url:                    http://a.localhost:10001
+    accessTokenUri:         http://a.localhost:10001/oauth/token
+    userAuthorizationUri:   http://a.localhost:10001/oauth/authorize
   resource:
     id: MY_RSC
-    port: 10002
-    photoListUri:           http://localhost:10001/o2/photo
-    photoDetailUri:         http://localhost:10001/o2/photo/{id}
+    url:                    http://r.localhost:10002
+    photoListUri:           http://r.localhost:10001/o2/photo
+    photoDetailUri:         http://r.localhost:10001/o2/photo/{id}
   client:
     id: MY_CLIENT
     secret: secret
-    port: 10003
+    url:                    http://c.localhost:10003
     scopes:
       - read
       - write

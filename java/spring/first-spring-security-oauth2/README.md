@@ -1,4 +1,27 @@
 
+# 运行
+
+```
+# 为了防止 JSESSION cookie 冲突，使用不同的域名进行测试
+
+cat <<EOF | sudo tee -a /etc/hosts
+## OAuth 2.0 test
+127.0.0.1   a.localhost     # authorization server
+127.0.0.1   r.localhost     # resource server
+127.0.0.1   c.localhost     # client app
+EOF
+
+# 启动服务器
+cd first-spring-security-oauth2
+./gradlew :oauth2-authorization-server:bootRun
+./gradlew :oauth2-client-app:bootRun
+
+```
+
+
+
+
+# 7788
 《[理解OAuth 2.0](http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html)》
 
 《[Stateless Authentication with Spring Security and JWT](http://technicalrex.com/2015/02/20/stateless-authentication-with-spring-security-and-jwt)》

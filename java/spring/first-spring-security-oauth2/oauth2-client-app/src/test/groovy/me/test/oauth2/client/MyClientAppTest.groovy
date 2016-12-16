@@ -8,13 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.security.oauth2.authserver.AuthorizationServerProperties
 import org.springframework.boot.context.properties.EnableConfigurationProperties
-import org.springframework.boot.test.context.ConfigFileApplicationContextInitializer
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.*
-import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 import org.springframework.util.LinkedMultiValueMap
 import org.springframework.util.MultiValueMap
@@ -27,11 +25,11 @@ import static org.assertj.core.api.Assertions.assertThat
 
 @RunWith(SpringJUnit4ClassRunner.class)
 //@SpringBootTest(classes = [MyClientApp.class], webEnvironment = SpringBootTest.WebEnvironment.NONE)
-@SpringBootTest(classes = [MyApp.class])
+@SpringBootTest(classes = [MyApp.class], webEnvironment = SpringBootTest.WebEnvironment.NONE)
 public class MyClientAppTest {
 
     @Configuration
-    @EnableConfigurationProperties(AuthorizationServerProperties.class)
+    @EnableConfigurationProperties(AuthorizationServerProperties.class) // FIXME : 为何 @SpringBootTest 必须用该注解才行？
     static class MyApp{
 
         @Bean
@@ -45,20 +43,19 @@ public class MyClientAppTest {
 
 
     MyOAuth2Properties myOAuth2Props
-    int clientPort
-    int authPort
+    String clientUrl
+    String authUrl
 
     @Autowired
-    void sss(@Value('${my.oauth2.auth.port}') String p){
+    void sss(@Value('${my.oauth2.auth.url}') String p){
         println("----------------sssssssssssssssssssssss : "+p)
     }
-
 
     @Autowired
     void initProps(MyOAuth2Properties myOAuth2Props) {
         this.myOAuth2Props = myOAuth2Props
-        clientPort = myOAuth2Props.client.port
-        authPort = myOAuth2Props.auth.port
+        clientUrl = myOAuth2Props.client.url
+        authUrl = myOAuth2Props.auth.url
     }
 
 //    @Autowired
@@ -83,7 +80,7 @@ public class MyClientAppTest {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept([MediaType.TEXT_HTML])
 
-        String path = UriComponentsBuilder.fromHttpUrl("http://localhost:${clientPort}/")
+        String path = UriComponentsBuilder.fromHttpUrl("${clientUrl}/")
                 .build()
                 .toUri()
                 .toString()
@@ -106,7 +103,7 @@ public class MyClientAppTest {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept([MediaType.TEXT_HTML])
 
-        String path = UriComponentsBuilder.fromHttpUrl("http://localhost:${clientPort}/sec")
+        String path = UriComponentsBuilder.fromHttpUrl("${clientUrl}/sec")
                 .build()
                 .toUri()
                 .toString()
@@ -118,7 +115,7 @@ public class MyClientAppTest {
 
         assertThat(respEntity.getStatusCode()).isEqualTo(HttpStatus.FOUND)
         assertThat(respEntity.headers.getLocation().toString())
-                .isEqualTo("http://localhost:${clientPort}/login".toString())
+                .isEqualTo("${clientUrl}/login".toString())
     }
 
     /** 登录后才能访问的页面 */
@@ -149,7 +146,7 @@ public class MyClientAppTest {
         client_sec(clientRestTemplate)
 
         // 登录 auth server
-        auth_login01(authRestTemplate, new URI("http://localhost:${authPort}/login"))
+        auth_login01(authRestTemplate, new URI("${authUrl}/login"))
 
         // 验证 auth server 登录结果
         auth_sec(authRestTemplate)
@@ -167,7 +164,6 @@ public class MyClientAppTest {
     @Test
     public void oauth01() {
         TestRestTemplate clientRestTemplate = new TestRestTemplate(TestRestTemplate.HttpClientOption.ENABLE_COOKIES);
-
         TestRestTemplate authRestTemplate = new TestRestTemplate(TestRestTemplate.HttpClientOption.ENABLE_COOKIES);
 
         // 登录 client app
@@ -210,7 +206,7 @@ public class MyClientAppTest {
 
         HttpEntity reqEntity = new HttpEntity(reqMsg, headers);
 
-        String path = UriComponentsBuilder.fromHttpUrl("http://localhost:${clientPort}/login")
+        String path = UriComponentsBuilder.fromHttpUrl("${clientUrl}/login")
                 .build()
                 .toUri()
                 .toString()
@@ -220,7 +216,7 @@ public class MyClientAppTest {
 
         assertThat(respEntity.getStatusCode()).isEqualTo(HttpStatus.FOUND)
         assertThat(respEntity.headers.getLocation().toString())
-                .isEqualTo("http://localhost:${clientPort}/".toString())
+                .isEqualTo("${clientUrl}/".toString())
 
     }
 
@@ -233,7 +229,7 @@ public class MyClientAppTest {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept([MediaType.TEXT_HTML])
 
-        String path = UriComponentsBuilder.fromHttpUrl("http://localhost:${clientPort}/sec")
+        String path = UriComponentsBuilder.fromHttpUrl("${clientUrl}/sec")
                 .build()
                 .toUri()
                 .toString()
@@ -254,7 +250,7 @@ public class MyClientAppTest {
 
         HttpEntity<Void> reqEntity = new HttpEntity<Void>(null, headers);
 
-        String path = UriComponentsBuilder.fromHttpUrl("http://localhost:${clientPort}/photo")
+        String path = UriComponentsBuilder.fromHttpUrl("${clientUrl}/photo")
                 .build()
                 .toUri()
                 .toString()
@@ -270,14 +266,14 @@ public class MyClientAppTest {
         // &redirect_uri=http://localhost:59081/photo
         // &response_type=code
         // &scope=read%20write&state=IugS4H"
-        assertThat(uri.toString()).startsWith("http://localhost:${authPort}/oauth/authorize".toString())
+        assertThat(uri.toString()).startsWith("${authUrl}/oauth/authorize".toString())
         MultiValueMap<String, String> decodedQueryParams = UriComponentsBuilder.newInstance()
                 .query(uri.getQuery())
                 .build()
                 .getQueryParams()
         assertThat(decodedQueryParams)
                 .containsEntry("client_id", [myOAuth2Props.client.id])
-                .containsEntry("redirect_uri", ["http://localhost:${clientPort}/photo".toString()])
+                .containsEntry("redirect_uri", ["${clientUrl}/photo".toString()])
                 .containsEntry("response_type", ["code"])
                 .containsEntry("scope", ["read write"])
                 .containsKeys("state")
@@ -299,7 +295,7 @@ public class MyClientAppTest {
 
         assertThat(respEntity.getStatusCode()).isEqualTo(HttpStatus.FOUND)
         URI uri = respEntity.headers.getLocation()
-        assertThat(uri.toString()).isEqualTo("http://localhost:${authPort}/login".toString())
+        assertThat(uri.toString()).isEqualTo("${authUrl}/login".toString())
         return uri
     }
 
@@ -321,7 +317,7 @@ public class MyClientAppTest {
 
         assertThat(respEntity.getStatusCode()).isEqualTo(HttpStatus.FOUND)
         URI uri = respEntity.headers.getLocation()
-        assertThat(uri.toString()).startsWith("http://localhost:${authPort}/".toString())
+        assertThat(uri.toString()).startsWith("${authUrl}/".toString())
 
         return uri
     }
@@ -335,7 +331,7 @@ public class MyClientAppTest {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept([MediaType.TEXT_HTML])
 
-        String path = "http://localhost:${authPort}/sec"
+        String path = "${authUrl}/sec"
 
         HttpEntity<Void> reqEntity = new HttpEntity<Void>(null, headers);
         ResponseEntity<String> respEntity = restTemplate.exchange(path,
@@ -363,7 +359,7 @@ public class MyClientAppTest {
 
         assertThat(respEntity.getStatusCode()).isEqualTo(HttpStatus.FOUND)
         URI uri = respEntity.headers.getLocation()
-        assertThat(uri.toString()).startsWith("http://localhost:${authPort}/oauth/authorize".toString())
+        assertThat(uri.toString()).startsWith("${authUrl}/oauth/authorize".toString())
 
         MultiValueMap<String, String> decodedQueryParams = UriComponentsBuilder.newInstance()
                 .query(uri.getQuery())
@@ -371,7 +367,7 @@ public class MyClientAppTest {
                 .getQueryParams()
         assertThat(decodedQueryParams)
                 .containsEntry("client_id", [myOAuth2Props.client.id])
-                .containsEntry("redirect_uri", ["http://localhost:${clientPort}/photo".toString()])
+                .containsEntry("redirect_uri", ["${clientUrl}/photo".toString()])
                 .containsEntry("response_type", ["code"])
                 .containsEntry("scope", ["read write"])
                 .containsKeys("state")
@@ -407,7 +403,7 @@ public class MyClientAppTest {
 
         HttpEntity reqEntity = new HttpEntity(reqMsg, headers);
 
-        String path = UriComponentsBuilder.fromHttpUrl("http://localhost:${authPort}/oauth/authorize")
+        String path = UriComponentsBuilder.fromHttpUrl("${authUrl}/oauth/authorize")
                 .build()
                 .toUri()
                 .toString()
@@ -419,7 +415,7 @@ public class MyClientAppTest {
 
         // http://localhost:56077/photo?code=O1U3fz&state=q8NZmz">
         URI uri = respEntity.headers.getLocation()
-        assertThat(uri.toString()).startsWith("http://localhost:${clientPort}/photo".toString())
+        assertThat(uri.toString()).startsWith("${clientUrl}/photo".toString())
 
         MultiValueMap<String, String> decodedQueryParams = UriComponentsBuilder.newInstance()
                 .query(uri.getQuery())

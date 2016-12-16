@@ -2,10 +2,10 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>my login form</title>
+    <title>my authorization server form</title>
 </head>
 <body>
-<h1>my login form</h1>
+<h1>my authorization server login form</h1>
 <p th:if="${param.logout}" class="alert">You have been logged out</p>
 <p th:if="${param.error}" class="alert alert-error">There was an error, please try again</p>
 <h2>Login with Username and Password</h2>
@@ -17,6 +17,9 @@
     <input type="submit" id="login" value="Login"
            class="btn btn-primary" />
 </form>
-
+<ul> users :
+    <li>a_admin/a_admin</li>
+    <li>a_user/a_user</li>
+</ul>
 </body>
 </html>

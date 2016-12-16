@@ -27,7 +27,7 @@ class MyClientController {
     @ResponseBody
     @PreAuthorize("permitAll")
     String index(@AuthenticationPrincipal Object curUser) {
-        return "my oauth2 client app~ " + curUser + " @ " + new Date() + " == " + myOAuth2Props.auth.port;
+        return "my oauth2 client app~ " + curUser + " @ " + new Date() + " == " + myOAuth2Props.auth.url;
     }
 
     // ---------------------------------------------  人员登录后的功能

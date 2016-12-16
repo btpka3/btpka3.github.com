@@ -34,7 +34,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore
  */
 @Configuration
 @EnableAuthorizationServer
-@EnableConfigurationProperties(AuthorizationServerProperties.class)
+//@EnableConfigurationProperties(AuthorizationServerProperties.class)
 public class OAuth2AuthorizationServerConf extends AuthorizationServerConfigurerAdapter {
 
     public static final String MY_RESOURCE_ID = "MY_RSC";

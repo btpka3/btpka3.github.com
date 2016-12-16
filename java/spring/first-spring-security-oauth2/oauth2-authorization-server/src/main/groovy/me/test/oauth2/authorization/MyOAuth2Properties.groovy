@@ -4,20 +4,21 @@ import org.springframework.boot.context.properties.ConfigurationProperties
 
 @ConfigurationProperties(prefix = "my.oauth2")
 class MyOAuth2Properties {
+
     Auth auth = new Auth()
     Rsc resource = new Rsc()
     Client client = new Client()
 
 
     static class Auth {
-        int port
+        String url
         String accessTokenUri
         String userAuthorizationUri
     }
 
     static class Rsc {
         String id
-        int port
+        String url
         String photoListUri
         String photoDetailUri
     }
@@ -25,7 +26,7 @@ class MyOAuth2Properties {
     static class Client {
         String id
         String secret
-        int port
+        String url
         String[] scopes
         String[] authorizedGrantTypes
         String[] authorities

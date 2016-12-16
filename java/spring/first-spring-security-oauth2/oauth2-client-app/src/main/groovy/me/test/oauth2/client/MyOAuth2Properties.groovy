@@ -11,14 +11,14 @@ class MyOAuth2Properties {
 
 
     static class Auth {
-        int port
+        String url
         String accessTokenUri
         String userAuthorizationUri
     }
 
     static class Rsc {
         String id
-        int port
+        String url
         String photoListUri
         String photoDetailUri
     }
@@ -26,7 +26,7 @@ class MyOAuth2Properties {
     static class Client {
         String id
         String secret
-        int port
+        String url
         String[] scopes
         String[] authorizedGrantTypes
         String[] authorities
