@@ -9,7 +9,6 @@ class MyOAuth2Properties {
     Rsc resource = new Rsc()
     Client client = new Client()
 
-
     static class Auth {
         String url
         String accessTokenUri

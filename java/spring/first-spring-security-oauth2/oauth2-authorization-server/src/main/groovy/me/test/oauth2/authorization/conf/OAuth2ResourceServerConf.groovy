@@ -40,12 +40,15 @@ public class OAuth2ResourceServerConf extends ResourceServerConfigurerAdapter {
             .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-
+            .and()
+                .cors()
             // 权限的配置建议统一使用 @PreAuthorize 等注解来处理。
             .and()
                 .authorizeRequests()  // FIXME : 必须调用该语句，否则 IllegalStateException @ ResourceServerSecurityConfigurer.configure() -> http.authorizeRequests()
                 .anyRequest()
                 .authenticated()
+
+
 //                .antMatchers("/me")
 //                .access("#oauth2.hasScope('read')")
 //

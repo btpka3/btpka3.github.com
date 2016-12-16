@@ -34,12 +34,13 @@ class WebSecurityConf extends WebSecurityConfigurerAdapter {
         // @formatter:on
     }
 
-//    @Override
-//    public void configure(WebSecurity web) throws Exception {
-//
-//        web.expressionHandler(new OAuth2MethodSecurityExpressionHandler())
-//
-//    }
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+
+        web.ignoring()
+            .antMatchers("/implicit.html")
+
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

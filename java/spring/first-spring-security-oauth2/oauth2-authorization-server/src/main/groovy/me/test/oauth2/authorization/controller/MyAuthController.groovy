@@ -3,6 +3,7 @@ package me.test.oauth2.authorization.controller
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.stereotype.Controller
+import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseBody
@@ -63,7 +64,8 @@ class MyAuthController {
     @RequestMapping("/o2/photo")
     @ResponseBody
     @PreAuthorize("#oauth2.hasScope('read')")  // OAuth2MethodSecurityExpressionHandler
-    String photos(Principal principal) {
+    @CrossOrigin
+    Object photos(Principal principal) {
         return photos
     }
 
@@ -71,7 +73,8 @@ class MyAuthController {
     @RequestMapping("/o2/photo/{photoId}")
     @ResponseBody
     @PreAuthorize("#oauth2.hasScope('read')")  // OAuth2MethodSecurityExpressionHandler
-    String photo(Principal principal, @PathVariable("photoId") String id) {
+    @CrossOrigin
+    Object photo(Principal principal, @PathVariable("photoId") String id) {
         return photos.get(id)
     }
 

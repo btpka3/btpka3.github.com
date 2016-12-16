@@ -125,7 +125,7 @@ public class OAuth2AuthorizationServerConf extends AuthorizationServerConfigurer
                 .authorities(myOAuth2Props.client.authorities)
                 .scopes(myOAuth2Props.client.scopes)
                 .secret(myOAuth2Props.client.secret)
-//
+
 //                .withClient("tonr")
 //                .resourceIds(MY_RESOURCE_ID)
 //                .authorizedGrantTypes("authorization_code", "implicit")

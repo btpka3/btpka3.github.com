@@ -11,6 +11,7 @@ logging.level.org.springframework.security.web.csrf: DEBUG
 logging.level.org.springframework.security.access: DEBUG
 # 用来追踪 restTemplate 请求
 logging.level.org.apache.http: DEBUG
+logging.level.package org.springframework.security.oauth2.provider.authentication: DEBUG
 
 my.oauth2:
   auth:
