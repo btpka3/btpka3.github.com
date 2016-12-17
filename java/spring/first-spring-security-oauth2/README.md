@@ -16,6 +16,19 @@ cd first-spring-security-oauth2
 ./gradlew :oauth2-authorization-server:bootRun
 ./gradlew :oauth2-client-app:bootRun
 
+
+# 测试 OAuth2 authorization code 模式 —— 通过 testcase
+# 查看 MyClientAppTest#oauthAuthCode01()
+./gradlew :oauth2-client-app:test
+
+# 测试 OAuth2 authorization code 模式 —— 通过 浏览器
+# 浏览器访问 http://c.localhost:10003/photo/authCode
+
+# 测试 OAuth2 implicit 模式
+# 浏览器访问 http://c.localhost:10003/implicit.html#
+
+# 测试 OAuth2 client 模式
+
 ```
 
 

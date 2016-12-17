@@ -11,17 +11,18 @@ import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResour
 import org.springframework.security.oauth2.client.token.AccessTokenProvider
 import org.springframework.security.oauth2.client.token.AccessTokenProviderChain
 import org.springframework.security.oauth2.client.token.grant.client.ClientCredentialsAccessTokenProvider
+import org.springframework.security.oauth2.client.token.grant.client.ClientCredentialsResourceDetails
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeAccessTokenProvider
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails
 import org.springframework.security.oauth2.client.token.grant.implicit.ImplicitAccessTokenProvider
+import org.springframework.security.oauth2.client.token.grant.implicit.ImplicitResourceDetails
 import org.springframework.security.oauth2.client.token.grant.password.ResourceOwnerPasswordAccessTokenProvider
+import org.springframework.security.oauth2.client.token.grant.password.ResourceOwnerPasswordResourceDetails
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client
 import org.springframework.security.oauth2.http.converter.FormOAuth2AccessTokenMessageConverter
 import org.springframework.security.oauth2.http.converter.FormOAuth2ExceptionHttpMessageConverter
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter
 import org.springframework.web.client.RestOperations
-import org.springframework.web.client.RestTemplate
-
 /**
  *
  */
@@ -37,8 +38,11 @@ public class OAuth2ClientConf {
         return new MyOAuth2Properties()
     }
 
+
+    // ---------------------------------------------  OAuth2 : authorization code
+
     @Bean
-    public OAuth2ProtectedResourceDetails myRscResourceDetails() {
+    public OAuth2ProtectedResourceDetails oAuthCodeResourceDetails() {
         AuthorizationCodeResourceDetails details = new AuthorizationCodeResourceDetails();
         details.setId(myOAuth2Props.resource.id);
         details.setClientId(myOAuth2Props.client.id);
@@ -49,11 +53,72 @@ public class OAuth2ClientConf {
         return details;
     }
 
-    // 以下配置是为了让 OAuth2RestTemplate 使用统一的 RestTemplateBuilder 接口
     @Bean
-    public OAuth2RestTemplate myRscRestTemplate(OAuth2ClientContext clientContext) {
-        return new OAuth2RestTemplate(myRscResourceDetails(), clientContext);
+    public OAuth2RestTemplate oAuthCodeRestTemplate(OAuth2ClientContext clientContext) {
+        return new OAuth2RestTemplate(oAuthCodeResourceDetails(), clientContext);
     }
+
+    // ---------------------------------------------  OAuth2 : implicit
+    @Bean
+    public OAuth2ProtectedResourceDetails oImplicitResourceDetails() {
+        ImplicitResourceDetails details = new ImplicitResourceDetails();
+        details.setId(myOAuth2Props.resource.id);
+        details.setClientId(myOAuth2Props.client.id);
+        details.setClientSecret(myOAuth2Props.client.secret);
+        details.setAccessTokenUri(myOAuth2Props.auth.accessTokenUri);
+        details.setUserAuthorizationUri(myOAuth2Props.auth.userAuthorizationUri);
+        details.setScope(Arrays.asList(myOAuth2Props.client.scopes));
+
+        details.setPreEstablishedRedirectUri(myOAuth2Props.client.preEstablishedRedirectUri)
+        return details;
+    }
+
+    @Bean
+    public OAuth2RestTemplate oImplicitRestTemplate(OAuth2ClientContext clientContext) {
+        return new OAuth2RestTemplate(oImplicitResourceDetails(), clientContext);
+    }
+
+    // ---------------------------------------------  OAuth2 : client
+
+    @Bean
+    public OAuth2ProtectedResourceDetails oPasswordResourceDetails() {
+        ClientCredentialsResourceDetails details = new ClientCredentialsResourceDetails();
+        details.setId(myOAuth2Props.resource.id);
+        details.setClientId(myOAuth2Props.client.id);
+        details.setClientSecret(myOAuth2Props.client.secret);
+        details.setAccessTokenUri(myOAuth2Props.auth.accessTokenUri);
+        details.setScope(Arrays.asList(myOAuth2Props.client.scopes));
+        return details;
+    }
+
+    @Bean
+    public OAuth2RestTemplate oPasswordRestTemplate(OAuth2ClientContext clientContext) {
+        return new OAuth2RestTemplate(oPasswordResourceDetails(), clientContext);
+    }
+
+    // ---------------------------------------------  OAuth2 : password
+
+    @Bean
+    public OAuth2ProtectedResourceDetails oClientResourceDetails() {
+        ResourceOwnerPasswordResourceDetails details = new ResourceOwnerPasswordResourceDetails();
+        details.setId(myOAuth2Props.resource.id);
+        details.setClientId(myOAuth2Props.client.id);
+        details.setClientSecret(myOAuth2Props.client.secret);
+        details.setAccessTokenUri(myOAuth2Props.auth.accessTokenUri);
+        details.setScope(Arrays.asList(myOAuth2Props.client.scopes));
+
+        details.setUsername("a_admin")
+        details.setPassword("c_admin")
+        return details;
+    }
+
+    @Bean
+    public OAuth2RestTemplate oClientRestTemplate(OAuth2ClientContext clientContext) {
+        return new OAuth2RestTemplate(oPasswordResourceDetails(), clientContext);
+    }
+
+
+    // 以下配置是为了让 OAuth2RestTemplate 使用统一的 RestTemplateBuilder 接口
 
     @Bean
     FormOAuth2AccessTokenMessageConverter FormOAuth2AccessTokenMessageConverter() {
@@ -86,6 +151,8 @@ public class OAuth2ClientConf {
     }
 
 }
+
+import org.springframework.web.client.RestTemplate
 
 
 

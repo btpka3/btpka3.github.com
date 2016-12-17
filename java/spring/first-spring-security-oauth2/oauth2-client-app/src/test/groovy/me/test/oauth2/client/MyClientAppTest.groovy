@@ -129,40 +129,40 @@ public class MyClientAppTest {
         client_sec(restTemplate)
     }
 
-    /** 测试多个域都使用同名cookie时，TestRestTemplate 能处理好各个域的cookie */
-    @Test
-    public void mulipleDomainCookie01() {
-
-        // 根据 RFC 6265 规定，相同domain，但不同port是会共享cookie的，
-        // 因此，为了防止 JSESSIONID 被覆盖，需要使用独立的 TestRestTemplate
-
-        TestRestTemplate clientRestTemplate = new TestRestTemplate(TestRestTemplate.HttpClientOption.ENABLE_COOKIES);
-        TestRestTemplate authRestTemplate = new TestRestTemplate(TestRestTemplate.HttpClientOption.ENABLE_COOKIES);
-
-        // 登录 client app
-        client_login(clientRestTemplate)
-
-        // 验证 client app 登录结果
-        client_sec(clientRestTemplate)
-
-        // 登录 auth server
-        auth_login01(authRestTemplate, new URI("${authUrl}/login"))
-
-        // 验证 auth server 登录结果
-        auth_sec(authRestTemplate)
-
-        // --------------------------------- 再次验证
-
-        // 验证 client app 登录结果,
-        client_sec(clientRestTemplate)
-
-        // 验证 auth server 登录结果
-        auth_sec(authRestTemplate)
-    }
+//    /** 测试多个域都使用同名cookie时，TestRestTemplate 能处理好各个域的cookie */
+//    @Test
+//    public void mulipleDomainCookie01() {
+//
+//        // 根据 RFC 6265 规定，相同domain，但不同port是会共享cookie的，
+//        // 因此，为了防止 JSESSIONID 被覆盖，需要使用独立的 TestRestTemplate
+//
+//        TestRestTemplate clientRestTemplate = new TestRestTemplate(TestRestTemplate.HttpClientOption.ENABLE_COOKIES);
+//        TestRestTemplate authRestTemplate = new TestRestTemplate(TestRestTemplate.HttpClientOption.ENABLE_COOKIES);
+//
+//        // 登录 client app
+//        client_login(clientRestTemplate)
+//
+//        // 验证 client app 登录结果
+//        client_sec(clientRestTemplate)
+//
+//        // 登录 auth server
+//        auth_login01(authRestTemplate, new URI("${authUrl}/login"))
+//
+//        // 验证 auth server 登录结果
+//        auth_sec(authRestTemplate)
+//
+//        // --------------------------------- 再次验证
+//
+//        // 验证 client app 登录结果,
+//        client_sec(clientRestTemplate)
+//
+//        // 验证 auth server 登录结果
+//        auth_sec(authRestTemplate)
+//    }
 
     /** 访问授权资源的正常流程 */
     @Test
-    public void oauth01() {
+    public void oauthAuthCode01() {
         TestRestTemplate clientRestTemplate = new TestRestTemplate(TestRestTemplate.HttpClientOption.ENABLE_COOKIES);
         TestRestTemplate authRestTemplate = new TestRestTemplate(TestRestTemplate.HttpClientOption.ENABLE_COOKIES);
 
@@ -250,7 +250,7 @@ public class MyClientAppTest {
 
         HttpEntity<Void> reqEntity = new HttpEntity<Void>(null, headers);
 
-        String path = UriComponentsBuilder.fromHttpUrl("${clientUrl}/photo")
+        String path = UriComponentsBuilder.fromHttpUrl("${clientUrl}/photo/authCode")
                 .build()
                 .toUri()
                 .toString()
@@ -263,7 +263,7 @@ public class MyClientAppTest {
 
         // "http://localhost:10001/oauth/authorize
         // ?client_id=MY_CLIENT
-        // &redirect_uri=http://localhost:59081/photo
+        // &redirect_uri=http://localhost:59081/photo/authCode
         // &response_type=code
         // &scope=read%20write&state=IugS4H"
         assertThat(uri.toString()).startsWith("${authUrl}/oauth/authorize".toString())
@@ -273,7 +273,7 @@ public class MyClientAppTest {
                 .getQueryParams()
         assertThat(decodedQueryParams)
                 .containsEntry("client_id", [myOAuth2Props.client.id])
-                .containsEntry("redirect_uri", ["${clientUrl}/photo".toString()])
+                .containsEntry("redirect_uri", ["${clientUrl}/photo/authCode".toString()])
                 .containsEntry("response_type", ["code"])
                 .containsEntry("scope", ["read write"])
                 .containsKeys("state")
@@ -367,7 +367,7 @@ public class MyClientAppTest {
                 .getQueryParams()
         assertThat(decodedQueryParams)
                 .containsEntry("client_id", [myOAuth2Props.client.id])
-                .containsEntry("redirect_uri", ["${clientUrl}/photo".toString()])
+                .containsEntry("redirect_uri", ["${clientUrl}/photo/authCode".toString()])
                 .containsEntry("response_type", ["code"])
                 .containsEntry("scope", ["read write"])
                 .containsKeys("state")
@@ -413,9 +413,9 @@ public class MyClientAppTest {
 
         assertThat(respEntity.getStatusCode()).isEqualTo(HttpStatus.FOUND)
 
-        // http://localhost:56077/photo?code=O1U3fz&state=q8NZmz">
+        // http://localhost:56077/photo/authCode?code=O1U3fz&state=q8NZmz">
         URI uri = respEntity.headers.getLocation()
-        assertThat(uri.toString()).startsWith("${clientUrl}/photo".toString())
+        assertThat(uri.toString()).startsWith("${clientUrl}/photo/authCode".toString())
 
         MultiValueMap<String, String> decodedQueryParams = UriComponentsBuilder.newInstance()
                 .query(uri.getQuery())

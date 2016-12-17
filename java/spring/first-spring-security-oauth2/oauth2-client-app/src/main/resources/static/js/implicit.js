@@ -59,6 +59,8 @@
                     $log.error("------- getResource: OK : ", resp)
                 },function(resp){
                     $log.error("------- getResource: ERROR : ", resp)
+
+                    // TODO 如果OAuth 出错的话，应该 jso.wipeTokens(); 并重新获取 AT
                 })
             };
 

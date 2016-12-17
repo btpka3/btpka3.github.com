@@ -38,5 +38,6 @@ my.oauth2:
       - refresh_token
     authorities:
       - ROLE_CLIENT
+    preEstablishedRedirectUri:  http://c.localhost:10003/implicit.html
 
 

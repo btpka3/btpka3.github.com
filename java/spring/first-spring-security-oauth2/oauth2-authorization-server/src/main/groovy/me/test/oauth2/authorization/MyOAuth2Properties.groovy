@@ -29,5 +29,6 @@ class MyOAuth2Properties {
         String[] scopes
         String[] authorizedGrantTypes
         String[] authorities
+        String preEstablishedRedirectUri
     }
 }
