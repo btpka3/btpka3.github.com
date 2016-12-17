@@ -1,6 +1,8 @@
 
 # 运行
 
+## 启动
+
 ```
 # 为了防止 JSESSION cookie 冲突，使用不同的域名进行测试
 
@@ -16,22 +18,174 @@ cd first-spring-security-oauth2
 ./gradlew :oauth2-authorization-server:bootRun
 ./gradlew :oauth2-client-app:bootRun
 
+```
 
-# 测试 OAuth2 authorization code 模式 —— 通过 testcase
-# 查看 MyClientAppTest#oauthAuthCode01()
-./gradlew :oauth2-client-app:test
+## 验证 OAuth2 authorization 授权模式
 
-# 测试 OAuth2 authorization code 模式 —— 通过 浏览器
-# 浏览器访问 http://c.localhost:10003/photo/authCode
+1. 通过 testcase 检验, 查看 MyClientAppTest#oauthAuthCode01() 代码
+   以及运行结果。
 
-# 测试 OAuth2 implicit 模式
-# 浏览器访问 http://c.localhost:10003/implicit.html#
+    ```
+    ./gradlew :oauth2-client-app:test
+    ```
 
-# 测试 OAuth2 client 模式
+1. 通过浏览器访问校验: `http://c.localhost:10003/photo/authCode`
+
+## 验证 OAuth2 implicit 授权模式
+通过浏览器访问 `http://c.localhost:10003/implicit.html#` ，
+依次点击 `去授权`，`去请求资源`、`清除 AT` 进行验证。
+请留意浏览器的控制台输出、以及网络监控。
+
+
+## 验证 OAuth2 password 授权模式
+
+通过浏览器访问校验: `http://c.localhost:10003/photo/password`
+
+```
+# 命令行获取AT。注意，这里配合了 Http Basic 认证来认证 client
+curl http://MY_CLIENT:secret@a.localhost:10001/oauth/token \
+    -d grant_type=password \
+    -d username=a_admin \
+    -d password=a_admin \
+    -d scope=read \
+    --trace-ascii /dev/stdout 
+
+```
+
+## 验证 OAuth2 client 授权模式
+
+通过浏览器访问校验: `http://c.localhost:10003/photo/client`
+
+
+```
+# 命令行获取AT。注意，这里配合了 Http Basic 认证来认证 client
+curl http://MY_CLIENT:secret@a.localhost:10001/oauth/token \
+    -d grant_type=client_credentials \
+    -d scope=read \
+    --trace-ascii /dev/stdout 
+    
+响应如为：{
+    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiTVlfUlNDIl0sInNjb3BlIjpbInJlYWQiXSwiZXhwIjoxNDgyMDA0MTk1LCJhdXRob3JpdGllcyI6WyJST0xFX0NMSUVOVCJdLCJqdGkiOiIzYWY3NDVlZS1jYWIyLTRjNzctYjdmNi1jOWU4NDNhYzEzZDkiLCJjbGllbnRfaWQiOiJNWV9DTElFTlQifQ.T4Lq5vkNPNE6tDjCIf8NtPjzV6T15pU3WaFoHqnCtv8", 
+    "token_type": "bearer", 
+    "expires_in": 43199, 
+    "scope": "read", 
+    "jti": "3af745ee-cab2-4c77-b7f6-c9e843ac13d9"
+}
+
+该 demo 中配置的是使用 JWT，解析后内容如下（注意：作为client app，则无需关心该内容）:
+
+access_token.header = {
+  "alg": "HS256",
+  "typ": "JWT"
+}
+
+access_token.payload = {
+  "aud": [
+    "MY_RSC"
+  ],
+  "scope": [
+    "read"
+  ],
+  "exp": 1482004195,
+  "authorities": [
+    "ROLE_CLIENT"
+  ],
+  "jti": "3af745ee-cab2-4c77-b7f6-c9e843ac13d9",
+  "client_id": "MY_CLIENT"
+}
 
 ```
 
 
+# OAuth 2
+
+## Authorization Code 授权方式
+
+```
+# 请求授权
+GET /oauth/authorize
+        ?response_type=code
+        &client_id=xxx
+        &redirect_uri=xxx
+        &scope=xxx
+        &state=xxx
+
+# 授权返回
+GET redirect_uri
+        ?code=xxx
+        &state=xxx
+        
+# 换取 AT
+POST /oauth/token
+        grant_type=xxx
+        &code=xxx
+        &redirect_uri=xxx
+        &client_id=xxx
+
+# 响应
+{
+   "access_token":"2YotnFZFEjr1zCsicMWpAA",
+   "token_type":"example",
+   "expires_in":3600,
+   "refresh_token":"tGzv3JOkF0XG5Qx2TlKWIA",
+   "example_parameter":"example_value"
+ }
+```
+
+## Implicit 授权方式
+
+```
+GET /oauth/authorize
+        ?response_type=token
+        &client_id=xxx
+        &redirect_uri=xxx
+        &scope=xxx
+        &state=xxx
+        
+GET redirect_uri
+        #access_token=xxx
+        &token_type=xxx
+        &expires_in=xxx
+        &scope=xxx
+        &state=xxx
+```
+
+## 用户密码 授权方式
+
+```
+# 请求
+PSOT /oauth/token
+        ?grant_type=password
+        &username=xxx
+        &password=xxx
+        &scope=xxx
+# 响应
+{
+   "access_token":"2YotnFZFEjr1zCsicMWpAA",
+   "token_type":"example",
+   "expires_in":3600,
+   "refresh_token":"tGzv3JOkF0XG5Qx2TlKWIA",
+   "example_parameter":"example_value"
+}
+```
+
+## client 授权方式
+
+```
+# 请求
+PSOT /oauth/authorize
+        ?grant_type=client_credentials
+        &scope=xxx
+
+# 响应
+{
+   "access_token":"2YotnFZFEjr1zCsicMWpAA",
+   "token_type":"example",
+   "expires_in":3600,
+   "refresh_token":"tGzv3JOkF0XG5Qx2TlKWIA",
+   "example_parameter":"example_value"
+}
+```
 
 
 # 7788
@@ -248,6 +402,21 @@ ClientCredentialsTokenEndpointFilter
 ```
 
 # FIXME
+
+1. implicit 获取的 AT 能否从 SPA 传递给API后台，让API后台代为请求资源？
+ 
+   ```
+   // TRY : 需要当前用户已经登录的情况下
+   OAuth2AccessToken at = new DefaultOAuth2AccessToken(params.at)
+   myClientOAuth2RestTemplate.getOAuth2ClientContext().setAccessToken(at)
+   myClientOAuth2RestTemplate.xxx()
+   ```
+   
+   貌似理论上可行，但是后台服务器在集群，就得保证 session 也在集群。否则 API 服务器切换时将出错。
+
+ 
+
+
 微信 OAuth 登录
 OAuth2ClientContext
 

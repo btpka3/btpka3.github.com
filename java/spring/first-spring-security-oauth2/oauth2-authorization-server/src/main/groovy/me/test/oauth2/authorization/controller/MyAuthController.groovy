@@ -49,33 +49,13 @@ class MyAuthController {
 
     // ---------------------------------------------  resource server
 
-    // TODO 同时判断用户权限 和 client 权限
-    /** 获取当前用户信息 */
-    @RequestMapping("/o2/me")
-    @ResponseBody
-    @PreAuthorize("#oauth2.hasScope('read')")  // OAuth2MethodSecurityExpressionHandler
-    String me(Principal principal) {
-        return [
-                name: principal.name
-        ]
-    }
-
     /** 获取所有图片列表 */
     @RequestMapping("/o2/photo")
     @ResponseBody
-    @PreAuthorize("#oauth2.hasScope('read')")  // OAuth2MethodSecurityExpressionHandler
+    // OAuth2MethodSecurityExpressionHandler, OAuth2SecurityExpressionMethods, OAuth2Authentication
+    @PreAuthorize("#oauth2.hasScope('read')")
     @CrossOrigin
     Object photos(Principal principal) {
         return photos
     }
-
-    /** 获取单个图片信息 */
-    @RequestMapping("/o2/photo/{photoId}")
-    @ResponseBody
-    @PreAuthorize("#oauth2.hasScope('read')")  // OAuth2MethodSecurityExpressionHandler
-    @CrossOrigin
-    Object photo(Principal principal, @PathVariable("photoId") String id) {
-        return photos.get(id)
-    }
-
 }

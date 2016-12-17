@@ -11,7 +11,7 @@ logging.level.org.springframework.security.access: DEBUG
 # 用来追踪 restTemplate 请求
 logging.level.org.apache.http: DEBUG
 logging.level.me.test.oauth2.client: DEBUG
-logging.level.org.springframework.boot.context.config: TRACE
+logging.level.org.springframework.boot.context.config.ConfigFileApplicationListener: TRACE
 
 my.oauth2:
   auth:

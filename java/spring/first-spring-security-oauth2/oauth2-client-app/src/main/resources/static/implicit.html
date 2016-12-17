@@ -19,10 +19,10 @@
 </head>
 <body>
 <div ng-if="!vm.at">
-    <md-button class="md-primary md-raised" ng-click="goOAuth()">去认证</md-button>
+    <md-button class="md-primary md-raised" ng-click="goOAuth()">去授权</md-button>
 </div>
 <div ng-if="vm.at">
-    <md-button class="md-primary md-raised" ng-click="getResouce()">去请求资源</md-button>
+    <md-button class="md-primary md-raised" ng-click="getResource()">去请求资源</md-button>
     <md-button class="md-primary md-raised" ng-click="clearAt()">清除 AT</md-button>
 </div>
 

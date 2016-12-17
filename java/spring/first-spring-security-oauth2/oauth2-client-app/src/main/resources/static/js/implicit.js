@@ -5,7 +5,8 @@
             var resourceUrl = "http://a.localhost:10001/o2/photo";
 
             var vm = $scope.vm = {
-                at: null   // 获取的 access_token
+                at: null,   // 获取的 access_token
+                photos:null // 图片列表
             };
 
             // 构建配置的数据
@@ -48,7 +49,7 @@
             };
 
 
-            $scope.getResouce = function(){
+            $scope.getResource = function(){
                 $http({
                     method:"GET",
                     url:resourceUrl,
@@ -56,9 +57,10 @@
                         'Authorization': 'Bearer '+vm.at.access_token
                     }
                 }).then(function(resp){
-                    $log.error("------- getResource: OK : ", resp)
+                    $log.error("------- getResource: OK : ", resp);
+                    vm.photos = resp.data;
                 },function(resp){
-                    $log.error("------- getResource: ERROR : ", resp)
+                    $log.error("------- getResource: ERROR : ", resp);
 
                     // TODO 如果OAuth 出错的话，应该 jso.wipeTokens(); 并重新获取 AT
                 })

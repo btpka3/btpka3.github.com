@@ -49,6 +49,7 @@ public class OAuth2AuthorizationServerConf extends AuthorizationServerConfigurer
 
     @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
+        // 如果集群模式下部署，则这里必须明确指明签名和验证签名的key。
         return new JwtAccessTokenConverter()
     }
 
@@ -184,7 +185,7 @@ public class OAuth2AuthorizationServerConf extends AuthorizationServerConfigurer
         endpoints.accessTokenConverter(jwtAccessTokenConverter())
                 .tokenStore(jwtTokenStore())
         //.userApprovalHandler(userApprovalHandler)
-        //.authenticationManager(authenticationManager);
+        .authenticationManager(authenticationManager);  // 启用 ResourceOwnerPasswordTokenGranter
         //.pathMapping("/oauth/confirm_access","/your/controller") // 可以修改映射路径。
     }
 

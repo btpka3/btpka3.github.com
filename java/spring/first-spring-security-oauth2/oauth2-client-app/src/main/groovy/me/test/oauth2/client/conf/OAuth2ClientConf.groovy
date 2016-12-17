@@ -23,6 +23,8 @@ import org.springframework.security.oauth2.http.converter.FormOAuth2AccessTokenM
 import org.springframework.security.oauth2.http.converter.FormOAuth2ExceptionHttpMessageConverter
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter
 import org.springframework.web.client.RestOperations
+import org.springframework.web.client.RestTemplate
+
 /**
  *
  */
@@ -37,7 +39,6 @@ public class OAuth2ClientConf {
     MyOAuth2Properties myOAuth2Properties() {
         return new MyOAuth2Properties()
     }
-
 
     // ---------------------------------------------  OAuth2 : authorization code
 
@@ -54,11 +55,18 @@ public class OAuth2ClientConf {
     }
 
     @Bean
-    public OAuth2RestTemplate oAuthCodeRestTemplate(OAuth2ClientContext clientContext) {
-        return new OAuth2RestTemplate(oAuthCodeResourceDetails(), clientContext);
+    public OAuth2RestTemplate oAuthCodeRestTemplate(OAuth2ClientContext clientContext,
+                                                    AccessTokenProvider accessTokenProvider) {
+        OAuth2RestTemplate restTemplate = new OAuth2RestTemplate(oAuthCodeResourceDetails(), clientContext);
+        restTemplate.setAccessTokenProvider(accessTokenProvider)
+        return restTemplate;
     }
 
     // ---------------------------------------------  OAuth2 : implicit
+
+    // 注意：OAuth2 implicit 主要用于运行再浏览器内的应用，或 native 应用
+    // 请参考 ImplicitAccessTokenProvider 的java注释
+    // 分析 ImplicitResponseExtractor 代码可以看到其通过 URI#getFragment() 来解析 AT
     @Bean
     public OAuth2ProtectedResourceDetails oImplicitResourceDetails() {
         ImplicitResourceDetails details = new ImplicitResourceDetails();
@@ -74,8 +82,11 @@ public class OAuth2ClientConf {
     }
 
     @Bean
-    public OAuth2RestTemplate oImplicitRestTemplate(OAuth2ClientContext clientContext) {
-        return new OAuth2RestTemplate(oImplicitResourceDetails(), clientContext);
+    public OAuth2RestTemplate oImplicitRestTemplate(OAuth2ClientContext clientContext,
+                                                    AccessTokenProvider accessTokenProvider) {
+        OAuth2RestTemplate restTemplate = new OAuth2RestTemplate(oImplicitResourceDetails(), clientContext);
+        restTemplate.setAccessTokenProvider(accessTokenProvider)
+        return restTemplate;
     }
 
     // ---------------------------------------------  OAuth2 : client
@@ -92,8 +103,11 @@ public class OAuth2ClientConf {
     }
 
     @Bean
-    public OAuth2RestTemplate oPasswordRestTemplate(OAuth2ClientContext clientContext) {
-        return new OAuth2RestTemplate(oPasswordResourceDetails(), clientContext);
+    public OAuth2RestTemplate oPasswordRestTemplate(OAuth2ClientContext clientContext,
+                                                    AccessTokenProvider accessTokenProvider) {
+        OAuth2RestTemplate restTemplate = new OAuth2RestTemplate(oPasswordResourceDetails(), clientContext);
+        restTemplate.setAccessTokenProvider(accessTokenProvider)
+        return restTemplate;
     }
 
     // ---------------------------------------------  OAuth2 : password
@@ -113,10 +127,12 @@ public class OAuth2ClientConf {
     }
 
     @Bean
-    public OAuth2RestTemplate oClientRestTemplate(OAuth2ClientContext clientContext) {
-        return new OAuth2RestTemplate(oPasswordResourceDetails(), clientContext);
+    public OAuth2RestTemplate oClientRestTemplate(OAuth2ClientContext clientContext,
+                                                  AccessTokenProvider accessTokenProvider) {
+        OAuth2RestTemplate restTemplate = new OAuth2RestTemplate(oPasswordResourceDetails(), clientContext);
+        restTemplate.setAccessTokenProvider(accessTokenProvider)
+        return restTemplate;
     }
-
 
     // 以下配置是为了让 OAuth2RestTemplate 使用统一的 RestTemplateBuilder 接口
 
@@ -135,36 +151,47 @@ public class OAuth2ClientConf {
         return new JwtAccessTokenConverter()
     }
 
+    // FIXME : 公用的话，是否有问题？
     @Bean
     AccessTokenProvider accessTokenProvider(RestTemplateBuilder restTemplateBuilder) {
         return new AccessTokenProviderChain(Arrays.asList(
                 new AuthorizationCodeAccessTokenProvider() {
+                    @Override
                     protected RestOperations getRestTemplate() {
                         RestTemplate restTemplate = restTemplateBuilder.build();
                         restTemplate.setErrorHandler(getResponseErrorHandler())
+                        setMessageConverters(restTemplate.getMessageConverters());
+                        return restTemplate
                     }
                 },
-                new ImplicitAccessTokenProvider(),
-                new ResourceOwnerPasswordAccessTokenProvider(),
-                new ClientCredentialsAccessTokenProvider()
+                new ImplicitAccessTokenProvider(){
+                    @Override
+                    protected RestOperations getRestTemplate() {
+                        RestTemplate restTemplate = restTemplateBuilder.build();
+                        restTemplate.setErrorHandler(getResponseErrorHandler())
+                        setMessageConverters(restTemplate.getMessageConverters());
+                        return restTemplate
+                    }
+                },
+                new ResourceOwnerPasswordAccessTokenProvider(){
+                    @Override
+                    protected RestOperations getRestTemplate() {
+                        RestTemplate restTemplate = restTemplateBuilder.build();
+                        restTemplate.setErrorHandler(getResponseErrorHandler())
+                        setMessageConverters(restTemplate.getMessageConverters());
+                        return restTemplate
+                    }
+                },
+                new ClientCredentialsAccessTokenProvider(){
+                    @Override
+                    protected RestOperations getRestTemplate() {
+                        RestTemplate restTemplate = restTemplateBuilder.build();
+                        restTemplate.setErrorHandler(getResponseErrorHandler())
+                        setMessageConverters(restTemplate.getMessageConverters());
+                        return restTemplate
+                    }
+                }
         ));
     }
 
 }
-
-import org.springframework.web.client.RestTemplate
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -6,13 +6,19 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.boot.autoconfigure.security.oauth2.authserver.AuthorizationServerProperties
+import org.springframework.boot.autoconfigure.PropertyPlaceholderAutoConfiguration
+import org.springframework.boot.context.config.ConfigFileApplicationListener
 import org.springframework.boot.context.properties.EnableConfigurationProperties
+import org.springframework.boot.test.context.ConfigFileApplicationContextInitializer
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
+import org.springframework.context.ApplicationContext
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Import
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer
 import org.springframework.http.*
+import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 import org.springframework.util.LinkedMultiValueMap
 import org.springframework.util.MultiValueMap
@@ -26,11 +32,14 @@ import static org.assertj.core.api.Assertions.assertThat
 @RunWith(SpringJUnit4ClassRunner.class)
 //@SpringBootTest(classes = [MyClientApp.class], webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @SpringBootTest(classes = [MyApp.class], webEnvironment = SpringBootTest.WebEnvironment.NONE)
+//@ContextConfiguration(classes = MyApp.class,
+//        initializers = ConfigFileApplicationContextInitializer.class)
 public class MyClientAppTest {
 
     @Configuration
-    @EnableConfigurationProperties(AuthorizationServerProperties.class) // FIXME : 为何 @SpringBootTest 必须用该注解才行？
-    static class MyApp{
+    @EnableConfigurationProperties
+//    @Import(PropertyPlaceholderAutoConfiguration)
+    static class MyApp {
 
         @Bean
         MyOAuth2Properties myOAuth2Properties() {
@@ -47,12 +56,20 @@ public class MyClientAppTest {
     String authUrl
 
     @Autowired
-    void sss(@Value('${my.oauth2.auth.url}') String p){
-        println("----------------sssssssssssssssssssssss : "+p)
+    void sss(@Value('${my.oauth2.auth.url}') String p) {
+        println("----------------sssssssssssssssssssssss : " + p)
     }
 
     @Autowired
+    void initPropss(ApplicationContext appCtx) {
+        println("----------------0000000000 : " + appCtx.getBeansOfType(ConfigFileApplicationListener))
+
+    }
+
+
+    @Autowired
     void initProps(MyOAuth2Properties myOAuth2Props) {
+        println("----------------eeee : " + myOAuth2Props.client.url)
         this.myOAuth2Props = myOAuth2Props
         clientUrl = myOAuth2Props.client.url
         authUrl = myOAuth2Props.auth.url
@@ -71,6 +88,11 @@ public class MyClientAppTest {
 //
 //    @Value('${my.oauth2.auth.port}')
 //    int authPort = 10001;
+
+    @Test
+    public void empty() {
+        assertThat(myOAuth2Props.client.url).isNotNull()
+    }
 
     /** 主页 */
     @Test
@@ -159,6 +181,26 @@ public class MyClientAppTest {
 //        // 验证 auth server 登录结果
 //        auth_sec(authRestTemplate)
 //    }
+
+    @Test
+    public void oauthPassword01() {
+        TestRestTemplate clientRestTemplate = new TestRestTemplate(TestRestTemplate.HttpClientOption.ENABLE_COOKIES);
+
+        // 登录 client app
+        client_login(clientRestTemplate)
+
+        client_photoPassword01(clientRestTemplate)
+    }
+
+    @Test
+    public void oauthClient01() {
+        TestRestTemplate clientRestTemplate = new TestRestTemplate(TestRestTemplate.HttpClientOption.ENABLE_COOKIES);
+
+        // 登录 client app
+        client_login(clientRestTemplate)
+
+        client_photoClient01(clientRestTemplate)
+    }
 
     /** 访问授权资源的正常流程 */
     @Test
@@ -430,7 +472,7 @@ public class MyClientAppTest {
     }
 
     /** Client App : 第二次访问资源（此时已授权） */
-    private URI client_accessResourceWithAuth(TestRestTemplate restTemplate, URI rscWithAuthCodeUri) {
+    private void client_accessResourceWithAuth(TestRestTemplate restTemplate, URI rscWithAuthCodeUri) {
         log.debug(logPrefix + "client_accessResourceWithAuth")
 
         HttpHeaders headers = new HttpHeaders();
@@ -442,11 +484,56 @@ public class MyClientAppTest {
                 HttpMethod.GET, reqEntity, String.class);
 
         assertThat(respEntity.getStatusCode()).isEqualTo(HttpStatus.OK)
-        URI uri = respEntity.headers.getLocation()
         assertThat(respEntity.body)
                 .contains("aaa.png")
                 .contains("bbb.png")
                 .contains("ccc.png")
-        return uri
+    }
+
+    private void client_photoPassword01(TestRestTemplate restTemplate) {
+        log.debug(logPrefix + "client_photoPassword01")
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept([MediaType.ALL])
+
+        String path = UriComponentsBuilder.fromHttpUrl("${clientUrl}/photo/password")
+                .build()
+                .toUri()
+                .toString()
+
+        HttpEntity reqEntity = new HttpEntity(null, headers);
+
+        ResponseEntity<String> respEntity = restTemplate.exchange(path,
+                HttpMethod.GET, reqEntity, String.class);
+
+        assertThat(respEntity.getStatusCode()).isEqualTo(HttpStatus.OK)
+        assertThat(respEntity.body)
+                .contains("aaa.png")
+                .contains("bbb.png")
+                .contains("ccc.png")
+    }
+
+
+    private void client_photoClient01(TestRestTemplate restTemplate) {
+        log.debug(logPrefix + "client_photoClient01")
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept([MediaType.ALL])
+
+        String path = UriComponentsBuilder.fromHttpUrl("${clientUrl}/photo/client")
+                .build()
+                .toUri()
+                .toString()
+
+        HttpEntity reqEntity = new HttpEntity(null, headers);
+
+        ResponseEntity<String> respEntity = restTemplate.exchange(path,
+                HttpMethod.GET, reqEntity, String.class);
+
+        assertThat(respEntity.getStatusCode()).isEqualTo(HttpStatus.OK)
+        assertThat(respEntity.body)
+                .contains("aaa.png")
+                .contains("bbb.png")
+                .contains("ccc.png")
     }
 }

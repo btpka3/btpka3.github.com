@@ -5,10 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.oauth2.client.OAuth2RestTemplate
+import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseBody
+import org.springframework.web.context.request.WebRequest
 
 /**
  *
@@ -18,7 +20,6 @@ class MyClientController {
 
     @Autowired
     MyOAuth2Properties myOAuth2Props
-
 
 
 
@@ -63,14 +64,16 @@ class MyClientController {
     @RequestMapping("/photo/implicit")
     @ResponseBody
     @PreAuthorize("isAuthenticated()")
-    String photoImplicit() {
+    String photoImplicit(WebRequest req) {
+
+        //oImplicitRestTemplate.getOAuth2ClientContext().setAccessToken(new DefaultOAuth2AccessToken (req.getParameter("at")))
 
         String url = myOAuth2Props.resource.photoListUri
         String respStr = oImplicitRestTemplate.getForObject(url, String)
         return "photos sec : " + respStr;
     }
 
-    // ---------------------------------------------  OAuth2 : client
+    // ---------------------------------------------  OAuth2 : password
     @Autowired
     OAuth2RestTemplate oPasswordRestTemplate
 
@@ -84,7 +87,7 @@ class MyClientController {
         return "photos sec : " + respStr;
     }
 
-    // ---------------------------------------------  OAuth2 : password
+    // ---------------------------------------------  OAuth2 : client
     @Autowired
     OAuth2RestTemplate oClientRestTemplate
 
