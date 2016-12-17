@@ -17,7 +17,7 @@ gradle build
 
 
 ## 提供静态资源
-可以分析 `WebMvcAutoConfiguration` 源代码,静态资源可以在以下位置中:
+可以分析 `WebMvcAutoConfiguration`,`ResourceProperties` 源代码,静态资源可以在以下位置中:
 
 ```
 private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {
