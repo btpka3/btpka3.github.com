@@ -23,7 +23,9 @@
 </div>
 <div ng-if="vm.at">
     <md-button class="md-primary md-raised" ng-click="getResource()">去请求资源</md-button>
+    <md-button class="md-primary md-raised" ng-click="passAt()">传递AT到后台，让后台请求资源</md-button>
     <md-button class="md-primary md-raised" ng-click="clearAt()">清除 AT</md-button>
+    <div> 注意： 点击 "传递AT到后台，让后台请求资源" 按钮前，请先登录 <a href="login" target="_blank">/login</a></div>
 </div>
 
 

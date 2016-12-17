@@ -33,7 +33,7 @@ cd first-spring-security-oauth2
 
 ## 验证 OAuth2 implicit 授权模式
 通过浏览器访问 `http://c.localhost:10003/implicit.html#` ，
-依次点击 `去授权`，`去请求资源`、`清除 AT` 进行验证。
+依次点击 `去授权`，`去请求资源`、`传递AT到后台，让后台请求资源`,`清除 AT` 进行验证。
 请留意浏览器的控制台输出、以及网络监控。
 
 
@@ -189,42 +189,18 @@ PSOT /oauth/authorize
 
 
 # 7788
-《[理解OAuth 2.0](http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html)》
-
-《[Stateless Authentication with Spring Security and JWT](http://technicalrex.com/2015/02/20/stateless-authentication-with-spring-security-and-jwt)》
-
-[spring-security-jwt demo](https://github.com/technical-rex/spring-security-jwt)
-
-
-[spring-boot-gradle-plugin](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-tools/spring-boot-gradle-plugin)
-
-```
-User
-```
-
-## spring-security-oauth
-
-[@github](https://github.com/spring-projects/spring-security-oauth)
-
-OAuth2ClientConfiguration
+* 《[理解OAuth 2.0](http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html)》
+* 《[Stateless Authentication with Spring Security and JWT](http://technicalrex.com/2015/02/20/stateless-authentication-with-spring-security-and-jwt)》
+* [spring-security-jwt demo](https://github.com/technical-rex/spring-security-jwt)
+* [spring-boot-gradle-plugin](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-tools/spring-boot-gradle-plugin)
+* [auth0](https://auth0.com/#)
+* [spring-security-oauth@github](https://github.com/spring-projects/spring-security-oauth)
+* 《[SSO with OAuth2: Angular JS and Spring Security Part V](https://spring.io/blog/2015/02/03/sso-with-oauth2-angular-js-and-spring-security-part-v)》
+* 《[Spring Security and Angular JS](https://spring.io/guides/tutorials/spring-security-and-angular-js/)》
+* [UUA - User Account and Authentication Service](http://docs.cloudfoundry.org/api/uaa/)
+* [微信公众平台 - 管理测试号](http://mp.weixin.qq.com/debug/cgi-bin/sandboxinfo?action=showinfo&t=sandbox/index)
 
 
-《[SSO with OAuth2: Angular JS and Spring Security Part V](https://spring.io/blog/2015/02/03/sso-with-oauth2-angular-js-and-spring-security-part-v)》
-
-《[Spring Security and Angular JS](https://spring.io/guides/tutorials/spring-security-and-angular-js/)》
-
-[UUA - User Account and Authentication Service](http://docs.cloudfoundry.org/api/uaa/)
-
-
-
-```
-curl acme:acmesecret@localhost:8080/oauth/token  \
--d grant_type=authorization_code -d client_id=acme     \
--d redirect_uri=http://example.com -d code=jYWioI
-
-
-c
-```
 ## 参考
 
 1. [samples@spring-security-oauth](https://github.com/spring-projects/spring-security-oauth.git)
@@ -244,29 +220,15 @@ mvn tomcat7:run
 
 
 
-|URI                    |@FrameworkEndpoint         |Method |parameters                                      |Description                          |
-|-----------------------|---------------------------|-------|------------------------------------------------|-------------------------------------|
-|`/oauth/authorize`     |AuthorizationEndpoint      |GET    |client_id,state,redirect_uri,response_type,scope|从Client App将用户引导至此以完成授权的URL|
-|                       |                           |POST   |user_oauth_approval                             |用户确认授权                           |
-|`/oauth/token`         |TokenEndpoint              |POST   | 
-|`/oauth/confirm_access`|WhitelabelApprovalEndpoint |
-|`/oauth/token_key`     |TokenKeyEndpoint           |
-|`/oauth/error`         |WhitelabelErrorEndpoint    |
-|`/oauth/check_token`   |CheckTokenEndpoint         |
+|URI                    |@FrameworkEndpoint         |Description                          |
+|-----------------------|---------------------------|-------------------------------------|
+|`/oauth/authorize`     |AuthorizationEndpoint      |GET: 授权表单画面、POST: 提交授权网址|
+|`/oauth/token`         |TokenEndpoint              |拿code换取AT的网址，password/client 模式直接请求AT的网址|
+|`/oauth/token_key`     |TokenKeyEndpoint           |如果AT是JWT，可从此处获取验证签名的秘钥|
+|`/oauth/check_token`   |CheckTokenEndpoint         ||
+|`/oauth/confirm_access`|WhitelabelApprovalEndpoint ||
+|`/oauth/error`         |WhitelabelErrorEndpoint    ||
 
-
-
-## OAuth2RestTemplate
-
-
-## 微信测试
-
-[微信公众平台 - 管理测试号](http://mp.weixin.qq.com/debug/cgi-bin/sandboxinfo?action=showinfo&t=sandbox/index)
-
-
-## FIXME
-
-1. 单个工程多个 OAuth2 client 配置与使用。
 
 ## 代码分析
 
@@ -415,7 +377,7 @@ ClientCredentialsTokenEndpointFilter
    貌似理论上可行，但是后台服务器在集群，就得保证 session 也在集群。否则 API 服务器切换时将出错。
 
  
-
+1. 单个工程多个 OAuth2 client 配置与使用。
 
 微信 OAuth 登录
 OAuth2ClientContext

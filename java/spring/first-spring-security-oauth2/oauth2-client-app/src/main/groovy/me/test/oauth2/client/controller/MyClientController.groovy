@@ -7,7 +7,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.oauth2.client.OAuth2RestTemplate
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.context.request.WebRequest
@@ -20,9 +19,6 @@ class MyClientController {
 
     @Autowired
     MyOAuth2Properties myOAuth2Props
-
-
-
 
 
     @RequestMapping("/")
@@ -48,29 +44,29 @@ class MyClientController {
     @RequestMapping("/photo/authCode")
     @ResponseBody
     @PreAuthorize("isAuthenticated()")
-    String photoAuthCode() {
+    Object photoAuthCode() {
 
         String url = myOAuth2Props.resource.photoListUri
         String respStr = oAuthCodeRestTemplate.getForObject(url, String)
-        return "photos sec : " + respStr;
+        return respStr;
     }
-
 
     // ---------------------------------------------  OAuth2 : implicit
 
-    @Autowired
-    OAuth2RestTemplate oImplicitRestTemplate
+//    @Autowired
+//    OAuth2RestTemplate oImplicitRestTemplate
 
     @RequestMapping("/photo/implicit")
     @ResponseBody
     @PreAuthorize("isAuthenticated()")
-    String photoImplicit(WebRequest req) {
+    Object photoImplicit(WebRequest req) {
 
-        //oImplicitRestTemplate.getOAuth2ClientContext().setAccessToken(new DefaultOAuth2AccessToken (req.getParameter("at")))
+        // 注意：这里后 前台传过来的AT，故直接用client模式访问
+        oClientRestTemplate.getOAuth2ClientContext().setAccessToken(new DefaultOAuth2AccessToken(req.getParameter("at")))
 
         String url = myOAuth2Props.resource.photoListUri
-        String respStr = oImplicitRestTemplate.getForObject(url, String)
-        return "photos sec : " + respStr;
+        String respStr = oClientRestTemplate.getForObject(url, String)
+        return respStr;
     }
 
     // ---------------------------------------------  OAuth2 : password
@@ -80,11 +76,11 @@ class MyClientController {
     @RequestMapping("/photo/password")
     @ResponseBody
     @PreAuthorize("isAuthenticated()")
-    String photoPassword() {
+    Object photoPassword() {
 
         String url = myOAuth2Props.resource.photoListUri
         String respStr = oPasswordRestTemplate.getForObject(url, String)
-        return "photos sec : " + respStr;
+        return respStr;
     }
 
     // ---------------------------------------------  OAuth2 : client
@@ -94,10 +90,10 @@ class MyClientController {
     @RequestMapping("/photo/client")
     @ResponseBody
     @PreAuthorize("isAuthenticated()")
-    String photoClient() {
+    Object photoClient() {
 
         String url = myOAuth2Props.resource.photoListUri
         String respStr = oClientRestTemplate.getForObject(url, String)
-        return "photos sec : " + respStr;
+        return respStr;
     }
 }
