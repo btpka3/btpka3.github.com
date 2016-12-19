@@ -439,9 +439,14 @@ public class MyClientAppTest {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept([MediaType.TEXT_HTML])
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED)
 
         MultiValueMap reqMsg = new LinkedMultiValueMap()
-        reqMsg.user_oauth_approval = true
+        // 这里只能是 string 值(true.toString)，否则用 multipart/form-data 提交数据
+        // 可选：明确指明要使用的 content-type
+        reqMsg.user_oauth_approval = true.toString()
+        reqMsg['scope.read'] = 'true'
+        reqMsg['scope.write'] = 'false'
 
         HttpEntity reqEntity = new HttpEntity(reqMsg, headers);
 

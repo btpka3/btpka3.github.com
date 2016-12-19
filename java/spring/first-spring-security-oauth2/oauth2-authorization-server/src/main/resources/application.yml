@@ -1,5 +1,6 @@
 server.port: 10001
 
+
 security.oauth2.resource.id: MY_RSC
 security.oauth2.authorization.realm: btpka3/my-oauth2
 
@@ -39,3 +40,19 @@ my.oauth2:
     authorities:
       - ROLE_CLIENT
     preEstablishedRedirectUri:  http://c.localhost:10003/implicit.html
+
+
+spring.h2.console.enabled: true
+
+spring.datasource:
+  url: jdbc:h2:tcp://localhost:9092/~/.oauth2-authorization-server
+  #url: jdbc:h2:~/.first-spring-boot-database
+  #username: sa
+  #password:
+  driver-class-name: "org.h2.Driver"
+
+my.h2.tcp.conf: -tcp,-tcpAllowOthers,-tcpPort,9092
+
+security:
+  basic:
+    enabled: false
