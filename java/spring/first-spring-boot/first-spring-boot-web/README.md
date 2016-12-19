@@ -176,6 +176,23 @@ HttpMessageConverters
         #getDefaultConverters()     // 从 WebMvcConfigurationSupport 或者 RestTemplate 获取內建的作为默认
         #getCombinedConverters()
  
+ 
+ConversionService
+    ConfigurableConversionService
+        GenericConversionService
+            DefaultConversionService
+            FormattingConversionService
+                DefaultFormattingConversionService
+
+Converter
+    StringToNumberConverterFactory.StringToNumber
+
+GenericConverter, 
+ConditionalConverter
+    ConditionalGenericConverter
+        StringToArrayConverter
 ```
 
 FIXME: 静态资源 Response 的 http 头： Content-Type 是如何自动设定的？
+
+
