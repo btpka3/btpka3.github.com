@@ -35,6 +35,12 @@
             <li>es <g:link action="es">es</g:link></li>
         </ul>
     </li>
+
+    <li>asset-pipeline 测试:
+        <ul>
+            <li>es <g:link action="rsc">rsc</g:link></li>
+        </ul>
+    </li>
 </ol>
 
 </body>

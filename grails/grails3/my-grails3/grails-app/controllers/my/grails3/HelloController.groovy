@@ -128,6 +128,10 @@ class HelloController {
     String index = "zll";
     String type = "item1";
 
+    def rsc() {
+        render(view: "rsc")
+    }
+
     def es() {
         recreateIndex(elasticsearchClient);
         doIndex(elasticsearchClient);

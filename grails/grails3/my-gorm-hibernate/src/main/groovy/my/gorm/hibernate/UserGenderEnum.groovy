@@ -7,7 +7,7 @@ public enum UserGenderEnum {
 
     MALE("男"),
     FEMALE("女"),
-    UNKONWN("保密");
+    UNKNOWN("保密");
 
     final String description
 

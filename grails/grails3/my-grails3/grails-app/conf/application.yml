@@ -200,6 +200,7 @@ grails:
 a.b.c: "abc111"
 environments:
    development:
+      server.contextPath: '/my-grails3'
       grails.logging.jul.usebridge: true
       grails.plugin.springsecurity.debug.useFilter: true
    production:
@@ -269,3 +270,12 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
+
+
+grails:
+  assets:
+    bundle: true #dont individually require files in development
+    storagePath: /tmp/aaa #automatically copy assets to external folder on startup
+    #url: http://cdn.example.com/
+
+
