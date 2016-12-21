@@ -1,4 +1,4 @@
-package me.test.oauth2.client.conf
+package me.test.oauth2.clientSso.conf
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.context.annotation.Bean

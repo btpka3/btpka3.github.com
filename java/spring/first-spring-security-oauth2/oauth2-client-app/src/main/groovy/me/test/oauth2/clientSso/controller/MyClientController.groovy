@@ -1,6 +1,6 @@
-package me.test.oauth2.client.controller
+package me.test.oauth2.clientSso.controller
 
-import me.test.oauth2.client.MyOAuth2Properties
+import me.test.oauth2.common.MyOAuth2Properties
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal

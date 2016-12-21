@@ -32,6 +32,7 @@ repositories {
 }
 
 dependencies {
+    compile(project(':oauth2-common'))
     compile('org.codehaus.groovy:groovy')
     compile("org.springframework.boot:spring-boot-configuration-processor")
     compile("org.springframework.boot:spring-boot-devtools")

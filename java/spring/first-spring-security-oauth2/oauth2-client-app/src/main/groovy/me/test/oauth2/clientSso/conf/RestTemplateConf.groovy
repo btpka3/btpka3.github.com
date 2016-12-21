@@ -1,4 +1,4 @@
-package me.test.oauth2.client.conf
+package me.test.oauth2.clientSso.conf
 
 import org.apache.http.client.HttpClient
 import org.apache.http.impl.client.HttpClientBuilder

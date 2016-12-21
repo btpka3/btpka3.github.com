@@ -1,4 +1,4 @@
-package me.test.oauth2.client.conf
+package me.test.oauth2.clientSso.conf
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.security.SecurityProperties
@@ -8,7 +8,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.builders.WebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
-import org.springframework.security.oauth2.provider.expression.OAuth2MethodSecurityExpressionHandler
 
 /**
  * 对 Spring Security 进行配置

@@ -1,0 +1,46 @@
+server.port: 10003
+spring.devtools.restart.exclude: static/**,public/**,templates/**,resources/**
+
+
+logging.level.org.springframework.security: INFO
+logging.level.org.springframework.boot.actuate.audit.listener.AuditListener: DEBUG
+logging.level.org.springframework.security.config.annotation.authentication.configuration: DEBUG
+logging.level.org.springframework.security.web.access: DEBUG
+logging.level.org.springframework.security.web.csrf: DEBUG
+logging.level.org.springframework.security.access: DEBUG
+# 用来追踪 restTemplate 请求
+logging.level.org.apache.http: DEBUG
+logging.level.me.test.oauth2.client: DEBUG
+logging.level.org.springframework.boot.context.config.ConfigFileApplicationListener: TRACE
+
+my.oauth2:
+  auth:
+    url:                    http://a.localhost:10001
+    accessTokenUri:         http://a.localhost:10001/oauth/token
+    userAuthorizationUri:   http://a.localhost:10001/oauth/authorize
+    checkTokenUri:          http://a.localhost:10001/oauth/check_token
+    realm: btpka3/oauth2
+  resource:
+    id: MY_RSC
+    url:                    http://r.localhost:10002
+    photoListUri:           http://r.localhost:10002/o2/photo
+    username4AuthServer:    a_my_rsc
+    password4AuthServer:    a_my_rsc
+  client:
+    id: MY_CLIENT
+    secret: secret
+    url:                    http://c.localhost:10003
+    scopes:
+      - read
+      - write
+    authorizedGrantTypes:
+      - authorization_code
+      - implicit
+      - client_credentials
+      - password
+      - refresh_token
+    authorities:
+      - ROLE_CLIENT
+    preEstablishedRedirectUri:  http://c.localhost:10003/implicit.html
+
+

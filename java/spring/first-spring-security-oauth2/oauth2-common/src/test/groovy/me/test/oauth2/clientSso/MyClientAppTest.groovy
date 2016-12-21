@@ -1,4 +1,4 @@
-package me.test.oauth2.client
+package me.test.oauth2.clientSso
 
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -6,19 +6,14 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.boot.autoconfigure.PropertyPlaceholderAutoConfiguration
 import org.springframework.boot.context.config.ConfigFileApplicationListener
 import org.springframework.boot.context.properties.EnableConfigurationProperties
-import org.springframework.boot.test.context.ConfigFileApplicationContextInitializer
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.context.ApplicationContext
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.context.annotation.Import
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer
 import org.springframework.http.*
-import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 import org.springframework.util.LinkedMultiValueMap
 import org.springframework.util.MultiValueMap

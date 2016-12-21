@@ -1,4 +1,4 @@
-package me.test.oauth2.client
+package me.test.oauth2.clientSso
 
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication

@@ -1,6 +1,8 @@
-package me.test.oauth2.client.conf
+package me.test.oauth2.clientSso.conf
 
-import me.test.oauth2.client.MyOAuth2Properties
+import me.test.oauth2.common.MyOAuth2Properties
+
+//import me.test.oauth2.client.MyOAuth2Properties
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.web.client.RestTemplateBuilder
 import org.springframework.context.annotation.Bean

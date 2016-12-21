@@ -188,7 +188,8 @@ PSOT /oauth/authorize
 ```
 
 
-# 7788
+# 参考
+
 * 《[理解OAuth 2.0](http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html)》
 * 《[Stateless Authentication with Spring Security and JWT](http://technicalrex.com/2015/02/20/stateless-authentication-with-spring-security-and-jwt)》
 * [spring-security-jwt demo](https://github.com/technical-rex/spring-security-jwt)
@@ -199,13 +200,10 @@ PSOT /oauth/authorize
 * 《[Spring Security and Angular JS](https://spring.io/guides/tutorials/spring-security-and-angular-js/)》
 * [UUA - User Account and Authentication Service](http://docs.cloudfoundry.org/api/uaa/)
 * [微信公众平台 - 管理测试号](http://mp.weixin.qq.com/debug/cgi-bin/sandboxinfo?action=showinfo&t=sandbox/index)
-
-
-## 参考
-
-1. [samples@spring-security-oauth](https://github.com/spring-projects/spring-security-oauth.git)
-1. [oauth2-sso-demo@making](https://github.com/making/oauth2-sso-demo.git)
-1. [UUA@github](https://github.com/cloudfoundry/uaa)
+* [samples@spring-security-oauth](https://github.com/spring-projects/spring-security-oauth.git)
+* [oauth2-sso-demo@making](https://github.com/making/oauth2-sso-demo.git)
+* [UUA@github](https://github.com/cloudfoundry/uaa)
+* [OAuth2 SSO](http://docs.spring.io/spring-boot/docs/1.4.2.RELEASE/reference/htmlsingle/#boot-features-security-oauth2-single-sign-on)
 
 ```
 git clone https://github.com/spring-projects/spring-security-oauth.git
@@ -280,9 +278,13 @@ ResourceServerSecurityConfigurer
     -> OAuth2SsoProperties                      // 读取配置 "security.oauth2.sso"
     -> OAuth2SsoDefaultConfiguration            // 实现了 WebSecurityConfigurerAdapter
     -> OAuth2SsoCustomConfiguration             // BPP, 通过AOP在调用 WebSecurityConfigurerAdapter#getHttp() 时追加额外配置
+                                                // 追加 SsoSecurityConfigurer 对 HttpSecurity 进行配置
+        -> SsoSecurityConfigurer
+            #configure(HttpSecurity)            // 追加 OAuth2ClientAuthenticationProcessingFilter
+            #addAuthenticationEntryPoint()      // 针对网站和异步请求增加不同的认证点
     -> ResourceServerTokenServicesConfiguration // 不能和 @EnableAuthorizationServer 一起使用
         #remoteTokenServices()                  // 注册 bean : RemoteTokenServices
-    ??? SsoSecurityConfigurer.java 
+    
 
 @EnableAutoConfiguration
 OAuth2AutoConfiguration
