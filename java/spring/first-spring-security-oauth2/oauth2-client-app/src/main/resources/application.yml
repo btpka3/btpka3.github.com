@@ -18,11 +18,14 @@ my.oauth2:
     url:                    http://a.localhost:10001
     accessTokenUri:         http://a.localhost:10001/oauth/token
     userAuthorizationUri:   http://a.localhost:10001/oauth/authorize
+    checkTokenUri:          http://a.localhost:10001/oauth/check_token
+    realm: btpka3/oauth2
   resource:
     id: MY_RSC
     url:                    http://r.localhost:10002
-    photoListUri:           http://r.localhost:10001/o2/photo
-    photoDetailUri:         http://r.localhost:10001/o2/photo/{id}
+    photoListUri:           http://r.localhost:10002/o2/photo
+    username4AuthServer:    a_my_rsc
+    password4AuthServer:    a_my_rsc
   client:
     id: MY_CLIENT
     secret: secret

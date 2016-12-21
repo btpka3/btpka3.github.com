@@ -49,8 +49,21 @@ public class OAuth2AuthorizationServerConf extends AuthorizationServerConfigurer
     @Autowired
     TokenStore tokenStore
 
+//    @Autowired
+//    ClientDetailsService clientDetailsService
+
     @Autowired
-    ClientDetailsService clientDetailsService
+    DataSource dataSource
+
+    @Autowired
+    private MyOAuth2Properties myOAuth2Props
+
+
+    @Autowired
+//    @Qualifier("authenticationManagerBean")
+    private AuthenticationManager authenticationManager; // 人：Resource Owner
+
+
 
     // -------------------------- 定义 spring beans
     @Bean
@@ -119,34 +132,39 @@ public class OAuth2AuthorizationServerConf extends AuthorizationServerConfigurer
     // --------------------------
 //    @Autowired
 //    private AuthorizationServerProperties properties;
-    @Autowired
-    private MyOAuth2Properties myOAuth2Props
 
-    @Autowired
-    private ClientDetailsService clientDetailsService;
+
+//    @Autowired
+//    private ClientDetailsService clientDetailsService;
 
 
 //    @Autowired
 //    private UserApprovalHandler userApprovalHandler;
 
 
-    @Autowired
-//    @Qualifier("authenticationManagerBean")
-    private AuthenticationManager authenticationManager; // 人：Resource Owner
 
 
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+//        clients.inMemory()
 
-        clients.inMemory()
+        clients.jdbc(dataSource)
+                //.passwordEncoder()
 
+                // 刚启动就注册一个
                 .withClient(myOAuth2Props.client.id)
                 .resourceIds(myOAuth2Props.resource.id)
-                .authorizedGrantTypes(myOAuth2Props.client.authorizedGrantTypes)
-                .authorities(myOAuth2Props.client.authorities)
-                .scopes(myOAuth2Props.client.scopes)
                 .secret(myOAuth2Props.client.secret)
+                .scopes(myOAuth2Props.client.scopes)
+                .authorizedGrantTypes(myOAuth2Props.client.authorizedGrantTypes)
+                //.redirectUris()
+                .authorities(myOAuth2Props.client.authorities)
+                //.accessTokenValiditySeconds()
+                //.refreshTokenValiditySeconds()
+                //.additionalInformation()
+                //.autoApprove()
+
 
     }
 
@@ -164,7 +182,9 @@ public class OAuth2AuthorizationServerConf extends AuthorizationServerConfigurer
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
 
         // 通过 application.yml : "security.oauth2.authorization.realm"
-        oauthServer.realm("btpka3/oauth2");
+        oauthServer.realm(myOAuth2Props.auth.realm)
+            .tokenKeyAccess('isFullyAuthenticated()')
+            .checkTokenAccess('isFullyAuthenticated()');
     }
 
 }

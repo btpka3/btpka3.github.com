@@ -261,6 +261,7 @@ ResourceServerSecurityConfigurer
         
     -> AuthorizationServerSecurityConfiguration     // 实现了 WebSecurityConfigurerAdapter
                                                     // 仅仅过滤 /oauth/token, /oauth/token_key, /oauth/check_token 这三个URL
+                                                    // 注意：这三个路径默认有不同的权限，需要自行检查配置。
         #configurers                                // 获取所有 bean : AuthorizationServerConfigurer/AuthorizationServerConfigurerAdapter
         #configure(ClientDetailsServiceConfigurer)  // 
         #configure(HttpSecurity)                    // 调用所有 bean : AuthorizationServerConfigurer/AuthorizationServerConfigurerAdapter
@@ -280,7 +281,7 @@ ResourceServerSecurityConfigurer
     -> OAuth2SsoDefaultConfiguration            // 实现了 WebSecurityConfigurerAdapter
     -> OAuth2SsoCustomConfiguration             // BPP, 通过AOP在调用 WebSecurityConfigurerAdapter#getHttp() 时追加额外配置
     -> ResourceServerTokenServicesConfiguration // 不能和 @EnableAuthorizationServer 一起使用
-
+        #remoteTokenServices()                  // 注册 bean : RemoteTokenServices
     ??? SsoSecurityConfigurer.java 
 
 @EnableAutoConfiguration

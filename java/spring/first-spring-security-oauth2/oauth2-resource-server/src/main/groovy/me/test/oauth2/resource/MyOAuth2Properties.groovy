@@ -1,4 +1,4 @@
-package me.test.oauth2.authorization
+package me.test.oauth2.resource
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 
@@ -21,6 +21,9 @@ class MyOAuth2Properties {
         String id
         String url
         String photoListUri
+        // 验证 token 有效性时，去访问 auth server `/oauth/check_token` 时使用的用户名和密码
+        String username4AuthServer
+        String password4AuthServer
     }
 
     static class Client {

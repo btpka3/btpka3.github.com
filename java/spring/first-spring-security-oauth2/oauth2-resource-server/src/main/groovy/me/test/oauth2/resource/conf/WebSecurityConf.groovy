@@ -1,4 +1,4 @@
-package me.test.oauth2.authorization.conf
+package me.test.oauth2.resource.conf
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.security.SecurityProperties
@@ -6,9 +6,7 @@ import org.springframework.core.annotation.Order
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
-import org.springframework.security.config.annotation.web.builders.WebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
-import org.springframework.security.oauth2.provider.expression.OAuth2MethodSecurityExpressionHandler
 
 /**
  * 对 Spring Security 进行配置
@@ -31,12 +29,6 @@ class WebSecurityConf extends WebSecurityConfigurerAdapter {
                 .password("a_user")
                 .authorities("UUU")
                 .roles("USER")
-
-            .and()
-                .withUser("a_my_rsc")
-                .password("a_my_rsc")
-                .authorities("UUU")
-                .roles("RSC")
         // @formatter:on
     }
 

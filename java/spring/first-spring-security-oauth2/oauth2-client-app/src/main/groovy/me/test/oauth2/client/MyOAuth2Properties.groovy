@@ -14,13 +14,14 @@ class MyOAuth2Properties {
         String url
         String accessTokenUri
         String userAuthorizationUri
+        String checkTokenUri
+        String realm
     }
 
     static class Rsc {
         String id
         String url
         String photoListUri
-        String photoDetailUri
     }
 
     static class Client {
