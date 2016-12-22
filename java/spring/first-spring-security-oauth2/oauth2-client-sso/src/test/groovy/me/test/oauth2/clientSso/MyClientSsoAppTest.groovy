@@ -271,7 +271,7 @@ public class MyClientSsoAppTest {
     private URI client_accessSecWithoutLocalLogin(TestRestTemplate restTemplate) {
         log.debug(logPrefix + "client_accessSecWithoutLocalLogin")
         HttpHeaders headers = new HttpHeaders();
-        headers.setAccept([MediaType.TEXT_HTML])
+        headers.setAccept([MediaType.ALL])
 
         HttpEntity<Void> reqEntity = new HttpEntity<Void>(null, headers);
 

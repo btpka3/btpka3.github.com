@@ -71,105 +71,105 @@ public class OAuth2ClientConf {
     @Bean
     public OAuth2RestTemplate oAuthCodeLoginRestTemplate(OAuth2ClientContext clientContext,
                                                     AccessTokenProvider accessTokenProvider) {
-        OAuth2RestTemplate restTemplate = new OAuth2RestTemplate(oAuthCodeResourceDetails(), clientContext);
+        OAuth2RestTemplate restTemplate = new OAuth2RestTemplate(oAuthCodeLoginResourceDetails(), clientContext);
         restTemplate.setAccessTokenProvider(accessTokenProvider)
         return restTemplate;
     }
-
-
-    // ---------------------------------------------  OAuth2 : authorization code
-
-    @Bean
-    public OAuth2ProtectedResourceDetails oAuthCodeResourceDetails() {
-        AuthorizationCodeResourceDetails details = new AuthorizationCodeResourceDetails();
-        details.setId(myOAuth2Props.resource.id);
-        details.setClientId(myOAuth2Props.client.id);
-        details.setClientSecret(myOAuth2Props.client.secret);
-        details.setAccessTokenUri(myOAuth2Props.auth.accessTokenUri);
-        details.setUserAuthorizationUri(myOAuth2Props.auth.userAuthorizationUri);
-        details.setScope(Arrays.asList(myOAuth2Props.client.scopes));
-        return details;
-    }
-
-    @Bean
-    public OAuth2RestTemplate oAuthCodeRestTemplate(OAuth2ClientContext clientContext,
-                                                    AccessTokenProvider accessTokenProvider) {
-        OAuth2RestTemplate restTemplate = new OAuth2RestTemplate(oAuthCodeResourceDetails(), clientContext);
-        restTemplate.setAccessTokenProvider(accessTokenProvider)
-        return restTemplate;
-    }
-
-    // ---------------------------------------------  OAuth2 : implicit
-
-    // 注意：OAuth2 implicit 主要用于运行再浏览器内的应用，或 native 应用
-    // 请参考 ImplicitAccessTokenProvider 的java注释
-    // 分析 ImplicitResponseExtractor 代码可以看到其通过 URI#getFragment() 来解析 AT
-    @Bean
-    public OAuth2ProtectedResourceDetails oImplicitResourceDetails() {
-        ImplicitResourceDetails details = new ImplicitResourceDetails();
-        details.setId(myOAuth2Props.resource.id);
-        details.setClientId(myOAuth2Props.client.id);
-        details.setClientSecret(myOAuth2Props.client.secret);
-        details.setAccessTokenUri(myOAuth2Props.auth.accessTokenUri);
-        details.setUserAuthorizationUri(myOAuth2Props.auth.userAuthorizationUri);
-        details.setScope(Arrays.asList(myOAuth2Props.client.scopes));
-
-        details.setPreEstablishedRedirectUri(myOAuth2Props.client.preEstablishedRedirectUri)
-        return details;
-    }
-
-    @Bean
-    public OAuth2RestTemplate oImplicitRestTemplate(OAuth2ClientContext clientContext,
-                                                    AccessTokenProvider accessTokenProvider) {
-        OAuth2RestTemplate restTemplate = new OAuth2RestTemplate(oImplicitResourceDetails(), clientContext);
-        restTemplate.setAccessTokenProvider(accessTokenProvider)
-        return restTemplate;
-    }
-
-    // ---------------------------------------------  OAuth2 : client
-
-    @Bean
-    public OAuth2ProtectedResourceDetails oPasswordResourceDetails() {
-        ClientCredentialsResourceDetails details = new ClientCredentialsResourceDetails();
-        details.setId(myOAuth2Props.resource.id);
-        details.setClientId(myOAuth2Props.client.id);
-        details.setClientSecret(myOAuth2Props.client.secret);
-        details.setAccessTokenUri(myOAuth2Props.auth.accessTokenUri);
-        details.setScope(Arrays.asList(myOAuth2Props.client.scopes));
-        return details;
-    }
-
-    @Bean
-    public OAuth2RestTemplate oPasswordRestTemplate(OAuth2ClientContext clientContext,
-                                                    AccessTokenProvider accessTokenProvider) {
-        OAuth2RestTemplate restTemplate = new OAuth2RestTemplate(oPasswordResourceDetails(), clientContext);
-        restTemplate.setAccessTokenProvider(accessTokenProvider)
-        return restTemplate;
-    }
-
-    // ---------------------------------------------  OAuth2 : password
-
-    @Bean
-    public OAuth2ProtectedResourceDetails oClientResourceDetails() {
-        ResourceOwnerPasswordResourceDetails details = new ResourceOwnerPasswordResourceDetails();
-        details.setId(myOAuth2Props.resource.id);
-        details.setClientId(myOAuth2Props.client.id);
-        details.setClientSecret(myOAuth2Props.client.secret);
-        details.setAccessTokenUri(myOAuth2Props.auth.accessTokenUri);
-        details.setScope(Arrays.asList(myOAuth2Props.client.scopes));
-
-        details.setUsername("a_admin")
-        details.setPassword("a_admin")
-        return details;
-    }
-
-    @Bean
-    public OAuth2RestTemplate oClientRestTemplate(OAuth2ClientContext clientContext,
-                                                  AccessTokenProvider accessTokenProvider) {
-        OAuth2RestTemplate restTemplate = new OAuth2RestTemplate(oPasswordResourceDetails(), clientContext);
-        restTemplate.setAccessTokenProvider(accessTokenProvider)
-        return restTemplate;
-    }
+//
+//
+//    // ---------------------------------------------  OAuth2 : authorization code
+//
+//    @Bean
+//    public OAuth2ProtectedResourceDetails oAuthCodeResourceDetails() {
+//        AuthorizationCodeResourceDetails details = new AuthorizationCodeResourceDetails();
+//        details.setId(myOAuth2Props.resource.id);
+//        details.setClientId(myOAuth2Props.client.id);
+//        details.setClientSecret(myOAuth2Props.client.secret);
+//        details.setAccessTokenUri(myOAuth2Props.auth.accessTokenUri);
+//        details.setUserAuthorizationUri(myOAuth2Props.auth.userAuthorizationUri);
+//        details.setScope(Arrays.asList(myOAuth2Props.client.scopes));
+//        return details;
+//    }
+//
+//    @Bean
+//    public OAuth2RestTemplate oAuthCodeRestTemplate(OAuth2ClientContext clientContext,
+//                                                    AccessTokenProvider accessTokenProvider) {
+//        OAuth2RestTemplate restTemplate = new OAuth2RestTemplate(oAuthCodeResourceDetails(), clientContext);
+//        restTemplate.setAccessTokenProvider(accessTokenProvider)
+//        return restTemplate;
+//    }
+//
+//    // ---------------------------------------------  OAuth2 : implicit
+//
+//    // 注意：OAuth2 implicit 主要用于运行再浏览器内的应用，或 native 应用
+//    // 请参考 ImplicitAccessTokenProvider 的java注释
+//    // 分析 ImplicitResponseExtractor 代码可以看到其通过 URI#getFragment() 来解析 AT
+//    @Bean
+//    public OAuth2ProtectedResourceDetails oImplicitResourceDetails() {
+//        ImplicitResourceDetails details = new ImplicitResourceDetails();
+//        details.setId(myOAuth2Props.resource.id);
+//        details.setClientId(myOAuth2Props.client.id);
+//        details.setClientSecret(myOAuth2Props.client.secret);
+//        details.setAccessTokenUri(myOAuth2Props.auth.accessTokenUri);
+//        details.setUserAuthorizationUri(myOAuth2Props.auth.userAuthorizationUri);
+//        details.setScope(Arrays.asList(myOAuth2Props.client.scopes));
+//
+//        details.setPreEstablishedRedirectUri(myOAuth2Props.client.preEstablishedRedirectUri)
+//        return details;
+//    }
+//
+//    @Bean
+//    public OAuth2RestTemplate oImplicitRestTemplate(OAuth2ClientContext clientContext,
+//                                                    AccessTokenProvider accessTokenProvider) {
+//        OAuth2RestTemplate restTemplate = new OAuth2RestTemplate(oImplicitResourceDetails(), clientContext);
+//        restTemplate.setAccessTokenProvider(accessTokenProvider)
+//        return restTemplate;
+//    }
+//
+//    // ---------------------------------------------  OAuth2 : client
+//
+//    @Bean
+//    public OAuth2ProtectedResourceDetails oPasswordResourceDetails() {
+//        ClientCredentialsResourceDetails details = new ClientCredentialsResourceDetails();
+//        details.setId(myOAuth2Props.resource.id);
+//        details.setClientId(myOAuth2Props.client.id);
+//        details.setClientSecret(myOAuth2Props.client.secret);
+//        details.setAccessTokenUri(myOAuth2Props.auth.accessTokenUri);
+//        details.setScope(Arrays.asList(myOAuth2Props.client.scopes));
+//        return details;
+//    }
+//
+//    @Bean
+//    public OAuth2RestTemplate oPasswordRestTemplate(OAuth2ClientContext clientContext,
+//                                                    AccessTokenProvider accessTokenProvider) {
+//        OAuth2RestTemplate restTemplate = new OAuth2RestTemplate(oPasswordResourceDetails(), clientContext);
+//        restTemplate.setAccessTokenProvider(accessTokenProvider)
+//        return restTemplate;
+//    }
+//
+//    // ---------------------------------------------  OAuth2 : password
+//
+//    @Bean
+//    public OAuth2ProtectedResourceDetails oClientResourceDetails() {
+//        ResourceOwnerPasswordResourceDetails details = new ResourceOwnerPasswordResourceDetails();
+//        details.setId(myOAuth2Props.resource.id);
+//        details.setClientId(myOAuth2Props.client.id);
+//        details.setClientSecret(myOAuth2Props.client.secret);
+//        details.setAccessTokenUri(myOAuth2Props.auth.accessTokenUri);
+//        details.setScope(Arrays.asList(myOAuth2Props.client.scopes));
+//
+//        details.setUsername("a_admin")
+//        details.setPassword("a_admin")
+//        return details;
+//    }
+//
+//    @Bean
+//    public OAuth2RestTemplate oClientRestTemplate(OAuth2ClientContext clientContext,
+//                                                  AccessTokenProvider accessTokenProvider) {
+//        OAuth2RestTemplate restTemplate = new OAuth2RestTemplate(oPasswordResourceDetails(), clientContext);
+//        restTemplate.setAccessTokenProvider(accessTokenProvider)
+//        return restTemplate;
+//    }
 
     // 以下配置是为了让 OAuth2RestTemplate 使用统一的 RestTemplateBuilder 接口
 

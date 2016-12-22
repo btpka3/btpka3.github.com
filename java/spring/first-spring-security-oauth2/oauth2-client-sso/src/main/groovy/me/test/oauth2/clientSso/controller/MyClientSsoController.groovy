@@ -31,8 +31,14 @@ class MyClientSsoController {
     @RequestMapping("/sec")
     @ResponseBody
     @PreAuthorize("isAuthenticated()")
-    String sec(Principal principal, @AuthenticationPrincipal Object curUser) {
-        return "client sso sec " + new Date() + "; " + principal + "; " + curUser;
+    Object sec(Principal principal, @AuthenticationPrincipal Object curUser) {
+        return [
+                msg      : "client sso sec",
+                date     : new Date(),
+                principal: principal.toString(),
+                curUser  : curUser.toString()
+
+        ]
     }
 
 }
