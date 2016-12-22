@@ -570,7 +570,7 @@ Spring security 的 filter-stack 在[这里](http://docs.spring.io/spring-securi
 |  -MIN |                                       |OrderedCharacterEncodingFilter             |                                       |                       |
 |-10000 |                                       |OrderedHiddenHttpMethodFilter              |                                       |                       |
 | -9900 |                                       |OrderedHttpPutFormContentFilter            |                                       |                       |
-|  -110 |                                       |OAuth2ClientContextFilter  ???             |                                       |                       |
+|  -110 |                                       |OAuth2ClientContextFilter  !!!             |                                       |                       |
 |  -105 |                                       |OrderedRequestContextFilter                |                                       |                       |
 |  -100 |                                       |DelegatingFilterProxy                      |                                       |                       |
 |       |                                       |                                           |                                       |                       |
@@ -587,6 +587,7 @@ Spring security 的 filter-stack 在[这里](http://docs.spring.io/spring-securi
 |   900 |  900 : X509_FILTER                    |X509AuthenticationFilter                   |http/x509                              |#x509()                |
 |       |                                       |OAuth2AuthenticationProcessingFilter       |                                       |                       |
 |  1000 | 1000 : PRE_AUTH_FILTER                |AbstractPreAuthenticatedProcessingFilter   |N/A                                    |#addFilter...()        |
+|       |                                       |OAuth2ClientAuthenticationProcessingFilter |                                       |                       |
 |  1100 | 1100 : CAS_FILTER                     |CasAuthenticationFilter                    |N/A                                    |#addFilter...()        |
 |  1200 | 1200 : FORM_LOGIN_FILTER              |UsernamePasswordAuthenticationFilter       |http/form-login                        |#formLogin()           |
 |  1300 |  300 : CONCURRENT_SESSION_FILTER      |ConcurrentSessionFilter                    |session-management/concurrency-control |#sessionManagement()   |
@@ -608,5 +609,7 @@ Spring security 的 filter-stack 在[这里](http://docs.spring.io/spring-securi
 |  2800 | 2600 : LAST                           |                                           |                                       |                       |
 |       |                                       |                                           |                                       |                       |
 
+
+注意：不要轻易将 Filter 注册为bean，否则都会被 ServletContextInitializerBeans#addAdaptableBeans() 追加到 Web.xml 的映射中的。
 
 
