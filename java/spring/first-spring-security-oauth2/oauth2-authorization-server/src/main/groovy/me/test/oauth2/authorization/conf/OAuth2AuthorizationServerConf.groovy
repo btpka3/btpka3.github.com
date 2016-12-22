@@ -158,7 +158,7 @@ public class OAuth2AuthorizationServerConf extends AuthorizationServerConfigurer
                 //.accessTokenValiditySeconds()
                 //.refreshTokenValiditySeconds()
                 //.additionalInformation()
-                //.autoApprove()
+                .autoApprove("LOGIN")  // 仅仅用来自动登录的话，无需授权（已默认）。
 
 
     }

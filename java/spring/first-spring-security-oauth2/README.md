@@ -11,6 +11,7 @@ cat <<EOF | sudo tee -a /etc/hosts
 127.0.0.1   a.localhost     # authorization server
 127.0.0.1   r.localhost     # resource server
 127.0.0.1   c.localhost     # client app
+127.0.0.1   s.localhost     # client sso
 EOF
 
 # 启动服务器
@@ -284,6 +285,9 @@ ResourceServerSecurityConfigurer
             #addAuthenticationEntryPoint()      // 针对网站和异步请求增加不同的认证点
     -> ResourceServerTokenServicesConfiguration // 不能和 @EnableAuthorizationServer 一起使用
         #remoteTokenServices()                  // 注册 bean : RemoteTokenServices
+        #userInfoRestTemplateFactory()          // 注册 bean : UserInfoRestTemplateFactory
+                                                // 会依赖注入所有的 UserInfoRestTemplateCustomizer、OAuth2ProtectedResourceDetails、OAuth2ClientContext
+            #getUserInfoRestTemplate()          // 会调用所有的 UserInfoRestTemplateCustomizer
     
 
 @EnableAutoConfiguration
@@ -298,7 +302,7 @@ OAuth2AutoConfiguration
         #resourceServer()                       // 默认提供一个 ResourceServerConfigurer(ResourceSecurityConfigurer)
         -> ResourceServerTokenServicesConfiguration
             #jwtTokenStore()                    // 注册 bean : JwtTokenStore
-    -> OAuth2RestOperationsConfiguration
+    -> OAuth2RestOperationsConfiguration        // 只有配置了 "security.oauth2.client.client-id" 时才启用
         -> SessionScopedConfiguration           // 有 bean OAuth2ClientConfiguration 时启用
             -> OAuth2ProtectedResourceDetailsConfiguration
                 #oauth2RemoteResource()         // 注册 bean : AuthorizationCodeResourceDetails
@@ -393,7 +397,5 @@ JaxbOAuth2AccessTokenMessageConverter
 DefaultClientAuthenticationHandler
 BaseOAuth2ProtectedResourceDetails
 
-SsoSecurityConfigurer
-Oauth2ClientAuthenticationProcessingFilter
 
 

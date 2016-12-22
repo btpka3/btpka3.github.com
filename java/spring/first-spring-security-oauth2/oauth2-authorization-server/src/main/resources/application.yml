@@ -35,6 +35,7 @@ my.oauth2:
     scopes:
       - read
       - write
+      - LOGIN
     authorizedGrantTypes:
       - authorization_code
       - implicit

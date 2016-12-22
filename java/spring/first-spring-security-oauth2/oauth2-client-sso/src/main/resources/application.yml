@@ -1,4 +1,4 @@
-server.port: 10002
+server.port: 10004
 spring.devtools.restart.exclude: static/**,public/**,templates/**,resources/**
 
 
@@ -29,7 +29,7 @@ my.oauth2:
   client:
     id: MY_CLIENT
     secret: secret
-    url:                    http://c.localhost:10003
+    url:                    http://s.localhost:10004
     scopes:
       - read
       - write
@@ -42,6 +42,12 @@ my.oauth2:
       - refresh_token
     authorities:
       - ROLE_CLIENT
-    preEstablishedRedirectUri:  http://c.localhost:10003/implicit.html
+    preEstablishedRedirectUri:  ""
 
+# OAuth2SsoProperties
+#security.oauth2.sso:
+#  login-path: /login
 
+#ResourceServerProperties
+#security.oauth2.resource:
+#  clientId:
