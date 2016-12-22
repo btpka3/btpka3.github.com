@@ -97,6 +97,13 @@ access_token.payload = {
 
 ```
 
+## 验证 html OAuth2 SSO
+
+通过浏览器访问校验: `http://s.localhost:10004/sec`
+
+## 验证 Ajax OAuth2 SSO
+通过浏览器访问校验: `http://s.localhost:10004/ajaxSso.html`
+并点击 `GET /SEC` 按钮。
 
 # OAuth 2
 
