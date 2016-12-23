@@ -124,7 +124,7 @@ public class OAuth2ClientConf {
         details.setScope(Arrays.asList(myOAuth2Props.client.scopes));
 
         details.setUsername("a_admin")
-        details.setPassword("c_admin")
+        details.setPassword("a_admin")
         return details;
     }
 

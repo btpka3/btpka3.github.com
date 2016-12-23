@@ -107,6 +107,19 @@ access_token.payload = {
 
 # OAuth 2
 
+
+
+|                                                               |auth code  |Implicit   |password   |client |
+|---------------------------------------------------------------|-----------|-----------|-----------|-------|
+|所有 AT 都从 Authorization Endpoint (`/oauth/authorize`) 返回？  | no        |            |           |       |
+|所有 AT 都从 Token Endpoint (`/oauth/token`) 返回？              | yes       |            |           |       |
+|AT 未泄露给 User Agent?                                         | yes       |            |           |       |
+|Client App 可以被认证？                                          | yes       |            |          |       |
+|AT 可以被 Refresh?                                              | yes       |             |          |       |
+|一次 http 请求就可以返回 AT?                                     | no         |             |          |       |
+|大多数请求都是 Server-to-Server?                                 | yes        |            |          |       |
+
+
 ## Authorization Code 授权方式
 
 ```
@@ -375,11 +388,15 @@ OAuth2AuthenticationProcessingFilter
 TokenEndpointAuthenticationFilter
 ClientCredentialsTokenEndpointFilter
 
+AccessTokenConverter
+    JTI     // TOKEN_ID
+    ATI     // ACCESS_TOKEN_ID
+
 ```
 
 # FIXME
 
-1. implicit 获取的 AT 能否从 SPA 传递给API后台，让API后台代为请求资源？
+* implicit 获取的 AT 能否从 SPA 传递给API后台，让API后台代为请求资源？
  
    ```
    // TRY : 需要当前用户已经登录的情况下
@@ -391,12 +408,232 @@ ClientCredentialsTokenEndpointFilter
    貌似理论上可行，但是后台服务器在集群，就得保证 session 也在集群。否则 API 服务器切换时将出错。
 
  
-1. 单个工程多个 OAuth2 client 配置与使用。
+* 单个工程多个 OAuth2 client 配置与使用。
+ 
+   可以的，需要使用不同的 OAuth2ProtectedResourceDetails 配置不同的 OAuth2RestTemplate。
 
-微信 OAuth 登录
-OAuth2ClientContext
+* 微信 OAuth 登录
 
-DefaultOAuth2AccessToken
+* 注册自己平台的统一账号
+
+    ```
+    
+    ```
+* 如何利用 OAuth2 创建 Stateless 的 Restful API 服务器?
+
+    把该服务器当成 OAuth2 的 Resource Server 即可。配合使用 Implicit 授权模式。
+    
+* Implicit 模式下如何 SSO？
+
+    后台 API 需提供接口，判断当前存储在浏览器端的 AT 是否有效，
+无效的话就引导用户到 authorization 服务器上进行授权，并返回。 
+
+* Implicit 授权模式没有 refresh token，如何保障持久性登录？
+
+    在 OAuth2 的 authorization 服务器上使用集群、分布式、持久化的session。通过无缝重定向确保。
+
+* 如何有效使用 JWT ? 
+
+```
+access_token.payload = {
+    // for user
+    user_name   :   ""
+    authorities :   [""],
+    scope       :   [""],
+    jti         :   "",     // token id。可以理解为该 AT 的主键，可以用于防范重放攻击 (replay attack) ?
+    exp         :   0,      // 过期时间
+    grant_type  :   "",     // 可选：授权方式
+    client_id   :   "",     // 
+    aud         :   [""] ,  // 授权的 resource id 列表
+    *           :   *       // 所有额外信息
+}
+
+# rfc7519
+iss         : (R) Issuer Claim
+sub         : (R) Subject Claim
+aud         : (R) Audience Claim
+exp         : (R) Expiration Time Claim
+nbf         : () Not Before Claim
+iat         : (R) Issued At Claim
+jti         : () WT ID Claim
+
+http://openid.net/specs/openid-connect-core-1_0.html
+auth_time   : (O)
+nonce       :   
+acr         : (O) Authentication Context Class Reference
+amr         : (O) Authentication Methods References
+azp         : Authorized party
+```
+
+    1. 使用公钥、私钥
+    2. 使用额外的校验:
+    
+        * 校验 client_id 是否与自己的应用的 client id 一致
+        * 通过扩展 JwtAccessTokenConverter#enhance() 对 JWT 追加额外信息：比如创建时间
+        * 通过扩展 JwtAccessTokenConverter#extractAuthentication(), 对 额外信息进行判断。
+    3. resource server，client app 保存所有的 AT，通过 jti 判断是否重复。
+    4. 启用 `iat`, `nbf` 等字段，并加强控制。
+
+* 使用 JWT 时，如何防范重放攻击 (replay attack) ? 
+    使用黑名单机制，保存已经废弃的 at. 
+    
+* JWT 类型的 AT 不能 revoke？
+    
+    1. 需要 client app， resource server 通过 轮训 从 auth 服务器上获取 revoke 的 at
+    2. auth server 主动推送给 client app， resource server 未过期且已被revoke的 at
+    3. client app， resource server 上 at 存储设计：
+    
+        * at、revoked_at 表中只保存未过期的，
+        * revoked_at 表中数据从 auth_server 轮训获取。
+
+* 如何实现单点退出？
+
+    同 at 的 revoke， 最好由 auth server 主动通知 client app、 resource server 被撤销的 AT。
+    如果是使用了session，则需要 destory session。
+
+* 微信账号绑定后，使用其他微信账号登录？
+
+    微信登录后，如果已经绑定，则使用绑定的身份登录，否则新建本地账户。
+
+* 如何处理用户多次授权的 AT? 用户第一次微信登录，第二次本地账户登录时，能够继续使用第一次微信登录的 AT？
+
+    应当保存所有用户授权的 AT，但使用时，应当只用最新，scope 最全的。
+
+* 何时使用无需用户授权的登录？何时使用需要授权的登录？
+
+    目前来看，需要用户授权的，只有获取用户基本信息。
+    因此，应当只在用户通过微信注册账号，或者微信绑定账号时才使用 `snsapi_userinfo` scope，让用户授权。
+    其他情形则应当使用 `snsapi_base` scope 仅仅进行登录。
+
+* 微信 AT 刷新后，如何及时到其他 resource server? 
+
+* 配置服务中心？
+
+
+* 能够本地使用 [UUA](http://docs.cloudfoundry.org/api/uaa/), [UUA@github](https://github.com/cloudfoundry/uaa)?
+* Spring Social ?
+* Spring Retry ?
+
+
+# 多模块应用设计
+
+* OAuth2 SSO server
+    * 统一所有账号，创建本地账号，并绑定第三方账号
+    * 提供本地账户相关的API
+    * 提供第三方账号绑定、解绑相关的API
+
+    * FIXME: 提供微信用户 AT 相关的API
+    
+* OAuth2 resource server (API server)
+    * 组织、权限维护
+    * 用户信息维护（用户详细信息，收货地址维护）
+    * 仓库管理
+    * 商品管理
+    * 订单管理
+    * 搜索服务
+    * 消息服务()
+
+* OAuth2 Client APP (SPA)
+    单网页应用, FIXME angular 2 使用 component 技术发开，按需加载？
+
+# OAuth2 SSO 服务器设计
+
+* 注册本地账号
+* 绑定第三方账户
+* 使用第三账户登录、注册并绑定。
+* 第三方账户登录
+* 本地账户登录
+
+
+
+## 自己的 OAuth2 SSO 如何使用 微信、支付宝等第三方账户？
+ 
+### 代表自己的微信公众号
+
+[代表自己的微信公众号](http://mp.weixin.qq.com/wiki/11/0e4b294685f817b95cbed85ba5e82b8f.html)
+模式下，AT 是使用 client 模式获取的， AT 有效期是2个小时，需要定时刷新，刷新后前一个AT会失效。
+因此，只能一个服务器去定时刷新。
+        
+该类型与自己的 OAuth2 SSO 没有关系。可以是后台集群的无界面的服务，通过分布式锁单线程刷新 AT。
+
+使用 OAuth2RestTemplate ?
+
+1. 应使用固定的 DefaultOAuth2ClientContext 而无需是 session、request 作用的，
+1. 使用 AccessTokenProviderChain， 仅仅包含一个 ClientCredentialsAccessTokenProvider 即可
+1. 需扩展 AccessTokenProviderChain#refreshAccessToken() 使用分布式锁。
+
+### 代表用户
+
+[代表用户](http://mp.weixin.qq.com/wiki/17/c0f37d5704f0b64713d5d2c37b468d75.html)
+模式下，AT 是通过 auth code 获取的。
+        
+自己本地的 OAuth2 authorization 服务器是可以（也建议）使用 session 的，
+可以使用 微信的 auth code 方式的授权码。
+
+ 
+
+
+auth 服务器需要提供以下 API， 以方便 resource server 访问。但基本上不需要。
+
+* `GET /wxUserAt/list`
+
+    由 resource server / client app 调用，获取用户(此次/前次)微信登录时授权的 AT 列表。
+    返回值可能有多个，scope 相同的，只保留最后一个。主要用于微信的 JS SDK。
+    
+    OAuth client 模式，仅对 resource server 开放。
+
+
+    |param|desp|
+    |-------|----|
+    |mySsoAt            |本地 SSO 服务器登录的 AT，代表用户本次 SSO 登录的 session|
+    |onlyCurWxLogin     | true, 仅限此次用户登录是微信登录, false - 返回可能是之前用户通过微信登录授权的的 AT |
+
+    ```
+    {
+       wxAt: [{
+            access_token    : "",
+            scope           : [""],
+            expires_in      : 7200,
+            // refresh_token   : "",    // 为防止误用，不返回，应统一在一个地方进行刷新。 
+            openid          : "",
+            unionid         : ""
+       },{},{}]
+    }
+    ```
+    
+
+* `POST /wxUserAt/refresh`
+
+    由 resource server / client app 调用，刷新用户(此次/前次)微信登录时的授权 AT。
+    
+    OAuth client 模式，仅对 resource server 开放。
+
+    |param|desp|
+    |-------|----|
+    |mySsoAt            |本地 SSO 服务器登录的 AT，代表用户本次 SSO 登录的 session|
+
+ 
+
+```
+# 获取微信用户基本信息
+
+User Agent -> http Bearer 认证 (OAuth implicit 模式，代表用户)
+    -> My Resource Server
+        -> Weixin Auth Server
+            // ClientCredentialsResourceDetails#setAuthenticationScheme(AuthenticationScheme.query)
+            // 
+            // 直接使用普通的 RestTemplate 即可:
+            // 1. 如果没有 微信 AT, 则从 My Auth Server `/wxUserAt/list` 获取微信用户AT
+            // 2. 调用微信 API，获取用户基本信息。
+            // 3. error 处理
+            // 3.1 从 My Auth Server `/wxUserAt/list` 获取微信用户AT，并使用最新的，且与刚才不一样的 AT 再次重试。
+            // 3.2 从 My Auth Server `/wxUserAt/refresh` 主动刷新AT，并再次重试。
+            // 3.3 返回异常。FIXME: 参考使用 Spring Retry ?
+```
+
+使用 OAuth2RestTemplate ?
+
+
 
 AuthenticationScheme
 
