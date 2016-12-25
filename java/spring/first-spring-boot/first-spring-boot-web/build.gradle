@@ -1,47 +1,14 @@
-buildscript {
-    ext {
-        springBootVersion = '1.4.0.RELEASE'
-    }
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-    }
-}
-
-apply plugin: 'groovy'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
-apply plugin: 'spring-boot'
 
 //jar {
 //    baseName = 'demo'
 //    version = '0.0.1-SNAPSHOT'
 //}
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
-repositories {
-    mavenCentral()
-}
-
 
 dependencies {
-    compile('org.codehaus.groovy:groovy')
-    compile('org.springframework.boot:spring-boot-starter-web')
-    compile('org.springframework.boot:spring-boot-starter-thymeleaf')
-    compile("org.springframework.boot:spring-boot-devtools")
-    compile('com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.8.4')
-    compile('org.apache.httpcomponents:httpclient:4.5.2')
 
-    testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
-bootRun {
-    addResources = true
-}
 
 
 test {
@@ -58,15 +25,3 @@ test {
 //    }
 }
 
-
-// gradle bootRun
-springBoot {
-    mainClass = System.properties['mainClass']
-}
-
-
-// gradle -DmainClass=me.test.Example execute
-task execute(type: JavaExec) {
-    main = System.getProperty('mainClass')
-    classpath = sourceSets.main.runtimeClasspath
-}
