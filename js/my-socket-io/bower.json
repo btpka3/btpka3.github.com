@@ -1,0 +1,21 @@
+{
+  "name": "my-socket-io",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "btpka3 <btpka3@163.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/btpka3/btpka3.github.com",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "socket.io-client": "^1.7.2",
+    "jquery": "^3.1.1"
+  }
+}
