@@ -1,0 +1,20 @@
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-websocket')
+    compile('org.webjars:sockjs-client:1.1.1')
+
+    compile('org.webjars.bower:angular:1.6.0')
+    compile('org.webjars.bower:angular-messages:1.6.0')
+    compile('org.webjars.bower:angular-animate:1.6.0')
+    compile('org.webjars.bower:angular-aria:1.6.0')
+
+    compile('org.webjars:angular-material:1.1.1')
+    compile('org.webjars.bower:angular-material-icons:0.7.1') {
+        exclude group: "org.webjars.bower", module: "angular"
+    }
+}
+
+test {
+    include 'me/test/**'
+    testLogging.showStandardStreams = false
+}
+

@@ -36,6 +36,7 @@ buildscript {
         springBootVersion = '1.4.0.RELEASE'
     }
     repositories {
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
         mavenCentral()
     }
     dependencies {
@@ -55,6 +56,7 @@ subprojects {
     targetCompatibility = 1.8
 
     repositories {
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
         mavenCentral()
     }
 
