@@ -7,6 +7,12 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.beans.factory.config.BeanPostProcessor
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.core.io.ResourceLoader
+import org.springframework.jdbc.datasource.init.DatabasePopulator
+import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator
+
+import javax.sql.DataSource
 
 /**
  * 因为 BeanPostProcessor 类型的 bean 会在其他普通 bean 前先实例化，
@@ -24,6 +30,9 @@ class H2Conf implements BeanPostProcessor {
     @Autowired
     Server h2Server
 
+    @Autowired
+    ResourceLoader resourceLoader
+
     // ----------------------- 空白实现
     @Override
     Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
@@ -32,6 +41,17 @@ class H2Conf implements BeanPostProcessor {
 
     @Override
     Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+        if (bean instanceof DataSource) {
+            DataSource dataSource = bean
+
+            // 先创建所需的表结构
+            DatabasePopulator databasePopulator = new ResourceDatabasePopulator();
+            databasePopulator.addScripts(
+                    resourceLoader.getResource("classpath:schema.sql"),
+                    resourceLoader.getResource("classpath:data.sql"),
+            )
+            DatabasePopulatorUtils.execute(databasePopulator, dataSource);
+        }
         return bean
     }
 }

@@ -21,3 +21,8 @@ gradle bootRun
 ```
 
 
+## FIXME
+
+1. JUnit test
+2. STOMP
+

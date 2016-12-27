@@ -38,3 +38,7 @@ XML 配置：
 ./gradlew :first-spring-boot-database:run -DmainClass=org.h2.tools.Server -Dexec.args="-?"
 ```
 
+
+## FIXME
+1. JPA + Hibernate 
+

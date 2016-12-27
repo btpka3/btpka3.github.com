@@ -17,22 +17,4 @@ class MySecApp {
         SpringApplication.run(MySecApp.class, args);
     }
 
-
-    @Bean
-    RestTemplateCustomizer myRestTemplateCustomizer() {
-        return new RestTemplateCustomizer() {
-
-            @Override
-            void customize(RestTemplate restTemplate) {
-                HttpClient httpClient = HttpClientBuilder.create()
-                        .build();
-
-                // HttpComponentsClientHttpRequestFactory 与日志级别 "logging.level.org.apache.http: DEBUG" 配合
-                // 以方便调试 RestTemplate 请求头、响应头
-                ClientHttpRequestFactory fac = new HttpComponentsClientHttpRequestFactory(httpClient)
-                restTemplate.setRequestFactory(fac);
-
-            }
-        }
-    }
 }
