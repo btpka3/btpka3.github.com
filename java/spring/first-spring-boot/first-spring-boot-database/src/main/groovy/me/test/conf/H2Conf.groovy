@@ -1,6 +1,8 @@
 package me.test.conf
 
+import ch.qos.logback.classic.Logger
 import org.h2.tools.Server
+import org.slf4j.LoggerFactory
 import org.springframework.beans.BeansException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
@@ -20,6 +22,8 @@ import javax.sql.DataSource
  */
 @Configuration
 class H2Conf implements BeanPostProcessor {
+
+    Logger log = LoggerFactory.getLogger(H2Conf)
 
     @Bean(initMethod = "start", destroyMethod = "stop")
     static Server h2Server(@Value('${my.h2.tcp.conf}') String[] conf) {
@@ -42,15 +46,17 @@ class H2Conf implements BeanPostProcessor {
     @Override
     Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         if (bean instanceof DataSource) {
-            DataSource dataSource = bean
 
-            // 先创建所需的表结构
-            DatabasePopulator databasePopulator = new ResourceDatabasePopulator();
-            databasePopulator.addScripts(
-                    resourceLoader.getResource("classpath:schema.sql"),
-                    resourceLoader.getResource("classpath:data.sql"),
-            )
-            DatabasePopulatorUtils.execute(databasePopulator, dataSource);
+            log.info("================ postProcess : DataSource" + bean)
+//            DataSource dataSource = bean
+//
+//            // 先创建所需的表结构
+//            DatabasePopulator databasePopulator = new ResourceDatabasePopulator();
+//            databasePopulator.addScripts(
+//                    resourceLoader.getResource("classpath:schema.sql"),
+//                    resourceLoader.getResource("classpath:data.sql"),
+//            )
+//            DatabasePopulatorUtils.execute(databasePopulator, dataSource);
         }
         return bean
     }

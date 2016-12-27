@@ -37,6 +37,15 @@ XML 配置：
 如何通过 Java 配置 实现？可以通过 BeanFactoryPostProcessor/BeanPostProcessor 来实现。
 具体例子请参考 H2Conf.
 
+
+```
+@EnableAutoConfiguration
+
+DataSourceAutoConfiguration
+
+初始化数据库的话，可以 实现 ApplicationListener<DataSourceInitializedEvent>， 参考：DataSourceInitializer
+
+```
 ### 通过 gradle 启动
 
 ```
