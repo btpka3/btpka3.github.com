@@ -48,7 +48,9 @@ dependencies {
     compile 'org.webjars.bower:angular-aria:1.6.0'
 
     compile('org.webjars:angular-material:1.1.1')
-    compile 'org.webjars.bower:angular-material-icons:0.7.1'
+    compile('org.webjars.bower:angular-material-icons:0.7.1') {
+        exclude group: "org.webjars.bower", module: "angular"
+    }
 
     //optional("org.springframework.boot:spring-boot-configuration-processor")
     compile("org.springframework.boot:spring-boot-configuration-processor")
