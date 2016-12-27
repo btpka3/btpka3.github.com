@@ -87,9 +87,27 @@ spring security 的 "springSecurityFilterChain" 是在哪里注册配置的？
     但是，如果你的 BeanPostProcessor 中通过 @Autowired 或 @Resource 来依赖注入其他 bean，则这些bean可能会回退为自动封装的。
     常见子类：
     
+    * InstantiationAwareBeanPostProcessor
     * AbstractAdvisingBeanPostProcessor
     * ConfigurationPropertiesBindingPostProcessor
-
+    
+    参考：PostProcessorRegistrationDelegate#registerBeanPostProcessors()，会按照以下顺序处理：
+    
+    1. 实现了 PriorityOrdered 的 BPP
+        * 0 = {ConfigurationClassPostProcessor$ImportAwareBeanPostProcessor@5923} 
+        * 1 = {ConfigurationClassPostProcessor$EnhancedConfigurationBeanPostProcessor@5924} 
+        * 2 = {ConfigurationPropertiesBindingPostProcessor@5925} 
+        * 3 = {PersistenceAnnotationBeanPostProcessor@5926} 
+        * 4 = {CommonAnnotationBeanPostProcessor@5927} 
+        * 5 = {AutowiredAnnotationBeanPostProcessor@4846} 
+        * 6 = {RequiredAnnotationBeanPostProcessor@5928} 
+        * 7 = {FactoryBeanTypePredictingBeanPostProcessor@5929} 
+    2. 实现了 Ordered 的 BPP，注意：内部可能再通过 @Order 来排序。
+        * 0 = "org.springframework.aop.config.internalAutoProxyCreator"  // AnnotationAwareAspectJAutoProxyCreator
+        * 1 = "dataSourceInitializerPostProcessor"
+        * 2 = "persistenceExceptionTranslationPostProcessor"
+    3. 其他的 BPP, 这里 BPP，以及其依赖的 Bean 都会被 AOP 的。
+        因此可能会因为各种 Advisor 影响初始化顺序。
 
 * BeanFactoryPostProcessor: (BFPP) 
 
@@ -374,6 +392,9 @@ SecurityAutoConfiguration
         -> GlobalMethodSecurityConfiguration
             #methodSecurityInterceptor()            // 在 Spring 容器中注册 bean : "methodSecurityInterceptor"
                                                     // MethodSecurityMetadataSourceAdvisor
+            #setPermissionEvaluator()               // 从 Spring 容器中获取单个 bean : PermissionEvaluator
+                                                    // 并注入给 DefaultMethodSecurityExpressionHandler
+            
     -> ObjectPostProcessorConfiguration
     -> @EnableGlobalAuthentication 
         -> AuthenticationConfiguration

@@ -1,0 +1,11 @@
+
+
+dependencies {
+    compile('org.grails:grails-datastore-gorm-rx-mongodb:6.0.4.RELEASE')
+}
+
+test {
+    include 'me/test/**'
+    testLogging.showStandardStreams = false
+}
+
