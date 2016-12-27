@@ -46,6 +46,9 @@ XML 配置：
 
 
 ## FIXME
-1. JPA + Hibernate
 1. Query DSL
 1. spring-data-jpa
+
+## 参考
+
+* 《[使用 Spring Data JPA 简化 JPA 开发](http://www.ibm.com/developerworks/cn/opensource/os-cn-spring-jpa/)》

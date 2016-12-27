@@ -19,7 +19,7 @@ class MyTestController {
         return "home " + new Date();
     }
 
-    /** 测试 service bean 调用 */
+    /** 测试 JdbcTemplate */
     @RequestMapping("/jdbcTemplate")
     @ResponseBody
     Object jdbcTemplate() {
@@ -27,12 +27,20 @@ class MyTestController {
         return myService.testJdbcTemplate()
     }
 
-    /** 测试 service bean 调用 */
+    /** 测试 JPA */
     @RequestMapping("/jpa")
     @ResponseBody
     Object jpa() {
 
         return myService.testJpa()
+    }
+
+    /** 测试 spring-data-jpa */
+    @RequestMapping("/dataJpa")
+    @ResponseBody
+    Object dataJpa() {
+
+        return myService.testDataJpa()
     }
 
 }

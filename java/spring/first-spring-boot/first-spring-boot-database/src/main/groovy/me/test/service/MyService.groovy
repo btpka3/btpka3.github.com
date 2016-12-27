@@ -1,5 +1,6 @@
 package me.test.service
 
+import me.test.dao.City2Dao
 import me.test.dao.CityDao
 import me.test.domain.City
 import org.springframework.beans.factory.annotation.Autowired
@@ -61,6 +62,30 @@ create table MY_USER(
         cityDao.insert(c2)
 
         return cityDao.all()
+    }
+
+
+    // ------------------------------- spring-data-jpa
+
+    @Autowired
+    City2Dao city2Dao
+
+    @Transactional
+    List<City> testDataJpa() {
+
+        city2Dao.deleteAll()
+
+        City c1 = new City();
+        c1.name = '威海'
+        c1.state = "山东省"
+        city2Dao.save(c1)
+
+        City c2 = new City();
+        c2.name = '广州'
+        c2.state = "广东省"
+        city2Dao.save(c2)
+
+        return city2Dao.findAll()
     }
 
 }
