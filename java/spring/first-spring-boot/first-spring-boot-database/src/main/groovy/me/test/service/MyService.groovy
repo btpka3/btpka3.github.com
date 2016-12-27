@@ -1,11 +1,17 @@
 package me.test.service
 
+import me.test.dao.CityDao
+import me.test.domain.City
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Service
 
+import javax.transaction.Transactional
+
 @Service
 class MyService {
+
+    // ------------------------------- JdbcTemplate
 
     @Autowired
     JdbcTemplate jdbcTemplate;
@@ -15,6 +21,7 @@ class MyService {
         jdbcTemplate.execute("""
 drop table IF EXISTS MY_USER
 """)
+
         jdbcTemplate.execute("""
 create table MY_USER(
     ID          IDENTITY,
@@ -32,4 +39,28 @@ create table MY_USER(
         List<Map<String, Object>> recList = jdbcTemplate.queryForList("select * from MY_USER")
         return recList
     }
+
+    // ------------------------------- JPA
+
+    @Autowired
+    CityDao cityDao
+
+    @Transactional
+    List<City> testJpa() {
+
+        cityDao.deleteAll()
+
+        City c1 = new City();
+        c1.name = '郑州'
+        c1.state = "河南省"
+        cityDao.insert(c1)
+
+        City c2 = new City();
+        c2.name = '杭州'
+        c2.state = "浙江省"
+        cityDao.insert(c2)
+
+        return cityDao.all()
+    }
+
 }

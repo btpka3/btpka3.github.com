@@ -3,10 +3,16 @@
 
 验证 spring-boot 对关系数据库数据库的配置与访问。
 
-默认可以通过 `http://localhost:8080/h2-console` 访问 h2 database 控制台
+* 浏览器访问 `http://localhost:8080/h2-console` 访问 h2 database 控制台，以确认数据库状态
+
+* 浏览器访问 `http://localhost:8080/jdbcTemplate` 确认 JdbcTemplate 执行OK
+
+* 浏览器访问 `http://localhost:8080/jpa` 确认 JPA 执行OK
+
+## 源码分析
 
 ```
-
+# TODO
 ```
 
 ## 启动独立的 h2 server
@@ -40,5 +46,6 @@ XML 配置：
 
 
 ## FIXME
-1. JPA + Hibernate 
-
+1. JPA + Hibernate
+1. Query DSL
+1. spring-data-jpa

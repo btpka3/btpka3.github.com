@@ -27,4 +27,12 @@ class MyTestController {
         return myService.testJdbcTemplate()
     }
 
+    /** 测试 service bean 调用 */
+    @RequestMapping("/jpa")
+    @ResponseBody
+    Object jpa() {
+
+        return myService.testJpa()
+    }
+
 }
