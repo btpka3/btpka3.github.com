@@ -1,0 +1,53 @@
+
+# 错误处理相关
+server.error.include-stacktrace: on_trace_param
+#server.error.path: /error
+
+# template 相关
+#spring.thymeleaf.prefix: classpath:/templates/
+
+security.basic.enabled: false
+security.user.password: 123456
+
+logging.level:
+  me.test: DEBUG
+  org.springframework.web: INFO
+  org.springframework.security: INFO
+  org.springframework.boot.actuate.audit.listener.AuditListener: DEBUG
+  org.springframework.boot.web.support.ErrorPageFilter: DEBUG
+  org.springframework.web.servlet.view.ContentNegotiatingViewResolver: DEBUG
+  org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping: DEBUG
+  # 用来追踪 restTemplate 请求
+  org.apache.http: DEBUG
+  org.springframework.boot.autoconfigure.cache.CacheCondition: TRACE
+  #org.springframework.boot.autoconfigure.condition.OnBeanCondition: TRACE
+  org.springframework.boot.autoconfigure.jdbc.EmbeddedDataSourceConfiguration: TRACE
+
+
+spring.devtools.restart.exclude: static/**,public/**,templates/**,resources/**
+
+
+spring.h2.console.enabled: true
+
+spring.datasource:
+  url: jdbc:h2:tcp://localhost:9092/~/.first-spring-boot-security-acl
+  #url: jdbc:h2:~/.first-spring-boot-database
+  #username: sa
+  #password:
+  driver-class-name: "org.h2.Driver"
+  schema: classpath*:dropAclSchema.sql,classpath*:createAclSchema.sql
+
+spring.jpa:
+  database: H2
+  database-platform: org.hibernate.dialect.H2Dialect
+  generate-ddl: false
+  #properties:
+  hibernate:
+    ddl-auto: create-drop
+  open-in-view: true
+  show-sql: true
+
+my.h2.tcp.conf: -tcp,-tcpAllowOthers,-tcpPort,9092
+
+# NoOpCacheConfiguration
+spring.cache.type: none

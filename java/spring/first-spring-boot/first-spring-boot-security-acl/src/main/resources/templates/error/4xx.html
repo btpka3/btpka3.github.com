@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>4xx</title>
+</head>
+<body>
+<div th:text="|4xx.html: *{status}|"></div>
+<ul> DefaultErrorAttributes :
+    <li th:text="|exception : *{exception}|"></li>
+    <li th:text="|trace : *{trace}|"></li>
+    <li th:text="|path : *{path}|"></li>
+</ul>
+</body>
+</html>
