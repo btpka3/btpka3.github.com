@@ -1,4 +1,4 @@
-package me.test.domain
+package me.test.db.domain
 
 import groovy.transform.ToString
 

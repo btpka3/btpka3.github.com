@@ -1,8 +1,8 @@
-package me.test.service
+package me.test.db.service
 
-import me.test.dao.City2Dao
-import me.test.dao.CityDao
-import me.test.domain.City
+import me.test.db.dao.City2Dao
+import me.test.db.dao.CityDao
+import me.test.db.domain.City
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Service

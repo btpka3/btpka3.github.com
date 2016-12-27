@@ -1,4 +1,4 @@
-package me.test.conf
+package me.test.db.conf
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.context.annotation.Bean

@@ -1,4 +1,4 @@
-package me.test.conf
+package me.test.db.conf
 
 import ch.qos.logback.classic.Logger
 import org.h2.tools.Server
@@ -10,9 +10,6 @@ import org.springframework.beans.factory.config.BeanPostProcessor
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.io.ResourceLoader
-import org.springframework.jdbc.datasource.init.DatabasePopulator
-import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator
 
 import javax.sql.DataSource
 
@@ -23,11 +20,11 @@ import javax.sql.DataSource
 @Configuration
 class H2Conf implements BeanPostProcessor {
 
-    Logger log = LoggerFactory.getLogger(H2Conf)
+    static final Logger log = LoggerFactory.getLogger(H2Conf)
 
     @Bean(initMethod = "start", destroyMethod = "stop")
     static Server h2Server(@Value('${my.h2.tcp.conf}') String[] conf) {
-        println("-------------------dddd : " + Arrays.toString(conf))
+        log.debug("-------------------dddd : " + Arrays.toString(conf))
         return Server.createTcpServer(conf)
     }
 

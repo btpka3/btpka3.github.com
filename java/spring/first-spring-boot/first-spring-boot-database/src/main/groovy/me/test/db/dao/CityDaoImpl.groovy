@@ -1,6 +1,6 @@
-package me.test.dao
+package me.test.db.dao
 
-import me.test.domain.City
+import me.test.db.domain.City
 import org.springframework.stereotype.Repository
 
 import javax.persistence.EntityManager
