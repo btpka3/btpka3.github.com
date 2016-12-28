@@ -3,8 +3,11 @@ package me.test.acl.controller
 import me.test.acl.dao.CityDao
 import me.test.acl.domain.Area
 import me.test.acl.service.MyAclService
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.access.prepost.PreAuthorize
+import org.springframework.security.acls.domain.BasePermission
 import org.springframework.security.acls.domain.PrincipalSid
 import org.springframework.security.acls.model.Sid
 import org.springframework.security.core.Authentication
@@ -18,6 +21,8 @@ import javax.transaction.Transactional
 
 @Controller
 class MyAclController {
+
+    Logger log = LoggerFactory.getLogger(MyAclController)
 
     @RequestMapping("/")
     @PreAuthorize("permitAll")
@@ -48,15 +53,6 @@ class MyAclController {
     CityDao cityDao
 
 
-    Area areaZj
-    Area areaHz
-
-    Area areaHn
-    Area areaZz
-
-    Area areaSd
-    Area areaWh
-
     Sid sidZhang3 = new PrincipalSid("zhang3")
     Sid sidLi4 = new PrincipalSid("li4")
 
@@ -66,10 +62,16 @@ class MyAclController {
     @Transactional
     String zhang3(Authentication auth) {
 
-        Assert.isTrue(auth.getPrincipal().username == "zhang3")
+        Assert.isTrue(auth.getPrincipal().username == "zhang3", "please login as 'zhang3'")
 
-        initArea()
+        Area areaZj = cityDao.findOne(10L)
+        Area areaHz = cityDao.findOne(11L)
+        Area areaHn = cityDao.findOne(20L)
+        Area areaZz = cityDao.findOne(21L)
+        Area areaSd = cityDao.findOne(30L)
+        Area areaWh = cityDao.findOne(31L)
 
+        // 因为 zhang3 只是 owner，未明确授权，所以没有相关权限。
         Assert.isTrue(canRead(areaZj))
         Assert.isTrue(canAdmin(areaZj))
         Assert.isTrue(canAdminAndRead(areaZj))
@@ -109,9 +111,14 @@ class MyAclController {
     @Transactional
     String li4(Authentication auth) {
 
-        Assert.isTrue(auth.getPrincipal().username == "li4")
+        Assert.isTrue(auth.getPrincipal().username == "li4", "please login as 'li4'")
 
-        initArea()
+        Area areaZj = cityDao.findOne(10L)
+        Area areaHz = cityDao.findOne(11L)
+        Area areaHn = cityDao.findOne(20L)
+        Area areaZz = cityDao.findOne(21L)
+        Area areaSd = cityDao.findOne(30L)
+        Area areaWh = cityDao.findOne(31L)
 
         Assert.isTrue(canRead(areaZj))
         Assert.isTrue(canAdmin(areaZj))
@@ -121,12 +128,12 @@ class MyAclController {
         Assert.isTrue(canRead(areaHz))
         Assert.isTrue(canAdmin(areaHz))
         Assert.isTrue(canAdminAndRead(areaHz))
-        Assert.isTrue(!canWrite(areaHz))
+        Assert.isTrue(!canWrite(areaHz))  // 未明确授权
 
-//        Assert.isTrue(canRead(areaHn))
-//        Assert.isTrue(canAdmin(areaHn))
-//        Assert.isTrue(canAdminAndRead(areaHn))
-//        Assert.isTrue(!canWrite(areaHn))
+        Assert.isTrue(!canRead(areaHn))     // bit mask 合并在一起，并不认为是两个权限，而是一个新的权限
+        Assert.isTrue(!canAdmin(areaHn))
+        Assert.isTrue(!canAdminAndRead(areaHn))
+        Assert.isTrue(!canWrite(areaHn))
 
         Assert.isTrue(!canRead(areaZz))
         Assert.isTrue(!canAdmin(areaZz))
@@ -143,18 +150,12 @@ class MyAclController {
         Assert.isTrue(!canAdminAndRead(areaWh))
         Assert.isTrue(!canWrite(areaWh))
 
+        //------
+        Assert.isTrue(myAclService.testProgram(areaZj, [BasePermission.READ]))
+        Assert.isTrue(!myAclService.testProgram(areaWh, [BasePermission.READ]))
+
+
         return "li4 OK " + new Date();
-    }
-
-    private void initArea() {
-        areaZj = cityDao.findOne(10L)
-        areaHz = cityDao.findOne(11L)
-
-        areaHn = cityDao.findOne(20L)
-        areaZz = cityDao.findOne(21L)
-
-        areaSd = cityDao.findOne(30L)
-        areaWh = cityDao.findOne(31L)
     }
 
 
@@ -163,6 +164,7 @@ class MyAclController {
             myAclService.testRead(area)
             return true
         } catch (Exception e) {
+            log.debug(e.message, e)
             return false
         }
     }
@@ -172,6 +174,7 @@ class MyAclController {
             myAclService.testAdmin(area)
             return true
         } catch (Exception e) {
+            log.debug(e.message, e)
             return false
         }
     }
@@ -181,6 +184,7 @@ class MyAclController {
             myAclService.testAdminAndRead(area)
             return true
         } catch (Exception e) {
+            log.debug(e.message, e)
             return false
         }
     }
@@ -190,6 +194,7 @@ class MyAclController {
             myAclService.testWrite(area)
             return true
         } catch (Exception e) {
+            log.debug(e.message, e)
             return false
         }
     }
