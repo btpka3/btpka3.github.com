@@ -25,4 +25,6 @@ _site
 gradle/my-gradle/data
 js/my-ts/dist
 .tmp
+.slcache
+.asscache
 

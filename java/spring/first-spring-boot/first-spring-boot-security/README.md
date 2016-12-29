@@ -175,7 +175,6 @@ spring security 的 "springSecurityFilterChain" 是在哪里注册配置的？
 # 类关系
 
 ```
-
 AopProxy
     CglibAopProxy
     JdkDynamicAopProxy
@@ -197,7 +196,8 @@ ProxyConfig
                 PersistenceExceptionTranslationPostProcessor
         AbstractAutoProxyCreator                            // BPP
             AbstractAdvisorAutoProxyCreator
-                AspectJAwareAdvisorAutoProxyCreator
+                AspectJAwareAdvisorAutoProxyCreator         
+                    AnnotationAwareAspectJAutoProxyCreator  // ***
                 DefaultAdvisorAutoProxyCreator
                 InfrastructureAdvisorAutoProxyCreator
             BeanNameAutoProxyCreator
@@ -241,6 +241,46 @@ AnnotationAwareAspectJAutoProxyCreator
             #findEligibleAdvisors()
                 #findCandidateAdvisors()
         #createProxy()                      // 使用上述所有的 Advisor 创建 Proxy
+
+
+AopInfrastructureBean
+    PreInvocationAuthorizationAdvice            // 处理 @PreFilter， 
+        ExpressionBasedPreInvocationAdvice  
+    PostInvocationAuthorizationAdvice           // @PostAuthorize, @PostFilter
+        ExpressionBasedPostInvocationAdvice
+
+AfterInvocationProvider
+    PostInvocationAdviceProvider
+    AbstractAclProvider
+        AclEntryAfterInvocationProvider
+        AclEntryAfterInvocationCollectionFilteringProvider
+
+AfterInvocationManager
+    AfterInvocationProviderManager
+    
+MethodSecurityMetadataSourceAdvisor
+    MethodSecurityMetadataSourcePointcut
+        -> DelegatingMethodSecurityMetadataSource
+
+MethodSecurityMetadataSource
+    AbstractMethodSecurityMetadataSource
+        AbstractFallbackMethodSecurityMetadataSource
+            Jsr250MethodSecurityMetadataSource
+            MapBasedMethodSecurityMetadataSource
+            SecuredAnnotationSecurityMetadataSource
+        DelegatingMethodSecurityMetadataSource
+        PrePostAnnotationSecurityMetadataSource
+
+MethodSecurityInterceptor
+    AspectJMethodSecurityInterceptor
+
+AbstractAdvisorAutoProxyCreator#findAdvisorsThatCanApply
+    AopUtils.findAdvisorsThatCanApply
+        #canApply
+            IntroductionAdvisor#getClassFilter().matches()
+            PointcutAdvisor#getPointcut().getClassFilter().matches()
+            PointcutAdvisor#getPointcut().getMethodMatcher().matches()
+
 ```
 
  
