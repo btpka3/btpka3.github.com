@@ -3,9 +3,11 @@
  */
 
 'use strict';
+// 如果在node中执行，则包含以下语句。注意：写在这里不管用，生成的代码会插入到最前面。
+//require("babel-polyfill");
 
 // FIXME not work
-function aaa(a1) {
+async function aaa(a1) {
     console.log("----------- aa0: ", new Date(), a1);
     return new Promise((resolve, reject)=> {
         setTimeout(function () {
@@ -15,7 +17,7 @@ function aaa(a1) {
     });
 }
 
-function bbb(v) {
+async function bbb(v) {
     console.log("----------- bb0: ", new Date(), v);
     return new Promise((resolve, reject)=> {
         setTimeout(function () {
