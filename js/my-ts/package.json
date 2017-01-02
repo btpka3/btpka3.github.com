@@ -9,7 +9,11 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-polyfill": "^6.20.0",
+    "babel-preset-latest": "^6.16.0",
     "gulp": "^3.9.1",
-    "gulp-typescript": "^2.13.6"
+    "gulp-babel": "^6.1.2",
+    "gulp-typescript": "^2.14.1"
   }
 }

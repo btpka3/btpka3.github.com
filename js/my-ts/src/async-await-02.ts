@@ -2,7 +2,7 @@
 
 
 
-function sleep(time) {
+function sleep(time:Number) {
     return new Promise((resolve, reject)=> {
         setTimeout(function () {
             resolve(111);
