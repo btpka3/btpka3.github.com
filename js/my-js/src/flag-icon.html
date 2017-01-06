@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <!--
+    https://w3c.github.io/webcomponents/spec/custom/
+    -->
+
+</head>
+<body>
+<flag-icon country="nl">nnll</flag-icon>
+
+<button is="plastic-button">Click Me!</button>
+
+
+<script>
+    class FlagIcon extends HTMLElement {
+        constructor() {
+            super();
+            this._countryCode = null;
+            this.addEventListener("click", () => {
+                // Draw some fancy animation effects!
+                console.log("clicked");
+            });
+        }
+
+        static get observedAttributes() { return ["country"]; }
+
+        attributeChangedCallback(name, oldValue, newValue) {
+            // name will always be "country" due to observedAttributes
+            this._countryCode = newValue;
+            this._updateRendering();
+        }
+        connectedCallback() {
+            this._updateRendering();
+        }
+
+        get country() {
+            return this._countryCode;
+        }
+        set country(v) {
+            this.setAttribute("country", v);
+        }
+
+        _updateRendering() {
+            // Left as an exercise for the reader. But, you'll probably want to
+            // check this.ownerDocument.defaultView to see if we've been
+            // inserted into a document with a browsing context, and avoid
+            // doing any work if not.
+        }
+    }
+    class PlasticButton extends HTMLButtonElement {
+        constructor() {
+            super();
+
+            this.addEventListener("click", () => {
+                // Draw some fancy animation effects!
+                console.log("----------")
+            });
+        }
+    }
+
+    customElements.define("flag-icon", FlagIcon);
+
+
+    customElements.define("plastic-button", PlasticButton, { extends: "button" });
+
+//    const flagIcon = document.createElement("flag-icon")
+//    flagIcon.country = "jp"
+//    document.body.appendChild(flagIcon)
+</script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<template id="template"><p>Smile!</p></template>
+<script>
+    let num = 3;
+    const fragment = document.getElementById('template').content.cloneNode(true);
+    while (num-- > 1) {
+        fragment.firstChild.before(fragment.firstChild.cloneNode(true));
+        fragment.firstChild.textContent += fragment.lastChild.textContent;
+    }
+    document.body.appendChild(fragment);
+</script>
+</body>
+</html>
