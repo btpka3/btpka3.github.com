@@ -1,0 +1,22 @@
+{
+  "name": "my-polymer",
+  "homepage": "https://github.com/btpka3/btpka3.github.com",
+  "authors": [
+    "btpka3 <btpka3@163.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "^1.7.1",
+    "iron-icon": "^1.0.12",
+    "iron-icons": "^1.2.0"
+  }
+}

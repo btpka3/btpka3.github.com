@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script>
+        /*
+         window.Polymer = window.Polymer || {};
+         window.Polymer.dom = 'shadow';
+         */
+    </script>
+    <style is="custom-style">
+        /* Define a document-wide default—will not override a :host rule in icon-toggle-demo */
+        :root {
+            --icon-toggle-outline-color: red;
+        }
+        /* Override the value specified in icon-toggle-demo */
+        icon-toggle-demo {
+            --icon-toggle-pressed-color: blue;
+        }
+        /* This rule does not work! */
+        body {
+            --icon-toggle-color: purple;
+        }
+    </style>
+    <link rel="import" href="icon-toggle-demo.html">
+</head>
+<body>
+<icon-toggle-demo></icon-toggle-demo>
+</body>
+</html>
