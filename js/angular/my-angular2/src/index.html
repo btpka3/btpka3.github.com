@@ -1,13 +1,12 @@
 <html>
 <head>
     <title>Angular 2 QuickStart</title>
+    <script src="../node_modules/core-js/client/shim.min.js"></script>
+    <script src="../node_modules/zone.js/dist/zone.js"></script>
     <script src="../node_modules/systemjs/dist/system.src.js"></script>
-    <script src="../node_modules/angular2/bundles/angular2.dev.js"></script>
+    <script src="systemjs.config.js"></script>
     <script>
-        System.config({
-            packages: {'app': {defaultExtension: 'js'}}
-        });
-        System.import('app/app');
+        System.import('app/app').catch(function(err){ console.error(err); });
     </script>
 </head>
 <body>
