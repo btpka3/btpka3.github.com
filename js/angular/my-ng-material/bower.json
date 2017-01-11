@@ -27,6 +27,7 @@
     "angular-material": "v1.1.0-rc.5",
     "angular-bootstrap": "^1.3.3",
     "material-design-icons-font": "^2.2.3",
-    "angular-load": "^0.4.1"
+    "angular-load": "^0.4.1",
+    "angular-areas": "^1.0.4"
   }
 }

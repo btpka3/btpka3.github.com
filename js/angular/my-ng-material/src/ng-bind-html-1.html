@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyApp" ng-controller="DemoCtrl as ctrl" layout="column" ng-cloak="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <title>study ng-material</title>
+    <link rel="stylesheet" href="../bower_components/material-design-icons-font/iconfont/material-icons.css">
+    <link rel="stylesheet" href="../bower_components/angular-material/angular-material.css"/>
+    <link rel="stylesheet" href="../bower_components/angular-material-icons/angular-material-icons.css"/>
+    <style type="text/css">
+        index-tpl, index-tpl-div {
+            border: 2px solid blue;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        index-tpl.sec {
+            border: 2px solid green;
+        }
+
+        index-tpl.truted {
+            border: 2px solid red;
+        }
+
+        .index-c img {
+            padding-bottom: 2px;
+        }
+    </style>
+</head>
+<body layout flex="">
+<!-- 1. 插入过滤后的静态html -->
+<index-tpl class="sec" ng-bind-html="html" flex></index-tpl>
+<!-- 2. 插入未经过滤静态html -->
+<index-tpl class="truted" ng-bind-html="withoutSanitize()" flex></index-tpl>
+
+<!-- 2. 通过 -->
+<index-tpl-div tpl-url="tplUrl" flex>
+
+</index-tpl-div>
+
+
+</body>
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="../bower_components/angular-aria/angular-aria.min.js"></script>
+<script src="../bower_components/angular-messages/angular-messages.min.js"></script>
+<script src="../bower_components/angular-material/angular-material.min.js"></script>
+<script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
+<script src="../bower_components/angular-material-icons/angular-material-icons.min.js"></script>
+<script src="../bower_components/svg-morpheus/compile/minified/svg-morpheus.js"></script>
+<script>
+    (function () {
+        'use strict';
+
+        var tpl = `
+<div    class="d"
+        style="z-index:1; position: relative; font-size:20px;"
+        onclick="alert(1)"
+        data-x="x">
+111  : {{1+2}}
+<my-tag>ttt</my-tag>
+</div>
+<div class="index-c">
+<div class="layout-column">
+<img class="flex" src="http://placehold.it/350x150">
+<img class="flex" src="http://placehold.it/350x150">
+<img class="flex" src="http://placehold.it/350x150">
+</div>
+</div>
+`;
+        var tplUrl = "http://localhost:63333/front-workspace/my-ng-material/src/aaa.html";
+
+        // https://docs.angularjs.org/api/ng/directive/ngBindHtml
+        // http://stackoverflow.com/questions/21503588/angularjs-bind-html-string-with-custom-style\
+        // https://github.com/angular/angular.js/issues/5900
+        // http://onehungrymind.com/angularjs-dynamic-templates-yes-can-remote-template-edition/
+        angular
+            .module('MyApp', ['ngMaterial', 'ngMessages', 'ngMdIcons', 'ngSanitize'])
+            .config(function ($sceDelegateProvider) {
+                //$sceDelegateProvider.resourceUrlWhitelist(['self', '**']);
+            })
+            .run(function ($templateCache) {
+                $templateCache.put(tplUrl, tpl);
+            })
+
+            // 通过自定义指令来绑定远程模板
+            .directive("indexTplDiv", function ($compile, $templateCache) {
+                var linker = function (scope, element, attrs) {
+                    console.log("--------scope.tplUrl = " + scope.tplUrl);
+                    element.html($templateCache.get(scope.tplUrl));
+                    $compile(element.contents())(scope);
+                };
+
+                return {
+                    restrict: 'E',
+                    scope: {
+                        tplUrl: '='
+                    },
+                    link: linker
+                    //templateUrl: this.scope
+                };
+            })
+            .controller('DemoCtrl', ['$scope', '$sce', function ($scope, $sce) {
+                $scope.html = tpl;
+                $scope.tplUrl = tplUrl;
+                $scope.withoutSanitize = function () {
+                    return $sce.trustAsHtml($scope.html);
+                }
+            }])
+    })();
+
+</script>
+</html>

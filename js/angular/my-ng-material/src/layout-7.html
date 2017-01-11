@@ -6,7 +6,7 @@
           content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
     <title>study ng-material</title>
     <link rel="stylesheet" href="../bower_components/material-design-icons-font/iconfont/material-icons.css">
-    <link rel="stylesheet" href="../bower_components/angular-material/angular-material.min.css"/>
+    <link rel="stylesheet" href="../bower_components/angular-material/angular-material.css"/>
     <link rel="stylesheet" href="../bower_components/angular-material-icons/angular-material-icons.css"/>
     <style type="text/css">
 
@@ -17,7 +17,11 @@
     <div flex="100" layout="column" style="border:10px solid yellow;">
         <div style="background-color: #008800;height:100px; flex-shrink: 0">aaa</div>
         <md-content style="background-color: #886aea;" flex="">
+            <div><input type="number" ng-model="count"></div>
             ssssddf99555
+            <ol>
+                <li ng-repeat="i in getCount(count) track by $index">aaaaaa</li>
+            </ol>
         </md-content>
         <div style="background-color: #007aff;height:100px; flex-shrink: 0">bbb</div>
     </div>
@@ -35,25 +39,29 @@
     (function () {
         'use strict';
         angular
-                .module('MyApp', ['ngMaterial', 'ngMessages', 'ngMdIcons'])
-                .controller('DemoCtrl', ['$scope', '$element', function ($scope, $element) {
-                    $scope.vs = {};
-                    $scope.s = function () {
+            .module('MyApp', ['ngMaterial', 'ngMessages', 'ngMdIcons'])
+            .controller('DemoCtrl', ['$scope', '$element', function ($scope, $element) {
+                $scope.vs = {};
+                $scope.count = 10;
+                $scope.getCount = function (num) {
+                    return new Array(num);
+                }
+                $scope.s = function () {
 
-                        $scope.vs.w = window.screen.width;
-                        $scope.vs.h = window.screen.height;
+                    $scope.vs.w = window.screen.width;
+                    $scope.vs.h = window.screen.height;
 
-                        $scope.vs.innerWidth = window.innerWidth;
-                        $scope.vs.innerHeight = window.innerHeight;
+                    $scope.vs.innerWidth = window.innerWidth;
+                    $scope.vs.innerHeight = window.innerHeight;
 
 
-                        $scope.vs.header = angular.element(".header").height();
-                        $scope.vs.content = angular.element(".content").height();
-                        $scope.vs.footer = angular.element(".footer").height();
+                    $scope.vs.header = angular.element(".header").height();
+                    $scope.vs.content = angular.element(".content").height();
+                    $scope.vs.footer = angular.element(".footer").height();
 
-                        console.log("------------", $scope.vs);
-                    }
-                }]);
+                    console.log("------------", $scope.vs);
+                }
+            }]);
     })();
 
 </script>
