@@ -23,6 +23,10 @@
             border: 1px solid red;
         }
     </style>
+    <!--
+    https://github.com/delkant/angular-areas
+    http://www.cowglow.com/github/rwdImageMaps/
+    -->
 </head>
 <body>
 
@@ -77,11 +81,11 @@
                 $scope.fields900 = testData.slice(0);
                 $scope.fields600 = testData.slice(0);
 
-                $scope.onAddArea = function(ev, boxId, areas, area) {
+                $scope.onAddArea = function (ev, boxId, areas, area) {
                     console.log("area added");
                 };
-                $scope.onRemoveArea = function(ev, boxId, areas, area) {
-                    $scope.log900= JSON.stringify(areas);
+                $scope.onRemoveArea = function (ev, boxId, areas, area) {
+                    $scope.log900 = JSON.stringify(areas);
                     $scope.$apply();
                     if (area.id) {
                         //since new areas doesn't have id
@@ -89,13 +93,13 @@
                     }
                 };
 
-                $scope.onChangeAreas900 = function(ev, boxId, areas, area) {
+                $scope.onChangeAreas900 = function (ev, boxId, areas, area) {
                     console.log(areas);
                     $scope.log900 = JSON.stringify(areas);
                     $scope.$apply();
                 };
 
-                $scope.onChangeAreas600 = function(ev, boxId, areas, area) {
+                $scope.onChangeAreas600 = function (ev, boxId, areas, area) {
                     $scope.log600 = JSON.stringify(areas);
                     $scope.$apply();
                 }

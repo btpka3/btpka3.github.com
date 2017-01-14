@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app" ng-controller="DemoCtrl as ctrl" layout="column" ng-cloak="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <title>ng module</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/angular-material/1.0.6/angular-material.css"/>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/material-design-icons/2.2.0/iconfont/material-icons.css"/>
+    <style>
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+<ol> messages :
+    <li ng-repeat="msg in msgs">{{msg}}</li>
+</ol>
+
+</body>
+<script src="https://cdn.bootcss.com/angular.js/1.5.0/angular.js"></script>
+<script src="https://cdn.bootcss.com/angular.js/1.5.0/angular-animate.js"></script>
+<script src="https://cdn.bootcss.com/angular.js/1.5.0/angular-aria.js"></script>
+<script src="https://cdn.bootcss.com/angular.js/1.5.0/angular-messages.js"></script>
+<script src="https://cdn.bootcss.com/angular-material/1.0.6/angular-material.js"></script>
+<script>
+    (function () {
+        'use strict';
+
+        var msgs = [];
+
+        angular.module("app.common", [])
+            .config(function () {
+                msgs.push("---------angular.module('app.common').config()")
+            })
+            .run(function () {
+                msgs.push("---------angular.module('app.common').run()")
+            })
+            .factory('commonService', [function () {
+                return {
+                    hi: function () {
+                        msgs.push("---------angular.module('app.common').service('commonService').hi()");
+                    }
+                };
+            }])
+            .provider('common', [function () {
+                var name = "xxx";
+                this.setName = function (value) {
+                    name = value;
+                };
+                this.$get = [function () {
+                    return {
+                        hey: function () {
+                            msgs.push("---------angular.module('app.common').provider('common').hey() = " + name);
+                        }
+                    }
+
+                }];
+            }]);
+
+        angular.module("app.layout", ["app.common"])
+            .config(function () {
+                msgs.push("---------angular.module('app.layout').config()")
+            })
+            .run(function () {
+                msgs.push("---------angular.module('app.layout').run()")
+            })
+            .factory('layoutService', [function () {
+                return {
+                    hi: function () {
+                        msgs.push("---------angular.module('app.layout').service('layoutService').hi()");
+                    }
+                };
+            }])
+            .provider('layout', [function () {
+                var name = "yyy";
+                this.setName = function (value) {
+                    name = value;
+                };
+                this.$get = [function () {
+                    return {
+                        hey: function () {
+                            msgs.push("---------angular.module('app.layout').provider('layout').hey() = " + name);
+                        }
+                    }
+
+                }];
+            }]);
+
+        angular
+            .module('app', ['ngMaterial', 'ngMessages', "app.layout"])
+            .controller('DemoCtrl', [
+                '$scope',
+                'commonService',
+                'layoutService',
+                'appService',
+                "common",
+                "layout",
+                "app",
+                function ($scope,
+                          commonService,
+                          layoutService,
+                          appService,
+                          common,
+                          layout,
+                          app) {
+
+                    commonService.hi();
+                    layoutService.hi();
+                    appService.hi();
+
+                    common.hey();
+                    layout.hey();
+                    app.hey();
+
+                    $scope.msgs = msgs;
+                    console.log(msgs);
+                }])
+            .config(['commonProvider', 'layoutProvider', 'appProvider', function (commonProvider, layoutProvider, appProvider) {
+                commonProvider.setName("common");
+                layoutProvider.setName("layout");
+                appProvider.setName("app");
+                msgs.push("---------angular.module('app').config()")
+            }])
+            .run(function () {
+                msgs.push("---------angular.module('app').run()")
+            })
+            .factory('appService', [function () {
+                return {
+                    hi: function () {
+                        msgs.push("---------angular.module('app.layout').service('appService').hi()");
+                    }
+                };
+            }])
+            .provider('app', [function () {
+                var name = "zzz";
+                this.setName = function (value) {
+                    name = value;
+                };
+                this.$get = [function () {
+                    return {
+                        hey: function () {
+                            msgs.push("---------angular.module('app.app').provider('app').hey() = " + name);
+                        }
+                    }
+
+                }];
+            }])
+
+    })();
+
+</script>
+</html>
