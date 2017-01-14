@@ -27,4 +27,6 @@ js/my-ts/dist
 .tmp
 .slcache
 .asscache
+jspm_packages
+
 

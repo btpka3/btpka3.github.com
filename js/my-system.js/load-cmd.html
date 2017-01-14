@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>load js file test</title>
+    <script src="bower_components/system.js/dist/system.js"></script>
+    <script>
+        SystemJS.config({
+            baseURL: './'
+        });
+        SystemJS.import('load-cmd.html.bbb.js').then(function (/* Module */m) {
+            console.log("----------m2 = ", m);
+            console.log("----------m2.b1 = ", m.b1);
+            console.log("----------m2.b2('bbb') = ", m.b2("BBB"));
+
+        }, function (err) {
+            console.log("----------err", err);
+        });
+        SystemJS.import('load-cmd.html.aaa.js').then(function (/* Module */m) {
+            console.log("----------m1 = ", m);
+            console.log("----------m1.a1 = ", m.a1);
+            console.log("----------m1.a2('aaa') = ", m.a2("AAA"));
+
+        }, function (err) {
+            console.log("----------err", err);
+        });
+    </script>
+</head>
+<body>
+<div>测试加载 <a target="_blank" href="http://wiki.commonjs.org/wiki/Modules/1.1">CMD 格式的文件</a></div>
+
+<ul>
+    <li>大部分同加载任意的 js 文件</li>
+    <li>JS文件中对用的变量、函数会暴露到 promise 中返回的 module 实例中</li>
+</ul>
+</body>
+</html>

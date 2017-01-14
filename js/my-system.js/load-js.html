@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>load js file test</title>
+    <script src="bower_components/system.js/dist/system.js"></script>
+    <script>
+
+
+        SystemJS.config({
+            baseURL: './',
+//            // 该配置仅仅确保执行 bbb 时，aaa 的文件已经获取，并不保证 aaa 的内容已经执行。
+//            depCache: {
+//                'load-js.html.bbb.js': ['load-js.html.aaa.js']
+//            },
+            meta: {
+                'load-js.html.bbb.js': {
+                    format: 'global', // load this module as a global
+                    deps: [
+                        // dependencies to load before this module
+                        'load-js.html.aaa.js'
+                    ]
+                }
+            }
+        });
+
+
+        SystemJS.import('load-js.html.bbb.js').then(function (/* Module */m) {
+            console.log("----------m2 = ", m);
+            console.log("----------m2.b1 = ", m.b1);
+            console.log("----------m2.b2('bbb') = ", m.b2("bbb"));
+
+            console.log("----------window.a1 = ", a1);
+            console.log("----------window.a2('aaa') = ", a2('aaa'));
+            console.log("----------window.b1 = ", b1);
+            console.log("----------window.b2('bbb') = ", window.b2('BBB'));
+
+        }, function (err) {
+            console.log("----------err", err);
+        });
+
+
+        SystemJS.import('load-js.html.aaa.js').then(function (/* Module */m) {
+            console.log("----------m1 = ", m);
+            console.log("----------m1.a1 = ", m.a1);
+            console.log("----------m1.a2('aaa') = ", m.a2("AAA"));
+
+        }, function (err) {
+            console.log("----------err", err);
+        });
+    </script>
+</head>
+<body>
+<div>测试加载js文件（不是任何 Module 格式）</div>
+<ul>
+    <li>http 请求的顺序 是与程序中 import 的顺序是一致的 —— [bbb, aaa]</li>
+    <li>对应 JS 文件中的内容的执行顺序是按照其依赖关系进行的 —— [aaa, bbb]</li>
+    <li>对应 JS 文件的 promise 是按照其依赖关系进行的 —— [aaa, bbb]</li>
+    <li>JS文件中对应的变量、函数会暴露到全局中(window对象下可访问）</li>
+    <li>JS文件中对用的变量、函数会暴露到 promise 中返回的 module 实例中</li>
+</ul>
+</body>
+</html>

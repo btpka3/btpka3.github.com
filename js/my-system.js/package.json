@@ -1,0 +1,30 @@
+{
+  "name": "my-system.js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "traceur": "0.0.111"
+  },
+  "jspm": {
+    "dependencies": {
+      "plugin-traceur": "npm:systemjs-plugin-traceur@^0.0.3"
+    },
+    "devDependencies": {
+      "babel": "npm:babel-core@^5.8.24",
+      "babel-runtime": "npm:babel-runtime@^5.8.24",
+      "core-js": "npm:core-js@^1.1.4",
+      "traceur": "github:jmcriffey/bower-traceur@0.0.93",
+      "traceur-runtime": "github:jmcriffey/bower-traceur-runtime@0.0.93",
+      "typescript": "npm:typescript@^2.0.7"
+    }
+  },
+  "devDependencies": {
+    "jspm": "^0.16.48"
+  }
+}
