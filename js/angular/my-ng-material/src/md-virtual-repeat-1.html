@@ -5,10 +5,19 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
     <title>study ng-material</title>
-    <link rel="stylesheet" href="../bower_components/material-design-icons-font/iconfont/material-icons.css">
-    <link rel="stylesheet" href="../bower_components/angular-material/angular-material.css"/>
-    <link rel="stylesheet" href="../bower_components/angular-material-icons/angular-material-icons.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/material-design-icons-font@2.2.3/iconfont/material-icons.css">
+    <link rel="stylesheet" href="https://unpkg.com/angular-material@1.1.1/angular-material.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/angular-material-icons@0.7.1/angular-material-icons.css"/>
     <style type="text/css">
+        li {
+            height: 100px;
+            border-top: 1px solid #eeeeee;
+        }
+
+        ol li:last-child {
+            border-bottom: 1px solid #eeeeee;
+        }
+
 
     </style>
 </head>
@@ -19,51 +28,117 @@
     </code>
     <md-content layout="column" flex>
         <ol md-virtual-repeat-container id="vertical-container" md-top-index="vm.topIndex" flex>
-            <li md-virtual-repeat="item in dynamicItems" md-on-demand flex>
-                {{item}}
+            <li md-virtual-repeat="item in dynamicItems" md-on-demand flex
+                ng-style="{'background-color':item.bgColor}">
+                {{item.idx}} : {{item.str}}
             </li>
         </ol>
         <div style="border:1px solid blue; height:50px;"> PLACE_HOLDER</div>
     </md-content>
 </div>
 </body>
-<script src="../bower_components/jquery/dist/jquery.min.js"></script>
-<script src="../bower_components/angular/angular.js"></script>
-<script src="../bower_components/angular-animate/angular-animate.min.js"></script>
-<script src="../bower_components/angular-aria/angular-aria.min.js"></script>
-<script src="../bower_components/angular-messages/angular-messages.min.js"></script>
-<script src="../bower_components/angular-material/angular-material.min.js"></script>
-<script src="../bower_components/angular-material-icons/angular-material-icons.min.js"></script>
-<script src="../bower_components/svg-morpheus/compile/minified/svg-morpheus.js"></script>
+<!--<script src="../bower_components/jquery/dist/jquery.min.js"></script>-->
+<script src="https://unpkg.com/angular@1.6.1/angular.js"></script>
+<script src="https://unpkg.com/angular-animate@1.6.1/angular-animate.js"></script>
+<script src="https://unpkg.com/angular-aria@1.6.1/angular-aria.js"></script>
+<script src="https://unpkg.com/angular-messages@1.6.1/angular-messages.js"></script>
+<script src="https://unpkg.com/angular-material@1.1.1/angular-material.js"></script>
+<script src="https://unpkg.com/angular-material-icons@0.7.1/angular-material-icons.js"></script>
 <script>
     (function () {
         'use strict';
         angular
             .module('MyApp', ['ngMaterial', 'ngMessages', 'ngMdIcons'])
-            .controller('DemoCtrl', ['$scope', '$element', function ($scope, $element) {
-
+            .controller('DemoCtrl', ['$scope', '$element', '$timeout', function ($scope, $element, $timeout) {
+                var colors = [
+                    '#d4e157',
+                    '#ffa726',
+                    '#ec4075',
+                    '#26a69a',
+                    '#29b6f6',
+                    '#738ffe'
+                ];
                 $scope.vm = {};
                 $scope.dynamicItems = {
 //                    loadedPages: {},
 //                    numItems: 20,
-//                    PAGE_SIZE: 50,
-                    items: [],
+                    pages: [],
+                    PAGE_SIZE: 10,
+//                    items: [],
 
                     // Required by `md-on-demand`.
                     // getItemAtIndex: function(index) [object]
                     getItemAtIndex: function (index) {
-                        console.log("-----getItemAtIndex(" + index + ")");
-                        var result = "aaa-" + index;
-                        if (this.items.indexOf(result) < 0) {
-                            this.items.push(result);
+                        if (index >= 50) {
+                            console.log("-----getItemAtIndex(" + index + ")  index>50 : " + index);
+                            return null;
                         }
-                        return result;
+
+
+
+                        var pageIdx = Math.floor(1.0 * index / this.PAGE_SIZE);
+                        console.log("-----getItemAtIndex(" + index + ") , "+pageIdx);
+                        var page = this.pages[pageIdx];
+                        if (page) {
+                            return page.items[index % this.PAGE_SIZE];
+                        } else {
+                            this.loadPage(pageIdx)
+                        }
                     },
+
                     // Required by `md-on-demand`.
                     // getLength: function() [number]
                     getLength: function () {
-                        return this.items.length + 30;
+//                        return 50;
+
+                        var r = this.getItemCount();
+                        if (r <= 40) {
+                            r = r + 10;
+                        }
+
+                        if (r > 50) {
+                            r = 50;
+                        }
+                        console.log("----getLength : " + r);
+                        return r;
+                    },
+
+                    loadPage: function (pageIdx) {
+                        console.log("=======loadPage : " + pageIdx);
+                        this.pages[pageIdx] = null;
+                        $timeout(angular.noop(), 3000).then(angular.bind(this, function () {
+                            var page = {
+                                pageIdx: pageIdx,
+                                items: []
+                            };
+                            // 实际情况最后一页可能少于10条记录。
+                            for (var i = 0; i < this.PAGE_SIZE; i++) {
+                                var itemIdx = pageIdx * this.PAGE_SIZE + i;
+                                var item = {
+                                    str: "aaa-" + itemIdx,
+                                    bgColor: colors[itemIdx % colors.length],
+                                    idx: itemIdx
+                                };
+                                page.items.push(item);
+                            }
+
+                            this.pages[pageIdx] = page;
+                        }));
+
+                    },
+                    getItemCount: function () {
+                        console.log("pages = ",this.pages)
+                        return this.PAGE_SIZE * this.pages.length;
+//                        var itemCount = 0;
+//                        for (var i = 0; i < this.pages.length; i++) {
+//                            var p = this.pages[i];
+//
+//                            itemCount += p ? p.items.length : 0;
+//                        }
+//                        return itemCount;
                     }
+
+
                 }
             }]);
     })();
