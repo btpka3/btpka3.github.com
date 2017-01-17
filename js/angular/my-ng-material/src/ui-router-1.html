@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app" layout="column" ng-cloak="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <title>oc.lazyLoad test</title>
+    <!-- //cdn.bootcss.com/jquery/3.1.1/jquery.js -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/angular-material/1.1.1/angular-material.css"/>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/material-design-icons/2.2.0/iconfont/material-icons.css"/>
+    <style>
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+            display: none !important;
+        }
+    </style>
+
+    <!--
+    http://stackoverflow.com/questions/24727042/angularjs-ui-router-how-to-configure-dynamic-views
+    -->
+</head>
+<body>
+本示例主要演示如何运行时注册状态。
+
+<div>
+    <md-button class="md-raised ">aaa</md-button>
+    <md-button class="md-raised md-primary">bbb</md-button>
+    <md-button class="md-raised md-warn">ccc</md-button>
+</div>
+
+<div style="border:1px solid red;">
+    <div ui-view=""></div>
+</div>
+<ol> messages :
+    <li ng-repeat="msg in msgs">{{msg}}</li>
+</ol>
+
+
+</body>
+<script src="https://cdn.bootcss.com/angular.js/1.5.0/angular.js"></script>
+<script src="https://cdn.bootcss.com/angular.js/1.5.0/angular-animate.js"></script>
+<script src="https://cdn.bootcss.com/angular.js/1.5.0/angular-aria.js"></script>
+<script src="https://cdn.bootcss.com/angular.js/1.5.0/angular-messages.js"></script>
+<script src="https://cdn.bootcss.com/angular-material/1.1.1/angular-material.js"></script>
+<script src="https://cdn.bootcss.com/angular-ui-router/0.3.2/angular-ui-router.js"></script>
+<script src="../bower_components/ui-router-extras/release/ct-ui-router-extras.js"></script>
+<script src="../bower_components/system.js/dist/system.js"></script>
+<script src="../bower_components/oclazyload/dist/ocLazyLoad.js"></script>
+<script>
+    (function () {
+        'use strict';
+
+        var msgs = [];
+
+        angular
+            .module('app', [
+                'ngMaterial',
+                'ngMessages',
+                "ui.router",
+                'ct.ui.router.extras',
+                "oc.lazyLoad"
+            ])
+            .provider('app', [function () {
+                var name = "zzz";
+                this.setName = function (value) {
+                    name = value;
+                };
+                this.$get = [function () {
+                    return {
+                        hey: function () {
+                            msgs.push("---------angular.module('app.app').provider('app').hey() = " + name);
+                        }
+                    }
+
+                }];
+            }])
+            .config(['$urlMatcherFactoryProvider', function ($urlMatcherFactoryProvider) {
+                $urlMatcherFactoryProvider.strictMode(false);
+            }])
+
+            .config(['$urlRouterProvider', function ($urlRouterProvider) {
+                $urlRouterProvider.otherwise('/aaa');
+            }])
+            .config(['$ocLazyLoadProvider', function ($ocLazyLoadProvider) {
+                $ocLazyLoadProvider.config({
+                    debug: true,
+                    events: true
+                });
+            }])
+
+
+            .config(['$stateProvider', function ($stateProvider) {
+                window.$stateProviderRef = $stateProvider;
+                $stateProvider.state("app", {
+                    abstract: true,
+                    url: "",
+                    views: {
+                        "@": {
+                            template: '<div> === <span ui-view=""></span> ===',
+                            controller: ['$scope', function ($scope) {
+                                $scope.go = function (state) {
+
+                                };
+                            }]
+                        }
+                    }
+                });
+            }])
+            .config(['$futureStateProvider',
+                function ($futureStateProvider) {
+//                    $futureStateProvider.addResolve(['$q', '$timeout', function ($q, $timeout) {
+//                        var d = $q.defer();
+//                        $timeout(function () {
+//                            d.resolve("When this resolves, future state provider will re-sync the state/url");
+//                        }, 1000);
+//                        return d.promise;
+//                    }]);
+                    $futureStateProvider.stateFactory('load', [
+                        '$q',
+                        '$ocLazyLoad',
+                        'futureState',
+                        function ($q, $ocLazyLoad, futureState) {
+
+                            var def = $q.defer();
+
+                            $ocLazyLoad.load(futureState.src).then(function () {
+                                def.resolve();
+                            }, function () {
+                                console.log('error loading: ' + loaded.name);
+                                def.reject();
+                            });
+
+
+                            return def.promise;
+                        }]);
+//                    $futureStateProvider.futureState({
+//                        "stateName": "app",
+//                        "url": "",
+//                        "type": "load",
+//                        "src": "ui-router-1-state-app.js"
+//                    });
+
+                    $futureStateProvider.futureState({
+                        "stateName": "app.aaa",
+                        "url": "/aaa",
+                        "type": "load",
+                        "src": "ui-router-1-state-app.aaa.js"
+                    });
+                }])
+
+            .run(['$ocLazyLoad', function ($ocLazyLoad) {
+
+                $ocLazyLoad.load([{
+                    files: ['./ui-router-1-state-app.aaa.js'],
+                    rerun: true
+                }]).then(function (m) {
+                    console.log('-----------m', m);
+//                    var appService = $injector.get('appService');
+//                    var commonService = $injector.get('commonService');
+//                    var layoutService = $injector.get('layoutService');
+//
+//                    commonService.hi();
+//                    layoutService.hi();
+//                    appService.hi();
+//
+//                    var common = $injector.get('common');
+//                    var layout = $injector.get('layout');
+//                    var app = $injector.get('app');
+//
+//                    common.hey();
+//                    layout.hey();
+//                    app.hey();
+                }, function (err) {
+                    console.log('-----------e', err);
+                });
+            }])
+    })();
+</script>
+</html>

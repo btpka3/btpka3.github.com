@@ -15,7 +15,7 @@
 </head>
 <body>
 <ol> messages :
-    <li ng-repeat="msg in msgs">{{msg}}</li>
+    <li ng-repeat="msg in msgs track by $index">{{msg}}</li>
 </ol>
 
 </body>
@@ -60,12 +60,16 @@
             }]);
 
         angular.module("app.layout", ["app.common"])
-            .config(function () {
-                msgs.push("---------angular.module('app.layout').config()")
-            })
-            .run(function () {
-                msgs.push("---------angular.module('app.layout').run()")
-            })
+            .config(['commonProvider', function (commonProvider) {
+                msgs.push("---------angular.module('app.layout').config()");
+                commonProvider.setName("XxXxXx");
+            }])
+            .run(['common', function (common) {
+                msgs.push("---------angular.module('app.layout').run()");
+
+                // 因为所有的config都已经先执行过了，所以，此处打印的是 "common", 而不是 "XxXxXx"
+                // common.hey();
+            }])
             .factory('layoutService', [function () {
                 return {
                     hi: function () {

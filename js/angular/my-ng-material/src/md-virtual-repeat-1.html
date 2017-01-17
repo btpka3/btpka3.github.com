@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyApp" ng-controller="DemoCtrl as ctrl" layout="column" ng-cloak="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <title>study ng-material</title>
+    <link rel="stylesheet" href="../bower_components/material-design-icons-font/iconfont/material-icons.css">
+    <link rel="stylesheet" href="../bower_components/angular-material/angular-material.css"/>
+    <link rel="stylesheet" href="../bower_components/angular-material-icons/angular-material-icons.css"/>
+    <style type="text/css">
+
+    </style>
+</head>
+<body flex layout ng-cloak style="border:10px solid green;">
+<div flex layout="column" style="border:10px solid red; flex-grow:1;">
+    <code style="border: 1px solid blue;">
+        <pre>{{vm|json}}</pre>
+    </code>
+    <md-content layout="column" flex>
+        <ol md-virtual-repeat-container id="vertical-container" md-top-index="vm.topIndex" flex>
+            <li md-virtual-repeat="item in dynamicItems" md-on-demand flex>
+                {{item}}
+            </li>
+        </ol>
+        <div style="border:1px solid blue; height:50px;"> PLACE_HOLDER</div>
+    </md-content>
+</div>
+</body>
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="../bower_components/angular-aria/angular-aria.min.js"></script>
+<script src="../bower_components/angular-messages/angular-messages.min.js"></script>
+<script src="../bower_components/angular-material/angular-material.min.js"></script>
+<script src="../bower_components/angular-material-icons/angular-material-icons.min.js"></script>
+<script src="../bower_components/svg-morpheus/compile/minified/svg-morpheus.js"></script>
+<script>
+    (function () {
+        'use strict';
+        angular
+            .module('MyApp', ['ngMaterial', 'ngMessages', 'ngMdIcons'])
+            .controller('DemoCtrl', ['$scope', '$element', function ($scope, $element) {
+
+                $scope.vm = {};
+                $scope.dynamicItems = {
+//                    loadedPages: {},
+//                    numItems: 20,
+//                    PAGE_SIZE: 50,
+                    items: [],
+
+                    // Required by `md-on-demand`.
+                    // getItemAtIndex: function(index) [object]
+                    getItemAtIndex: function (index) {
+                        console.log("-----getItemAtIndex(" + index + ")");
+                        var result = "aaa-" + index;
+                        if (this.items.indexOf(result) < 0) {
+                            this.items.push(result);
+                        }
+                        return result;
+                    },
+                    // Required by `md-on-demand`.
+                    // getLength: function() [number]
+                    getLength: function () {
+                        return this.items.length + 30;
+                    }
+                }
+            }]);
+    })();
+
+</script>
+</html>

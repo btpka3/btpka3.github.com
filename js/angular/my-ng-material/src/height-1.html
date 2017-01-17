@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyApp" ng-controller="DemoCtrl as ctrl" layout="column" ng-cloak="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <title>study ng-material</title>
+    <link rel="stylesheet" href="../bower_components/material-design-icons-font/iconfont/material-icons.css">
+    <link rel="stylesheet" href="../bower_components/angular-material/angular-material.css"/>
+    <link rel="stylesheet" href="../bower_components/angular-material-icons/angular-material-icons.css"/>
+    <style type="text/css">
+        #t {
+            min-height: 100px;
+            max-height: 300px;
+            border: 1px solid red;
+            overflow: auto;
+            padding: 2px;
+            margin: 3px;
+        }
+    </style>
+</head>
+<body flex layout ng-cloak style="border:10px solid green;">
+<div flex layout="row" style="border:10px solid red; flex-grow:1;">
+    <div flex="100" layout="column" style="border:10px solid yellow;">
+        <div style="background-color: #008800;height:150px; flex-shrink: 0">
+            <pre>{{vs|json}}</pre>
+        </div>
+        <md-content style="background-color: #886aea;" flex="">
+            <div>
+                <button ng-click="add(-1)">-</button>
+                {{count}}
+                <button ng-click="add(1)">+</button>
+            </div>
+            <ol id="t">
+                <li ng-repeat="i in getCount(count) track by $index">aaaaaa-{{$index}}</li>
+            </ol>
+            <div id="u">U</div>
+        </md-content>
+        <div style="background-color: #007aff;height:100px; flex-shrink: 0">bbb</div>
+    </div>
+</div>
+</body>
+<!--<script src="../bower_components/jquery/dist/jquery.min.js"></script>-->
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="../bower_components/angular-aria/angular-aria.min.js"></script>
+<script src="../bower_components/angular-messages/angular-messages.min.js"></script>
+<script src="../bower_components/angular-material/angular-material.min.js"></script>
+<script src="../bower_components/angular-material-icons/angular-material-icons.min.js"></script>
+<script src="../bower_components/svg-morpheus/compile/minified/svg-morpheus.js"></script>
+<script>
+    (function () {
+        'use strict';
+        angular
+            .module('MyApp', ['ngMaterial', 'ngMessages', 'ngMdIcons'])
+            .controller('DemoCtrl', ['$scope', '$element', '$timeout', function ($scope, $element, $timeout) {
+                $scope.vs = {};
+                $scope.count = 2;
+
+                var t = angular.element(document.getElementById('t'));
+                var u = angular.element(document.getElementById('u'));
+                t.on("scroll", function (e) {
+                    $timeout(function () {
+                        var pos = t.prop('scrollTop');
+                        $scope.vs["t.scrollTop"] = pos;
+                        console.log('--------- scroll :', pos);
+
+                        if (pos === 0) {
+                            console.log('--------- scroll : top');
+                        } else if (pos === (t.prop('scrollHeight') - t.prop('clientHeight'))) {
+                            console.log('--------- scroll : bottom');
+                        }
+                    });
+                });
+
+                $scope.add = function (c) {
+                    $scope.count += c;
+                    console.log('--------- ' + t.prop('offsetHeight'));
+                    $timeout(function () {
+                        $scope.vs["t.offsetHeight"] = t.prop('offsetHeight');
+                        $scope.vs["t.clientHeight"] = t.prop('clientHeight');
+                        $scope.vs["t.scrollHeight"] = t.prop('scrollHeight');
+                        $scope.vs["t.offsetTop"] = t.prop('offsetTop');
+                        $scope.vs["u.offsetTop"] = u.prop('offsetTop');
+                    });
+
+//                    console.log('--------- '+e.offsetHeight);
+                };
+                $timeout(function () {
+                    $scope.add(1);
+                });
+
+
+                $scope.getCount = function (num) {
+                    return new Array(num);
+                };
+                // offsetHeight = clientHeight + margin + border
+                // clientHeight = 可视区域的高度（含padding）
+                // scrollHeight = 内容区域的高度（含padding）
+//                $scope.e = ;//.style.height
+            }]);
+    })();
+
+</script>
+</html>

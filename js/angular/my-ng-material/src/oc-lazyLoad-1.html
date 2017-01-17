@@ -15,7 +15,9 @@
     </style>
 </head>
 <body>
-<button ng-click="load()"> load</button>
+<md-button  class="md-fab md-primary" ng-click="load()"> load</md-button>
+
+<button class="btn btn-danger">bootstrap btn</button>
 <ol> messages :
     <li ng-repeat="msg in msgs track by $index">{{msg}}</li>
 </ol>

@@ -11,8 +11,8 @@
         .iscroll-on .iscroll-wrapper {
             position: relative;
             z-index: 1;
-            width: 100%;
-            height: 600px !important;
+            /*width: 100%;*/
+            /*height: 600px !important;*/
             overflow: hidden;
             background-color: #ccc;
             border: 1px solid blue;
@@ -21,87 +21,47 @@
         .iscroll-on .iscroll-scroller {
             position: absolute;
             width: 100%;
-            min-height: 100%;
+            /*min-height: 100%;*/
             background-color: #fff;
+        }
+
+        .iscroll-scroller ol > li:last-child {
+            border-bottom: 1px solid #999999;
+        }
+
+        .iscroll-scroller ol > li {
+            border-top: 1px solid #999999;
+            height: 50px;
         }
 
     </style>
 </head>
-<body ng-controller="DemoCtrl as vm" class="iscroll-on">
-
-<div class="iscroll-wrapper" iscroll="vm.iscrollParam" iscroll-instance="instance">
+<body class="iscroll-on" layout="column" style="border:1px solid red;">
+<div>header</div>
+<md-content flex class="iscroll-wrapper" iscroll="vm.iscrollParam"
+            iscroll-instance="instance"
+            style="border:2px solid blue;">
     <div class="iscroll-scroller">
+
+        <div>
+            aaa instance.options： -
+            <pre>{{instance.options | json}}</pre>
+        </div>
+        <div>aaa iScrollState ： {{vm.iScrollState}}</div>
         <ol>
-            <li>aaa instance.options： -
-                <pre>{{instance.options | json}}</pre>
-                -
-            </li>
-            <li>aaa iScrollState ： {{vm.iScrollState}}</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
+            <li data-ng-repeat="item in items track by $index">{{item}}</li>
         </ol>
     </div>
-</div>
+</md-content>
+<div>footer</div>
 </body>
 <script src="https://cdn.bootcss.com/angular.js/1.5.0/angular.js"></script>
 <script src="https://cdn.bootcss.com/angular.js/1.5.0/angular-animate.js"></script>
 <script src="https://cdn.bootcss.com/angular.js/1.5.0/angular-aria.js"></script>
 <script src="https://cdn.bootcss.com/angular.js/1.5.0/angular-messages.js"></script>
-<script src="../bower_components/platform/platform.js"></script>
-<script src="../bower_components/iscroll/build/iscroll.js"></script>
-<script src="../bower_components/angular-iscroll/dist/lib/angular-iscroll.js"></script>
+<script src="https://unpkg.com/platform@1.3.3"></script>
+<script src="https://unpkg.com/iscroll@5.2.0"></script>
+<script src="https://unpkg.com/angular-iscroll@3.4.0"></script>
 <script>
     (function () {
 
@@ -109,9 +69,9 @@
             e.preventDefault();
         }, false);
         angular
-                .module('MyApp', ['ngMessages', 'angular-iscroll'])
-                .config(function (iScrollServiceProvider) {
-                    iScrollServiceProvider.configureDefaults({
+            .module('MyApp', ['ngMessages', 'angular-iscroll'])
+            .config(function (iScrollServiceProvider) {
+                iScrollServiceProvider.configureDefaults({
 //                        iScroll: {
 //                            // Passed through to the iScroll library
 //                            scrollbars: true,
@@ -122,23 +82,48 @@
 //                            // Interpreted by the directive
 //                            refreshInterval: 500
 //                        }
+                });
+            })
+            .controller('DemoCtrl', ['$scope', 'iScrollService', '$timeout', function ($scope, iScrollService, $timeout) {
+                $scope.items = [];
+                for (var i = 0; i < 20; i++) {
+                    $scope.items.push("item-" + i);
+                }
+                $timeout(function () {
+                    console.log("------", $scope.instance);
+                    $scope.instance.on('scrollEnd', function (e) {
+                        if (this.y == 0) {
+                            console.log('This is the beginning');
+                        }
+                        if (this.y == this.maxScrollY) {
+                            var idx = i++;
+                            console.log('This is the end ' + idx);
+                            $scope.items.push("item-" + idx);
+                            //$scope.$apply();
+
+                            $scope.$digest();
+                            iScrollService.refresh();
+                        }
                     });
-                })
-                .controller('DemoCtrl', ['$scope', 'iScrollService', function ($scope, iScrollService) {
-                    var vm = this;
-                    vm.iscrollParam = {
-                        mouseWheel: true,
-                        bounce: true,
-                        //scrollX: false,
-                        scrollY: true,  // FIXM: 不能 scrollX 和 scrollY 不能一个为true，一个为false？
-                        //freeScroll: true,
-                        scrollbars: true,
-                        fadeScrollbars: true
-                    };
-                    vm.iScrollState = iScrollService.state;
-                    vm.iScrollState.useIScroll = true;
-                    iScrollService.enable();
-                }]);
+
+                });
+
+                var vm = this;
+                vm.iscrollParam = {
+                    mouseWheel: true,
+                    //bounce: true,
+                    //scrollX: false,
+                    scrollY: true,  // FIXME: 不能 scrollX 和 scrollY 不能一个为true，一个为false？
+                    //freeScroll: true,
+                    scrollbars: true,
+                    fadeScrollbars: true,
+                    refreshInterval: 5000,
+                    invokeApply: true
+                };
+                vm.iScrollState = iScrollService.state;
+                vm.iScrollState.useIScroll = true;
+                iScrollService.enable();
+            }]);
     })();
 
 </script>

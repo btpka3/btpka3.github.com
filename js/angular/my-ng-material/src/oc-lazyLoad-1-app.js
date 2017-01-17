@@ -7,7 +7,11 @@ angular
                   $ocLazyLoad, $injector) {
 
             $scope.load = function () {
-                $ocLazyLoad.load(['oc-lazyLoad-1-layout.js']).then(function (m) {
+                $ocLazyLoad.load([
+                    'oc-lazyLoad-1-layout.js',
+                    "https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.css",
+                    "https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.js",
+                ]).then(function (m) {
                     console.log('-----------m', m);
 
                     var appService = $injector.get('appService');

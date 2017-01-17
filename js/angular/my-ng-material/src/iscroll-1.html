@@ -16,7 +16,11 @@
     var myScroll;
 
     function loaded () {
-      myScroll = new IScroll('#wrapper', { scrollX: true, freeScroll: true });
+      myScroll = new IScroll('#wrapper', {
+          scrollX: true,
+          freeScroll: true,
+          mouseWheel: true
+      });
     }
 
     document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
