@@ -2,7 +2,8 @@
 <html lang="en" ng-app="app" ng-controller="IndexController as ctrl">
 <head>
     <meta charset="UTF-8">
-    <title>load js file test</title>
+    <title>load asset test</title>
+    <!--<base href="./">-->
     <script src="bower_components/system.js/dist/system.js"></script>
     <script src="config.js"></script>
     <!--<script src="bower_components/traceur/traceur.js"></script>-->
@@ -12,12 +13,16 @@
 </head>
 <body ng-cloak="">
 <div>txt = {{txt}}</div>
-<button ng-click="txt=txt+'1'"> a</button>
-<button ng-click="hi()"> a</button>
+<button ng-click="txt=txt+'1'">txt++</button>
+<button ng-click="hi()">hi()</button>
+<button type="button" class="btn btn-danger">Danger</button>
+<span class="glyphicon glyphicon-star"></span>
+<button class="btpka3-btn">.btpka3-btn</button>
 <div>
     <md-button class="md-primary md-raised" ng-click="hi()">hi()</md-button>
     <!--<md-button class="md-accent md-raised"></md-button>-->
     <md-button class="md-warn md-raised" ng-click="ctrl.showMap()">加载百度地图</md-button>
+
 </div>
 <div id="container" style="height: 300px; border:1px solid red;"></div>
 </body>

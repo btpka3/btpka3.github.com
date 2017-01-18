@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "jspm": "jspm"
   },
   "author": "",
   "license": "ISC",
@@ -17,6 +18,7 @@
       "angular-material": "github:angular/bower-material@^1.1.1",
       "bootstrap": "github:twbs/bootstrap@^3.3.7",
       "css": "github:systemjs/plugin-css@^0.1.32",
+      "jquery": "npm:jquery@^3.1.1",
       "plugin-traceur": "npm:systemjs-plugin-traceur@^0.0.3"
     },
     "devDependencies": {
