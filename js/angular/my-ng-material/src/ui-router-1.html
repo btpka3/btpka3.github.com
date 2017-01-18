@@ -5,9 +5,8 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
     <title>oc.lazyLoad test</title>
-    <!-- //cdn.bootcss.com/jquery/3.1.1/jquery.js -->
-    <link rel="stylesheet" href="https://cdn.bootcss.com/angular-material/1.1.1/angular-material.css"/>
-    <link rel="stylesheet" href="https://cdn.bootcss.com/material-design-icons/2.2.0/iconfont/material-icons.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/angular-material@1.1.1/angular-material.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/material-design-icons-font@2.2.3/iconfont/material-icons.css"/>
     <style>
         [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
             display: none !important;
@@ -22,29 +21,37 @@
 本示例主要演示如何运行时注册状态。
 
 <div>
-    <md-button class="md-raised ">aaa</md-button>
-    <md-button class="md-raised md-primary">bbb</md-button>
-    <md-button class="md-raised md-warn">ccc</md-button>
+    <md-button class="md-raised" ui-sref="app.aaa">aaa</md-button>
+    <md-button class="md-raised md-primary" ui-sref="app.bbb">bbb</md-button>
+    <md-button class="md-raised md-warn" ng-click="$root.$state.go('app.ccc')">ccc</md-button>
 </div>
+
 
 <div style="border:1px solid red;">
     <div ui-view=""></div>
 </div>
-<ol> messages :
-    <li ng-repeat="msg in msgs">{{msg}}</li>
-</ol>
+<ul>
+    <li>ct.ui.router.extras 的 `$futureStateProvider.futureState` 可以为实际state的子状态</li>
+    <li>在同一个模块下，如果已经存在同名的 futureState，再定义同名的常规 state 将会在控制台报错。因此远程加载的资源最好另外定义 angular module</li>
+    <li>futureState 需要全部预定义好</li>
+    <li>System.js 可以加载远程的任意代码（含angular的），但是如果远程代码中angular module 的 config 或 run 方法，
+        且该angular module已经在浏览器本地初始化好了，上述 config，run方法将不会被调用
+    </li>
+    <li>oc-lazyLoad 可以配置加载远程的 angular 模块或代码，并明确执行是否重新调用 config , run 方法</li>
+    <li>建议：使用webpack打包打包常用的 vendor.js, vendor.css, 异步加载 angular 的代码都定义成独立的 module</li>
+</ul>
 
 
 </body>
-<script src="https://cdn.bootcss.com/angular.js/1.5.0/angular.js"></script>
-<script src="https://cdn.bootcss.com/angular.js/1.5.0/angular-animate.js"></script>
-<script src="https://cdn.bootcss.com/angular.js/1.5.0/angular-aria.js"></script>
-<script src="https://cdn.bootcss.com/angular.js/1.5.0/angular-messages.js"></script>
-<script src="https://cdn.bootcss.com/angular-material/1.1.1/angular-material.js"></script>
-<script src="https://cdn.bootcss.com/angular-ui-router/0.3.2/angular-ui-router.js"></script>
+<script src="https://unpkg.com/angular@1.6.1/angular.js"></script>
+<script src="https://unpkg.com/angular-animate@1.6.1/angular-animate.js"></script>
+<script src="https://unpkg.com/angular-aria@1.6.1/angular-aria.js"></script>
+<script src="https://unpkg.com/angular-messages@1.6.1/angular-messages.js"></script>
+<script src="https://unpkg.com/angular-material@1.1.1/angular-material.js"></script>
+<script src="https://unpkg.com/angular-ui-router@0.3.2/release/angular-ui-router.js"></script>
 <script src="../bower_components/ui-router-extras/release/ct-ui-router-extras.js"></script>
-<script src="../bower_components/system.js/dist/system.js"></script>
-<script src="../bower_components/oclazyload/dist/ocLazyLoad.js"></script>
+<script src="https://unpkg.com/systemjs@0.19.42/dist/system.js"></script>
+<script src="https://unpkg.com/oclazyload@1.0.9/dist/ocLazyLoad.js"></script>
 <script>
     (function () {
         'use strict';
@@ -96,9 +103,10 @@
                     views: {
                         "@": {
                             template: '<div> === <span ui-view=""></span> ===',
-                            controller: ['$scope', function ($scope) {
+                            controller: ['$scope', '$state', function ($scope, $state) {
                                 $scope.go = function (state) {
-
+                                    console.log("--------------" + state);
+                                    $state.go(state);
                                 };
                             }]
                         }
@@ -129,7 +137,6 @@
                                 def.reject();
                             });
 
-
                             return def.promise;
                         }]);
 //                    $futureStateProvider.futureState({
@@ -145,9 +152,23 @@
                         "type": "load",
                         "src": "ui-router-1-state-app.aaa.js"
                     });
+                    $futureStateProvider.futureState({
+
+                        "stateName": "app.bbb",
+                        "url": "/bbb",
+                        "type": "load",
+                        "src": "ui-router-1-state-app.bbb.js"
+                    });
+                    $futureStateProvider.futureState({
+
+                        "stateName": "app.ccc",
+                        "url": "/ccc",
+                        "type": "load",
+                        "src": "ui-router-1-state-app.ccc.js"
+                    });
                 }])
 
-            .run(['$ocLazyLoad', function ($ocLazyLoad) {
+            .run(['$ocLazyLoad', '$state', '$rootScope', function ($ocLazyLoad, $state, $rootScope) {
 
                 $ocLazyLoad.load([{
                     files: ['./ui-router-1-state-app.aaa.js'],
@@ -172,6 +193,7 @@
                 }, function (err) {
                     console.log('-----------e', err);
                 });
+                $rootScope.$state = $state;
             }])
     })();
 </script>

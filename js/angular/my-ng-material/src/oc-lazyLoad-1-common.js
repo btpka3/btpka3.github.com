@@ -1,6 +1,6 @@
 angular.module("app.common", [{
     files: [
-        'https://cdn.bootcss.com/jquery/3.1.1/jquery.js'
+        'https://unpkg.com/jquery@3.1.1/dist/jquery.js'
     ],
     cache: true
 }])

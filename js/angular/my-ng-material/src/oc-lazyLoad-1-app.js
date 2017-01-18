@@ -9,8 +9,8 @@ angular
             $scope.load = function () {
                 $ocLazyLoad.load([
                     'oc-lazyLoad-1-layout.js',
-                    "https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.css",
-                    "https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.js",
+                    "https://unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.css",
+                    "https://unpkg.com/bootstrap@3.3.7/dist/js/bootstrap.js",
                 ]).then(function (m) {
                     console.log('-----------m', m);
 
