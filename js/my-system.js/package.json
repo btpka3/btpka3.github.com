@@ -13,6 +13,10 @@
   },
   "jspm": {
     "dependencies": {
+      "angular": "github:angular/bower-angular@^1.6.1",
+      "angular-material": "github:angular/bower-material@^1.1.1",
+      "bootstrap": "github:twbs/bootstrap@^3.3.7",
+      "css": "github:systemjs/plugin-css@^0.1.32",
       "plugin-traceur": "npm:systemjs-plugin-traceur@^0.0.3"
     },
     "devDependencies": {

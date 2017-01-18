@@ -12,15 +12,44 @@ System.config({
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
   },
+  separateCSS: true,
+  buildCSS: false,
+  production: true,
+  trace: true,
+
+  meta: {
+    "baiduMap": {
+      "format": "global",
+      "scriptLoad": true,
+      "exports": "bdMap"
+    }
+  },
 
   map: {
+    "angular": "github:angular/bower-angular@1.6.1",
+    "angular-material": "github:angular/bower-material@1.1.1",
     "babel": "npm:babel-core@5.8.38",
     "babel-runtime": "npm:babel-runtime@5.8.38",
+    "baiduMap": "https://api.map.baidu.com/getscript?v=2.0&ak=AA9iQNKiR6Dp8YKZnMQjGSev&services=&",
+    "bootstrap": "github:twbs/bootstrap@3.3.7",
     "core-js": "npm:core-js@1.2.7",
+    "css": "github:systemjs/plugin-css@0.1.32",
     "plugin-traceur": "npm:systemjs-plugin-traceur@0.0.3",
     "traceur": "github:jmcriffey/bower-traceur@0.0.93",
     "traceur-runtime": "github:jmcriffey/bower-traceur-runtime@0.0.93",
     "typescript": "npm:typescript@2.1.5",
+    "github:angular/bower-angular-animate@1.6.1": {
+      "angular": "github:angular/bower-angular@1.6.1"
+    },
+    "github:angular/bower-angular-aria@1.6.1": {
+      "angular": "github:angular/bower-angular@1.6.1"
+    },
+    "github:angular/bower-material@1.1.1": {
+      "angular": "github:angular/bower-angular@1.6.1",
+      "angular-animate": "github:angular/bower-angular-animate@1.6.1",
+      "angular-aria": "github:angular/bower-angular-aria@1.6.1",
+      "css": "github:systemjs/plugin-css@0.1.32"
+    },
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.4.1"
     },
@@ -83,6 +112,9 @@ System.config({
     },
     "github:jspm/nodelibs-vm@0.1.0": {
       "vm-browserify": "npm:vm-browserify@0.0.4"
+    },
+    "github:twbs/bootstrap@3.3.7": {
+      "jquery": "npm:jquery@3.1.1"
     },
     "npm:asn1.js@4.9.1": {
       "bn.js": "npm:bn.js@4.11.6",
