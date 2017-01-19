@@ -2,8 +2,6 @@ var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
-// var CopyWebpackPlugin = require('copy-webpack-plugin');
-// var autoprefixer = require('autoprefixer');
 var args = require('yargs').argv;
 var path = require('path');
 //
@@ -21,6 +19,9 @@ var appName = isMock ? 'appTest' : 'app';
 
 var vendorCssPlugin = new ExtractTextPlugin({
     filename: isProd ? '[name].[hash].css' : '[name].css'
+});
+var appCssPlugin = new ExtractTextPlugin({
+    filename: isProd ? '[name].scss.[hash].css' : '[name].scss.css'
 });
 //
 // var plugins = [
@@ -194,7 +195,26 @@ const config = {
             },
             {
                 test: /\.scss$/,
-                use: ["style-loader", "css-loader", "sass-loader"]
+                loader: appCssPlugin.extract(
+                    {
+                        fallbackLoader: 'style-loader',
+                        loader: [
+                            {
+                                loader: 'css-loader',
+                                // XXX : 需要关注 https://github.com/webpack/css-loader/pull/400
+                                query: {
+                                    minimize: true,
+                                    sourcemap: false,
+                                    discardComments: {
+                                        removeAll: true
+                                    },
+                                    calc: false
+                                }
+
+                            },
+                            "sass-loader"
+                        ]
+                    })
             }
             // {
             //     test: /\.html$/,
@@ -213,6 +233,7 @@ const config = {
         //     "window.jQuery": "jquery"
         // }),
         vendorCssPlugin,
+        appCssPlugin,
         new HtmlWebpackPlugin({
             template: './src/index.html',
             filename: 'index.html',
