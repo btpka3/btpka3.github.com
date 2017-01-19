@@ -1,0 +1,1 @@
+require("script-loader!./MyShimmingModule2.js");

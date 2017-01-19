@@ -1,0 +1,35 @@
+{
+  "name": "my-angular-webpack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "webpack": "node $NODE_DEBUG_OPTION ./node_modules/.bin/webpack"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "babel-polyfill": "^6.20.0",
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.1.1",
+    "scriptjs": "^2.5.8",
+    "systemjs": "^0.19.42"
+  },
+  "devDependencies": {
+    "babel-core": "^6.21.0",
+    "babel-loader": "^6.2.10",
+    "babel-preset-latest": "^6.16.0",
+    "css-loader": "^0.26.1",
+    "expose-loader": "^0.7.1",
+    "extract-text-webpack-plugin": "^2.0.0-beta.5",
+    "file-loader": "^0.9.0",
+    "html-webpack-plugin": "^2.26.0",
+    "imports-loader": "^0.7.0",
+    "node-sass": "^4.3.0",
+    "sass-loader": "^4.1.1",
+    "script-loader": "^0.7.0",
+    "style-loader": "^0.13.1",
+    "webpack": "^2.2.0"
+  }
+}

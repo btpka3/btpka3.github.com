@@ -1,0 +1,15 @@
+.index-test {
+
+    /* comment --- */
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    display: flex;
+    color: red;
+    background: hsl(134, 50%, 50%);
+    min-width: initial;
+    width: calc(2 * 100px);
+}
+
+.index {
+    color: darkmagenta;
+}

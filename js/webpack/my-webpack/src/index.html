@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>index test1</h1>
+
+<ol>
+    <li>
+        <button class="btn btn-primary" onclick="amdHi()">amd</button>
+    </li>
+    <li>
+        <button class="btn btn-primary" onclick="cmdHi()">cmd</button>
+    </li>
+    <li>
+        <button class="btn btn-primary" onclick="es6Hi()">es6</button>
+    </li>
+
+    <li>
+        <button class="btn btn-primary" onclick="shimHi()">Shimming1</button>
+        <button class="btn btn-success" onclick="shimHi2()">Shimming2</button>
+        error
+    </li>
+
+    <li>
+        <button class="btn btn-primary" onclick="loadBt()">loadd bootstrap</button>
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">
+            BootStrap 模态窗口
+        </button>
+    </li>
+
+    <li>
+        <div>
+            <button class="btn btn-primary" onclick="loadBdMap()">加载百度地图</button>
+        </div>
+        <div id="container" style="height: 300px;"></div>
+    </li>
+    <li>
+        <button class="btn btn-success index"> 字体图标 <span class="glyphicon glyphicon-search"></span></button>
+        <span class="a">this is <span class="txt">scss txt</span></span>
+    </li>
+
+    <li>
+        <button class="btn btn-primary" onclick="lazyLoadMe()">异步加载自己的代码</button>
+    </li>
+    <li>
+        <button class="btn btn-primary" onclick="asyncTest()"> async - await 测试</button>
+    </li>
+</ol>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
