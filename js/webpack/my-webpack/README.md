@@ -1,9 +1,17 @@
 
 
 ```
-npm install webpack -g
-npm install webpack-dev-server -g
+npm install -g  webpack@2.2.0
+npm install -g webpack-dev-server@2.2.0
+npm i
 
+# 打包到 build 目录下
+webpack
+
+# 根据 webpack.config.js 启动开发服务器，通过 http://localhost:8080/ 访问。
+webpack-dev-server
+
+# 示例：命令下较全的参数配置
 webpack-dev-server \
     --progress \
     --colors \
@@ -14,9 +22,6 @@ webpack-dev-server \
     --inline \
     --output-public-path /\
     --client-log-level info
-
-# 浏览器访问 http://localhost:8080/
-
 ```
 
 
