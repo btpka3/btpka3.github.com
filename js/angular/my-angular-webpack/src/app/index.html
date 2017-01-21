@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-CN" ng-app="app" class="no-js">
+<head>
+    <title>test</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="Cache-Control" content="must-revalidate, no-cache, no-store">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+    <style>
+        circle {
+            fill: #fff;
+            stroke: steelblue;
+            stroke-width: 3px;
+        }
+
+        text { font: 12px sans-serif; }
+
+        .link {
+            fill: none;
+            stroke: #ccc;
+            stroke-width: 2px;
+        }
+    </style>
+</head>
+
+<body ng-cloak="" layout="column" md-no-ink class=".btpka3-index">
+<div>
+    <md-button class="md-fab md-mini" aria-label="Eat cake">
+        好
+    </md-button>
+    state = "{{$state.current.name}}"
+</div>
+<div   layout="row" ui-view style="border:1px solid blue;"></div>
+<state-vis style="position:fixed; bottom: 0;"></state-vis>
+</body>
+</html>

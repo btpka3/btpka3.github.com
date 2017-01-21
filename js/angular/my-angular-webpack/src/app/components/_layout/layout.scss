@@ -1,0 +1,39 @@
+/*
+ * 该文件是全局配置。
+ */
+html, body {
+    font-family: "Helvetica Neue", "Helvetica", "Hiragino Sans GB", "Heiti SC", "Roboto", "Droid Sans", "Noto Sans CJK SC", "Droid Sans Fallback", Tahoma, Arial, Simsun, sans-self;
+    font-size: 14px;
+    color: #101010;
+}
+
+/**
+ * 主要内容区域
+ */
+.ks-main {
+    //@extend .md-whiteframe-z2;
+
+    min-width: $ks-main-min-width !important;
+    width: 100%;
+
+    // 当小于 600px 时，百分比宽度。否则600px;
+    @media (min-width: $layout-breakpoint-xs) {
+        max-width: $layout-breakpoint-xs;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    h1 {
+        color: #101010;
+        font-size: 18px;
+    }
+
+    // 使内容区域有顶部边框
+    md-content.top-border {
+        //暂时不要了
+        // border-top: 1px solid rgba(0, 0, 0, 0.12);
+    }
+    //统一 md-content 字体颜色
+    md-content.md-default-theme, md-content {
+        color: #101010;
+    }
+}
