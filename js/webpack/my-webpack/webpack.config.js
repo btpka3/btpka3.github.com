@@ -23,59 +23,73 @@ var vendorCssPlugin = new ExtractTextPlugin({
 var appCssPlugin = new ExtractTextPlugin({
     filename: isProd ? '[name].scss.[hash].css' : '[name].scss.css'
 });
-//
-// var plugins = [
 
-//     new webpack.DefinePlugin({
-//         __PROD__: isProd,
-//         __MOCK__: isMock
-//     }),
-//     new webpack.optimize.CommonsChunkPlugin({
-//         //names: ["vendor"],
-//         //minChunks: 3,
-//         minChunks: Infinity,
-//         children: true,
-//         async: true
-//     }),
-//     //
-//     vendorCssPlugin,
-//
-//     // 只针对主页
-//     new HtmlWebpackPlugin({
-//         template: './src/index.html',
-//         chunks: ['app', 'vendor'],
-//         // favicon: 'favicon.ico',
-//         appName: appName,
-//         hash: !isProd,
-//         minify: {
-//             html5: true,
-//             removeComments: true,
-//             collapseWhitespace: true
-//         }
-//     }),
-//     // new CopyWebpackPlugin([
-//     //     {from: 'node_modules/babel-core/browser-polyfill.min.js', to: 'polyfill.js'}
-//     // ])
-//
-// ];
-//
-//
-// if (isProd) {
-//     plugins.push(
-//         new webpack.optimize.UglifyJsPlugin({
-//             compress: {
-//                 warnings: false
-//             },
-//             mangle: {
-//                 except: ['$super', '$', 'exports', 'require']
-//             }
-//         }),
-//         //                   OccurrenceOrderPlugin
-//         new webpack.optimize.OccurenceOrderPlugin(),
-//         new webpack.NoErrorsPlugin(),
-//         new webpack.optimize.DedupePlugin()
-//     );
-// }
+
+var plugins = [
+    // new webpack.ProvidePlugin({
+    //     $: "jquery",
+    //     jQuery: "jquery",
+    //     "window.jQuery": "jquery"
+    // }),
+    vendorCssPlugin,
+    appCssPlugin,
+    new HtmlWebpackPlugin({
+        template: './src/index.html',
+        filename: 'index.html',
+        chunks: ['index'],
+        // favicon: 'favicon.ico',
+        appName: appName,
+        hash: !isProd,
+        minify: {
+            html5: true,
+            removeComments: true,
+            collapseWhitespace: true
+        }
+    }),
+    new HtmlWebpackPlugin({
+        template: './src/user.html',
+        filename: 'test.html',
+        chunks: ['user'],
+        // favicon: 'favicon.ico',
+        appName: appName,
+        hash: !isProd,
+        minify: {
+            html5: true,
+            removeComments: true,
+            collapseWhitespace: true
+        }
+    }),
+    new HtmlWebpackPlugin({
+        template: './src/testJson.html',
+        filename: 'testJson.html',
+        chunks: ['testJson'],
+        // favicon: 'favicon.ico',
+        appName: appName,
+        hash: !isProd,
+        minify: {
+            html5: true,
+            removeComments: true,
+            collapseWhitespace: true
+        }
+    })
+];
+
+if (isProd) {
+    plugins.push(
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false
+            },
+            mangle: {
+                except: ['$super', '$', 'exports', 'require']
+            },
+            output: {
+                comments: false
+            }
+        }),
+        new webpack.optimize.OccurrenceOrderPlugin()
+    );
+}
 
 
 const config = {
@@ -95,21 +109,10 @@ const config = {
         ],
         user: [
             "./src/user.js"
+        ],
+        testJson: [
+            "./src/testJson.js"
         ]
-        // // 第三方类库
-        // vendor: [
-        //     // 'angular-material/angular-material.css',
-        //     // 'angular-material/angular-material.js',
-        //     // 'animate.css/animate.css',
-        //     //
-        //     'angular',
-        //     // 'angular-ui-router',
-        //     // 'angular-animate',
-        //     // 'angular-messages',
-        //     // 'angular-mocks',
-        //     // 'angular-loading-bar',
-        //     // 'oclazyload'
-        // ]
     },
     output: {
         path: path.resolve(base, 'build'),
@@ -132,32 +135,6 @@ const config = {
                 ],
                 exclude: /node_modules/
             },
-            // {
-            //     test: /https:\/\/unpkg\.com\/.*/,
-            //     use: [
-            //         'script-loader'
-            //     ]
-            // },
-            // {
-            //     test: /MyShimmingModule.js$/,
-            //     use: [
-            //         {
-            //             loader: 'imports-loader',
-            //             options: {
-            //                 this: ">global"
-            //             }
-            //         }
-            //     ],
-            //     exclude: /node_modules/
-            // },
-            // { // 处理 src/app/components/**/*.html, src/app/pages/**/*.html,
-            //     test: /\.html$/,
-            //     loaders: ['raw']//, 'html-minify'
-            // },
-            // {
-            //     test: /\.scss$/,
-            //     loaders: ["style-loader", "css-loader", "sass-loader"]
-            // },
             {
                 test: /\.css$/,
                 loader: vendorCssPlugin.extract({
@@ -176,22 +153,6 @@ const config = {
 
                     }
                 })
-                // use: [ 'style-loader',
-                //     {
-                //         loader: 'css-loader',
-                //         options: { minimize: {safe:true} }
-                //     } ]
-            },
-            {
-                test: /\.(woff|woff2|ttf|eot|svg)(\?]?.*)?$/,
-                use: [
-                    {
-                        loader: "file-loader",
-                        options: {
-                            name: "assets/fonts/[name]-[hash].[ext]"
-                        }
-                    }
-                ]
             },
             {
                 test: /\.scss$/,
@@ -215,70 +176,33 @@ const config = {
                             "sass-loader"
                         ]
                     })
+            },
+            {
+                test: /\.(woff|woff2|ttf|eot|svg)(\?]?.*)?$/,
+                use: [
+                    {
+                        loader: "file-loader",
+                        options: {
+                            name: "assets/fonts/[name]-[hash].[ext]"
+                        }
+                    }
+                ]
+            },
+            {
+                test: /\.(jpg|jepg|png|gif)(\?]?.*)?$/,
+                use: [
+                    {
+                        loader: "file-loader",
+                        options: {
+                            name: "assets/fonts/[name]-[hash].[ext]"
+                        }
+                    }
+                ]
             }
-            // {
-            //     test: /\.html$/,
-            //     loader: 'html'
-            // }
-            // {
-            //     test: /\.(png|jpg)$/,
-            //     loader: 'url?limit=8192&name=assets/images/[name].[hash].[ext]'
-            // }
         ]
     },
-    plugins: [
-        // new webpack.ProvidePlugin({
-        //     $: "jquery",
-        //     jQuery: "jquery",
-        //     "window.jQuery": "jquery"
-        // }),
-        vendorCssPlugin,
-        appCssPlugin,
-        new HtmlWebpackPlugin({
-            template: './src/index.html',
-            filename: 'index.html',
-            chunks: ['index'],
-            // favicon: 'favicon.ico',
-            appName: appName,
-            hash: !isProd,
-            minify: {
-                html5: true,
-                removeComments: true,
-                collapseWhitespace: true
-            }
-        }),
-        new HtmlWebpackPlugin({
-            template: './src/user.html',
-            filename: 'test.html',
-            chunks: ['user'],
-            // favicon: 'favicon.ico',
-            appName: appName,
-            hash: !isProd,
-            minify: {
-                html5: true,
-                removeComments: true,
-                collapseWhitespace: true
-            }
-        }),
-        // new webpack.optimize.UglifyJsPlugin({
-        //     compress: {
-        //         warnings: false
-        //     },
-        //     mangle: {
-        //         except: ['$super', '$', 'exports', 'require']
-        //     },
-        //     output: {
-        //         comments: false
-        //     }
-        // }),
-        //                   OccurrenceOrderPlugin,OccurenceOrderPlugin
-        new webpack.optimize.OccurrenceOrderPlugin(),
-        // new webpack.NoErrorsPlugin(),
-        // new webpack.optimize.DedupePlugin()
-    ],
-    //debug: !isProd,
+    plugins: plugins,
     devtool: "source-map",
-
     devServer: {
         contentBase: path.resolve(base, 'build'),
         historyApiFallback: true,
@@ -296,10 +220,6 @@ const config = {
         compress: true,
         quiet: false
     },
-    // postcss: function () {
-    //     return [autoprefixer];
-    // }
-
 };
 
 module.exports = config;
