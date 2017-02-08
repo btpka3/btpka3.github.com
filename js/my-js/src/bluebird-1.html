@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>promise test</title>
+    <script src="https://unpkg.com/bluebird@3.4.7"></script>
+    <script>
+
+
+        //var Promise = require('bluebird');
+
+        var o = {a: "aaa"};
+
+        function f1(num, callback) {
+            console.log("f1 : this === window : " + ( this === window) + "; this === o : " + (this === o));
+            setTimeout(function () {
+
+                console.log("setTimeout : this === window : " + ( this === window) + "; this === o : " + (this === o));
+                callback(null, num + 9);
+            }, 1000);
+        }
+        // 正常情况
+        f1(1000, function (err, result) {
+            console.log("----------f1: result = " + result);
+        });
+
+        // 使用bluebird
+        var f2 = Promise.promisify(f1, {context: o});
+        f2(2000).then(function (result) {
+            console.log("----------f2: result = " + result);
+        });
+    </script>
+
+</head>
+<body>
+
+</body>
+</html>
