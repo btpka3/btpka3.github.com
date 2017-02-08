@@ -4,6 +4,7 @@ import "babel-polyfill";
 import MyAmdModule from "./MyAmdModule.js";
 import MyCmdModule from "./MyCmdModule.js";
 import MyEs6Module from "./MyEs6Module.js";
+//import "imports-loader?this=>window!./MyShimmingModule.js";
 import "./MyShimmingModule.js";
 import "./MyShimmingModule2-1.js";
 import LoadBootStrap from "./LoadBootStrap.js";

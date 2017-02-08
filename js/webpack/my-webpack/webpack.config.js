@@ -1,13 +1,14 @@
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var MyPlugin = require("./webpack.myPlugin.js");
 
 var args = require('yargs').argv;
 var path = require('path');
 //
 // parameters
-var isProd = args.prod;
-var isMock = args.mock;
+var isProd = args.env && args.env.prod;
+var isMock = args.env && args.env.mock;
 //
 var base = __dirname;
 // // use mock api or not
@@ -25,14 +26,30 @@ var appCssPlugin = new ExtractTextPlugin({
 });
 
 
+var mypluginHtmlWebpackPlugin = new HtmlWebpackPlugin({
+    template: './src/myplugin.html',
+    filename: 'myplugin.html',
+    chunks: [],
+    // favicon: 'favicon.ico',
+    appName: appName,
+    hash: !isProd,
+    minify: {
+        html5: true,
+        removeComments: true,
+        collapseWhitespace: true
+    }
+});
+
 var plugins = [
     // new webpack.ProvidePlugin({
     //     $: "jquery",
     //     jQuery: "jquery",
     //     "window.jQuery": "jquery"
     // }),
+    new MyPlugin({htmlWebpackPlugin: mypluginHtmlWebpackPlugin}),
     vendorCssPlugin,
     appCssPlugin,
+    mypluginHtmlWebpackPlugin,
     new HtmlWebpackPlugin({
         template: './src/index.html',
         filename: 'index.html',
