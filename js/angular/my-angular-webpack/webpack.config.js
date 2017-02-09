@@ -9,14 +9,14 @@ var BellOnBundlerErrorPlugin = require('bell-on-bundler-error-plugin');
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 var getStateEntries = require("./webpack.getStateEntries");
 
-var GenFutureStates = require("./webpack.GenFutureStates")
+var GenFutureStates = require("./webpack.GenFutureStates");
 
 var args = require('yargs').argv;
 var path = require('path');
 //
 // parameters
 var isProd = args.env && args.env.prod;
-var isMock = args.env.mock;
+var isMock = args.env && args.env.mock;
 
 //
 var base = __dirname;
@@ -42,7 +42,9 @@ const entry = {
 Object.assign(entry, getStateEntries());
 
 const plugins = [
-    new GenFutureStates(),
+    new GenFutureStates({
+        "htmlDir": "../" // 相对于 output.path
+    }),
     new BundleAnalyzerPlugin({
         analyzerMode: 'static',
         reportFilename: 'report.html',
@@ -79,7 +81,7 @@ const plugins = [
         template: './src/app/index.html',
         filename: '../index.html',
         chunks: ['commons', 'index'],
-        // favicon: 'favicon.ico',
+        favicon: 'favicon.ico',
         appName: appName,
         hash: !isProd,
         minify: {
@@ -90,6 +92,7 @@ const plugins = [
             minifyCSS: true
         }
     }),
+
     // Make sure that the plugin is after any plugins that add images
     new ImageminPlugin({
         disable: !isProd,

@@ -1,6 +1,7 @@
-import futureStates from "./futureStates.js";
+//import futureStates from "./futureStates.js";
 import stateFactory from "./stateFactory";
 
+var futureStates = global.myStates; // FIXME :
 function confFutureState($futureStateProvider) {
 
     $futureStateProvider.stateFactory('load', stateFactory);

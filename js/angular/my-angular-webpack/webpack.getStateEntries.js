@@ -3,10 +3,8 @@ const glob = require('glob');
 const path = require('path');
 
 /**
- * 通过查找
+ * 通过根据一定规则自动生成 future state 列表。
  */
-
-
 function dirToState(dir) {
     let state = dir                         // => "src/app/pages/aaa/"
             .replace("src/app/", "")        // => "pages/aaa/"
