@@ -3,11 +3,28 @@
 <head>
     <meta charset="utf-8">
     <title>test TypeScript aysnc on browser</title>
-    <script src="../node_modules/babel-polyfill/dist/polyfill.js"></script>
-    <script src="../dist/babel/async-await-01.js"></script>
+
 </head>
 <body>
 <h1>test TypeScript aysnc on browser</h1>
 <span>see browser console. (IE8 error)</span>
+<pre id="a">
+
+</pre>
+
+<script>
+    console.log = function () {
+        var msgs = "";
+        for (var i = 0; i < arguments.length; i++) {
+
+            msgs += arguments[i];
+            msgs += " ";
+        }
+        msgs += "\n";
+        document.getElementById("a").innerText += msgs;
+    }
+</script>
+<script src="../node_modules/babel-polyfill/dist/polyfill.js"></script>
+<script src="../dist/babel/async-await-01.js"></script>
 </body>
 </html>
