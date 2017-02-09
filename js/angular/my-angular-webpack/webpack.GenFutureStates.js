@@ -25,58 +25,43 @@ const getStateEntries = require("./webpack.getStateEntries");
  */
 
 // 为了后续查找方便，先转换为对象。
-//const states = getStateEntries();
-console.log("--==--==::", states);
 const statesObj = states.reduce((preVal, curVal, curIdx) => {
     preVal[curVal[0]] = curVal;
     return preVal
 }, {});
 
 class GenFutureStates {
+
+    /**
+     * 构造函数，当前需要一个 选项 "htmlDir", 以便生成相对于该html的额外资源的URL路径。
+     *
+     * @param options
+     */
     constructor(options) {
 
+        // FIXME 如果使用该方式，可能 htmlWebpackPlugin 尚未初始化？且在webpack配置中要有相应的先后顺序？
         if (options && options.htmlWebpackPlugin) {
             this.htmlWebpackPlugin = options.htmlWebpackPlugin
         }
         if (options && options.htmlDir) {
             this.htmlDir = options.htmlDir
         }
-        console.log('--------new GenFutureStates  : htmlDir = ' + this.htmlDir);
-
-    }
-
-    findoutPath(compilation) {
-        console.log("------------ compilation.options.output.path :" + compilation.options.output.path)
-        console.log("------------ compilation.options.output.publicPath :" + compilation.options.output.publicPath)
-        var self = this;
-        var webpackStatsJson = compilation.getStats().toJson();
-
-        // Use the configured public path or build a relative path
-        var publicPath = typeof compilation.options.output.publicPath !== 'undefined'
-            // If a hard coded public path exists use it
-            ? compilation.mainTemplate.getPublicPath({hash: webpackStatsJson.hash})
-            // If no public path was set get a relative url path
-            : path.relative(compilation.options.output.path, compilation.options.output.path)
-                .split(path.sep).join('/');
-
-        if (publicPath.length && publicPath.substr(-1, 1) !== '/') {
-            publicPath += '/';
-        }
-        return publicPath
     }
 
     // 构建额外的资源
     buildExtraAssets(compiler, compilation) {
 
         var self = this;
-        console.log("-----------------ccccccccc this = ", this);
         let tmpStates = {};
+        let stateJsonFile = "./.myStates.js";
 
+        // webpack 配置的输出目录（绝对路径）
+        let outputPath = compilation.getPath(compiler.outputPath);
+        // html-webpack-plugin 要生成的 html的相对路径
+        let htmlDir = path.resolve(outputPath, self.htmlDir);
+
+        // 遍历已经生成，但尚未存盘的 chunk，判断其是否是要保留的 ui-router 的状态js。
         compilation.chunks.forEach(function (chunk) {
-            console.log(`--------======= GenFutureStates: chunk :
-                id=${chunk.id}, 
-                name=${chunk.name},
-                files=${chunk.files}`);
 
             // 判断当前 chunk 是否是一个 ui-router 状态
             let curState = statesObj[chunk.name];
@@ -86,44 +71,38 @@ class GenFutureStates {
             let stateName = curState[0];
 
             let jsFile = chunk.files.find((file) => {
-                console.log(`--------======= GenFutureStates: file =${file}, typeof = ${typeof file}`);
                 return file.startsWith(stateName)
             });
             assert(jsFile, `状态 [${stateName}] 没有找到相应主入口 js 文件。候选有：${chunk.files}`);
 
-            console.log("-----------------dddddddddd this = ", self);
-            let outputPath = compilation.getPath(compiler.outputPath);
-            var htmlDir = path.resolve(outputPath, self.htmlDir);
-            var jsPath = path.resolve(outputPath, jsFile);
+            // 已生成js文件的绝对路径
+            let jsPath = path.resolve(outputPath, jsFile);
+
+            // 已生成js文件的绝对路径
             let jsFileUrl = "./" + path.relative(
                     htmlDir,
                     jsPath
-                ).split(path.sep).join('/'); // URL
+                ).split(path.sep).join('/'); // URL，防止windows操作系统下生成的路径使用 '\'
 
-            console.log(`--------======= GenFutureStates: jsFileUrl =${jsFileUrl}`);
+            //console.log(`--------======= GenFutureStates: jsFileUrl =${jsFileUrl}`);
             tmpStates[stateName] = [
                 curState[0],    // ui-router 中 匹配的 状态名称
                 curState[1],    // ui-router 中 匹配的 url
                 jsFileUrl,      // 相对于 index.html 要加载的 JS 文件的路径
             ];
         });
-        //fs.writeFileSync("./src/myplugin.js", "var mypluginData=" + JSON.stringify(arr) + ";");
 
-        //let stateJsonFile = path.resolve(compilation.options.output.path, "states.json");
-        let stateJsonFile = "./.myStates.js";
-        console.log(`--------======= GenFutureStates: stateJsonFile =${stateJsonFile}`);
-
-        //console.log(`--------======= GenFutureStates: outputPath =${outputPath}`);
+        // Object => Array : 相当于  Object.values(tmpStates)
         let stateArr = Object.keys(tmpStates).map(key => {
             return tmpStates[key]
         });
+
         let jsContent = `/* comment test btpka3. */ module.exports = ${JSON.stringify(stateArr)};`;
         fs.writeFileSync(stateJsonFile, jsContent);  // FIXME 目录不存在
     }
 
 
     genChildCompiler(compilation) {
-
         // 追加额外的资源
         // http://stackoverflow.com/questions/28987626/using-a-loader-inside-a-webpack-plugin/30344170#30344170
         var outputOptions = {
@@ -156,16 +135,20 @@ class GenFutureStates {
     }
 }
 
-
-// 1111
 GenFutureStates.prototype.apply = function (compiler) {
     const self = this;
 
-    var aaa;
-    console.log(`--------======= GenFutureStates: compiler.outputPath = ${compiler.outputPath}`);
+
+    var extraAssetCompilerPromise;
 
     // 获取 compilation 实例
     compiler.plugin('compilation', function (compilation, params) {
+
+        // webpack 配置的输出目录（绝对路径）
+        let outputPath = compilation.getPath(compiler.outputPath);
+        // html-webpack-plugin 要生成的 html的相对路径
+        let htmlDir = path.resolve(outputPath, self.htmlDir);
+
 
         // 注册 html-webpack-plugin 事件处理，等待生成额外的资源，并注入
         compilation.plugin('html-webpack-plugin-before-html-processing', function (htmlPluginData, callback) {
@@ -176,145 +159,60 @@ GenFutureStates.prototype.apply = function (compiler) {
                 return;
             }
 
-            //htmlPluginData.html += 'The magic footer';
+            // htmlPluginData = {html, assets, plugin, outputName};
+            extraAssetCompilerPromise.then(function (extraAssets) {
+                let outputPath = compilation.getPath(compiler.outputPath);
 
-            console.log("--------------------self.htmlWebpackPlugin = htmlPluginData.plugin :::::::: ",
-                (self.htmlWebpackPlugin === htmlPluginData.plugin)
-            );
-            console.log("--------------------htmlPluginData = ", htmlPluginData);
+                let extraAssetFiles = extraAssets.map(extraAssetName => {
+                    var extraAssetPath = path.resolve(outputPath, extraAssetName);
+                    //var htmlPath = path.resolve(outputPath, htmlPluginData.plugin.options.filename);
 
-            // {html, assets, plugin, outputName};
-            console.log("--------------------htmlWebpackPlugin.assets =  ", htmlPluginData.assets);
-            console.log("--------------------aaa =  ", aaa);
+                    return "./" + path.relative(htmlDir, extraAssetPath);
+                });
 
-            aaa.then(
-                function (extraAssets) {
+                // 追加到最前面。
+                Array.prototype.unshift.apply(htmlPluginData.assets.js, extraAssetFiles);
 
-                    let outputPath = compilation.getPath(compiler.outputPath);
-
-                    let extraAssetFiles = extraAssets.map(extraAssetName => {
-
-                        var extraAssetPath = path.resolve(outputPath, extraAssetName);
-                        var htmlPath = path.resolve(outputPath, htmlPluginData.plugin.options.filename);
-                        console.log("--------------------outputPath =  ", outputPath);
-                        console.log("--------------------extraAssetPath =  ", extraAssetPath);
-                        console.log("--------------------htmlPath =  ", htmlPath);
-
-                        // var publicPath = typeof compilation.options.output.publicPath !== 'undefined'
-                        //     // If a hard coded public path exists use it
-                        //     ? compilation.mainTemplate.getPublicPath({hash: webpackStatsJson.hash})
-                        //     // If no public path was set get a relative url path
-                        //     : path.relative(compilation.options.output.path, compilation.options.output.path)
-                        //         .split(path.sep).join('/');
-
-                        return "./" + path.relative(path.dirname(htmlPath), extraAssetPath);
-
-                    });
-
-
-                    console.log("--------------------extraAssets =  ", extraAssets, extraAssetFiles);
-                    // 追加到最前面。
-                    Array.prototype.unshift.apply(htmlPluginData.assets.js, extraAssetFiles);
-                    console.log("--------------------htmlPluginData.assets.js =  ", htmlPluginData.assets.js);
-                    callback(null, htmlPluginData);
-                },
-                function (err) {
-                    console.log("--------err", err);
-                    callback(err);
-                }
-            );
-            // callback(null, htmlPluginData);
+                callback(null, htmlPluginData);
+            }, function (err) {
+                callback(err);
+            });
         });
     });
 
     // 所需的资源都编译好，准备发布时, 生成额外的资源
-    compiler.plugin('emit', function (compilation, callback1) {
-
-        aaa = new Promise(function (resolve, reject) {
-
-            // 先生成额外的资源
-            self.buildExtraAssets(compiler, compilation);
-
-            // 再构建(压缩、hash）
-            let childCompiler = self.genChildCompiler(compilation);
-            childCompiler.runAsChild(function (err, entries, childCompilation) {
-
-                console.log("------childCompiler-err", err);
-
-                var arr = [];
-                childCompilation.chunks.forEach(function (chunk) {
-                    console.log(`--------=======11 childCompilation: chunk :
-                        id=${chunk.id},
-                        name=${chunk.name},
-                        files=${chunk.files}`);
-
-                    arr.push(chunk.files[0])
-                });
-                callback1();
-                resolve(arr)
-            });
-        });
-
-    });
-};
-
-GenFutureStates.prototype.apply1 = function (compiler) {
-    const self = this;
-
-    console.log(`--------======= GenFutureStates: compiler.outputPath = ${compiler.outputPath}`);
-
-
     compiler.plugin('emit', function (compilation, callback) {
 
+        extraAssetCompilerPromise = new Promise(function (resolve, reject) {
+            try {
+                // 先生成额外的资源
+                self.buildExtraAssets(compiler, compilation);
 
-        let tmpStates = {};
+                // 再构建(压缩、hash）
+                let childCompiler = self.genChildCompiler(compilation);
 
-        // Explore each chunk (build output):
-        compilation.chunks.forEach(function (chunk) {
+                childCompiler.runAsChild(function (err, entries, childCompilation) {
+                    if (err) {
+                        reject(err);
+                    }
 
-            console.log(`--------======= GenFutureStates: chunk :
-                findoutPath=${self.findoutPath(compilation)}
-                id=${chunk.id}, 
-                name=${chunk.name},
-                files=${chunk.files}`);
+                    // var extraAssets = [];
+                    // childCompilation.chunks.forEach(function (chunk) {
+                    //     extraAssets.push(chunk.files[0]);
+                    // });
 
-
-            // 判断当前 chunk 是否是一个 ui-router 状态
-            let curState = statesObj[chunk.name];
-            if (!curState) {
-                return;
+                    var extraAssets = childCompilation.chunks.map(chunk => chunk.files[0]);
+                    resolve(extraAssets);
+                    callback();
+                });
+            } catch (err) {
+                reject(err);
+                callback(err);
             }
-            let stateName = curState[0];
-
-            let jsFile = chunk.files.find((file) => {
-                console.log(`--------======= GenFutureStates: file =${file}, typeof = ${typeof file}`);
-                return file.startsWith(stateName)
-            });
-            assert(jsFile, `状态 [${stateName}] 没有找到相应主入口 js 文件。候选有：${chunk.files}`);
-
-            let jsFileUrl = path.relative(
-                    compilation.options.output.path,
-                    compilation.options.output.path
-                ).split(path.sep).join('/') + jsFile;
-
-            console.log(`--------======= GenFutureStates: jsFileUrl =${jsFileUrl}`);
-            tmpStates[stateName] = [
-                curState[0],    // ui-router 中 匹配的 状态名称
-                curState[1],    // ui-router 中 匹配的 url
-                jsFileUrl,      // 相对于 index.html 要加载的 JS 文件的路径
-            ];
         });
 
-        let outputPath = compilation.getPath(compiler.outputPath);
-        //let stateJsonFile = path.resolve(outputPath, "states.json");
-        let stateJsonFile = path.resolve(compilation.options.output.path, "states.json");
-        console.log(`--------======= GenFutureStates: stateJsonFile =${stateJsonFile}`);
-
-        //console.log(`--------======= GenFutureStates: outputPath =${outputPath}`);
-        fs.writeFileSync(stateJsonFile, JSON.stringify(tmpStates));  // FIXME 目录不存在
-
-        callback();
     });
 };
+
 
 module.exports = exports = GenFutureStates;

@@ -45,7 +45,7 @@ function getStateEntries() {
 
         stateEntry[state] = [entryPath];
     });
-    console.log(stateEntry);
+    //console.log(stateEntry);
     return stateEntry
 }
 //console.log(getStateEntries());
