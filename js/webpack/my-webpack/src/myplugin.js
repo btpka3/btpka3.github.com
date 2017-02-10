@@ -1,1 +1,1 @@
-var mypluginData=["0.92b9b187ebb7856a98fe.chunk.js","index.92b9b187ebb7856a98fe.js","testJson.92b9b187ebb7856a98fe.js","user.92b9b187ebb7856a98fe.js"];
+var mypluginData=["0.chunk.js","index.js","testJson.js","user.js"];

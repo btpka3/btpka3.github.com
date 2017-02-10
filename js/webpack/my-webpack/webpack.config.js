@@ -171,28 +171,47 @@ const config = {
                     }
                 })
             },
+            // {
+            //     test: /\.scss$/,
+            //     loader: appCssPlugin.extract(
+            //         {
+            //             fallbackLoader: 'style-loader',
+            //             loader: [
+            //                 {
+            //                     loader: 'css-loader',
+            //                     // XXX : 需要关注 https://github.com/webpack/css-loader/pull/400
+            //                     query: {
+            //                         minimize: true,
+            //                         sourcemap: false,
+            //                         discardComments: {
+            //                             removeAll: true
+            //                         },
+            //                         calc: false
+            //                     }
+            //
+            //                 },
+            //                 "sass-loader"
+            //             ]
+            //         })
+            // },
             {
                 test: /\.scss$/,
-                loader: appCssPlugin.extract(
+                use: [
+                    'style-loader',
                     {
-                        fallbackLoader: 'style-loader',
-                        loader: [
-                            {
-                                loader: 'css-loader',
-                                // XXX : 需要关注 https://github.com/webpack/css-loader/pull/400
-                                query: {
-                                    minimize: true,
-                                    sourcemap: false,
-                                    discardComments: {
-                                        removeAll: true
-                                    },
-                                    calc: false
-                                }
-
+                        loader: 'css-loader',
+                        // XXX : 需要关注 https://github.com/webpack/css-loader/pull/400
+                        options: {
+                            minimize: true,
+                            sourcemap: false,
+                            discardComments: {
+                                removeAll: true
                             },
-                            "sass-loader"
-                        ]
-                    })
+                            calc: false
+                        }
+                    },
+                    "sass-loader"
+                ]
             },
             {
                 test: /\.(woff|woff2|ttf|eot|svg)(\?]?.*)?$/,
