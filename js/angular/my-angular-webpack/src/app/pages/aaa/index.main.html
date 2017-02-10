@@ -1,5 +1,13 @@
 <!-- comment -->
 <div class=".btpka3-pages-mian-aaa">
     aaa {{1+2}} <img src="../../components/_layout/logo.png" style="width:60px;">
+    <button ng-click="count=count+1"> 计数器 aaa : {{count}}</button>
+
+
+    <md-button ui-sref="main.aaa.a1"> a1</md-button>
+    <md-button ui-sref="main.aaa.a2"> a2</md-button>
+
+    <div ui-view="a1" ng-show="$state.includes('main.aaa.a1')"></div>
+    <div ui-view="a2" ng-show="$state.includes('main.aaa.a2')"></div>
 </div>
 

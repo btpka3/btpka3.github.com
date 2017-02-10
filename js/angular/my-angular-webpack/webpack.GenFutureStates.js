@@ -12,6 +12,9 @@ const LibraryTemplatePlugin = require('webpack/lib/LibraryTemplatePlugin');
 const SingleEntryPlugin = require('webpack/lib/SingleEntryPlugin');
 const getStateEntries = require("./webpack.getStateEntries");
 
+var args = require('yargs').argv;
+var isProd = args.env && args.env.prod;
+
 /**
  * 生成预定义好的futureStates的数组。
  * 示例如下：
@@ -117,7 +120,7 @@ class GenFutureStates {
         // http://stackoverflow.com/questions/28987626/using-a-loader-inside-a-webpack-plugin/30344170#30344170
         var outputOptions = {
             //filename: "ttt.js",
-            filename: '[name].[hash].js',
+            filename: isProd ? '[name].[hash].js' : '[name].js',
             publicPath: compilation.outputOptions.publicPath
         };
         var compilerName = "myStates";

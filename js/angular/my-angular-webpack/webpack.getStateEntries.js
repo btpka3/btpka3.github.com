@@ -6,11 +6,11 @@ const path = require('path');
  * 通过根据一定规则自动生成 future state 列表。
  */
 function dirToState(dir) {
-    let state = dir                         // => "src/app/pages/aaa/"
-            .replace("src/app/", "")        // => "pages/aaa/"
-            .replace(/\/$/, "")             // => "pages/aaa"
-            .replace(/^pages/, "main")      // => "main/aaa"
-            .replace(path.sep, ".")         // => "main.aaa"
+    let state = dir                         // => "src/app/pages/aaa/a1/"
+            .replace("src/app/", "")        // => "pages/aaa/a1/"
+            .replace(/\/$/, "")             // => "pages/aaa/a1"
+            .replace(/^pages/, "main")      // => "main/aaa/a1"
+            .split(path.sep).join(".")      // => "main.aaa.a1"
         ;
     return state;
 }
@@ -48,5 +48,4 @@ function getStateEntries() {
     //console.log(stateEntry);
     return stateEntry
 }
-//console.log(getStateEntries());
 module.exports = exports = getStateEntries;

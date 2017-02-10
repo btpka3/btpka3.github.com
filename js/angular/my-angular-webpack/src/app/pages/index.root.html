@@ -5,7 +5,10 @@
         <md-button ui-sref="main.bbb"> bbb</md-button>
         <md-button ui-sref="main.ccc"> ccc</md-button>
     </div>
-    <div style="height: 300px;border:1px solid red;" ui-view>
+    <div style="height: 300px;border:1px solid red;" layout >
+        <div ui-view="aaa" ng-show="$state.includes('main.aaa')"></div>
+        <div ui-view="bbb" ng-show="$state.includes('main.bbb')"></div>
+        <div ui-view="ccc" ng-show="$state.includes('main.ccc')"></div>
     </div>
 
     <div class="a">the color should be <span class="txt">red</span>.</div>

@@ -9,6 +9,8 @@ module.exports = [
     // [ name, url, src, type?]
     ["main", ""],
     ["main.aaa", "/"],
+    ["main.aaa.a1", "/a1"],
+    ["main.aaa.a2", "/a2"],
     ["main.bbb", "/bbb"],
     ["main.ccc", "/ccc"]
 ];

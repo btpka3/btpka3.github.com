@@ -5,8 +5,10 @@ function confState($stateProvider) {
     console.log("--------main.ccc : confState");
     $stateProvider.state("main.ccc", {
         url: "/ccc",
+        sticky: true,
+        deepStateRedirect: true,
         views: {
-            "@main": {
+            "ccc@main": {
                 template: html,
                 controller: controller
             }

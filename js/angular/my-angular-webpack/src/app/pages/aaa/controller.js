@@ -3,6 +3,7 @@ function controller($scope, $state) {
         console.log("--------------" + state);
         $state.go(state);
     };
+    $scope.count = 100;
 }
 controller.$inject = ['$scope', '$state'];
 
