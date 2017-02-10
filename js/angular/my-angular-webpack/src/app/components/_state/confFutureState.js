@@ -14,7 +14,7 @@ function confFutureState($futureStateProvider) {
             src: s[2],
             type: "load"
         };
-        if (s.length === 4) {
+        if (s.length >= 4) {
             state.type = s[3]
         }
         $futureStateProvider.futureState(state);

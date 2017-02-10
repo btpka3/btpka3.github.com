@@ -9,6 +9,9 @@ webpack-dev-server
 浏览器直接访问 http://localhost:8080/
 
 webpack --env.prod
+
+
+future states 所有的 js，css，html都打包到js中。
 ```
 
 

@@ -17,10 +17,10 @@ const getStateEntries = require("./webpack.getStateEntries");
  * 示例如下：
  * [
  *   // [状态名称， 状态URL，状态打包文件]
- *   ["main",     "",     "main.90ba1d50c154614dd6d9.js"],
- *   ["main.aaa", "/",    "main.aaa.cdbee811327d854d9e24.js"],
- *   ["main.bbb", "/bbb", "main.bbb.309e31daab8f6c412668.js"],
- *   ["main.ccc", "/ccc", "main.ccc.b31716d65ab745c9f590.js"]
+ *   ["main",     "",     "main.90ba1d50c154614dd6d9.js",       ["main.xxxxxx.css"]],
+ *   ["main.aaa", "/",    "main.aaa.cdbee811327d854d9e24.js",   ["main.aaa.xxxxxx.css"]],
+ *   ["main.bbb", "/bbb", "main.bbb.309e31daab8f6c412668.js",   ["main.bbb.xxxxxx.css"]],
+ *   ["main.ccc", "/ccc", "main.ccc.b31716d65ab745c9f590.js",   ["main.ccc.xxxxxx.css"]]
  * ]
  */
 
@@ -70,6 +70,7 @@ class GenFutureStates {
             }
             let stateName = curState[0];
 
+
             let jsFile = chunk.files.find((file) => {
                 return file.startsWith(stateName)
             });
@@ -84,11 +85,20 @@ class GenFutureStates {
                     jsPath
                 ).split(path.sep).join('/'); // URL，防止windows操作系统下生成的路径使用 '\'
 
+            // let cssArr = chunk.files
+            //     .filter(f => f.endsWith(".css"))
+            //     .map(f => {
+            //         return "./" + path.relative(htmlDir, path.resolve(outputPath, f))
+            //                 .split(path.sep)
+            //                 .join('/')
+            //     });
+            //console.log("------btpka3: " + chunk.name + "   " + chunk.files + "; cssArr = " + cssArr);
             //console.log(`--------======= GenFutureStates: jsFileUrl =${jsFileUrl}`);
             tmpStates[stateName] = [
                 curState[0],    // ui-router 中 匹配的 状态名称
                 curState[1],    // ui-router 中 匹配的 url
                 jsFileUrl,      // 相对于 index.html 要加载的 JS 文件的路径
+                //cssArr
             ];
         });
 

@@ -31,13 +31,19 @@ var vendorCssPlugin = new ExtractTextPlugin({
     filename: isProd ? '[name].[hash].css' : '[name].css'
 });
 var appCssPlugin = new ExtractTextPlugin({
-    filename: isProd ? '[name].scss.[hash].css' : '[name].scss.css'
+    filename: isProd ? '[name].[hash].scss.css' : '[name].scss.css'
 });
 
 const entry = {
     "index": [
         "./src/app/index.js"
-    ]
+    ],
+    // "main":{
+    //     "./src/app/pages/main",
+    // },
+    // "main.aaa":{
+    //     "./src/app/pages/main/aaa"
+    // }
 };
 Object.assign(entry, getStateEntries());
 
@@ -173,8 +179,46 @@ const config = {
                 ],
                 exclude: /node_modules/
             },
+
             {
-                test: /\.css$/,
+                test: /src\/app\/pages\/.*\.css$/,
+                use: [
+                    "style-loader",
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            minimize: true,
+                            sourcemap: false,
+                            discardComments: {
+                                removeAll: true
+                            },
+                            calc: false
+                        }
+                    }
+                ],
+            },
+
+            {
+                test: /src\/app\/pages\/.*\.scss$/,
+                use: [
+                    "style-loader",
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            minimize: true,
+                            sourcemap: false,
+                            discardComments: {
+                                removeAll: true
+                            },
+                            calc: false
+                        }
+                    },
+                    "sass-loader"
+                ],
+            },
+
+            {
+                test: /(node_modules|src\/app\/components).*\.css$/,
                 loader: vendorCssPlugin.extract({
                     fallbackLoader: 'style-loader',
                     loader: {
@@ -193,7 +237,7 @@ const config = {
                 })
             },
             {
-                test: /\.scss$/,
+                test: /(node_modules|src\/app\/components).*\.scss$/,
                 loader: appCssPlugin.extract(
                     {
                         fallbackLoader: 'style-loader',
@@ -209,7 +253,6 @@ const config = {
                                     },
                                     calc: false
                                 }
-
                             },
                             "sass-loader"
                         ]
@@ -232,7 +275,7 @@ const config = {
                     {
                         loader: "file-loader",
                         options: {
-                            name: "assets/fonts/[name]-[hash].[ext]"
+                            name: "assets/imgs/[name]-[hash].[ext]"
                         }
                     }
                 ]
