@@ -26,6 +26,10 @@
         .index-c img {
             padding-bottom: 2px;
         }
+
+        div[ng-include]{
+            border:2px solid #93004e;
+        }
     </style>
 </head>
 <body layout flex="">
@@ -34,10 +38,13 @@
 <!-- 2. 插入未经过滤静态html -->
 <index-tpl class="truted" ng-bind-html="withoutSanitize()" flex></index-tpl>
 
-<!-- 2. 通过 -->
+<!-- 3. 通过 自定义 directive -->
 <index-tpl-div tpl-url="tplUrl" flex>
 
 </index-tpl-div>
+
+<!-- 4. 通过 ng-include -->
+<div ng-include="tplUrl"></div>
 
 
 </body>
