@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>array test</title>
+    <script>
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+        var arr = ["aaa", "bbb", "ccc"]
+        console.log("arr = ", arr);
+
+        // 后面追加(1)
+        arr.push("ddd");
+        console.log("push-1. ", arr);
+
+        // 后面追加(*)
+        Array.prototype.push.apply(arr, ["eee", "fff"]);
+        console.log("push-2. ", arr);
+
+        // 后面删除
+        arr.pop();
+        arr.pop();
+        console.log("pop-1. ", arr);
+
+        // 前面追加(1)
+        arr.unshift("333");
+        console.log("unshift-1. ", arr);
+
+        // 前面追加(*)
+        Array.prototype.unshift.apply(arr, ["111", "222"]);
+        console.log("unshift-2. ", arr);
+
+        // 前面删除
+        arr.shift();
+        arr.shift();
+        console.log("shift-1. ", arr);
+
+        // 中间插入(1)
+        arr.splice(2, 0, "a");
+        console.log("splice-1. ", arr);
+
+        // 中间插入(*)
+        arr.splice(3, 0, "b", "c");
+        console.log("splice-2. ", arr);
+
+        // 中间删除(1)
+        arr.splice(2, 5);
+        console.log("splice-3. ", arr);
+
+    </script>
+
+</head>
+<body>
+please see console.
+</body>
+</html>

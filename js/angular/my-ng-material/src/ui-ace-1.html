@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="sidenavDemo1">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport"
+          content="width=device-width, flexinitial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <title>tabs</title>
+    <link rel="stylesheet" href="https://unpkg.com/angular-material@1.1.1/angular-material.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/material-design-icons-font@2.2.3/iconfont/material-icons.css">
+    <link rel="stylesheet" href="https://unpkg.com/angular-material-icons@0.7.1/angular-material-icons.css"/>
+
+
+    <style>
+        .c {
+            border: 1px solid red;
+            width: 300px;
+        }
+
+        .c .md-tab {
+            padding: 12px 6px;
+        }
+
+        .c md-tabs .md-tab.md-active {
+            color: #ba9f6e;
+        }
+
+        .c md-tabs md-ink-bar {
+            color: #ba9f6e;
+            background-color: #ba9f6e;
+        }
+    </style>
+</head>
+<body layout="">
+<div ng-controller="AppCtrl as ctrl" layout="column" ng-cloak flex>
+    <div ui-ace="ctrl.uiAceOpt" ng-model="editorData" flex>Ace here</div>
+    <md-button ng-click="ctrl.show()">show data</md-button>
+</div>
+
+<!--
+<html>
+<head>
+<title> test ace</title>
+<style>
+#a {
+  border: 2px solid red;
+}
+</style>
+<script>
+var a = {
+    num : 111,
+    str : "aaa",
+    bool : false,
+    func: function(){
+        console.log("Hello World~");
+    }
+};
+</script>
+</head>
+<body>
+<div style="border: 2px solid red;"> aaa</div>
+</body>
+</html>
+-->
+
+
+<!--<script src="https://unpkg.com/jquery@3.1.1/dist/jquery.js"></script>-->
+
+<script src="https://unpkg.com/ace-builds@1.2.5/src-min-noconflict/ace.js"></script>
+<script src="https://unpkg.com/angular@1.6.1/angular.js"></script>
+<script src="https://unpkg.com/angular-animate@1.6.1/angular-animate.js"></script>
+<script src="https://unpkg.com/angular-aria@1.6.1/angular-aria.js"></script>
+<script src="https://unpkg.com/angular-messages@1.6.1/angular-messages.js"></script>
+<script src="https://unpkg.com/angular-material@1.1.1/angular-material.js"></script>
+<script src="https://unpkg.com/angular-sanitize@1.6.1/angular-sanitize.js"></script>
+<script src="https://unpkg.com/angular-ui-ace@0.2.3"></script>
+<script>
+    angular
+        .module('sidenavDemo1', ['ngMaterial', 'ngSanitize', 'ui.ace'])
+        .controller('AppCtrl', AppCtrl);
+
+    function AppCtrl($scope, $log, $http) {
+
+        $http({
+            //method: "GET",
+            url: ""
+        }).then(function (resp) {
+            $scope.editorData = resp.data;
+            console.log(resp);
+        }, function (err) {
+            console.log("ERROR : ", err);
+        });
+
+        var ctrl = this;
+
+        ctrl.uiAceOpt = {
+            useWrapMode: true,
+            showGutter: true,
+            theme: 'twilight',
+            mode: 'html'
+        };
+
+        ctrl.show = function () {
+            console.log($scope.editorData);
+        }
+
+    }
+</script>
+</body>
+< / html >

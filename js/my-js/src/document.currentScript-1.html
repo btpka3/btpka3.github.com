@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>获取js文件的路径</title>
+
+    <!--
+
+     https://developer.mozilla.org/en-US/docs/Web/API/Document/currentScript
+      仅仅适用于同步加载 JS
+
+    -->
+
+    <script>
+        // 仅仅适用于同步加载 JS
+        function JS_SELF_URL() {
+            var script_tags = document.getElementsByTagName('script');
+            return script_tags[script_tags.length - 1].src;
+        }
+    </script>
+    <script src="document.currentScript-1-a.js"></script>
+    <script src="document.currentScript-1-b.js"></script>
+</head>
+<body>
+please see console
+</body>
+</html>
