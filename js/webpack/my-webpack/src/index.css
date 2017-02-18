@@ -10,6 +10,7 @@
     width: calc(2 * 100px);
 }
 
-.index {
+.index-btn {
+    /* test for sourceMap */
     color: darkmagenta;
 }

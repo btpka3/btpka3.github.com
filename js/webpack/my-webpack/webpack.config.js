@@ -161,39 +161,15 @@ const config = {
                         // XXX : 需要关注 https://github.com/webpack/css-loader/pull/400
                         query: {
                             minimize: true,
-                            sourcemap: false,
+                            sourceMap: true,
                             discardComments: {
                                 removeAll: true
                             },
                             calc: false
                         }
-
                     }
                 })
             },
-            // {
-            //     test: /\.scss$/,
-            //     loader: appCssPlugin.extract(
-            //         {
-            //             fallbackLoader: 'style-loader',
-            //             loader: [
-            //                 {
-            //                     loader: 'css-loader',
-            //                     // XXX : 需要关注 https://github.com/webpack/css-loader/pull/400
-            //                     query: {
-            //                         minimize: true,
-            //                         sourcemap: false,
-            //                         discardComments: {
-            //                             removeAll: true
-            //                         },
-            //                         calc: false
-            //                     }
-            //
-            //                 },
-            //                 "sass-loader"
-            //             ]
-            //         })
-            // },
             {
                 test: /\.scss$/,
                 use: [
@@ -203,14 +179,26 @@ const config = {
                         // XXX : 需要关注 https://github.com/webpack/css-loader/pull/400
                         options: {
                             minimize: true,
-                            sourcemap: false,
+                            // 缺点：css压缩后的内容，包含 sourceMap 都在Js文件中，造成JS文件太大
+                            sourceMap: true,
                             discardComments: {
                                 removeAll: true
                             },
                             calc: false
                         }
                     },
-                    "sass-loader"
+                    {
+                        loader: 'sass-loader',
+                        // XXX : 需要关注 https://github.com/webpack/css-loader/pull/400
+                        options: {
+                            minimize: true,
+                            sourceMap: true,
+                            discardComments: {
+                                removeAll: true
+                            },
+                            calc: false
+                        }
+                    }
                 ]
             },
             {
