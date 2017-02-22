@@ -7,6 +7,8 @@
 ## 参考
 
 * [GORM](http://gorm.grails.org/latest/)
-*
+* [GORM for MongoDB](http://gorm.grails.org/latest/mongodb/manual/index.html)
+
+
 
 
