@@ -1,6 +1,7 @@
 package me.test.first.spring.boot.gorm.mongo.domain
 
 import grails.gorm.annotation.Entity
+
 //import grails.gorm.rx.mongodb.RxMongoEntity
 
 @Entity
@@ -12,6 +13,7 @@ class City  //implements RxMongoEntity<City>
     static constraints = {
         memo nullable: true
     }
+    static embedded = ['streetList']
 
     String id
     Date dateCreated
@@ -21,4 +23,5 @@ class City  //implements RxMongoEntity<City>
     int age
     String memo
 
+    List<Street> streetList = []
 }

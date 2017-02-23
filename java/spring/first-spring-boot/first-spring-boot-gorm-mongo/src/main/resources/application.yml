@@ -37,3 +37,5 @@ grails:
           connectTimeout: 300
         default:
           version: true
+    gorm:
+      failOnError: true
