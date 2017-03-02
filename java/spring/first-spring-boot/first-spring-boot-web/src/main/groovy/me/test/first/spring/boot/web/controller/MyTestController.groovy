@@ -1,4 +1,4 @@
-package me.test.controller
+package me.test.first.spring.boot.web.controller
 
 import me.test.service.MyService
 import org.springframework.beans.factory.annotation.Autowired

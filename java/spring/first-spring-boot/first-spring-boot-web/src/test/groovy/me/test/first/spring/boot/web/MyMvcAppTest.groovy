@@ -1,4 +1,4 @@
-package me.test.first.spring.boot.cxf
+package me.test.first.spring.boot.web
 
 import org.junit.Test
 import org.junit.runner.RunWith

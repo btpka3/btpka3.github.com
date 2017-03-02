@@ -1,4 +1,4 @@
-package me.test.service
+package me.test.first.spring.boot.web.service
 
 import org.springframework.stereotype.Service
 

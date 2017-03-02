@@ -1,4 +1,4 @@
-package me.test
+package me.test.first.spring.boot.web
 
 import org.apache.http.client.HttpClient
 import org.apache.http.impl.client.HttpClientBuilder
