@@ -6,11 +6,11 @@
 
 
 dependencies {
-    compile "io.swagger:swagger-core:1.5.10"  // 1.5.12
-    compile "io.springfox:springfox-swagger2:2.6.1"
-    compile "io.springfox:springfox-data-rest:2.6.1"
-    compile "io.springfox:springfox-staticdocs:2.6.1"
-    compile 'io.springfox:springfox-swagger-ui:2.6.1'
+    compile "io.swagger:swagger-core"  // 1.5.12
+    compile "io.springfox:springfox-swagger2"
+    compile "io.springfox:springfox-data-rest"
+    compile "io.springfox:springfox-staticdocs"
+    compile 'io.springfox:springfox-swagger-ui'
 }
 
 

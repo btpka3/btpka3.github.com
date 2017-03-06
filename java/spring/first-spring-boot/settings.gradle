@@ -1,8 +1,15 @@
 rootProject.name = 'first-spring-boot'
 
+include 'first-spring-boot-data-gemfire'
+include 'first-spring-boot-data-mongo'
 include 'first-spring-boot-database'
-include 'first-spring-boot-security-acl'
+include 'first-spring-boot-jersey'
 include 'first-spring-boot-security'
+include 'first-spring-boot-security-acl'
+include 'first-spring-boot-swagger'
 include 'first-spring-boot-web'
 include 'first-spring-boot-websocket'
 include 'first-spring-boot-gorm-mongo'
+includeBuild './my-querydsl-plugin'
+
+

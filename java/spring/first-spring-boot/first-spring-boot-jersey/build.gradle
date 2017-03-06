@@ -5,14 +5,14 @@
 
 
 dependencies {
-    compile "io.swagger:swagger-core:1.5.12"  // 1.5.12
-    //compile "io.swagger:swagger-jaxrs:1.5.12"
-    compile 'io.swagger:swagger-jersey2-jaxrs:1.5.12'
+    compile "io.swagger:swagger-core"  // 1.5.12
+    //compile "io.swagger:swagger-jaxrs"
+    compile 'io.swagger:swagger-jersey2-jaxrs'
     compile('org.springframework.boot:spring-boot-starter-jersey')
-    compile('org.webjars:swagger-ui:2.2.10')
-//    compile "javax.ws.rs:jsr311-api:1.1.1"
-//    compile "javax.ws.rs:javax.ws.rs-api:2.0.1"
-    compile 'org.glassfish.jersey.ext:jersey-spring3:2.25.1'
+    compile('org.webjars:swagger-ui')
+//    compile "javax.ws.rs:jsr311-api"
+//    compile "javax.ws.rs:javax.ws.rs-api"
+    compile 'org.glassfish.jersey.ext:jersey-spring3'
 }
 
 

@@ -1,0 +1,88 @@
+//jar {
+//    baseName = 'demo'
+//    version = '0.0.1-SNAPSHOT'
+//}
+plugins {
+    id "com.ewerk.gradle.plugins.querydsl" version "1.0.8"
+}
+
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-data-mongodb')
+    compile('com.querydsl:querydsl-mongodb')
+    //compileOnly('com.querydsl:querydsl-apt')
+    compile('joda-time:joda-time')
+    compile('org.mongodb.morphia:morphia')
+
+}
+
+
+sourceSets {
+    //generated
+}
+
+
+configurations {
+    springAgent
+    querydslapt
+}
+
+querydsl {
+    springDataMongo = true
+    //library = 'com.querydsl:querydsl-apt:4.1.4'
+    library = 'com.querydsl:querydsl-apt'
+    //querydslSourcesDir = 'src/generated/groovy'
+}
+
+//idea {
+//    module {
+//        sourceDirs += file('src/main/generated')
+//        generatedSourceDirs += file('src/main/generated')
+//    }
+//}
+
+test {
+    include 'me/test/**'
+    testLogging.showStandardStreams = false
+    // listen to events in the test execution lifecycle
+//    beforeTest { descriptor ->
+//        logger.lifecycle("Running test: " + descriptor)
+//    }
+//
+//    // listen to standard out and standard error of the test JVM(s)
+//    onOutput { descriptor, event ->
+//        logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message )
+//    }
+}
+
+//Querydsl
+//def generatedSrcDir = 'src/main/generated'
+//task createGeneratedSrcDir << {
+//    file(generatedSrcDir).mkdirs()
+//}
+//
+//compileJava.dependsOn createGeneratedSrcDir
+
+//clean {
+//    delete generatedSrcDir
+//}
+
+//
+//task generateQueryDSL(type: JavaCompile, group: 'build', description: 'Generates the QueryDSL query types') {
+//    source = sourceSets.main.java
+//    classpath = configurations.compile + configurations.querydslapt
+//    options.compilerArgs = [
+//            "-proc:only",
+//            "-processor", "com.mysema.query.apt.jpa.JPAAnnotationProcessor"
+//    ]
+//    destinationDir = sourceSets.generated.java.srcDirs.iterator().next()
+//}
+//compileGroovy {
+//    dependsOn generateQueryDSL
+//    source generateQueryDSL.destinationDir
+//}
+//compileGeneratedJava {
+//    dependsOn generateQueryDSL
+//    classpath += sourceSets.main.runtimeClasspath
+//}
+
+

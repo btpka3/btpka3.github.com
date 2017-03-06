@@ -1,0 +1,40 @@
+
+# 错误处理相关
+server.error.include-stacktrace: on_trace_param
+#server.error.path: /error
+
+# template 相关
+#spring.thymeleaf.prefix: classpath:/templates/
+
+
+
+security.basic.enabled: false
+security.user.password: 123456
+
+logging.level.org.springframework.web: INFO
+logging.level.org.springframework.security: INFO
+logging.level.org.springframework.boot.actuate.audit.listener.AuditListener: DEBUG
+logging.level.org.springframework.boot.web.support.ErrorPageFilter: DEBUG
+logging.level.org.springframework.web.servlet.view.ContentNegotiatingViewResolver: DEBUG
+logging.level.org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping: DEBUG
+# 用来追踪 restTemplate 请求
+logging.level.org.apache.http: DEBUG
+
+spring.devtools.restart.exclude: static/**,public/**,templates/**,resources/**
+
+
+
+# cxf 配置
+#cxf:
+#  path: "/services/*"
+#  servlet:
+#    init:
+#      key1: value1
+#      key2: value2
+#  jaxrs:
+#    server:
+#      path: /
+#      component-scan: true
+#      classes-scan: me.test.first.spring.boot.cxf
+
+

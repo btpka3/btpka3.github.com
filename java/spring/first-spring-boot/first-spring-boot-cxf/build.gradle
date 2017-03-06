@@ -1,0 +1,30 @@
+
+//jar {
+//    baseName = 'demo'
+//    version = '0.0.1-SNAPSHOT'
+//}
+
+
+dependencies {
+    compile('org.apache.cxf:cxf-spring-boot-starter-jaxws')
+    compile('org.apache.cxf:cxf-rt-frontend-jaxrs')
+    compile('org.apache.cxf:cxf-rt-rs-service-description-swagger')
+    compile('org.webjars:swagger-ui')
+}
+
+
+
+test {
+    include 'me/test/**'
+    testLogging.showStandardStreams = false
+    // listen to events in the test execution lifecycle
+//    beforeTest { descriptor ->
+//        logger.lifecycle("Running test: " + descriptor)
+//    }
+//
+//    // listen to standard out and standard error of the test JVM(s)
+//    onOutput { descriptor, event ->
+//        logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message )
+//    }
+}
+
