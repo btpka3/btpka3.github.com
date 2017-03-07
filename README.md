@@ -1,4 +1,4 @@
-该代码仓库主要用于个人总结一些新技术、框架学习用的demo。wiki就迁移到了 [here](https://btpka3.github.io/btpka3/)。
+该代码仓库主要用于个人总结一些新技术、框架学习用的demo。wiki就迁移到了 [here](https://btpka3.gitbooks.io/btpka3)。
 
 给自己的提醒：
 
