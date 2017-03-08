@@ -1,0 +1,139 @@
+//jar {
+//    baseName = 'demo'
+//    version = '0.0.1-SNAPSHOT'
+//}
+
+
+plugins {
+    id "com.ewerk.gradle.plugins.querydsl" version "1.0.8"
+}
+apply plugin: 'org.springframework.boot'
+apply plugin: "java"
+
+
+//test {
+//    include 'me/test/**'
+//    testLogging.showStandardStreams = false
+//}
+
+
+// https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-gradle-plugin.html#build-tool-plugins-gradle-repackage-configuration
+bootRepackage {
+    enabled = false
+}
+
+
+sourceSets {
+//    generated {
+//        java {
+//            //srcDirs = ['src/main/generated']
+//        }
+//    }
+    querydsl
+
+    main {
+        // Fixes problem with JPA EntityManager factory requiring classes and persistence.xml in same path
+        //output.resourcesDir = output.classesDir
+        java {
+            srcDirs = [
+                    'src/main/java',
+                    'src/querydsl/java'
+            ]
+        }
+    }
+}
+
+ 
+
+//
+//configurations {
+////    springAgent
+////    querydslapt
+////    querydslapt
+//}
+
+//buildscript {
+////    repositories {
+////        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+////        mavenCentral()
+////    }
+//    dependencies {
+//        //classpath("com.github.btpka3:my-querydsl-plugin")
+//    }
+//
+//}
+////apply plugin: 'com.github.btpka3.gradle.plugins.querydsl'
+
+dependencies {
+    compile project(":data-core")
+    compile('org.springframework.boot:spring-boot-starter-data-mongodb')
+    compile('com.querydsl:querydsl-mongodb')
+    compile('com.querydsl:querydsl-apt')
+    compile('com.querydsl:querydsl-core')
+    compile('joda-time:joda-time')
+    compile('org.mongodb.morphia:morphia')
+    //querydslapt('com.querydsl:querydsl-apt')
+}
+
+querydsl {
+    springDataMongo = true
+    //library = 'com.querydsl:querydsl-apt:4.1.4'
+    library = 'com.querydsl:querydsl-apt'
+    //querydslSourcesDir = 'src/main/querydsl'
+}
+
+//println "---- zll 1_1: "+project.extensions.querydsl.querydslSourcesDir
+//println "---- zll 1_2: "+project.extensions.querydsl
+
+idea {
+    module {
+        sourceDirs += file('src/querydsl/java')
+        generatedSourceDirs += file('src/querydsl/java')
+    }
+}
+
+test {
+    include 'me/test/**'
+    testLogging.showStandardStreams = false
+}
+
+
+
+
+
+
+
+
+
+// ------------------ bak
+
+//task generateQueryDSL(type: GroovyCompile, group: 'build', description: 'Generates the QueryDSL query types') {
+//
+//    source = sourceSets.main.groovy
+//    classpath = configurations.compile + configurations.querydslapt
+//
+//    groovyOptions.javaAnnotationProcessing = true
+//    options.compilerArgs << "-proc:only"
+//    options.compilerArgs << "-processor" << "org.springframework.data.mongodb.repository.support.MongoAnnotationProcessor"
+//
+//    destinationDir = sourceSets.generated.java.srcDirs.iterator().next()
+//}
+//
+//compileJava {
+//    dependsOn generateQueryDSL
+//    source generateQueryDSL.destinationDir
+//}
+//
+//compileGeneratedJava {
+//    dependsOn generateQueryDSL
+//    options.warnings = false
+//    classpath += sourceSets.main.runtimeClasspath
+//}
+//clean {
+//    delete sourceSets.generated.java.srcDirs
+//}
+
+//project.tasks.compileJava.dependsOn project.tasks.compileQuerydsl
+//compileGroovy {
+//    dependsOn compileQueryDsl
+//}
