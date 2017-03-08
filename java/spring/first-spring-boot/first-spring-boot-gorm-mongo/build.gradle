@@ -1,18 +1,5 @@
 
 
-
-buildscript {
-//    repositories {
-//        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
-//        mavenCentral()
-//    }
-    dependencies {
-        classpath("com.github.btpka3:my-querydsl-plugin")
-    }
-
-}
-apply plugin: 'com.github.btpka3.gradle.plugins.querydsl'
-
 dependencies {
     //compile('org.grails:grails-datastore-gorm-rx-mongodb')
     //compile "org.grails.plugins:rx-mongodb"
