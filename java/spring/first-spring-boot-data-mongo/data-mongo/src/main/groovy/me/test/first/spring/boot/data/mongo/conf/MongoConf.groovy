@@ -20,4 +20,7 @@ class MongoConf {
     MyAuditorAware myAuditorAware() {
         return new MyAuditorAware()
     }
+
+    // SpringDataMongodbQuery
+    // QuerydslRepositorySupport
 }

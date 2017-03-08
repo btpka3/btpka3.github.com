@@ -79,7 +79,7 @@ querydsl {
     springDataMongo = true
     //library = 'com.querydsl:querydsl-apt:4.1.4'
     library = 'com.querydsl:querydsl-apt'
-    //querydslSourcesDir = 'src/main/querydsl'
+    //querydslSourcesDir = 'src/querydsl/java'
 }
 
 //println "---- zll 1_1: "+project.extensions.querydsl.querydslSourcesDir

@@ -70,3 +70,5 @@ http://localhost:8080/tplAdd1
 1. MappingMongoConverter
 1. [Groovy Bean serialization](https://github.com/querydsl/querydsl/issues/112) - GroovyBeanSerializer
 1. SpringDataMongodbSerializer、GroovyBeanSerializer、MongodbSerializer
+
+1. spring-data-mongo [Query methods](http://docs.spring.io/spring-data/data-mongo/docs/1.10.1.RELEASE/reference/html/#mongodb.repositories.queries)

@@ -70,8 +70,7 @@ class TplController {
     @RequestMapping(path = "/update", method = [RequestMethod.GET])
     @ResponseBody
     Object update() {
-        Criteria criteria = Criteria
-                .where("name").exists(true)
+        Criteria criteria = where("name").exists(true)
 
         Query query = query(criteria)
                 .skip(1)
