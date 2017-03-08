@@ -110,11 +110,11 @@ public class Addr {
     private List<Street> streetList = new ArrayList<Street>();
 
     public static class Street {
-        public ObjectId getId() {
+        public String getId() {
             return id;
         }
 
-        public void setId(ObjectId id) {
+        public void setId(String id) {
             this.id = id;
         }
 
@@ -137,7 +137,7 @@ public class Addr {
         /**
          * 原则上，内嵌的列表对象也应当有个id，以方便更新
          */
-        private ObjectId id = new ObjectId();
+        private String id = new ObjectId().toString();
         @Indexed
         private String name;
         private String memo;

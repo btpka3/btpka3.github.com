@@ -30,3 +30,9 @@ spring.data.mongodb:
   #username: ''
   #password: ''
 
+# DevToolsProperties
+#spring.devtools.restart.additional-paths:
+#  - ../data-core/build/libs/
+#  - ../data-domain/build/libs/
+
+

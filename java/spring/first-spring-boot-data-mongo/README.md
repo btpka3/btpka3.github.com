@@ -26,6 +26,7 @@ http://localhost:8080/tplAdd1
 
 
 # 总结
+1. idea intellij 要修改后手动触发 Build Project。若有必要请手动修改该快捷键。
 1. 自动更新索引:  索引变更需要手动在原有数据库清除索引，然后spring-data-mongo才能新建搜因
 1. 级联保存: 根据 spring-data-mongo 的[文档](http://docs.spring.io/spring-data/data-mongo/docs/1.10.1.RELEASE/reference/html/#mapping-usage-references)
 
@@ -39,6 +40,8 @@ http://localhost:8080/tplAdd1
 1. 一对一，一对多，多对多等关系. 文档中有提到说，不需要使用类似 JPA 中 `@OneToMany` 注解
 1. Map -> bean, 如果使用 groovy bean, 必须使用 groovy 的  `[:] as User` 语法，包含内嵌文档。
 1. 通过 `@Indexed` 创建后并变更索引会抛出异常，需要手动删除索引，请参考 `MongoPersistentEntityIndexCreator`
+1. @Id 字段不要使用ObjectId, 因为 querydsl 会生成 QObjectId
+
 
 # querydsl
 1. groovy 生成的 domain 有额外的 "metaClass" 属性，暂时没找到有效的 skip 方法
@@ -51,7 +54,7 @@ http://localhost:8080/tplAdd1
     * [gist-5377401](https://gist.github.com/EdwardBeckett/5377401)
     * [querydsl-plugin](https://github.com/ewerk/gradle-plugins/tree/master/querydsl-plugin)
     * [groovy 的 annotation processing](https://docs.gradle.org/2.4-rc-1/release-notes.html?_ga=1.15443582.930750960.1480575237#support-for-%E2%80%9Cannotation-processing%E2%80%9D-of-groovy-code)
-    * [Alternative code generation](http://www.querydsl.com/static/querydsl/2.7.3/reference/html/ch03s02.html)
+    * [Alternative code generation](http://www.querydsl.com/static/querydsl/2.7.3/reference/html/ch03s02.html) - GenericExporter
 
 # TODO
 1. 正常访问Mongodb数据库
@@ -64,6 +67,6 @@ http://localhost:8080/tplAdd1
     * Pageable(PageableArgumentResolver)
     * Sort(SortArgumentResolver)
 
-   
 1. MappingMongoConverter
-
+1. [Groovy Bean serialization](https://github.com/querydsl/querydsl/issues/112) - GroovyBeanSerializer
+1. SpringDataMongodbSerializer、GroovyBeanSerializer、MongodbSerializer

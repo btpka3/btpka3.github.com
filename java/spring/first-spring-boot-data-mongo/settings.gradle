@@ -2,6 +2,7 @@ rootProject.name = 'first-spring-boot-data-mongo'
 
 include 'data-core'
 include 'data-domain'
+include 'data-domain-groovy'
 //include 'data-domain-q'
 include 'data-mongo'
 //includeBuild './my-querydsl-plugin'
