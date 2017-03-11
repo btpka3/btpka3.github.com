@@ -15,6 +15,7 @@ import org.springframework.context.ApplicationContext
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.*
+import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 import org.springframework.util.LinkedMultiValueMap
 import org.springframework.util.MultiValueMap
@@ -24,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat
 
 // 使用独立运行的服务进行测试
 
-
+@ActiveProfiles(["default"])
 @RunWith(SpringJUnit4ClassRunner.class)
 //@SpringBootTest(classes = [MyClientApp.class], webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @SpringBootTest(classes = [MyApp.class], webEnvironment = SpringBootTest.WebEnvironment.NONE)
@@ -309,11 +310,13 @@ public class MyClientAppTest {
                 .query(uri.getQuery())
                 .build()
                 .getQueryParams()
+//        assertThat(decodedQueryParams.get('client_id')).isEqualTo([myOAuth2Props.client.id])
+
         assertThat(decodedQueryParams)
                 .containsEntry("client_id", [myOAuth2Props.client.id])
                 .containsEntry("redirect_uri", ["${clientUrl}/photo/authCode".toString()])
                 .containsEntry("response_type", ["code"])
-                .containsEntry("scope", ["read write"])
+                .containsEntry("scope", ["read"])
                 .containsKeys("state")
 
         return uri
@@ -407,7 +410,7 @@ public class MyClientAppTest {
                 .containsEntry("client_id", [myOAuth2Props.client.id])
                 .containsEntry("redirect_uri", ["${clientUrl}/photo/authCode".toString()])
                 .containsEntry("response_type", ["code"])
-                .containsEntry("scope", ["read write"])
+                .containsEntry("scope", ["read"])
                 .containsKeys("state")
 
         return uri

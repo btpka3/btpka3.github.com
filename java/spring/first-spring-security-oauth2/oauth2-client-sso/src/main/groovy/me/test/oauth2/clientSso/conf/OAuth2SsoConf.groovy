@@ -5,6 +5,7 @@ import org.springframework.beans.factory.ObjectProvider
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2SsoProperties
+import org.springframework.boot.autoconfigure.security.oauth2.resource.DefaultUserInfoRestTemplateFactory
 import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoRestTemplateCustomizer
 import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoRestTemplateFactory
 import org.springframework.boot.web.client.RestTemplateBuilder
@@ -45,9 +46,6 @@ public class OAuth2SsoConf extends SecurityConfigurerAdapter<DefaultSecurityFilt
     private OAuth2ClientAuthenticationProcessingFilter ssoFilter
 
     @Autowired
-    private MyOAuth2Properties myOAuth2Props
-
-    @Autowired
     OAuth2SsoProperties sso
 
     @Bean
@@ -70,7 +68,7 @@ public class OAuth2SsoConf extends SecurityConfigurerAdapter<DefaultSecurityFilt
                     ObjectProvider<OAuth2ProtectedResourceDetails> detailsProvider,
             ObjectProvider<OAuth2ClientContext> oauth2ClientContextProvider) {
 
-        return new UserInfoRestTemplateFactory(customizersProvider, detailsProvider,
+        return new DefaultUserInfoRestTemplateFactory(customizersProvider, detailsProvider,
                 oauth2ClientContextProvider);
 
     }
@@ -80,9 +78,11 @@ public class OAuth2SsoConf extends SecurityConfigurerAdapter<DefaultSecurityFilt
     // EnableOAuth2Sso -> ResourceServerTokenServicesConfiguration 有类似配置
     RemoteTokenServices myRemoteTokenServices(RestTemplateBuilder restTemplateBuilder) {
         RemoteTokenServices ts = new RemoteTokenServices()
-        ts.setCheckTokenEndpointUrl(myOAuth2Props.auth.checkTokenUri);
-        ts.setClientId(myOAuth2Props.resource.username4AuthServer);
-        ts.setClientSecret(myOAuth2Props.resource.password4AuthServer);
+
+        ts.setCheckTokenEndpointUrl("http://a.localhost:10001/oauth/check_token");
+        // 去检查token时，自己的身份信息
+        ts.setClientId("CLIENT_ID_client_sso");
+        ts.setClientSecret("CLIENT_PWD_client_sso");
         // 内部默认自己新建的，为了方便跟踪调试，统一使用自己配置的。
         ts.setRestTemplate(restTemplateBuilder.build())
         return ts

@@ -60,6 +60,7 @@ class WebSecurityConf extends WebSecurityConfigurerAdapter {
                 .antMatchers("/sec")
                 .antMatchers("/oauth/authorize")
                 .antMatchers("/oauth/confirm_access")
+                .antMatchers("/oauth/check_token")
 
             .and()
                 .formLogin()

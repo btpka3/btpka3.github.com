@@ -1,35 +1,9 @@
-buildscript {
-    ext {
-        springBootVersion = '1.4.0.RELEASE'
-    }
-    repositories {
-        mavenLocal()
-        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
-        mavenCentral()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-    }
-}
-
-version "0.0.1"
-group "me.test"
 
 apply plugin: 'groovy'
-apply plugin: "spring-boot"
-apply plugin: "eclipse"
-apply plugin: "idea"
-apply plugin: 'project-report'
+apply plugin: "org.springframework.boot"
 
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
 
-repositories {
-    mavenLocal()
-    maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
-    mavenCentral()
-}
 
 dependencies {
     compile(project(':oauth2-common'))
@@ -39,9 +13,9 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-security')
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.springframework.security.oauth:spring-security-oauth2')
-    compile('org.springframework.security:spring-security-jwt:1.0.6.RELEASE')
+    compile('org.springframework.security:spring-security-jwt')
     testCompile('org.springframework.boot:spring-boot-starter-test')
-    compile('org.apache.httpcomponents:httpclient:4.5.2')
+    compile('org.apache.httpcomponents:httpclient')
 }
 
 bootRun {

@@ -9,7 +9,7 @@ logging.level.org.springframework.security.web.access: DEBUG
 logging.level.org.springframework.security.web.csrf: DEBUG
 logging.level.org.springframework.security.access: DEBUG
 # 用来追踪 restTemplate 请求
-logging.level.org.apache.http: DEBUG
+logging.level.org.apache.http.wire: DEBUG
 logging.level.me.test.oauth2.client: DEBUG
 logging.level.org.springframework.boot.context.config.ConfigFileApplicationListener: TRACE
 

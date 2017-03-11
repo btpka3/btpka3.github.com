@@ -96,26 +96,33 @@ public class MyClientSsoAppTest {
         TestRestTemplate authRestTemplate = new TestRestTemplate(TestRestTemplate.HttpClientOption.ENABLE_COOKIES);
 
         // "GET http://s.localhost:10004/sec" —— 尚未登录
+        log.debug(logPrefix + "001")
         URI clientLoginUri = client_accessSecWithoutLocalLogin(clientRestTemplate)
 
         // "GET http://s.localhost:10004/login" —— 尚未登录
+        log.debug(logPrefix + "002")
         URI authUri = client_localLoginWithoutSso(clientRestTemplate, clientLoginUri)
 
         // "GET http://a.localhost:10004/oauth/authorize" —— 尚未登录
+        log.debug(logPrefix + "003")
         URI authLoginUri = auth_authWithoutLogin(authRestTemplate, authUri)
 
         // 省略了一步 ： 让显示 登录表单画面的请求
         // "GET http://a.localhost:10004/login" —— 尚未登录
 
         // "POST http://a.localhost:10004/oauth/authorize" —— 已经登录
+        log.debug(logPrefix + "004")
         URI authUriWithLogin = auth_login(authRestTemplate, authLoginUri)
 
+        log.debug(logPrefix + "005")
         URI clientLoginUriWithSso = auth_authWithLoginAndAutoAuth(authRestTemplate, authUriWithLogin)
 
         // "GET http://a.localhost:10004/login" —— 已经登录
+        log.debug(logPrefix + "006")
         URI secWithLocalLogin = client_localLoginWithSso(clientRestTemplate, clientLoginUriWithSso)
 
         // "GET http://s.localhost:10004/sec" —— 已经登录
+        log.debug(logPrefix + "007")
         client_accessSecWithLocalLogin(clientRestTemplate, secWithLocalLogin)
     }
 

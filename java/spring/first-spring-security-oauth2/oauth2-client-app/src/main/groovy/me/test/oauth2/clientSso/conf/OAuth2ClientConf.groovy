@@ -47,12 +47,15 @@ public class OAuth2ClientConf {
     @Bean
     public OAuth2ProtectedResourceDetails oAuthCodeResourceDetails() {
         AuthorizationCodeResourceDetails details = new AuthorizationCodeResourceDetails();
-        details.setId(myOAuth2Props.resource.id);
-        details.setClientId(myOAuth2Props.client.id);
-        details.setClientSecret(myOAuth2Props.client.secret);
-        details.setAccessTokenUri(myOAuth2Props.auth.accessTokenUri);
-        details.setUserAuthorizationUri(myOAuth2Props.auth.userAuthorizationUri);
-        details.setScope(Arrays.asList(myOAuth2Props.client.scopes));
+        details.setId("RSC_ID_rsc_server");
+
+        details.setClientId("CLIENT_ID_client_app");
+        details.setClientSecret("CLIENT_PWD_client_app");
+        details.setScope(["read"]);
+
+        details.setAccessTokenUri("http://a.localhost:10001/oauth/token");
+        details.setUserAuthorizationUri("http://a.localhost:10001/oauth/authorize");
+
         return details;
     }
 
@@ -72,14 +75,16 @@ public class OAuth2ClientConf {
     @Bean
     public OAuth2ProtectedResourceDetails oImplicitResourceDetails() {
         ImplicitResourceDetails details = new ImplicitResourceDetails();
-        details.setId(myOAuth2Props.resource.id);
-        details.setClientId(myOAuth2Props.client.id);
-        details.setClientSecret(myOAuth2Props.client.secret);
-        details.setAccessTokenUri(myOAuth2Props.auth.accessTokenUri);
-        details.setUserAuthorizationUri(myOAuth2Props.auth.userAuthorizationUri);
-        details.setScope(Arrays.asList(myOAuth2Props.client.scopes));
+        details.setId("RSC_ID_rsc_server");
 
-        details.setPreEstablishedRedirectUri(myOAuth2Props.client.preEstablishedRedirectUri)
+        details.setClientId("CLIENT_ID_client_app");
+        details.setClientSecret("CLIENT_PWD_client_app");
+        details.setScope(["read"]);
+
+        details.setAccessTokenUri("http://a.localhost:10001/oauth/token");
+        details.setUserAuthorizationUri("http://a.localhost:10001/oauth/authorize");
+
+        details.setPreEstablishedRedirectUri("http://c.localhost:10003/implicit.html")
         return details;
     }
 
@@ -96,11 +101,16 @@ public class OAuth2ClientConf {
     @Bean
     public OAuth2ProtectedResourceDetails oPasswordResourceDetails() {
         ClientCredentialsResourceDetails details = new ClientCredentialsResourceDetails();
-        details.setId(myOAuth2Props.resource.id);
-        details.setClientId(myOAuth2Props.client.id);
-        details.setClientSecret(myOAuth2Props.client.secret);
-        details.setAccessTokenUri(myOAuth2Props.auth.accessTokenUri);
-        details.setScope(Arrays.asList(myOAuth2Props.client.scopes));
+
+        details.setId("RSC_ID_rsc_server");
+
+        details.setClientId("CLIENT_ID_client_app");
+        details.setClientSecret("CLIENT_PWD_client_app");
+        details.setScope(["read"]);
+
+        details.setAccessTokenUri("http://a.localhost:10001/oauth/token");
+
+
         return details;
     }
 
@@ -117,11 +127,15 @@ public class OAuth2ClientConf {
     @Bean
     public OAuth2ProtectedResourceDetails oClientResourceDetails() {
         ResourceOwnerPasswordResourceDetails details = new ResourceOwnerPasswordResourceDetails();
-        details.setId(myOAuth2Props.resource.id);
-        details.setClientId(myOAuth2Props.client.id);
-        details.setClientSecret(myOAuth2Props.client.secret);
-        details.setAccessTokenUri(myOAuth2Props.auth.accessTokenUri);
-        details.setScope(Arrays.asList(myOAuth2Props.client.scopes));
+
+        details.setId("RSC_ID_rsc_server");
+
+        details.setClientId("CLIENT_ID_client_app");
+        details.setClientSecret("CLIENT_PWD_client_app");
+        details.setScope(["read"]);
+
+        details.setAccessTokenUri("http://a.localhost:10001/oauth/token");
+
 
         details.setUsername("a_admin")
         details.setPassword("a_admin")

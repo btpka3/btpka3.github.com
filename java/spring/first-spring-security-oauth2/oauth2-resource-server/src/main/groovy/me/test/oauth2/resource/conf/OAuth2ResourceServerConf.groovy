@@ -25,8 +25,6 @@ public class OAuth2ResourceServerConf extends ResourceServerConfigurerAdapter {
 
 
     @Autowired
-    private MyOAuth2Properties myOAuth2Props
-    @Autowired
     private RemoteTokenServices remoteTokenServices
 
     @Bean
@@ -35,12 +33,16 @@ public class OAuth2ResourceServerConf extends ResourceServerConfigurerAdapter {
     }
 
     // ResourceServerTokenServicesConfiguration 有自动配置
+
+
     @Bean
     RemoteTokenServices remoteTokenServices(RestTemplateBuilder restTemplateBuilder) {
         RemoteTokenServices ts = new RemoteTokenServices()
-        ts.setCheckTokenEndpointUrl(myOAuth2Props.auth.checkTokenUri);
-        ts.setClientId(myOAuth2Props.resource.username4AuthServer);
-        ts.setClientSecret(myOAuth2Props.resource.password4AuthServer);
+        // 去检查token的URL
+        ts.setCheckTokenEndpointUrl("http://a.localhost:10001/oauth/check_token");
+        // 去检查token时，自己的身份信息
+        ts.setClientId("CLIENT_ID_rsc_server");
+        ts.setClientSecret("CLIENT_PWD_rsc_server");
         // 内部默认自己新建的，为了方便跟踪调试，统一使用自己配置的。
         ts.setRestTemplate(restTemplateBuilder.build())
         return ts
@@ -51,7 +53,7 @@ public class OAuth2ResourceServerConf extends ResourceServerConfigurerAdapter {
     public void configure(ResourceServerSecurityConfigurer resources) {
 
         // 通过 application.yml "security.oauth2.resource.id" 配置
-        resources.resourceId(myOAuth2Props.resource.id)
+        resources.resourceId("RSC_ID_rsc_server")
                 .tokenServices(remoteTokenServices) //RemoteTokenServices
                 .stateless(true);
     }

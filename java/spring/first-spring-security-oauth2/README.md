@@ -19,6 +19,10 @@ cd first-spring-security-oauth2
 ./gradlew :oauth2-authorization-server:bootRun
 ./gradlew :oauth2-client-app:bootRun
 
+# 浏览器访问
+# oauth2-authorization-server 所用的数据库
+http://localhost:10001/h2-console/
+
 ```
 
 ## 验证 OAuth2 authorization 授权模式

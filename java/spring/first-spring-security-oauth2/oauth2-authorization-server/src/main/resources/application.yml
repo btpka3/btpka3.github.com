@@ -4,15 +4,21 @@ server.port: 10001
 #security.oauth2.resource.id: MY_RSC
 #security.oauth2.authorization.realm: btpka3/my-oauth2
 
-logging.level.org.springframework.security: INFO
-logging.level.org.springframework.boot.actuate.audit.listener.AuditListener: DEBUG
-logging.level.org.springframework.security.config.annotation.authentication.configuration: DEBUG
-logging.level.org.springframework.security.web.access: DEBUG
-logging.level.org.springframework.security.web.csrf: DEBUG
-logging.level.org.springframework.security.access: DEBUG
-# 用来追踪 restTemplate 请求
-logging.level.org.apache.http: DEBUG
-logging.level.package org.springframework.security.oauth2.provider.authentication: DEBUG
+
+# LOGGING
+logging:
+  level:
+    org.springframework.security:                                                 INFO
+    org.springframework.boot.actuate.audit.listener.AuditListener:                DEBUG
+    org.springframework.security.config.annotation.authentication.configuration:  DEBUG
+    org.springframework.security.web.access:                                      DEBUG
+    org.springframework.security.web.csrf:                                        DEBUG
+    org.springframework.security.access:                                          DEBUG
+    # 用来追踪 restTemplate 请求
+    org.apache.http:                                                              DEBUG
+    me.test.oauth2.client.wire:                                                   DEBUG
+    org.springframework.boot.context.config.ConfigFileApplicationListener:        TRACE
+    org.springframework.security.oauth2.provider.authentication:                  DEBUG
 
 my.oauth2:
   auth:

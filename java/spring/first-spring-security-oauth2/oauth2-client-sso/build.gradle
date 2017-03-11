@@ -1,35 +1,8 @@
-buildscript {
-    ext {
-        springBootVersion = '1.4.0.RELEASE'
-    }
-    repositories {
-        mavenLocal()
-        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
-        mavenCentral()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-    }
-}
 
-version "0.0.1"
-group "me.test"
 
 apply plugin: 'groovy'
-apply plugin: "spring-boot"
-apply plugin: "eclipse"
-apply plugin: "idea"
-apply plugin: 'project-report'
+apply plugin: "org.springframework.boot"
 
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
-repositories {
-    mavenLocal()
-    maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
-    mavenCentral()
-}
 
 dependencies {
     compile(project(':oauth2-common'))
@@ -39,16 +12,16 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-thymeleaf')
     compile("org.springframework.boot:spring-boot-devtools")
     compile('org.springframework.security.oauth:spring-security-oauth2')
-    compile('org.springframework.security:spring-security-jwt:1.0.6.RELEASE')
-    compile('org.apache.httpcomponents:httpclient:4.5.2')
+    compile('org.springframework.security:spring-security-jwt')
+    compile('org.apache.httpcomponents:httpclient')
 
-    compile 'org.webjars.bower:angular:1.6.0'
-    compile 'org.webjars.bower:angular-messages:1.6.0'
-    compile 'org.webjars.bower:angular-animate:1.6.0'
-    compile 'org.webjars.bower:angular-aria:1.6.0'
+    compile 'org.webjars.bower:angular'
+    compile 'org.webjars.bower:angular-messages'
+    compile 'org.webjars.bower:angular-animate'
+    compile 'org.webjars.bower:angular-aria'
 
-    compile('org.webjars:angular-material:1.1.1')
-    compile('org.webjars.bower:angular-material-icons:0.7.1') {
+    compile('org.webjars:angular-material')
+    compile('org.webjars.bower:angular-material-icons') {
         exclude group: "org.webjars.bower", module: "angular"
     }
 

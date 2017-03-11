@@ -2,12 +2,14 @@ package me.test.oauth2.authorization.conf
 
 import me.test.oauth2.common.MyOAuth2Properties
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.context.annotation.*
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.core.io.ResourceLoader
 import org.springframework.jdbc.datasource.init.DatabasePopulator
 import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator
 import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.oauth2.config.annotation.builders.JdbcClientDetailsServiceBuilder
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer
@@ -58,8 +60,6 @@ public class OAuth2AuthorizationServerConf extends AuthorizationServerConfigurer
 //    @Qualifier("authenticationManagerBean")
     private AuthenticationManager authenticationManager; // 人：Resource Owner
 
-
-
     // -------------------------- 定义 spring beans
     @Bean
     MyOAuth2Properties myOAuth2Properties() {
@@ -100,7 +100,6 @@ public class OAuth2AuthorizationServerConf extends AuthorizationServerConfigurer
         return store;
     }
 
-
     // AuthorizationServerEndpointsConfigurer#userApprovalHandler 已经智能配置好了
 //    @Bean
 //    @Lazy
@@ -128,38 +127,50 @@ public class OAuth2AuthorizationServerConf extends AuthorizationServerConfigurer
 //    @Autowired
 //    private AuthorizationServerProperties properties;
 
-
 //    @Autowired
 //    private ClientDetailsService clientDetailsService;
 
-
 //    @Autowired
 //    private UserApprovalHandler userApprovalHandler;
-
-
-
 
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 //        clients.inMemory()
 
-        clients.jdbc(dataSource)
-                //.passwordEncoder()
+        JdbcClientDetailsServiceBuilder clientDetailsServiceBuilder = clients.jdbc(dataSource)
+        //.passwordEncoder()
 
-                // 刚启动就注册一个
-                .withClient(myOAuth2Props.client.id)
-                .resourceIds(myOAuth2Props.resource.id)
-                .secret(myOAuth2Props.client.secret)
-                .scopes(myOAuth2Props.client.scopes)
-                .authorizedGrantTypes(myOAuth2Props.client.authorizedGrantTypes)
-                //.redirectUris()
-                .authorities(myOAuth2Props.client.authorities)
-                //.accessTokenValiditySeconds()
-                //.refreshTokenValiditySeconds()
-                //.additionalInformation()
+        // oauth2-resource-server
+        clientDetailsServiceBuilder.withClient("CLIENT_ID_rsc_server")
+                .secret("CLIENT_PWD_rsc_server")
+                .resourceIds("RSC_ID_rsc_server")
+                .scopes("read", "write", "LOGIN")
+                .authorizedGrantTypes("authorization_code", "implicit", "client_credentials", "password", "refresh_token")
+        //.redirectUris()
+                .authorities("ROLE_CLIENT")
+        //.accessTokenValiditySeconds()
+        //.refreshTokenValiditySeconds()
+        //.additionalInformation()
                 .autoApprove("LOGIN")  // 仅仅用来自动登录的话，无需授权（已默认）。
 
+        // oauth2-client-sso
+        clientDetailsServiceBuilder.withClient("CLIENT_ID_client_sso")
+                .secret("CLIENT_PWD_client_sso")
+                .resourceIds("RSC_ID_rsc_server")
+                .scopes("read", "write", "LOGIN")
+                .authorizedGrantTypes("authorization_code", "implicit", "client_credentials", "password", "refresh_token")
+                .authorities("ROLE_CLIENT")
+                .autoApprove("LOGIN")
+
+        // oauth2-client-app
+        clientDetailsServiceBuilder.withClient("CLIENT_ID_client_app")
+                .secret("CLIENT_PWD_client_app")
+                .resourceIds("RSC_ID_rsc_server")
+                .scopes("read", "write", "LOGIN")
+                .authorizedGrantTypes("authorization_code", "implicit", "client_credentials", "password", "refresh_token")
+                .authorities("ROLE_CLIENT")
+                .autoApprove("LOGIN")
 
     }
 
@@ -178,8 +189,8 @@ public class OAuth2AuthorizationServerConf extends AuthorizationServerConfigurer
 
         // 通过 application.yml : "security.oauth2.authorization.realm"
         oauthServer.realm(myOAuth2Props.auth.realm)
-            .tokenKeyAccess('isFullyAuthenticated()')
-            .checkTokenAccess('isFullyAuthenticated()');
+                .tokenKeyAccess('isFullyAuthenticated()')
+                .checkTokenAccess('isFullyAuthenticated()');
     }
 
 }
