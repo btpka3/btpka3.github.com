@@ -78,7 +78,7 @@ public class OAuth2ResourceServerConf extends ResourceServerConfigurerAdapter {
 
             .and()
                 .cors()
-                .disable()
+                //.disable()
 
         // @formatter:on
     }

@@ -2,7 +2,8 @@
 
     angular.module('MyApp', ['ngMaterial', 'ngMessages', 'ngMdIcons'])
         .controller('DemoCtrl', ['$scope', '$http', '$log', function ($scope, $http, $log) {
-            var resourceUrl = "http://a.localhost:10001/o2/photo";
+            //var resourceUrl = "http://a.localhost:10001/o2/photo";
+            var resourceUrl = "http://r.localhost:10002/o2/photo";
 
             var vm = $scope.vm = {
                 at: null,   // 获取的 access_token
@@ -12,7 +13,7 @@
             // 构建配置的数据
             var jso = new JSO({
                 providerID: "oauth2-authorization-server",
-                client_id: "MY_CLIENT",
+                client_id: "CLIENT_ID_client_app",
                 redirect_uri: "http://c.localhost:10003/implicit.html",
                 authorization: "http://a.localhost:10001/oauth/authorize",
                 scopes: {request: ["read", "write"]},

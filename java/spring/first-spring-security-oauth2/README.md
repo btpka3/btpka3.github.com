@@ -8,10 +8,10 @@
 
 cat <<EOF | sudo tee -a /etc/hosts
 ## OAuth 2.0 test
-127.0.0.1   a.localhost     # authorization server
-127.0.0.1   r.localhost     # resource server
-127.0.0.1   c.localhost     # client app
-127.0.0.1   s.localhost     # client sso
+127.0.0.1   a.localhost    10001 # authorization server
+127.0.0.1   r.localhost    10002 # resource server
+127.0.0.1   c.localhost    10003 # client app
+127.0.0.1   s.localhost    10004 # client sso
 EOF
 
 # 启动服务器
