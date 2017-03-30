@@ -7,24 +7,24 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
- * Duration Test
+ *
  */
 public class LocalTimeTest {
 
 
     public static void main(String[] args) throws InterruptedException {
 
-        dateToLocalDateTime();
-        localDateTimeToDate();
-        formatLocalDateTime();
+        fromDate();
+        toDate();
+        format();
         settingLocalDateTime();
-        addLocalDateTime();
+        plus();
     }
 
 
     // LocalDateTime <- Instant <- Date
-    static void dateToLocalDateTime() {
-        System.out.println("============================= dateToLocalDateTime");
+    static void fromDate() {
+        System.out.println("============================= fromDate");
         Date date = new Date();
         System.out.println("Date          : " + date);
         Instant instant = date.toInstant();
@@ -35,12 +35,10 @@ public class LocalTimeTest {
     }
 
     // LocalDateTime -> Instant -> Date
-    static void localDateTimeToDate() {
-        System.out.println("============================= localDateTimeToDate");
+    static void toDate() {
+        System.out.println("============================= toDate");
         LocalDateTime ldt = LocalDateTime.now();
         System.out.println("LocalDateTime : " + ldt);
-
-
         // Instant instant = ldt.toInstant(ZoneOffset.UTC);
         Instant instant = ldt.atZone(ZoneId.systemDefault()).toInstant();
         System.out.println("Instant       : " + instant);
@@ -48,8 +46,8 @@ public class LocalTimeTest {
         System.out.println("Date          : " + date);
     }
 
-    static void formatLocalDateTime() {
-        System.out.println("============================= formatLocalDateTime");
+    static void format() {
+        System.out.println("============================= format");
         LocalDateTime ldt = LocalDateTime.now();
         System.out.println("LocalDateTime : " + ldt);
         String text = ldt.format(DateTimeFormatter.ISO_DATE_TIME);
@@ -68,8 +66,8 @@ public class LocalTimeTest {
         System.out.println("LocalDateTime : " + ldt);
     }
 
-    static void addLocalDateTime() {
-        System.out.println("============================= addLocalDateTime");
+    static void plus() {
+        System.out.println("============================= plus");
 
         LocalDateTime ldt = LocalDateTime.of(2000, 1, 2, 11, 22, 33, 444 * 1000 * 1000);
 
