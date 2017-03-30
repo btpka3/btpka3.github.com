@@ -26,21 +26,39 @@
 <body>
 
 
-<div ng-controller="AppCtrl" class="sample" layout="column" ng-cloak>
+<div ng-controller="AppCtrl" class="sample">
     <div class="c">
         <md-content class="">
             <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
-                <md-nav-item md-nav-click="goto('page1')" name="page1">中国人</md-nav-item>
-                <md-nav-item md-nav-click="goto('page2')" name="page2">中国人</md-nav-item>
-                <md-nav-item md-nav-click="goto('page3')" name="page3">中国人</md-nav-item>
-                <md-nav-item md-nav-click="goto('page3')" name="page3">中国人</md-nav-item>
-                <md-nav-item md-nav-click="goto('page3')" name="page3">中国人</md-nav-item>
-                <!-- these require actual routing with ui-router or ng-route, so they won't work in the demo
-                <md-nav-item md-nav-sref="app.page4" name="page4">Page Four</md-nav-item>
-                <md-nav-item md-nav-href="#page5" name="page5">Page Five</md-nav-item>
-                -->
+                <md-nav-item md-nav-click="goto('page1')" name="page1">page1</md-nav-item>
+                <md-nav-item md-nav-click="goto('page2')" name="page2">page2</md-nav-item>
+                <md-nav-item md-nav-click="goto('page3')" name="page3">page3</md-nav-item>
+                <md-nav-item md-nav-click="goto('page4')" name="page4">page4</md-nav-item>
+                <md-nav-item md-nav-click="goto('page5')" name="page5">page5</md-nav-item>
             </md-nav-bar>
             <span>{{currentNavItem}}</span>
+
+            <select ng-model="currentNavItem">
+                <option value="page1">page1</option>
+                <option value="page2">page2</option>
+                <option value="page3">page3</option>
+                <option value="page4">page4</option>
+                <option value="page5">page5</option>
+            </select>
+    </div>
+
+    <div class="d">
+        <md-content class="">
+            <md-nav-bar md-selected-nav-item="currentNavItem2">
+                <md-nav-item ng-repeat="tab in tabs"
+                             md-nav-click="goto('page1')"
+                             name="{{tab.name}}">{{tab.title}}
+                </md-nav-item>
+            </md-nav-bar>
+            <div>currentNavItem2 = <input type="text" ng-model="currentNavItem2"></div>
+            <div>idx = <input type="text" ng-model="idx"></div>
+            <div><button ng-click="del(idx)">del</button></div>
+            <div>先选中 P4, 再删除第二个位置（idx==1)时，动画有问题。</div>
     </div>
 
 </div>
@@ -56,22 +74,40 @@
 
 <script>
     angular
-            .module('sidenavDemo1', ['ngMaterial', 'ngSanitize'])
-            .config(function ($provide) {
-                $provide.decorator("$sanitize", function ($delegate, $log) {
-                    return function (text, target) {
+        .module('sidenavDemo1', ['ngMaterial', 'ngSanitize'])
+        .controller('AppCtrl', AppCtrl);
 
-                        var result = $delegate(text, target);
-                        $log.info("$sanitize input: " + text);
-                        $log.info("$sanitize output: " + result);
-                        return result;
-                    };
-                });
-            })
-            .controller('AppCtrl', AppCtrl);
+    function AppCtrl($scope, $log,$timeout) {
+        $scope.currentNavItem = "page2";
+        $scope.tabs = [];
+        for (var i = 0; i < 5; i++) {
+            $scope.tabs.push({
+                name: "p" + i,
+                title: "p" + i
+            });
+        }
+        $scope.idx = 1;
+        $scope.currentNavItem2 = $scope.tabs[1].name;
+        $scope.del = function (idx) {
 
-    function AppCtrl($scope, $log) {
+            var curIdx = $scope.tabs.findIndex(function (ele) {
+                return ele.name === $scope.currentNavItem2;
+            });
 
+
+            $scope.tabs.splice(idx, 1);
+            console.log(curIdx, curIdx - 2, curIdx - 1);
+
+//            $scope.currentNavItem2 = $scope.tabs[curIdx - 2].name;
+//
+            $scope.currentNavItem2 = $scope.tabs[0].name;
+            $timeout(function(){
+                $scope.currentNavItem2 = $scope.tabs[curIdx - 1].name;
+            });
+
+//            $scope.$digest();
+
+        }
     }
 </script>
 </body>

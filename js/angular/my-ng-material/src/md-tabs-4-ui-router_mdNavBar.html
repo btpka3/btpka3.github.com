@@ -58,35 +58,30 @@
     confSsSideNavSections.$inject = ['$mdThemingProvider', 'ssSideNavSectionsProvider'];
     function confSsSideNavSections($mdThemingProvider, ssSideNavSectionsProvider) {
         ssSideNavSectionsProvider.initWithTheme($mdThemingProvider);
-        ssSideNavSectionsProvider.initWithSections([{
-            id: "left",
-            name: 'Section Heading 1',
-            type: 'heading',
-            children: [
-                {
-                    name: 'a',
-                    type: 'toggle',
-                    pages: [{
-                        name: 'a1',
-                        state: 'main.a1'
-                    }, {
-                        name: 'a2',
-                        state: 'main.a2'
-                    }]
-                },
-                {
-                    name: 'b',
-                    type: 'toggle',
-                    pages: [{
-                        name: 'b1',
-                        state: 'main.b1'
-                    }, {
-                        name: 'b2',
-                        state: 'main.b2'
-                    }]
-                },
-            ]
-        }]);
+        ssSideNavSectionsProvider.initWithSections([
+            {
+                name: 'a',
+                type: 'toggle',
+                pages: [{
+                    name: 'a1',
+                    state: 'main.a1'
+                }, {
+                    name: 'a2',
+                    state: 'main.a2'
+                }]
+            },
+            {
+                name: 'b',
+                type: 'toggle',
+                pages: [{
+                    name: 'b1',
+                    state: 'main.b1'
+                }, {
+                    name: 'b2',
+                    state: 'main.b2'
+                }]
+            }
+        ]);
     }
 
 
@@ -130,7 +125,7 @@
                     stateName = state.name;
                 }
 
-                var tab = asTabStates.find((ele) => {
+                var tab = asTabStates.find(function (ele) {
                     return ele.matchStates.startsWith(stateName);
                 });
                 return tab;
@@ -138,6 +133,7 @@
 
             tabs: [],
             tabIndex: 0,
+            tab: null,
             getOpenedTabIndex: function (tab) {
                 return this.tabs.indexOf(tab);
             },
@@ -147,18 +143,22 @@
             focusTab: function (tabOrIdx) {
                 if (typeof (tabOrIdx) === "undefined") {
                     this.tabIndex = this.tabs.length - 1;
+                    this.tab = this.tabs[this.tabIndex].title;
+                    return;
                 }
 
                 if (typeof tabOrIdx === "number") {
 
                     if (tabOrIdx >= 0) {
                         this.tabIndex = tabOrIdx;
+                        this.tab = this.tabs[this.tabIndex].title;
                     }
                     return;
                 }
                 var idx = this.getOpenedTabIndex(tabOrIdx);
                 if (idx >= 0) {
                     this.tabIndex = idx;
+                    this.tab = this.tabs[this.tabIndex].title;
                 }
             },
             openOrFocusTab: function (toState) {
@@ -216,8 +216,9 @@
                         $scope.menu = ssSideNav;
 
                         vm.sidenavTab = sidenavTab;
-                        vm.close = function (tab) {
-                            console.log("------000 close");
+                        vm.close = function (tab,$event) {
+                            console.log("------000 close",arguments);
+                            $event.stopPropagation();
                             sidenavTab.closeTab(tab);
                         }
                     }],
@@ -352,33 +353,25 @@
 
     </md-sidenav>
 
-    <md-tabs flex
-             md-selected="vm.sidenavTab.tabIndex"
-             md-border-bottom
-             md-center-tabs
-             md-swipe-content="true"
-             md-autoselect
-             style="border:1px solid red;">
-        <!-- md-dynamic-height -->
 
-        <md-tab ng-repeat="tab in vm.sidenavTab.tabs">
+    <div flex style="border:1px solid red;">
+        <md-nav-bar md-selected-nav-item="vm.sidenavTab.tab">
+            <md-nav-item ng-repeat="tab in vm.sidenavTab.tabs"
+                         md-nav-click="d();"
+                         name="{{tab.title}}">
+                <div><span ui-sref="{{tab.curState}}">{{tab.title}}</span>
+                    <span ng-if="!tab.disableClose" ng-click="vm.close(tab,$event)">XXXX</span></div>
+            </md-nav-item>
+        </md-nav-bar>
 
-            <md-tab-label>
-                <h3 ui-sref="{{tab.curState}}">{{tab.title}} <span  ng-if="!tab.disableClose"  ng-click="vm.close(tab)">X</span></h3>
-            </md-tab-label>
-            <md-tab-body>
-                <md-content>
-                    --
-                    <div ui-view="{{tab.uiView}}" ng-show="$state.includes(tab.matchStates)"></div>
-                    ==
-                </md-content>
-            </md-tab-body>
-        </md-tab>
-    </md-tabs>
-
-    <div>
-
+        <md-content>
+            --
+            <div ng-repeat="tab in vm.sidenavTab.tabs" ui-view="{{tab.uiView}}"
+                 ng-show="$state.includes(tab.matchStates)"></div>
+            ==
+        </md-content>
     </div>
+
     <ol>
         <li ui-sref="main.a1">a1</li>
         <li ui-sref="main.a2">a2</li>

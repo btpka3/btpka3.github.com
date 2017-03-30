@@ -33,6 +33,7 @@
                     console.log(new URL("https://kingsilk.net/qh/mall/?showwxpaytitle=1#/cms/detail?id=578a1fe9dc8d4c1ce51a8a3c"));
                     console.log(new URL("http://localhost:63333/kingsilk-front/my-ng-material/src/svg/LOGO.svg"));
 
+                    $scope.num = 0;
                 }]);
     </script>
 
@@ -44,6 +45,8 @@
     <div ng-bind-html="myHtml">
 
     </div>
+
+    <md-button ng-click="num=num+1">add :{{num}}</md-button>
 
 </div>
 

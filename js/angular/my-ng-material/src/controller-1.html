@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyApp" ng-controller="DemoCtrl as ctrl" layout="column" ng-cloak="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <title>study ng-material</title>
+    <link rel="stylesheet" href="https://unpkg.com/material-design-icons-font@2.2.3/iconfont/material-icons.css">
+    <link rel="stylesheet" href="https://unpkg.com/angular-material@1.1.1/angular-material.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/angular-material-icons@0.7.1/angular-material-icons.css"/>
+    <style type="text/css">
+
+    </style>
+</head>
+<body>
+
+<div>ctrl.num = {{ctrl.num}}</div>
+<div>str = {{str}}</div>
+<div>
+    <button ng-click="ctrl.hi(ctrl.num)">ctrl.hi</button>
+</div>
+<div>
+    <button ng-click="hello(str)">hello</button>
+</div>
+
+</body>
+<script src="https://unpkg.com/jquery@3.1.1/dist/jquery.js"></script>
+<script src="https://unpkg.com/angular@1.6.1/angular.js"></script>
+<script src="https://unpkg.com/angular-animate@1.6.1/angular-animate.js"></script>
+<script src="https://unpkg.com/angular-aria@1.6.1/angular-aria.js"></script>
+<script src="https://unpkg.com/angular-messages@1.6.1/angular-messages.js"></script>
+<script src="https://unpkg.com/angular-material@1.1.1/angular-material.js"></script>
+<script src="https://unpkg.com/angular-sanitize@1.6.1/angular-sanitize.js"></script>
+<script src="https://unpkg.com/angular-material-icons@0.7.1/angular-material-icons.js"></script>
+<script src="https://unpkg.com/svg-morpheus@0.3.0/compile/minified/svg-morpheus.js"></script>
+<script>
+
+    class MyController {
+        constructor($scope, $log) {
+
+            this.$log = $log;
+            this.num = 100;
+
+            this.$scope = $scope;
+            this.$scope.str = "str";
+            this.$scope.hello = function (msg) {
+
+                // NOTICE: this.$log === undefined;
+                $log.log("====== hello : " + msg);
+            }
+        }
+
+        hi(msg) {
+            this.$log.log("~~~~~~ hi : " + msg);
+        }
+    }
+    MyController.$inject = ["$scope","$log"  ];
+
+    angular
+        .module('MyApp', ['ngMaterial'])
+        .controller('DemoCtrl', MyController);
+</script>
+</html>
