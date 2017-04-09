@@ -1,6 +1,6 @@
 package me.test.first.spring.boot.web.controller
 
-import me.test.service.MyService
+import me.test.first.spring.boot.web.service.MyService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType

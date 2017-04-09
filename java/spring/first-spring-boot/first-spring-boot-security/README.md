@@ -35,6 +35,52 @@ SecConf
 curl -v http://admin:admin@localhost:8080/static/sec.html
 curl -v http://admin:admin@localhost:8080/controller/sec
 ```
+# CORS
+
+spring-webmvc 本身可以为 action 通过 @CrossOrigin 提供细颗粒度的配置。 
+
+spring-webmvc 也提供统一配置：
+
+```java
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurerAdapter() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/api/**");
+            }
+        };
+    }
+``` 
+
+spring-security 也针对 ProxyFilerChain 提供了配置
+
+```java
+@EnableWebSecurity
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http
+			// by default uses a Bean by the name of corsConfigurationSource
+			.cors().and()
+			...
+	}
+
+	@Bean
+	CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration();
+		configuration.setAllowedOrigins(Arrays.asList("https://example.com"));
+		configuration.setAllowedMethods(Arrays.asList("GET","POST"));
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+		return source;
+	}
+}
+```
+
+
+
 
 # http basic 认证
 
@@ -554,8 +600,24 @@ FIXME: authentioncationManager 是何时注册到 applicationContenxt 中的？
 1. 在 @EnableAutoConfiguration 中注册 bean
 1. 在 @EnableGlobalAuthentication 中注册 bean 
 
+## GlobalAuthenticationConfigurerAdapter
+
+AuthenticationConfiguration 中会处理依赖注入所有 GlobalAuthenticationConfigurerAdapter，并初始化。
+
+1. EnableGlobalAuthenticationAutowiredConfigurer 会优先初始化 class 被 @EnableGlobalAuthentication 标注的 bean (比如： SpringBootWebSecurityConfiguration)
+1. BootGlobalAuthenticationConfigurationAdapter 会优先初始化 class 被 @EnableAutoConfiguration 标注的 bean。
+1. InitializeAuthenticationProviderBeanManagerConfigurer(较高的bean初始化顺序)  会 获取 AuthenticationProvider 类型的bean，并配置 AuthenticationManagerBuilder 
+1. SpringBootAuthenticationConfigurerAdapter 会使用 DefaultInMemoryUserDetailsManagerConfigurer 
+
+注意：请留意 BuildState 中状态的定义。上述 GlobalAuthenticationConfigurerAdapter 的配置都是在 init() 方法内进行的。
+因此，如果自己需要实现 GlobalAuthenticationConfigurerAdapter, 大部分代码也应该是在 init() 中进行。
 
 
+WebSecurityConfigurerAdapter#authenticationManager() 中有关于是否使用本地 AuthenticationManager 的代码。
+1. AuthorizationServerSecurityConfiguration 使用 本地的
+1. ResourceServerConfiguration 使用全局的
+1. 自定义的 WebSecurityConfigurerAdapter 实现如果重写 configure(AuthenticationManagerBuilder) 则使用本地的，否则使用全局的。
+1. ApplicationNoWebSecurityConfigurerAdapter 使用全局的
                             
 ## 类关系
 
@@ -583,7 +645,7 @@ SecurityConfigurer                          // 初始化并配置 SecurityBuilde
             AbstractAuthenticationFilterConfigurer,
                 FormLoginConfigurer, 
                 OpenIDLoginConfigurer
-            AnonymousConfigurer, 
+            AnonymousConfigurer,                // if null , then + AnonymousAuthenticationProvider
             ChannelSecurityConfigurer, 
             CorsConfigurer, 
             CsrfConfigurer, 

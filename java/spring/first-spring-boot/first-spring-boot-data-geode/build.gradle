@@ -1,0 +1,15 @@
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-jdbc')
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    //runtime('com.h2database:h2')
+    compile('com.h2database:h2')
+    //compile('org.flywaydb:flyway-core')
+}
+
+test {
+    include 'me/test/**'
+    testLogging.showStandardStreams = false
+}
+
+
+

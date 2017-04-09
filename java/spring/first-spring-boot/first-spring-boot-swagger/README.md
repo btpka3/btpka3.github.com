@@ -43,3 +43,5 @@ http://localhost:8080/swagger-ui.html
 1. tag 
     1. 先使用 docket#tags 注册，
     2. 再在 @Api/@ApiOperation 中引用该tag
+1. 在 application.yml 中可以通过 追加 `spring.jackson.default-property-inclusion : non_null` 来不生成值为 null 的字段
+
