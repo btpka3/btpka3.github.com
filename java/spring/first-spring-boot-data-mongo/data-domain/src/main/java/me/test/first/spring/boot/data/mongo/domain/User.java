@@ -13,6 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Document
 public class User {
@@ -118,6 +119,14 @@ public class User {
         this.arrList = arrList;
     }
 
+    public Set<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<String> tags) {
+        this.tags = tags;
+    }
+
     @Id
 //    @QueryType(PropertyType.STRING)
     private ObjectId id;
@@ -156,4 +165,7 @@ public class User {
 
     @DBRef(lazy = true)
     private List<Addr> arrList = new ArrayList<Addr>();
+
+    private Set<String> tags;
+
 }

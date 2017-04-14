@@ -70,6 +70,7 @@ dependencies {
     compile('com.querydsl:querydsl-mongodb')
     compile('com.querydsl:querydsl-apt')
     compile('com.querydsl:querydsl-core')
+    compile('com.querydsl:querydsl-collections')
     compile('joda-time:joda-time')
     compile('org.mongodb.morphia:morphia')
     //querydslapt('com.querydsl:querydsl-apt')

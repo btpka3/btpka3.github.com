@@ -18,12 +18,10 @@ http://localhost:8080/tplAdd1
 # 参考
 * spring-data-mongo [Reference](http://docs.spring.io/spring-data/data-mongo/docs/1.10.0.RELEASE/reference/html/#repositories.create-instances)、
  [API](http://docs.spring.io/spring-data/data-mongo/docs/1.10.0.RELEASE/api/index.html?org/springframework/data/mongodb/core/MongoTemplate.html)
-
 * spring-data-common [Reference](http://docs.spring.io/spring-data/commons/docs/current/reference/html/)
-
 * [QueryDSL, spring-boot & Gradle](http://stackoverflow.com/questions/22773639/querydsl-spring-boot-gradle)
 * [spring-boot-querydsl demo](https://github.com/mariuszs/spring-boot-querydsl/blob/master/build.gradle)
-
+* [Querying Mongodb](http://www.querydsl.com/static/querydsl/latest/reference/html/ch02s07.html#d0e1737)
 
 # 总结
 1. idea intellij 要修改后手动触发 Build Project。若有必要请手动修改该快捷键。

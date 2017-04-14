@@ -51,12 +51,14 @@ class RepoController {
     Object add() {
 
         Addr addr = new Addr(name: "addr-1", streetList: [
-                new Addr.Street(name: "street-1")
+                new Addr.Street(name: "street-1"),
+                new Addr.Street(name: "street-2"),
+                new Addr.Street(name: "street-3")
         ])
 
         addrRepo.save(addr)
 
-        userRepo.save(new User(name: "zhang3", age: 13, arrList: [addr]))
+        userRepo.save(new User(name: "zhang3", age: 13, arrList: [addr], tags: ["z1", "z2", "z3"]))
 
         userRepo.save(new User(name: "li4", age: 14, type: MyTypeEnum.THREE))
         userRepo.save(new User(name: "wang5", age: 15, type: MyTypeEnum.TWO))

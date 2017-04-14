@@ -42,6 +42,8 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath name = createString("name");
 
+    public final SetPath<String, StringPath> tags = this.<String, StringPath>createSet("tags", String.class, StringPath.class, PathInits.DIRECT2);
+
     public final EnumPath<me.test.first.spring.boot.data.mongo.core.MyTypeEnum> type = createEnum("type", me.test.first.spring.boot.data.mongo.core.MyTypeEnum.class);
 
     public final NumberPath<Long> version = createNumber("version", Long.class);
