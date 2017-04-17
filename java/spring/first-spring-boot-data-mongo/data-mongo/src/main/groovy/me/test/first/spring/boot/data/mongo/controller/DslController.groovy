@@ -2,7 +2,9 @@ package me.test.first.spring.boot.data.mongo.controller
 
 import com.querydsl.mongodb.AbstractMongodbQuery
 import groovy.transform.CompileStatic
+import me.test.first.spring.boot.data.mongo.domain.Addr
 import me.test.first.spring.boot.data.mongo.domain.QAddr
+import me.test.first.spring.boot.data.mongo.domain.QAddr_Street
 import me.test.first.spring.boot.data.mongo.domain.QUser
 import me.test.first.spring.boot.data.mongo.repo.AddrRepository
 import me.test.first.spring.boot.data.mongo.repo.UserRepository
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
 import org.springframework.data.mongodb.core.MongoOperations
+import org.springframework.data.mongodb.repository.support.SpringDataMongodbQuery
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseBody
@@ -82,18 +85,43 @@ class DslController {
         ))
     }
 
-//    // https://github.com/querydsl/querydsl/issues/115
-//    @RequestMapping("/anyEntity")
-//    @ResponseBody
-//    Object anyEntity() {
-//
-//        AbstractMongodbQuery query = userRepo.query()
-//
-//
-//        return userRepo.findAll(allOf(
-//                QUser.user.tags.any().eq("a3")
-//        ))
-//    }
+
+    @RequestMapping("/anyEmbedded2")
+    @ResponseBody
+    Object anyEmbedded2() {
+
+        AbstractMongodbQuery<Addr, SpringDataMongodbQuery<Addr>> query = addrRepo.query()
+        query.anyEmbedded(QAddr.addr.streetList, null).on(
+                QAddr_Street.street.name.in("street-2", "street-200")
+        )
+        List<Addr> addrList = query.fetchResults().getResults()
+        return addrList
+    }
+
+
+    @RequestMapping("/anyEntity")
+    @ResponseBody
+    Object anyEntity() {
+
+        // FIXME: NOT WORK
+        return userRepo.findAll(allOf(
+                QUser.user.arrList.any().name.eq('addr-1')
+                //QUser.user.arrList.any().streetList.any().name.in('street-1', 'street-99')
+        ))
+    }
+
+    @RequestMapping("/notIn")
+    @ResponseBody
+    Object notIn() {
+
+        List<Addr> addrList = addrRepo.findAll(allOf(
+                QAddr.addr.name.in(['addr-1'])
+        )).toList()
+
+        return userRepo.findAll(allOf(
+                QUser.user.addr.notIn(addrList)
+        ))
+    }
 }
 
 
