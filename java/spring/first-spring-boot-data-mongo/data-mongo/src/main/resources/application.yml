@@ -17,6 +17,10 @@ logging.level.org.springframework.boot.actuate.audit.listener.AuditListener: DEB
 logging.level.org.springframework.boot.web.support.ErrorPageFilter: DEBUG
 logging.level.org.springframework.web.servlet.view.ContentNegotiatingViewResolver: DEBUG
 logging.level.org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping: DEBUG
+# https://mongodb.github.io/mongo-java-driver/3.4/driver/reference/logging/
+#logging.level.org.mongodb.driver:        TRACE
+logging.level.org.mongodb.driver.protocol:  TRACE
+
 # 用来追踪 restTemplate 请求
 logging.level.org.apache.http: DEBUG
 

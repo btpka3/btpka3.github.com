@@ -1,7 +1,5 @@
 package me.test.first.spring.boot.data.mongo.domain;
 
-import com.querydsl.core.annotations.PropertyType;
-import com.querydsl.core.annotations.QueryType;
 import me.test.first.spring.boot.data.mongo.core.MyTypeEnum;
 import org.bson.types.ObjectId;
 import org.joda.time.DateTime;
@@ -16,13 +14,14 @@ import java.util.List;
 import java.util.Set;
 
 @Document
+@org.mongodb.morphia.annotations.Entity(value = "user")  // 只有使用 Morphia 相关时才需要
 public class User {
-//    @QueryType(PropertyType.STRING)
+    //    @QueryType(PropertyType.STRING)
     public ObjectId getId() {
         return id;
     }
 
-//    @QueryType(PropertyType.STRING)
+    //    @QueryType(PropertyType.STRING)
     public void setId(ObjectId id) {
         this.id = id;
     }
@@ -127,7 +126,16 @@ public class User {
         this.tags = tags;
     }
 
+    public Addr getAddr() {
+        return addr;
+    }
+
+    public void setAddr(Addr addr) {
+        this.addr = addr;
+    }
+
     @Id
+    @org.mongodb.morphia.annotations.Id
 //    @QueryType(PropertyType.STRING)
     private ObjectId id;
 
@@ -164,7 +172,12 @@ public class User {
     private MyTypeEnum type = MyTypeEnum.ONE;
 
     @DBRef(lazy = true)
+    @org.mongodb.morphia.annotations.Reference
     private List<Addr> arrList = new ArrayList<Addr>();
+
+    @DBRef(lazy = true)
+    @org.mongodb.morphia.annotations.Reference
+    private Addr addr;
 
     private Set<String> tags;
 

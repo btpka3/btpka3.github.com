@@ -6,5 +6,3 @@ include 'data-domain'
 //include 'data-domain-q'
 include 'data-mongo'
 //includeBuild './my-querydsl-plugin'
-
-

@@ -22,6 +22,8 @@ public class QUser extends EntityPathBase<User> {
 
     public static final QUser user = new QUser("user");
 
+    public final QAddr addr;
+
     public final NumberPath<Integer> age = createNumber("age", Integer.class);
 
     public final ListPath<Addr, QAddr> arrList = this.<Addr, QAddr>createList("arrList", Addr.class, QAddr.class, PathInits.DIRECT2);
@@ -66,6 +68,7 @@ public class QUser extends EntityPathBase<User> {
 
     public QUser(Class<? extends User> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
+        this.addr = inits.isInitialized("addr") ? new QAddr(forProperty("addr")) : null;
         this.id = inits.isInitialized("id") ? new org.bson.types.QObjectId(forProperty("id")) : null;
     }
 

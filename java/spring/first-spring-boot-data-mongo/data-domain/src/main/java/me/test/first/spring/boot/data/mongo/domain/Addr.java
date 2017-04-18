@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 @Document
+@org.mongodb.morphia.annotations.Entity(value = "addr")
 public class Addr {
     public String getId() {
         return id;
@@ -81,6 +82,7 @@ public class Addr {
     }
 
     @Id
+    @org.mongodb.morphia.annotations.Id
     private String id;
     /**
      * 创建时间

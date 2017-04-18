@@ -74,6 +74,8 @@ class RepoController {
                 arrList: [addr],
                 addr: addr,
                 type: MyTypeEnum.THREE))
+
+
         userRepo.save(new User(name: "wang5", age: 15, type: MyTypeEnum.TWO))
         userRepo.save(new User(name: "zhao6", age: 16, type: MyTypeEnum.ONE))
         userRepo.save(new User(name: "qian7", age: 17, type: MyTypeEnum.TWO))
