@@ -23,9 +23,10 @@ export default angular.module('app', [
     // .config(confState)
     .run(runState)
     .run(function () {
-        console.log("00099999999999-------------------zll12")
+        console.log("00099999999999-------------------zll1234")
     })
 
 // ff
 //import offlinePlugin from  'offline-plugin/runtime'
 //offlinePlugin.install();
+

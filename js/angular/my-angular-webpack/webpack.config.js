@@ -17,6 +17,7 @@ var path = require('path');
 // parameters
 var isProd = args.env && args.env.prod;
 var isMock = args.env && args.env.mock;
+console.log("-------:",args.env);
 
 //
 var base = __dirname;
@@ -188,7 +189,7 @@ const config = {
                         loader: 'css-loader',
                         options: {
                             minimize: true,
-                            sourcemap: false,
+                            sourceMap: false,
                             discardComments: {
                                 removeAll: true
                             },
@@ -206,7 +207,7 @@ const config = {
                         loader: 'css-loader',
                         options: {
                             minimize: true,
-                            sourcemap: false,
+                            sourceMap: false,
                             discardComments: {
                                 removeAll: true
                             },
@@ -220,13 +221,13 @@ const config = {
             {
                 test: /(node_modules|src\/app\/components).*\.css$/,
                 loader: vendorCssPlugin.extract({
-                    fallbackLoader: 'style-loader',
-                    loader: {
+                    fallback: 'style-loader',
+                    use: {
                         loader: 'css-loader',
                         // XXX : 需要关注 https://github.com/webpack/css-loader/pull/400
                         query: {
                             minimize: true,
-                            sourcemap: false,
+                            sourceMap: false,
                             discardComments: {
                                 removeAll: true
                             },
@@ -240,14 +241,14 @@ const config = {
                 test: /(node_modules|src\/app\/components).*\.scss$/,
                 loader: appCssPlugin.extract(
                     {
-                        fallbackLoader: 'style-loader',
-                        loader: [
+                        fallback: 'style-loader',
+                        use: [
                             {
                                 loader: 'css-loader',
                                 // XXX : 需要关注 https://github.com/webpack/css-loader/pull/400
                                 query: {
                                     minimize: true,
-                                    sourcemap: false,
+                                    sourceMap: false,
                                     discardComments: {
                                         removeAll: true
                                     },
