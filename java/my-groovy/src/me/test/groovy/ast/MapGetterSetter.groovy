@@ -10,6 +10,7 @@ import java.lang.annotation.Target
 
 /**
  *
+ * 可以通过 ASTTransformationCustomizer 配置，可以避免将 自定义筛选用的 annotation 类放到单独的一个jar包中。
  * @See groovy.transform.EqualsAndHashCode
  */
 @Documented
