@@ -122,6 +122,7 @@ allprojects {
     }
 
     uploadArchives {
+        dependsOn assemble  // 没有这句，uploadArchives 只上传没有 bootRepackage 的 jar 包`
         repositories {
             mavenDeployer {
                 repository(url: "http://mvn.kingsilk.xyz/content/repositories/releases/") {
@@ -156,15 +157,21 @@ subprojects {
 
     bootRun {
         addResources = true
+        systemProperties = System.properties
     }
 
-    // gradle bootRun
     springBoot {
         //mainClass = System.properties['mainClass']
         buildInfo {
             additionalProperties = [
                     'foo': 'bar'
             ]
+        }
+    }
+
+    jar {
+        manifest {
+            attributes "Implementation-Version": project.version
         }
     }
 

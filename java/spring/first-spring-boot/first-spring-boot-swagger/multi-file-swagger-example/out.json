@@ -1,0 +1,44 @@
+
+> multi-file-swagger-example@1.0.0 start /Users/zll/work/git-repo/github/mohsen1/multi-file-swagger-example
+> node resolve.js
+
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "0.0.0",
+    "title": "Simple API"
+  },
+  "paths": {
+    "/foo": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/bar": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
