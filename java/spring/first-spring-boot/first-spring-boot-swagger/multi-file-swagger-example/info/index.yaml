@@ -1,2 +1,11 @@
-version: 0.0.0
-title: Simple API
+title:        Simple API
+version:      0.0.0
+description:  A short description of the application
+termsOfService: "xx"
+contact:
+  name: zhang3
+  url: http://btpka3.github.io
+  email: btpka3@163.com
+license:
+  name: "Apache License version 2"
+  url: http://xxxx.com/LICENSE

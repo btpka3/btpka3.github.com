@@ -4,4 +4,8 @@
 ```bash
 npm i 
 node resolve.js
+
+
+./definitions/      # 共通的 model 定义
+
 ```

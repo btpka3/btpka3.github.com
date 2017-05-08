@@ -1,0 +1,131 @@
+get:
+  tags:
+    - bar
+  summary: SHOULD be less than 120 characters
+  description: A verbose explanation of the operation behavior
+  externalDocs:
+    url: http://xxx.com
+  operationId: "xx"  # 全局唯一id
+  consumes:
+    - application/json
+  produces:
+    - application/json
+  schemes:
+    - https
+    - http
+    - ws
+    - wss
+  deprecated: false
+  security:
+    key1:
+      - write:pets
+      - read:pets
+    key2:
+      - write:pets2
+      - read:pets2
+  parameters:
+    #$ref: "xxx"
+    - name:         itemId
+      in:           query
+      description:  "xxx"
+      required:     true
+
+      # 以下字段只有当 in != body 时才可用
+      type:             string
+      format:           dateTime
+      allowEmptyValue:  true      # 只有当 in in (query, formData) 时才可用
+      default:    1996-12-19T16:39:57-08:00
+
+      items:      {...}         # 只有当 type == array 时才可用
+      collectionFormat:   csv   # 数组的表现方式。只有当 type == array 时才可用
+      maxItems: 10              # 最大元素数。只有当 type == array 时才可用
+      minItems: 0               # 最小元素数。只有当 type == array 时才可用
+      uniqueItems: false        # 元素是否必须唯一。只有当 type == array 时才可用
+
+
+      maximum:  999.99          # 最大值。只有当 type in （number, integer） 时才可用
+      exclusiveMaximum: false   # 是否排除最大值。只有当 type in （number, integer） 时才可用
+      minimum: 0                # 最小值。只有当 type in （number, integer） 时才可用
+      exclusiveMinimum: false   # 是否排除最小值。只有当 type in （number, integer） 时才可用
+      multipleOf:   5           # 参数值必须是该值的整数倍。只有当 type in （number, integer） 时才可用
+
+
+      maxLength:  12            # 字符串最大长度。只有当 type == string 时才可用
+      minLength:  6             # 字符串最大长度。只有当 type == string 时才可用
+      pattern: '^abc123$'       # 字符串匹配的正则表达式。只有当 type == string 时才可用
+
+
+      enum:                     # 可用的枚举值
+        - ONE
+        - 1
+        - 0.01
+
+      #additionalItems:          # 必须是 boolean 型或 JSON Schema对象型。
+
+
+    - name:         orderId
+      in:           body
+      description:  orderId
+      required:     true
+
+      schema:       # 只有当 in == body 时才可用
+        #$ref :
+        format:       dateTime
+        title:        xxx
+        description:  ""
+        default:      1996-12-19T16:39:57-08:00
+        multipleOf:
+        maximum:
+        exclusiveMaximum:
+        minimum:
+        exclusiveMinimum:
+        maxLength:
+        minLength:
+        pattern:
+        maxItems:
+        minItems:
+        uniqueItems:
+        maxProperties:
+        minProperties:
+        required:
+        enum:
+        type:
+
+
+        items:
+        allOf:
+        properties:
+        additionalProperties:
+
+
+        discriminator:
+        readOnly:
+        xml:
+        externalDocs:
+        example:
+
+  responses:
+    default:
+      description: xxx
+      schema: {...}
+      headers:
+        X-xxx-header:           # Header 对象
+          description: xx
+          type: string
+          format: string
+          # ...
+        X-yyy-header:
+          # ...
+      examples:
+        "application/json" :
+           "name": "Puma"
+           "type": "Dog"
+           "color": "Black"
+           "gender": "Female"
+           "breed": "Mixed"
+
+    200:
+      description: OK
+      schema:
+        $ref: '#/definitions/User'
+#parameters:

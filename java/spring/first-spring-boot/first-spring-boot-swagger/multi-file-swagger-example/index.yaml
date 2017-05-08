@@ -1,4 +1,65 @@
-swagger: '2.0'
+swagger:  '2.0'
+host:     http://localhost
+basePath: "/rs/api"
+schemes:
+  - https
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+parameters:   # 全局参数
+  param1:
+    name: xxx
+    in: path
+    ...
+  param2:
+    name: xxx
+    in: path
+    ...
+responses:     # 全局响应
+  default:      # Response Object
+    description: ""
+    schema: {...}
+    headers: {...}
+    examples: {...}
+   200:      # Response Object
+      description: ""
+      schema: {...}
+      headers: {...}
+      examples: {...}
+
+securityDefinitions:
+  api_key111:         # Security Scheme Object
+    type: apiKey
+    name: api_key
+    in: header
+  petstore_auth222:   # Security Scheme Object
+    type: oauth2
+    authorizationUrl: http://swagger.io/api/oauth/dialog
+    flow: implicit
+    scopes:
+      write:pets: modify pets in your account
+      read:pets: read your pets
+security:
+  name1:
+    -value11
+    -value12
+  name2:
+    -value21
+    -value22
+
+tags:
+  - name: tag1
+    description: xxx
+    externalDocs:
+      url: http://xxx.com
+  - name: tag2
+    description: xxx1
+    externalDocs:
+      url: http://xxx.com
+externalDocs:
+  url: http://xxx.com
 info:
   $ref: ./info/index.yaml
 paths:
