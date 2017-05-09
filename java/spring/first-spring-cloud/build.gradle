@@ -6,32 +6,30 @@ buildscript {
         maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
         mavenCentral()
     }
-//    dependencies {
-//        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-//        classpath("io.spring.gradle:dependency-management-plugin:1.0.0.RELEASE")
-//        classpath("gradle.plugin.com.gorylenko.gradle-git-properties:gradle-git-properties:1.4.17")
-//    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("io.spring.gradle:dependency-management-plugin:1.0.0.RELEASE")
+        classpath("gradle.plugin.com.gorylenko.gradle-git-properties:gradle-git-properties:1.4.17")
+    }
 }
 
-plugins{
-    id 'eclipse'
-    id 'idea'
-    id "io.spring.dependency-management" version "1.0.2.RELEASE"
-    id 'project-report'
-    id 'maven'
-}
+//plugins{
+//    id 'eclipse'
+//    id 'idea'
+//    id "io.spring.dependency-management" version "1.0.0.RELEASE" //1.0.2.RELEASE
+//    id 'project-report'
+//    id 'maven'
+//    id 'org.springframework.boot' version '1.5.2.RELEASE'
+//}
 
 
 allprojects {
 
-//    apply plugin: 'eclipse'
-//    apply plugin: 'idea'
-//    apply plugin: "io.spring.dependency-management"
-//    apply plugin: 'project-report'
-//    apply plugin: 'maven'
-
-
-
+    apply plugin: 'eclipse'
+    apply plugin: 'idea'
+    apply plugin: "io.spring.dependency-management"
+    apply plugin: 'project-report'
+    apply plugin: 'maven'
 
     repositories {
         maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
@@ -44,6 +42,7 @@ allprojects {
             downloadSources = true
         }
     }
+
     eclipse {
         classpath {
             downloadSources = true
@@ -53,8 +52,8 @@ allprojects {
 
     dependencyManagement {
         imports {
-            mavenBom 'org.springframework.boot:spring-boot-dependencies:1.5.2.RELEASE'
-            mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Dalston.RELEASE'
+            mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
         }
 
         dependencies {
@@ -119,7 +118,6 @@ allprojects {
 }
 
 subprojects {
-
 
     dependencies {
 
