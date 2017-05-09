@@ -1,0 +1,3 @@
+rootProject.name = 'first-spring-cloud'
+
+include "first-spring-cloud-config"
