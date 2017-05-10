@@ -18,22 +18,29 @@ logging:
 spring.cloud.config.server:
   prefix: "/cfg"
 
-# MultipleJGitEnvironmentRepository
-spring.cloud.config.server.git:
-  # 可以使用占位符 {application}，{profile}，{label}
-  uri: git@github.com:btpka3/btpka3.github.com.git
-  cloneOnStart: false
-  forcePull: false
-  repos:
-    sc-config-client:
-      uri: git@github.com:btpka3/btpka3.github.com.git
-      basedir: ${user.home}/btpka3.github.com
-      searchPaths:
-        - /java/spring/first-spring-cloud/sc-config-git-repo
-        - /java/spring/first-spring-cloud/sc-config-git-repo/aaa/{application}
-      #username: trolley
-      #password: strongpassword
-      #force-pull
+  # MultipleJGitEnvironmentRepository
+  git:
+    # 可以使用占位符 {application}，{profile}，{label}
+    uri: git@github.com:btpka3/btpka3.github.com.git
+    cloneOnStart: false
+    forcePull: false
+    repos:
+      sc-config-client:
+        uri: git@github.com:btpka3/btpka3.github.com.git
+        basedir: ${user.home}/btpka3.github.com
+        searchPaths:
+          - /java/spring/first-spring-cloud/sc-config-git-repo
+          - /java/spring/first-spring-cloud/sc-config-git-repo/aaa/{application}
+        #username: trolley
+        #password: strongpassword
+        #force-pull
+
+  # ConfigServerHealthIndicator
+  health:
+    repositories:
+      sc-config-client:
+        profiles: default
+
 
 ---
 spring:

@@ -27,29 +27,42 @@ EnvironmentRepository
 
 # ConfigurationProperties
 
-* RetryProperties
-* ConfigClientHealthProperties
-* ConfigServerHealthIndicator
-* ConfigServerProperties
-* ConsulEnvironmentWatch
-* SvnKitEnvironmentRepository
-* VaultEnvironmentRepository
-* NativeEnvironmentRepository
-* ConfigClientProperties
-* MultipleJGitEnvironmentRepository
+```txt
+* RetryProperties                   : spring.cloud.config.retry
+* ConfigClientHealthProperties      : health.config
+* ConfigServerHealthIndicator       : spring.cloud.config.server.health
+* EnvironmentRepositoryConfiguration: spring.cloud.config.server.health.enabled
+* ConfigServerProperties            : spring.cloud.config.server
+* ConsulEnvironmentWatch            : spring.cloud.config.server.consul.watch
+* SvnKitEnvironmentRepository       : spring.cloud.config.server.svn
+* VaultEnvironmentRepository        : spring.cloud.config.server.vault
+* NativeEnvironmentRepository       : spring.cloud.config.server.native
+* ConfigClientProperties            : spring.cloud.config
+* MultipleJGitEnvironmentRepository : spring.cloud.config.server.git
 
-
-```text
-application*  文件被多所有 config client 共享
+EncryptorFactory
+EncryptionAutoConfiguration
+EncryptionBootstrapConfiguration
+* KeyProperties                     : encrypt
 ```
 
 # Controller
+## EncryptionController
 
-* EnvironmentController
+```bash
+# 加密
+curl http://localhost:8888/cfg/encrypt -d 123456
+13763946e638caeacec62529d13ea4a9c8dad0f996795e5e88448ff9a124250c
+curl http://localhost:8888/cfg/encrypt -d 123456
+e1599a7106caf7dc6abcf35a8158db934b0bb7156dd73a11a1a9d1dd642f9a06
 
-* ResourceController
-    通过 URL "/{spring.cloud.config.server.prefix}/{name}/{profile}/{label}/" 可以获取指定的资源。
+# 解密
+curl http://localhost:8888/cfg/decrypt -d e1599a7106caf7dc6abcf35a8158db934b0bb7156dd73a11a1a9d1dd642f9a06
+123456
+```
 
+
+## EnvironmentController
 ```bash
 
 # 查看给定的 name， profile 下，启用了哪些文件
@@ -67,6 +80,7 @@ curl http://localhost:8888/cfg/sc-config-client/default,test
 # 查看合并后的内容
 curl http://localhost:8888/cfg/sc-config-client-default,test.yml
 # 返回结果如下
+password: '123456'
 path:
   /aaa/sc-config-client/application: true
   /aaa/sc-config-client/application-test: true
@@ -76,6 +90,24 @@ path:
   /application-test: true
   /sc-config-client: true
   /sc-config-client-test: true
+```
+
+## ResourceController
+    通过 URL "/{spring.cloud.config.server.prefix}/{name}/{profile}/{label}/" 可以获取指定的资源。
+
+```text
+curl -v http://localhost:8888/cfg/sc-config-client/default/master/a.json    # Content-Type: text/plain;charset=UTF-8
+{
+  "youPwd": "123456"
+}
+
+curl -v http://localhost:8888/cfg/sc-config-client/default/master/a.xml     # Content-Type: text/plain;charset=UTF-8
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <yourPwd>123456</yourPwd>
+* Curl_http_done: called premature == 0
+* Connection #0 to host localhost left intact
+</root>
 ```
 
 配置文件搜索路径

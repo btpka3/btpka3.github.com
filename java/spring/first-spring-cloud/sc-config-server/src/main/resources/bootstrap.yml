@@ -6,9 +6,10 @@ spring:
 
 encrypt:
   failOnError: false
-  keyStore:
-    location: classpath:keystore.jks
-    password: ${KEYSTORE_PASSWORD:foobar} # don't use a default in production
-    alias: test
+  key: aaa    # 对称加密
+#  keyStore:  # 非对称加密
+#    location: classpath:keystore.jks
+#    password: ${KEYSTORE_PASSWORD:foobar} # don't use a default in production
+#    alias: test
 
 #spring.cloud.config.uri: http://myconfigserver.com
