@@ -1,0 +1,49 @@
+server.port: 8888
+
+management:
+  context-path: /admin
+
+logging:
+  level:
+    com.netflix.discovery:        'OFF'
+    org.springframework.cloud:    'DEBUG'
+
+#eureka:
+#  instance:
+#    leaseRenewalIntervalInSeconds: 10
+#    statusPageUrlPath: /admin/info
+#    healthCheckUrlPath: /admin/health
+
+# ConfigServerProperties
+spring.cloud.config.server:
+  prefix: "/cfg"
+
+# MultipleJGitEnvironmentRepository
+spring.cloud.config.server.git:
+  # 可以使用占位符 {application}，{profile}，{label}
+  uri: git@github.com:btpka3/btpka3.github.com.git
+  cloneOnStart: false
+  forcePull: false
+  repos:
+    sc-config-client:
+      uri: git@github.com:btpka3/btpka3.github.com.git
+      basedir: ${user.home}/btpka3.github.com
+      searchPaths:
+        - /java/spring/first-spring-cloud/sc-config-git-repo
+        - /java/spring/first-spring-cloud/sc-config-git-repo/aaa/{application}
+      #username: trolley
+      #password: strongpassword
+      #force-pull
+
+---
+spring:
+  profiles: cloud
+
+#eureka:
+#  password: password
+#  instance:
+#    hostname: ${vcap.application.uris[0]}
+#    nonSecurePort: 80
+#  client:
+#    serviceUrl:
+#      defaultZone: ${vcap.services.${PREFIX:}eureka.credentials.uri:http://user:${eureka.password:}@${PREFIX:}eureka.${application.domain:cfapps.io}}/eureka/

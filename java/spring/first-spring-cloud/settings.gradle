@@ -1,3 +1,4 @@
 rootProject.name = 'first-spring-cloud'
 
-include "first-spring-cloud-config"
+include "sc-config-server"
+include "sc-config-client"
