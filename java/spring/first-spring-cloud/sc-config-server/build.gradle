@@ -30,7 +30,11 @@ dependencies {
     // spring cloud
     compile('org.springframework.cloud:spring-cloud-starter-config')
     compile('org.springframework.cloud:spring-cloud-config-server')
-//    compile('org.springframework.cloud:spring-cloud-config-monitor')
+    compile('org.springframework.cloud:spring-cloud-config-monitor')
+//    compile('org.springframework.cloud:spring-cloud-stream-binder-rabbit')
+    compile('org.springframework.cloud:spring-cloud-starter-stream-rabbit')
+
+    //compile('org.springframework.cloud:spring-cloud-starter-consul')
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
 //

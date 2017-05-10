@@ -44,6 +44,9 @@ EncryptorFactory
 EncryptionAutoConfiguration
 EncryptionBootstrapConfiguration
 * KeyProperties                     : encrypt
+
+EnvironmentMonitorAutoConfiguration
+
 ```
 
 # Controller
@@ -119,6 +122,9 @@ curl -v http://localhost:8888/cfg/sc-config-client/default/master/a.xml     # Co
 1. 有 profile 时，profile 最匹配的优先
 1. profile 相同时，name 严格匹配的优先，application 名称的其次。
 
+
+
+## PropertyPathEndpoint
 
 # 配置用git仓库规划
 ## 多个工程公用一个git仓库

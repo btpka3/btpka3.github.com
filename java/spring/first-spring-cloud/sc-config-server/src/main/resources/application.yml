@@ -42,6 +42,12 @@ spring.cloud.config.server:
         profiles: default
 
 
+
+
+#spring.cloud.consul:
+#  host: localhost
+#  port: 8500
+
 ---
 spring:
   profiles: cloud
