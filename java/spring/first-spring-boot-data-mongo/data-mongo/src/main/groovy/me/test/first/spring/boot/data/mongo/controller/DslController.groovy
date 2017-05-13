@@ -1,9 +1,6 @@
 package me.test.first.spring.boot.data.mongo.controller
 
-import com.mongodb.DBRef
-import com.mongodb.DBRefCodec
 import com.querydsl.core.types.dsl.BooleanExpression
-import com.querydsl.core.types.dsl.EntityPathBase
 import com.querydsl.mongodb.AbstractMongodbQuery
 import groovy.transform.CompileStatic
 import me.test.first.spring.boot.data.mongo.domain.Addr
@@ -24,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseBody
 
 import static com.querydsl.core.types.dsl.Expressions.allOf
-import static com.querydsl.core.types.dsl.Expressions.anyOf
 
 /**
  *
@@ -70,6 +66,18 @@ class DslController {
                 QUser.user.name.isNotNull(),
                 QUser.user.age.in([13, 15, 16, 17, 18])
         ), new PageRequest(1, 2, new Sort(new Sort.Order(Sort.Direction.DESC, "age"))))
+    }
+
+
+    @RequestMapping("/count")
+    @ResponseBody
+    Object count() {
+
+        long count = userRepo.count(allOf(QUser.user.age.in([13, 15, 16, 17, 18])))
+
+        return [
+                count: count
+        ]
     }
 
     // https://github.com/querydsl/querydsl/issues/324
@@ -193,8 +201,6 @@ class DslController {
         ))
 
     }
-
-
 
 //    @RequestMapping("/notIn2")
 //    @ResponseBody

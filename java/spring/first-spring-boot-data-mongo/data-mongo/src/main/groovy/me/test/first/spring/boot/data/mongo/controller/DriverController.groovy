@@ -56,6 +56,7 @@ class DriverController {
         return docs
     }
 
+    // 创建文档
     @RequestMapping("/gridFs_C")
     @ResponseBody
     Object gridFs_C() {
@@ -77,15 +78,13 @@ class DriverController {
         return fileId
     }
 
+    // 读取文档
     @RequestMapping("/gridFs_R")
     @ResponseBody
     Object gridFs_R() {
 
-
         MongoDatabase database = mongoClient.getDatabase("test");
         GridFSBucket gridFSBucket = GridFSBuckets.create(database, "fs");
-
-
 
         GridFSFile gridFSFile = gridFSBucket.find(eq("metadata.contentType", "image/png"))
                 .first();

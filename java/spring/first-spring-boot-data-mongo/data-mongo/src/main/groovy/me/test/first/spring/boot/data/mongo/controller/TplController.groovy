@@ -6,6 +6,8 @@ import me.test.first.spring.boot.data.mongo.domain.User
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Sort
 import org.springframework.data.mongodb.core.MongoTemplate
+import org.springframework.data.mongodb.core.aggregation.Aggregation
+import org.springframework.data.mongodb.core.aggregation.AggregationResults
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.Query
 import org.springframework.stereotype.Controller
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.ResponseBody
 
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.*
 import static org.springframework.data.mongodb.core.query.Criteria.where
 import static org.springframework.data.mongodb.core.query.Query.query
 
@@ -25,7 +28,6 @@ class TplController {
 
     @Autowired
     MongoTemplate mongoTemplate
-
 
     @RequestMapping("/add")
     @ResponseBody
@@ -80,4 +82,38 @@ class TplController {
         mongoTemplate.save(user)
         return user
     }
+
+
+    @RequestMapping(path = "/project1", method = [RequestMethod.GET])
+    @ResponseBody
+    Object project1() {
+
+        Criteria criteria = where("age").gt(13)
+
+        Aggregation agg = newAggregation(
+                match(criteria),
+                project("name")
+        )
+
+        AggregationResults<Map> results = mongoTemplate.aggregate(
+                agg,
+                "user",
+                Map.class);
+        return results.getMappedResults()*.name
+    }
+
+    @RequestMapping(path = "/mapReduce1", method = [RequestMethod.GET])
+    @ResponseBody
+    Object mapReduce1() {
+        Criteria criteria = where("name").exists(true)
+
+        Aggregation agg = newAggregation(
+                match(criteria),
+                project("name")
+        )
+        mongoTemplate.mapReduce()
+        AggregationResults<String> results = mongoTemplate.aggregate(agg, "collectionName", String.class);
+        return results.getMappedResults()
+    }
+
 }

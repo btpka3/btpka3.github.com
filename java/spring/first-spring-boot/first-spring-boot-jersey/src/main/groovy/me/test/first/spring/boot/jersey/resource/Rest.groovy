@@ -1,9 +1,6 @@
 package me.test.first.spring.boot.jersey.controller
 
-import io.swagger.annotations.Api
-import io.swagger.annotations.ApiOperation
-import io.swagger.annotations.ApiResponse
-import io.swagger.annotations.ApiResponses
+import io.swagger.annotations.*
 import org.springframework.stereotype.Component
 
 import javax.ws.rs.GET
@@ -50,7 +47,13 @@ class Rest {
 
 }
 
+@ApiModel
 class RestGetResp {
+
+    @ApiModelProperty(
+            value = "名称",
+            allowableValues = "ONE,TWO,THREE"
+    )
     String a
     String b
     String c
