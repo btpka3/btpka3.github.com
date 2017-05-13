@@ -17,7 +17,7 @@ class SwaggerConf {
         config.setVersion("1.0.0");
         config.setBasePath("/api");
         config.setSchemes(["https"] as String[]);
-        config.setResourcePackage("me.test.first.spring.boot.jersey.controller")
+        config.setResourcePackage("me.test.first.spring.boot.jersey.resource")
         config.setScan(true)
         return config;
     }

@@ -1,4 +1,4 @@
-package me.test.first.spring.boot.jersey.controller
+package me.test.first.spring.boot.jersey.resource
 
 import io.swagger.annotations.*
 import org.springframework.stereotype.Component
@@ -9,13 +9,14 @@ import javax.ws.rs.Produces
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 
+@javax.inject.Singleton
 @Component
 @Path("/rest")
 @Api(value = "/rest", description = "Jax-RS测试", tags = ["rest"])
 class Rest {
 
     Rest() {
-        println "================= new Rest() : @ " + new Date()
+        println "================= new ${this.class.name}() : @ " + new Date()
     }
 
     @GET
@@ -46,16 +47,3 @@ class Rest {
 
 
 }
-
-@ApiModel
-class RestGetResp {
-
-    @ApiModelProperty(
-            value = "名称",
-            allowableValues = "ONE,TWO,THREE"
-    )
-    String a
-    String b
-    String c
-}
-

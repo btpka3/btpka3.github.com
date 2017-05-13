@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseBody
 
 @Controller
-class MyTestController {
+class HomeController {
 
     /** 测试最基本情形 */
     @RequestMapping("/")

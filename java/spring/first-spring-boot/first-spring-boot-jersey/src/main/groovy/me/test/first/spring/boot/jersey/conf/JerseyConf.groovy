@@ -1,7 +1,8 @@
 package me.test.first.spring.boot.jersey.conf
 
 import io.swagger.jaxrs.config.BeanConfig
-import me.test.first.spring.boot.jersey.controller.Rest
+import me.test.first.spring.boot.jersey.resource.Rest
+import org.glassfish.jersey.media.multipart.MultiPartFeature
 import org.glassfish.jersey.server.ResourceConfig
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -22,8 +23,6 @@ class JerseyConf {
 
         println "---------------999999999999999"
 
-        // TODO 根据文档，需要手动一一将RESTful controller 添加至此。
-        // http://docs.spring.io/spring-boot/docs/1.5.1.RELEASE/reference/htmlsingle/#boot-features-jersey
 
         ResourceConfig resourceConfig = new ResourceConfig()
 
@@ -43,10 +42,14 @@ class JerseyConf {
             }
         })
 
-
+        resourceConfig.register(MultiPartFeature)
         resourceConfig.register(io.swagger.jaxrs.listing.ApiListingResource)
-        resourceConfig.register(me.test.first.spring.boot.jersey.controller.Rest)
-        //resourceConfig.register(rest)
+
+        // TODO 根据文档，需要手动一一将RESTful controller 添加至此。
+        // http://docs.spring.io/spring-boot/docs/1.5.1.RELEASE/reference/htmlsingle/#boot-features-jersey
+        resourceConfig.packages("me.test.first.spring.boot.jersey.resource")
+        //resourceConfig.register(Rest)
+        //resourceConfig.register(UserResource)
 
     }
 

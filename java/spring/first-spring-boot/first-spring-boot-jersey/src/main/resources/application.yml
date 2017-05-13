@@ -11,6 +11,7 @@ server.error.include-stacktrace: on_trace_param
 security.basic.enabled: false
 security.user.password: 123456
 
+logging.level.me.test.first.spring.boot.jersey: DEBUG
 logging.level.org.springframework.web: INFO
 logging.level.org.springframework.security: INFO
 logging.level.org.springframework.boot.actuate.audit.listener.AuditListener: DEBUG
