@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.RestController
 
 /**
- * Created by zll on 09/05/2017.
+ *
  */
 @RestController()
 @RequestMapping("/test")

@@ -1,0 +1,41 @@
+server.port: 9091
+# 错误处理相关
+server.error.include-stacktrace: on_trace_param
+#server.error.path: /error
+
+# template 相关
+#spring.thymeleaf.prefix: classpath:/templates/
+
+security.basic.enabled: false
+security.user.password: 123456
+
+logging.level.org.springframework.web: INFO
+logging.level.org.springframework.security: INFO
+logging.level.org.springframework.boot.actuate.audit.listener.AuditListener: DEBUG
+logging.level.org.springframework.boot.web.support.ErrorPageFilter: DEBUG
+logging.level.org.springframework.web.servlet.view.ContentNegotiatingViewResolver: DEBUG
+logging.level.org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping: DEBUG
+# 用来追踪 restTemplate 请求
+logging.level.org.apache.http: DEBUG
+
+
+#spring.cloud.service-registry.auto-registration.enabled: false
+
+eureka:
+  datacenter: me
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      #defaultZone: 'http://${eureka.instance.hostname}:${server.port}/eureka/'
+      defaultZone: 'http://localhost:8080/eureka/'
+    healthcheck: true
+
+  instance:
+    leaseRenewalIntervalInSeconds: 5
+    leaseExpirationDurationInSeconds: 15
+  #  statusPageUrlPath: ${management.context-path}/info
+  #  healthCheckUrlPath: ${management.context-path}/health
+  #  securePortEnabled: false
+    hostname: localhost
+

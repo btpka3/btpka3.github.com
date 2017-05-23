@@ -2,3 +2,8 @@ rootProject.name = 'first-spring-cloud'
 
 include "sc-config-server"
 include "sc-config-client"
+include "sc-hystrix"
+include "sc-eureka-server"
+include "sc-eureka-sp"
+include "sc-eureka-sc"
+include "sc-ribbon"

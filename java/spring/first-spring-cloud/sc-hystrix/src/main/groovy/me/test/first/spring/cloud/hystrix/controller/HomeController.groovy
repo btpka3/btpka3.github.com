@@ -1,4 +1,4 @@
-package me.test.first.spring.cloud.config.server.controller
+package me.test.first.spring.cloud.hystrix.controller
 
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.RequestMapping
@@ -10,18 +10,17 @@ import org.springframework.web.bind.annotation.RestController
  *
  */
 @RestController()
-@RequestMapping("/test")
-class TestController {
+@RequestMapping("/")
+class HomeController {
 
-    @RequestMapping(path = "/hi",
+    @RequestMapping(path = "",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    Object hi() {
+    Object index() {
 
         return [
-                a   : "aaa",
-                date: new Date()
+                msg: "Hello worold @ " + new Date()
         ]
     }
 }
