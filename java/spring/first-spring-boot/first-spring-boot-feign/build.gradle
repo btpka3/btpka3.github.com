@@ -1,0 +1,45 @@
+
+//jar {
+//    baseName = 'demo'
+//    version = '0.0.1-SNAPSHOT'
+//}
+
+
+dependencies {
+
+    compile "io.swagger:swagger-core"  // 1.5.12
+//    compile "io.swagger:swagger-jaxrs"
+    compile 'io.swagger:swagger-jersey2-jaxrs'
+    compile('org.springframework.boot:spring-boot-starter-jersey')
+    compile('org.webjars:swagger-ui')
+//    compile "javax.ws.rs:jsr311-api"
+//    compile "javax.ws.rs:javax.ws.rs-api"
+    compile 'org.glassfish.jersey.ext:jersey-spring3'
+
+    compile "io.swagger:swagger-core"  // 1.5.12
+    compile "io.springfox:springfox-swagger2"
+    compile "io.springfox:springfox-data-rest"
+    compile "io.springfox:springfox-staticdocs"
+    compile 'io.springfox:springfox-swagger-ui'
+    compile('org.springframework.boot:spring-boot-starter-jersey')
+    compile 'io.swagger:swagger-jersey2-jaxrs'
+    compile 'org.glassfish.jersey.ext:jersey-spring3'
+    compile 'org.glassfish.jersey.core:jersey-client'
+}
+
+
+
+test {
+    include 'me/test/**'
+    testLogging.showStandardStreams = false
+    // listen to events in the test execution lifecycle
+//    beforeTest { descriptor ->
+//        logger.lifecycle("Running test: " + descriptor)
+//    }
+//
+//    // listen to standard out and standard error of the test JVM(s)
+//    onOutput { descriptor, event ->
+//        logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message )
+//    }
+}
+

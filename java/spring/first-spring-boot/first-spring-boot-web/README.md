@@ -196,3 +196,13 @@ ConditionalConverter
 FIXME: 静态资源 Response 的 http 头： Content-Type 是如何自动设定的？
 
 
+#  配置
+
+```text
+
+logging.*            : LoggingSystemProperties
+
+@ConfigurationProperties
+
+
+```
