@@ -12,6 +12,7 @@ import javax.ws.rs.core.Context
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 
+// application/x-www-form-urlencoded
 @javax.inject.Singleton
 @Component
 @Path("/form")

@@ -1,5 +1,13 @@
 package me.test.first.spring.boot.feign.resource
 
+import feign.Feign
+import feign.Logger
+import feign.httpclient.ApacheHttpClient
+import feign.jackson.JacksonDecoder
+import feign.jackson.JacksonEncoder
+import feign.jaxrs.JAXRSContract
+import feign.slf4j.Slf4jLogger
+import groovy.json.JsonOutput
 import groovy.util.logging.Slf4j
 import io.swagger.annotations.*
 import me.test.first.spring.boot.feign.api.UserApi
@@ -128,8 +136,33 @@ curl -v \
         return str
     }
 
-    void test2(){
-        // TODO Feign
+    // curl -v http://localhost:8080/api/user/test2
+    //
+    @Path("/test2")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    String test2(){
+
+        UserApi userApi = Feign.builder()
+                .contract(new JAXRSContract())
+                .logger(new Slf4jLogger())
+                .logLevel(Logger.Level.FULL)
+                .client(new ApacheHttpClient())
+                .encoder(new JacksonEncoder())
+                .decoder(new JacksonDecoder())
+
+                // 不能使用 UserResource 替代 UserApi, 因为前者还实现了 GroovyObject 接口
+                .target(UserApi.class, "http://localhost:8080/api");
+
+        UserGetResp userGetResp =  userApi.list(
+            33,
+            ["hobby21","hobby22"],
+            "comKingsilk",
+            "aLiang",
+            ["addr21","addr22"]
+        )
+
+        return JsonOutput.toJson(userGetResp)
     }
 }
 

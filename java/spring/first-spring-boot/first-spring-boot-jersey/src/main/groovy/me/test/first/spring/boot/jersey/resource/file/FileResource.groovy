@@ -10,6 +10,9 @@ import javax.ws.rs.*
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 
+
+// multipart/form-data
+// application/octet-stream
 @javax.inject.Singleton
 @Component
 @Path("/file")
