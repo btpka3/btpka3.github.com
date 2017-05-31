@@ -1,0 +1,17 @@
+<h1>
+  {{title}}
+</h1>
+
+
+<ul>
+  <li>myService : {{myService.add(1,2)}}, myServiceResult : {{myServiceResult}}</li>
+  <li>
+    <my-component></my-component>
+  </li>
+  <li>{{myPipeSrc|myPipe:" aa":" bb"}}</li>
+  <li >
+    <span my-directive highlightColor="yellow"> MyDirective - yellow</span>
+    <span my-directive [highlightColor]="'orange'"> MyDirective - orange</span>
+
+    </li>
+</ul>
