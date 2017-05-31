@@ -1,7 +1,8 @@
 
 
 
-[angular.cn](https://angular.cn/)
+* [angular.cn](https://angular.cn/)
+* [GettingStartedWithAngular2](https://github.com/DaveMBush/GettingStartedWithAngular2)
 
 ```
 npm install -g @angular/cli
