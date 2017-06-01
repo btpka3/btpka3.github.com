@@ -10,6 +10,19 @@ import {TestComponentModule} from "./test-component/test-component.module";
 import {TestPipeModule} from "./test-pipe/test-pipe.module";
 import {TestDirectiveModule} from "./test-directive/test-directive.module";
 
+import {AppRoutingModule} from "./app-routing.module";
+import {AaaComponent} from "./test-route/aaa/aaa.component";
+
+import {Routes} from "@angular/router";
+
+const routes: Routes = [
+  {path: '', redirectTo: '/aaa', pathMatch: 'full'},
+  {path: 'aaa', component: AaaComponent},
+  //{path: 'aaa', loadChildren: './test-route/aaa/aaa.module#AaaModule'},
+  //{path: 'bbb', loadChildren: './test-route/bbb/bbb.module#BbbModule'}
+];
+
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -19,10 +32,16 @@ import {TestDirectiveModule} from "./test-directive/test-directive.module";
     TestServiceModule,
     TestComponentModule,
     TestPipeModule,
-    TestDirectiveModule
+    TestDirectiveModule,
+
+    // RouterModule,
+    AppRoutingModule
+
+    // RouterModule.forRoot(routes)
   ],
   declarations: [
-    AppComponent
+    AppComponent,
+    AaaComponent  // router 默认显示的组件
   ],
   providers: [],
   bootstrap: [AppComponent]

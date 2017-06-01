@@ -9,9 +9,17 @@
     <my-component></my-component>
   </li>
   <li>{{myPipeSrc|myPipe:" aa":" bb"}}</li>
-  <li >
+  <li>
     <span my-directive highlightColor="yellow"> MyDirective - yellow</span>
     <span my-directive [highlightColor]="'orange'"> MyDirective - orange</span>
-
-    </li>
+  </li>
+  <li>
+    <a routerLink="aaa" routerLinkActive="active">aaa</a>
+    <a routerLink="bbb" routerLinkActive="active">bbb</a>
+    <a routerLink="ccc" routerLinkActive="active">ccc</a>
+  </li>
 </ul>
+
+<div style="border:1px solid red;">
+  <router-outlet></router-outlet>
+</div>
