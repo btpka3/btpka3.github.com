@@ -5,7 +5,17 @@ server.error.include-stacktrace: on_trace_param
 
 logging.level.org.springframework.context.support: DEBUG
 logging.level.org.springframework.amqp.rabbit.connection: DEBUG
-logging.level.org.springframework.amqp.rabbit.listener: DEBUG
+logging.level.org.springframework.amqp.rabbit.listener: INFO
+logging.level.org.springframework.web: INFO
+logging.level.org.springframework.security: INFO
+logging.level.org.springframework.boot.actuate.audit.listener.AuditListener: DEBUG
+logging.level.org.springframework.boot.web.support.ErrorPageFilter: DEBUG
+logging.level.org.springframework.web.servlet.view.ContentNegotiatingViewResolver: DEBUG
+logging.level.org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping: DEBUG
+# 用来追踪 restTemplate 请求
+logging.level.org.apache.http: DEBUG
+logging.level.me.test: DEBUG
+
 
 spring.devtools.restart.exclude: static/**,public/**
 

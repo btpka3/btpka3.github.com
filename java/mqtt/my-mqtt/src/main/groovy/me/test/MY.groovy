@@ -27,8 +27,7 @@ public class MY {
     static final String AMQP_QUEUE_NAME = ""
 
     // -----------
-    static
-    final String TLS_ROOT_PATH = "/Users/zll/work/git-repo/github/btpka3/btpka3.github.com/java/mqtt/my-mqtt/src/main/resources"
+    static final String TLS_ROOT_PATH = "/Users/zll/work/git-repo/github/btpka3/btpka3.github.com/java/mqtt/my-mqtt/src/main/resources"
 
     static final String TLS_CA_STORE_PATH = TLS_ROOT_PATH + "/myca.jks";
     static final String TLS_CA_STORE_TYPE = "JKS"; // "PKCS12"
