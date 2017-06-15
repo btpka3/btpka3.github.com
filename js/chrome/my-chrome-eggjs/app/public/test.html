@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <style>
+        body {
+            font-size: 14px;
+            margin:0;
+        }
+
+        ul.list {
+            padding: 0;
+            border: 1px solid red;
+        }
+
+        ul.list li {
+            display: flex;
+        }
+
+        ul.list li span.font {
+            flex: 1
+        }
+
+        ul.list li span.str {
+            flex: 2
+        }
+    </style>
+
+    <script>
+
+        var str = "oO01lLiIabcxyz,.;中华人民共和国，。、；";
+        var fonts = [
+            // name-EN, name-ZH, css class
+
+            ["Arial" ],
+
+            // Web
+            [["Roboto", 'Helvetica Neue', "sans-serif"],
+                "web : ng-material", "f-md"],
+
+            [["Menlo", "Monaco", "Andale Mono", "lucida console", "Courier New", "monospace"],
+                "web : ng-material-highlight", "f-md-heighlight"],
+
+
+            [["-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif"],
+                "web : bootstrap-sans-serif", "f-twbs-sans-serif"],
+
+            [["Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", "monospace"],
+                "web : bootstrap-mono", "f-twbs-mono"],
+
+            [["Tahoma", "Helvetica", "Arial", "SimSun", "sans-serif"],
+                "web : taobao UED", "f-taobao-ued"],
+
+            [["Tahoma", "Helvetica", 'Hiragino Sans GB','Microsoft Yahei', "Arial", "sans-serif"],
+                "web : taobao UX", "f-taobao-ux"],
+
+            [["Helvetica Neue", "Helvetica Neue","Helvetica", "Arial","Microsoft Yahei","Hiragino Sans GB","Heiti SC","WenQuanYi Micro Hei", "sans-serif"],
+                "web : xiaomi mall", "f-xiaomi-mall"],
+
+            // Mac OS
+            ["STXihei",                 "华文细黑"],    // OK 华文细黑.ttf == STHeiti-Light.ttf
+            ["Hiragino Sans GB",        "冬青黑体"],  // OK
+            ["STHeiti",                 "华文黑体"],  // OK
+            ["STKaiti",                 "华文楷体"],  // OK
+            ["STSong",                  "华文宋体"],    // OK STSong-Regular.ttf
+            ["STFangsong",              "华文仿宋"],  // OK
+            ["LiHei Pro Medium",        "丽黑 Pro"], // OK
+            ["LiSong Pro Light",        "丽宋 Pro"],   // OK
+            ["BiauKai",                 "标楷体"],     // OK
+            ["Apple LiGothic Medium",   "苹果丽中黑"], // OK
+            ["Apple LiSung Light",      "苹果丽中黑"], // OK
+
+            // Windows
+            ["PMingLiU",                "新细明体"  ],
+            ["MingLiU",                 "细明体"  ],
+            ["DFKai-SB",                "标楷体"  ],
+            ["SimHei",                  "黑体"  ],
+            ["SimSun",                  "宋体"  ],
+            ["NSimSun",                 "新宋体" ],
+            ["FangSong",                "仿宋" ],
+            ["KaiTi",                   "楷体" ],
+            ["FangSong_GB2312",         "仿宋_GB2312" ],
+            ["KaiTi_GB2312",            "楷体_GB2312" ],
+            ["Microsoft JhengHei",      "微软正黑体"],
+            ["Microsoft YaHei",         "微软雅黑"],
+
+            // Windows - Office
+            ["LiSu",                    "隶书"],
+            ["YouYuan",                 "幼圆"],
+            ["STZhongsong",             "华文中宋"],
+            ["FZShuTi",                 "方正舒体"],
+            ["FZYaoti",                 "方正姚体"],
+            ["STCaiyun",                "华文彩云"],
+            ["STHupo",                  "华文琥珀"],
+            ["STLiti",                  "华文隶书"],
+            ["STXingkai",               "华文行楷"],
+            ["STXinwei",                "华文新魏"],
+
+
+
+            // Linux
+            ["Ubuntu"],
+
+            // Android
+            ["Roboto"],                                 // 英文
+            ["Noto SansCJK",            "思源黑体"],     // 中文
+            ["DroidSans"],                              // 英文
+            ["DroidSansFallback"],                      // 中文
+
+            // iOS
+            ["Helvetica Neue"],
+            ["San Francisco",           "苹方"], // 英文
+            ["PingFang SC",             "苹方"], // 中文
+            ["PingFang TC" ],
+            ["PingFang HK" ],
+            ["Heiti SC",                "黑体-简"],
+            ["Heiti TC" ]
+        ];
+    </script>
+
+
+    <script>
+        // 500x1200
+
+        document.write("<style>");
+
+
+        fonts.forEach(function(f,i){
+            var fontClass = f[2];
+            if (!fontClass) {
+                f[2] = fontClass = "f-" + f[0].replace(/ /g, "-")
+            }
+
+            document.write("." + fontClass + " {");
+
+            document.write("font-family:");
+            if (Array.isArray(f[0])) {
+
+                f[0].forEach(function (name, nameIdx) {
+                    document.write('"' + name + '"');
+                    if (nameIdx < f[0].length-1) {
+                        document.write(',');
+                    }
+                });
+            } else {
+                document.write('"' + f[0] + '"');
+            }
+            document.write(";");
+
+            document.write("}");
+        });
+
+        document.write("</style>")
+    </script>
+
+</head>
+<body>
+
+<div>
+    <div>测试目标屏幕css像素：500px * 1200px </div>
+    <div>屏幕css像素宽度 : <script>document.write(screen.width);</script></div>
+    <div>屏幕css像素高度 : <script>document.write(screen.height);</script></div>
+    <div>devicePixelRatio : <script>document.write(devicePixelRatio);</script></div>
+    <div>屏幕物理像素宽度 : <script>document.write(screen.width * devicePixelRatio);</script></div>
+    <div>屏幕物理像素高度 : <script>document.write(screen.height * devicePixelRatio);</script></div>
+</div>
+
+<ul class="list">
+    <li style="width:100px; background-color: aquamarine">100px</li>
+    <li style="width:200px; background-color: darksalmon">200px</li>
+    <li style="width:300px; background-color: cornflowerblue">300px</li>
+
+<script>
+    fonts.forEach(function(f,i){
+        document.write("<li>");
+        document.write('<span class="font">' + (f[1] ? f[1] : f[0]) + '</span>');
+        document.write('<span class="str '+f[2]+'">' + str +'</span>');
+        document.write("</li>");
+    });
+</script>
+</ul>
+
+<div style="background-color: beige;">
+    <div style="font-size:8px;">8px - abcdefg中国</div>
+    <div style="font-size:9px;">9px - abcdefg中国</div>
+    <div style="font-size:10px;">10px - abcdefg中国</div>
+    <div style="font-size:11px;">11px - abcdefg中国</div>
+    <div style="font-size:12px;">12px - abcdefg中国</div>
+    <div style="font-size:13px;">13px - abcdefg中国</div>
+    <div style="font-size:14px;">14px - abcdefg中国</div>
+    <div style="font-size:15px;">15px - abcdefg中国</div>
+    <div style="font-size:16px;">16px - abcdefg中国</div>
+    <div style="font-size:17px;">17px - abcdefg中国</div>
+    <div style="font-size:18px;">18px - abcdefg中国</div>
+</div>
+<div><img src="test.png" style="width: 100%;"/></div>
+</body>
+</html>
