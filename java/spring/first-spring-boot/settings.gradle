@@ -1,5 +1,6 @@
 rootProject.name = 'first-spring-boot'
 
+include 'first-spring-boot-data-elasticsearch'
 include 'first-spring-boot-data-geode'
 //include 'first-spring-boot-data-mongo'
 include 'first-spring-boot-database'

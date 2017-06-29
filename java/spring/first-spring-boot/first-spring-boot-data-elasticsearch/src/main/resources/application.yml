@@ -27,3 +27,12 @@ spring.devtools.restart.exclude: static/**,public/**,templates/**,resources/**
 spring.jackson.joda-date-time-format: yyyy-MM-dd'T'HH:mm:ss.SSSZ
 spring.jackson.default-property-inclusion: non_null
 
+# ElasticsearchProperties
+spring.data.elasticsearch:
+  cluster-name: my-es
+  cluster-nodes: localhost:9300
+  properties:
+    a: aa
+  repositories:
+    enabled:  true
+

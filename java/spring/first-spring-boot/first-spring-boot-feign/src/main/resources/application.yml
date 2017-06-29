@@ -42,4 +42,7 @@ spring.jersey:
     #  io.swagger.jaxrs.listing.SwaggerSerializers,
     #  {your.application.classes}
 
+# JacksonProperties
+spring.jackson.joda-date-time-format: yyyy-MM-dd'T'HH:mm:ss.SSSZ
 spring.jackson.default-property-inclusion: non_null
+
