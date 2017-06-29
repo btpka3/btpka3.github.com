@@ -40,3 +40,15 @@ spring.data.mongodb:
 #  - ../data-domain/build/libs/
 
 
+
+# RepositoryRestConfiguration
+spring.data.rest.basePath: /api
+
+
+# JacksonProperties
+spring.jackson.serialization.write_dates_as_timestamps: false
+spring.jackson.serialization.WRITE_DATES_AS_TIMESTAMPS: false
+spring.jackson.date-format: yyyy-MM-dd'T'HH:mm:ss.SSSZ
+spring.jackson.joda-date-time-format: yyyy-MM-dd'T'HH:mm:ss.SSSZ
+spring.jackson.default-property-inclusion: non_null
+

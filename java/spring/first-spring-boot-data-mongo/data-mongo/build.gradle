@@ -27,6 +27,9 @@ dependencies {
     compile("org.springframework.boot:spring-boot-devtools")
     compile('com.fasterxml.jackson.dataformat:jackson-dataformat-xml')
     compile('org.apache.httpcomponents:httpclient')
+    compile("org.springframework.boot:spring-boot-starter-hateoas")
+    compile("org.springframework.boot:spring-boot-starter-data-rest")
+    compile("com.fasterxml.jackson.datatype:jackson-datatype-joda")
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
 

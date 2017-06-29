@@ -70,3 +70,41 @@ http://localhost:8080/tplAdd1
 1. SpringDataMongodbSerializer、GroovyBeanSerializer、MongodbSerializer
 
 1. spring-data-mongo [Query methods](http://docs.spring.io/spring-data/data-mongo/docs/1.10.1.RELEASE/reference/html/#mongodb.repositories.queries)
+1. [spring-data-rest](http://docs.spring.io/spring-data/rest/docs/2.6.4.RELEASE/reference/html/#getting-started.configuration)
+
+# spring data rest
+
+```text
+RepositoryRestMvcAutoConfiguration
+RepositoryRestConfiguration
+RepositoryRestProperties
+RepositoryRestConfigurer  // 自定义 
+
+@EnableAutoConfiguration
+RepositoryRestMvcConfiguration
+EnableAutoConfigurationImportSelector
+@RepositoryRestResource  // 用在 自定义的 XxxRepository 类上
+@RestResource
+
+curl -v http://localhost:8080/api/
+
+{
+  "_links" : {
+    "addrs" : {
+      "href" : "http://localhost:8080/api/addrs{?page,size,sort}",
+      "templated" : true
+    },
+    "users" : {
+      "href" : "http://localhost:8080/api/users{?page,size,sort}",
+      "templated" : true
+    },
+    "profile" : {
+      "href" : "http://localhost:8080/api/profile"
+    }
+  }
+
+curl -v http://localhost:8080/api/users
+
+```
+
+
