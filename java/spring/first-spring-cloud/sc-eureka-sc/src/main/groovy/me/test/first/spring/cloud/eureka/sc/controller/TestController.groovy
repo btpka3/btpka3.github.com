@@ -19,7 +19,7 @@ class TestController {
     @Autowired
     private DiscoveryClient discoveryClient
 
-    @RequestMapping(path = "/hi",
+    @RequestMapping(path = "",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody

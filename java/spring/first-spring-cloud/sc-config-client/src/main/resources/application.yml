@@ -1,4 +1,4 @@
-server.port: 8888
+server.port: 10020
 
 management:
   context-path: /admin

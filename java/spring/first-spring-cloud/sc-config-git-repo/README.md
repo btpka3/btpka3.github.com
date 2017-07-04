@@ -54,13 +54,13 @@ EnvironmentMonitorAutoConfiguration
 
 ```bash
 # 加密
-curl http://localhost:8888/cfg/encrypt -d 123456
+curl http://localhost:10010/cfg/encrypt -d 123456
 13763946e638caeacec62529d13ea4a9c8dad0f996795e5e88448ff9a124250c
-curl http://localhost:8888/cfg/encrypt -d 123456
+curl http://localhost:10010/cfg/encrypt -d 123456
 e1599a7106caf7dc6abcf35a8158db934b0bb7156dd73a11a1a9d1dd642f9a06
 
 # 解密
-curl http://localhost:8888/cfg/decrypt -d e1599a7106caf7dc6abcf35a8158db934b0bb7156dd73a11a1a9d1dd642f9a06
+curl http://localhost:10010/cfg/decrypt -d e1599a7106caf7dc6abcf35a8158db934b0bb7156dd73a11a1a9d1dd642f9a06
 123456
 ```
 
@@ -69,7 +69,7 @@ curl http://localhost:8888/cfg/decrypt -d e1599a7106caf7dc6abcf35a8158db934b0bb7
 ```bash
 
 # 查看给定的 name， profile 下，启用了哪些文件
-curl http://localhost:8888/cfg/sc-config-client/default,test
+curl http://localhost:10010/cfg/sc-config-client/default,test
 # 返回JSON 内容指明启用了以下文件
 /aaa/sc-config-client/sc-config-client-test.yml
 /aaa/sc-config-client/application-test.yml
@@ -81,7 +81,7 @@ curl http://localhost:8888/cfg/sc-config-client/default,test
 /application.yml
 
 # 查看合并后的内容
-curl http://localhost:8888/cfg/sc-config-client-default,test.yml
+curl http://localhost:10010/cfg/sc-config-client-default,test.yml
 # 返回结果如下
 password: '123456'
 path:
@@ -99,12 +99,12 @@ path:
     通过 URL "/{spring.cloud.config.server.prefix}/{name}/{profile}/{label}/" 可以获取指定的资源。
 
 ```text
-curl -v http://localhost:8888/cfg/sc-config-client/default/master/a.json    # Content-Type: text/plain;charset=UTF-8
+curl -v http://localhost:10010/cfg/sc-config-client/default/master/a.json    # Content-Type: text/plain;charset=UTF-8
 {
   "youPwd": "123456"
 }
 
-curl -v http://localhost:8888/cfg/sc-config-client/default/master/a.xml     # Content-Type: text/plain;charset=UTF-8
+curl -v http://localhost:10010/cfg/sc-config-client/default/master/a.xml     # Content-Type: text/plain;charset=UTF-8
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
     <yourPwd>123456</yourPwd>

@@ -58,4 +58,10 @@ class RestTemplateConf {
     RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder) {
         return restTemplateBuilder.build()
     }
+
+    @Bean
+    RestTemplate noLbRestTemplate(RestTemplateBuilder restTemplateBuilder) {
+        return restTemplateBuilder.build()
+    }
+
 }

@@ -1,5 +1,5 @@
 path:
   "/application" : true
 
-# curl http://localhost:8888/cfg/encrypt -d 123456
+# curl http://localhost:10010/cfg/encrypt -d 123456
 password: '{cipher}dec9c647af5d5c5d17e8d33ed27e568b8c6f789822d5b231304997136d14e3d9'

@@ -92,3 +92,15 @@ curl -v -X PUT http://localhost:8080/eureka/apps/SC-EUREKA-SP/192.168.0.41:sc-eu
 
 curl -v http://localhost:8080/eureka/vips/????
 ```
+
+# 运行步骤
+
+```bash
+# 1. 启动 sc-eureka-server
+# 2. 启动 sc-eureka-sp （默认使用配置文件中的端口: 9090）
+# 3. 再启动一个 sc-eureka-sp，追加 JVM 参数 "-Dserver.port=9091"
+# 4. 浏览器访问：http://localhost:8080/ ，可以看到 sc-eureka-sp 启动了两个(9090,9091)。
+# 5. 启动 sc-eureka-sc，并浏览器访问 http://localhost:10000/sc/sum
+#    可以发现使用的 RestTemplate 默认已经在客户端轮训调用 9090, 9091 的服务器
+#    即，如果此次请求返回 JSON 中的 node = 9090, 则下一次访问返回的是 9091
+```

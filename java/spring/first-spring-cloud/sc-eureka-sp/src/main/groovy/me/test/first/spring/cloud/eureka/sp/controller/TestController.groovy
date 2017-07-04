@@ -1,15 +1,10 @@
 package me.test.first.spring.cloud.eureka.sp.controller
 
-import com.netflix.appinfo.InstanceInfo
-import com.netflix.discovery.EurekaClient
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cloud.client.ServiceInstance
 import org.springframework.cloud.client.discovery.DiscoveryClient
 import org.springframework.http.MediaType
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.ResponseBody
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 /**
  *
@@ -21,14 +16,14 @@ class TestController {
     @Autowired
     private DiscoveryClient discoveryClient
 
-    @RequestMapping(path = "/hi",
+    @RequestMapping(path = "",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     Object hi() {
 
         return [
-                a   : "aaa",
+                url : "/test/",
                 date: new Date()
         ]
     }
@@ -38,7 +33,6 @@ class TestController {
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     Object test01() {
-
 
 
         List<String> serviceIds = discoveryClient.getServices();
@@ -65,7 +59,6 @@ class TestController {
 
         return list
     }
-
 
 
     @RequestMapping(path = "/test02",

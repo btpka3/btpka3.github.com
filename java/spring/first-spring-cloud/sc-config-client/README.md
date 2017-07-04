@@ -21,7 +21,7 @@ git commit -m "Add application.properties"
 gradle -DmainClass=me.test.first.spring.cloud.config.DemoConfigServer bootRun
 
 
-curl localhost:8888/foo/development
+curl localhost:10010/foo/development
 ```
  
  
