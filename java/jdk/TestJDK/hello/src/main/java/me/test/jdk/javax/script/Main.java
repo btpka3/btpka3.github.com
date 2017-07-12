@@ -37,6 +37,10 @@ public class Main {
         m.put("c", 10);
         engine.put("m", m);
 
+        Map u = new HashMap();
+        u.put("r", "rrr");
+        engine.put("RSAUtils", u);
+
         engine.eval("var x= max_num(a,m.get('c'));");
         System.out.println("max_num:" + engine.get("x"));
     }
