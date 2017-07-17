@@ -38,7 +38,12 @@ curl -v \
 
 {"age":31,"hobbies":["hobby1","hobby2"]}
  */
-
+/**
+ * TODO 这里写概要设计。
+ * @param request
+ * @param req
+ * @return
+ */
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)

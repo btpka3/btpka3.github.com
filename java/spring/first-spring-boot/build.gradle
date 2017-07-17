@@ -52,9 +52,9 @@ allprojects {
 //            dependency('org.glassfish.jersey.media:jersey-media-multipart:2.25.1')
 //            dependency('org.glassfish.jersey.core:jersey-client:2.25.1')
 
-            dependency('io.swagger:swagger-core:1.5.10')                 // 1.5.12
-            dependency('io.swagger:swagger-jaxrs:1.5.12')
-            dependency('io.swagger:swagger-jersey2-jaxrs:1.5.12')
+            dependency('io.swagger:swagger-core:1.5.16')                 // 1.5.12,1.5.10
+            dependency('io.swagger:swagger-jaxrs:1.5.16')
+            dependency('io.swagger:swagger-jersey2-jaxrs:1.5.16')
             dependency('io.springfox:springfox-swagger2:2.6.1')
             dependency('io.springfox:springfox-data-rest:2.6.1')
             dependency('io.springfox:springfox-staticdocs:2.6.1')
