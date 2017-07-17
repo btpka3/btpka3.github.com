@@ -1,0 +1,120 @@
+buildscript {
+    ext {
+        //springBootVersion = '1.5.2.RELEASE'
+    }
+    repositories {
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("io.spring.gradle:dependency-management-plugin:1.0.0.RELEASE")
+        classpath("gradle.plugin.com.gorylenko.gradle-git-properties:gradle-git-properties:1.4.17")
+        classpath('ch.raffael.markdown-doclet:markdown-doclet:1.4')
+    }
+}
+
+
+
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+//    apply plugin: 'org.springframework.boot'
+apply plugin: "io.spring.dependency-management"
+//apply plugin: 'application'
+apply plugin: 'java'
+apply plugin: 'maven'
+//    apply plugin: "com.gorylenko.gradle-git-properties"
+apply plugin: 'project-report'
+
+apply plugin: 'org.springframework.boot'
+apply plugin: 'ch.raffael.markdown-doclet'
+
+
+repositories {
+    maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+    mavenCentral()
+}
+
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+    compile("org.springframework.boot:spring-boot-devtools")
+    compile('com.fasterxml.jackson.dataformat:jackson-dataformat-xml')
+    compile('org.apache.httpcomponents:httpclient')
+    compile('com.google.code.findbugs:jsr305')
+    compile('commons-io:commons-io')
+
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+
+dependencyManagement {
+    dependencies {
+//            dependency('org.apache.httpcomponents:httpclient:4.5.3')
+        dependency('com.google.code.findbugs:jsr305:3.0.1')
+        dependency('commons-io:commons-io:2.5')
+
+    }
+}
+
+
+
+idea {
+    module {
+        downloadJavadoc = false
+        downloadSources = true
+    }
+}
+eclipse {
+    classpath {
+        downloadSources = true
+    }
+}
+javadoc {
+    options {
+        encoding "UTF-8"
+        charSet 'UTF-8'
+        author true
+        version true
+        links "http://docs.oracle.com/javase/8/docs/api"
+        links "http://docs.spring.io/spring/docs/4.3.7.RELEASE/javadoc-api/"
+        links "http://fasterxml.github.io/jackson-databind/javadoc/2.8/"
+    }
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    //archives javadocJar
+}
+
+
+
+
+bootRun {
+    addResources = true
+    systemProperties = System.properties
+}
+
+springBoot {
+    //mainClass = System.properties['mainClass']
+    buildInfo {
+        additionalProperties = [
+                'foo': 'bar'
+        ]
+    }
+}
+
+jar {
+    manifest {
+        attributes "Implementation-Version": project.version
+    }
+}
