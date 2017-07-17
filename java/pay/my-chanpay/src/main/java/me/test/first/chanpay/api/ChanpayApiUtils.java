@@ -35,7 +35,7 @@ public class ChanpayApiUtils {
                 // 排除值为空的参数
                 .filter(entry -> !StringUtils.isEmpty(entry.getValue()))
 
-                // 变为字符串List
+                // 变为字符串List<String>
                 .map(entry -> entry.getKey() + "=" + entry.getValue())
 //                .map(entry -> {
 ////                    try {

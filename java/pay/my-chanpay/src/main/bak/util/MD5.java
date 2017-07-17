@@ -1,22 +1,24 @@
-package me.test.first.chanpay.a;
+package com.chanpay.demo.util;
 
-import org.apache.commons.codec.digest.*;
-
-import java.io.*;
-import java.security.*;
+import java.io.UnsupportedEncodingException;
+import java.security.SignatureException;
+import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  * MD5签名处理核心文件
- */
+ * */
 
 public class MD5 {
 
     /**
-     * 签名字符�?
+     * 签名字符�?
      *
-     * @param text          �?要签名的字符�?
-     * @param key           密钥
-     * @param input_charset 编码格式
+     * @param text
+     *            �?要签名的字符�?
+     * @param key
+     *            密钥
+     * @param input_charset
+     *            编码格式
      * @return 签名结果
      */
     public static String sign(String text, String key, String charset) throws Exception {
@@ -25,12 +27,16 @@ public class MD5 {
     }
 
     /**
-     * 签名字符�?
+     * 签名字符�?
      *
-     * @param text          �?要签名的字符�?
-     * @param sign          签名结果
-     * @param key           密钥
-     * @param input_charset 编码格式
+     * @param text
+     *            �?要签名的字符�?
+     * @param sign
+     *            签名结果
+     * @param key
+     *            密钥
+     * @param input_charset
+     *            编码格式
      * @return 签名结果
      */
     public static boolean verify(String text, String sign, String key, String charset) throws Exception {
@@ -57,7 +63,7 @@ public class MD5 {
         try {
             return content.getBytes(charset);
         } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException("签名过程中出现错�?,指定的编码集不对,您目前指定的编码集是:" + charset);
+            throw new RuntimeException("签名过程中出现错�?,指定的编码集不对,您目前指定的编码集是:" + charset);
         }
     }
 

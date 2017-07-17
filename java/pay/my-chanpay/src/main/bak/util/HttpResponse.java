@@ -1,11 +1,10 @@
-package me.test.first.chanpay.a;
+package com.chanpay.demo.util;
 
-import org.apache.commons.httpclient.*;
-
-import java.io.*;
+import org.apache.commons.httpclient.Header;
+import java.io.UnsupportedEncodingException;
 
 /* *
- *功能：Http返回对象的封�?
+ *功能：Http返回对象的封�?
  *详细：封装Http返回信息
  */
 
@@ -19,12 +18,12 @@ public class HttpResponse {
     /**
      * String类型的result
      */
-    private String stringResult;
+    private String   stringResult;
 
     /**
      * btye类型的result
      */
-    private byte[] byteResult;
+    private byte[]   byteResult;
 
     public Header[] getResponseHeaders() {
         return responseHeaders;

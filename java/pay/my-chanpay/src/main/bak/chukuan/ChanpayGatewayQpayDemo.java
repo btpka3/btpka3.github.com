@@ -1,12 +1,23 @@
-package me.test.first.chanpay.a;
+package com.chanpay.demo.temp;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import org.apache.commons.codec.binary.Base64;
-import org.apache.http.*;
-import org.apache.http.message.*;
+import org.apache.commons.httpclient.NameValuePair;
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
+import com.chanpay.demo.util.HttpProtocolHandler;
+import com.chanpay.demo.util.HttpRequest;
+import com.chanpay.demo.util.HttpResponse;
+import com.chanpay.demo.util.HttpResultType;
+import com.chanpay.demo.util.MD5;
+import com.chanpay.demo.util.RSA;
 
 public class ChanpayGatewayQpayDemo {
 
@@ -26,19 +37,16 @@ public class ChanpayGatewayQpayDemo {
     /**
      * 建立请求，以模拟远程HTTP的POST请求方式构造并获取钱包的处理结果 如果接口中没有上传文件参数，那么strParaFileName与strFilePath设置为空值 如：buildRequest("", "",sParaTemp)
      *
-     * @param strParaFileName 文件类型的参数名
-     * @param strFilePath     文件路径
-     * @param sParaTemp       请求参数数组
-     * @return 钱包处理结果MERCHANT_PRIVATE_KEY
+     * @param strParaFileName
+     *            文件类型的参数名
+     * @param strFilePath
+     *            文件路径
+     * @param sParaTemp
+     *            请求参数数组
+     * @return 钱包处理结果
      * @throws Exception
      */
-    public static String buildRequest(
-            Map<String, String> sParaTemp,
-            String signType,
-            String key,
-            String inputCharset,
-            String gatewayUrl
-    ) throws Exception {
+    public static String buildRequest(Map<String, String> sParaTemp, String signType, String key, String inputCharset, String gatewayUrl) throws Exception {
         // 待请求参数数组
         Map<String, String> sPara = buildRequestPara(sParaTemp, signType, key, inputCharset);
         HttpProtocolHandler httpProtocolHandler = HttpProtocolHandler.getInstance();
@@ -59,7 +67,8 @@ public class ChanpayGatewayQpayDemo {
     /**
      * MAP类型数组转换成NameValuePair类型
      *
-     * @param properties MAP类型数组
+     * @param properties
+     *            MAP类型数组
      * @return NameValuePair类型数组
      */
     private static NameValuePair[] generatNameValuePair(Map<String, String> properties, String charset) throws Exception {
@@ -67,18 +76,22 @@ public class ChanpayGatewayQpayDemo {
         int i = 0;
         for (Map.Entry<String, String> entry : properties.entrySet()) {
             // nameValuePair[i++] = new NameValuePair(entry.getKey(), URLEncoder.encode(entry.getValue(),charset));
-            nameValuePair[i++] = new BasicNameValuePair(entry.getKey(), entry.getValue());
+            nameValuePair[i++] = new NameValuePair(entry.getKey(), entry.getValue());
         }
         return nameValuePair;
     }
 
     /**
      * 生成要请求给钱包的参数数组
-     *
-     * @param sParaTemp    请求前的参数数组
-     * @param signType     RSA
-     * @param key          商户自己生成的商户私钥
-     * @param inputCharset UTF-8
+     * 
+     * @param sParaTemp
+     *            请求前的参数数组
+     * @param signType
+     *            RSA
+     * @param key
+     *            商户自己生成的商户私钥
+     * @param inputCharset
+     *            UTF-8
      * @return 要请求的参数数组
      * @throws Exception
      */
@@ -103,7 +116,8 @@ public class ChanpayGatewayQpayDemo {
     /**
      * 生成MD5签名结果
      *
-     * @param sPara 要签名的数组
+     * @param sPara
+     *            要签名的数组
      * @return 签名结果字符串
      */
     public static String buildRequestByMD5(Map<String, String> sPara, String key, String inputCharset) throws Exception {
@@ -116,7 +130,8 @@ public class ChanpayGatewayQpayDemo {
     /**
      * 生成RSA签名结果
      *
-     * @param sPara 要签名的数组
+     * @param sPara
+     *            要签名的数组
      * @return 签名结果字符串
      */
     public static String buildRequestByRSA(Map<String, String> sPara, String privateKey, String inputCharset) throws Exception {
@@ -129,8 +144,10 @@ public class ChanpayGatewayQpayDemo {
     /**
      * 把数组所有元素排序，并按照“参数=参数值”的模式用“&”字符拼接成字符串
      *
-     * @param params 需要排序并参与字符拼接的参数组
-     * @param encode 是否需要urlEncode
+     * @param params
+     *            需要排序并参与字符拼接的参数组
+     * @param encode
+     *            是否需要urlEncode
      * @return 拼接后字符串
      */
     public static Map<String, String> createLinkRequestParas(Map<String, String> params) {
@@ -154,8 +171,10 @@ public class ChanpayGatewayQpayDemo {
     /**
      * 把数组所有元素排序，并按照“参数=参数值”的模式用“&”字符拼接成字符串
      *
-     * @param params 需要排序并参与字符拼接的参数组
-     * @param encode 是否需要urlEncode
+     * @param params
+     *            需要排序并参与字符拼接的参数组
+     * @param encode
+     *            是否需要urlEncode
      * @return 拼接后字符串
      */
     public static String createLinkString(Map<String, String> params, boolean encode) {
@@ -192,7 +211,8 @@ public class ChanpayGatewayQpayDemo {
     /**
      * 除去数组中的空值和签名参数
      *
-     * @param sArray 签名参数组
+     * @param sArray
+     *            签名参数组
      * @return 去掉空值与签名参数后的新签名参数组
      */
     public static Map<String, String> paraFilter(Map<String, String> sArray) {
@@ -221,10 +241,13 @@ public class ChanpayGatewayQpayDemo {
 
     /**
      * 向测试服务器发送post请求
-     *
-     * @param origMap              参数map
-     * @param charset              编码字符集
-     * @param MERCHANT_PRIVATE_KEY 私钥
+     * 
+     * @param origMap
+     *            参数map
+     * @param charset
+     *            编码字符集
+     * @param MERCHANT_PRIVATE_KEY
+     *            私钥
      */
     public void gatewayPost(Map<String, String> origMap, String charset, String MERCHANT_PRIVATE_KEY) {
         try {
@@ -240,10 +263,13 @@ public class ChanpayGatewayQpayDemo {
 
     /**
      * 加密，2.14付款到卡接口等部分接口，有参数需要加密
-     *
-     * @param src       原值
-     * @param publicKey 畅捷支付发送的平台公钥
-     * @param charset   UTF-8
+     * 
+     * @param src
+     *            原值
+     * @param publicKey
+     *            畅捷支付发送的平台公钥
+     * @param charset
+     *            UTF-8
      * @return RSA加密后的密文
      */
     private String encrypt(String src, String publicKey, String charset) {
@@ -256,38 +282,6 @@ public class ChanpayGatewayQpayDemo {
         return null;
     }
 
-    /**
-     * 2.3 单笔支付cjt_create_instant_trade 手机版用cjt_wap_create_instant_trade 将调用此方法system.out打印的请求url交给浏览器访问
-     */
-    public void cjt_create_instant_tradeORcjt_wap_create_instant_trade() {
-
-        Map<String, String> origMap = new HashMap<String, String>();
-        // 2.1 基本参数
-        origMap.put("version", "1.0");
-        origMap.put("partner_id", "200000400007"); // 畅捷支付分配的商户号
-        origMap.put("_input_charset", charset);// 字符集 UTF-8
-        origMap.put("is_anonymous", "Y");// 是否匿名 必须写Y，然后buyer,seller相关的参数不要填写，因为写N的话，要求买家（商户那边，来付款的普通用户）也是畅捷的用户
-        origMap.put("return_url", "http://dev.chanpay.com/receive.php");// 前台跳转url
-        // 2.3 单笔支付
-        origMap.put("bank_code", "BOC");// 含义看文档 跳收银台此值为空，不要再写TESTBANK了
-        String out_trade_no = (UUID.randomUUID().toString()).replace("-", "");
-        System.out.println(out_trade_no);
-        origMap.put("out_trade_no", out_trade_no);// 订单号
-        origMap.put("pay_method", "2");// 含义看文档 收银台写2 直连网银1
-        origMap.put("pay_type", "C,DC");// 含义看文档 连收银台此值为空
-        // origMap.put("service", "cjt_create_instant_trade");// 支付的接口名
-        origMap.put("service", "cjt_wap_create_instant_trade");// 支付的接口名
-        origMap.put("trade_amount", "1024.00");// 金额
-        origMap.put("notify_url", "http://dev.chanpay.com/receive.php");// 前台跳转url
-        /**
-         * 以下俩自行选择一个看效果
-         */
-        // // 绑卡
-        origMap.put("ext1", "[{'hasUserSign':'true','userSign':'yangyang0test'}]");
-        // 绑卡 + wap收银台2.0
-        // origMap.put("ext1", "[{'hasUserSign':'true','userSign':'yangyang0test','version':'2.0'}]");
-        this.gatewayPost(origMap, charset, );
-    }
 
     /**
      * 2.14 付款到卡cjt_payment_to_card
@@ -319,6 +313,76 @@ public class ChanpayGatewayQpayDemo {
 
     }
 
+
+/**
+     * 2.20 2.20单笔订单提现接口cjt_order_withdraw
+     */
+    public void cjt_order_withdraw() {
+
+        Map<String, String> origMap = new HashMap<String, String>();
+        // 2.1 基本参数
+        origMap.put("service", "cjt_order_withdraw");
+        origMap.put("version", "1.0");
+        origMap.put("partner_id", "200000400007"); // 畅捷支付分配的商户号
+        origMap.put("_input_charset", charset);
+        
+		 origMap.put("order_withdraw_no", "30000043551252390");
+		 origMap.put("trade_src_voucher_no", "6741334835157966");
+        origMap.put("bank_card_no", this.encrypt("6214830215878947", MERCHANT_PUBLIC_KEY, charset));
+        origMap.put("account_name", this.encrypt("测试01", MERCHANT_PUBLIC_KEY, charset));
+        origMap.put("notify_url", "https://tadmin.chanpay.com/tpu/mag/syncNotify.do");// 换成自己的
+        this.gatewayPost(origMap, charset, MERCHANT_PRIVATE_KEY);
+
+    }
+
+
+	/**
+     * 2.23账户余额普通提现API接口 cjt_site_withdraw
+     */
+    public void cjt_site_withdraw() {
+
+        Map<String, String> origMap = new HashMap<String, String>();
+        // 2.1 基本参数
+        origMap.put("service", "cjt_site_withdraw");
+        origMap.put("version", "1.0");
+        origMap.put("partner_id", "200000400007"); // 畅捷支付分配的商户号
+        origMap.put("_input_charset", charset);
+        
+        String out_trade_no = UUID.randomUUID().toString().replace("-", "");
+        origMap.put("outer_trade_no", (out_trade_no));
+        System.out.println("pay 2 card out_trade_no :" + out_trade_no);
+        origMap.put("bank_account_no", this.encrypt("6214830215878947", MERCHANT_PUBLIC_KEY, charset));
+        origMap.put("account_name", this.encrypt("测试01", MERCHANT_PUBLIC_KEY, charset));
+        origMap.put("bank_code", "CMB");// 每家银行简码到底是什么，调用2.7接口去查
+        origMap.put("amount", "100.00");
+        origMap.put("notify_url", "https://tadmin.chanpay.com/tpu/mag/syncNotify.do");// 换成自己的
+        this.gatewayPost(origMap, charset, MERCHANT_PRIVATE_KEY);
+
+    }
+
+/**
+     * 2.27转账到户网关接口 cjt_balance_transfer
+     */
+    public void cjt_balance_transfer() {
+
+        Map<String, String> origMap = new HashMap<String, String>();
+        // 2.1 基本参数
+        origMap.put("service", "cjt_balance_transfer");
+        origMap.put("version", "1.0");
+        origMap.put("partner_id", "200000400007"); // 畅捷支付分配的商户号
+        origMap.put("_input_charset", charset);
+        String out_trade_no = UUID.randomUUID().toString().replace("-", "");
+        origMap.put("outer_trade_no", (out_trade_no));
+        System.out.println("pay 2 card out_trade_no :" + out_trade_no);
+        origMap.put("fundout_identity_no", "200000400007");
+        origMap.put("fundin_identity_no", "200000400007");
+        origMap.put("amount", "100.00");
+        origMap.put("notify_url", "https://tadmin.chanpay.com/tpu/mag/syncNotify.do");// 换成自己的
+        this.gatewayPost(origMap, charset, MERCHANT_PRIVATE_KEY);
+
+    }
+
+
     /**
      * 2.11 日支付对账文件cjt_everyday_trade_file 需要自行从response流里获取xls对账文件 2.12 日退款对账文件和2.13 手续费对账文件参照此接口调用
      */
@@ -327,6 +391,23 @@ public class ChanpayGatewayQpayDemo {
         Map<String, String> origMap = new HashMap<String, String>();
         // 2.1 基本参数
         origMap.put("service", "cjt_everyday_trade_file");// 支付的接口名
+        origMap.put("version", "1.0");
+        origMap.put("partner_id", "200000400007"); // 畅捷支付分配的商户号
+        origMap.put("_input_charset", charset);// 字符集
+        // 2.11 日支付对账文件
+        origMap.put("transDate", "20160728");// 交易日期
+
+        this.gatewayPost(origMap, charset, MERCHANT_PRIVATE_KEY);
+    }
+
+	 /**
+     * 2.12 商户日退款对账单文件cjt_refund_trade_file
+     */
+    public void cjt_refund_trade_file() {
+
+        Map<String, String> origMap = new HashMap<String, String>();
+        // 2.1 基本参数
+        origMap.put("service", "cjt_refund_trade_file");// 支付的接口名
         origMap.put("version", "1.0");
         origMap.put("partner_id", "200000400007"); // 畅捷支付分配的商户号
         origMap.put("_input_charset", charset);// 字符集
@@ -453,85 +534,11 @@ public class ChanpayGatewayQpayDemo {
         this.gatewayPost(origMap, charset, MERCHANT_PRIVATE_KEY);
     }
 
-    /**
-     * 2.18快捷支付api cjt_quick_payment
-     */
-    public void createQPay() {
-
-        Map<String, String> origMap = new HashMap<String, String>();
-        // 2.1 基本参数
-        origMap.put("version", "1.0");
-        origMap.put("partner_id", "200000400007"); // 畅捷支付分配的商户号
-        origMap.put("_input_charset", charset);// 字符集
-        origMap.put("service", "cjt_quick_payment");// 支付的接口名
-        // 2.18快捷支付api 业务参数
-        String out_trade_no = (UUID.randomUUID().toString()).replace("-", "");
-        System.out.println("out_trade_no:\r\n" + out_trade_no);
-        origMap.put("out_trade_no", out_trade_no);// 订单号
-        origMap.put("trade_amount", "2.50");// 金额
-        origMap.put("buyer_ip", "10.20.31.88");// 金额
-        // 2.18快捷支付api 支付相关参数
-        origMap.put("card_type", "DC");// 卡类型
-        origMap.put("pay_type", "C");// 对公对私
-        origMap.put("bank_code", "TESTBANK");// 含义看文档 跳收银台此值为空
-        origMap.put("payer_name", this.encrypt("测试01", MERCHANT_PUBLIC_KEY, charset));// 含义看文档 收银台写2 直连网银1
-        origMap.put("payer_card_no", this.encrypt("6214830215878947", MERCHANT_PUBLIC_KEY, charset));// 含义看文档 收银台写2 直连网银1
-        origMap.put("id_number", this.encrypt("152801111111111111", MERCHANT_PUBLIC_KEY, charset));// 含义看文档 收银台写2 直连网银1
-        origMap.put("phone_number", this.encrypt("13511111111", MERCHANT_PUBLIC_KEY, charset));// 含义看文档 收银台写2 直连网银1
-        origMap.put("notify_url", "http://dev.chanpay.com/receive.php");// 前台跳转url
-
-        this.gatewayPost(origMap, charset, MERCHANT_PRIVATE_KEY);
-    }
-
-    /**
-     * 2.19快捷api确认 cjt_quick_payment_confirm
-     */
-    public void createQPayConfirm() {
-
-        Map<String, String> origMap = new HashMap<String, String>();
-        // 2.1 基本参数
-        origMap.put("version", "1.0");
-        origMap.put("partner_id", "200000400007"); // 畅捷支付分配的商户号
-        origMap.put("_input_charset", charset);// 字符集
-        origMap.put("service", "cjt_quick_payment_confirm");// 支付的接口名
-        // 2.19快捷api确认
-        origMap.put("out_trade_no", "4a7841eaa2e34fff821c0eb451acb137");// 订单号
-        origMap.put("verification_code", "123456");// 短信验证码
-
-        this.gatewayPost(origMap, charset, MERCHANT_PRIVATE_KEY);
-    }
-
-    /**
-     * 2.3 微信扫码
-     */
-    public void wxPay() {
-
-        Map<String, String> origMap = new HashMap<String, String>();
-        // 2.1 基本参数
-        origMap.put("version", "1.0");
-        origMap.put("partner_id", "200000400007"); // 畅捷支付分配的商户号
-        origMap.put("_input_charset", charset);// 字符集 UTF-8
-        origMap.put("is_anonymous", "Y");// 是否匿名 必须写Y，然后buyer,seller相关的参数不要填写，因为写N的话，要求买家（商户那边，来付款的普通用户）也是畅捷的用户
-        // 2.3 单笔支付
-        String out_trade_no = (UUID.randomUUID().toString()).replace("-", "");
-        System.out.println(out_trade_no);
-        origMap.put("out_trade_no", out_trade_no);// 订单号
-        origMap.put("pay_method", "1");// 含义看文档 收银台写2 直连网银1
-        origMap.put("pay_type", "C,GC");// 含义看文档 连收银台此值为空
-        origMap.put("bank_code", "WXPAY");// 含义看文档 跳收银台此值为空，不要再写TESTBANK了
-        origMap.put("is_returnpayurl ", "Y");// 前台跳转url
-        origMap.put("service", "cjt_create_instant_trade");// 支付的接口名
-        origMap.put("trade_amount", "10.00");// 金额
-        origMap.put("notify_url", "http://dev.chanpay.com/receive.php");// 前台跳转url
-        this.gatewayPost(origMap, charset, MERCHANT_PRIVATE_KEY);
-    }
-
+    
     // //////////////////////////////////////////////////////////////////////
 
     public static void main(String[] args) {
         ChanpayGatewayQpayDemo test = new ChanpayGatewayQpayDemo();
-        // test.cjt_create_instant_tradeORcjt_wap_create_instant_trade();// 2.3单笔支付webORwap
-        test.wxPay();// 微信扫码接口
         // test.notifyVerify();// 异步通知验签
         // test.pay2card();// 2.14付款到卡
         // test.everyTradeFile();// 2.11日交易对账文件
@@ -539,10 +546,5 @@ public class ChanpayGatewayQpayDemo {
         test.cjt_query_trade();// 2.6 主动查询
         // test.cjt_view_receipt();// 2.10回单下载
         // test.cjt_fee_trade_file();// 2.13手续费对账文件
-        // ////////////////////////////////////////////////////////////////
-        // step1 调用2.18 然后订单号复制出来
-        // test.createQPay();// 2.18快捷api
-        // step2 调用2.19，订单号填写刚才复制的
-        // test.createQPayConfirm();// 2.19快捷确认
     }
 }
