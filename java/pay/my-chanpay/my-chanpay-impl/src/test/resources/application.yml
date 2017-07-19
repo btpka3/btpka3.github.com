@@ -1,0 +1,40 @@
+
+a: aab
+
+# LOGGING
+logging:
+  level:
+    org.springframework.web:                                                      INFO
+    org.springframework.security:                                                 INFO
+    org.springframework.boot.actuate.audit.listener.AuditListener:                DEBUG
+    org.springframework.boot.web.support.ErrorPageFilter:                         DEBUG
+    org.springframework.web.servlet.view.ContentNegotiatingViewResolver:          DEBUG
+    org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping:  DEBUG
+    org.apache.http.wire:                                                         DEBUG
+    net.kingsilk:                                                                 DEBUG
+    io.github.btpka3:                                                             DEBUG
+    me.test:                                                                      DEBUG
+# JacksonProperties
+spring.jackson:
+  default-property-inclusion: non_null
+
+
+
+ut:
+  scan:
+    gatewayUrl: "https://tpay.chanpay.com/mag-unify/gateway/receiveOrder.do"
+
+    #mchPubKey: "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDPq3oXX5aFeBQGf3Ag/86zNu0VICXmkof85r+DDL46w3vHcTnkEWVbp9DaDurcF7DMctzJngO0u9OG1cb4mn+Pn/uNC1fp7S4JH4xtwST6jFgHtXcTG9uewWFYWKw/8b3zf4fXyRuI/2ekeLSstftqnMQdenVP7XCxMuEnnmM1RwIDAQAB"
+
+    mchPubKey: "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDONXNe9xgdWykFwTLRLKWKmGQC6ZLp66tqLRoUlvjUJnwoej8aD+KUuimcOXpIh9XuTDEO0YYh/D5xtnEN+q2wvZzK3G2l+xEirCowE7CM388t/yplGdJMw81CSaUQUeAz/5NCwbXA8i8OTv8/h0kLIdO/omMD8aJKgpmtyJ3IEQIDAQAB"
+    #mchPubKey: "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDv0rdsn5FYPn0EjsCPqDyIsYRawNWGJDRHJBcdCldodjM5bpve+XYb4Rgm36F6iDjxDbEQbp/HhVPj0XgGlCRKpbluyJJt8ga5qkqIhWoOd/Cma1fCtviMUep21hIlg1ZFcWKgHQoGoNX7xMT8/0bEsldaKdwxOlv3qGxWfqNV5QIDAQAB"
+    mchPriKey: "MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAO/6rPCvyCC+IMalLzTy3cVBz/+wamCFNiq9qKEilEBDTttP7Rd/GAS51lsfCrsISbg5td/w25+wulDfuMbjjlW9Afh0p7Jscmbo1skqIOIUPYfVQEL687B0EmJufMlljfu52b2efVAyWZF9QBG1vx/AJz1EVyfskMaYVqPiTesZAgMBAAECgYEAtVnkk0bjoArOTg/KquLWQRlJDFrPKP3CP25wHsU4749t6kJuU5FSH1Ao81d0Dn9m5neGQCOOdRFi23cV9gdFKYMhwPE6+nTAloxI3vb8K9NNMe0zcFksva9c9bUaMGH2p40szMoOpO6TrSHO9Hx4GJ6UfsUUqkFFlN76XprwE+ECQQD9rXwfbr9GKh9QMNvnwo9xxyVl4kI88iq0X6G4qVXo1Tv6/DBDJNkX1mbXKFYL5NOW1waZzR+Z/XcKWAmUT8J9AkEA8i0WT/ieNsF3IuFvrIYG4WUadbUqObcYP4Y7Vt836zggRbu0qvYiqAv92Leruaq3ZN1khxp6gZKl/OJHXc5xzQJACqr1AU1i9cxnrLOhS8m+xoYdaH9vUajNavBqmJ1mY3g0IYXhcbFm/72gbYPgundQ/pLkUCt0HMGv89tn67i+8QJBALV6UgkVnsIbkkKCOyRGv2syT3S7kOv1J+eamGcOGSJcSdrXwZiHoArcCZrYcIhOxOWB/m47ymfE1Dw/+QjzxlUCQCmnGFUO9zN862mKYjEkjDN65n1IUB9Fmc1msHkIZAQaQknmxmCIOHC75u4W0PGRyVzq8KkxpNBq62ICl7xmsPM="
+
+
+    # 以下为自己生成的测试用的。
+    #mchPubKey: MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC1iE+1+aMYY8ssmRg+wB+hyNFolMVk/PmmdUGqyBXgAqekExtfIkq+Cz68LyvjpfUjgBMW2gU81+YmC+X1UFBBE1YcsKrnKu9Dpfh2eLT+/BtSO40ufT6nqqDV5qoIneaiP+f0Voi5ZUiX2vKAaIwpiEocAEmMIeiZ4X5SWQL72wIDAQAB
+    #mchPriKey: MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBALWIT7X5oxhjyyyZGD7AH6HI0WiUxWT8+aZ1QarIFeACp6QTG18iSr4LPrwvK+Ol9SOAExbaBTzX5iYL5fVQUEETVhywqucq70Ol+HZ4tP78G1I7jS59PqeqoNXmqgid5qI/5/RWiLllSJfa8oBojCmIShwASYwh6JnhflJZAvvbAgMBAAECgYA6DVNgYGq1vAQXSQYl2w7CkBPXm+vcNcIoZ0sOsFm+f1rY73tLWw4H5FS1nWgtrr7MEYMJRcNzB6AD/r4VSw++lQ6snIJP4JSakyVy28oC8vPbG690YBDzVqBVsB72tIcIBJFK+6TAJ3QYnyxzgKQE0AfLlwV01xeo/rYgErS+YQJBAPEyOTfAj8h8OiHQklhT/Uvsk9HUhC0IZ3XqFq3Ix87VrSMgC5lcCWHpijN4IU/DQVAcrMw4oxLtOMKkmSuWlqMCQQDArKBTIrh7b2hOlLnSx3sLMr/iZdKzoAPFj+yVMTOr/P3c+oh/nVw9qGQFw5RQ5+pLnb4szDDmX50j2Ev9jjFpAkAGMab8gopuuJn5klSfxhBkKcAmDFIUofmeMpPAhL501lHq7ADAQHfRNuEgrz4TwUzlFMdvOykc7FCf1wBD+UsHAkAaEMB3vsC6Yi34Q4KIE1iAAVOYKzI//qvD9F6LKGbXI5isZnBE42LxLHCrnvPXpig6JpLtuIn9AH5ftQlCuhPRAkEAhtvP/AEc8KgkJFXM4ThVyTctjye/LtF1NPgMQ5wRZoWbx2Vc6sl9WjLhDP8EhvHOHwwrJUdISzniBe+m7S05Ag==
+
+
+
+#MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBALWIT7X5oxhjyyyZGD7AH6HI0WiUxWT8+aZ1QarIFeACp6QTG18iSr4LPrwvK+Ol9SOAExbaBTzX5iYL5fVQUEETVhywqucq70Ol+HZ4tP78G1I7jS59PqeqoNXmqgid5qI/5/RWiLllSJfa8oBojCmIShwASYwh6JnhflJZAvvbAgMBAAECgYA6DVNgYGq1vAQXSQYl2w7CkBPXm+vcNcIoZ0sOsFm+f1rY73tLWw4H5FS1nWgtrr7MEYMJRcNzB6AD/r4VSw++lQ6snIJP4JSakyVy28oC8vPbG690YBDzVqBVsB72tIcIBJFK+6TAJ3QYnyxzgKQE0AfLlwV01xeo/rYgErS+YQJBAPEyOTfAj8h8OiHQklhT/Uvsk9HUhC0IZ3XqFq3Ix87VrSMgC5lcCWHpijN4IU/DQVAcrMw4oxLtOMKkmSuWlqMCQQDArKBTIrh7b2hOlLnSx3sLMr/iZdKzoAPFj+yVMTOr/P3c+oh/nVw9qGQFw5RQ5+pLnb4szDDmX50j2Ev9jjFpAkAGMab8gopuuJn5klSfxhBkKcAmDFIUofmeMpPAhL501lHq7ADAQHfRNuEgrz4TwUzlFMdvOykc7FCf1wBD+UsHAkAaEMB3vsC6Yi34Q4KIE1iAAVOYKzI//qvD9F6LKGbXI5isZnBE42LxLHCrnvPXpig6JpLtuIn9AH5ftQlCuhPRAkEAhtvP/AEc8KgkJFXM4ThVyTctjye/LtF1NPgMQ5wRZoWbx2Vc6sl9WjLhDP8EhvHOHwwrJUdISzniBe+m7S05Ag==

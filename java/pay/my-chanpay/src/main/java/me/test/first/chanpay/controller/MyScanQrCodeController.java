@@ -2,18 +2,16 @@ package me.test.first.chanpay.controller;
 
 import me.test.first.chanpay.api.*;
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.core.convert.*;
 import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-@Controller
-public class MyTestController {
+@RestController
+@RequestMapping("/scan")
+public class MyScanQrCodeController {
 
 
-    @Autowired
-    ConversionService conversionService;
 
     @Autowired
     TradeApi tradeApi;
@@ -21,7 +19,7 @@ public class MyTestController {
     @RequestMapping("/")
     @ResponseBody
     public String home() {
-        return "home " + new Date() + "   " + conversionService;
+        return "home " + new Date();
     }
 
 

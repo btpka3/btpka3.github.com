@@ -36,6 +36,8 @@ repositories {
 }
 
 dependencies {
+    compile project(":my-chanpay-api")
+
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.springframework.boot:spring-boot-starter-thymeleaf')
     compile("org.springframework.boot:spring-boot-devtools")
@@ -47,31 +49,7 @@ dependencies {
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
-
-allprojects {
-    apply plugin: 'eclipse'
-    apply plugin: 'idea'
-    apply plugin: 'org.springframework.boot'
-    apply plugin: "io.spring.dependency-management"
-
-    dependencyManagement {
-        dependencies {
-//            dependency('org.apache.httpcomponents:httpclient:4.5.3')
-            dependency('com.google.code.findbugs:jsr305:3.0.1')
-            dependency('commons-io:commons-io:2.5')
-            dependency('commons-lang:commons-lang:2.6')
-            dependency('commons-httpclient:commons-httpclient:3.1')
-            dependency('commons-codec:commons-codec:1.10')
-
-        }
-    }
-    dependencies{
-        testCompile('org.springframework.boot:spring-boot-starter-test')
-        testCompile('junit:junit')
-    }
-
-}
-
+ 
 
 
 idea {
