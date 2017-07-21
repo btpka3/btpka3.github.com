@@ -88,34 +88,13 @@ public class CpScanApiImpl implements CpScanApi {
         this.objectMapper = objectMapper;
     }
 
-    private void verifyRespSign(
-            Map<String, String> respMap,
-            String respCharset,
-            String sign
-    ) {
 
-        if (verifyRespSign) {
-
-            String respStrToSign = SignUtils.joinStr(respMap);
-            if (logger.isDebugEnabled()) {
-                logger.debug("RESPONSE 签名验证字符串 : " + respStrToSign);
-            }
-
-            boolean verifed = SignUtils.rsaSignVerify(
-                    SignUtils.getBytes(respStrToSign, respCharset),
-                    sign,
-                    SignUtils.toRsaPubKey(merchantPublicKey));
-
-            Assert.isTrue(verifed, "财付通响应签名验证失败");
-        }
-    }
-
-
-    @Override
-    public UserScanResp userScan(UserScanReq req) {
-
-        // 计算签名
+    protected void sign(Req req) {
         Map<String, String> reqMap = conversionService.convert(req, Map.class);
+        if (logger.isDebugEnabled()) {
+            logger.debug("请求 - 请求Map : " + reqMap);
+        }
+
         byte[] reqStrToSignBytes = SignUtils.getBytes(
                 SignUtils.joinStr(reqMap),
                 req.getInputCharset());
@@ -123,11 +102,39 @@ public class CpScanApiImpl implements CpScanApi {
         String sign = SignUtils.rsaSign(
                 reqStrToSignBytes,
                 SignUtils.toRsaPriKey(merchantPrivateKey));
-        req.setSign(sign);
         req.setSignType("RSA");
+        req.setSign(sign);
+    }
 
+    protected void verifyRespSign(
+            Resp resp,
+            String respCharset,
+            String sign
+    ) {
 
-        // 发送请求
+        if (!verifyRespSign) {
+            return;
+        }
+
+        Map<String, String> respMap = conversionService.convert(resp, Map.class);
+        if (logger.isDebugEnabled()) {
+            logger.debug("响应 - 响应Map : " + respMap);
+        }
+
+        String respStrToSign = SignUtils.joinStr(respMap);
+        if (logger.isDebugEnabled()) {
+            logger.debug("响应 - 待计算签名字符串 : " + respStrToSign);
+        }
+
+        boolean verifed = SignUtils.rsaSignVerify(
+                SignUtils.getBytes(respStrToSign, respCharset),
+                sign,
+                SignUtils.toRsaPubKey(merchantPublicKey));
+
+        Assert.isTrue(verifed, "响应 - 签名验证失败");
+    }
+
+    protected <T extends Req> String sendReq(T req) {
         LinkedMultiValueMap<String, String> reqBody = new LinkedMultiValueMap<>();
         reqBody.setAll(conversionService.convert(req, Map.class));
 
@@ -140,31 +147,45 @@ public class CpScanApiImpl implements CpScanApi {
                 reqEntity,
                 String.class);
 
-
         String respStr = respStrEntity.getBody();
         if (logger.isDebugEnabled()) {
-            logger.debug("respStr : " + respStr);
+            logger.debug("响应 - JSON 字符串 : " + respStr);
         }
-        UserScanResp resp;
-        try {
-            resp = objectMapper.readValue(respStr, UserScanResp.class);
+        return respStr;
+    }
 
+    protected <T> T toResp(String json, Class<T> clazz) {
+        T resp;
+        try {
+            resp = objectMapper.readValue(json, clazz);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        return resp;
+    }
 
-        // 验证签名
-        if (verifyRespSign) {
-            Map<String, String> respMap = conversionService.convert(resp, Map.class);
-            if (logger.isDebugEnabled()) {
-                logger.debug("respMap : " + respMap);
-            }
 
-            verifyRespSign(respMap, resp.getInputCharset(), resp.getSign());
-        }
+    protected <R extends Req, P extends Resp> P invokeApi(R req, Class<P> respClass) {
 
+        // 计算请求签名
+        sign(req);
+
+        // 发送请求
+        String respStr = sendReq(req);
+
+        // JSON -> Resp
+        P resp = toResp(respStr, respClass);
+
+        // 验证响应签名
+        verifyRespSign(resp, resp.getInputCharset(), resp.getSign());
 
         return resp;
+    }
+
+
+    @Override
+    public UserScanResp userScan(UserScanReq req) {
+        return invokeApi(req, UserScanResp.class);
     }
 
     @Override
@@ -173,8 +194,8 @@ public class CpScanApiImpl implements CpScanApi {
     }
 
     @Override
-    public void oneCodePay() {
-
+    public OneCodePayResp oneCodePay(OneCodePayReq req) {
+        return invokeApi(req, OneCodePayResp.class);
     }
 
     @Override

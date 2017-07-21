@@ -11,6 +11,9 @@ import static org.assertj.core.api.Assertions.*;
 
 public class UserScanRespConverterTest extends BaseTest {
 
+    /**
+     * 正常例子
+     */
     @Test
     public void converer01() {
 
@@ -57,6 +60,53 @@ public class UserScanRespConverterTest extends BaseTest {
         exptected.put("CodeUrl", "codeUrl");
         exptected.put("Status", "status");
         exptected.put("Ext", "ext");
+
+        assertThat(actural).isEqualTo(exptected);
+    }
+
+
+    /**
+     * 测试 空字符串
+     */
+    @Test
+    public void converer02() {
+
+        UserScanResp resp = new UserScanResp();
+        resp.setAcceptStatus("");
+        resp.setPartnerId("");
+        resp.setTradeDate("");
+        resp.setTradeTime("");
+        resp.setInputCharset("");
+        resp.setMchId("");
+        resp.setMemo("");
+        resp.setSign("");
+        resp.setSignType("");
+        //
+        resp.setRetCode("");
+        resp.setRetMsg("");
+        resp.setOutTradeNo("");
+        resp.setInnerTradeNo("");
+        resp.setCodeUrl("");
+        resp.setStatus("");
+        resp.setExt("");
+
+        Map actural = conversionService.convert(resp, Map.class);
+        Map exptected = new HashMap<String, String>();
+
+        assertThat(actural).isEqualTo(exptected);
+    }
+
+
+    /**
+     * 测试 null
+     */
+    @Test
+    public void converer03() {
+
+        UserScanResp resp = new UserScanResp();
+
+        Map actural = conversionService.convert(resp, Map.class);
+        Map exptected = new HashMap<String, String>();
 
         assertThat(actural).isEqualTo(exptected);
     }

@@ -2,12 +2,16 @@ package me.test.first.chanpay.api.scan.dto;
 
 import javax.annotation.*;
 import javax.xml.bind.annotation.*;
+import java.io.*;
 import java.util.*;
 
 /**
  *
  */
-public class Resp {
+public class Resp implements Serializable {
+
+
+    private static final long serialVersionUID = 1L;
 
 
 //    @XmlEnum

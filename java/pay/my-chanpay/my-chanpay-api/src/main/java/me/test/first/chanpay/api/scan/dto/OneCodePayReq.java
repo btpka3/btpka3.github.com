@@ -3,61 +3,149 @@ package me.test.first.chanpay.api.scan.dto;
 import me.test.first.chanpay.api.scan.*;
 
 import javax.annotation.*;
+import java.time.format.*;
 import java.util.*;
 
 /**
  *
  */
-public class UserScanReq extends Req {
+public class OneCodePayReq extends Req {
 
-    public UserScanReq() {
-        this.setService(CpScanApi.S_userScan);
+    public OneCodePayReq() {
+        this.setService(CpScanApi.S_oneCodePay);
     }
 
+    /**
+     * 商户唯一订单号
+     */
     @Nonnull
     private String outTradeNo;
 
+    /**
+     * 商户标示ID
+     */
     @Nonnull
     private String mchId;
+
+    /**
+     * 子商户标示ID
+     */
     private String subMchId;
 
+    /**
+     * 交易类型
+     *
+     * - `11` : 即时
+     * - `12` : 担保
+     */
     @Nonnull
     private String tradeType;
 
+    /**
+     * 业务类型
+     *
+     * - `1` : 动码
+     * - `2` : 固码
+     *
+     */
     @Nonnull
-    private String bankCode;
-    private String appId;
+    private String busiType;
+
+
+    /**
+     * 设备信息
+     */
     private String deviceInfo;
+
+    /**
+     * 币种
+     */
     private String currency;
 
+    /**
+     * 交易金额
+     */
     @Nonnull
     private Double tradeAmount;
+
+    /**
+     * 担保金额
+     *
+     * 如果交易类型为 12-担保 金额必填，
+     * 担保金额可以小于订单金额，
+     * 订单金额减去担保金额为及时到账部分。
+     */
     private Double ensureAmount;
 
+    /**
+     * 商品名称
+     */
     @Nonnull
     private String goodsName;
+
+    /**
+     * 商品描述
+     */
     private String tradeMemo;
 
+    /**
+     * 订单标题
+     */
     @Nonnull
     private String subject;
 
+    /**
+     * 订单起始提交时间
+     *
+     * 格式为 `yyyyMMddHHmmss`
+     */
     @Nonnull
     private Date orderStartTime;
+
+    /**
+     * 订单失效时间
+     *
+     * 订单失效时间默认为5分钟。
+     * 格式为 `yyyyMMddHHmmss`
+     */
     private Date orderEndTime;
+
+    /**
+     * 限制信用卡
+     *
+     * - `` ：不限制
+     * - `NoCredit` : 不使用信用卡
+     */
     private String limitCreditPay;
+
+    /**
+     * 服务器异步通知页面路径
+     */
     private String notifyUrl;
 
-    @Nonnull
-    private String spBillCreateIp;
 
+    /**
+     * 分账列表
+     */
     private List<Split> splitList;
+
+    /**
+     * 扩展字段
+     */
     private String ext;
 
 
     public static class Split {
 
+        /**
+         * 收方商户号
+         */
         private String payeeId;
-        private Number amount;
+
+        /**
+         * 分账金额
+         */
+        private Double amount;
 
         // ------------------------------------ getter && setter
 
@@ -70,11 +158,11 @@ public class UserScanReq extends Req {
             this.payeeId = payeeId;
         }
 
-        public Number getAmount() {
+        public Double getAmount() {
             return amount;
         }
 
-        public void setAmount(Number amount) {
+        public void setAmount(Double amount) {
             this.amount = amount;
         }
 
@@ -130,21 +218,6 @@ public class UserScanReq extends Req {
         this.tradeType = tradeType;
     }
 
-    public String getBankCode() {
-        return bankCode;
-    }
-
-    public void setBankCode(String bankCode) {
-        this.bankCode = bankCode;
-    }
-
-    public String getAppId() {
-        return appId;
-    }
-
-    public void setAppId(String appId) {
-        this.appId = appId;
-    }
 
     public String getDeviceInfo() {
         return deviceInfo;
@@ -234,14 +307,6 @@ public class UserScanReq extends Req {
         this.notifyUrl = notifyUrl;
     }
 
-    public String getSpBillCreateIp() {
-        return spBillCreateIp;
-    }
-
-    public void setSpBillCreateIp(String spBillCreateIp) {
-        this.spBillCreateIp = spBillCreateIp;
-    }
-
     public List<Split> getSplitList() {
         return splitList;
     }
@@ -258,20 +323,28 @@ public class UserScanReq extends Req {
         this.ext = ext;
     }
 
+    @Nonnull
+    public String getBusiType() {
+        return busiType;
+    }
+
+    public void setBusiType(@Nonnull String busiType) {
+        this.busiType = busiType;
+    }
     // ------------------------------------ equals && hashCode
+
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        UserScanReq that = (UserScanReq) o;
+        OneCodePayReq that = (OneCodePayReq) o;
         return Objects.equals(outTradeNo, that.outTradeNo) &&
                 Objects.equals(mchId, that.mchId) &&
                 Objects.equals(subMchId, that.subMchId) &&
                 Objects.equals(tradeType, that.tradeType) &&
-                Objects.equals(bankCode, that.bankCode) &&
-                Objects.equals(appId, that.appId) &&
+                Objects.equals(busiType, that.busiType) &&
                 Objects.equals(deviceInfo, that.deviceInfo) &&
                 Objects.equals(currency, that.currency) &&
                 Objects.equals(tradeAmount, that.tradeAmount) &&
@@ -283,14 +356,12 @@ public class UserScanReq extends Req {
                 Objects.equals(orderEndTime, that.orderEndTime) &&
                 Objects.equals(limitCreditPay, that.limitCreditPay) &&
                 Objects.equals(notifyUrl, that.notifyUrl) &&
-                Objects.equals(spBillCreateIp, that.spBillCreateIp) &&
                 Objects.equals(splitList, that.splitList) &&
                 Objects.equals(ext, that.ext);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), outTradeNo, mchId, subMchId, tradeType, bankCode, appId, deviceInfo, currency, tradeAmount, ensureAmount, goodsName, tradeMemo, subject, orderStartTime, orderEndTime, limitCreditPay, notifyUrl, spBillCreateIp, splitList, ext);
+        return Objects.hash(super.hashCode(), outTradeNo, mchId, subMchId, tradeType, busiType, deviceInfo, currency, tradeAmount, ensureAmount, goodsName, tradeMemo, subject, orderStartTime, orderEndTime, limitCreditPay, notifyUrl, splitList, ext);
     }
-
 }

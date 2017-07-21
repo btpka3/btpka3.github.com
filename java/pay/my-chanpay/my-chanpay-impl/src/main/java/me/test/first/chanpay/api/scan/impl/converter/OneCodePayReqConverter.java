@@ -10,6 +10,7 @@ import org.springframework.core.convert.converter.*;
 import org.springframework.stereotype.*;
 import org.springframework.util.*;
 
+import javax.annotation.*;
 import java.time.*;
 import java.time.format.*;
 import java.util.*;
@@ -18,7 +19,7 @@ import java.util.*;
  *
  */
 @Component
-public class UserScanReqConverter implements Converter<UserScanReq, Map<String, String>> {
+public class OneCodePayReqConverter implements Converter<OneCodePayReq, Map<String, String>> {
 
     private static final DateTimeFormatter _orderStartTimeFmt = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
     private static final DateTimeFormatter _orderEndTimeFmt = _orderStartTimeFmt;
@@ -33,8 +34,9 @@ public class UserScanReqConverter implements Converter<UserScanReq, Map<String, 
     @Autowired
     private ZoneId zoneId;
 
+
     @Override
-    public Map<String, String> convert(UserScanReq src) {
+    public Map<String, String> convert(OneCodePayReq src) {
 
         Map<String, String> map = new LinkedHashMap<>();
 
@@ -67,14 +69,9 @@ public class UserScanReqConverter implements Converter<UserScanReq, Map<String, 
             map.put("TradeType", tradeType);
         }
 
-        String bankCode = src.getBankCode();
-        if (!StringUtils.isEmpty(bankCode)) {
-            map.put("BankCode", bankCode);
-        }
-
-        String appId = src.getAppId();
-        if (!StringUtils.isEmpty(appId)) {
-            map.put("AppId", appId);
+        String busiType = src.getBusiType();
+        if (!StringUtils.isEmpty(busiType)) {
+            map.put("BusiType", busiType);
         }
 
         String deviceInfo = src.getDeviceInfo();
@@ -86,7 +83,6 @@ public class UserScanReqConverter implements Converter<UserScanReq, Map<String, 
         if (!StringUtils.isEmpty(currency)) {
             map.put("Currency", currency);
         }
-
 
         Double tradeAmount = src.getTradeAmount();
         if (tradeAmount != null) {
@@ -138,12 +134,8 @@ public class UserScanReqConverter implements Converter<UserScanReq, Map<String, 
             map.put("NotifyUrl", notifyUrl);
         }
 
-        String spBillCreateIp = src.getSpBillCreateIp();
-        if (!StringUtils.isEmpty(spBillCreateIp)) {
-            map.put("SpbillCreateIp", spBillCreateIp);
-        }
 
-        List<UserScanReq.Split> splitList = src.getSplitList();
+        List<OneCodePayReq.Split> splitList = src.getSplitList();
         if (splitList != null) {
 
             try {
@@ -153,6 +145,7 @@ public class UserScanReqConverter implements Converter<UserScanReq, Map<String, 
                 throw new RuntimeException(e);
             }
         }
+
         String ext = src.getExt();
         if (!StringUtils.isEmpty(ext)) {
             map.put("Ext", ext);
@@ -167,5 +160,4 @@ public class UserScanReqConverter implements Converter<UserScanReq, Map<String, 
     public void setConversionService(ConversionService conversionService) {
         this.conversionService = conversionService;
     }
-
 }

@@ -11,6 +11,9 @@ import static org.assertj.core.api.Assertions.*;
 
 public class RespConverterTest extends BaseTest {
 
+    /**
+     * 正常例子
+     */
     @Test
     public void converer01() {
 
@@ -42,6 +45,47 @@ public class RespConverterTest extends BaseTest {
         exptected.put("Memo", "memo");
         exptected.put("Sign", "sign");
         exptected.put("SignType", "RSA");
+
+        assertThat(actural).isEqualTo(exptected);
+    }
+
+
+    /**
+     * 测试空字符串
+     */
+    @Test
+    public void converer02() {
+
+        Resp resp = new Resp();
+        resp.setAcceptStatus("");
+        resp.setPartnerId("");
+        resp.setTradeDate("");
+        resp.setTradeTime("");
+        resp.setInputCharset("");
+        resp.setMchId("");
+        resp.setMemo("");
+        resp.setSign("");
+        resp.setSignType("");
+
+
+        Map actural = conversionService.convert(resp, Map.class);
+        Map exptected = new HashMap<String, String>();
+
+        assertThat(actural).isEqualTo(exptected);
+    }
+
+
+
+    /**
+     * 测试 null
+     */
+    @Test
+    public void converer03() {
+
+        Resp resp = new Resp();
+
+        Map actural = conversionService.convert(resp, Map.class);
+        Map exptected = new HashMap<String, String>();
 
         assertThat(actural).isEqualTo(exptected);
     }

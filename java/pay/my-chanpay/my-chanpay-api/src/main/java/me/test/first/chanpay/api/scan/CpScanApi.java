@@ -25,14 +25,22 @@ public interface CpScanApi extends CpApi {
     String S_getDailyRefundFile = "nmg_api_refund_trade_file";
 
 
-    // 4.2.1 二维码主扫 (消费者扫码)
+    //
+
+    /**
+     * 4.2.1 二维码主扫 (消费者扫码)
+     *
+     *
+     * @param req 请求信息
+     * @return 响应信息
+     */
     UserScanResp userScan(UserScanReq req);
 
     // 4.2.2 二维码被扫 (商家扫码)
     void merchantScan();
 
     // 4.2.3 一码付
-    void oneCodePay();
+    OneCodePayResp oneCodePay(OneCodePayReq req);
 
     // 4.2.4 微信公众号 (大商户模式)
     void chanpayWxComPay();
@@ -61,7 +69,6 @@ public interface CpScanApi extends CpApi {
 
     // 4.2.11 退款对账单
     void getDailyRefundFile();
-
 
 
 }

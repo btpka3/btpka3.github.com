@@ -2,18 +2,20 @@ package me.test.first.chanpay.api.scan.dto;
 
 
 import javax.annotation.*;
+import java.io.*;
 import java.time.format.*;
 import java.util.*;
 
 /**
  *
  */
-public class Req {
+public class Req implements Serializable {
 
 
-    private static final DateTimeFormatter _tradeDateFmt = DateTimeFormatter.ofPattern("yyyyMMdd");
-    private static final DateTimeFormatter _tradeTimeFmt = DateTimeFormatter.ofPattern("HHmmss");
+    //private static final DateTimeFormatter _tradeDateFmt = DateTimeFormatter.ofPattern("yyyyMMdd");
+    //private static final DateTimeFormatter _tradeTimeFmt = DateTimeFormatter.ofPattern("HHmmss");
 
+    private static final long serialVersionUID = 1L;
 
     @Nonnull
     private String service;

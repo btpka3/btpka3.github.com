@@ -1,8 +1,8 @@
 package me.test.first.chanpay.api.scan.impl.converter;
 
-import groovy.lang.*;
 import me.test.first.chanpay.api.scan.dto.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.context.annotation.*;
 import org.springframework.core.convert.*;
 import org.springframework.core.convert.converter.*;
 import org.springframework.stereotype.*;
@@ -14,17 +14,16 @@ import java.util.*;
  *
  */
 @Component
-public class UserScanRespConverter implements Converter<UserScanResp, Map<String, String>> {
+public class OneCodePayRespConverter implements Converter<OneCodePayResp, Map<String, String>> {
 
     @Autowired
     @Lazy
     private ConversionService conversionService;
 
     @Override
-    public Map<String, String> convert(UserScanResp src) {
+    public Map<String, String> convert(OneCodePayResp src) {
 
         Map<String, String> map = new LinkedHashMap<>();
-
 
         TypeDescriptor respTd = TypeDescriptor.valueOf(Resp.class);
         TypeDescriptor strTd = TypeDescriptor.valueOf(String.class);
@@ -57,11 +56,6 @@ public class UserScanRespConverter implements Converter<UserScanResp, Map<String
         String codeUrl = src.getCodeUrl();
         if (!StringUtils.isEmpty(codeUrl)) {
             map.put("CodeUrl", codeUrl);
-        }
-
-        String status = src.getStatus();
-        if (!StringUtils.isEmpty(status)) {
-            map.put("Status", status);
         }
 
         String ext = src.getExt();

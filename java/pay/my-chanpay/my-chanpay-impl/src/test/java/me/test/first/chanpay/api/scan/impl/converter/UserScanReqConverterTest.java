@@ -11,6 +11,9 @@ import static org.assertj.core.api.Assertions.*;
 
 public class UserScanReqConverterTest extends BaseTest {
 
+    /**
+     * 正常例子
+     */
     @Test
     public void converer01() {
 
@@ -100,6 +103,72 @@ public class UserScanReqConverterTest extends BaseTest {
         //exptected.put("SplitList", "");
         exptected.put("Ext", "{'ext':'ext1'}");
 
+
+        assertThat(actural).isEqualTo(exptected);
+    }
+
+
+    /**
+     * 测试空字符串
+     */
+    @Test
+    public void converer02() {
+
+        UserScanReq req = new UserScanReq();
+        req.setService("");
+        req.setVersion("");
+        req.setPartnerId("");
+        //req.setTradeTime(tradeTime);
+        req.setSign("");
+        req.setSignType("");
+        req.setReturnUrl("");
+        req.setMemo("");
+        //
+        req.setOutTradeNo("");
+        req.setMchId("");
+        req.setSubMchId("");
+        req.setTradeType("");
+        req.setBankCode("");
+        req.setAppId("");
+        req.setDeviceInfo("");
+        req.setCurrency("");
+        //req.setTradeAmount(0.02);
+        //req.setEnsureAmount(null);
+        req.setGoodsName("");
+        req.setTradeMemo("");
+        req.setSubject("");
+        //req.setOrderStartTime(orderStartTime);
+        //req.setOrderEndTime(null);
+        req.setLimitCreditPay("");
+        req.setNotifyUrl("");
+        req.setSpBillCreateIp("");
+        //req.setSplitList(null);
+        req.setExt("");
+
+        Map actural = conversionService.convert(req, Map.class);
+
+        Map<String, String> exptected = new HashMap<>();
+        exptected.put("InputCharset", "UTF-8");
+
+
+        assertThat(actural).isEqualTo(exptected);
+    }
+
+
+    /**
+     * 测试 null
+     */
+    @Test
+    public void converer03() {
+
+        UserScanReq req = new UserScanReq();
+
+        Map actural = conversionService.convert(req, Map.class);
+
+        Map<String, String> exptected = new HashMap<>();
+        exptected.put("InputCharset", "UTF-8");
+        exptected.put("Version", "1.0");
+        exptected.put("Service", CpScanApi.S_userScan);
 
         assertThat(actural).isEqualTo(exptected);
     }

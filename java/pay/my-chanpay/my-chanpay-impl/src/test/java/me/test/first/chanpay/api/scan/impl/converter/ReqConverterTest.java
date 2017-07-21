@@ -11,6 +11,9 @@ import static org.assertj.core.api.Assertions.*;
 
 public class ReqConverterTest extends BaseTest {
 
+    /**
+     * 测试正常情况
+     */
     @Test
     public void converer01() {
 
@@ -42,6 +45,48 @@ public class ReqConverterTest extends BaseTest {
         exptected.put("SignType", "RSA");
         exptected.put("ReturnUrl", "http://baidu.com");
         exptected.put("Memo", "memo");
+
+        assertThat(actural).isEqualTo(exptected);
+    }
+
+
+    /**
+     * 测试空字符
+     */
+    @Test
+    public void converer02() {
+
+        Req req = new Req();
+        req.setService("");
+        req.setVersion("");
+        req.setPartnerId("");
+        //req.setTradeTime(tradeTime);
+        req.setSign("");
+        req.setSignType("");
+        req.setReturnUrl("");
+        req.setMemo("");
+
+
+        Map actural = conversionService.convert(req, Map.class);
+        Map exptected = new HashMap<String, String>();
+        exptected.put("InputCharset", "UTF-8");
+
+        assertThat(actural).isEqualTo(exptected);
+    }
+
+    /**
+     * 测试 null
+     */
+    @Test
+    public void converer03() {
+
+        Req req = new Req();
+
+        Map actural = conversionService.convert(req, Map.class);
+
+        Map exptected = new HashMap<String, String>();
+        exptected.put("InputCharset", "UTF-8");
+        exptected.put("Version", "1.0");
 
         assertThat(actural).isEqualTo(exptected);
     }
