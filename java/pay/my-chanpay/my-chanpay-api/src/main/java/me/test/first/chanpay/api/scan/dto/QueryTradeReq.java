@@ -2,7 +2,6 @@ package me.test.first.chanpay.api.scan.dto;
 
 import me.test.first.chanpay.api.scan.*;
 
-import javax.annotation.*;
 import java.util.*;
 
 /**
@@ -17,13 +16,13 @@ public class QueryTradeReq extends Req {
     /**
      * 商户唯一订单号
      */
-    @Nonnull
+
     private String trxId;
 
     /**
      * 支付订单号
      */
-    @Nonnull
+
     private String orderTrxId;
 
     /**
@@ -32,7 +31,7 @@ public class QueryTradeReq extends Req {
      * - `pay_order` : 支付订单
      * - `refund_order` : 退款订单
      */
-    @Nonnull
+
     private String tradeType;
 
     /**
@@ -43,30 +42,30 @@ public class QueryTradeReq extends Req {
 
     // ------------------------------------ getter && setter
 
-    @Nonnull
+
     public String getTrxId() {
         return trxId;
     }
 
-    public void setTrxId(@Nonnull String trxId) {
+    public void setTrxId(String trxId) {
         this.trxId = trxId;
     }
 
-    @Nonnull
+
     public String getOrderTrxId() {
         return orderTrxId;
     }
 
-    public void setOrderTrxId(@Nonnull String orderTrxId) {
+    public void setOrderTrxId(String orderTrxId) {
         this.orderTrxId = orderTrxId;
     }
 
-    @Nonnull
+
     public String getTradeType() {
         return tradeType;
     }
 
-    public void setTradeType(@Nonnull String tradeType) {
+    public void setTradeType(String tradeType) {
         this.tradeType = tradeType;
     }
 

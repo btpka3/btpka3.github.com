@@ -1,6 +1,5 @@
 package me.test.first.chanpay.api.scan.dto;
 
-import javax.annotation.*;
 import javax.xml.bind.annotation.*;
 import java.util.*;
 
@@ -13,14 +12,14 @@ public class RefundResp extends Resp {
      * 商户唯一订单号
      */
     @XmlAttribute(name = "TrxId", required = true)
-    @Nonnull
+
     private String trxId;
 
     /**
      * 畅捷支付平台订单号
      */
     @XmlAttribute(name = "OrderTrxId", required = true)
-    @Nonnull
+
     private String orderTrxId;
 
     /**
@@ -31,7 +30,7 @@ public class RefundResp extends Resp {
      * - `F` : 失败
      */
     @XmlAttribute(name = "Status", required = true)
-    @Nonnull
+
     private String status;
 
     /**
@@ -54,30 +53,30 @@ public class RefundResp extends Resp {
 
     // ------------------------------------ getter && setter
 
-    @Nonnull
+
     public String getTrxId() {
         return trxId;
     }
 
-    public void setTrxId(@Nonnull String trxId) {
+    public void setTrxId(String trxId) {
         this.trxId = trxId;
     }
 
-    @Nonnull
+
     public String getOrderTrxId() {
         return orderTrxId;
     }
 
-    public void setOrderTrxId(@Nonnull String orderTrxId) {
+    public void setOrderTrxId(String orderTrxId) {
         this.orderTrxId = orderTrxId;
     }
 
-    @Nonnull
+
     public String getStatus() {
         return status;
     }
 
-    public void setStatus(@Nonnull String status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

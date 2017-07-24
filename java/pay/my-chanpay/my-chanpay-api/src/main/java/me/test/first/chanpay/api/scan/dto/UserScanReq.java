@@ -2,7 +2,6 @@ package me.test.first.chanpay.api.scan.dto;
 
 import me.test.first.chanpay.api.scan.*;
 
-import javax.annotation.*;
 import javax.xml.bind.annotation.*;
 import java.util.*;
 
@@ -15,40 +14,40 @@ public class UserScanReq extends Req {
         this.setService(CpScanApi.S_userScan);
     }
 
-    @Nonnull
+
     private String outTradeNo;
 
-    @Nonnull
+
     private String mchId;
     private String subMchId;
 
-    @Nonnull
+
     private String tradeType;
 
-    @Nonnull
+
     private String bankCode;
     private String appId;
     private String deviceInfo;
     private String currency;
 
-    @Nonnull
+
     private Double tradeAmount;
     private Double ensureAmount;
 
-    @Nonnull
+
     private String goodsName;
     private String tradeMemo;
 
-    @Nonnull
+
     private String subject;
 
-    @Nonnull
+
     private Date orderStartTime;
     private Date orderEndTime;
     private String limitCreditPay;
     private String notifyUrl;
 
-    @Nonnull
+
     private String spBillCreateIp;
 
     private List<Split> splitList;
@@ -108,21 +107,21 @@ public class UserScanReq extends Req {
 
     // ------------------------------------ getter && setter
 
-    @Nonnull
+
     public String getOutTradeNo() {
         return outTradeNo;
     }
 
-    public void setOutTradeNo(@Nonnull String outTradeNo) {
+    public void setOutTradeNo(String outTradeNo) {
         this.outTradeNo = outTradeNo;
     }
 
-    @Nonnull
+
     public String getMchId() {
         return mchId;
     }
 
-    public void setMchId(@Nonnull String mchId) {
+    public void setMchId(String mchId) {
         this.mchId = mchId;
     }
 
@@ -134,21 +133,21 @@ public class UserScanReq extends Req {
         this.subMchId = subMchId;
     }
 
-    @Nonnull
+
     public String getTradeType() {
         return tradeType;
     }
 
-    public void setTradeType(@Nonnull String tradeType) {
+    public void setTradeType(String tradeType) {
         this.tradeType = tradeType;
     }
 
-    @Nonnull
+
     public String getBankCode() {
         return bankCode;
     }
 
-    public void setBankCode(@Nonnull String bankCode) {
+    public void setBankCode(String bankCode) {
         this.bankCode = bankCode;
     }
 
@@ -176,12 +175,12 @@ public class UserScanReq extends Req {
         this.currency = currency;
     }
 
-    @Nonnull
+
     public Double getTradeAmount() {
         return tradeAmount;
     }
 
-    public void setTradeAmount(@Nonnull Double tradeAmount) {
+    public void setTradeAmount(Double tradeAmount) {
         this.tradeAmount = tradeAmount;
     }
 
@@ -193,12 +192,12 @@ public class UserScanReq extends Req {
         this.ensureAmount = ensureAmount;
     }
 
-    @Nonnull
+
     public String getGoodsName() {
         return goodsName;
     }
 
-    public void setGoodsName(@Nonnull String goodsName) {
+    public void setGoodsName(String goodsName) {
         this.goodsName = goodsName;
     }
 
@@ -210,21 +209,21 @@ public class UserScanReq extends Req {
         this.tradeMemo = tradeMemo;
     }
 
-    @Nonnull
+
     public String getSubject() {
         return subject;
     }
 
-    public void setSubject(@Nonnull String subject) {
+    public void setSubject(String subject) {
         this.subject = subject;
     }
 
-    @Nonnull
+
     public Date getOrderStartTime() {
         return orderStartTime;
     }
 
-    public void setOrderStartTime(@Nonnull Date orderStartTime) {
+    public void setOrderStartTime(Date orderStartTime) {
         this.orderStartTime = orderStartTime;
     }
 
@@ -252,12 +251,12 @@ public class UserScanReq extends Req {
         this.notifyUrl = notifyUrl;
     }
 
-    @Nonnull
+
     public String getSpBillCreateIp() {
         return spBillCreateIp;
     }
 
-    public void setSpBillCreateIp(@Nonnull String spBillCreateIp) {
+    public void setSpBillCreateIp(String spBillCreateIp) {
         this.spBillCreateIp = spBillCreateIp;
     }
 

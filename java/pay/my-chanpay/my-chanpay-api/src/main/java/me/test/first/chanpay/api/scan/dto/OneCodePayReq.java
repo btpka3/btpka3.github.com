@@ -2,9 +2,7 @@ package me.test.first.chanpay.api.scan.dto;
 
 import me.test.first.chanpay.api.scan.*;
 
-import javax.annotation.*;
 import javax.xml.bind.annotation.*;
-import java.time.format.*;
 import java.util.*;
 
 /**
@@ -19,13 +17,13 @@ public class OneCodePayReq extends Req {
     /**
      * 商户唯一订单号
      */
-    @Nonnull
+
     private String outTradeNo;
 
     /**
      * 商户标示ID
      */
-    @Nonnull
+
     private String mchId;
 
     /**
@@ -39,7 +37,7 @@ public class OneCodePayReq extends Req {
      * - `11` : 即时
      * - `12` : 担保
      */
-    @Nonnull
+
     private String tradeType;
 
     /**
@@ -49,7 +47,7 @@ public class OneCodePayReq extends Req {
      * - `2` : 固码
      *
      */
-    @Nonnull
+
     private String busiType;
 
 
@@ -66,7 +64,7 @@ public class OneCodePayReq extends Req {
     /**
      * 交易金额
      */
-    @Nonnull
+
     private Double tradeAmount;
 
     /**
@@ -81,7 +79,7 @@ public class OneCodePayReq extends Req {
     /**
      * 商品名称
      */
-    @Nonnull
+
     private String goodsName;
 
     /**
@@ -92,7 +90,7 @@ public class OneCodePayReq extends Req {
     /**
      * 订单标题
      */
-    @Nonnull
+
     private String subject;
 
     /**
@@ -100,7 +98,7 @@ public class OneCodePayReq extends Req {
      *
      * 格式为 `yyyyMMddHHmmss`
      */
-    @Nonnull
+
     private Date orderStartTime;
 
     /**
@@ -326,12 +324,12 @@ public class OneCodePayReq extends Req {
         this.ext = ext;
     }
 
-    @Nonnull
+
     public String getBusiType() {
         return busiType;
     }
 
-    public void setBusiType(@Nonnull String busiType) {
+    public void setBusiType(String busiType) {
         this.busiType = busiType;
     }
     // ------------------------------------ equals && hashCode

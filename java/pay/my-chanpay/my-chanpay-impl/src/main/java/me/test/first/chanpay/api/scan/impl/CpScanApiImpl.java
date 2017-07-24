@@ -11,9 +11,12 @@ import org.springframework.http.*;
 import org.springframework.messaging.core.*;
 import org.springframework.util.*;
 import org.springframework.web.client.*;
+import org.springframework.web.util.*;
 
 import java.io.*;
+import java.net.*;
 import java.util.*;
+import java.util.stream.*;
 
 /**
  *
@@ -95,13 +98,22 @@ public class CpScanApiImpl implements CpScanApi {
             logger.debug("请求 - 请求Map : " + reqMap);
         }
 
+        String joinStr = SignUtils.joinStr(reqMap);
+        if (logger.isDebugEnabled()) {
+            logger.debug("请求 - joinStr : " + joinStr);
+        }
+
         byte[] reqStrToSignBytes = SignUtils.getBytes(
-                SignUtils.joinStr(reqMap),
+                joinStr,
                 req.getInputCharset());
 
         String sign = SignUtils.rsaSign(
                 reqStrToSignBytes,
                 SignUtils.toRsaPriKey(merchantPrivateKey));
+
+        if (logger.isDebugEnabled()) {
+            logger.debug("请求 - sign : " + sign);
+        }
         req.setSignType("RSA");
         req.setSign(sign);
     }
@@ -135,19 +147,55 @@ public class CpScanApiImpl implements CpScanApi {
     }
 
     protected <T extends Req> String sendReq(T req) {
+        return sendReq(req, true);
+    }
+
+    protected <T extends Req> String sendReq(T req, boolean paramInUrl) {
 
         if (msgOps != null) {
             msgOps.convertAndSend(req);
         }
 
-        LinkedMultiValueMap<String, String> reqBody = new LinkedMultiValueMap<>();
-        reqBody.setAll(conversionService.convert(req, Map.class));
+        LinkedMultiValueMap<String, String> reqParams = new LinkedMultiValueMap<>();
+        reqParams.setAll(conversionService.convert(req, Map.class));
 
-        HttpEntity<MultiValueMap<String, String>> reqEntity =
-                new HttpEntity<>(reqBody, null);
+        HttpEntity<MultiValueMap<String, String>> reqEntity = new HttpEntity<>(reqParams, null);
+
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(getGatewayUrl());
+        URI apiUri = uriBuilder.build().toUri();
+
+        if (paramInUrl) {
+
+            // 注意：这里使用手动 编码，因为 RestTemplate 对 URL参数的编码机制与 URLEncoder 不一致：
+            // origin text      : http://dev.chanpay.com/receive.php
+            // RestTemplate     : http://dev.chanpay.com/receive.php
+            // URLEncoder       : http%3A%2F%2Fdev.chanpay.com%2Freceive.php
+            LinkedMultiValueMap<String, String> encodedReqParams = new LinkedMultiValueMap<>();
+            Map<String, String> encodedMap = reqParams.toSingleValueMap()
+                    .entrySet()
+                    .stream()
+                    .collect(Collectors.toMap(
+                            entry -> entry.getValue(),
+                            entry -> {
+                                try {
+                                    return URLEncoder.encode(entry.getValue(), "UTF-8");
+                                } catch (UnsupportedEncodingException e) {
+                                    throw new CpApiException(e);
+                                }
+                            }));
+            encodedReqParams.setAll(encodedMap);
+
+            uriBuilder.queryParams(encodedReqParams);
+            apiUri = uriBuilder.build(false).toUri();
+
+        } else {
+
+            // 而 request body 中的则是由 FormHttpMessageConverter 调用 URLEncoder 处理的。
+            reqEntity = new HttpEntity<>(reqParams, null);
+        }
 
         ResponseEntity<String> respStrEntity = restTemplate.exchange(
-                getGatewayUrl(),
+                apiUri,
                 HttpMethod.POST,
                 reqEntity,
                 String.class);
@@ -170,13 +218,25 @@ public class CpScanApiImpl implements CpScanApi {
     }
 
 
-    protected <R extends Req, P extends Resp> P invokeApi(R req, Class<P> respClass) {
+    protected <R extends Req, P extends Resp> P invokeApi(
+            R req,
+            Class<P> respClass
+    ) {
+        return invokeApi(req, respClass, false);
+
+    }
+
+    protected <R extends Req, P extends Resp> P invokeApi(
+            R req,
+            Class<P> respClass,
+            boolean paramInUrl
+    ) {
 
         // 计算请求签名
         sign(req);
 
         // 发送请求
-        String respStr = sendReq(req);
+        String respStr = sendReq(req, paramInUrl);
 
         // JSON -> Resp
         P resp = toResp(respStr, respClass);

@@ -1,6 +1,5 @@
 package me.test.first.chanpay.api.scan.dto;
 
-import javax.annotation.*;
 import javax.xml.bind.annotation.*;
 import java.util.*;
 
@@ -26,14 +25,14 @@ public class MerchantWxComPayResp extends Resp {
      * 商户唯一订单号
      */
     @XmlAttribute(name = "OutTradeNo", required = true)
-    @Nonnull
+
     private String outTradeNo;
 
     /**
      * 畅捷支付平台订单号
      */
     @XmlAttribute(name = "InnerTradeNo", required = true)
-    @Nonnull
+
     private String innerTradeNo;
 
 
@@ -41,28 +40,28 @@ public class MerchantWxComPayResp extends Resp {
      * 微信/支付宝标识
      */
     @XmlAttribute(name = "JsapiAppId", required = true)
-    @Nonnull
+
     private String jsapiAppId;
 
     /**
      * 随机字符串
      */
     @XmlAttribute(name = "JsapiNonceStr", required = true)
-    @Nonnull
+
     private String jsapiNonceStr;
 
     /**
      * 回话标识
      */
     @XmlAttribute(name = "JsapiPackage", required = true)
-    @Nonnull
+
     private String jsapiPackage;
 
     /**
      * 微信返回的签名值
      */
     @XmlAttribute(name = "JsapiPaySign", required = true)
-    @Nonnull
+
     private String jsapiPaySign;
 
 
@@ -70,14 +69,14 @@ public class MerchantWxComPayResp extends Resp {
      * 微信返回的签名的签名方式
      */
     @XmlAttribute(name = "JsapiSignType", required = true)
-    @Nonnull
+
     private String jsapiSignType;
 
     /**
      * 时间戳
      */
     @XmlAttribute(name = "JsapiTimeStamp", required = true)
-    @Nonnull
+
     private String jsapiTimeStamp;
 
 
@@ -85,7 +84,7 @@ public class MerchantWxComPayResp extends Resp {
      * 商户号
      */
     @XmlAttribute(name = "MchId", required = true)
-    @Nonnull
+
     private String mchId;
 
     /**
@@ -103,7 +102,7 @@ public class MerchantWxComPayResp extends Resp {
      * - `2` : 支付失败
      */
     @XmlAttribute(name = "Status", required = true)
-    @Nonnull
+
     private String status;
 
     /**
@@ -130,86 +129,86 @@ public class MerchantWxComPayResp extends Resp {
         this.retMsg = retMsg;
     }
 
-    @Nonnull
+
     public String getOutTradeNo() {
         return outTradeNo;
     }
 
-    public void setOutTradeNo(@Nonnull String outTradeNo) {
+    public void setOutTradeNo(String outTradeNo) {
         this.outTradeNo = outTradeNo;
     }
 
-    @Nonnull
+
     public String getInnerTradeNo() {
         return innerTradeNo;
     }
 
-    public void setInnerTradeNo(@Nonnull String innerTradeNo) {
+    public void setInnerTradeNo(String innerTradeNo) {
         this.innerTradeNo = innerTradeNo;
     }
 
-    @Nonnull
+
     public String getJsapiAppId() {
         return jsapiAppId;
     }
 
-    public void setJsapiAppId(@Nonnull String jsapiAppId) {
+    public void setJsapiAppId(String jsapiAppId) {
         this.jsapiAppId = jsapiAppId;
     }
 
-    @Nonnull
+
     public String getJsapiNonceStr() {
         return jsapiNonceStr;
     }
 
-    public void setJsapiNonceStr(@Nonnull String jsapiNonceStr) {
+    public void setJsapiNonceStr(String jsapiNonceStr) {
         this.jsapiNonceStr = jsapiNonceStr;
     }
 
-    @Nonnull
+
     public String getJsapiPackage() {
         return jsapiPackage;
     }
 
-    public void setJsapiPackage(@Nonnull String jsapiPackage) {
+    public void setJsapiPackage(String jsapiPackage) {
         this.jsapiPackage = jsapiPackage;
     }
 
-    @Nonnull
+
     public String getJsapiPaySign() {
         return jsapiPaySign;
     }
 
-    public void setJsapiPaySign(@Nonnull String jsapiPaySign) {
+    public void setJsapiPaySign(String jsapiPaySign) {
         this.jsapiPaySign = jsapiPaySign;
     }
 
-    @Nonnull
+
     public String getJsapiSignType() {
         return jsapiSignType;
     }
 
-    public void setJsapiSignType(@Nonnull String jsapiSignType) {
+    public void setJsapiSignType(String jsapiSignType) {
         this.jsapiSignType = jsapiSignType;
     }
 
-    @Nonnull
+
     public String getJsapiTimeStamp() {
         return jsapiTimeStamp;
     }
 
-    public void setJsapiTimeStamp(@Nonnull String jsapiTimeStamp) {
+    public void setJsapiTimeStamp(String jsapiTimeStamp) {
         this.jsapiTimeStamp = jsapiTimeStamp;
     }
 
     @Override
-    @Nonnull
+
     public String getMchId() {
         return mchId;
     }
 
     @Override
-    public void setMchId(@Nonnull String mchId) {
+    public void setMchId(String mchId) {
         this.mchId = mchId;
     }
 
@@ -221,12 +220,12 @@ public class MerchantWxComPayResp extends Resp {
         this.subMchId = subMchId;
     }
 
-    @Nonnull
+
     public String getStatus() {
         return status;
     }
 
-    public void setStatus(@Nonnull String status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

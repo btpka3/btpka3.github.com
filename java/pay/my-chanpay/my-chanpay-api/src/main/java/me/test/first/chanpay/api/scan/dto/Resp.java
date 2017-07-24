@@ -1,6 +1,5 @@
 package me.test.first.chanpay.api.scan.dto;
 
-import javax.annotation.*;
 import javax.xml.bind.annotation.*;
 import java.io.*;
 import java.util.*;
@@ -27,7 +26,7 @@ public class Resp implements Serializable {
      * - `R`: 处理中
      */
     @XmlAttribute(name = "AcceptStatus", required = true)
-    @Nonnull
+
     private String acceptStatus;
 
     /**
@@ -40,21 +39,21 @@ public class Resp implements Serializable {
      * 交易日期。
      */
     @XmlAttribute(name = "TradeDate", required = true)
-    @Nonnull
+
     private String tradeDate;
 
     /**
      * 交易时间。
      */
     @XmlAttribute(name = "TradeTime", required = true)
-    @Nonnull
+
     private String tradeTime;
 
     /**
      * 参数编码字符集。
      */
     @XmlAttribute(name = "InputCharset", required = true)
-    @Nonnull
+
     private String inputCharset;
 
     /**
@@ -73,26 +72,26 @@ public class Resp implements Serializable {
      * 签名
      */
     @XmlAttribute(name = "Sign", required = true)
-    @Nonnull
+
     private String sign;
 
     /**
      * 签名方式
      */
     @XmlAttribute(name = "SignType", required = true)
-    @Nonnull
+
     private String signType;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
 
-    @Nonnull
+
     public String getAcceptStatus() {
         return acceptStatus;
     }
 
-    public void setAcceptStatus(@Nonnull String acceptStatus) {
+    public void setAcceptStatus(String acceptStatus) {
         this.acceptStatus = acceptStatus;
     }
 
@@ -104,30 +103,30 @@ public class Resp implements Serializable {
         this.partnerId = partnerId;
     }
 
-    @Nonnull
+
     public String getTradeDate() {
         return tradeDate;
     }
 
-    public void setTradeDate(@Nonnull String tradeDate) {
+    public void setTradeDate(String tradeDate) {
         this.tradeDate = tradeDate;
     }
 
-    @Nonnull
+
     public String getTradeTime() {
         return tradeTime;
     }
 
-    public void setTradeTime(@Nonnull String tradeTime) {
+    public void setTradeTime(String tradeTime) {
         this.tradeTime = tradeTime;
     }
 
-    @Nonnull
+
     public String getInputCharset() {
         return inputCharset;
     }
 
-    public void setInputCharset(@Nonnull String inputCharset) {
+    public void setInputCharset(String inputCharset) {
         this.inputCharset = inputCharset;
     }
 
@@ -147,21 +146,21 @@ public class Resp implements Serializable {
         this.memo = memo;
     }
 
-    @Nonnull
+
     public String getSign() {
         return sign;
     }
 
-    public void setSign(@Nonnull String sign) {
+    public void setSign(String sign) {
         this.sign = sign;
     }
 
-    @Nonnull
+
     public String getSignType() {
         return signType;
     }
 
-    public void setSignType(@Nonnull String signType) {
+    public void setSignType(String signType) {
         this.signType = signType;
     }
 

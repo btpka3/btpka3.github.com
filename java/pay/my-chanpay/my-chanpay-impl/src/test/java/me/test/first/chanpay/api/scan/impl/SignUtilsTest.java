@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.*;
 public class SignUtilsTest extends BaseTest {
 
 
-    @Test
+//    @Test
     public void keyTest01() throws UnsupportedEncodingException {
 
         byte[] bytes = "Hello World~".getBytes("UTF-8");
@@ -144,6 +144,8 @@ Process finished with exit code 0
     }
 
 
+
+
     @Test
     public void signWithRsa02() {
 
@@ -207,10 +209,10 @@ Process finished with exit code 0
         String actualSign = SignUtils.rsaSign(bytes, priKey);
         assertThat(actualSign).isEqualTo(expectedSign);
 
-        PublicKey pubKey = SignUtils.toRsaPubKey(props.getScan().getMchPubKey());
-
-        boolean verifyResult = SignUtils.rsaSignVerify(bytes, expectedSign, pubKey);
-        assertThat(verifyResult).isTrue();
+//        PublicKey pubKey = SignUtils.toRsaPubKey(props.getScan().getMchPubKey());
+//
+//        boolean verifyResult = SignUtils.rsaSignVerify(bytes, expectedSign, pubKey);
+//        assertThat(verifyResult).isTrue();
 
     }
 

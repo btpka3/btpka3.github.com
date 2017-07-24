@@ -16,26 +16,26 @@ public class Req implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Nonnull
+
     private String service;
 
-    @Nonnull
+
     private String version = "1.0";
 
-    @Nonnull
+
     private String partnerId;
 
-    @Nonnull
+
     private final String inputCharset = "UTF-8";
     //    private String tradeDate;
 
-    @Nonnull
+
     private Date tradeDateTime;
 
-    @Nonnull
+
     private String sign = "";
 
-    @Nonnull
+
     private String signType = "RSA";
 
     @Nullable
@@ -50,62 +50,62 @@ public class Req implements Serializable {
         return serialVersionUID;
     }
 
-    @Nonnull
+
     public String getService() {
         return service;
     }
 
-    public void setService(@Nonnull String service) {
+    public void setService(String service) {
         this.service = service;
     }
 
-    @Nonnull
+
     public String getVersion() {
         return version;
     }
 
-    public void setVersion(@Nonnull String version) {
+    public void setVersion(String version) {
         this.version = version;
     }
 
-    @Nonnull
+
     public String getPartnerId() {
         return partnerId;
     }
 
-    public void setPartnerId(@Nonnull String partnerId) {
+    public void setPartnerId(String partnerId) {
         this.partnerId = partnerId;
     }
 
-    @Nonnull
+
     public String getInputCharset() {
         return inputCharset;
     }
 
-    @Nonnull
+
     public Date getTradeDateTime() {
         return tradeDateTime;
     }
 
-    public void setTradeDateTime(@Nonnull Date tradeDateTime) {
+    public void setTradeDateTime(Date tradeDateTime) {
         this.tradeDateTime = tradeDateTime;
     }
 
-    @Nonnull
+
     public String getSign() {
         return sign;
     }
 
-    public void setSign(@Nonnull String sign) {
+    public void setSign(String sign) {
         this.sign = sign;
     }
 
-    @Nonnull
+
     public String getSignType() {
         return signType;
     }
 
-    public void setSignType(@Nonnull String signType) {
+    public void setSignType(String signType) {
         this.signType = signType;
     }
 

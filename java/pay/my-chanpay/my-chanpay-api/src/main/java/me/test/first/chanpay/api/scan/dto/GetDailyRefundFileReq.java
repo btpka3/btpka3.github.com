@@ -2,8 +2,6 @@ package me.test.first.chanpay.api.scan.dto;
 
 import me.test.first.chanpay.api.scan.*;
 
-import javax.annotation.*;
-import javax.xml.bind.annotation.*;
 import java.util.*;
 
 /**
@@ -14,20 +12,21 @@ public class GetDailyRefundFileReq extends Req {
     public GetDailyRefundFileReq() {
         this.setService(CpScanApi.S_getDailyRefundFile);
     }
+
     /**
      * 交易日期
      */
-    @Nonnull
+
     private Date transDate;
 
     // ------------------------------------ getter && setter
 
-    @Nonnull
+
     public Date getTransDate() {
         return transDate;
     }
 
-    public void setTransDate(@Nonnull Date transDate) {
+    public void setTransDate(Date transDate) {
         this.transDate = transDate;
     }
 

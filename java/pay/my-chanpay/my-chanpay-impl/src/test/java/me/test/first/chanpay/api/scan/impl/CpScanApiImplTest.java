@@ -5,14 +5,66 @@ import me.test.first.chanpay.api.scan.*;
 import me.test.first.chanpay.api.scan.dto.*;
 import org.junit.*;
 
+import java.time.*;
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.*;
 
 public class CpScanApiImplTest extends BaseTest {
 
-    //@Value("${ut.scan.mchPubKey}")
-    //String a;
+    /**
+     * 使用固定的参数，以方便调试签名过程。
+     */
+
+    @Test
+    public void userScan00() throws JsonProcessingException {
+        ZonedDateTime tradeTimeZdt = ZonedDateTime.of(
+                2017, 7, 24,
+                12, 12, 40,
+                444 * 1000 * 1000,
+                ZoneId.of("Asia/Shanghai"));
+
+        Date tradeDateTime = Date.from(tradeTimeZdt.toInstant());
+
+        UserScanReq req = new UserScanReq();
+        req.setService(CpScanApi.S_userScan);
+        req.setVersion("1.0");
+        req.setPartnerId("200000140001");
+        req.setTradeDateTime(tradeDateTime);
+        req.setReturnUrl("http://dev.chanpay.com/receive.php");
+        req.setMemo("备注");
+
+
+//        req.setOutTradeNo(Long.toString(System.currentTimeMillis()));
+        req.setOutTradeNo("11223344556633");
+        req.setMchId("200000140001");
+//        req.setSubMchId("");
+        req.setTradeType("11");
+        req.setBankCode("WXPAY");
+        req.setAppId("wx90192dels817xla0");
+        req.setDeviceInfo("wx90192dels817xla0");
+        req.setCurrency("CNY");
+        req.setTradeAmount(0.02);
+//        req.setEnsureAmount(0.02);
+        req.setGoodsName("11");
+
+        req.setTradeMemo("1111");
+        req.setOrderStartTime(tradeDateTime);
+//        req.setOrderEndTime();
+        req.setNotifyUrl("http://www.baidu.com");
+        req.setSpBillCreateIp("127.0.0.1");
+//        req.setSplitList();
+        req.setExt("{'ext':'ext1'}");
+        req.setSignType("RSA");
+        req.setSubject("subject");
+
+
+        UserScanResp resp = cpScanApi.userScan(req);
+
+
+        String acceptStatus = resp.getAcceptStatus();
+        assertThat("S".equals(acceptStatus) || "R".equals(acceptStatus)).isTrue();
+    }
 
     @Test
     public void userScan01() throws JsonProcessingException {
@@ -61,7 +113,6 @@ public class CpScanApiImplTest extends BaseTest {
     @Test
     public void oneCodePay01() throws JsonProcessingException {
 
-
         OneCodePayReq req = new OneCodePayReq();
         req.setService(CpScanApi.S_oneCodePay);
         req.setVersion("1.0");
@@ -106,7 +157,8 @@ public class CpScanApiImplTest extends BaseTest {
         req.setMemo("备注");
         //
         req.setOutTradeNo(Long.toString(System.currentTimeMillis()));
-        req.setMchId("200000400059");
+        req.setMchId("200000140001");
+//        req.setMchId("200000400059");
         req.setSubMchId("");
         req.setTradeType("11");
         req.setBankCode("WXPAY");
@@ -146,7 +198,8 @@ public class CpScanApiImplTest extends BaseTest {
         req.setMemo("备注");
         //
         req.setOutTradeNo(Long.toString(System.currentTimeMillis()));
-        req.setMchId("200000400059");
+//        req.setMchId("200000400059");
+        req.setMchId("200000140001");
 //        req.setSubMchId("");
         req.setTradeType("11");
         req.setAppId("wx90192dels817xla0");
@@ -165,7 +218,6 @@ public class CpScanApiImplTest extends BaseTest {
 //        req.setSplitList();
         req.setExt("{'ext':'ext1'}");
         req.setSignType("RSA");
-
 
         MerchantWxComPayResp resp = cpScanApi.merchantWxComPay(req);
 

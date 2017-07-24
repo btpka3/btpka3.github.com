@@ -2,7 +2,6 @@ package me.test.first.chanpay.api.scan.dto;
 
 import me.test.first.chanpay.api.scan.*;
 
-import javax.annotation.*;
 import javax.xml.bind.annotation.*;
 import java.util.*;
 
@@ -18,13 +17,13 @@ public class MerchantWxComPayReq extends Req {
     /**
      * 商户唯一订单号
      */
-    @Nonnull
+
     private String outTradeNo;
 
     /**
      * 商户号
      */
-    @Nonnull
+
     private String mchId;
 
     /**
@@ -38,19 +37,19 @@ public class MerchantWxComPayReq extends Req {
      * - `11` : 即时
      * - `12` : 担保
      */
-    @Nonnull
+
     private String tradeType;
 
     /**
      * 微信/支付宝标识
      */
-    @Nonnull
+
     private String appId;
 
     /**
      * 付方支付ID
      */
-    @Nonnull
+
     private String buyerPayCode;
 
     /**
@@ -66,7 +65,7 @@ public class MerchantWxComPayReq extends Req {
     /**
      * 交易金额
      */
-    @Nonnull
+
     private Double tradeAmount;
 
     /**
@@ -77,7 +76,7 @@ public class MerchantWxComPayReq extends Req {
     /**
      * 商品名称
      */
-    @Nonnull
+
     private String goodsName;
 
     /**
@@ -88,13 +87,13 @@ public class MerchantWxComPayReq extends Req {
     /**
      * 订单标题
      */
-    @Nonnull
+
     private String subject;
 
     /**
      * 订单起始提交时间
      */
-    @Nonnull
+
     private Date orderStartTime;
 
     /**
@@ -115,7 +114,7 @@ public class MerchantWxComPayReq extends Req {
     /**
      * 终端IP
      */
-    @Nonnull
+
     private String spBillCreateIp;
 
     /**
@@ -183,21 +182,21 @@ public class MerchantWxComPayReq extends Req {
 
     // ------------------------------------ getter && setter
 
-    @Nonnull
+
     public String getOutTradeNo() {
         return outTradeNo;
     }
 
-    public void setOutTradeNo(@Nonnull String outTradeNo) {
+    public void setOutTradeNo(String outTradeNo) {
         this.outTradeNo = outTradeNo;
     }
 
-    @Nonnull
+
     public String getMchId() {
         return mchId;
     }
 
-    public void setMchId(@Nonnull String mchId) {
+    public void setMchId(String mchId) {
         this.mchId = mchId;
     }
 
@@ -209,30 +208,30 @@ public class MerchantWxComPayReq extends Req {
         this.subMchId = subMchId;
     }
 
-    @Nonnull
+
     public String getTradeType() {
         return tradeType;
     }
 
-    public void setTradeType(@Nonnull String tradeType) {
+    public void setTradeType(String tradeType) {
         this.tradeType = tradeType;
     }
 
-    @Nonnull
+
     public String getAppId() {
         return appId;
     }
 
-    public void setAppId(@Nonnull String appId) {
+    public void setAppId(String appId) {
         this.appId = appId;
     }
 
-    @Nonnull
+
     public String getBuyerPayCode() {
         return buyerPayCode;
     }
 
-    public void setBuyerPayCode(@Nonnull String buyerPayCode) {
+    public void setBuyerPayCode(String buyerPayCode) {
         this.buyerPayCode = buyerPayCode;
     }
 
@@ -252,12 +251,12 @@ public class MerchantWxComPayReq extends Req {
         this.currency = currency;
     }
 
-    @Nonnull
+
     public Double getTradeAmount() {
         return tradeAmount;
     }
 
-    public void setTradeAmount(@Nonnull Double tradeAmount) {
+    public void setTradeAmount(Double tradeAmount) {
         this.tradeAmount = tradeAmount;
     }
 
@@ -269,12 +268,12 @@ public class MerchantWxComPayReq extends Req {
         this.ensureAmount = ensureAmount;
     }
 
-    @Nonnull
+
     public String getGoodsName() {
         return goodsName;
     }
 
-    public void setGoodsName(@Nonnull String goodsName) {
+    public void setGoodsName(String goodsName) {
         this.goodsName = goodsName;
     }
 
@@ -286,21 +285,21 @@ public class MerchantWxComPayReq extends Req {
         this.tradeMemo = tradeMemo;
     }
 
-    @Nonnull
+
     public String getSubject() {
         return subject;
     }
 
-    public void setSubject(@Nonnull String subject) {
+    public void setSubject(String subject) {
         this.subject = subject;
     }
 
-    @Nonnull
+
     public Date getOrderStartTime() {
         return orderStartTime;
     }
 
-    public void setOrderStartTime(@Nonnull Date orderStartTime) {
+    public void setOrderStartTime(Date orderStartTime) {
         this.orderStartTime = orderStartTime;
     }
 
@@ -328,12 +327,12 @@ public class MerchantWxComPayReq extends Req {
         this.notifyUrl = notifyUrl;
     }
 
-    @Nonnull
+
     public String getSpBillCreateIp() {
         return spBillCreateIp;
     }
 
-    public void setSpBillCreateIp(@Nonnull String spBillCreateIp) {
+    public void setSpBillCreateIp(String spBillCreateIp) {
         this.spBillCreateIp = spBillCreateIp;
     }
 

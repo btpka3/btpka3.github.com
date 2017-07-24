@@ -1,6 +1,5 @@
 package me.test.first.chanpay.api.scan.dto;
 
-import javax.annotation.*;
 import javax.xml.bind.annotation.*;
 import java.util.*;
 
@@ -14,14 +13,14 @@ public class TradeNotify extends NotifyBase {
      * 商户唯一订单号
      */
     @XmlAttribute(name = "OutTradeNo", required = true)
-    @Nonnull
+
     private String outTradeNo;
 
     /**
      * 畅捷支付平台订单号
      */
     @XmlAttribute(name = "InnerTradeNo", required = true)
-    @Nonnull
+
     private String innerTradeNo;
 
 
@@ -29,14 +28,14 @@ public class TradeNotify extends NotifyBase {
      * 交易状态
      */
     @XmlAttribute(name = "TradeStatus", required = true)
-    @Nonnull
+
     private String tradeStatus;
 
     /**
      * 交易金额
      */
     @XmlAttribute(name = "TradeAmount", required = true)
-    @Nonnull
+
     private Double tradeAmount;
 
     /**
@@ -45,7 +44,7 @@ public class TradeNotify extends NotifyBase {
      * 格式: `yyyyMMddHHmmss`
      */
     @XmlAttribute(name = "GmtCreate", required = true)
-    @Nonnull
+
     private Date gmtCreate;
 
     /**
@@ -72,48 +71,48 @@ public class TradeNotify extends NotifyBase {
 
     // ------------------------------------ getter && setter
 
-    @Nonnull
+
     public String getOutTradeNo() {
         return outTradeNo;
     }
 
-    public void setOutTradeNo(@Nonnull String outTradeNo) {
+    public void setOutTradeNo(String outTradeNo) {
         this.outTradeNo = outTradeNo;
     }
 
-    @Nonnull
+
     public String getInnerTradeNo() {
         return innerTradeNo;
     }
 
-    public void setInnerTradeNo(@Nonnull String innerTradeNo) {
+    public void setInnerTradeNo(String innerTradeNo) {
         this.innerTradeNo = innerTradeNo;
     }
 
-    @Nonnull
+
     public String getTradeStatus() {
         return tradeStatus;
     }
 
-    public void setTradeStatus(@Nonnull String tradeStatus) {
+    public void setTradeStatus(String tradeStatus) {
         this.tradeStatus = tradeStatus;
     }
 
-    @Nonnull
+
     public Double getTradeAmount() {
         return tradeAmount;
     }
 
-    public void setTradeAmount(@Nonnull Double tradeAmount) {
+    public void setTradeAmount(Double tradeAmount) {
         this.tradeAmount = tradeAmount;
     }
 
-    @Nonnull
+
     public Date getGmtCreate() {
         return gmtCreate;
     }
 
-    public void setGmtCreate(@Nonnull Date gmtCreate) {
+    public void setGmtCreate(Date gmtCreate) {
         this.gmtCreate = gmtCreate;
     }
 

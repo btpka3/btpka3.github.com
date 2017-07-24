@@ -1,6 +1,5 @@
 package me.test.first.chanpay.api.scan.dto;
 
-import javax.annotation.*;
 import javax.xml.bind.annotation.*;
 import java.util.*;
 
@@ -26,28 +25,28 @@ public class MerchantAliPubPayResp extends Resp {
      * 商户唯一订单号
      */
     @XmlAttribute(name = "OutTradeNo", required = true)
-    @Nonnull
+
     private String outTradeNo;
 
     /**
      * 畅捷支付平台订单号
      */
     @XmlAttribute(name = "InnerTradeNo", required = true)
-    @Nonnull
+
     private String innerTradeNo;
 
     /**
      * 回话标识
      */
     @XmlAttribute(name = "PayData", required = true)
-    @Nonnull
+
     private String payData;
 
     /**
      * 商户号
      */
     @XmlAttribute(name = "MchId", required = true)
-    @Nonnull
+
     private String mchId;
 
     /**
@@ -64,7 +63,7 @@ public class MerchantAliPubPayResp extends Resp {
      * - `2` : 支付失败
      */
     @XmlAttribute(name = "Status", required = true)
-    @Nonnull
+
     private String status;
 
     /**
@@ -91,41 +90,41 @@ public class MerchantAliPubPayResp extends Resp {
         this.retMsg = retMsg;
     }
 
-    @Nonnull
+
     public String getOutTradeNo() {
         return outTradeNo;
     }
 
-    public void setOutTradeNo(@Nonnull String outTradeNo) {
+    public void setOutTradeNo(String outTradeNo) {
         this.outTradeNo = outTradeNo;
     }
 
-    @Nonnull
+
     public String getInnerTradeNo() {
         return innerTradeNo;
     }
 
-    public void setInnerTradeNo(@Nonnull String innerTradeNo) {
+    public void setInnerTradeNo(String innerTradeNo) {
         this.innerTradeNo = innerTradeNo;
     }
 
-    @Nonnull
+
     public String getPayData() {
         return payData;
     }
 
-    public void setPayData(@Nonnull String payData) {
+    public void setPayData(String payData) {
         this.payData = payData;
     }
 
     @Override
-    @Nonnull
+
     public String getMchId() {
         return mchId;
     }
 
     @Override
-    public void setMchId(@Nonnull String mchId) {
+    public void setMchId(String mchId) {
         this.mchId = mchId;
     }
 
@@ -137,12 +136,12 @@ public class MerchantAliPubPayResp extends Resp {
         this.subMchId = subMchId;
     }
 
-    @Nonnull
+
     public String getStatus() {
         return status;
     }
 
-    public void setStatus(@Nonnull String status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

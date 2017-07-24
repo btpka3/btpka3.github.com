@@ -2,7 +2,6 @@ package me.test.first.chanpay.api.scan.dto;
 
 import me.test.first.chanpay.api.scan.*;
 
-import javax.annotation.*;
 import javax.xml.bind.annotation.*;
 import java.util.*;
 
@@ -18,13 +17,13 @@ public class ConfirmWarrantTradeReq extends Req {
     /**
      * 商户唯一订单号
      */
-    @Nonnull
+
     private String trxId;
 
     /**
      * 担保订单号
      */
-    @Nonnull
+
     private String outTradeNo;
 
     /**
@@ -121,21 +120,21 @@ public class ConfirmWarrantTradeReq extends Req {
 
     // ------------------------------------ getter && setter
 
-    @Nonnull
+
     public String getTrxId() {
         return trxId;
     }
 
-    public void setTrxId(@Nonnull String trxId) {
+    public void setTrxId(String trxId) {
         this.trxId = trxId;
     }
 
-    @Nonnull
+
     public String getOutTradeNo() {
         return outTradeNo;
     }
 
-    public void setOutTradeNo(@Nonnull String outTradeNo) {
+    public void setOutTradeNo(String outTradeNo) {
         this.outTradeNo = outTradeNo;
     }
 

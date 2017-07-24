@@ -1,6 +1,5 @@
 package me.test.first.chanpay.api.scan.dto;
 
-import javax.annotation.*;
 import javax.xml.bind.annotation.*;
 import java.io.*;
 import java.util.*;
@@ -22,14 +21,14 @@ public class NotifyBase implements Serializable {
      * 通知ID
      */
     @XmlAttribute(name = "NotifyId", required = true)
-    @Nonnull
+
     private String notifyId;
 
     /**
      * 通知类型
      */
     @XmlAttribute(name = "NotifyType", required = true)
-    @Nonnull
+
     private String notifyType;
 
 
@@ -39,14 +38,14 @@ public class NotifyBase implements Serializable {
      * 格式 : `yyyyMMddHHmmss`
      */
     @XmlAttribute(name = "NotifyTime", required = true)
-    @Nonnull
+
     private Date notifyTime;
 
     /**
      * 参数字符集编码.
      */
     @XmlAttribute(name = "Charset", required = true)
-    @Nonnull
+
     private Date charset;
 
 
@@ -54,7 +53,7 @@ public class NotifyBase implements Serializable {
      * 签名.
      */
     @XmlAttribute(name = "Sign", required = true)
-    @Nonnull
+
     private String sign;
 
 
@@ -62,14 +61,14 @@ public class NotifyBase implements Serializable {
      * 签名方式.
      */
     @XmlAttribute(name = "SignType", required = true)
-    @Nonnull
+
     private String signType;
 
     /**
      * 版本号.
      */
     @XmlAttribute(name = "Version", required = true)
-    @Nonnull
+
     private String version;
     // ------------------------------------ getter && setter
 
@@ -77,66 +76,66 @@ public class NotifyBase implements Serializable {
         return serialVersionUID;
     }
 
-    @Nonnull
+
     public String getNotifyId() {
         return notifyId;
     }
 
-    public void setNotifyId(@Nonnull String notifyId) {
+    public void setNotifyId(String notifyId) {
         this.notifyId = notifyId;
     }
 
-    @Nonnull
+
     public String getNotifyType() {
         return notifyType;
     }
 
-    public void setNotifyType(@Nonnull String notifyType) {
+    public void setNotifyType(String notifyType) {
         this.notifyType = notifyType;
     }
 
-    @Nonnull
+
     public Date getNotifyTime() {
         return notifyTime;
     }
 
-    public void setNotifyTime(@Nonnull Date notifyTime) {
+    public void setNotifyTime(Date notifyTime) {
         this.notifyTime = notifyTime;
     }
 
-    @Nonnull
+
     public Date getCharset() {
         return charset;
     }
 
-    public void setCharset(@Nonnull Date charset) {
+    public void setCharset(Date charset) {
         this.charset = charset;
     }
 
-    @Nonnull
+
     public String getSign() {
         return sign;
     }
 
-    public void setSign(@Nonnull String sign) {
+    public void setSign(String sign) {
         this.sign = sign;
     }
 
-    @Nonnull
+
     public String getSignType() {
         return signType;
     }
 
-    public void setSignType(@Nonnull String signType) {
+    public void setSignType(String signType) {
         this.signType = signType;
     }
 
-    @Nonnull
+
     public String getVersion() {
         return version;
     }
 
-    public void setVersion(@Nonnull String version) {
+    public void setVersion(String version) {
         this.version = version;
     }
 

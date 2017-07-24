@@ -2,7 +2,6 @@ package me.test.first.chanpay.api.scan.dto;
 
 import me.test.first.chanpay.api.scan.*;
 
-import javax.annotation.*;
 import javax.xml.bind.annotation.*;
 import java.util.*;
 
@@ -19,19 +18,19 @@ public class RefundReq extends Req {
     /**
      * 商户唯一订单号
      */
-    @Nonnull
+
     private String trxId;
 
     /**
      * 支付订单号
      */
-    @Nonnull
+
     private String oriTrxId;
 
     /**
      * 退款金额
      */
-    @Nonnull
+
     private Double trxAmt;
 
     /**
@@ -138,30 +137,30 @@ public class RefundReq extends Req {
 
     // ------------------------------------ getter && setter
 
-    @Nonnull
+
     public String getTrxId() {
         return trxId;
     }
 
-    public void setTrxId(@Nonnull String trxId) {
+    public void setTrxId(String trxId) {
         this.trxId = trxId;
     }
 
-    @Nonnull
+
     public String getOriTrxId() {
         return oriTrxId;
     }
 
-    public void setOriTrxId(@Nonnull String oriTrxId) {
+    public void setOriTrxId(String oriTrxId) {
         this.oriTrxId = oriTrxId;
     }
 
-    @Nonnull
+
     public Double getTrxAmt() {
         return trxAmt;
     }
 
-    public void setTrxAmt(@Nonnull Double trxAmt) {
+    public void setTrxAmt(Double trxAmt) {
         this.trxAmt = trxAmt;
     }
 

@@ -1,6 +1,5 @@
 package me.test.first.chanpay.api.scan.dto;
 
-import javax.annotation.*;
 import javax.xml.bind.annotation.*;
 import java.util.*;
 
@@ -30,7 +29,7 @@ public class ConfirmWarrantTradeResp extends Resp {
      * - `2` : 支付失败
      */
     @XmlAttribute(name = "Status", required = true)
-    @Nonnull
+
     private String status;
 
 
@@ -52,12 +51,12 @@ public class ConfirmWarrantTradeResp extends Resp {
         this.retMsg = retMsg;
     }
 
-    @Nonnull
+
     public String getStatus() {
         return status;
     }
 
-    public void setStatus(@Nonnull String status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

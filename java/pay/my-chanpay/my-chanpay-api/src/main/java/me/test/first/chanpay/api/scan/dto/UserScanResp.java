@@ -1,6 +1,5 @@
 package me.test.first.chanpay.api.scan.dto;
 
-import javax.annotation.*;
 import javax.xml.bind.annotation.*;
 import java.util.*;
 
@@ -16,19 +15,19 @@ public class UserScanResp extends Resp {
     private String retMsg;
 
     @XmlAttribute(name = "OutTradeNo", required = true)
-    @Nonnull
+
     private String outTradeNo;
 
     @XmlAttribute(name = "InnerTradeNo", required = true)
-    @Nonnull
+
     private String innerTradeNo;
 
     @XmlAttribute(name = "CodeUrl", required = true)
-    @Nonnull
+
     private String codeUrl;
 
     @XmlAttribute(name = "Status", required = true)
-    @Nonnull
+
     private String status;
 
     @XmlAttribute(name = "Ext")

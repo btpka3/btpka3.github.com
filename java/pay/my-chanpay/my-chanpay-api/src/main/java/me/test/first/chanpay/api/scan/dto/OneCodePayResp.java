@@ -1,6 +1,5 @@
 package me.test.first.chanpay.api.scan.dto;
 
-import javax.annotation.*;
 import javax.xml.bind.annotation.*;
 import java.util.*;
 
@@ -26,21 +25,21 @@ public class OneCodePayResp extends Resp {
      * 商户唯一订单号
      */
     @XmlAttribute(name = "OutTradeNo", required = true)
-    @Nonnull
+
     private String outTradeNo;
 
     /**
      * 畅捷支付平台订单号
      */
     @XmlAttribute(name = "InnerTradeNo", required = true)
-    @Nonnull
+
     private String innerTradeNo;
 
     /**
      * 支付url
      */
     @XmlAttribute(name = "CodeUrl", required = true)
-    @Nonnull
+
     private String codeUrl;
 
     /**
