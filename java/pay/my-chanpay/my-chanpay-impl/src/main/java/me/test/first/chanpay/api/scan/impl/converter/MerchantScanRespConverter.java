@@ -1,9 +1,9 @@
 package me.test.first.chanpay.api.scan.impl.converter;
 
+import groovy.lang.*;
 import me.test.first.chanpay.api.scan.dto.*;
 import org.springframework.beans.factory.*;
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.context.annotation.*;
 import org.springframework.core.convert.*;
 import org.springframework.core.convert.converter.*;
 import org.springframework.stereotype.*;
@@ -15,15 +15,16 @@ import java.util.*;
  *
  */
 @Component
-public class OneCodePayRespConverter implements Converter<OneCodePayResp, Map<String, String>> {
+public class MerchantScanRespConverter implements Converter<MerchantScanResp, Map<String, String>> {
 
     @Autowired
     private ObjectProvider<ConversionService> conversionServiceProvider;
 
     @Override
-    public Map<String, String> convert(OneCodePayResp src) {
+    public Map<String, String> convert(MerchantScanResp src) {
 
         Map<String, String> map = new LinkedHashMap<>();
+
 
         TypeDescriptor respTd = TypeDescriptor.valueOf(Resp.class);
         TypeDescriptor strTd = TypeDescriptor.valueOf(String.class);
@@ -54,9 +55,19 @@ public class OneCodePayRespConverter implements Converter<OneCodePayResp, Map<St
             map.put("InnerTradeNo", innerTradeNo);
         }
 
-        String codeUrl = src.getCodeUrl();
-        if (!StringUtils.isEmpty(codeUrl)) {
-            map.put("CodeUrl", codeUrl);
+        String mchId = src.getMchId();
+        if (!StringUtils.isEmpty(mchId)) {
+            map.put("MchId", mchId);
+        }
+
+        String subMchId = src.getSubMchId();
+        if (!StringUtils.isEmpty(subMchId)) {
+            map.put("SubMchId", subMchId);
+        }
+
+        String status = src.getStatus();
+        if (!StringUtils.isEmpty(status)) {
+            map.put("Status", status);
         }
 
         String ext = src.getExt();

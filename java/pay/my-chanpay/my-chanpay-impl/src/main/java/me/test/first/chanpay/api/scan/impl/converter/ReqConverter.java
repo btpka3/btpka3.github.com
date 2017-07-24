@@ -47,10 +47,10 @@ public class ReqConverter implements Converter<Req, Map<String, String>> {
             map.put("Sign", sign);
         }
 
-        Date tradeTime = src.getTradeTime();
-        if (tradeTime != null) {
+        Date tradeDateTime = src.getTradeDateTime();
+        if (tradeDateTime != null) {
             LocalDateTime ldt = LocalDateTime.ofInstant(
-                    tradeTime.toInstant(),
+                    tradeDateTime.toInstant(),
                     ZoneId.of("Asia/Shanghai"));
             map.put("TradeDate", tradeDateFmt.format(ldt));
             map.put("TradeTime", tradeTimeFmt.format(ldt));

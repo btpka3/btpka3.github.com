@@ -169,7 +169,7 @@ Process finished with exit code 0
         req.setService("mag_init_code_pay");
         req.setVersion("1.0");
         req.setPartnerId("200000140001");
-        req.setTradeTime(tradeTime);
+        req.setTradeDateTime(tradeTime);
         req.setSign(expectedSign);
         req.setSignType("RSA");
         req.setReturnUrl("http://dev.chanpay.com/receive.php");

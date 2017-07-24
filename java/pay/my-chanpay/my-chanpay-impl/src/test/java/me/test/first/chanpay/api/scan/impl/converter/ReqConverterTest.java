@@ -20,13 +20,13 @@ public class ReqConverterTest extends BaseTest {
 
         ZonedDateTime zdt = ZonedDateTime.of(2000, 1, 2, 11, 22, 33, 444 * 1000 * 1000, ZoneId.of("Asia/Shanghai"));
 
-        Date tradeTime = Date.from(zdt.toInstant());
+        Date tradeDateTime = Date.from(zdt.toInstant());
 
         Req req = new Req();
         req.setService("service");
         req.setVersion("version");
         req.setPartnerId("partnerId");
-        req.setTradeTime(tradeTime);
+        req.setTradeDateTime(tradeDateTime);
         req.setSign("sign");
         req.setSignType("RSA");
         req.setReturnUrl("http://baidu.com");
@@ -56,11 +56,15 @@ public class ReqConverterTest extends BaseTest {
     @Test
     public void converer02() {
 
+
+        ZonedDateTime zdt = ZonedDateTime.of(2000, 1, 2, 11, 22, 33, 444 * 1000 * 1000, ZoneId.of("Asia/Shanghai"));
+        Date tradeDateTime = Date.from(zdt.toInstant());
+
         Req req = new Req();
         req.setService("");
         req.setVersion("");
         req.setPartnerId("");
-        //req.setTradeTime(tradeTime);
+        req.setTradeDateTime(tradeDateTime);
         req.setSign("");
         req.setSignType("");
         req.setReturnUrl("");
@@ -70,6 +74,8 @@ public class ReqConverterTest extends BaseTest {
         Map actural = conversionService.convert(req, Map.class);
         Map exptected = new HashMap<String, String>();
         exptected.put("InputCharset", "UTF-8");
+        exptected.put("TradeDate", "20000102");
+        exptected.put("TradeTime", "112233");
 
         assertThat(actural).isEqualTo(exptected);
     }
@@ -80,13 +86,26 @@ public class ReqConverterTest extends BaseTest {
     @Test
     public void converer03() {
 
+
+        ZonedDateTime zdt = ZonedDateTime.of(2000, 1, 2, 11, 22, 33, 444 * 1000 * 1000, ZoneId.of("Asia/Shanghai"));
+        Date tradeDateTime = Date.from(zdt.toInstant());
+
         Req req = new Req();
+        req.setService("");
+        req.setVersion("");
+        req.setPartnerId("");
+        req.setTradeDateTime(tradeDateTime);
+        req.setSign("");
+        req.setSignType("");
+        req.setReturnUrl(null);
+        req.setMemo(null);
+
 
         Map actural = conversionService.convert(req, Map.class);
-
         Map exptected = new HashMap<String, String>();
         exptected.put("InputCharset", "UTF-8");
-        exptected.put("Version", "1.0");
+        exptected.put("TradeDate", "20000102");
+        exptected.put("TradeTime", "112233");
 
         assertThat(actural).isEqualTo(exptected);
     }

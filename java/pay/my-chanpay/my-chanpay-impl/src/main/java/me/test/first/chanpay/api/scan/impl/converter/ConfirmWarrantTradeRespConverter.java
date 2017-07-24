@@ -1,9 +1,9 @@
 package me.test.first.chanpay.api.scan.impl.converter;
 
+import groovy.lang.*;
 import me.test.first.chanpay.api.scan.dto.*;
 import org.springframework.beans.factory.*;
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.context.annotation.*;
 import org.springframework.core.convert.*;
 import org.springframework.core.convert.converter.*;
 import org.springframework.stereotype.*;
@@ -15,13 +15,13 @@ import java.util.*;
  *
  */
 @Component
-public class OneCodePayRespConverter implements Converter<OneCodePayResp, Map<String, String>> {
+public class ConfirmWarrantTradeRespConverter implements Converter<ConfirmWarrantTradeResp, Map<String, String>> {
 
     @Autowired
     private ObjectProvider<ConversionService> conversionServiceProvider;
 
     @Override
-    public Map<String, String> convert(OneCodePayResp src) {
+    public Map<String, String> convert(ConfirmWarrantTradeResp src) {
 
         Map<String, String> map = new LinkedHashMap<>();
 
@@ -44,24 +44,9 @@ public class OneCodePayRespConverter implements Converter<OneCodePayResp, Map<St
             map.put("RetMsg", retMsg);
         }
 
-        String outTradeNo = src.getOutTradeNo();
-        if (!StringUtils.isEmpty(outTradeNo)) {
-            map.put("OutTradeNo", outTradeNo);
-        }
-
-        String innerTradeNo = src.getInnerTradeNo();
-        if (!StringUtils.isEmpty(innerTradeNo)) {
-            map.put("InnerTradeNo", innerTradeNo);
-        }
-
-        String codeUrl = src.getCodeUrl();
-        if (!StringUtils.isEmpty(codeUrl)) {
-            map.put("CodeUrl", codeUrl);
-        }
-
-        String ext = src.getExt();
-        if (!StringUtils.isEmpty(ext)) {
-            map.put("Ext", ext);
+        String status = src.getStatus();
+        if (!StringUtils.isEmpty(status)) {
+            map.put("Status", status);
         }
 
         return map;

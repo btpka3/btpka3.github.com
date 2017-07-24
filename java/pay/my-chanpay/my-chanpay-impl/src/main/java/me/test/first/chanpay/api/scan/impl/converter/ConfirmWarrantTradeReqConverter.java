@@ -1,5 +1,7 @@
 package me.test.first.chanpay.api.scan.impl.converter;
 
+import com.fasterxml.jackson.core.*;
+import com.fasterxml.jackson.databind.*;
 import me.test.first.chanpay.api.scan.dto.*;
 import org.springframework.beans.factory.*;
 import org.springframework.beans.factory.annotation.*;
@@ -9,39 +11,39 @@ import org.springframework.core.convert.converter.*;
 import org.springframework.stereotype.*;
 import org.springframework.util.*;
 
+import java.time.*;
 import java.util.*;
 
 /**
  *
  */
 @Component
-public class OneCodePayRespConverter implements Converter<OneCodePayResp, Map<String, String>> {
+public class ConfirmWarrantTradeReqConverter implements Converter<ConfirmWarrantTradeReq, Map<String, String>> {
+
 
     @Autowired
     private ObjectProvider<ConversionService> conversionServiceProvider;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @Override
-    public Map<String, String> convert(OneCodePayResp src) {
+    public Map<String, String> convert(ConfirmWarrantTradeReq src) {
 
         Map<String, String> map = new LinkedHashMap<>();
 
-        TypeDescriptor respTd = TypeDescriptor.valueOf(Resp.class);
+        TypeDescriptor reqTd = TypeDescriptor.valueOf(Req.class);
         TypeDescriptor strTd = TypeDescriptor.valueOf(String.class);
         TypeDescriptor mapTd = TypeDescriptor.map(Map.class, strTd, strTd);
 
         ConversionService conversionService =  conversionServiceProvider.getObject();
-        Map<String, String> respMap = (Map<String, String>) conversionService.convert(src, respTd, mapTd);
+        Map<String, String> reqMap = (Map<String, String>) conversionService.convert(src, reqTd, mapTd);
 
-        map.putAll(respMap);
+        map.putAll(reqMap);
 
-        String retCode = src.getRetCode();
-        if (!StringUtils.isEmpty(retCode)) {
-            map.put("RetCode", retCode);
-        }
-
-        String retMsg = src.getRetMsg();
-        if (!StringUtils.isEmpty(retMsg)) {
-            map.put("RetMsg", retMsg);
+        String trxId = src.getTrxId();
+        if (!StringUtils.isEmpty(trxId)) {
+            map.put("TrxId", trxId);
         }
 
         String outTradeNo = src.getOutTradeNo();
@@ -49,21 +51,20 @@ public class OneCodePayRespConverter implements Converter<OneCodePayResp, Map<St
             map.put("OutTradeNo", outTradeNo);
         }
 
-        String innerTradeNo = src.getInnerTradeNo();
-        if (!StringUtils.isEmpty(innerTradeNo)) {
-            map.put("InnerTradeNo", innerTradeNo);
-        }
-
-        String codeUrl = src.getCodeUrl();
-        if (!StringUtils.isEmpty(codeUrl)) {
-            map.put("CodeUrl", codeUrl);
+        List<ConfirmWarrantTradeReq.Split> splitList = src.getRoyaltyParameters();
+        if (splitList != null) {
+            try {
+                String json = objectMapper.writeValueAsString(splitList);
+                map.put("RoyaltyParameters", json);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         String ext = src.getExt();
         if (!StringUtils.isEmpty(ext)) {
             map.put("Ext", ext);
         }
-
         return map;
     }
 }

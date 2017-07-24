@@ -15,13 +15,13 @@ import java.util.*;
  *
  */
 @Component
-public class OneCodePayRespConverter implements Converter<OneCodePayResp, Map<String, String>> {
+public class MerchantAliPubPayRespConverter implements Converter<MerchantAliPubPayResp, Map<String, String>> {
 
     @Autowired
     private ObjectProvider<ConversionService> conversionServiceProvider;
 
     @Override
-    public Map<String, String> convert(OneCodePayResp src) {
+    public Map<String, String> convert(MerchantAliPubPayResp src) {
 
         Map<String, String> map = new LinkedHashMap<>();
 
@@ -54,9 +54,23 @@ public class OneCodePayRespConverter implements Converter<OneCodePayResp, Map<St
             map.put("InnerTradeNo", innerTradeNo);
         }
 
-        String codeUrl = src.getCodeUrl();
-        if (!StringUtils.isEmpty(codeUrl)) {
-            map.put("CodeUrl", codeUrl);
+        String payData = src.getPayData();
+        if (!StringUtils.isEmpty(payData)) {
+            map.put("PayData", payData);
+        }
+
+        String mchId = src.getMchId();
+        if (!StringUtils.isEmpty(mchId)) {
+            map.put("MchId", mchId);
+        }
+
+        String subMchId = src.getSubMchId();
+        if (!StringUtils.isEmpty(subMchId)) {
+            map.put("SubMchId", subMchId);
+        }
+        String status = src.getStatus();
+        if (!StringUtils.isEmpty(status)) {
+            map.put("Status", status);
         }
 
         String ext = src.getExt();

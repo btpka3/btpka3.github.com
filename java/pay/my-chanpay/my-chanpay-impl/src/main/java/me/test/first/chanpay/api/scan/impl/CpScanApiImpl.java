@@ -1,12 +1,14 @@
 package me.test.first.chanpay.api.scan.impl;
 
 import com.fasterxml.jackson.databind.*;
+import me.test.first.chanpay.api.*;
 import me.test.first.chanpay.api.scan.*;
 import me.test.first.chanpay.api.scan.dto.*;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.core.convert.*;
 import org.springframework.http.*;
+import org.springframework.messaging.core.*;
 import org.springframework.util.*;
 import org.springframework.web.client.*;
 
@@ -24,14 +26,12 @@ public class CpScanApiImpl implements CpScanApi {
 
     private String gatewayUrl;
 
-//    private DtoUtils dtoUtils;
-
-//    private CpScanApiUtils cpScanApiUtils;
-
     private ObjectMapper objectMapper;
     private String merchantPrivateKey;
     private String merchantPublicKey;
     private boolean verifyRespSign = false;
+
+    private MessageSendingOperations msgOps;
 
     @Autowired
     private ConversionService conversionService;
@@ -135,6 +135,11 @@ public class CpScanApiImpl implements CpScanApi {
     }
 
     protected <T extends Req> String sendReq(T req) {
+
+        if (msgOps != null) {
+            msgOps.convertAndSend(req);
+        }
+
         LinkedMultiValueMap<String, String> reqBody = new LinkedMultiValueMap<>();
         reqBody.setAll(conversionService.convert(req, Map.class));
 
@@ -159,7 +164,7 @@ public class CpScanApiImpl implements CpScanApi {
         try {
             resp = objectMapper.readValue(json, clazz);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new CpApiException(e);
         }
         return resp;
     }
@@ -189,8 +194,8 @@ public class CpScanApiImpl implements CpScanApi {
     }
 
     @Override
-    public void merchantScan() {
-
+    public MerchantScanResp merchantScan(MerchantScanReq req) {
+        return invokeApi(req, MerchantScanResp.class);
     }
 
     @Override
@@ -199,47 +204,47 @@ public class CpScanApiImpl implements CpScanApi {
     }
 
     @Override
-    public void chanpayWxComPay() {
-
+    public ChanpayWxComPayResp chanpayWxComPay(ChanpayWxComPayReq req) {
+        return invokeApi(req, ChanpayWxComPayResp.class);
     }
 
     @Override
-    public void merchantWxComPay() {
-
+    public MerchantWxComPayResp merchantWxComPay(MerchantWxComPayReq req) {
+        return invokeApi(req, MerchantWxComPayResp.class);
     }
 
     @Override
-    public void merchantAliPubPay() {
-
+    public MerchantAliPubPayResp merchantAliPubPay(MerchantAliPubPayReq req) {
+        return invokeApi(req, MerchantAliPubPayResp.class);
     }
 
     @Override
-    public void aliWapPay() {
-
+    public AliWapPayResp aliWapPay(AliWapPayReq req) {
+        return invokeApi(req, AliWapPayResp.class);
     }
 
     @Override
-    public void confirmEnsureTrade() {
-
+    public ConfirmWarrantTradeResp confirmWarrantTrade(ConfirmWarrantTradeReq req) {
+        return invokeApi(req, ConfirmWarrantTradeResp.class);
     }
 
     @Override
-    public void queryTrade() {
-
+    public QueryTradeResp queryTrade(QueryTradeReq req) {
+        return invokeApi(req, QueryTradeResp.class);
     }
 
     @Override
-    public void refund() {
-
+    public RefundResp refund(RefundReq req) {
+        return invokeApi(req, RefundResp.class);
     }
 
     @Override
-    public void getDailyTradeFile() {
-
+    public GetDailyTradeFileResp getDailyTradeFile(GetDailyTradeFileReq req) {
+        return invokeApi(req, GetDailyTradeFileResp.class);
     }
 
     @Override
-    public void getDailyRefundFile() {
-
+    public GetDailyRefundFileResp getDailyRefundFile(GetDailyRefundFileReq req) {
+        return invokeApi(req, GetDailyRefundFileResp.class);
     }
 }

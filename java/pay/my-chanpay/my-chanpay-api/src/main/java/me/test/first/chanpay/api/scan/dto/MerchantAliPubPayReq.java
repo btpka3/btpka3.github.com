@@ -9,53 +9,129 @@ import java.util.*;
 /**
  *
  */
-public class UserScanReq extends Req {
+public class MerchantAliPubPayReq extends Req {
 
-    public UserScanReq() {
-        this.setService(CpScanApi.S_userScan);
+    public MerchantAliPubPayReq() {
+        this.setService(CpScanApi.S_merchantAliPubPay);
     }
 
+    /**
+     * 商户唯一订单号
+     */
     @Nonnull
     private String outTradeNo;
 
+    /**
+     * 商户号
+     */
     @Nonnull
     private String mchId;
+
+    /**
+     * 子商户标示ID
+     */
     private String subMchId;
 
+    /**
+     * 交易类型
+     *
+     * - `11` : 即时
+     * - `12` : 担保
+     */
     @Nonnull
     private String tradeType;
 
-    @Nonnull
-    private String bankCode;
-    private String appId;
+
+    /**
+     * 用户ID
+     */
+    private String buyerId;
+
+
+    /**
+     * 支付宝ID
+     */
+    private String buyerLogonId;
+
+
+    /**
+     * 设备信息
+     */
     private String deviceInfo;
+
+    /**
+     * 币种
+     */
     private String currency;
 
+    /**
+     * 交易金额
+     */
     @Nonnull
     private Double tradeAmount;
+
+    /**
+     * 担保金额
+     */
     private Double ensureAmount;
 
+    /**
+     * 商品名称
+     */
     @Nonnull
     private String goodsName;
+
+    /**
+     * 商品描述
+     */
     private String tradeMemo;
 
+    /**
+     * 订单标题
+     */
     @Nonnull
     private String subject;
 
+    /**
+     * 订单起始提交时间
+     */
     @Nonnull
     private Date orderStartTime;
+
+    /**
+     * 订单失效时间
+     */
     private Date orderEndTime;
+
+    /**
+     * 限制信用卡
+     */
     private String limitCreditPay;
+
+    /**
+     * 服务器异步通知页面路径
+     */
     private String notifyUrl;
 
+    /**
+     * 终端IP
+     */
     @Nonnull
     private String spBillCreateIp;
 
+    /**
+     * 分账列表
+     */
     private List<Split> splitList;
+
+    /**
+     * 扩展字段
+     */
     private String ext;
 
 
     public static class Split {
+
 
         /**
          * 收方商户号
@@ -143,21 +219,20 @@ public class UserScanReq extends Req {
         this.tradeType = tradeType;
     }
 
-    @Nonnull
-    public String getBankCode() {
-        return bankCode;
+    public String getBuyerId() {
+        return buyerId;
     }
 
-    public void setBankCode(@Nonnull String bankCode) {
-        this.bankCode = bankCode;
+    public void setBuyerId(String buyerId) {
+        this.buyerId = buyerId;
     }
 
-    public String getAppId() {
-        return appId;
+    public String getBuyerLogonId() {
+        return buyerLogonId;
     }
 
-    public void setAppId(String appId) {
-        this.appId = appId;
+    public void setBuyerLogonId(String buyerLogonId) {
+        this.buyerLogonId = buyerLogonId;
     }
 
     public String getDeviceInfo() {
@@ -285,13 +360,13 @@ public class UserScanReq extends Req {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        UserScanReq that = (UserScanReq) o;
+        MerchantAliPubPayReq that = (MerchantAliPubPayReq) o;
         return Objects.equals(outTradeNo, that.outTradeNo) &&
                 Objects.equals(mchId, that.mchId) &&
                 Objects.equals(subMchId, that.subMchId) &&
                 Objects.equals(tradeType, that.tradeType) &&
-                Objects.equals(bankCode, that.bankCode) &&
-                Objects.equals(appId, that.appId) &&
+                Objects.equals(buyerId, that.buyerId) &&
+                Objects.equals(buyerLogonId, that.buyerLogonId) &&
                 Objects.equals(deviceInfo, that.deviceInfo) &&
                 Objects.equals(currency, that.currency) &&
                 Objects.equals(tradeAmount, that.tradeAmount) &&
@@ -310,7 +385,6 @@ public class UserScanReq extends Req {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), outTradeNo, mchId, subMchId, tradeType, bankCode, appId, deviceInfo, currency, tradeAmount, ensureAmount, goodsName, tradeMemo, subject, orderStartTime, orderEndTime, limitCreditPay, notifyUrl, spBillCreateIp, splitList, ext);
+        return Objects.hash(super.hashCode(), outTradeNo, mchId, subMchId, tradeType, buyerId, buyerLogonId, deviceInfo, currency, tradeAmount, ensureAmount, goodsName, tradeMemo, subject, orderStartTime, orderEndTime, limitCreditPay, notifyUrl, spBillCreateIp, splitList, ext);
     }
-
 }

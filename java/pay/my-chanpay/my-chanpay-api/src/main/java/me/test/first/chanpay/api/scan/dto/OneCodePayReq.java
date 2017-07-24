@@ -3,6 +3,7 @@ package me.test.first.chanpay.api.scan.dto;
 import me.test.first.chanpay.api.scan.*;
 
 import javax.annotation.*;
+import javax.xml.bind.annotation.*;
 import java.time.format.*;
 import java.util.*;
 
@@ -140,11 +141,13 @@ public class OneCodePayReq extends Req {
         /**
          * 收方商户号
          */
+        @XmlAttribute(name = "PayeeId")
         private String payeeId;
 
         /**
          * 分账金额
          */
+        @XmlAttribute(name = "Amount")
         private Double amount;
 
         // ------------------------------------ getter && setter

@@ -83,12 +83,16 @@ public class Resp implements Serializable {
     @Nonnull
     private String signType;
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
 
+    @Nonnull
     public String getAcceptStatus() {
         return acceptStatus;
     }
 
-    public void setAcceptStatus(String acceptStatus) {
+    public void setAcceptStatus(@Nonnull String acceptStatus) {
         this.acceptStatus = acceptStatus;
     }
 
@@ -100,27 +104,30 @@ public class Resp implements Serializable {
         this.partnerId = partnerId;
     }
 
+    @Nonnull
     public String getTradeDate() {
         return tradeDate;
     }
 
-    public void setTradeDate(String tradeDate) {
+    public void setTradeDate(@Nonnull String tradeDate) {
         this.tradeDate = tradeDate;
     }
 
+    @Nonnull
     public String getTradeTime() {
         return tradeTime;
     }
 
-    public void setTradeTime(String tradeTime) {
+    public void setTradeTime(@Nonnull String tradeTime) {
         this.tradeTime = tradeTime;
     }
 
+    @Nonnull
     public String getInputCharset() {
         return inputCharset;
     }
 
-    public void setInputCharset(String inputCharset) {
+    public void setInputCharset(@Nonnull String inputCharset) {
         this.inputCharset = inputCharset;
     }
 
@@ -140,19 +147,21 @@ public class Resp implements Serializable {
         this.memo = memo;
     }
 
+    @Nonnull
     public String getSign() {
         return sign;
     }
 
-    public void setSign(String sign) {
+    public void setSign(@Nonnull String sign) {
         this.sign = sign;
     }
 
+    @Nonnull
     public String getSignType() {
         return signType;
     }
 
-    public void setSignType(String signType) {
+    public void setSignType(@Nonnull String signType) {
         this.signType = signType;
     }
 

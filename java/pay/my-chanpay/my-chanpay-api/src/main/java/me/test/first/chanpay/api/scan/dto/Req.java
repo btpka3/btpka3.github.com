@@ -3,7 +3,6 @@ package me.test.first.chanpay.api.scan.dto;
 
 import javax.annotation.*;
 import java.io.*;
-import java.time.format.*;
 import java.util.*;
 
 /**
@@ -31,87 +30,101 @@ public class Req implements Serializable {
     //    private String tradeDate;
 
     @Nonnull
-    private Date tradeTime;
+    private Date tradeDateTime;
 
     @Nonnull
-    private String sign;
+    private String sign = "";
 
     @Nonnull
-    private String signType;
+    private String signType = "RSA";
 
     @Nullable
-    private String returnUrl;
+    private String returnUrl = "";
 
     @Nullable
-    private String memo;
+    private String memo = "";
 
     // ------------------------------------ getter && setter
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    @Nonnull
     public String getService() {
         return service;
     }
 
-    public void setService(String service) {
+    public void setService(@Nonnull String service) {
         this.service = service;
     }
 
+    @Nonnull
     public String getVersion() {
         return version;
     }
 
-    public void setVersion(String version) {
+    public void setVersion(@Nonnull String version) {
         this.version = version;
     }
 
+    @Nonnull
     public String getPartnerId() {
         return partnerId;
     }
 
-    public void setPartnerId(String partnerId) {
+    public void setPartnerId(@Nonnull String partnerId) {
         this.partnerId = partnerId;
     }
 
+    @Nonnull
     public String getInputCharset() {
         return inputCharset;
     }
 
+    @Nonnull
+    public Date getTradeDateTime() {
+        return tradeDateTime;
+    }
+
+    public void setTradeDateTime(@Nonnull Date tradeDateTime) {
+        this.tradeDateTime = tradeDateTime;
+    }
+
+    @Nonnull
     public String getSign() {
         return sign;
     }
 
-    public void setSign(String sign) {
+    public void setSign(@Nonnull String sign) {
         this.sign = sign;
     }
 
+    @Nonnull
     public String getSignType() {
         return signType;
     }
 
-    public void setSignType(String signType) {
+    public void setSignType(@Nonnull String signType) {
         this.signType = signType;
     }
 
+    @Nullable
     public String getReturnUrl() {
         return returnUrl;
     }
 
-    public void setReturnUrl(String returnUrl) {
+    public void setReturnUrl(@Nullable String returnUrl) {
         this.returnUrl = returnUrl;
     }
 
+    @Nullable
     public String getMemo() {
         return memo;
     }
 
-    public void setMemo(String memo) {
+    public void setMemo(@Nullable String memo) {
         this.memo = memo;
-    }
-
-    public Date getTradeTime() {
-        return tradeTime;
-    }
-
-    public void setTradeTime(Date tradeTime) {
-        this.tradeTime = tradeTime;
     }
 
     // ------------------------------------ equals && hashCode
@@ -126,7 +139,7 @@ public class Req implements Serializable {
                 Objects.equals(version, req.version) &&
                 Objects.equals(partnerId, req.partnerId) &&
                 Objects.equals(inputCharset, req.inputCharset) &&
-                Objects.equals(tradeTime, req.tradeTime) &&
+                Objects.equals(tradeDateTime, req.tradeDateTime) &&
                 Objects.equals(sign, req.sign) &&
                 Objects.equals(signType, req.signType) &&
                 Objects.equals(returnUrl, req.returnUrl) &&
@@ -135,7 +148,7 @@ public class Req implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(service, version, partnerId, inputCharset, tradeTime, sign, signType, returnUrl, memo);
+        return Objects.hash(service, version, partnerId, inputCharset, tradeDateTime, sign, signType, returnUrl, memo);
     }
 
 }

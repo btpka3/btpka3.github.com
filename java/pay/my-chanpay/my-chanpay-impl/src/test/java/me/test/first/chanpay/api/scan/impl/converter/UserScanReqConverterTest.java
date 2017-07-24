@@ -26,7 +26,7 @@ public class UserScanReqConverterTest extends BaseTest {
                 444 * 1000 * 1000,
                 ZoneId.of("Asia/Shanghai"));
 
-        Date tradeTime = Date.from(tradeTimeZdt.toInstant());
+        Date tradeDateTime = Date.from(tradeTimeZdt.toInstant());
 
         ZonedDateTime orderStartTimeZdt = ZonedDateTime.of(
                 2017, 7, 19,
@@ -40,7 +40,7 @@ public class UserScanReqConverterTest extends BaseTest {
         req.setService("mag_init_code_pay");
         req.setVersion("1.0");
         req.setPartnerId("200000140001");
-        req.setTradeTime(tradeTime);
+        req.setTradeDateTime(tradeDateTime);
         req.setSign(sign);
         req.setSignType("RSA");
         req.setReturnUrl("http://dev.chanpay.com/receive.php");
@@ -48,23 +48,32 @@ public class UserScanReqConverterTest extends BaseTest {
         //
         req.setOutTradeNo("1500437560445");
         req.setMchId("200000140001");
-        req.setSubMchId("");
+        req.setSubMchId("1");
         req.setTradeType("11");
         req.setBankCode("WXPAY");
         req.setAppId("wx90192dels817xla0");
         req.setDeviceInfo("wx90192dels817xla0");
         req.setCurrency("CNY");
         req.setTradeAmount(0.02);
-        req.setEnsureAmount(null);
+        req.setEnsureAmount(1.11);
         req.setGoodsName("11");
         req.setTradeMemo("1111");
         req.setSubject("0153");
         req.setOrderStartTime(orderStartTime);
-        req.setOrderEndTime(null);
-        req.setLimitCreditPay("");
+        req.setOrderEndTime(orderStartTime);
+        req.setLimitCreditPay("99");
         req.setNotifyUrl("http://www.baidu.com");
         req.setSpBillCreateIp("127.0.0.1");
-        req.setSplitList(null);
+
+        UserScanReq.Split s1 = new UserScanReq.Split();
+        s1.setPayeeId("aaa");
+        s1.setAmount(111.11);
+
+        UserScanReq.Split s2 = new UserScanReq.Split();
+        s2.setPayeeId("bbb");
+        s2.setAmount(222.22);
+
+        req.setSplitList(Arrays.asList(s1, s2));
         req.setExt("{'ext':'ext1'}");
 
         Map actural = conversionService.convert(req, Map.class);
@@ -84,23 +93,23 @@ public class UserScanReqConverterTest extends BaseTest {
         //
         exptected.put("OutTradeNo", "1500437560445");
         exptected.put("MchId", "200000140001");
-        //exptected.put("SubMchId", "");
+        exptected.put("SubMchId", "1");
         exptected.put("TradeType", "11");
         exptected.put("BankCode", "WXPAY");
         exptected.put("AppId", "wx90192dels817xla0");
         exptected.put("DeviceInfo", "wx90192dels817xla0");
         exptected.put("Currency", "CNY");
         exptected.put("TradeAmount", "0.02");
-        //exptected.put("EnsureAmount", "");
+        exptected.put("EnsureAmount", "1.11");
         exptected.put("GoodsName", "11");
         exptected.put("TradeMemo", "1111");
         exptected.put("Subject", "0153");
         exptected.put("OrderStartTime", "20170719121240");
-        //exptected.put("OrderEndTime", "");
-        //exptected.put("LimitCreditPay", "");
+        exptected.put("OrderEndTime", "20170719121240");
+        exptected.put("LimitCreditPay", "99");
         exptected.put("NotifyUrl", "http://www.baidu.com");
         exptected.put("SpbillCreateIp", "127.0.0.1");
-        //exptected.put("SplitList", "");
+        exptected.put("SplitList", "[{\"PayeeId\":\"aaa\",\"Amount\":111.11},{\"PayeeId\":\"bbb\",\"Amount\":222.22}]");
         exptected.put("Ext", "{'ext':'ext1'}");
 
 
@@ -114,11 +123,28 @@ public class UserScanReqConverterTest extends BaseTest {
     @Test
     public void converer02() {
 
+        ZonedDateTime tradeTimeZdt = ZonedDateTime.of(
+                2017, 7, 19,
+                12, 12, 40,
+                444 * 1000 * 1000,
+                ZoneId.of("Asia/Shanghai"));
+
+        Date tradeDateTime = Date.from(tradeTimeZdt.toInstant());
+
+
+        ZonedDateTime orderStartTimeZdt = ZonedDateTime.of(
+                2017, 7, 19,
+                12, 12, 40,
+                555 * 1000 * 1000,
+                ZoneId.of("Asia/Shanghai"));
+
+        Date orderStartTime = Date.from(orderStartTimeZdt.toInstant());
+
         UserScanReq req = new UserScanReq();
         req.setService("");
         req.setVersion("");
         req.setPartnerId("");
-        //req.setTradeTime(tradeTime);
+        req.setTradeDateTime(tradeDateTime);
         req.setSign("");
         req.setSignType("");
         req.setReturnUrl("");
@@ -132,24 +158,28 @@ public class UserScanReqConverterTest extends BaseTest {
         req.setAppId("");
         req.setDeviceInfo("");
         req.setCurrency("");
-        //req.setTradeAmount(0.02);
-        //req.setEnsureAmount(null);
+        req.setTradeAmount(0.02);
+        req.setEnsureAmount(null);
         req.setGoodsName("");
         req.setTradeMemo("");
         req.setSubject("");
-        //req.setOrderStartTime(orderStartTime);
-        //req.setOrderEndTime(null);
+        req.setOrderStartTime(orderStartTime);
+        req.setOrderEndTime(orderStartTime);
         req.setLimitCreditPay("");
         req.setNotifyUrl("");
         req.setSpBillCreateIp("");
-        //req.setSplitList(null);
+        req.setSplitList(null);
         req.setExt("");
 
         Map actural = conversionService.convert(req, Map.class);
 
         Map<String, String> exptected = new HashMap<>();
         exptected.put("InputCharset", "UTF-8");
-
+        exptected.put("TradeDate", "20170719");
+        exptected.put("TradeTime", "121240");
+        exptected.put("TradeAmount", "0.02");
+        exptected.put("OrderStartTime", "20170719121240");
+        exptected.put("OrderEndTime", "20170719121240");
 
         assertThat(actural).isEqualTo(exptected);
     }
@@ -161,14 +191,62 @@ public class UserScanReqConverterTest extends BaseTest {
     @Test
     public void converer03() {
 
+        ZonedDateTime tradeTimeZdt = ZonedDateTime.of(
+                2017, 7, 19,
+                12, 12, 40,
+                444 * 1000 * 1000,
+                ZoneId.of("Asia/Shanghai"));
+
+        Date tradeDateTime = Date.from(tradeTimeZdt.toInstant());
+
+
+        ZonedDateTime orderStartTimeZdt = ZonedDateTime.of(
+                2017, 7, 19,
+                12, 12, 40,
+                555 * 1000 * 1000,
+                ZoneId.of("Asia/Shanghai"));
+
+        Date orderStartTime = Date.from(orderStartTimeZdt.toInstant());
+
         UserScanReq req = new UserScanReq();
+        req.setService("");
+        req.setVersion("");
+        req.setPartnerId("");
+        req.setTradeDateTime(tradeDateTime);
+        req.setSign("");
+        req.setSignType("");
+        req.setReturnUrl(null);
+        req.setMemo(null);
+        //
+        req.setOutTradeNo("");
+        req.setMchId("");
+        req.setSubMchId(null);
+        req.setTradeType("");
+        req.setBankCode("");
+        req.setAppId("");
+        req.setDeviceInfo("");
+        req.setCurrency("");
+        req.setTradeAmount(0.02);
+        req.setEnsureAmount(null);
+        req.setGoodsName("");
+        req.setTradeMemo(null);
+        req.setSubject("");
+        req.setOrderStartTime(orderStartTime);
+        req.setOrderEndTime(null);
+        req.setLimitCreditPay(null);
+        req.setNotifyUrl(null);
+        req.setSpBillCreateIp("");
+        req.setSplitList(null);
+        req.setExt(null);
 
         Map actural = conversionService.convert(req, Map.class);
 
         Map<String, String> exptected = new HashMap<>();
         exptected.put("InputCharset", "UTF-8");
-        exptected.put("Version", "1.0");
-        exptected.put("Service", CpScanApi.S_userScan);
+        exptected.put("TradeDate", "20170719");
+        exptected.put("TradeTime", "121240");
+        exptected.put("TradeAmount", "0.02");
+        exptected.put("OrderStartTime", "20170719121240");
 
         assertThat(actural).isEqualTo(exptected);
     }

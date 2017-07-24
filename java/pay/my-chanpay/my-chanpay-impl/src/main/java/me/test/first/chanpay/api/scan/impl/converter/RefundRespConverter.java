@@ -1,9 +1,9 @@
 package me.test.first.chanpay.api.scan.impl.converter;
 
+import groovy.lang.*;
 import me.test.first.chanpay.api.scan.dto.*;
 import org.springframework.beans.factory.*;
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.context.annotation.*;
 import org.springframework.core.convert.*;
 import org.springframework.core.convert.converter.*;
 import org.springframework.stereotype.*;
@@ -15,13 +15,13 @@ import java.util.*;
  *
  */
 @Component
-public class OneCodePayRespConverter implements Converter<OneCodePayResp, Map<String, String>> {
+public class RefundRespConverter implements Converter<RefundResp, Map<String, String>> {
 
     @Autowired
     private ObjectProvider<ConversionService> conversionServiceProvider;
 
     @Override
-    public Map<String, String> convert(OneCodePayResp src) {
+    public Map<String, String> convert(RefundResp src) {
 
         Map<String, String> map = new LinkedHashMap<>();
 
@@ -34,6 +34,21 @@ public class OneCodePayRespConverter implements Converter<OneCodePayResp, Map<St
 
         map.putAll(respMap);
 
+        String trxId = src.getTrxId();
+        if (!StringUtils.isEmpty(trxId)) {
+            map.put("TrxId", trxId);
+        }
+
+        String orderTrxId = src.getOrderTrxId();
+        if (!StringUtils.isEmpty(orderTrxId)) {
+            map.put("OrderTrxId", orderTrxId);
+        }
+
+        String status = src.getStatus();
+        if (!StringUtils.isEmpty(status)) {
+            map.put("Status", status);
+        }
+
         String retCode = src.getRetCode();
         if (!StringUtils.isEmpty(retCode)) {
             map.put("RetCode", retCode);
@@ -44,24 +59,9 @@ public class OneCodePayRespConverter implements Converter<OneCodePayResp, Map<St
             map.put("RetMsg", retMsg);
         }
 
-        String outTradeNo = src.getOutTradeNo();
-        if (!StringUtils.isEmpty(outTradeNo)) {
-            map.put("OutTradeNo", outTradeNo);
-        }
-
-        String innerTradeNo = src.getInnerTradeNo();
-        if (!StringUtils.isEmpty(innerTradeNo)) {
-            map.put("InnerTradeNo", innerTradeNo);
-        }
-
-        String codeUrl = src.getCodeUrl();
-        if (!StringUtils.isEmpty(codeUrl)) {
-            map.put("CodeUrl", codeUrl);
-        }
-
-        String ext = src.getExt();
-        if (!StringUtils.isEmpty(ext)) {
-            map.put("Ext", ext);
+        String extension = src.getExtension();
+        if (!StringUtils.isEmpty(extension)) {
+            map.put("Extension", extension);
         }
 
         return map;

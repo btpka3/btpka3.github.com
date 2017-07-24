@@ -75,7 +75,6 @@ public class RespConverterTest extends BaseTest {
     }
 
 
-
     /**
      * 测试 null
      */
@@ -83,6 +82,15 @@ public class RespConverterTest extends BaseTest {
     public void converer03() {
 
         Resp resp = new Resp();
+        resp.setAcceptStatus("");
+        resp.setPartnerId(null);
+        resp.setTradeDate("");
+        resp.setTradeTime("");
+        resp.setInputCharset("");
+        resp.setMchId(null);
+        resp.setMemo(null);
+        resp.setSign("");
+        resp.setSignType("");
 
         Map actural = conversionService.convert(resp, Map.class);
         Map exptected = new HashMap<String, String>();

@@ -15,13 +15,13 @@ import java.util.*;
  *
  */
 @Component
-public class OneCodePayRespConverter implements Converter<OneCodePayResp, Map<String, String>> {
+public class MerchantWxComPayRespConverter implements Converter<MerchantWxComPayResp, Map<String, String>> {
 
     @Autowired
     private ObjectProvider<ConversionService> conversionServiceProvider;
 
     @Override
-    public Map<String, String> convert(OneCodePayResp src) {
+    public Map<String, String> convert(MerchantWxComPayResp src) {
 
         Map<String, String> map = new LinkedHashMap<>();
 
@@ -54,10 +54,52 @@ public class OneCodePayRespConverter implements Converter<OneCodePayResp, Map<St
             map.put("InnerTradeNo", innerTradeNo);
         }
 
-        String codeUrl = src.getCodeUrl();
-        if (!StringUtils.isEmpty(codeUrl)) {
-            map.put("CodeUrl", codeUrl);
+
+        String jsapiAppId = src.getJsapiAppId();
+        if (!StringUtils.isEmpty(jsapiAppId)) {
+            map.put("JsapiAppId", jsapiAppId);
         }
+
+        String jsapiNonceStr = src.getJsapiNonceStr();
+        if (!StringUtils.isEmpty(jsapiNonceStr)) {
+            map.put("JsapiNonceStr", jsapiNonceStr);
+        }
+
+        String jsapiPackage = src.getJsapiPackage();
+        if (!StringUtils.isEmpty(jsapiPackage)) {
+            map.put("JsapiPackage", jsapiPackage);
+        }
+
+        String jsapiPaySign = src.getJsapiPaySign();
+        if (!StringUtils.isEmpty(jsapiPaySign)) {
+            map.put("JsapiPaySign", jsapiPaySign);
+        }
+
+        String jsapiSignType = src.getJsapiSignType();
+        if (!StringUtils.isEmpty(jsapiSignType)) {
+            map.put("JsapiSignType", jsapiSignType);
+        }
+
+        String jsapiTimeStamp = src.getJsapiTimeStamp();
+        if (!StringUtils.isEmpty(jsapiTimeStamp)) {
+            map.put("JsapiTimeStamp", jsapiTimeStamp);
+        }
+
+
+        String mchId = src.getMchId();
+        if (!StringUtils.isEmpty(mchId)) {
+            map.put("MchId", mchId);
+        }
+
+        String subMchId = src.getSubMchId();
+        if (!StringUtils.isEmpty(subMchId)) {
+            map.put("SubMchId", subMchId);
+        }
+        String status = src.getStatus();
+        if (!StringUtils.isEmpty(status)) {
+            map.put("Status", status);
+        }
+
 
         String ext = src.getExt();
         if (!StringUtils.isEmpty(ext)) {

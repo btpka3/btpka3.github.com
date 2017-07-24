@@ -3,6 +3,7 @@ package me.test.first.chanpay.api.scan.impl.converter;
 import com.fasterxml.jackson.core.*;
 import com.fasterxml.jackson.databind.*;
 import me.test.first.chanpay.api.scan.dto.*;
+import org.springframework.beans.factory.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.context.annotation.*;
 import org.springframework.core.convert.*;
@@ -10,7 +11,6 @@ import org.springframework.core.convert.converter.*;
 import org.springframework.stereotype.*;
 import org.springframework.util.*;
 
-import javax.annotation.*;
 import java.time.*;
 import java.time.format.*;
 import java.util.*;
@@ -25,8 +25,7 @@ public class OneCodePayReqConverter implements Converter<OneCodePayReq, Map<Stri
     private static final DateTimeFormatter _orderEndTimeFmt = _orderStartTimeFmt;
 
     @Autowired
-    @Lazy
-    private ConversionService conversionService;
+    private ObjectProvider<ConversionService> conversionServiceProvider;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -44,6 +43,7 @@ public class OneCodePayReqConverter implements Converter<OneCodePayReq, Map<Stri
         TypeDescriptor strTd = TypeDescriptor.valueOf(String.class);
         TypeDescriptor mapTd = TypeDescriptor.map(Map.class, strTd, strTd);
 
+        ConversionService conversionService =  conversionServiceProvider.getObject();
         Map<String, String> reqMap = (Map<String, String>) conversionService.convert(src, reqTd, mapTd);
 
         map.putAll(reqMap);
@@ -134,10 +134,8 @@ public class OneCodePayReqConverter implements Converter<OneCodePayReq, Map<Stri
             map.put("NotifyUrl", notifyUrl);
         }
 
-
         List<OneCodePayReq.Split> splitList = src.getSplitList();
         if (splitList != null) {
-
             try {
                 String json = objectMapper.writeValueAsString(splitList);
                 map.put("SplitList", json);
@@ -151,13 +149,5 @@ public class OneCodePayReqConverter implements Converter<OneCodePayReq, Map<Stri
             map.put("Ext", ext);
         }
         return map;
-    }
-
-    public ConversionService getConversionService() {
-        return conversionService;
-    }
-
-    public void setConversionService(ConversionService conversionService) {
-        this.conversionService = conversionService;
     }
 }

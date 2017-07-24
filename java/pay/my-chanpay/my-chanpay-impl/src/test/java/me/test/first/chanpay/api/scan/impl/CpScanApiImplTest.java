@@ -22,7 +22,7 @@ public class CpScanApiImplTest extends BaseTest {
         req.setService(CpScanApi.S_userScan);
         req.setVersion("1.0");
         req.setPartnerId("200000140001");
-        req.setTradeTime(new Date());
+        req.setTradeDateTime(new Date());
         req.setReturnUrl("http://dev.chanpay.com/receive.php");
         req.setMemo("备注");
 
@@ -66,11 +66,10 @@ public class CpScanApiImplTest extends BaseTest {
         req.setService(CpScanApi.S_oneCodePay);
         req.setVersion("1.0");
         req.setPartnerId("200000140001");
-        req.setTradeTime(new Date());
+        req.setTradeDateTime(new Date());
         req.setReturnUrl("http://dev.chanpay.com/receive.php");
         req.setMemo("备注");
-
-
+        //
         req.setOutTradeNo(Long.toString(System.currentTimeMillis()));
         req.setMchId("200000140001");
 //        req.setSubMchId("");
@@ -91,6 +90,84 @@ public class CpScanApiImplTest extends BaseTest {
         req.setSignType("RSA");
 
         OneCodePayResp resp = cpScanApi.oneCodePay(req);
+
+        String acceptStatus = resp.getAcceptStatus();
+        assertThat("S".equals(acceptStatus) || "R".equals(acceptStatus)).isTrue();
+    }
+
+    @Test
+    public void chanpayWxComPay01() {
+        ChanpayWxComPayReq req = new ChanpayWxComPayReq();
+        req.setService(CpScanApi.S_chanpayWxComPay);
+        req.setVersion("1.0");
+        req.setPartnerId("200000140001");
+        req.setTradeDateTime(new Date());
+        req.setReturnUrl("http://dev.chanpay.com/receive.php");
+        req.setMemo("备注");
+        //
+        req.setOutTradeNo(Long.toString(System.currentTimeMillis()));
+        req.setMchId("200000400059");
+        req.setSubMchId("");
+        req.setTradeType("11");
+        req.setBankCode("WXPAY");
+        req.setDeviceInfo("wx90192dels817xla0");
+        req.setCurrency("CNY");
+        req.setTradeAmount(0.02);
+        req.setEnsureAmount(null);
+        req.setGoodsName("zll'sItem");
+        req.setTradeMemo("1111");
+        req.setSubject("0153");
+        req.setOrderStartTime(new Date());
+        req.setOrderEndTime(null);
+        req.setNotifyUrl("http://www.baidu.com");
+        req.setSpBillCreateIp("127.0.0.1");
+        req.setSplitList(null);
+        req.setExt("{'ext':'ext1'}");
+
+        ChanpayWxComPayResp resp = cpScanApi.chanpayWxComPay(req);
+        String status = resp.getStatus();
+        assertThat("0".equals(status) || "1".equals(status)).isTrue();
+
+    }
+
+
+    // NOTICE: 测试环境不支持该API。
+    @Test
+    public void merchantWxComPay01() {
+
+
+        MerchantWxComPayReq req = new MerchantWxComPayReq();
+
+        req.setService(CpScanApi.S_merchantWxComPay);
+        req.setVersion("1.0");
+        req.setPartnerId("200000140001");
+        req.setTradeDateTime(new Date());
+        req.setReturnUrl("http://dev.chanpay.com/receive.php");
+        req.setMemo("备注");
+        //
+        req.setOutTradeNo(Long.toString(System.currentTimeMillis()));
+        req.setMchId("200000400059");
+//        req.setSubMchId("");
+        req.setTradeType("11");
+        req.setAppId("wx90192dels817xla0");
+        req.setDeviceInfo("013467007045764");
+        req.setBuyerPayCode("wx013467007045764");
+        req.setCurrency("CNY");
+        req.setTradeAmount(0.02);
+//        req.setEnsureAmount(0.02);
+        req.setGoodsName("11");
+        req.setTradeMemo("1111");
+        req.setSubject("0153");
+        req.setOrderStartTime(new Date());
+//        req.setOrderEndTime();
+        req.setNotifyUrl("http://www.baidu.com");
+        req.setSpBillCreateIp("127.0.0.1");
+//        req.setSplitList();
+        req.setExt("{'ext':'ext1'}");
+        req.setSignType("RSA");
+
+
+        MerchantWxComPayResp resp = cpScanApi.merchantWxComPay(req);
 
         String acceptStatus = resp.getAcceptStatus();
         assertThat("S".equals(acceptStatus) || "R".equals(acceptStatus)).isTrue();

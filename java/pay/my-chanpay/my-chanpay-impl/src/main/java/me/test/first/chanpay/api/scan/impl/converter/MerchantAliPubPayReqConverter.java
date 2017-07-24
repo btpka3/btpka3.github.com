@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.*;
 import me.test.first.chanpay.api.scan.dto.*;
 import org.springframework.beans.factory.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.context.annotation.*;
 import org.springframework.core.convert.*;
 import org.springframework.core.convert.converter.*;
 import org.springframework.stereotype.*;
@@ -18,7 +19,7 @@ import java.util.*;
  *
  */
 @Component
-public class UserScanReqConverter implements Converter<UserScanReq, Map<String, String>> {
+public class MerchantAliPubPayReqConverter implements Converter<MerchantAliPubPayReq, Map<String, String>> {
 
     private static final DateTimeFormatter _orderStartTimeFmt = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
     private static final DateTimeFormatter _orderEndTimeFmt = _orderStartTimeFmt;
@@ -32,8 +33,9 @@ public class UserScanReqConverter implements Converter<UserScanReq, Map<String, 
     @Autowired
     private ZoneId zoneId;
 
+
     @Override
-    public Map<String, String> convert(UserScanReq src) {
+    public Map<String, String> convert(MerchantAliPubPayReq src) {
 
         Map<String, String> map = new LinkedHashMap<>();
 
@@ -41,8 +43,7 @@ public class UserScanReqConverter implements Converter<UserScanReq, Map<String, 
         TypeDescriptor strTd = TypeDescriptor.valueOf(String.class);
         TypeDescriptor mapTd = TypeDescriptor.map(Map.class, strTd, strTd);
 
-        ConversionService conversionService = conversionServiceProvider.getObject();
-
+        ConversionService conversionService =  conversionServiceProvider.getObject();
         Map<String, String> reqMap = (Map<String, String>) conversionService.convert(src, reqTd, mapTd);
 
         map.putAll(reqMap);
@@ -68,14 +69,14 @@ public class UserScanReqConverter implements Converter<UserScanReq, Map<String, 
             map.put("TradeType", tradeType);
         }
 
-        String bankCode = src.getBankCode();
-        if (!StringUtils.isEmpty(bankCode)) {
-            map.put("BankCode", bankCode);
+        String buyerId = src.getBuyerId();
+        if (!StringUtils.isEmpty(buyerId)) {
+            map.put("BuyerId", buyerId);
         }
 
-        String appId = src.getAppId();
-        if (!StringUtils.isEmpty(appId)) {
-            map.put("AppId", appId);
+        String buyerLogonId = src.getBuyerLogonId();
+        if (!StringUtils.isEmpty(buyerLogonId)) {
+            map.put("BuyerLogonId", buyerLogonId);
         }
 
         String deviceInfo = src.getDeviceInfo();
@@ -87,7 +88,6 @@ public class UserScanReqConverter implements Converter<UserScanReq, Map<String, 
         if (!StringUtils.isEmpty(currency)) {
             map.put("Currency", currency);
         }
-
 
         Double tradeAmount = src.getTradeAmount();
         if (tradeAmount != null) {
@@ -113,6 +113,7 @@ public class UserScanReqConverter implements Converter<UserScanReq, Map<String, 
         if (!StringUtils.isEmpty(subject)) {
             map.put("Subject", subject);
         }
+
         Date orderStartTime = src.getOrderStartTime();
         if (orderStartTime != null) {
             LocalDateTime ldt = LocalDateTime.ofInstant(
@@ -144,7 +145,8 @@ public class UserScanReqConverter implements Converter<UserScanReq, Map<String, 
             map.put("SpbillCreateIp", spBillCreateIp);
         }
 
-        List<UserScanReq.Split> splitList = src.getSplitList();
+
+        List<MerchantAliPubPayReq.Split> splitList = src.getSplitList();
         if (splitList != null) {
             try {
                 String json = objectMapper.writeValueAsString(splitList);
@@ -153,11 +155,11 @@ public class UserScanReqConverter implements Converter<UserScanReq, Map<String, 
                 throw new RuntimeException(e);
             }
         }
+
         String ext = src.getExt();
         if (!StringUtils.isEmpty(ext)) {
             map.put("Ext", ext);
         }
         return map;
     }
-
 }
