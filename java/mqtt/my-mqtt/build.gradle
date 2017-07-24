@@ -31,8 +31,8 @@ repositories {
 
 dependencies {
     compile('org.codehaus.groovy:groovy-all')
-    compile('org.springframework.boot:spring-boot-starter-web')
-    compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+//    compile('org.springframework.boot:spring-boot-starter-web')
+//    compile('org.springframework.boot:spring-boot-starter-thymeleaf')
     compile("org.springframework.boot:spring-boot-devtools")
     compile('com.fasterxml.jackson.dataformat:jackson-dataformat-xml')
     compile('org.apache.httpcomponents:httpclient')
@@ -43,6 +43,7 @@ dependencies {
     compile("com.rabbitmq:amqp-client:3.6.5")
 
     compile("org.springframework.boot:spring-boot-starter-amqp")
+    compile("org.springframework.boot:spring-boot-starter-websocket")
     //compile("org.springframework.amqp:spring-rabbit:1.6.1.RELEASE")
 }
 
@@ -53,7 +54,7 @@ bootRun {
 }
 
 springBoot {
-    mainClass = System.properties['mainClass'] ?: "me.test.boot.MyMqttApp"
+    mainClass = System.properties['mainClass'] ?: "me.test.boot.MyWebSocketApp"
 }
 
 

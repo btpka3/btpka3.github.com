@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody
 
 @Controller
 @Slf4j
-class MyTestController {
+class MyAmqpController {
 
     @Autowired
     AmqpAdmin amqpAdmin
@@ -17,16 +17,8 @@ class MyTestController {
     @Autowired
     AmqpTemplate amqpTemplate
 
-    /** 测试最基本情形 */
-    @RequestMapping("/")
-    @ResponseBody
-    String home() {
-        return "home " + new Date();
-    }
-
     public static final String AMQP_EXCHANGE_NAME = "z.topic"//"amq.topic"
     public static final String routingKey = "z.ll"
-
 
     @RequestMapping("/pub")
     @ResponseBody
@@ -40,16 +32,14 @@ class MyTestController {
         return "OK : " + new Date()
     }
 
-
-    @MyMsgListener
+    @MyAmqpMsgListener
     void sub1(String msg) {
         log.debug("sub1 : " + msg)
     }
 
-    @MyMsgListener
+    @MyAmqpMsgListener
     void sub2(Message msg) {
         log.debug("sub2 : " + msg)
     }
-
 
 }

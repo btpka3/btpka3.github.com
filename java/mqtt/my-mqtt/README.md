@@ -13,6 +13,13 @@
 * 使用 RabbitMQ 的client包通信。
 
 
+```bash
+cd src/main/docker
+docker-compose up
+
+docker-compose stop
+```
+
 
 
 # MQTT server
@@ -65,7 +72,7 @@ docker run -d \
     -p 15672:15672 \
     -p 1883:1883 \
     -p 8883:8883 \
-    -p 15675:15675 \
+    -p 1561567575:15675 \
     -v ~/tmp/mq/data/:/var/lib/rabbitmq \
     -v ~/tmp/mq/conf/rabbitmq.config:/etc/rabbitmq/rabbitmq.config \
     -v ~/tmp/mq/conf/rabbitmq-env.conf:/etc/rabbitmq/rabbitmq-env.conf \

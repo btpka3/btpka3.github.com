@@ -25,6 +25,6 @@ import java.lang.annotation.*
                 type = ExchangeTypes.FANOUT
         )
 ))
-@interface MyMsgListener {
+@interface MyAmqpMsgListener {
 
 }
