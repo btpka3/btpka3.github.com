@@ -1,7 +1,12 @@
 package me.test.first.spring.boot.jersey.conf
 
 import io.swagger.jaxrs.config.BeanConfig
+import me.test.first.spring.boot.jersey.resource.MyExceptionMapper
 import me.test.first.spring.boot.jersey.resource.Rest
+import me.test.first.spring.boot.jersey.resource.err.ErrResource
+import me.test.first.spring.boot.jersey.resource.file.FileResource
+import me.test.first.spring.boot.jersey.resource.form.FormResource
+import me.test.first.spring.boot.jersey.resource.user.UserResource
 import org.glassfish.jersey.media.multipart.MultiPartFeature
 import org.glassfish.jersey.server.ResourceConfig
 import org.springframework.context.annotation.Bean
@@ -47,9 +52,13 @@ class JerseyConf {
 
         // TODO 根据文档，需要手动一一将RESTful controller 添加至此。
         // http://docs.spring.io/spring-boot/docs/1.5.1.RELEASE/reference/htmlsingle/#boot-features-jersey
-        resourceConfig.packages("me.test.first.spring.boot.jersey.resource")
-        //resourceConfig.register(Rest)
-        //resourceConfig.register(UserResource)
+//        resourceConfig.packages("me.test.first.spring.boot.jersey.resource")
+        resourceConfig.register(Rest)
+        resourceConfig.register(UserResource.class)
+        resourceConfig.register(FormResource.class)
+        resourceConfig.register(FileResource.class)
+        resourceConfig.register(ErrResource.class)
+        resourceConfig.register(MyExceptionMapper.class)
 
     }
 
