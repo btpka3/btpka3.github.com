@@ -440,7 +440,7 @@ ConfigFileApplicationListener
     加载 application.yml, application.properties
 ```
 
-## @@SpringBootApplication
+## @SpringBootApplication
 
 ```
 EnableAutoConfigurationImportSelector

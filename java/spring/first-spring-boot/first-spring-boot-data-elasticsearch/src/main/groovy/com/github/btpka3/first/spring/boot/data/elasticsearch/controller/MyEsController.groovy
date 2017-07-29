@@ -3,10 +3,17 @@ package com.github.btpka3.first.spring.boot.data.elasticsearch.controller
 import com.github.btpka3.first.spring.boot.data.elasticsearch.domain.*
 import com.github.btpka3.first.spring.boot.data.elasticsearch.repo.AddrRepo
 import com.github.btpka3.first.spring.boot.data.elasticsearch.repo.UserRepo
+import org.elasticsearch.index.query.QueryBuilders
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
+import org.springframework.data.elasticsearch.core.ElasticsearchTemplate
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder
+import org.springframework.data.elasticsearch.core.query.SearchQuery
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseBody
+
+import static org.elasticsearch.index.query.QueryBuilders.rangeQuery;
 
 @Controller
 @RequestMapping("/es")
@@ -18,6 +25,17 @@ class MyEsController {
     @Autowired
     AddrRepo addrRepo
 
+    @Autowired
+    ElasticsearchTemplate elasticsearchTemplate
+
+
+    @RequestMapping("/clear")
+    @ResponseBody
+    Object clear() {
+
+        userRepo.deleteAll()
+        return "delete OK " + new Date()
+    }
 
     @RequestMapping("/add")
     @ResponseBody
@@ -65,4 +83,33 @@ class MyEsController {
         return userRepo.findAll().toList()
 
     }
+
+    @RequestMapping("/search")
+    @ResponseBody
+    Object search() {
+
+        return userRepo.findAll().toList()
+
+    }
+
+
+
+    @RequestMapping("/tplSearch")
+    @ResponseBody
+    Object tplSearch() {
+
+        SearchQuery searchQuery = new NativeSearchQueryBuilder()
+                .withQuery(rangeQuery("age").gte(16))
+                .withFilter(QueryBuilders.matchQuery("name", "qian7"))
+                .build();
+
+        // AggregatedPageImpl
+        Page<User> users =
+                elasticsearchTemplate.queryForPage(searchQuery, User);
+
+        // 因为 AggregatedPageImpl 转为JSON 会失败，所以先转换下 Page 的类型
+        return users.map({ it })
+    }
+
+
 }

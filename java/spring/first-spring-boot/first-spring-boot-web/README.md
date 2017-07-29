@@ -184,6 +184,11 @@ ConversionService
             FormattingConversionService
                 DefaultFormattingConversionService
 
+WebMvcAutoConfiguration
+    EnableWebMvcConfiguration 继承自 WebMvcConfigurationSupport
+        WebMvcConfigurationSupport
+            @Bean FormattingConversionService
+
 Converter
     StringToNumberConverterFactory.StringToNumber
 
@@ -191,6 +196,8 @@ GenericConverter,
 ConditionalConverter
     ConditionalGenericConverter
         StringToArrayConverter
+
+
 ```
 
 FIXME: 静态资源 Response 的 http 头： Content-Type 是如何自动设定的？

@@ -9,6 +9,7 @@ import me.test.first.spring.boot.jersey.resource.form.FormResource
 import me.test.first.spring.boot.jersey.resource.user.UserResource
 import org.glassfish.jersey.media.multipart.MultiPartFeature
 import org.glassfish.jersey.server.ResourceConfig
+import org.glassfish.jersey.server.ServerProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
@@ -60,6 +61,8 @@ class JerseyConf {
         resourceConfig.register(ErrResource.class)
         resourceConfig.register(MyExceptionMapper.class)
 
+        resourceConfig.property(ServerProperties.RESPONSE_SET_STATUS_OVER_SEND_ERROR, true);
+        resourceConfig.property(ServerProperties.PROCESSING_RESPONSE_ERRORS_ENABLED, true);
     }
 
 
