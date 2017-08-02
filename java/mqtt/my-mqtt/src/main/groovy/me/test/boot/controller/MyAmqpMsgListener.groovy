@@ -21,7 +21,7 @@ import java.lang.annotation.*
                 )
         ),
         exchange = @Exchange(
-                value = "z.topic",
+                value = '${a.prefix}z.topic', // 可以使用 placeholder.
                 type = ExchangeTypes.FANOUT//,
                 //durable = "true"
         )
