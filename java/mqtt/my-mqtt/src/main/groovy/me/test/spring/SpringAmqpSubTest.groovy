@@ -8,17 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.context.ApplicationContext
-import org.springframework.context.ApplicationContextAware
-import org.springframework.context.ConfigurableApplicationContext
-import org.springframework.context.event.EventListener as _EventListener
+import org.springframework.context.*
+import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Component
 
 import static me.test.MY.AMQP_EXCHANGE_NAME
 import static me.test.MY.MQTT_TOPIC
 
 // 参考：http://docs.spring.io/spring-amqp/docs/1.6.4.RELEASE/reference/html/
-
+// 运行时需要指定 JVM 参数: `-Dserver.port=8000`, 否则端口冲突
 @EnableAutoConfiguration
 @SpringBootApplication(scanBasePackages = ["me.test"])
 @Component
@@ -61,7 +59,7 @@ class SpringAmqpSubTest implements ApplicationContextAware {
         msgListenerContainer.start()
     }
 
-    @_EventListener([MySpringAmqpListener.SubFinishedEvent])
+    @EventListener([MySpringAmqpListener.SubFinishedEvent])
     void onSubFinished(Object event) {
         println "------------- SpringAmqpSubTest : onSubFinished : $event"
 

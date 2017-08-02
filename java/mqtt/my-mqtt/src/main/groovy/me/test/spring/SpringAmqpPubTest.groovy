@@ -9,6 +9,7 @@ import org.springframework.context.ConfigurableApplicationContext
 import static me.test.MY.*
 
 // 参考：http://docs.spring.io/spring-amqp/docs/1.6.4.RELEASE/reference/html/
+// 运行时需要指定 JVM 参数: `-Dserver.port=8000`, 否则端口冲突
 @EnableAutoConfiguration
 @SpringBootApplication(scanBasePackages = ["me.test"])
 class SpringAmqpPubTest {

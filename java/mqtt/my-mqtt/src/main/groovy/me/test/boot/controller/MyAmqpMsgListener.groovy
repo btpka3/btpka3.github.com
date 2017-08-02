@@ -22,7 +22,8 @@ import java.lang.annotation.*
         ),
         exchange = @Exchange(
                 value = "z.topic",
-                type = ExchangeTypes.FANOUT
+                type = ExchangeTypes.FANOUT//,
+                //durable = "true"
         )
 ))
 @interface MyAmqpMsgListener {

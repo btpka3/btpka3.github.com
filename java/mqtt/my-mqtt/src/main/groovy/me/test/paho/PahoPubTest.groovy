@@ -1,9 +1,6 @@
 package me.test.paho
 
-import org.eclipse.paho.client.mqttv3.MqttClient
-import org.eclipse.paho.client.mqttv3.MqttConnectOptions
-import org.eclipse.paho.client.mqttv3.MqttException
-import org.eclipse.paho.client.mqttv3.MqttMessage
+import org.eclipse.paho.client.mqttv3.*
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence
 
 import javax.net.ssl.SSLContext
@@ -16,25 +13,31 @@ class PahoPubTest {
 
     // FIXME: ssh 隧道如何处理？即——SOCKSv5代理。有待尝试 testJDK 下面的代码。
     static void main(String[] args) {
+        boolean useSsl = args.length > 0 && "ssl".equals(args[0]);
+        String server = useSsl ? MQTT_SERVER_SSL : MQTT_SERVER
 
-        SSLContext sslContext = getClientSslContext(false)
-        SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory()
 
         MqttConnectOptions connOpts = new MqttConnectOptions();
         connOpts.setUserName(MQTT_USER)
         connOpts.setPassword(MQTT_PWD.toCharArray())
         connOpts.setCleanSession(true);
-        connOpts.setSocketFactory(sslSocketFactory)
+
+        if (useSsl) {
+            SSLContext sslContext = getClientSslContext(false)
+            SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory()
+            connOpts.setSocketFactory(sslSocketFactory)
+        }
+
 
         String clientId = "PahoPubTest";
         MemoryPersistence persistence = new MemoryPersistence();
 
         try {
-            MqttClient sampleClient = new MqttClient(MQTT_SERVER, clientId, persistence);
+            MqttClient sampleClient = new MqttClient(server, clientId, persistence);
 
 
 
-            System.out.println("Connecting to broker: " + MQTT_SERVER);
+            System.out.println("Connecting to broker: " + server);
             sampleClient.connect(connOpts);
             System.out.println("Connected");
 

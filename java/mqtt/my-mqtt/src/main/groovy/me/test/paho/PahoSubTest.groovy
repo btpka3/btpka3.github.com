@@ -12,25 +12,30 @@ import static me.test.MY.*
 class PahoSubTest {
 
     static void main(String[] args) {
+        boolean useSsl = args.length > 0 && "ssl".equals(args[0]);
+        String server = useSsl ? MQTT_SERVER_SSL : MQTT_SERVER
 
-        SSLContext sslContext = getClientSslContext(false)
-        SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory()
 
         MqttConnectOptions connOpts = new MqttConnectOptions();
         connOpts.setUserName(MQTT_USER)
         connOpts.setPassword(MQTT_PWD.toCharArray())
         connOpts.setCleanSession(true);
-        connOpts.setSocketFactory(sslSocketFactory)
+        if (useSsl) {
+            SSLContext sslContext = getClientSslContext(false)
+            SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory()
+            connOpts.setSocketFactory(sslSocketFactory)
+        }
+
 
         String clientId = "PahoSubTest";
         MemoryPersistence persistence = new MemoryPersistence();
 
         try {
-            MqttClient sampleClient = new MqttClient(MQTT_SERVER, clientId, persistence);
+            MqttClient sampleClient = new MqttClient(server, clientId, persistence);
 
 
 
-            System.out.println("Connecting to broker: " + MQTT_SERVER);
+            System.out.println("Connecting to broker: " + server);
             sampleClient.connect(connOpts);
             System.out.println("Connected");
 

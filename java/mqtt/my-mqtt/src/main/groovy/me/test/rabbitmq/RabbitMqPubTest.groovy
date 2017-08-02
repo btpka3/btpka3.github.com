@@ -1,13 +1,8 @@
 package me.test.rabbitmq
 
-import com.rabbitmq.client.Channel
-import com.rabbitmq.client.Connection
-import com.rabbitmq.client.ConnectionFactory
+import com.rabbitmq.client.*
 
-import javax.net.ssl.KeyManagerFactory
 import javax.net.ssl.SSLContext
-import javax.net.ssl.TrustManagerFactory
-import java.security.KeyStore
 
 import static me.test.MY.*
 
@@ -17,18 +12,20 @@ import static me.test.MY.*
 class RabbitMqPubTest {
 
     static void main(String[] args) {
-
-        SSLContext sslContext = getClientSslContext(false)
+        boolean useSsl = args.length > 0 && "ssl".equals(args[0]);
 
         ConnectionFactory factory = new ConnectionFactory();
         factory.setUsername(MQTT_USER);
         factory.setPassword(MQTT_PWD);
         factory.setVirtualHost(AMQP_VIRTUAL_HOST);
         factory.setHost(AMQP_HOST);
-        factory.setPort(AMQP_PORT);
-        //factory.useSslProtocol("TLSv1.2");
-        //factory.useSslProtocol();
-        factory.useSslProtocol(sslContext)
+        factory.setPort(useSsl ? AMQP_PORT_SSL : AMQP_PORT);
+        if (useSsl) {
+            SSLContext sslContext = getClientSslContext(false)
+            //factory.useSslProtocol("TLSv1.2");
+            //factory.useSslProtocol();
+            factory.useSslProtocol(sslContext)
+        }
         Connection conn = factory.newConnection();
 
         Channel channel = conn.createChannel();
