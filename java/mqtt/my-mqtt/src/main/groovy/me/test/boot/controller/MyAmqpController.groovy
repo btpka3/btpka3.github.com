@@ -106,14 +106,14 @@ content_type:	application/jso
                     MyMsg myMsg,
 //            // 不能同时使用不同的类型。
 //            // 发送消息时，使用的类型A，如果接受消息时想使用类型B，则需要为 Jackson2JsonMessageConverter 配置 ClassMapper
-//            @Payload
-//                    Map<String, String> map,
+            @Payload
+                    Map<String, String> map,
             org.springframework.messaging.Message<MyMsg> msg,
             Message amqpMsg
     ) {
         log.debug("sub3 : "
                 + "\n\t myMsg   : " + myMsg
-//                + "\n\t map     : " + map
+                + "\n\t map     : " + map
                 + "\n\t msg     : " + msg
                 + "\n\t amqpMsg : " + amqpMsg
                 + "\n\t"

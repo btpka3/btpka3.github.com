@@ -13,6 +13,7 @@ include 'first-spring-boot-websocket'
 include 'first-spring-boot-integration'
 include 'first-spring-boot-feign'
 include 'first-spring-boot-amqp'
+include 'test01'
 //include 'first-spring-boot-gorm-mongo'
 //includeBuild './my-querydsl-plugin'
 

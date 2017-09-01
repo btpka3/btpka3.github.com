@@ -40,4 +40,5 @@ spring.jersey:
     #  io.swagger.jaxrs.listing.SwaggerSerializers,
     #  {your.application.classes}
 
-spring.jackson.default-property-inclusion: non_null
+spring.jackson:
+  default-property-inclusion: non_absent

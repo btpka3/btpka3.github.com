@@ -21,6 +21,21 @@ docker-compose stop
 ```
 
 
+# source
+
+```text
+RabbitAutoConfiguration
+    -> RabbitAnnotationDrivenConfiguration
+    ->@EnableRabbit
+    -> RabbitBootstrapConfiguration
+        -> RabbitListenerAnnotationBeanPostProcessor
+            -> MessageHandlerMethodFactory/
+                -> PayloadArgumentResolver#resolveArgument()
+                    -> GenericMessageConverter
+                        -> ConversionService
+                            -> Converter<S, T>
+```
+
 
 # MQTT server
 

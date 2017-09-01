@@ -1,0 +1,11 @@
+foo.bar:
+  A_VALUE: aaa
+  B_VALUE: bbb
+  C_VALUE: ccc
+  D_VALUE: dddd         #
+  dValue: ddd           # 后面的覆盖前面
+
+
+logging.level:
+  org.springframework.boot.env: TRACE
+  org.springframework.boot.context.config: DEBUG
