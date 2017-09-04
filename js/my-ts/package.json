@@ -9,11 +9,19 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "babel-cli": "^6.18.0",
-    "babel-polyfill": "^6.20.0",
-    "babel-preset-latest": "^6.16.0",
+    "@types/es6-shim": "^0.31.35",
+    "@types/rx": "^4.1.1",
+    "babel-cli": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
     "gulp": "^3.9.1",
-    "gulp-babel": "^6.1.2",
-    "gulp-typescript": "^2.14.1"
+    "gulp-babel": "^7.0.0",
+    "gulp-typescript": "^3.2.2",
+    "minimatch": "^3.0.4",
+    "typescript": "^2.5.2",
+    "outDir": "dist"
+  },
+  "dependencies": {
+    "rxjs": "^5.4.3"
   }
 }

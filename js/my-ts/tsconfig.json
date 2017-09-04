@@ -1,7 +1,29 @@
 {
   "rootDir": "src",
+  "include": [
+    "./src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
   "compilerOptions": {
+    "moduleResolution": "node",
     "noImplicitAny": true,
-    "target": "es5"
+    "target": "es2015",
+    "module": "commonjs",
+    "strictNullChecks": true,
+    "sourceMap": true,
+    "strict": true,
+    "removeComments": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "outDir": "dist/ts",
+    "lib": [
+      "dom",
+      "es2015",
+      "scripthost",
+      "es2015.promise"
+    ]
   }
 }
