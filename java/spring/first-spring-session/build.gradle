@@ -1,0 +1,114 @@
+buildscript {
+    ext {
+    }
+    repositories {
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("io.spring.gradle:dependency-management-plugin:1.0.3.RELEASE")
+        classpath("gradle.plugin.com.gorylenko.gradle-git-properties:gradle-git-properties:1.4.17")
+    }
+}
+
+
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: "io.spring.dependency-management"
+apply plugin: 'project-report'
+
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+apply plugin: 'org.springframework.boot'
+
+repositories {
+    maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+    mavenCentral()
+}
+
+idea {
+    module {
+        downloadJavadoc = false
+        downloadSources = true
+    }
+}
+eclipse {
+    classpath {
+        downloadSources = true
+    }
+}
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.boot:spring-boot-starter-parent:${springBootVersion}")
+    }
+    resolutionStrategy {
+        cacheChangingModulesFor 0, 'seconds'
+    }
+    dependencies {
+        //dependency('log4j:log4j:1.2.17')
+    }
+}
+
+
+dependencies {
+
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+    compile('org.springframework.boot:spring-boot-starter-data-mongodb')
+    compile("org.springframework.boot:spring-boot-devtools")
+
+    compile('org.apache.httpcomponents:httpclient')
+
+    compile('com.fasterxml.jackson.dataformat:jackson-dataformat-xml')
+    compile('com.fasterxml.jackson.module:jackson-module-parameter-names')
+    compile('com.fasterxml.jackson.datatype:jackson-datatype-jdk8')
+    compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
+
+
+
+    compile('org.springframework.session:spring-session')
+    compile('org.springframework.session:spring-session-data-mongo')
+
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+bootRun {
+    addResources = true
+    systemProperties = System.properties
+}
+
+publishing {
+//        publications {
+//            mavenJava(MavenPublication) {
+//                from components.java
+//
+//                pom.withXml {
+//
+////                    ((groovy.util.Node) asNode()).children().first() + {
+////                        setResolveStrategy(Closure.DELEGATE_FIRST)
+////                        parent {
+////                            groupId 'org.springframework.boot'
+////                            artifactId 'spring-boot-starter-parent'
+////                            version "${springBootVersion}"
+////                        }
+////                        description 'A demonstration of maven POM customization'
+////                    }
+//                }
+//            }
+//        }
+    repositories {
+        maven {
+            credentials {
+                username "admin"
+                password "admin123"
+            }
+            if (project.version.endsWith('-SNAPSHOT')) {
+                url "http://mvn.kingsilk.xyz/content/repositories/snapshots/"
+            } else {
+                url "http://mvn.kingsilk.xyz/content/repositories/releases/"
+            }
+        }
+    }
+}

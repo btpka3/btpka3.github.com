@@ -1,0 +1,84 @@
+p: 9999
+
+# ServerProperties
+server:
+  port: ${p}
+  context-path: /${p}
+  error.include-stacktrace: on_trace_param
+  session:
+    timeout: 86400  # 24 小时
+    cookie.path: /  # 在使用 spring session 时，该项不起作用
+
+# LOGGING
+logging:
+  path: /tmp/${p}/
+  level:
+    root: INFO
+    org.springframework.web:                                                      INFO
+    org.springframework.security:                                                 INFO
+    org.springframework.boot.actuate.audit.listener.AuditListener:                DEBUG
+    org.springframework.boot.web.support.ErrorPageFilter:                         DEBUG
+    org.springframework.web.servlet.view.ContentNegotiatingViewResolver:          DEBUG
+    org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping:  DEBUG
+    org.apache.http.wire:                                                         DEBUG
+    me.test:                                                                      DEBUG
+
+spring.aop:
+  proxy-target-class: true
+
+
+# SessionProperties
+spring.session:
+  store-type: MONGO
+
+
+
+# DevToolsProperties
+
+# AuthorizationServerProperties
+
+# JacksonProperties
+spring.jackson:
+  default-property-inclusion: non_absent
+
+# EMBEDDED SERVER CONFIGURATION (ServerProperties)
+server.tomcat:
+  remote-ip-header:       X-Forwarded-For
+  protocol-header:        X-Forwarded-Proto
+  #internal-proxies:       120\\.26\\.140\\.95|\\
+  # 10\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}|\\
+  # 192\\.168\\.\\d{1,3}\\.\\d{1,3}|\\
+  # 169\\.254\\.\\d{1,3}\\.\\d{1,3}|\\
+  # 127\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}|\\
+  # 172\\.1[6-9]{1}\\.\\d{1,3}\\.\\d{1,3}|\\
+  # 172\\.2[0-9]{1}\\.\\d{1,3}\\.\\d{1,3}|\\
+  # 172\\.3[0-1]{1}\\.\\d{1,3}\\.\\d{1,3}
+  uri-encoding:           UTF-8
+
+
+# RABBIT (RabbitProperties)
+# org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration
+spring.rabbitmq:
+  addresses: localhost
+  port: 5672
+  username: guest
+  password: guest
+  enabled: false
+  virtual-host: /
+
+# MongoProperties
+spring.data.mongodb:
+  host: localhost
+  port: 27017
+  database: 'test'
+  #username: 'test'
+  #password: 'test'
+
+
+
+
+
+
+
+
+
