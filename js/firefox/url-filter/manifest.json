@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "url-filter",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Replace google cdn libraries links to CDNs which not block by China GFW.",
   "icons": {
     "48": "icons/icon-64.png"
@@ -16,9 +16,6 @@
     "gecko": {
       "id": "btpka3@163.com"
     }
-  },
-  "browser_action": {
-    "default_title": "Favourite colour option"
   },
   "background": {
     "persistent": true,
