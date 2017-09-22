@@ -1,20 +1,15 @@
-// a dummy function, to show how tests work.
-// to see how to test this function, look at test/test-index.js
-function dummy(text, callback) {
-    callback(text);
-}
+// 与网页进行交互（注意：这与JavaScript在页面中的 <script> 元素不一样）
 
-exports.dummy = dummy;
+//document.body.style.border = "5px solid red";
+
+console.log("------------------zll : " + new Date());
 
 
-//require('./data/panel.addon');
-//require('./data/sidebar.addon');
-//require('./data/frame.addon');
-//require('./data/tabs.addon');
-//require('./data/about.addon');
-//require('./data/pageMod.addon');
-require('./data/httpRequestObserver.addon');
-//require('./data/DOMOfflineResourceList.addon');
+browser.runtime.onMessage.addListener(function(msg){
+    console.log("Message from the background script:");
+    console.log(msg);
+    return Promise.resolve({response: "Hi from content script"});
+});
 
-//require('./data/localFile.addon');
-//require('./data/saveImg.addon');
+
+

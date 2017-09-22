@@ -1,0 +1,45 @@
+{
+  "manifest_version": 2,
+  "name": "url-filter",
+  "version": "0.3.0",
+  "description": "Replace google cdn libraries links to CDNs which not block by China GFW.",
+  "icons": {
+    "48": "icons/icon-64.png"
+  },
+  "permissions": [
+    "*://*/*",
+    "webRequest",
+    "webRequestBlocking",
+    "storage"
+  ],
+  "applications": {
+    "gecko": {
+      "id": "btpka3@163.com"
+    }
+  },
+  "browser_action": {
+    "default_title": "Favourite colour option"
+  },
+  "background": {
+    "persistent": true,
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "options_ui": {
+    "page": "options/options.html",
+    "browser_style": true,
+    "open_in_tab": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "js": [
+        "index.js"
+      ]
+    }
+  ],
+  "content_security_policy": "script-src 'self'; object-src 'self';"
+}

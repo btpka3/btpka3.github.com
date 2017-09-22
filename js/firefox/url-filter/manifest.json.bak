@@ -1,0 +1,54 @@
+{
+  "manifest_version": 2,
+  "name": "url-filter",
+  "version": "0.3.0",
+  "description": "Replace google cdn libraries links to CDNs which not block by China GFW.",
+  "icons": {
+    "48": "icons/icon-64.png"
+  },
+  "permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "applications": {
+    "gecko": {
+      "id": "btpka3@163.com"
+    }
+  },
+  "browser_action": {
+    "default_icon": {
+      "16": "button/icon-16.png",
+      "32": "button/icon-32.png",
+      "64": "button/icon-64.png"
+    },
+    "default_title": "url-filter",
+    "default_popup": "popup/choose_beast.html"
+  },
+  "page_action": {
+    "browser_style": true,
+    "default_icon": {
+      "16": "button/icon-16.png",
+      "32": "button/icon-32.png",
+      "64": "button/icon-64.png"
+    },
+    "default_title": "Whereami?"
+  },
+  "web_accessible_resources": [
+    "icons/icon-16.png",
+    "icons/icon-32.png",
+    "icons/icon-64.png"
+  ],
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "js": [
+        "index.js"
+      ]
+    }
+  ]
+}
