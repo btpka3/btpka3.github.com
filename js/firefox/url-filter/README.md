@@ -67,6 +67,9 @@ zip -r ../beastify.xpi *    # 打zip包，但后缀是 xpi
     web-ext run
     
     # 打包
+    # 登录 https://addons.mozilla.org/en-US/firefox/ ，在 Tools/Manager API keys 下找到你的 key
+    AMO_JWT_ISSUER=
+    AMO_JWT_SECRET=
     web-ext sign --api-key=$AMO_JWT_ISSUER --api-secret=$AMO_JWT_SECRET
     ```
 

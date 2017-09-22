@@ -4,11 +4,13 @@
  *
  */
 
+/*
 function handleClick() {
     browser.runtime.openOptionsPage();
 }
 
 browser.browserAction.onClicked.addListener(handleClick);
+*/
 
 var chrome = browser;
 
@@ -70,8 +72,3 @@ console.log("-------background.js ");
 //     browser.tabs.sendMessage()
 // },1000);
 
-
-browser.runtime.onMessage.addListener(function(message){
-
-
-})

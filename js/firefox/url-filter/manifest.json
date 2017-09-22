@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "url-filter",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Replace google cdn libraries links to CDNs which not block by China GFW.",
   "icons": {
     "48": "icons/icon-64.png"
