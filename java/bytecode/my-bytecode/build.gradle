@@ -1,0 +1,147 @@
+buildscript {
+    ext {
+    }
+    repositories {
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("io.spring.gradle:dependency-management-plugin:1.0.3.RELEASE")
+        classpath("gradle.plugin.com.gorylenko.gradle-git-properties:gradle-git-properties:1.4.17")
+    }
+}
+
+
+
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: "io.spring.dependency-management"
+apply plugin: 'project-report'
+
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+
+
+apply plugin: 'java'
+apply plugin: 'java-library'
+apply plugin: 'org.springframework.boot'
+
+repositories {
+    maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+    maven { url "http://mvn.kingsilk.xyz/content/repositories/snapshots/" }
+    mavenCentral()
+}
+
+idea {
+    module {
+        downloadJavadoc = false
+        downloadSources = true
+    }
+}
+
+eclipse {
+    classpath {
+        downloadSources = true
+    }
+}
+
+dependencyManagement {
+    resolutionStrategy {
+        cacheChangingModulesFor 0, 'seconds'
+    }
+    imports {
+        mavenBom("org.springframework.boot:spring-boot-starter-parent:${springBootVersion}")
+    }
+    dependencies {
+        dependency('cglib:cglib:3.2.5')
+        dependency('cglib:cglib-sample:3.2.5')
+
+
+        dependency('org.javassist:javassist:3.21.0-GA')
+        dependency('org.apache.bcel:bcel:6.1')
+        dependency('org.ow2.asm:asm:6.0')
+        dependency('org.ow2.asm:asm-util:6.0')
+        dependency('commons-io:commons-io:2.5')
+    }
+}
+
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    //archives javadocJar
+}
+
+dependencies {
+
+    compile('cglib:cglib')
+    compile('cglib:cglib-sample')
+    compile('org.javassist:javassist')
+    compile('org.apache.bcel:bcel')
+    compile('org.ow2.asm:asm')
+    compile('org.ow2.asm:asm-util')
+    compile('commons-io:commons-io')
+
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+
+    compile("org.springframework.boot:spring-boot-devtools")
+    compile('com.fasterxml.jackson.dataformat:jackson-dataformat-xml')
+    compile('org.apache.httpcomponents:httpclient')
+
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+
+    compile('org.springframework.boot:spring-boot-starter-data-mongodb')
+}
+
+test {
+    testLogging.showStandardStreams = false
+}
+
+
+bootRun {
+    addResources = true
+    systemProperties = System.properties
+}
+
+bootRepackage {
+    enabled = false
+}
+
+springBoot {
+    buildInfo {
+        additionalProperties = [
+                'foo': 'bar'
+        ]
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+
+            artifact sourcesJar {
+                classifier "sources"
+            }
+        }
+    }
+}
+
+jar {
+    manifest {
+        attributes "Implementation-Version": project.version
+    }
+}
+
+
