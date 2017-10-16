@@ -28,8 +28,11 @@ spring.rabbitmq:
   password: guest
   enabled: false
   virtual-host: /
+  listener:
+    default-requeue-rejected:   false
 
 
  # 最好以 `.` 结尾
 a.prefix: "aaa."
+
 

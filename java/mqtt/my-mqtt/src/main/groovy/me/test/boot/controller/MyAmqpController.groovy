@@ -2,7 +2,6 @@ package me.test.boot.controller
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import groovy.util.logging.Slf4j
-import org.springframework.amqp.AmqpException
 import org.springframework.amqp.core.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.env.Environment
@@ -104,8 +103,8 @@ content_type:	application/jso
     void sub3(
             @Payload
                     MyMsg myMsg,
-//            // 不能同时使用不同的类型。
-//            // 发送消息时，使用的类型A，如果接受消息时想使用类型B，则需要为 Jackson2JsonMessageConverter 配置 ClassMapper
+            //            // 不能同时使用不同的类型。
+            //            // 发送消息时，使用的类型A，如果接受消息时想使用类型B，则需要为 Jackson2JsonMessageConverter 配置 ClassMapper
             @Payload
                     Map<String, String> map,
             org.springframework.messaging.Message<MyMsg> msg,

@@ -1,17 +1,15 @@
 package me.test.spring
 
-import me.test.MY
-import org.springframework.amqp.core.AmqpAdmin
-import org.springframework.amqp.core.AmqpTemplate
-import org.springframework.amqp.rabbit.connection.CachingConnectionFactory
+import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory
 import org.springframework.amqp.rabbit.connection.ConnectionFactory
-import org.springframework.amqp.rabbit.core.RabbitAdmin
-import org.springframework.amqp.rabbit.core.RabbitTemplate
-import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer
-import org.springframework.boot.SpringApplication
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.context.ConfigurableApplicationContext
+import org.springframework.amqp.rabbit.listener.*
+import org.springframework.amqp.rabbit.retry.MessageRecoverer
+import org.springframework.amqp.support.converter.MessageConverter
+import org.springframework.beans.factory.ObjectProvider
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.autoconfigure.amqp.RabbitProperties
+import org.springframework.boot.autoconfigure.amqp.SimpleRabbitListenerContainerFactoryConfigurer
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
@@ -47,9 +45,81 @@ class MySpringAmqpConf {
         return new MySpringAmqpListener()
     }
 
-    @Bean
-    AAA aaa() {
-        new AAA()
-    }
+//    @Bean
+//    AAA aaa() {
+//        new AAA()
+//    }
+
+//    // 所有异常都认为是严重异常，不重复执行。
+//    @Autowired
+//    void confSimpleMessageListenerContainer(SimpleRabbitListenerContainerFactory   c) {
+//
+////        FatalExceptionStrategy s = new FatalExceptionStrategy() {
+////
+////            @Override
+////            boolean isFatal(Throwable t) {
+////                return true
+////            }
+////        }
+////        ConditionalRejectingErrorHandler errorHandler =new ConditionalRejectingErrorHandler(s);
+////        c.setErrorHandler(errorHandler)
+//        c.setDefaultRequeueRejected(false);
+//    }
+
+
+
+//    @Bean
+//    public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(
+//            SimpleRabbitListenerContainerFactoryConfigurer configurer,
+//            ConnectionFactory connectionFactory
+//    ) {
+//        SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
+//        configurer.configure(factory, connectionFactory);
+//
+//        factory.setDefaultRequeueRejected(false);
+//        return factory;
+//    }
+
+
+//
+//    @Bean
+//    @ConditionalOnMissingBean
+//    public SimpleRabbitListenerContainerFactoryConfigurer rabbitListenerContainerFactoryConfigurer(
+//            ObjectProvider<MessageConverter> messageConverter,
+//            ObjectProvider<MessageRecoverer> messageRecoverer,
+//            RabbitProperties properties
+//    ) {
+//
+//        FatalExceptionStrategy s = new FatalExceptionStrategy() {
+//
+//            @Override
+//            boolean isFatal(Throwable t) {
+//                return true
+//            }
+//        }
+//        ConditionalRejectingErrorHandler errorHandler = ConditionalRejectingErrorHandler(s);
+//
+//
+//        SimpleRabbitListenerContainerFactoryConfigurer configurer = new SimpleRabbitListenerContainerFactoryConfigurer(){
+//            public void configure(
+//                    SimpleRabbitListenerContainerFactory factory,
+//                                  ConnectionFactory connectionFactory) {
+//                super.configure(factory,connectionFactory);
+//                factory.setErrorHandler(errorHandler)
+//            }
+//        }
+//        configurer.setMessageConverter(messageConverter.getIfUnique());
+//        configurer.setMessageRecoverer(messageRecoverer.getIfUnique());
+//        configurer.setRabbitProperties(properties);
+//        configurer.configure()
+//        return configurer;
+//    }
+//
+//    @Bean
+//    SimpleRabbitListenerContainerFactoryConfigurer simpleRabbitListenerContainerFactoryConfigurer(){
+//
+//        SimpleRabbitListenerContainerFactoryConfigurer c = new SimpleRabbitListenerContainerFactoryConfigurer();
+//
+//    }
 
 }

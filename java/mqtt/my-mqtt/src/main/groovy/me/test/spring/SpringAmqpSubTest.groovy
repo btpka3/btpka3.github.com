@@ -49,6 +49,7 @@ class SpringAmqpSubTest implements ApplicationContextAware {
         amqpAdmin.declareBinding(queueBinding)
 
         msgListenerContainer = new SimpleMessageListenerContainer();
+        msgListenerContainer.setDefaultRequeueRejected(false);
         msgListenerContainer.setConnectionFactory(connectionFactory)
         msgListenerContainer.setMessageListener(listener)
         msgListenerContainer.setQueues(listeningQueue)

@@ -21,5 +21,4 @@ class CommonConf {
         return fac;
     }
 
-
 }

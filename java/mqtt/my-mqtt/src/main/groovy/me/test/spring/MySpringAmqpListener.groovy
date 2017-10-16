@@ -15,6 +15,9 @@ class MySpringAmqpListener implements MessageListener, ApplicationEventPublisher
     @Override
     void onMessage(Message message) {
         println "------------- MySpringAmqpListener received " + new String(message.body)
+
+        // 测试异常
+        // throw new RuntimeException("========zzzzzz");
         i++
         if (i >= MQTT_COUNT - 1) {
             // 手动停止该线程

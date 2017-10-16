@@ -37,6 +37,22 @@ RabbitAutoConfiguration
 ```
 
 
+# 异常处理
+
+- RabbitTemplate 中有 RetryTemplate，但该机制仅仅处理 发送，不处理消息接时的异常处理（除非该 RabbitTemplate 有监听回复的消息的处理）
+- SimpleMessageListenerContainer/DirectMessageListenerContainer 的父类 AbstractMessageListenerContainer 中：
+
+    - 有配置 `ErrorHandler`(默认为 `ConditionalRejectingErrorHandler`) ，该 errorHandler 默认只对 `MessageConversionException`，
+        `MethodArgumentNotValidException` 等异常不再重新入队，并发送。我们可以配置 自定义的 FatalExceptionStrategy。
+  
+    - SimpleMessageListenerContainer 有 `defaultRequeueRejected`
+    - SimpleRabbitListenerContainerFactory 有 `defaultRequeueRejected`
+ 
+  
+
+  
+  
+
 # MQTT server
 
 

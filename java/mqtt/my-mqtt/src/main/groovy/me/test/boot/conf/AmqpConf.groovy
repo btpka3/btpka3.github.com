@@ -24,23 +24,20 @@ class AmqpConf {
     @Bean
     DefaultMessageHandlerMethodFactory messageHandlerMethodFactory(
             @Qualifier("rabbitMqCs")
-            FormattingConversionService formattingConversionService
+                    FormattingConversionService rabbitMqCs
     ) {
         DefaultMessageHandlerMethodFactory defaultFactory = new DefaultMessageHandlerMethodFactory();
-//        defaultFactory.setBeanFactory(RabbitListenerAnnotationBeanPostProcessor.this.beanFactory);
-
-        defaultFactory.setConversionService(formattingConversionService)
-//        defaultFactory.afterPropertiesSet();
+        defaultFactory.setConversionService(rabbitMqCs);
         return defaultFactory;
     }
 
     @Bean(name = RabbitListenerConfigUtils.RABBIT_LISTENER_ANNOTATION_PROCESSOR_BEAN_NAME)
     @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
     public RabbitListenerAnnotationBeanPostProcessor rabbitListenerAnnotationProcessor(
-            MessageHandlerMethodFactory messageHandlerMethodFactory
+            MessageHandlerMethodFactory handlerFac
     ) {
         RabbitListenerAnnotationBeanPostProcessor bpp = new RabbitListenerAnnotationBeanPostProcessor();
-        bpp.setMessageHandlerMethodFactory(messageHandlerMethodFactory)
+        bpp.setMessageHandlerMethodFactory(handlerFac);
         return bpp;
     }
 
