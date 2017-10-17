@@ -6,7 +6,7 @@ import java.util.*;
 
 
 /**
- * 为了方便处理，对 RSA.js 进行了修改，修改后的内容为 RSA-new.js, 请 diff 对比差异。
+ * 为了方便处理，对 RSA.js 进行了修改，修改后的内容为 new-RSA.js, 请 diff 对比差异。
  */
 public class TestJs {
 
