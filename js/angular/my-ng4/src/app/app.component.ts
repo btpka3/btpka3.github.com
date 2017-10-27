@@ -11,7 +11,7 @@ export class AppComponent implements OnInit {
   myServiceResult;
   myPipeSrc="myPipeSrc";
 
-  constructor(private myService: MyService) {
+  constructor(public myService: MyService) {
   }
 
   ngOnInit(): void {
