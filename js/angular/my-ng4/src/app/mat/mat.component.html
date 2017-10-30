@@ -1,0 +1,37 @@
+mat
+
+
+<!--<checkbox-configurable-example>-->
+<!--<mat-checkbox [(ngModel)]="checked">Checked</mat-checkbox>-->
+<!--<mat-checkbox [(ngModel)]="indeterminate">Indeterminate</mat-checkbox>-->
+<!--</checkbox-configurable-example>-->
+<div>
+  <form>
+    <mat-form-field>
+      <input matInput placeholder="Company" value="Google" >
+    </mat-form-field>
+  </form>
+</div>
+
+<div>
+  <mat-checkbox class="example-margin" [(ngModel)]="checked">Checked</mat-checkbox>
+  <mat-checkbox class="example-margin" [(ngModel)]="indeterminate">Indeterminate</mat-checkbox>
+</div>
+
+<div>
+  <mat-radio-group>
+    <mat-radio-button value="1">Option 1</mat-radio-button>
+    <mat-radio-button value="2">Option 2</mat-radio-button>
+  </mat-radio-group>
+</div>
+
+<div class="button-row">
+  <button mat-raised-button>Basic</button>
+  <button mat-raised-button color="primary">Primary</button>
+  <button mat-raised-button color="accent">Accent</button>
+  <button mat-raised-button color="warn">Warn</button>
+  <button mat-raised-button disabled>Disabled</button>
+  <a mat-raised-button routerLink=".">Link</a>
+</div>
+
+

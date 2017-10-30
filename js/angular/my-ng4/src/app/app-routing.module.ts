@@ -8,7 +8,9 @@ const routes: Routes = [
   {path: 'index.html', component: AaaComponent}, // 该方式是直接打包到 main.bundle.js 中了
   {path: 'bbb', loadChildren: './test-route/bbb/bbb.module#BbbModule'},
   {path: 'ccc', loadChildren: './test-route/ccc/ccc.module#CccModule'},
-  {path: 'http', loadChildren: './http/http.module#HttpModule'}
+  {path: 'http', loadChildren: './http/http.module#HttpModule'},
+  {path: 'flex', loadChildren: './flex/flex.module#FlexModule'},
+  {path: 'mat', loadChildren: './mat/mat.module#MatModule'},
 ];
 
 @NgModule({

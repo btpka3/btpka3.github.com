@@ -32,6 +32,12 @@
   dependencies:
     tslib "^1.7.1"
 
+"@angular/cdk@^2.0.0-beta.12":
+  version "2.0.0-beta.12"
+  resolved "http://registry.npm.taobao.org/@angular/cdk/download/@angular/cdk-2.0.0-beta.12.tgz#3a243cb62b93f4e039120ba70f900dc9e235622e"
+  dependencies:
+    tslib "^1.7.1"
+
 "@angular/cli@^1.4.9":
   version "1.4.9"
   resolved "http://registry.npm.taobao.org/@angular/cli/download/@angular/cli-1.4.9.tgz#cd5cd7a8f3bf3a1c28dfcdc523a011f0fcebfb96"
@@ -140,6 +146,12 @@
 "@angular/language-service@^4.2.4":
   version "4.4.6"
   resolved "http://registry.npm.taobao.org/@angular/language-service/download/@angular/language-service-4.4.6.tgz#498ece95c5f6066403bf9fd3c5831af42b45618b"
+
+"@angular/material@^2.0.0-beta.12":
+  version "2.0.0-beta.12"
+  resolved "http://registry.npm.taobao.org/@angular/material/download/@angular/material-2.0.0-beta.12.tgz#71b6d0b7b021891e5d0e3688c1d4bd78c7457f58"
+  dependencies:
+    tslib "^1.7.1"
 
 "@angular/platform-browser-dynamic@^4.2.4":
   version "4.4.6"
@@ -2213,6 +2225,10 @@ globule@^1.0.0:
 graceful-fs@^4.1.2, graceful-fs@^4.1.6:
   version "4.1.11"
   resolved "http://registry.npm.taobao.org/graceful-fs/download/graceful-fs-4.1.11.tgz#0e8bdfe4d1ddb8854d64e04ea7c00e2a026e5658"
+
+hammerjs@^2.0.8:
+  version "2.0.8"
+  resolved "http://registry.npm.taobao.org/hammerjs/download/hammerjs-2.0.8.tgz#04ef77862cff2bb79d30f7692095930222bf60f1"
 
 handle-thing@^1.2.5:
   version "1.2.5"

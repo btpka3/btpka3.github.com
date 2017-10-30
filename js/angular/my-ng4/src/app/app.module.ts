@@ -17,6 +17,9 @@ import {Routes} from "@angular/router";
 
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import 'hammerjs';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+// import { MatComponent } from './mat/mat.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/index.html', pathMatch: 'full'},
@@ -33,6 +36,7 @@ const routes: Routes = [
     HttpModule,
     OAuthModule.forRoot(),
     FlexLayoutModule,
+    BrowserAnimationsModule,
 
     TestServiceModule,
     TestComponentModule,
@@ -45,6 +49,7 @@ const routes: Routes = [
     // RouterModule.forRoot(routes)
   ],
   declarations: [
+    //MatComponent,
     AppComponent,
     AaaComponent  // router 默认显示的组件
   ],
