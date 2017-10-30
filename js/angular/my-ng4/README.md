@@ -1,3 +1,65 @@
+
+# 参考
+
+- [Angular 2 SASS](http://www.angulartypescript.com/angular-2-sass/)
+- [Angular Universal](https://github.com/angular/universal)
+* [Protecting Routes using Guards in Angular](https://blog.thoughtram.io/angular/2016/07/18/guards-in-angular-2.html)
+
+# 注意事项
+
+* 使用 yarn 来取代 npm。
+
+# FIXME
+
+* 如何使用 OAuth2？
+
+  参考 : [angular-oauth2-oidc](https://github.com/manfredsteyer/angular-oauth2-oidc)
+
+    - 如何在去 oauth 认证前，追加额外参数
+    - 如何捕获 oauth 初始认证请求？
+
+* angular 如何配置，才能使 编译后的 js ，css等资源放到 index.html 子目录下？
+
+    参考 [angular-cli Project assets](https://github.com/angular/angular-cli/wiki/stories-asset-configuration)
+ 
+* 如何监听路由跳转？中止路由？
+
+
+* 如果使用 [PathLocationStrategy](https://angular.io/api/common/PathLocationStrategy)
+  到路由后的页面不能刷新，一刷新就404，如何处理？
+  
+  思路：映射所有请求到 dist/index.html 
+  
+  那 js、css、图片、字体等静态资源咋办？
+  
+    - 使用独立cdn域名
+    - nginx 等服务器 等保留 assert 路径映射。
+
+        ```
+        # 所有静态资源文件都提前映射
+        location /qh/assets/ {
+          alias /path/to/dist/;
+        }
+        
+        # 所有路由到转移到 index.html
+        location /qh {
+          alias /path/to/dist/index.html;
+        }
+        
+        ```
+  注意：如果使用 PathLocationStrategy，因为 index.html 可能通过不同层级的URL返回，
+  所以，其引用的静态资源只能使用绝对路径了(即 `<base href="/abs/path">`)。
+
+
+* 如何引入 [PrimeFaces](https://www.primefaces.org/primeng/#/)?
+
+* 如何引入 [Ionic](http://ionicframework.com/docs/)
+
+* 是否支持引入外部配置文件？——环境信息独立到构建的包之外。
+
+* i18n 如何支持运行时切换语言？
+
+
 # MyNg4
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.6.

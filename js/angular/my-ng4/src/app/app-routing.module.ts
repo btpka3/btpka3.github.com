@@ -4,15 +4,19 @@ import {RouterModule, Routes} from "@angular/router";
 import {AaaComponent} from "./test-route/aaa/aaa.component";
 
 const routes: Routes = [
-  {path: '', redirectTo: '/aaa', pathMatch: 'full'},
-  {path: 'aaa', component: AaaComponent},
+  {path: '', redirectTo: '/index.html', pathMatch: 'full'},
+  {path: 'index.html', component: AaaComponent}, // 该方式是直接打包到 main.bundle.js 中了
   {path: 'bbb', loadChildren: './test-route/bbb/bbb.module#BbbModule'},
-  {path: 'ccc', loadChildren: './test-route/ccc/ccc.module#CccModule'}
+  {path: 'ccc', loadChildren: './test-route/ccc/ccc.module#CccModule'},
+  {path: 'http', loadChildren: './http/http.module#HttpModule'}
 ];
 
 @NgModule({
   imports: [
     // AaaModule,
+
+    // PathLocationStrategy
+    // RouterModule.forRoot(routes,{ useHash: true })
     RouterModule.forRoot(routes)
   ],
 

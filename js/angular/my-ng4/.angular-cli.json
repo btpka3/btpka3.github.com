@@ -9,7 +9,7 @@
       "outDir": "dist",
       "assets": [
         "assets",
-        "favicon.ico"
+        { "glob": "favicon.ico", "input": "./", "output": "./assets" }
       ],
       "index": "index.html",
       "main": "main.ts",

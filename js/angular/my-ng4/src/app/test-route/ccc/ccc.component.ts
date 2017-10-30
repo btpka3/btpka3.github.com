@@ -6,7 +6,7 @@ import {Component, OnInit} from "@angular/core";
   styleUrls: ['./ccc.component.css']
 })
 export class CccComponent implements OnInit {
-  v = 'b1-b2';
+  v = 'c1-c2';
 
   constructor() {
   }

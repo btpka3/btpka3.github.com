@@ -15,9 +15,12 @@ import {AaaComponent} from "./test-route/aaa/aaa.component";
 
 import {Routes} from "@angular/router";
 
+import { OAuthModule } from 'angular-oauth2-oidc';
+import { FlexLayoutModule } from '@angular/flex-layout';
+
 const routes: Routes = [
-  {path: '', redirectTo: '/aaa', pathMatch: 'full'},
-  {path: 'aaa', component: AaaComponent},
+  {path: '', redirectTo: '/index.html', pathMatch: 'full'},
+  {path: 'index.html', component: AaaComponent},
   //{path: 'aaa', loadChildren: './test-route/aaa/aaa.module#AaaModule'},
   //{path: 'bbb', loadChildren: './test-route/bbb/bbb.module#BbbModule'}
 ];
@@ -28,6 +31,8 @@ const routes: Routes = [
     BrowserModule,
     FormsModule,
     HttpModule,
+    OAuthModule.forRoot(),
+    FlexLayoutModule,
 
     TestServiceModule,
     TestComponentModule,
