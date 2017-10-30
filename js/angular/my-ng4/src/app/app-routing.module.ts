@@ -11,6 +11,7 @@ const routes: Routes = [
   {path: 'http', loadChildren: './http/http.module#HttpModule'},
   {path: 'flex', loadChildren: './flex/flex.module#FlexModule'},
   {path: 'mat', loadChildren: './mat/mat.module#MatModule'},
+  {path: 'primeng', loadChildren: './primeng/primeng.module#PrimeNgModule'},
 ];
 
 @NgModule({
