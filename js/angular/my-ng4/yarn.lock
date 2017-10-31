@@ -2583,6 +2583,10 @@ invert-kv@^1.0.0:
   version "1.0.0"
   resolved "http://registry.npm.taobao.org/invert-kv/download/invert-kv-1.0.0.tgz#104a8e4aaca6d3d8cd157a8ef8bfab2d7a3ffdb6"
 
+ionic-angular@^3.8.0:
+  version "3.8.0"
+  resolved "http://registry.npm.taobao.org/ionic-angular/download/ionic-angular-3.8.0.tgz#c88faaeb5693e1053f90ff77b6df5f3bdfda93a2"
+
 ip@^1.1.0, ip@^1.1.5:
   version "1.1.5"
   resolved "http://registry.npm.taobao.org/ip/download/ip-1.1.5.tgz#bdded70114290828c0a039e72ef25f5aaec4354a"

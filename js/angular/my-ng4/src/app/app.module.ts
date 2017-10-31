@@ -20,7 +20,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import 'hammerjs';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 // import { MatComponent } from './mat/mat.component';
-
+// import { IonicApp, IonicModule } from 'ionic-angular';
 const routes: Routes = [
   {path: '', redirectTo: '/index.html', pathMatch: 'full'},
   {path: 'index.html', component: AaaComponent},
@@ -44,9 +44,10 @@ const routes: Routes = [
     TestDirectiveModule,
 
     // RouterModule,
-    AppRoutingModule
+    AppRoutingModule,
 
-    // RouterModule.forRoot(routes)
+     //RouterModule.forRoot(routes)
+    //IonicModule.forRoot(AppComponent)
   ],
   declarations: [
     //MatComponent,
@@ -55,6 +56,7 @@ const routes: Routes = [
   ],
   providers: [],
   bootstrap: [AppComponent]
+  // bootstrap: [IonicApp]
 })
 export class AppModule {
 }

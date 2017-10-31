@@ -12,6 +12,7 @@ const routes: Routes = [
   {path: 'flex', loadChildren: './flex/flex.module#FlexModule'},
   {path: 'mat', loadChildren: './mat/mat.module#MatModule'},
   {path: 'primeng', loadChildren: './primeng/primeng.module#PrimeNgModule'},
+  {path: 'ionic', loadChildren: './ionic/ionic.module#IonicDemoModule'},
 ];
 
 @NgModule({

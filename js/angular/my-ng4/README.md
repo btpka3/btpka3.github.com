@@ -10,9 +10,14 @@
     - [demo source](https://github.com/angular/flex-layout/tree/master/src/demo-app)
     - [Fast Starts](https://github.com/angular/flex-layout/wiki/Fast-Starts)
 
-- `@`
+- `material`
     - [doc](https://material.angular.io/)
-    
+
+- ionic
+    - [Using Ionic 2 with the Angular CLI](https://labs.encoded.io/2016/11/12/ionic2-with-angular-cli/)
+    - [Ionic 2 + @angular/cli Seed Project](https://github.com/lathonez/clicker)
+    - [Using Angular2 Router in ionic2](https://stackoverflow.com/questions/40459918/using-angular2-router-in-ionic2)
+    - [Ionic 3 and Webpack 2 warning](https://github.com/ionic-team/ionic/issues/11072)
 
 # 注意事项
 
