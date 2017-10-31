@@ -24,6 +24,12 @@
     - [Using Angular2 Router in ionic2](https://stackoverflow.com/questions/40459918/using-angular2-router-in-ionic2)
     - [Ionic 3 and Webpack 2 warning](https://github.com/ionic-team/ionic/issues/11072)
 
+- clarity
+    - [Get Start](https://vmware.github.io/clarity/get-started)
+    
+- webcomponents
+    - [custom-elements](https://github.com/webcomponents/custom-elements)
+
 # 注意事项
 
 * 使用 yarn 来取代 npm。

@@ -226,6 +226,10 @@
   version "2.53.42"
   resolved "http://registry.npm.taobao.org/@types/selenium-webdriver/download/@types/selenium-webdriver-2.53.42.tgz#74cb77fb6052edaff2a8984ddafd88d419f25cac"
 
+"@webcomponents/custom-elements@^1.0.4":
+  version "1.0.4"
+  resolved "http://registry.npm.taobao.org/@webcomponents/custom-elements/download/@webcomponents/custom-elements-1.0.4.tgz#f7de0103026f27863ecfabaf1d450b9c21714910"
+
 abbrev@1:
   version "1.1.1"
   resolved "http://registry.npm.taobao.org/abbrev/download/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
@@ -920,6 +924,18 @@ clap@^1.0.9:
   resolved "http://registry.npm.taobao.org/clap/download/clap-1.2.3.tgz#4f36745b32008492557f46412d66d50cb99bce51"
   dependencies:
     chalk "^1.1.3"
+
+clarity-angular@^0.10.11:
+  version "0.10.11"
+  resolved "http://registry.npm.taobao.org/clarity-angular/download/clarity-angular-0.10.11.tgz#60de52642aff7e8d82c8534510fa105341f0963f"
+
+clarity-icons@^0.10.11:
+  version "0.10.11"
+  resolved "http://registry.npm.taobao.org/clarity-icons/download/clarity-icons-0.10.11.tgz#9b05d4c072d1efe8b4076c0782ac0b7a9517b102"
+
+clarity-ui@^0.10.11:
+  version "0.10.11"
+  resolved "http://registry.npm.taobao.org/clarity-ui/download/clarity-ui-0.10.11.tgz#347c3c0d78e89c6c91cbb4ad16f9289e2c021350"
 
 clean-css@4.1.x:
   version "4.1.9"

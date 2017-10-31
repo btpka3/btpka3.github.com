@@ -21,6 +21,9 @@ import 'hammerjs';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 // import { MatComponent } from './mat/mat.component';
 // import { IonicApp, IonicModule } from 'ionic-angular';
+
+//import {ClarityIcons}from "clarity-icons";
+
 const routes: Routes = [
   {path: '', redirectTo: '/index.html', pathMatch: 'full'},
   {path: 'index.html', component: AaaComponent},
