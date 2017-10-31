@@ -3308,6 +3308,10 @@ map-obj@^1.0.0, map-obj@^1.0.1:
   version "1.0.1"
   resolved "http://registry.npm.taobao.org/map-obj/download/map-obj-1.0.1.tgz#d933ceb9205d82bdcf4886f6742bdc2b4dea146d"
 
+material-design-icons-iconfont@^3.0.3:
+  version "3.0.3"
+  resolved "http://registry.npm.taobao.org/material-design-icons-iconfont/download/material-design-icons-iconfont-3.0.3.tgz#154a1084047d4e27237fa7f5a37e1075ceea6df2"
+
 math-expression-evaluator@^1.2.14:
   version "1.2.17"
   resolved "http://registry.npm.taobao.org/math-expression-evaluator/download/math-expression-evaluator-1.2.17.tgz#de819fdbcd84dccd8fae59c6aeb79615b9d266ac"

@@ -8,7 +8,7 @@ mat
 <div>
   <form>
     <mat-form-field>
-      <input matInput placeholder="Company" value="Google" >
+      <input matInput placeholder="Company" value="Google">
     </mat-form-field>
   </form>
 </div>
@@ -33,5 +33,39 @@ mat
   <button mat-raised-button disabled>Disabled</button>
   <a mat-raised-button routerLink=".">Link</a>
 </div>
+
+<mat-selection-list #shoes>
+  <mat-list-option *ngFor="let shoe of typesOfShoes">
+    {{shoe}}
+  </mat-list-option>
+</mat-selection-list>
+
+<mat-list dense>
+  <h3 matSubheader>Folders</h3>
+  <mat-list-item>
+    <img matListAvatar src="https://angular.cn/assets/images/logos/angular/angular.svg">
+    <h3 matLine> zhang3 </h3>
+    <p matLine> from li4 </p>
+    <p matLine>
+      <span> hi</span>
+      <span class="demo-2"> hello world </span>
+    </p>
+  </mat-list-item>
+  <mat-list-item> Salt</mat-list-item>
+  <h3 matSubheader>Folders</h3>
+  <mat-list-item> Paprika</mat-list-item>
+</mat-list>
+
+
+<mat-list>
+  <mat-list-item *ngFor="let message of messages">
+    <mat-icon matListIcon>folder</mat-icon>
+    <h3 matLine> {{message.from}} </h3>
+    <p matLine>
+      <span> {{message.subject}} </span>
+      <span class="demo-2"> -- {{message.content}} </span>
+    </p>
+  </mat-list-item>
+</mat-list>
 
 

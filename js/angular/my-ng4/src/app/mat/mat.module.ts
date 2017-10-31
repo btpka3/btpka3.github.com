@@ -5,7 +5,11 @@ import {HttpClientModule} from '@angular/common/http';
 //import {BrowserModule} from '@angular/platform-browser';
 import {FlexLayoutModule} from '@angular/flex-layout';
 //import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { CommonModule } from '@angular/common';
+
+
 import {
   MatAutocompleteModule,
   MatButtonModule,
@@ -44,6 +48,7 @@ import {
 @NgModule({
   imports: [
     FormsModule,
+    CommonModule,
 
     //  BrowserModule,
     MatRoutingModule,

@@ -32,6 +32,7 @@
     "ionic-angular": "^3.8.0",
     "koa": "^2.3.0",
     "koa-json": "^2.0.2",
+    "material-design-icons-iconfont": "^3.0.3",
     "primeng": "^4.3.0",
     "rxjs": "^5.4.2",
     "zone.js": "^0.8.14"

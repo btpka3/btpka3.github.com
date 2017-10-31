@@ -6,6 +6,11 @@
 - [Protecting Routes using Guards in Angular](https://blog.thoughtram.io/angular/2016/07/18/guards-in-angular-2.html)
 
 
+- angular 
+    - [Can't bind to 'ngforOf' since it isn't a known native property](https://stackoverflow.com/a/35531251/533317) 
+- angular-cli
+    - [Angular-cli is --mobile still an option?](https://github.com/angular/angular-cli/issues/5791)
+
 - `@angular/flex-layout`
     - [demo source](https://github.com/angular/flex-layout/tree/master/src/demo-app)
     - [Fast Starts](https://github.com/angular/flex-layout/wiki/Fast-Starts)
@@ -22,6 +27,15 @@
 # 注意事项
 
 * 使用 yarn 来取代 npm。
+
+
+```bash
+ng new \
+  --routing true \
+  --style scss \
+  --skip-install \
+  xxx
+```
 
 # FIXME
 
