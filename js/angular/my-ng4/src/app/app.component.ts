@@ -14,6 +14,7 @@ export class AppComponent implements OnInit {
   title = 'app works!';
   myServiceResult;
   myPipeSrc = "myPipeSrc";
+  value: string = '10';
 
   constructor(public myService: MyService,
               private oauthService: OAuthService) {

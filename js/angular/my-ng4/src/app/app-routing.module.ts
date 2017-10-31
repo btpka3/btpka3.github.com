@@ -14,6 +14,7 @@ const routes: Routes = [
   {path: 'primeng', loadChildren: './primeng/primeng.module#PrimeNgModule'},
   {path: 'ionic', loadChildren: './ionic/ionic.module#IonicDemoModule'},
   {path: 'clarity', loadChildren: './clarity/clarity.module#ClModule'},
+  {path: 'ons', loadChildren: './ons/ons.module#OnsModule'},
 ];
 
 @NgModule({

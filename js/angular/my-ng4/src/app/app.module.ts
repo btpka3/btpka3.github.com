@@ -22,6 +22,13 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 // import { MatComponent } from './mat/mat.component';
 // import { IonicApp, IonicModule } from 'ionic-angular';
 
+/*
+该模块因为 re-export 了 BrowserModule， 所以不能放到 子路由中 lazy 加载。
+ */
+// import { OnsenModule } from 'ngx-onsenui';
+// import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
+
 //import {ClarityIcons}from "clarity-icons";
 
 const routes: Routes = [
@@ -31,8 +38,11 @@ const routes: Routes = [
   //{path: 'bbb', loadChildren: './test-route/bbb/bbb.module#BbbModule'}
 ];
 
-
 @NgModule({
+  // schemas: [
+  //   CUSTOM_ELEMENTS_SCHEMA,
+  // ],
+
   imports: [
     BrowserModule,
     FormsModule,
@@ -45,6 +55,9 @@ const routes: Routes = [
     TestComponentModule,
     TestPipeModule,
     TestDirectiveModule,
+
+    // FIXME: 引入该包会造成 clarity 出错
+    // OnsenModule,
 
     // RouterModule,
     AppRoutingModule,

@@ -1,0 +1,12 @@
+ss
+<ons-button (click)="onClick()" modifier="material" ripple="true">Click Me</ons-button>
+<ons-input placeholder="Type here"></ons-input>
+
+
+<div style="text-align: center; margin: 10px">
+  <ons-range [(value)]="value" (valueChange)="rangeValueChange()"></ons-range>
+  <br>
+  <ons-range modifier="material" [(value)]="value"></ons-range>
+  <br>
+  {{value}}
+</div>

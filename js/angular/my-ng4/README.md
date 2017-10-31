@@ -29,10 +29,15 @@
     
 - webcomponents
     - [custom-elements](https://github.com/webcomponents/custom-elements)
+    - [angular-polymer](https://github.com/platosha/angular-polymer)
 
 # 注意事项
 
 * 使用 yarn 来取代 npm。
+* Onsen UI 使用之后， clarity 出错 "Error: The custom element being constructed was not registered with `customElements`."
+    且出错后中断路由。
+* OnsenModule 因为re-export 了BrowserModule，故只能在顶层route中使用，子route中数据无法双向绑定. 
+  
 
 
 ```bash
