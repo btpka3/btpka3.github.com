@@ -1,7 +1,8 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "my-ng4"
+    "name": "my-ng4",
+    "ejected": true
   },
   "apps": [
     {
@@ -9,7 +10,11 @@
       "outDir": "dist",
       "assets": [
         "assets",
-        { "glob": "favicon.ico", "input": "./", "output": "./assets" }
+        {
+  "glob": "favicon.ico",
+  "input": "/data0/work/git-repo/github/btpka3/btpka3.github.com/js/angular/my-ng4/src/",
+  "output": "./assets"
+}
       ],
       "index": "index.html",
       "main": "main.ts",
@@ -55,6 +60,7 @@
   },
   "defaults": {
     "styleExt": "css",
-    "component": {}
+    "component": {
+    }
   }
 }
