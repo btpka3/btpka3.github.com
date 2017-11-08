@@ -21,6 +21,9 @@
 * [RFC-4422: Simple Authentication and Security Layer (SASL)](https://tools.ietf.org/html/rfc4422)
 
 * [chhsiao90/nitmproxy](https://github.com/chhsiao90/nitmproxy)
+* [TCP and UDP Socket API](https://www.w3.org/TR/tcp-udp-sockets/)
+* [Proxy Auto-Configuration (PAC) file](https://developer.mozilla.org/en-US/docs/Web/HTTP/Proxy_servers_and_tunneling/Proxy_Auto-Configuration_(PAC)_file)
+
 
 ## socks5 代理服务器
 
@@ -39,7 +42,7 @@ curl --socks5 localhost:1080 https://www.baidu.com/
 curl --proxy socks5://li4:123456@localhost:1080 https://www.baidu.com/
 
 # SUCCESS
-curl --proxy socks5://zhang3:123456@localhost:1080 https://www.baidu.com/
+curl --proxy socks5://zhang3:zhang3@localhost:1080 https://www.baidu.com/
 
 
 

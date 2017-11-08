@@ -1,0 +1,24 @@
+server:
+  port: 8081
+  contextPath: /
+
+# LOGGING
+logging:
+  level:
+    org.springframework.security:                                                 INFO
+    org.springframework.boot.actuate.audit.listener.AuditListener:                DEBUG
+    org.springframework.security.config.annotation.authentication.configuration:  DEBUG
+    org.springframework.security.web.access:                                      DEBUG
+    org.springframework.security.web.csrf:                                        DEBUG
+    org.springframework.security.access:                                          DEBUG
+    # 用来追踪 restTemplate 请求
+    org.apache.http.wire:                                                         DEBUG
+    io.github.btpka3:                                                             DEBUG
+    org.springframework.boot.context.config.ConfigFileApplicationListener:        TRACE
+#    org.springframework:                                                          TRACE
+
+
+spring.jersey:
+  application-path: /api
+  type: servlet
+  servlet.load-on-startup: -1

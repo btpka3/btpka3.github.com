@@ -1,0 +1,165 @@
+buildscript {
+    ext {
+    }
+    repositories {
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("io.spring.gradle:dependency-management-plugin:1.0.3.RELEASE")
+        classpath("gradle.plugin.com.gorylenko.gradle-git-properties:gradle-git-properties:1.4.17")
+    }
+}
+
+
+
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: "io.spring.dependency-management"
+apply plugin: 'project-report'
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+//apply plugin: "com.gorylenko.gradle-git-properties"
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+
+repositories {
+    maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+    mavenCentral()
+}
+
+idea {
+    module {
+        downloadJavadoc = false
+        downloadSources = true
+    }
+}
+
+eclipse {
+    classpath {
+        downloadSources = true
+    }
+}
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.boot:spring-boot-starter-parent:${springBootVersion}")
+    }
+    resolutionStrategy {
+        cacheChangingModulesFor 0, 'seconds'
+    }
+    dependencies {
+//            dependency('log4j:log4j:1.2.17')
+    }
+}
+
+
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    //archives javadocJar
+}
+
+dependencies {
+
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-security')
+    compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+    compile("org.springframework.boot:spring-boot-devtools")
+
+    compile('org.springframework.security:spring-security-web')
+
+    compile('com.fasterxml.jackson.dataformat:jackson-dataformat-xml')
+    compile('com.fasterxml.jackson.module:jackson-module-parameter-names')
+    compile('com.fasterxml.jackson.datatype:jackson-datatype-jdk8')
+    compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
+
+    compile('org.springframework.boot:spring-boot-starter-jersey')
+    compile('org.glassfish.jersey.ext:jersey-spring3')
+
+    compile('io.swagger:swagger-core:1.5.16')
+    compile('io.swagger:swagger-jersey2-jaxrs:1.5.16')
+    compile('org.webjars:swagger-ui:3.2.2')
+
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+
+    compile('io.netty:netty-transport:4.1.8.Final')
+    compile('io.netty:netty-handler:4.1.8.Final')
+    compile('io.netty:netty-codec-socks:4.1.8.Final')
+
+}
+
+test {
+    include 'me/test/**'
+    testLogging.showStandardStreams = false
+}
+
+bootRepackage {
+    enabled = true
+    withJarTask jar
+    classifier = 'boot'
+}
+
+bootRun {
+    addResources = true
+    systemProperties = System.properties
+}
+
+springBoot {
+    //mainClass = System.properties['mainClass']
+    buildInfo {
+        additionalProperties = [
+                'foo': 'bar'
+        ]
+    }
+}
+
+jar {
+    manifest {
+        attributes "Implementation-Version": project.version
+    }
+}
+
+publish {
+    dependsOn assemble
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+
+            artifact sourcesJar {
+                classifier "sources"
+            }
+
+            artifact(file("${buildDir}/libs/${project.name}-${project.version}-${bootRepackage.classifier}.jar")) {
+                classifier 'boot'
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            credentials {
+                username "admin"
+                password "admin123"
+            }
+            if (project.version.endsWith('-SNAPSHOT')) {
+                url "http://mvn.kingsilk.xyz/content/repositories/snapshots/"
+            } else {
+                url "http://mvn.kingsilk.xyz/content/repositories/releases/"
+            }
+        }
+    }
+}
+

@@ -1,0 +1,15 @@
+
+version: '3'
+
+services:
+  s5:
+    image: openjdk:8u131-jdk-alpine
+    ports:
+      - "1080:1080"
+      - "8081:8081"
+    volumes:
+      - ../../../:/my-netty-socks5
+    command: /my-netty-socks5/src/test/docker/start.sh
+    #command: sleep 10000
+networks:
+  my-s5-net:
