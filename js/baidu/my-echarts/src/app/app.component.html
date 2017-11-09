@@ -1,0 +1,13 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <h1>
+    Welcome to {{title}}!
+  </h1>
+</div>
+
+<span *ngFor="let t of staffTypes; let i = index">
+  <input type="checkbox" [(ngModel)]="t['checked']" (change)="cc()"/> {{t['name']}}
+</span>
+
+<div echarts [options]="echartsOption" class="echartsStyle"></div>
+
