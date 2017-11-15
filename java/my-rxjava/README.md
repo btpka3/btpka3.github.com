@@ -1,5 +1,10 @@
 
 
+# 参考
+
+- [Implementing Your Own Operators](https://github.com/ReactiveX/RxJava/wiki/Implementing-Your-Own-Operators)
+- [《Reactive Programming with RxJava》](http://www.allitebooks.com/reactive-programming-with-rxjava/)
+
 # ObserveOn 和 SubscribeOn
  
 |                                                           |observerOn|subscribeOn|

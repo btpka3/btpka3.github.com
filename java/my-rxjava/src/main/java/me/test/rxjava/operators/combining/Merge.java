@@ -60,6 +60,8 @@ public class Merge {
         Flowable.merge(
                 Flowable.just("AA"),
                 Flowable.create((e) -> {
+
+                    // 独立的线程上单独执行的
                     new Thread() {
                         @Override
                         public void run() {
@@ -89,4 +91,6 @@ public class Merge {
 
                 }, Throwable::printStackTrace);
     }
+
+
 }

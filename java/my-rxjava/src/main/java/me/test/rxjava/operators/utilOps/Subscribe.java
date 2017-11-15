@@ -3,6 +3,8 @@ package me.test.rxjava.operators.utilOps;
 import io.reactivex.*;
 import io.reactivex.disposables.*;
 import io.reactivex.observers.*;
+import io.reactivex.schedulers.*;
+import me.test.rxjava.*;
 
 import java.util.concurrent.*;
 
@@ -14,7 +16,7 @@ public class Subscribe {
 
     public static void main(String[] args) throws InterruptedException {
 
-        subscribeWith01();
+        subscribe4();
 
     }
 
@@ -26,22 +28,22 @@ public class Subscribe {
 
                     @Override
                     public void onStart() {
-                        System.out.println("Start!");
+                        U.print("onStart", "Start!");
                     }
 
                     @Override
                     public void onNext(String t) {
-                        System.out.println(t);
+                        U.print("onNext", t);
                     }
 
                     @Override
                     public void onError(Throwable t) {
-                        t.printStackTrace();
+                        U.print("onError", t);
                     }
 
                     @Override
                     public void onComplete() {
-                        System.out.println("Done!");
+                        U.print("onComplete", "Done!");
                     }
                 });
 
@@ -50,5 +52,58 @@ public class Subscribe {
         d.dispose();
     }
 
+
+    // 所有消息订阅都是 main 线程上执行的。
+    public static void subscribe1() throws InterruptedException {
+        System.out.println("----------------------subscribe1");
+        Flowable<Integer> f = Flowable.range(0, 5);
+
+
+        f.subscribe(i -> U.print("s1.subscribe : ", i));
+        f.subscribe(i -> U.print("s2.subscribe : ", i));
+        //.subscribe(System.out::println);
+        Thread.sleep(3000);
+    }
+
+    // 一个 subscribe 使用一个独立的 线程
+    public static void subscribe2() throws InterruptedException {
+        System.out.println("----------------------subscribe2");
+        Flowable<Integer> f = Flowable.range(0, 5)
+                .subscribeOn(Schedulers.computation());
+
+
+        f.subscribe(i -> U.print("s1.subscribe : ", i));
+        f.subscribe(i -> U.print("s2.subscribe : ", i));
+        //.subscribe(System.out::println);
+        Thread.sleep(3000);
+    }
+
+
+    // 无论多晚，只要 subscribe，订阅的消息都是从第一个消息开始。
+    public static void subscribe3() throws InterruptedException {
+        System.out.println("----------------------subscribe3");
+        Flowable<Long> f = Flowable.interval(1, TimeUnit.SECONDS);
+
+        f.subscribe(i -> U.print("s1.subscribe : ", i));
+
+
+        Thread.sleep(3000);
+        // 虽然3秒后才订阅，但也仍然是从第一个消息（0）开始
+        f.subscribe(i -> U.print("s2.subscribe ----------- : ", i));
+        Thread.sleep(8000);
+    }
+
+    // 两次订阅得到的消息都不一样
+    public static void subscribe4() throws InterruptedException {
+        System.out.println("----------------------subscribe4");
+
+        Flowable<Integer> f = Flowable.range(1, 1000000)
+                .sample(1, TimeUnit.MILLISECONDS);
+
+        f.subscribe(i -> U.print("s1.subscribe", i));
+
+        Thread.sleep(3000);
+        f.subscribe(i -> U.print("s2.subscribe ================= ", i));
+    }
 
 }
