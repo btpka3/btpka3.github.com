@@ -65,8 +65,10 @@ public class IntStreamTest {
                 .forEach(System.out::println);
         long end2 = System.currentTimeMillis();
 
-
+        // 并发执行
         System.out.println("1.1 : " + Duration.ZERO.plusMillis(end1 - start1));
+
+        // 顺序执行
         System.out.println("1.2 : " + Duration.ZERO.plusMillis(end2 - start2));
     }
 
@@ -75,6 +77,11 @@ public class IntStreamTest {
 
 
         long start1 = System.currentTimeMillis();
+        // parallel() 和 sequential() 可以调用多次
+        // 但只有最后一次调用才决定到底是并发执行还是顺序执行，
+        // 因此这两个方法只调用一次即可。
+        // 并发执行默认的线程数是 CPU 的核心数，但可以通过全局系统属性修改
+        // System.setProperty("java.util.concurrent.ForkJoinPool.common.parallelism", "12");
         IntStream.range(0, bigNum)
                 .parallel()
                 .filter(IntStreamTest::isPrime)
