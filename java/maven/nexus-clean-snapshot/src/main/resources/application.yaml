@@ -1,0 +1,21 @@
+
+
+# LOGGING
+logging:
+  level:
+    org.springframework.web:                                                      INFO
+    org.springframework.security:                                                 INFO
+    org.springframework.boot.actuate.audit.listener.AuditListener:                DEBUG
+    org.springframework.boot.web.support.ErrorPageFilter:                         DEBUG
+    org.springframework.web.servlet.view.ContentNegotiatingViewResolver:          DEBUG
+    org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping:  DEBUG
+    org.apache.http.wire:                                                         DEBUG
+    net.kingsilk:                                                                 DEBUG
+    io.github.btpka3:                                                             DEBUG
+
+nexus:
+  userName: admin
+  password: admin123
+  repo :    snapshots
+  maxSnapshotCount: 5
+  apiBaseUrl:  http://mvn.kingsilk.xyz/service/local
