@@ -6,6 +6,7 @@ public class ArtifactInfo {
     private String artifactId;
     private String version;
     private String versionNumber;
+    private String path;
 
     public String getGroupId() {
         return groupId;
@@ -38,4 +39,14 @@ public class ArtifactInfo {
     public void setVersionNumber(String versionNumber) {
         this.versionNumber = versionNumber;
     }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+
 }
