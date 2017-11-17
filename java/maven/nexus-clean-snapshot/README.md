@@ -11,59 +11,10 @@
       如果相关API不清楚，可以通过 Web 界面进行相应的操作，并监控网络请求面板里的信息。      
 
 
-
 # sonartype nexus API
 * 2.x
     * [Nexus Core API](https://repository.sonatype.org/nexus-restlet1x-plugin/default/docs/index.html)
-    
-        ```bash
-        wget -O "qh-agency-admin-front-${app_version}.tgz" "http://mvn.kingsilk.xyz/service/local/artifact/maven/redirect\
-            ?r=public\
-            &g=net.kingsilk\
-            &a=qh-agency-admin-front\
-            &p=tgz\
-            &v=${app_version}
-      
-curl -v "http://mvn.kingsilk.xyz/service/local/artifact/maven/redirect\
-?r=snapshots\
-&g=net.kingsilk\
-&a=qh-activity-admin-front\
-&p=tgz\
-&v=0.0.1-SNAPSHOT"
-
-curl -v "http://mvn.kingsilk.xyz/service/local/artifact/maven\
-?r=snapshots\
-&g=net.kingsilk\
-&a=qh-activity-admin-front\
-&p=tgz\
-&v=0.0.1-SNAPSHOT"
-
-curl -v "http://mvn.kingsilk.xyz/service/local/artifact/maven/content\
-?r=snapshots\
-&g=net.kingsilk\
-&a=qh-activity-admin-front\
-&p=tgz\
-&v=0.0.1-SNAPSHOT"
-
-
-curl -v "http://mvn.kingsilk.xyz/service/local/artifact/maven/resolve\
-?r=snapshots\
-&g=net.kingsilk\
-&a=qh-activity-admin-front\
-&p=tgz\
-&v=0.0.1-SNAPSHOT"
-
-curl -v "http://mvn.kingsilk.xyz/service/local/repositories/snapshots/content/net/kingsilk/qh-activity-api/0.0.1-SNAPSHOT/"
-
-curl 'http://mvn.kingsilk.xyz/service/local/repositories/snapshots/content/net/kingsilk/qh-activity-admin-front/0.0.1-SNAPSHOT/qh-activity-admin-front-0.0.1-20171024.024511-2.zip' 
- -X DELETE \ 
- -H 'Accept: application/json' \
- -u admin:admin123 \
- -H 'Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3' 
- --compressed -H 'Referer: http://mvn.kingsilk.xyz/' 
- -H 'X-Nexus-UI: true' -H 'X-Requested-With: XMLHttpRequest' 
- -H 'Connection: keep-alive'
-        ```
+     
 * 3.x
     3.x 版本提供了基于 swagger 的API文档。
     * [simple-shell-example@github](https://github.com/sonatype/nexus-book-examples/tree/nexus-3.x/scripting/simple-shell-example)
