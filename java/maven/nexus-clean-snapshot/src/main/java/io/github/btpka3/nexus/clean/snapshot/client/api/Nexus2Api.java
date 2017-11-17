@@ -7,6 +7,6 @@ public interface Nexus2Api {
 
     ListenableFuture<ResponseEntity<RepoContent>> listRepoContent(String repoId, String relativePath);
 
-    ListenableFuture<ResponseEntity<Void>> delRepoContent(String resourceURI);
+    ListenableFuture<ResponseEntity<Void>> delRepoContent(String repoId, String relativePath);
 
 }

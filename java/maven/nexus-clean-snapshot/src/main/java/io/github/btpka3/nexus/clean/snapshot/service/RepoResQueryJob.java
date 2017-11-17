@@ -5,7 +5,7 @@ import org.slf4j.*;
 
 import java.util.function.*;
 
-
+@Deprecated
 public class RepoResQueryJob implements Consumer<RepoResDirJobConf> {
 
     private Logger logger = LoggerFactory.getLogger(getClass());

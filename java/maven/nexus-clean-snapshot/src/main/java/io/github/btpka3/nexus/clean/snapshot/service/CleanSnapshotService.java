@@ -178,6 +178,28 @@ public class CleanSnapshotService {
     }
 
 
+
+
+    public void queryRepoRsc(RepoResDirJobConf conf) {
+        String repo = conf.getRepo();
+        String path = conf.getPath();
+
+        logger.debug("==================== 开始查询 : " + path);
+        nexus2Api.listRepoContent(repo, path)
+                .addCallback(
+                        c -> {
+                            RepoContentEx p = new RepoContentEx();
+                            p.setConf(conf);
+                            p.setContent(c.getBody());
+                            conf.getSuccessCallback().accept(p);
+                        },
+                        err -> {
+                            conf.getErrorCallback().accept(err);
+                        }
+                );
+    }
+
+
     private Set<RepoResDirJobConf> runningJob = new LinkedHashSet<>();
 
 
@@ -236,9 +258,9 @@ public class CleanSnapshotService {
                         emitterRef.get().onComplete();
                     }));
 
-                    RepoResQueryJob job = new RepoResQueryJob();
+//                    RepoResQueryJob job = new RepoResQueryJob();
                     runningJob.add(conf);
-                    job.accept(conf);
+                    queryRepoRsc(conf);
 
                     return Flowable.create(
                             emitterRef::set,
@@ -247,7 +269,7 @@ public class CleanSnapshotService {
                 });
     }
 
-    public Flowable<Map<String, List<RepoContent.Item>>> dddd(RepoContentEx contentEx) {
+    public Flowable<Map<String, List<RepoContent.Item>>> getToBeDelItems(RepoContentEx contentEx) {
 
         //  快照版本目录的路径 解析出相应的信息
         ArtifactInfo artifactInfo = toSnapshotArtifactInfo(contentEx.getConf().getPath());
@@ -343,6 +365,30 @@ public class CleanSnapshotService {
 
     }
 
+    /**
+     * 返回的 flowable 只会 发送 onComplete 或 onError，而不会发送 onNext。
+     * @param key
+     * @param items
+     * @return
+     */
+    public Flowable<Void> del(String key, List<RepoContent.Item> items) {
+
+        return Flowable.fromIterable(items)
+                .parallel()
+                .flatMap(item -> Flowable.<Void>create(
+                        e -> nexus2Api.delRepoContent(repo, item.getRelativePath())
+                                .addCallback(
+                                        result -> e.onComplete(),
+                                        err -> e.onError(err)
+
+                                ),
+                        BackpressureStrategy.BUFFER)
+                )
+                .sequential()
+                .doOnComplete(() -> {
+                });
+    }
+
 
     public void clean(Consumer onComplete, Consumer onError) {
 
@@ -353,9 +399,16 @@ public class CleanSnapshotService {
                 // 只保留 "-SNAMPSHOTP/" 的 快照版本号 的目录
                 .filter(contentEx -> isSnapshotVersionDir(contentEx.getConf().getPath()))
                 .flatMap(contentEx -> {
-                    //  group
-                    return dddd(contentEx);
+                    //  分组，排序，得到要删除的记录集。
+                    return getToBeDelItems(contentEx);
                 })
+
+                .flatMap(m -> {
+                    //  按组删除记录集
+                    Map.Entry<String, List<RepoContent.Item>> entry = m.entrySet().stream().findFirst().get();
+                    return del(entry.getKey(), entry.getValue());
+                })
+
                 .sequential()
 
                 .subscribe(
