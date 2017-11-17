@@ -9,7 +9,7 @@ logging:
     org.springframework.boot.web.support.ErrorPageFilter:                         DEBUG
     org.springframework.web.servlet.view.ContentNegotiatingViewResolver:          DEBUG
     org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping:  DEBUG
-    org.apache.http.wire:                                                         DEBUG
+    #org.apache.http.wire:                                                         DEBUG
     net.kingsilk:                                                                 DEBUG
     io.github.btpka3:                                                             DEBUG
 
@@ -17,5 +17,7 @@ nexus:
   userName: admin
   password: admin123
   repo :    snapshots
+  # 需要以 '/' 结尾
+  repoRootRsc : /net/kingsilk/qh-activity-core/
   maxSnapshotCount: 5
   apiBaseUrl:  http://mvn.kingsilk.xyz/service/local

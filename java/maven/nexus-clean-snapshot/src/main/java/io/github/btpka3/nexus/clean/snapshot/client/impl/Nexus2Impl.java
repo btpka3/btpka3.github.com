@@ -36,7 +36,7 @@ public class Nexus2Impl implements Nexus2Api {
     }
 
     @Override
-    public ListenableFuture<ResponseEntity<Void>> delRepoContent(String repoId, String relativePath) {
+    public ListenableFuture<ResponseEntity<Void>> delRepoContent(String resourceUri) {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
@@ -44,7 +44,8 @@ public class Nexus2Impl implements Nexus2Api {
         HttpEntity<Void> reqEntity = new HttpEntity<>(headers);
 
         return asyncRestTemplate.exchange(
-                apiBaseUrl + "/repositories/" + repoId + "/content" + relativePath,
+                //apiBaseUrl + "/repositories/" + repoId + "/content" + relativePath,
+                resourceUri,
                 HttpMethod.DELETE,
                 reqEntity,
                 Void.class
