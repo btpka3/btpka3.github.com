@@ -1,14 +1,20 @@
 package me.test.jdk.java.io;
 
+import java.io.*;
+import java.nio.file.*;
+import java.nio.file.attribute.*;
 import java.util.*;
 import java.util.concurrent.*;
 
 public class File {
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
-        listFiles("/tmp");
+        //listFiles("/tmp");
+        //walkFileTree("/tmp");
+        //walk("/tmp");
+        fileIteratable("/data0");
     }
 
 
@@ -33,4 +39,59 @@ public class File {
     }
 
 
+    public static void walkFileTree(String dir) throws IOException {
+        System.out.println("----------------------------------- walkFileTree");
+
+        Files.walkFileTree(
+                Paths.get(dir),
+                EnumSet.of(FileVisitOption.FOLLOW_LINKS),
+                Integer.MAX_VALUE,
+                new SimpleFileVisitor<Path>() {
+
+                    @Override
+                    public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+                        System.out.println(dir.toFile().getAbsolutePath());
+                        return FileVisitResult.CONTINUE;
+                    }
+
+                    @Override
+                    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
+                            throws IOException {
+                        System.out.println(file.toFile().getAbsolutePath());
+                        return FileVisitResult.CONTINUE;
+                    }
+                });
+
+        System.out.println("done.");
+    }
+
+    public static void walk(String dir) throws IOException {
+        System.out.println("----------------------------------- walk");
+
+        Files.walk(Paths.get(dir), FileVisitOption.FOLLOW_LINKS)
+                //.peek(System.out::println)
+                .forEach(System.out::println);
+
+        System.out.println("done.");
+    }
+
+
+    public static void fileIteratable(String dir) throws IOException {
+
+
+        System.out.println("----------------------------------- fileIteratable : " + dir);
+
+        System.out.println(Paths.get("/aa/bb", "cc", "dd"));
+
+
+        String p = "/aa/bb/cc";
+        Paths.get(p).forEach(a ->
+                // 分别打印 "aa", "bb", "cc"
+                System.out.println("@@@@@@@@@ : " + a)
+        );
+        for (Path path : Paths.get(p)) {
+            System.out.println("========= : " + path);
+        }
+        System.out.println("done.");
+    }
 }
