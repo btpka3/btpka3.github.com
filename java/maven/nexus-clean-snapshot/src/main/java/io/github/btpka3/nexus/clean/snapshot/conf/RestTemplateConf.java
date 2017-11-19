@@ -74,7 +74,7 @@ class RestTemplateConf {
     }
 
 
-    @Bean
+    //@Bean
     AsyncRestTemplate asyncRestTemplate(
             AsyncClientHttpRequestFactory requestFactory,
 

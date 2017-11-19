@@ -14,10 +14,11 @@ logging:
     io.github.btpka3:                                                             DEBUG
 
 nexus:
-  userName: admin
-  password: admin123
-  repo :    snapshots
-  # 需要以 '/' 结尾
-  repoRootRsc : /net/kingsilk/qh-activity-core/
+  #userName: admin
+  #password: admin123
+  # 需要以 '/' 结尾 /net/kingsilk/qh-activity-core/
+  #repoRootRsc : /
+  sonartypeWorkDir:  /data0/nexus/sonatype-work
+  repoId :    snapshots
   maxSnapshotCount: 5
-  apiBaseUrl:  http://mvn.kingsilk.xyz/service/local
+  #apiBaseUrl:  http://mvn.kingsilk.xyz/service/local

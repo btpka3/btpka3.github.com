@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.*;
 import java.util.function.*;
 import java.util.regex.*;
 
-@Service
+//@Service
 public class CleanSnapshotService {
 
     @Autowired

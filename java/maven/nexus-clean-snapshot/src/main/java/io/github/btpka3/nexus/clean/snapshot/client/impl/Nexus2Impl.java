@@ -3,13 +3,12 @@ package io.github.btpka3.nexus.clean.snapshot.client.impl;
 import io.github.btpka3.nexus.clean.snapshot.client.api.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.*;
-import org.springframework.stereotype.*;
 import org.springframework.util.concurrent.*;
 import org.springframework.web.client.*;
 
 import java.util.*;
 
-@Component
+//@Component
 public class Nexus2Impl implements Nexus2Api {
 
     @Value("${nexus.apiBaseUrl}")
