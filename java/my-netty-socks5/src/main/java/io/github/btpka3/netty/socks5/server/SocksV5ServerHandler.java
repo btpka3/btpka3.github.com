@@ -4,12 +4,31 @@ import io.netty.channel.*;
 import io.netty.handler.codec.socksx.*;
 import io.netty.handler.codec.socksx.v4.*;
 import io.netty.handler.codec.socksx.v5.*;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.stereotype.*;
+import org.springframework.util.*;
 
-
+@Component
 @ChannelHandler.Sharable
 public final class SocksV5ServerHandler extends SimpleChannelInboundHandler<SocksMessage> {
 
-    public static final SocksV5ServerHandler INSTANCE = new SocksV5ServerHandler();
+    @Autowired
+    private Props props;
+
+    private boolean isPasswordCorrect(String username, String password) {
+        if (!StringUtils.hasText(username) || !StringUtils.hasText(password)) {
+            return false;
+        }
+        if (props == null || props.getUsers() == null) {
+            return false;
+        }
+        for (Props.User u : props.getUsers()) {
+            if (username.equals(u.getUsername()) && password.equals(u.getPassword())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     private SocksV5ServerHandler() {
     }
@@ -30,10 +49,10 @@ public final class SocksV5ServerHandler extends SimpleChannelInboundHandler<Sock
             case SOCKS5:
                 if (socksRequest instanceof Socks5InitialRequest) {
                     // auth support example
-//                    ctx.pipeline().addFirst(new Socks5PasswordAuthRequestDecoder());
-//                    ctx.write(new DefaultSocks5InitialResponse(Socks5AuthMethod.PASSWORD));
-                    ctx.pipeline().addFirst(new Socks5CommandRequestDecoder());
-                    ctx.write(new DefaultSocks5InitialResponse(Socks5AuthMethod.NO_AUTH));
+                    ctx.pipeline().addFirst(new Socks5PasswordAuthRequestDecoder());
+                    ctx.write(new DefaultSocks5InitialResponse(Socks5AuthMethod.PASSWORD));
+//                    ctx.pipeline().addFirst(new Socks5CommandRequestDecoder());
+//                    ctx.write(new DefaultSocks5InitialResponse(Socks5AuthMethod.NO_AUTH));
                 } else if (socksRequest instanceof Socks5PasswordAuthRequest) {
 
                     ctx.pipeline().addFirst(new Socks5CommandRequestDecoder());
@@ -41,8 +60,7 @@ public final class SocksV5ServerHandler extends SimpleChannelInboundHandler<Sock
                     String username = ((Socks5PasswordAuthRequest) socksRequest).username();
                     String password = ((Socks5PasswordAuthRequest) socksRequest).password();
 
-                    System.out.println("=================username = '" + username + "', password='" + password + "'");
-                    if (username.equals(password)) {
+                    if (isPasswordCorrect(username, password)) {
                         ctx.write(new DefaultSocks5PasswordAuthResponse(Socks5PasswordAuthStatus.SUCCESS));
                     } else {
                         ctx.write(new DefaultSocks5PasswordAuthResponse(Socks5PasswordAuthStatus.FAILURE));

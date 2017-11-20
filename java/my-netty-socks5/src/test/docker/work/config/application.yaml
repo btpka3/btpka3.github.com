@@ -22,3 +22,11 @@ spring.jersey:
   application-path: /api
   type: servlet
   servlet.load-on-startup: -1
+
+mns:
+  port: 1080
+  users:
+    - username: zhang3
+      password: zhang3
+
+

@@ -4,10 +4,10 @@ function FindProxyForURL(url, host) {
     //console.log("=================FindProxyForURL : ", url, host);
 
 
-    // if(host.startsWith("172.")){
-    //     //return "SOCKS5 zhang3:zhang3@localhost:1080";
-    //     return "SOCKS localhost:1080";
-    // }
+    if(host.indexOf("google")){
+        //return "SOCKS5 zhang3:zhang3@localhost:1080";
+        return "SOCKS localhost:9999";
+    }
     // //return "DIRECT";
     // return "DIRECT";
     return "SOCKS 127.0.0.1:1080";

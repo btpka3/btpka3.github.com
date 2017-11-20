@@ -1,4 +1,9 @@
 
+# 参考
+
+- [webextensions-examples/proxy-blocker](https://github.com/mdn/webextensions-examples/tree/master/proxy-blocker)
+ 
+
 
 ```text
 curl -v http://localhost:8080/

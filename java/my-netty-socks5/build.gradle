@@ -96,6 +96,9 @@ dependencies {
     compile('io.netty:netty-handler:4.1.8.Final')
     compile('io.netty:netty-codec-socks:4.1.8.Final')
 
+
+    compile("org.springframework.boot:spring-boot-configuration-processor")
+
 }
 
 test {
@@ -127,6 +130,7 @@ jar {
     manifest {
         attributes "Implementation-Version": project.version
     }
+    exclude  "application.yaml"
 }
 
 publish {
