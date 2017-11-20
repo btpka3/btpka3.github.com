@@ -1,0 +1,51 @@
+{
+  "manifest_version": 2,
+  "name": "btpka3-pac",
+  "version": "0.1.0",
+  "description": "A tool to conf PAC.",
+  "icons": {
+    "24": "icons/icon.svg",
+    "48": "icons/icon.svg",
+    "96": "icons/icon.svg"
+  },
+  "permissions": [
+    "*://*/*",
+    "webRequest",
+    "webRequestBlocking",
+    "storage",
+    "proxy"
+  ],
+  "applications": {
+    "gecko": {
+      "id": "btpka3-pac@btpka3.github.io",
+      "strict_min_version": "57.0"
+    }
+  },
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "browser_action": {
+    "browser_style": true,
+    "default_title": "Wa haha",
+    "default_icon": "icons/icon.svg",
+    "default_popup": "popup/choose_beast.html"
+  },
+  "options_ui": {
+    "page": "options/options.html",
+    "browser_style": true,
+    "open_in_tab": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "js": [
+        "index.js"
+      ]
+    }
+  ],
+  "content_security_policy": "script-src 'self'; object-src 'self';"
+}

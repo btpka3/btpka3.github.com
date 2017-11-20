@@ -1,0 +1,24 @@
+button.test {
+    color: red;
+}
+
+html, body {
+    height: 300px;
+    width: 300px;
+    margin: 0;
+    background-color: #CFF2F2;
+}
+
+.beast {
+    height: 30px;
+    width: 90%;
+    margin: 3% auto;
+    text-align: center;
+    font-size: 1.5em;
+    background-color: #E5F2F2;
+    cursor: pointer;
+}
+
+.beast:hover {
+    background-color: #CFF2F2;
+}

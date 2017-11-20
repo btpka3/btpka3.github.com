@@ -1,0 +1,11 @@
+{
+  "name": "btpka3-pac",
+  "version": "1.0.0",
+  "description": "一个浏览器插件，方便自定义 PAC 文件。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
