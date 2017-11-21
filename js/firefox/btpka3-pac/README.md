@@ -19,9 +19,11 @@ ng new \
   --style scss \
   --skip-install \
   btpka3-pac
+  
+ng build
 
 cd btpka3-pac
-web-ext run --browser-console
+web-ext --browser-console --firefox=nightly run 
 web-ext --firefox=nightly run
 
 # 打包
@@ -51,3 +53,6 @@ web-ext sign                # --api-key=$WEB_EXT_API_KEY --api-secret=$WEB_EXT_A
 -   [web-ext](https://developer.mozilla.org/zh-CN/Add-ons/WebExtensions/Getting_started_with_web-ext) 
 
 -   [WebExtensions/API/proxy](https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/proxy)
+
+-   [TypeSearch](https://microsoft.github.io/TypeSearch/)
+-   [web-ext-types](https://github.com/kelseasy/web-ext-types)
