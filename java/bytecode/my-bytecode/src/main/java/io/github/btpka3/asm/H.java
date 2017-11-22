@@ -1,16 +1,30 @@
 package io.github.btpka3.asm;
 
-import jdk.internal.org.objectweb.asm.*;
 import org.apache.commons.io.*;
+import org.objectweb.asm.*;
 
 import java.io.*;
 
-public class A implements Opcodes {
+/**
+ * 该文件是从 Astah_professional 7.2.0 ( RELEASE at 2017/09/27) 中 获取。
+ * 主要是用来判断评估版的过期时间。
+ * 通过UI界面提示消息，定位到 "license_evaluation_term.message" 这个消息代码，
+ * 根据代码找到提示的位置（多个，该文件是一个）
+ * 分析判断逻辑。
+ *
+ * $HOME/.astah/professional/.ael 是安装的时间，比如： "2017/09/30"，但是经过了 gzip 压缩。
+ * h.class#g(string) : Line 74 是用来获取过期时间的，故可以通过修改这里的代码来增加评估版的时长。
+ *
+ * PS: 第一次使用 Mac 系统，默认使用了不区分大小写的文件系统，
+ * 造成 astah-pro.jar 解压有问题——N多重名的文件。
+ *
+ */
+public class H implements Opcodes {
 
     public static void main(String[] args) throws Exception {
 
         String dirPath = ".tmp";
-        String filePath = dirPath + "/aaaa.class";
+        String filePath = dirPath + "/h.class";
 
         IOUtils.write(dump(), new FileOutputStream(filePath));
         System.out.println(111);
