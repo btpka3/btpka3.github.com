@@ -1,0 +1,191 @@
+buildscript {
+    ext {
+    }
+    repositories {
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("io.spring.gradle:dependency-management-plugin:1.0.3.RELEASE")
+        classpath("gradle.plugin.com.gorylenko.gradle-git-properties:gradle-git-properties:1.4.17")
+    }
+}
+
+
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: "io.spring.dependency-management"
+apply plugin: 'project-report'
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+//apply plugin: "com.gorylenko.gradle-git-properties" // 生成 git.properties
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+
+
+repositories {
+    maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+    mavenCentral()
+}
+
+idea {
+    module {
+        downloadJavadoc = false
+        downloadSources = true
+    }
+}
+eclipse {
+    classpath {
+        downloadSources = true
+    }
+}
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.boot:spring-boot-starter-parent:${springBootVersion}")
+        mavenBom("org.apache.rocketmq:rocketmq-all:4.1.0-incubating")
+    }
+    resolutionStrategy {
+        cacheChangingModulesFor 0, 'seconds'
+    }
+    dependencies {
+
+//        dependency("")
+    }
+}
+
+
+publishing {
+
+    repositories {
+        maven {
+            credentials {
+                username "admin"
+                password "admin123"
+            }
+            if (project.version.endsWith('-SNAPSHOT')) {
+                url "http://mvn.kingsilk.xyz/content/repositories/snapshots/"
+            } else {
+                url "http://mvn.kingsilk.xyz/content/repositories/releases/"
+            }
+        }
+    }
+}
+
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    //archives javadocJar
+}
+
+dependencies {
+//        compile project(":qh-oauth-service")
+//        compile project(":qh-oauth-api")
+
+    compile('org.springframework.boot:spring-boot-starter-web')
+//    compile('org.springframework.boot:spring-boot-starter-security')
+//    compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+//    compile('org.springframework.boot:spring-boot-starter-data-mongodb')
+//    compile("org.springframework.boot:spring-boot-devtools")
+//
+//    compile('org.apache.httpcomponents:httpclient')
+//
+//    compile('org.springframework.security.oauth:spring-security-oauth2')
+//    compile('org.springframework.security:spring-security-jwt')
+//    compile('org.springframework.security:spring-security-web')
+//
+//
+//    compile('com.fasterxml.jackson.dataformat:jackson-dataformat-xml')
+//    compile('com.fasterxml.jackson.module:jackson-module-parameter-names')
+//    compile('com.fasterxml.jackson.datatype:jackson-datatype-jdk8')
+//    compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
+//
+//    compile('com.querydsl:querydsl-mongodb')
+//    compile('com.querydsl:querydsl-apt')
+//    compile('com.querydsl:querydsl-core')
+//    compile('joda-time:joda-time')
+    //compile('org.mongodb.morphia:morphia')
+    //querydslapt('com.querydsl:querydsl-apt')
+
+//    compile "io.swagger:swagger-core"  // 1.5.12
+//    compile "io.springfox:springfox-swagger2"
+//    compile "io.springfox:springfox-data-rest"
+//    compile "io.springfox:springfox-staticdocs"
+//    compile 'io.springfox:springfox-swagger-ui'
+
+//    compile('org.springframework.boot:spring-boot-starter-jersey')
+//    compile('org.glassfish.jersey.ext:jersey-spring3')
+//
+//    compile('io.swagger:swagger-core')
+//    compile('io.swagger:swagger-jersey2-jaxrs')
+//    compile('org.webjars:swagger-ui')
+//
+//
+//    compile('org.springframework.session:spring-session')
+//    compile('org.springframework.session:spring-session-data-mongo')
+//
+//    testCompile('org.springframework.boot:spring-boot-starter-test')
+    compile('org.apache.rocketmq:rocketmq-example')
+    compile('org.apache.rocketmq:rocketmq-client')
+
+}
+
+test {
+    include 'me/test/**'
+    testLogging.showStandardStreams = false
+}
+
+bootRepackage {
+    enabled = true
+    withJarTask jar
+    classifier = 'boot'
+}
+
+bootRun {
+    addResources = true
+    systemProperties = System.properties
+}
+
+springBoot {
+    //mainClass = System.properties['mainClass']
+    buildInfo {
+        additionalProperties = [
+                'foo': 'bar'
+        ]
+    }
+}
+
+jar {
+    manifest {
+        attributes "Implementation-Version": project.version
+    }
+}
+
+publish {
+    dependsOn assemble
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+
+            artifact sourcesJar {
+                classifier "sources"
+            }
+
+            artifact(file("${buildDir}/libs/${project.name}-${project.version}-${bootRepackage.classifier}.jar")) {
+                classifier 'boot'
+            }
+        }
+    }
+}
