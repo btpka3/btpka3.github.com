@@ -1,3 +1,15 @@
+//plugins{
+////    id 'eclipse'
+////    id 'idea'
+////    id "io.spring.dependency-management" version "1.0.2.RELEASE"
+////    id 'project-report'
+////    id 'maven'
+//
+//    id 'groovy'
+//
+//    id "com.gorylenko.gradle-git-properties" version "1.4.17"
+//}
+
 apply plugin: 'groovy'
 apply plugin: 'org.springframework.boot'
 apply plugin: "com.gorylenko.gradle-git-properties" // 生成 git.properties
@@ -14,12 +26,12 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-actuator')
 
     // spring cloud
-    compile('org.springframework.cloud:spring-cloud-starter-eureka')
-    // spring-cloud-starter-eureka 已经依赖了 spring-cloud-starter-ribbon
-    //compile('org.springframework.cloud:spring-cloud-starter-ribbon')
-    compile('org.springframework.cloud:spring-cloud-starter-feign')
-    compile('io.github.openfeign:feign-httpclient')
-
+    compile('org.springframework.cloud:spring-cloud-starter-config')
+    compile('org.springframework.cloud:spring-cloud-starter-hystrix')
+    compile('org.springframework.cloud:spring-cloud-starter-hystrix-dashboard')
+    compile('org.springframework.cloud:spring-cloud-netflix-hystrix-dashboard')
+    compile('org.springframework.cloud:spring-cloud-starter-turbine')
+    compile('org.springframework.cloud:spring-cloud-starter-zuul')
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
@@ -42,6 +54,17 @@ artifacts {
 test {
     testLogging.showStandardStreams = false
 }
+
+//mainClass = System.getProperty('mainClass', null)
+//
+//// gradle -PmainClass=me.test.first.spring.cloud.config.DemoConfigServer execute
+//task execute(type:JavaExec) {
+//    main = System.getProperty('mainClass', "me.test.first.spring.cloud.config.DemoConfigServer")
+//    classpath = sourceSets.main.runtimeClasspath
+//}
+//
+//mainClassName=mainClass
+
 
 bootRun {
     addResources = true

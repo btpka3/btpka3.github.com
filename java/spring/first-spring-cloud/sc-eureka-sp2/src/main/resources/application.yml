@@ -1,13 +1,10 @@
-server.port: 10040
-
+server.port: 10050
 # 错误处理相关
 server.error.include-stacktrace: on_trace_param
 #server.error.path: /error
 
 # template 相关
 #spring.thymeleaf.prefix: classpath:/templates/
-
-
 
 security.basic.enabled: false
 security.user.password: 123456
@@ -20,10 +17,6 @@ logging.level.org.springframework.web.servlet.view.ContentNegotiatingViewResolve
 logging.level.org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping: DEBUG
 # 用来追踪 restTemplate 请求
 logging.level.org.apache.http: DEBUG
-
-# TurbineProperties
-ribbon.eureka.enabled: false
-
 
 
 eureka:

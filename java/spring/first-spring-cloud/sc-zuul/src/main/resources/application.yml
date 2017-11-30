@@ -1,6 +1,6 @@
-server.port: 10040
 
 # 错误处理相关
+server.port : 10030
 server.error.include-stacktrace: on_trace_param
 #server.error.path: /error
 
@@ -25,24 +25,7 @@ logging.level.org.apache.http: DEBUG
 ribbon.eureka.enabled: false
 
 
-
-eureka:
-  datacenter: me
-
-  # EurekaClientConfigBean
-  client:
-    registerWithEureka: true
-    fetchRegistry: true
-    serviceUrl:
-      #defaultZone: 'http://${eureka.instance.hostname}:${server.port}/eureka/'
-      defaultZone: 'http://localhost:8080/eureka/'
-    healthcheck: true
-
-  # EurekaInstanceConfigBean
-  instance:
-    leaseRenewalIntervalInSeconds: 5
-    leaseExpirationDurationInSeconds: 15
-  #  statusPageUrlPath: ${management.context-path}/info
-  #  healthCheckUrlPath: ${management.context-path}/health
-  #  securePortEnabled: false
-
+zuul:
+  ignoredServices: '*'
+  routes:
+    users: /myusers/**

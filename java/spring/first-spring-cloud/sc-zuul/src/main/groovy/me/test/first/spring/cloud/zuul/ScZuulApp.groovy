@@ -1,18 +1,20 @@
-package me.test.first.spring.cloud.hystrix
+package me.test.first.spring.cloud.zuul
 
 import groovy.transform.CompileStatic
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.cloud.netflix.zuul.EnableZuulProxy
 
 /**
  *
  */
 @SpringBootApplication
+@EnableZuulProxy
 @CompileStatic
-public class ScHystrixApp {
+class ScZuulApp {
 
     static void main(String[] args) throws Exception {
-        SpringApplication.run(ScHystrixApp.class, args)
+        SpringApplication.run(ScZuulApp.class, args)
     }
 
 }

@@ -45,6 +45,8 @@ class ScController {
     @ResponseBody
     Object sum() {
 
+        // 如果要通过API随机选择，可以通过以下代码
+        // ServiceInstance instance = loadBalancer.choose("sc-eureka-sp");
 
         List<ServiceInstance> instances = discoveryClient.getInstances("sc-eureka-sp");
         if (!instances) {
@@ -88,18 +90,26 @@ class ScController {
             ]
         }
 
+        ServiceInstance instance = instances[0]
+        // String url = "http://sc-eureka-sp/sp/sum"
+        String url = URI.create(String.format("http://%s:%s/sp/sum",
+                instance.getHost(),
+                instance.getPort()))
+                .toString()
 
         URI uri = UriComponentsBuilder
         // 注意：这里使用的是 serviceId
-                .fromHttpUrl("http://sc-eureka-sp/sp/sum")
+                .fromHttpUrl(url)
                 .queryParam("a", "2")
                 .queryParam("b", "5")
                 .build()
                 .encode("UTF-8")
                 .toUri()
 
+        // 如果这里使用 noLbRestTemplate ，且 URL 是 "http://sc-eureka-sp/sp/sum"，会报错：
+        //      UnknownHostException: sc-eureka-sp: nodename nor servname provided, or not known
 
-        ResponseEntity<Map> respEntity = restTemplate.exchange(uri, HttpMethod.GET, null, Map.class);
+        ResponseEntity<Map> respEntity = noLbRestTemplate.exchange(uri, HttpMethod.GET, null, Map.class);
         Map map = respEntity.getBody()
         map.sc = true;
         map.checkLb = restTemplate == noLbRestTemplate;
@@ -124,12 +134,6 @@ class ScController {
         }
 
         ServiceInstance instance = instances[0]
-        if (!instance) {
-            return [
-                    status: "error11",
-                    msg   : "no one sc-eureka-sp up."
-            ]
-        }
         URI serverUri = URI.create(String.format("http://%s:%s/sp/sum",
                 instance.getHost(),
                 instance.getPort()))

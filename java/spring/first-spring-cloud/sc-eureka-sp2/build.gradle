@@ -15,11 +15,6 @@ dependencies {
 
     // spring cloud
     compile('org.springframework.cloud:spring-cloud-starter-eureka')
-    // spring-cloud-starter-eureka 已经依赖了 spring-cloud-starter-ribbon
-    //compile('org.springframework.cloud:spring-cloud-starter-ribbon')
-    compile('org.springframework.cloud:spring-cloud-starter-feign')
-    compile('io.github.openfeign:feign-httpclient')
-
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }

@@ -18,7 +18,7 @@ logging.level.org.springframework.web.servlet.mvc.method.RequestMappingInfoHandl
 # 用来追踪 restTemplate 请求
 logging.level.org.apache.http: DEBUG
 logging.level.me.test: DEBUG
-
+logging.level.project.user.UserClient: DEBUG
 
 #spring.cloud.service-registry.auto-registration.enabled: false
 
@@ -54,6 +54,13 @@ spring.cloud.loadbalancer:
 ribbon:
   eureka:
     enabled: true     # 若要在 Ribbon 中禁用 Eureka，需设置为 false
+  # RibbonEagerLoadProperties
   eager-load:
     enabled: true     # 是否在 spring 容器一初始化好的时候就立即 配置好 相关的 client。
-    clients: client1, client2, client3
+    # clients: client1, client2, client3
+
+feign:
+#  hystrix:
+#    enabled: true
+  httpclient:
+    enabled: true
