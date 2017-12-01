@@ -27,6 +27,7 @@ dependencies {
     compile('org.apache.httpcomponents:httpclient')
     compile('org.springframework.security.oauth:spring-security-oauth2')
     compile('org.springframework.cloud:spring-cloud-starter-config')
+    compile('commons-io:commons-io:2.4')
 
     // spring cloud
 //    compile('org.springframework.cloud:spring-cloud-starter-config')

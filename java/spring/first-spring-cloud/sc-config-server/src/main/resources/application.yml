@@ -21,22 +21,28 @@ spring.cloud.config.server:
   # MultipleJGitEnvironmentRepository
   git:
     # 可以使用占位符 {application}，{profile}，{label}
-    uri: git@github.com:btpka3/btpka3.github.com.git
+    uri: git@github.com:btpka3/sc-config-git-repo.git
     cloneOnStart: false
     forcePull: false
+    #默认会在 /tmp/config-repo-* 检出。可以通过 basedir 修改
+    #basedir: ${user.home}/btpka3.github.com
     repos:
       sc-config-client:
-        uri: git@github.com:btpka3/btpka3.github.com.git
-        basedir: ${user.home}/btpka3.github.com
+        uri: git@github.com:btpka3/sc-config-git-repo.git
         searchPaths:
-          - /java/spring/first-spring-cloud/sc-config-git-repo
-          - /java/spring/first-spring-cloud/sc-config-git-repo/aaa/{application}
+          - /
+          - /aaa/{application}
         #username: trolley
         #password: strongpassword
         #force-pull
 
+  # 这里的配置，config client 将无法覆盖
+  overrides:
+    foo: bar
+
   # ConfigServerHealthIndicator
   health:
+    enabled: false
     repositories:
       sc-config-client:
         profiles: default

@@ -97,3 +97,6 @@ curl -v http://localhost:8080/a?p=1
 
 # 3. http://localhost:9411 查询结果：可以看到 /a, /b, /c, 以及 MyService 的调用。
 ```
+
+## FIXME
+- 通过 restTemplate 发起的请求被记录了2次。

@@ -1,12 +1,27 @@
 spring:
   application:
-    name: configserver
+    name: sc-config-client
 
-encrypt:
-  failOnError: false
-  keyStore:
-    location: classpath:keystore.jks
-    password: ${KEYSTORE_PASSWORD:foobar} # don't use a default in production
-    alias: test
+spring.cloud.config:
+  #uri: http://localhost:10010/cfg/sc-config-client-default,test.yml
+  uri: http://localhost:10010/cfg
+  failFast: true
+  discovery.enabled: false
+  #retry:
+  #name: ${spring.application.name}
+  #profile: ${spring.profiles.active}
+  #label: master
+  headers:
+    # 因为git仓库配置项的 key 有特殊字符 / , 默认造成返回XML，会出错。
+    # 所以这里明确设置使用 JSON
+    Accept: application/json
 
-#spring.cloud.config.uri: http://myconfigserver.com
+
+
+#eureka:
+#  instance:
+#    metadataMap:
+#      user: xxx
+#      password: xxx
+#      configPath: /config
+

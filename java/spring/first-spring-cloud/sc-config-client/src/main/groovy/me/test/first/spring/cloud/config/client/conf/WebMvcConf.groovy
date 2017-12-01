@@ -1,4 +1,4 @@
-package me.test.first.spring.cloud.config.server.conf
+package me.test.first.spring.cloud.config.client.conf
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.context.annotation.Bean

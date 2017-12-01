@@ -6,7 +6,7 @@ spring:
 
 encrypt:
   failOnError: false
-  key: aaa    # 对称加密
+  key: aaa    # 对称加密，参考 EncryptorFactory#create()
 #  keyStore:  # 非对称加密
 #    location: classpath:keystore.jks
 #    password: ${KEYSTORE_PASSWORD:foobar} # don't use a default in production

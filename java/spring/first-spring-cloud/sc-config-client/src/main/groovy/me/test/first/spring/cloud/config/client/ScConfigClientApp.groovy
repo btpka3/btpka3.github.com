@@ -1,4 +1,4 @@
-package me.test.first.spring.cloud.config
+package me.test.first.spring.cloud.config.client
 
 import groovy.transform.CompileStatic
 import org.springframework.boot.SpringApplication
@@ -7,11 +7,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 /**
  *
  */
-@SpringBootApplication(scanBasePackages="me.test.first.spring.cloud.config")
+@SpringBootApplication
+//@EnableDiscoveryClient
 @CompileStatic
-class ScConfigApp {
+class ScConfigClientApp {
 
     static void main(String[] args) throws Exception {
-        SpringApplication.run(ScConfigApp.class, args)
+        SpringApplication.run(ScConfigClientApp.class, args)
     }
 }
