@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  h2:
+    build:
+      context: ./h2
+    ports:
+      - 9092:9092
+      - 81:81
+

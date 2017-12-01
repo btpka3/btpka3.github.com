@@ -1,0 +1,11 @@
+#spring.cloud.task:
+#  tablePrefix: TASK_
+#  initialize:
+#    enable: true
+
+# 注意：必须添加 数据库连接池的相关 jar 包，才能使用外部独立数据库，否则使用 Embedded 数据库。
+spring.datasource:
+  url: jdbc:h2:tcp://localhost/~/test
+  username: sa
+  password: ''
+  driver-class-name: org.h2.Driver
