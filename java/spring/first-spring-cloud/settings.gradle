@@ -1,8 +1,9 @@
 rootProject.name = 'first-spring-cloud'
 
 include "sc-config-server"
-include "sc-config-server-zk"
+include "sc-config-consul"
 include "sc-config-client"
+include "sc-config-zk"
 include "sc-eureka-server"
 include "sc-contract-client"
 include "sc-contract-server"

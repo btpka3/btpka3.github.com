@@ -1,0 +1,103 @@
+
+
+
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: "com.gorylenko.gradle-git-properties" // 生成 git.properties
+
+
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-actuator')
+    compile('org.codehaus.groovy:groovy-all')
+    compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+    compile("org.springframework.boot:spring-boot-devtools")
+    compile('com.fasterxml.jackson.dataformat:jackson-dataformat-xml')
+    compile('org.apache.httpcomponents:httpclient')
+    compile('org.springframework.security.oauth:spring-security-oauth2')
+
+    // spring cloud
+    //compile('org.springframework.cloud:spring-cloud-starter-config')
+    //compile('org.springframework.cloud:spring-cloud-config-server')
+    //compile('org.springframework.cloud:spring-cloud-config-monitor')
+//    compile('org.springframework.cloud:spring-cloud-stream-binder-rabbit')
+    //compile('org.springframework.cloud:spring-cloud-starter-stream-rabbit')
+
+    //compile('org.springframework.cloud:spring-cloud-starter-consul')
+    //compile('commons-io:commons-io')
+
+    //compile('org.springframework.cloud:spring-cloud-zookeeper-discovery')
+    compile('org.springframework.cloud:spring-cloud-starter-zookeeper-config')
+
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+//
+//    compile 'org.springframework.cloud:spring-cloud-starter-config'
+//    compile 'org.springframework.cloud:spring-cloud-starter-eureka'
+////    compile('org.springframework.cloud:spring-cloud-starter-config')
+////    compile('org.springframework.cloud:spring-cloud-config-client')
+////    compile('org.springframework.cloud:spring-cloud-config-monitor')
+//    //compile('org.springframework.cloud:spring-cloud-starter-stream-rabbit')
+////    compile('org.springframework.cloud:spring-cloud-starter-config')
+////    compile('org.springframework.cloud:spring-cloud-starter-eureka')
+//
+////    compile('org.springframework.cloud:spring-cloud-starter-zookeeper-config')
+//    testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    //archives javadocJar
+}
+
+test {
+    testLogging.showStandardStreams = false
+}
+
+
+
+
+//mainClass = System.getProperty('mainClass', null)
+//
+//// gradle -PmainClass=me.test.first.spring.cloud.config.DemoConfigServer execute
+//task execute(type:JavaExec) {
+//    main = System.getProperty('mainClass', "me.test.first.spring.cloud.config.DemoConfigServer")
+//    classpath = sourceSets.main.runtimeClasspath
+//}
+//
+//mainClassName=mainClass
+
+
+bootRun {
+    addResources = true
+    systemProperties = System.properties
+}
+
+springBoot {
+    //mainClass = System.properties['mainClass']
+    buildInfo {
+        additionalProperties = [
+                'foo': 'bar'
+        ]
+    }
+}
+
+jar {
+    manifest {
+        attributes "Implementation-Version": project.version
+    }
+}
+
+gitProperties {
+    gitRepositoryRoot = new File("${project.rootDir}/../../..")
+}

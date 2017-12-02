@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  consul:
+    image: consul:1.0.1
+    ports:
+      - 8300:8300
+      - 8301:8301/udp
+      - 8302:8302
+      - 8302:8302/udp
+    volumes:
+      - ./consul/config:/consul/config
+      - ./consul/data:/consul/data
+
