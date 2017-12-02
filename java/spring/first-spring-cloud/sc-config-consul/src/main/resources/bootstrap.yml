@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: sc-config-consul
+  profiles:
+    active: default,dev
+
+
+# ConsulProperties
+spring.cloud.consul:
+  host: localhost
+  port: 8500
+  enabled: true
+
+  # RetryProperties
+  retry:
+    initialInterval: 1000
+    multiplier: 1.1
+    maxInterval: 2000
+    maxAttempts: 6
+
+  # ConsulConfigProperties
+  config:
+    enabled: true
+    prefix: config
+    defaultContext: application
+    profileSeparator: ","
+    format: KEY_VALUE
+

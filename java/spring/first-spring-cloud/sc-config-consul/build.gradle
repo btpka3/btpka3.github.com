@@ -27,8 +27,7 @@ dependencies {
     //compile('org.springframework.cloud:spring-cloud-starter-consul')
     //compile('commons-io:commons-io')
 
-    //compile('org.springframework.cloud:spring-cloud-zookeeper-discovery')
-    compile('org.springframework.cloud:spring-cloud-starter-zookeeper-config')
+    compile('org.springframework.cloud:spring-cloud-starter-consul-config')
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
 //
