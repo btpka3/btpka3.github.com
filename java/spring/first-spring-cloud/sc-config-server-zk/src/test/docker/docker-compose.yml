@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  zookeeper:
+    image: zookeeper:3.4.10
+    ports:
+      - 2181:2181
+      - 2888:2888
+      - 3888:3888
+    volumes:
+      - ./zookeeper/conf:/conf
+      - ./zookeeper/data:/data
+      - ./zookeeper/datalog:/datalog
+

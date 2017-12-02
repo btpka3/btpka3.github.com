@@ -54,6 +54,7 @@ allprojects {
         imports {
             mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
             mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+            mavenBom 'org.springframework.cloud:spring-cloud-zookeeper-dependencies:1.1.1.RELEASE'
         }
 
         dependencies {

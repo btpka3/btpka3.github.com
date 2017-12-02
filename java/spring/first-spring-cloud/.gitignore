@@ -1,0 +1,6 @@
+sc-config-server-zk/src/test/docker/zookeeper/data/*
+#!sc-config-server-zk/src/test/docker/zookeeper/data/.gitkeep
+sc-config-server-zk/src/test/docker/zookeeper/datalog/*
+#!sc-config-server-zk/src/test/docker/zookeeper/datalog/.gitkeep
+
+!**/.gitkeep

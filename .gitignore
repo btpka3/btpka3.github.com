@@ -1,4 +1,5 @@
 target
+classes
 out
 .project
 .springBeans
@@ -31,3 +32,11 @@ js/my-ts/dist
 jspm_packages
 
 ~*
+
+
+# 如果保留某个空目录 /a/b; 
+# 则创建文件 /a/b/.gitkeep
+# 并在该行前面追加 /a/b/*   
+# 注意：一定要有 最后的 '/*'
+!**/.gitkeep
+
