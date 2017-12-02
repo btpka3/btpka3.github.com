@@ -72,7 +72,12 @@ curl -v http://localhost:10060/hi
 - org.springframework.cloud.zookeeper.config.ZookeeperConfigAutoConfiguration
 - org.springframework.cloud.zookeeper.config.ZookeeperConfigProperties
 - org.springframework.cloud.zookeeper.config.ZookeeperConfigBootstrapConfiguration
+- org.springframework.cloud.zookeeper.config.ZookeeperPropertySource
+    该类应当算是一个很有用的类，哪怕用在业务开发中，比如系统配置表中数据。
+    不用每次都去查询数据库，或者Cache+轮训。
+
 - org.springframework.cloud.endpoint.RefreshEndpoint
+- [ZooKeeper Commands: The Four Letter Words](http://zookeeper.apache.org/doc/r3.3.1/zookeeperAdmin.html#sc_zkCommands)
 
 # 总结
 
@@ -85,5 +90,6 @@ curl -v http://localhost:10060/hi
     - '/x/y.z' = 'xyz'
     - '/x.y/z' = 'xyz'
 
-
+# FIXME
+- 对标 yaml 配置文件中 的 List,Map,Zookeeper该如何配置？
 

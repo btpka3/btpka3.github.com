@@ -22,10 +22,31 @@ logging.level.org.springframework.web.servlet.mvc.method.RequestMappingInfoHandl
 logging.level.org.apache.http: DEBUG
 
 # TurbineProperties
-ribbon.eureka.enabled: false
+#ribbon.eureka.enabled: false
 
+eureka:
+  datacenter: me
+
+  # EurekaClientConfigBean
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      #defaultZone: 'http://${eureka.instance.hostname}:${server.port}/eureka/'
+      defaultZone: 'http://localhost:8080/eureka/'
+    healthcheck: true
+
+  # EurekaInstanceConfigBean
+  instance:
+    leaseRenewalIntervalInSeconds: 5
+    leaseExpirationDurationInSeconds: 15
+  #  statusPageUrlPath: ${management.context-path}/info
+  #  healthCheckUrlPath: ${management.context-path}/health
+  #  securePortEnabled: false
 
 zuul:
-  ignoredServices: '*'
+  #ignoredServices: '*'
   routes:
-    users: /myusers/**
+    sc-eureka-sp:
+      path: /api/sc-eureka-sp/**
+      serviceId: sc-eureka-sp

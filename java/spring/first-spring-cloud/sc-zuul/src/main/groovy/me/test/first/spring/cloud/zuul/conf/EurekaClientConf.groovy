@@ -1,6 +1,5 @@
-package me.test.first.spring.cloud.eureka.sp.conf
+package me.test.first.spring.cloud.zuul.conf
 
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient
 import org.springframework.context.annotation.Configuration
 
 /**

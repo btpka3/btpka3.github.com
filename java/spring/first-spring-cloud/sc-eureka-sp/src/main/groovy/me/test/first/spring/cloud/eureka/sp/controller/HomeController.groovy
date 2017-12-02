@@ -1,10 +1,7 @@
 package me.test.first.spring.cloud.eureka.sp.controller
 
 import org.springframework.http.MediaType
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.ResponseBody
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 /**
  *
@@ -20,6 +17,7 @@ class HomeController {
     Object index() {
 
         return [
+                app: "sc-eureka-sp",
                 msg: "Hello worold @ " + new Date()
         ]
     }
