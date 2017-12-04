@@ -34,16 +34,17 @@ curl -v \
     -d age=31 \
     -d hobbies=hobby1 \
     -d hobbies=hobby2 \
-    "http://localhost:8080/api/form"
+    -d q=q2 \
+    "http://localhost:8080/api/form?q=q1"
 
-{"age":31,"hobbies":["hobby1","hobby2"]}
+{"age":31,"hobbies":["hobby1","hobby2"],"q3":"q1","q4":"q1"}
  */
-/**
- * TODO 这里写概要设计。
- * @param request
- * @param req
- * @return
- */
+    /**
+     * TODO 这里写概要设计。
+     * @param request
+     * @param req
+     * @return
+     */
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
