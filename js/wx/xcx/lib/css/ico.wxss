@@ -1,0 +1,30 @@
+@font-face {
+    font-family: 'Xxx';
+    src: url('https://unpkg.com/font-awesome@4.7.0/fonts/fontawesome-webfont.woff2?v=4.6.3') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+ks-icon, .ks-icon {
+    display: inline-block;
+    font: normal normal normal 14px Xxx;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.fa-eye::before {
+    content: "\f06e";
+}
+
+.fa-cubes::before {
+    content: "\f1b3";
+}
+
+.fa-user::before {
+    content: "\f007";
+}
+.fa-shopping-cart::before {
+    content: "\f07a";
+}

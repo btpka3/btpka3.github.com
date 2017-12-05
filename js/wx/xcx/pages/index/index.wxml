@@ -1,0 +1,64 @@
+<!--&lt;!&ndash;index.wxml&ndash;&gt;-->
+<!--<view class="container">-->
+<!--<view bindtap="bindViewTap" class="userinfo">-->
+<!--<image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>-->
+<!--<text class="userinfo-nickname">{{userInfo.nickName}}</text>-->
+<!--</view>-->
+<!--<view class="usermotto">-->
+<!--<button type="default" bindtap="btn" hover-class="other-button-hover"> default</button>-->
+<!--<text class="user-motto">{{motto}}</text>-->
+<!--<icon type="success" size="20"/>-->
+<!--<text>query={{query}}</text>-->
+<!--<text>a={{a}}</text>-->
+<!--<text>b={{b}}</text>-->
+<!--<text>c={{c}}</text>-->
+<!--<span class=".fa .fa-pull-left .ddd"></span>-->
+
+<!--<span class="eye"></span>-->
+<!--<span class="u"></span>-->
+<!--<span class="h"></span>-->
+<!--&lt;!&ndash;<image   src="/lib/zll.jpg" background-size="cover"></image>&ndash;&gt;-->
+<!--<div>aaa</div>-->
+<!--</view>-->
+<!--</view>-->
+
+
+<!--index.wxml-->
+<view class="container">
+    <view bindtap="bindViewTap" class="userinfo">
+        <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+        <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+
+    </view>
+    <scroll-view class="usermotto">
+
+        {{globalData.username}}
+        <navigator url="/pages/test/test"><button type="primary">test</button></navigator>
+        <span class="fa-eye"></span>
+
+        <ks-icon class="eye"></ks-icon>
+        <icon class="eye"  />
+        <icon type="success" size="20"/>
+        <image src="/lib/zll.jpg" background-size="cover"></image>
+        <image src="/lib/zll.jpg" background-size="cover"></image>
+        <image src="/lib/zll.jpg" background-size="cover"></image>
+        <image src="/lib/zll.jpg" background-size="cover"></image>
+        <image src="/lib/zll.jpg" background-size="cover"></image>
+        <image src="/lib/zll.jpg" background-size="cover"></image>
+        <image src="/lib/zll.jpg" background-size="cover"></image>
+        <image src="/lib/zll.jpg" background-size="cover"></image>
+        <image src="/lib/zll.jpg" background-size="cover"></image>
+        <image src="/lib/zll.jpg" background-size="cover"></image>
+        <image src="/lib/zll.jpg" background-size="cover"></image>
+        <image src="/lib/zll.jpg" background-size="cover"></image>
+        <image src="/lib/zll.jpg" background-size="cover"></image>
+
+        <image src="/lib/zll.jpg" background-size="cover"></image>
+        <image src="/lib/zll.jpg" background-size="cover"></image>
+        <image src="/lib/zll.jpg" background-size="cover"></image>
+        <div>aaa</div>
+    </scroll-view>
+    <view>
+        sss
+    </view>
+</view>

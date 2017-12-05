@@ -1,0 +1,42 @@
+
+<!--
+所需数据结构：
+{
+  idx : 0, // 选中标签页的下标
+}
+-->
+<template name="ks-footer">
+    <ks-footer>
+        <button class="ks-footer-btn {{idx == 0 ? 'ks-footer-btn-selected':''}}"
+                       hover-class="ks-footer-btn-hover"
+                       bindtap="btn">
+            <ks-footer-ico-c>
+                <ks-footer-ico class="ks-icon fa-cubes"/>
+            </ks-footer-ico-c>
+
+            <ks-footer-txt-c>
+                <ks-footer-txt>货架</ks-footer-txt>
+            </ks-footer-txt-c>
+        </button>
+        <button class="ks-footer-btn"
+                hover-class="ks-footer-btn-hover">
+            <ks-footer-ico-c>
+                <ks-footer-ico class="ks-icon fa-shopping-cart"/>
+            </ks-footer-ico-c>
+
+            <ks-footer-txt-c>
+                <ks-footer-txt>购物车 {{btn}}1</ks-footer-txt>
+            </ks-footer-txt-c>
+        </button>
+        <button class="ks-footer-btn"
+                hover-class="ks-footer-btn-hover">
+            <ks-footer-ico-c>
+                <ks-footer-ico class="ks-icon fa-user"/>
+            </ks-footer-ico-c>
+
+            <ks-footer-txt-c>
+                <ks-footer-txt>我</ks-footer-txt>
+            </ks-footer-txt-c>
+        </button>
+    </ks-footer>
+</template>

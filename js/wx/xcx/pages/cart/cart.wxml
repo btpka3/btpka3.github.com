@@ -1,0 +1,29 @@
+<import src="/lib/tpl.wxml"/>
+
+<!-- 关注钱皇 -->
+<view class="follow_us">
+
+</view>
+<view class="container">
+    <view bindtap="bindViewTap" class="userinfo">
+        <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+        <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    </view>
+    <scroll-view class="usermotto">
+
+        {{globalData.username}}
+        <navigator url="/pages/test/test"><button type="primary">test</button></navigator>
+        <span class="eye"></span>
+
+        <ks-icon class="eye"></ks-icon>
+        <icon class="eye"  />
+        <icon type="success" size="20"/>
+
+        <div>aaa</div>
+    </scroll-view>
+    <view>
+        sss
+    </view>
+</view>
+
+<template is="footer1" data="{{d}}"/>

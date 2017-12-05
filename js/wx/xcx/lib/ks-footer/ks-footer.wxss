@@ -1,0 +1,62 @@
+ks-footer {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    background-color: #333333;
+    height: 40px;
+    flex-shrink: 0;
+    color: #999999;
+}
+
+.ks-footer-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0;
+    padding: 2px 0;
+    background-color: transparent;
+    color: inherit;
+}
+
+.ks-footer-btn-selected {
+    color: #ffffff;
+}
+
+.ks-footer-btn::before, .ks-footer-btn::after {
+    border: none;
+    content: '';
+    border-radius: 0;
+}
+
+.ks-footer-btn-hover {
+    background-color: rgba(0, 0, 0, 0.26);
+}
+
+ks-footer-ico-c {
+    height: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+}
+
+ks-footer-ico {
+
+}
+
+ks-footer-txt-c {
+    height: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+ks-footer-txt {
+    height: 12px;
+    line-height: 10px;
+    font-size: 10px;
+}

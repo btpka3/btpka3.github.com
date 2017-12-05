@@ -1,0 +1,18 @@
+{
+  "pages":[
+    "pages/tmp/tmp",
+    "pages/test/test",
+    "pages/home/home",
+
+    "pages/cart/cart",
+    "pages/index/index",
+
+    "pages/logs/logs"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "钱皇精品",
+    "navigationBarTextStyle":"black"
+  }
+}

@@ -1,0 +1,26 @@
+@import "/lib/lib.wxss";
+
+header {
+    background-color: #dce775;
+    height: 40px;
+    flex-shrink: 0;
+}
+
+footer {
+    background-color: #738ffe;
+    height: 40px;
+    flex-shrink: 0;
+}
+
+ol, li {
+    display: block;
+}
+
+.content{
+    min-height: 100%;
+    max-height: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: auto;
+}

@@ -1,0 +1,38 @@
+<import src="/lib/tpl.wxml"/>
+<import src="/lib/ks-footer/ks-footer.wxml"/>
+
+<!-- 关注钱皇 -->
+<fus class="layout-row" wx:if="{{p.followed}}">
+    <fus-ico>
+    </fus-ico>
+    <fus-title class="layout-column flex">
+        <fus-app-no class="flex">钱皇公众号</fus-app-no>
+        <fus-desp class="flex">您身边的蚕丝护理专家</fus-desp>
+    </fus-title>
+    <button class="fus-btn">关 注</button>
+    <fus-close class="layout-row">
+        <icon type="clear" class="fus-close-ico" color="#cccccc" size="20"/>
+    </fus-close>
+</fus>
+
+<view class="flex content ">
+    <ks-icon class="fa-eye"  bindtap="btn"></ks-icon>
+    <image src="/lib/zll.jpg" background-size="cover"></image>
+    <image src="/lib/zll.jpg" background-size="cover"></image>
+    <image src="/lib/zll.jpg" background-size="cover"></image>
+    <image src="/lib/zll.jpg" background-size="cover"></image>
+    <image src="/lib/zll.jpg" background-size="cover"></image>
+    <image src="/lib/zll.jpg" background-size="cover"></image>
+    <image src="/lib/zll.jpg" background-size="cover"></image>
+    <image src="/lib/zll.jpg" background-size="cover"></image>
+    <image src="/lib/zll.jpg" background-size="cover"></image>
+    <image src="/lib/zll.jpg" background-size="cover"></image>
+    <image src="/lib/zll.jpg" background-size="cover"></image>
+    <image src="/lib/zll.jpg" background-size="cover"></image>
+    <image src="/lib/zll.jpg" background-size="cover"></image>
+    <image src="/lib/zll.jpg" background-size="cover"></image>
+    <image src="/lib/zll.jpg" background-size="cover"></image>
+    <image src="/lib/zll.jpg" background-size="cover"></image>
+</view>
+
+<template is="ks-footer" data="{{btn,...p.ksFooter}}"/>

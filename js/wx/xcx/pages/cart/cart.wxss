@@ -1,0 +1,11 @@
+@import "/lib/lib.wxss";
+
+.follow_us {
+    background-color: #dce775;
+    height: 40px;
+    flex-shrink: 0;
+}
+
+.footer {
+
+}

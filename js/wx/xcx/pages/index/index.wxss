@@ -1,0 +1,77 @@
+/**index.wxss**/
+@import "/lib/lib.wxss";
+
+
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userinfo-avatar {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+.userinfo-nickname {
+  color: #aaa;
+}
+
+.usermotto {
+  /*//margin-top: 200px;*/
+}
+
+.ddd{
+  border:1px solid red;
+}
+text {
+  display: block;
+}
+span{
+  background-color: grey;
+  border:1rpx solid red;
+  width: 120rpx;
+  height: 120rpx;
+  display: inline-block;
+  font: normal normal normal 200rpx Xxx;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+}
+.eye::before{
+  font-size:40px;
+  content: "\f06e";
+}
+.u::before{
+  content: "\f178";
+}
+.h::before{
+  content: "\f004";
+}
+
+div{
+  width:175rpx;
+  height:175rpx;
+  border:1px solid red;
+  display: inline-block;
+  background-image: url("/lib/zll.jpg");
+  background-color: antiquewhite;
+}
+
+
+.container{
+  display:flex;
+}
+
+.flex-item{
+  width: 100px;
+  height: 100px;
+  color: #FFFFFF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

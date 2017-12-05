@@ -1,0 +1,26 @@
+<import src="/lib/tpl.wxml"/>
+
+
+<header>header</header>
+<view class="flex content">
+    <view class="flex" style="background-color: #ba68c8;">
+        bbb a={{o.a}},
+        b={{o.b}}
+        <button bindtap="btn" > change</button>
+    </view>
+
+    <view class="flex">
+        sss  v={{v}}  {{globalData.username}}
+
+        <button  bindtap="{{o1}}">ooo o1={{o1}}</button>
+        tmp: <template is="c/d.e" data="{{ccc:o1}}"/>
+        <template is="odd" data="{{o}}"/>
+        <template is="a"/>
+    </view>
+
+    <input type="number" value="{{v}}" bindinput="inp" />
+    <ol>
+        <li wx:for="{{arr}}" wx:key="*this" wx:for-index="idx" wx:for-item="itemName">{{idx}} = {{itemName}}</li>
+    </ol>
+</view>
+<footer>footer</footer>

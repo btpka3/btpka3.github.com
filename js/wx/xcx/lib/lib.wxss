@@ -1,0 +1,7 @@
+@import "/lib/css/ico.wxss";
+@import "/lib/css/flex.wxss";
+@import "/lib/css/main.wxss";
+@import "/lib/css/fus.wxss";
+@import "/lib/ks-footer/ks-footer.wxss";
+
+

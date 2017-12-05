@@ -1,0 +1,10 @@
+<import src="/lib/tpl.wxml"/>
+
+h1={{h1}}, h2={{h2}}
+<button bindtap="{{h1}}">ok h1={{h1}}</button>
+<button bindtap="handler1">ok</button>
+<template is="x" data="{{handler:h1}}"/>
+<template is="x" data="{{handler:h2}}"/>
+
+<button bindtap="obj.nestedHandler">nest</button>
+<button bindtap="a.b">a.b</button>
