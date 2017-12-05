@@ -189,14 +189,8 @@ const config = {
                     },
                     {
                         loader: 'sass-loader',
-                        // XXX : 需要关注 https://github.com/webpack/css-loader/pull/400
                         options: {
-                            minimize: true,
-                            sourceMap: true,
-                            discardComments: {
-                                removeAll: true
-                            },
-                            calc: false
+                            sourceMap: true
                         }
                     }
                 ]
