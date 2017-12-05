@@ -42,6 +42,7 @@ http://localhost:10001/h2-console/
 请留意浏览器的控制台输出、以及网络监控。
 
 
+
 ## 验证 OAuth2 password 授权模式
 
 通过浏览器访问校验: `http://c.localhost:10003/photo/password`
@@ -166,7 +167,7 @@ GET /oauth/authorize
         &redirect_uri=xxx
         &scope=xxx
         &state=xxx
-        
+
 GET redirect_uri
         #access_token=xxx
         &token_type=xxx
@@ -201,6 +202,7 @@ PSOT /oauth/token
 PSOT /oauth/authorize
         ?grant_type=client_credentials
         &scope=xxx
+Authorization: Basic xxxxxx=
 
 # 响应
 {
@@ -256,6 +258,17 @@ mvn tomcat7:run
 ## 代码分析
 
 ```
+常见 
+AuthorizationServerConfigurerAdapter
+
+WebSecurityConfigurerAdapter
+1. ResourceServerConfiguration                  : order = 2147483639 (Ordered 接口)  = ResourceServerProperties#filterOrder = SecurityProperties.ACCESS_OVERRIDE_ORDER - 1
+1. AuthorizationServerSecurityConfiguration     : order = 0 (class 上 @Order注解——注意：并非是 @Bean 的 @Order 注解)
+1. WebSecurityConfigurerAdapter                 : order = 100 (class 上 @Order)
+1. ApplicationNoWebSecurityConfigurerAdapter    : order = SecurityProperties.BASIC_AUTH_ORDER 
+1. IgnoredPathsWebSecurityConfigurerAdapter     : order = SecurityProperties.IGNORED_ORDER = Ordered.HIGHEST_PRECEDENCE;(Ordered 接口)  
+
+
 @EnableResourceServer
     -> ResourceServerConfiguration  // 实现了 WebSecurityConfigurerAdapter
         #setConfigurers()           // 获取所有 bean : ResourceServerConfigurer/ResourceServerConfigurerAdapter
@@ -647,3 +660,52 @@ BaseOAuth2ProtectedResourceDetails
 
 
 
+# curl 版
+
+# implicit
+
+```bash
+
+# 通过 命令行直接请求参数
+curl -v \
+    -XGET \
+    https://kingsilk.net/oauth/local/14100/rs/oauth/authorize?client_id=CLIENT_ID_qh-agency-wap-front&redirect_uri=https%3A%2F%2Fkingsilk.net%2F404%3Fa%3Daa%26b%3Dbb%23%2Fxxx%2Fyyy%3Fc%3Dcc%26d%3Ddd&response_type=token&scope=LOGIN&state=randomStrXxx
+
+# 注意：如果是 自动授权的 scope，则会直接 302 跳转回 redirect_uri, 并在 hash 中包含 access token
+'https://kingsilk.net/404?a=aa&b=bb
+#/xxx/yyy?c=cc&d=dd
+&access_token=330b523b-b6bb-406e-8bdb-9f62fa42d886
+&token_type=bearer
+&state=randomStrXxx
+&expires_in=82316'
+
+# Resource 消费者（比如：Web前端单网页应用 通过 JSO.js） 获取到 access token 后，
+# 可以直接调用 Resource Server 的 API
+curl -v \
+    -XGET \
+    -H 'Authorization: Bearer mytoken123' \
+    https://kingsilk.net/xxxResouce/api
+
+
+# Resource 提供者 接收到请求后，如果是要远程检查 token （非JWT），可以 :
+# 注意：用户名、密码是应用的，而不是人的。
+# 具体配置请参考 AuthorizationServerSecurityConfigurer 配置的 bean : ClientDetailsUserDetailsService
+curl -v \
+    -XGET \
+    -u CLIENT_ID_qh-agency-wap-front:CLIENT_PWD_qh-agency-wap-front_123456 \
+    https://kingsilk.net/oauth/local/14100/rs/oauth/check_token?token=330b523b-b6bb-406e-8bdb-9f62fa42d886
+# 返回以下信息
+'{
+     "aud": [
+         "RSC_ID_qh-oauth-wap",
+         "RSC_ID_qh-agency-server"
+     ],
+     "exp": 1505621923,
+     "user_name": "58de6b27785a82000005a140",
+     "client_id": "CLIENT_ID_qh-agency-wap-front",
+     "scope": [
+         "LOGIN"
+     ]
+ }'
+
+```

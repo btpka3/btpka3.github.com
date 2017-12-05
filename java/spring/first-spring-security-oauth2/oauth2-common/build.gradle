@@ -1,6 +1,6 @@
 
 
-apply plugin: 'groovy'
+//apply plugin: 'groovy'
 apply plugin: "org.springframework.boot"
 
 
