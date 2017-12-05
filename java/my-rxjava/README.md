@@ -20,4 +20,7 @@
  ![a](http://reactivex.io/documentation/operators/images/schedulers.png)
  
  
+ # 总结
  
+- 确定问题点：通过声明 Flowable 变量，多次 订阅，其中一个订阅用来打印 debug 信息，以便确认问题——比如 onComplete 没有？
+

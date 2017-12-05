@@ -11,7 +11,7 @@ public class Just {
     public static void main(String[] args) {
 
         just01();
-        just02();
+        //just02();
 
     }
 

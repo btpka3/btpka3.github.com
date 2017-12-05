@@ -1,6 +1,8 @@
 package me.test.rxjava.operators.transforming;
 
 import io.reactivex.*;
+import io.reactivex.schedulers.*;
+import me.test.rxjava.*;
 
 import java.util.*;
 
@@ -10,9 +12,9 @@ import java.util.*;
 public class ToList {
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
-        toList01();
+        toList02();
 
     }
 
@@ -25,6 +27,37 @@ public class ToList {
                 .toList()
                 .blockingGet();
         System.out.println(intList);
+    }
+
+    public static void toList02() throws InterruptedException {
+        System.out.println("----------------------toList02");
+        Flowable.range(1, 9)
+                .groupBy(i -> i % 3)
+                .parallel()  // FIXME: Observable 没有该方法
+                .runOn(Schedulers.computation())
+                .flatMap(f -> {
+
+                    // 如果使用 blockingGet() : 因为所有操作都会在同一个线程上执行。而没有 complete，所以会阻塞。
+                    U.print("flatMap : ", f);
+
+
+                    return Flowable.just(Collections.singletonMap(f.getKey(), f.toList().blockingGet()));
+                })
+                //.sequential()
+                .sorted((m1, m2) -> Objects.compare(
+                        m1.keySet().stream().findFirst().get(),
+                        m2.keySet().stream().findFirst().get(),
+                        Comparator.naturalOrder()
+                ))
+                .subscribe(
+                        i -> U.print("subscribe : onNext", i),
+                        err -> U.print("subscribe : onError", err),
+                        () -> U.print("subscribe : onComplete", "")
+                )
+        ;
+
+        Thread.sleep(1000);
+
     }
 
 

@@ -6,6 +6,9 @@ import java.util.*;
 import java.util.Map;
 
 /**
+ *
+ * Map 操作是同步的， 而 flatMap 则可以是 异步的，而且可能 一对一，一对多的返回。
+ *
  * http://reactivex.io/documentation/operators/flatmap.html
  */
 public class FlatMap {
@@ -13,9 +16,9 @@ public class FlatMap {
 
     public static void main(String[] args) {
 
-        flatMap01();
+        //flatMap01();
         flatMap02();
-        flatMap03();
+        //flatMap03();
 
     }
 
