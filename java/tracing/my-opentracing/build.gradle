@@ -1,0 +1,57 @@
+buildscript {
+    ext {
+    }
+    repositories {
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("io.spring.gradle:dependency-management-plugin:1.0.0.RELEASE")
+        classpath("gradle.plugin.com.gorylenko.gradle-git-properties:gradle-git-properties:1.4.17")
+        classpath("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.5")
+    }
+}
+
+
+
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: "io.spring.dependency-management"
+apply plugin: 'project-report'
+apply plugin: 'maven'
+apply plugin: 'java'
+apply plugin: 'maven-publish'
+
+repositories {
+    maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+    mavenCentral()
+}
+
+idea {
+    module {
+        downloadJavadoc = false
+        downloadSources = true
+    }
+}
+eclipse {
+    classpath {
+        downloadSources = true
+    }
+}
+
+dependencyManagement {
+    resolutionStrategy {
+        cacheChangingModulesFor 0, 'seconds'
+    }
+    dependencies {
+        //dependency('org.apache.flink:flink-examples-streaming_2.11:1.3.2')
+        dependency('io.opentracing:opentracing-api:0.30.0')
+        dependency('io.opentracing:opentracing-mock:0.30.0')
+    }
+}
+
+dependencies {
+    compile('io.opentracing:opentracing-api')
+    compile('io.opentracing:opentracing-mock')
+}

@@ -1,0 +1,45 @@
+buildscript {
+    ext {
+    }
+    repositories {
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("io.spring.gradle:dependency-management-plugin:1.0.0.RELEASE")
+        classpath("gradle.plugin.com.gorylenko.gradle-git-properties:gradle-git-properties:1.4.17")
+    }
+}
+
+repositories {
+    maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+    mavenCentral()
+}
+
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+//apply plugin: "io.spring.dependency-management"
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'groovy'
+apply plugin: 'org.springframework.boot'
+
+dependencies {
+
+//    compile("org.springframework.boot:spring-boot-starter-web")
+    compile('org.codehaus.groovy:groovy')
+    compile('org.springframework.boot:spring-boot-starter-data-mongodb')
+
+}
+
+bootRepackage {
+    enabled = false
+}
+
+
+dependencyManagement {
+    dependencies {
+        dependency('io.springfox:springfox-swagger-ui:2.6.1')
+    }
+}

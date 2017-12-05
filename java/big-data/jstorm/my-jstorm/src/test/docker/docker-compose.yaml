@@ -1,0 +1,41 @@
+
+version: '3'
+
+services:
+  zookeeper:
+    image: zookeeper:3.4.10
+    ports:
+      - "2181:2181"
+      - "2888:2888"
+      - "3888:3888"
+    volumes:
+      - ./docker/zookeeper/data:/data
+      - ./docker/zookeeper/datalog:/datalog
+      - ./docker/zookeeper/conf:/conf
+    #command: /my-netty-socks5/src/test/docker/start.sh
+    #command: sleep 10000
+  jstorm:
+    image: openjdk:8u131-jdk-alpine
+    ports:
+      - "2181:2181"
+      - "2888:2888"
+      - "3888:3888"
+    volumes:
+      - ./docker/zookeeper/data:/data
+      - ./docker/zookeeper/datalog:/datalog
+      - ./docker/zookeeper/conf:/conf
+networks:
+  ssm-net:
+
+#  docker create                                   \
+#      --name ${APP_C}                             \
+#      --restart unless-stopped                    \
+#      -p 2181:2181                                \
+#      -p 2888:2888                                \
+#      -p 3888:3888                                \
+#      -v ${DIR_STORE_LOGS}:${DIR_STORE_LOGS}:rw   \
+#      -v ${DIR_STORE_DATA}:/data:rw               \
+#      -v ${DIR_STORE_DATA_LOG}:/datalog:rw        \
+#      -v ${DIR_CONF}/docker/conf:/conf            \
+#      -v ${DIR_CONF}:${DIR_CONF}                  \
+#      ${DOCKER_REG}/kingsilk/${APP_C}

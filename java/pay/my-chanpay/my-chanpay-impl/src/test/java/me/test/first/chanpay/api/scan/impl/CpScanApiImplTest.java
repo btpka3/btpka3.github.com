@@ -82,6 +82,7 @@ public class CpScanApiImplTest extends BaseTest {
         req.setOutTradeNo(Long.toString(System.currentTimeMillis()));
         req.setMchId("200000140001");
 //        req.setSubMchId("");
+        req.setSubMchId("200003640120");
         req.setTradeType("11");
         req.setBankCode("WXPAY");
         req.setAppId("wx90192dels817xla0");
@@ -89,7 +90,7 @@ public class CpScanApiImplTest extends BaseTest {
         req.setCurrency("CNY");
         req.setTradeAmount(0.02);
 //        req.setEnsureAmount(0.02);
-        req.setGoodsName("11");
+        req.setGoodsName("zll子商户测试商品");
 
         req.setTradeMemo("1111");
         req.setOrderStartTime(new Date());

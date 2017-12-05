@@ -166,10 +166,10 @@ public class CpScanApiImpl implements CpScanApi {
 
         if (paramInUrl) {
 
-            // 注意：这里使用手动 编码，因为 RestTemplate 对 URL参数的编码机制与 URLEncoder 不一致：
-            // origin text      : http://dev.chanpay.com/receive.php
-            // RestTemplate     : http://dev.chanpay.com/receive.php
-            // URLEncoder       : http%3A%2F%2Fdev.chanpay.com%2Freceive.php
+            // 注意：这里使用手动 编码，因为 UriComponentsBuilder 对 URL参数的编码机制与 URLEncoder 不一致：
+            // origin text              : http://dev.chanpay.com/receive.php
+            // UriComponentsBuilder     : http://dev.chanpay.com/receive.php
+            // URLEncoder               : http%3A%2F%2Fdev.chanpay.com%2Freceive.php
             LinkedMultiValueMap<String, String> encodedReqParams = new LinkedMultiValueMap<>();
             Map<String, String> encodedMap = reqParams.toSingleValueMap()
                     .entrySet()

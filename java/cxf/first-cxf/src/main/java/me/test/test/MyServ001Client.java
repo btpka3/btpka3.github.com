@@ -15,7 +15,7 @@ import org.apache.commons.io.FileUtils;
 
 public class MyServ001Client {
     public static void main(String[] args) throws IOException {
-        URL wsdlURL = new URL("http://localhost:8080/FirstCXF/myServ001?wsdl");
+        URL wsdlURL = new URL("http://localhost:9000/FirstCXF/myServ001?wsdl");
         QName SERVICE_NAME = new QName("http://test.sample.me/",
                 "MyServ001ImplService");
         Service service = Service.create(wsdlURL, SERVICE_NAME);

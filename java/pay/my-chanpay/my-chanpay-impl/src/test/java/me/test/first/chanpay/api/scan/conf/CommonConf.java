@@ -22,9 +22,9 @@ public class CommonConf {
 //    }
 
     @Bean
-    FormattingConversionServiceFactoryBean FormattingConversionServiceFactoryBean(
-            Set<Converter> converters
-    ) {
+    FormattingConversionServiceFactoryBean formattingConversionServiceFactoryBean(
+                    Set<Converter> converters
+            ) {
         FormattingConversionServiceFactoryBean fac = new FormattingConversionServiceFactoryBean();
         fac.setConverters(converters);
         return fac;

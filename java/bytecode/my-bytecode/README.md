@@ -35,7 +35,7 @@ PS：让想起了大学期间，学习ASM/C/C++的时候，到看雪论坛上下
   可以在 properties 文件中找到对应的 message 的 key——  "license_evaluation_term.message"。
 
 - 再根据该 message key，在各个class中找。首要目标是让 Astah Professional 长期可用，而非要破解注册码生成机制。
-  最简单的就是对 评估板 时长进行修改。这个具体就看 src/main/java/io/github/btpka3/asm/H.java 吧。
+  最简单的就是对 评估版 时长进行修改。这个具体就看 src/main/java/io/github/btpka3/asm/H.java 吧。
 
 # 参考
 - net.sf.cglib.samples.Bean

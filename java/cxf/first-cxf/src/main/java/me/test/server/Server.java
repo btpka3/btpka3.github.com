@@ -6,9 +6,9 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License. You may obtain a copy of the License at
- *
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -19,9 +19,9 @@
 
 package me.test.server;
 
-import javax.xml.namespace.QName;
-
 import org.apache.cxf.jaxws.JaxWsServerFactoryBean;
+
+import javax.xml.namespace.QName;
 
 public class Server {
 
@@ -41,8 +41,8 @@ public class Server {
     }
 
     public static void main(String args[]) throws Exception {
-        new Server(
-                "D:/zll/git/github/btpka3.github.com/java/cxf/first-cxf/src/main/webapp/WEB-INF/wsdl/MyMath.wsdl");
+
+        new Server("./src/main/webapp/WEB-INF/wsdl/MyMath.wsdl");
         System.out.println("Server ready...");
 
         Thread.sleep(5 * 60 * 1000);

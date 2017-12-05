@@ -1,0 +1,107 @@
+buildscript {
+    ext {
+        //springBootVersion = '1.5.2.RELEASE'
+    }
+    repositories {
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("io.spring.gradle:dependency-management-plugin:1.0.0.RELEASE")
+        classpath("gradle.plugin.com.gorylenko.gradle-git-properties:gradle-git-properties:1.4.17")
+    }
+}
+
+//plugins{
+//    id 'eclipse'
+//    id 'idea'
+//    id "io.spring.dependency-management" version "1.0.0.RELEASE" //1.0.2.RELEASE
+//    id 'project-report'
+//    id 'maven'
+//    id 'org.springframework.boot' version '1.5.2.RELEASE'
+//}
+
+
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: "io.spring.dependency-management"
+apply plugin: 'project-report'
+apply plugin: 'maven'
+
+
+apply plugin: 'groovy'
+apply plugin: 'org.springframework.boot'
+//apply plugin: "com.gorylenko.gradle-git-properties" // 生成 git.properties
+
+
+repositories {
+    maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+    mavenCentral()
+}
+
+idea {
+    module {
+        downloadJavadoc = false
+        downloadSources = true
+    }
+}
+
+eclipse {
+    classpath {
+        downloadSources = true
+    }
+}
+
+dependencies {
+    compile('org.codehaus.groovy:groovy-all')
+    compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+    compile("org.springframework.boot:spring-boot-devtools")
+    compile('com.fasterxml.jackson.dataformat:jackson-dataformat-xml')
+    compile('org.apache.httpcomponents:httpclient')
+    compile('org.springframework.security.oauth:spring-security-oauth2')
+    compile('org.springframework.boot:spring-boot-starter-actuator')
+
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+
+    dependencies {
+//            dependency('org.codehaus.groovy:groovy-all:2.4.11')
+    }
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "http://mvn.kingsilk.xyz/content/repositories/releases/") {
+                authentication(userName: "admin", password: "admin123")
+            }
+            snapshotRepository(url: "http://mvn.kingsilk.xyz/content/repositories/snapshots/") {
+                authentication(userName: "admin", password: "admin123")
+            }
+            //pom.version = "0.1.0-SNAPSHOT"
+            //pom.artifactId = "simple-project"
+            //pom.groupId = "com.example"
+        }
+    }
+}
+
+allprojects {
+
+}
+
+subprojects {
+
+    dependencies {
+
+    }
+
+
+}

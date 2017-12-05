@@ -1,0 +1,30 @@
+version: '3'
+services:
+
+  # 演示用的数据采集，并将数据发送给 influxdb
+  collectd:
+    build:
+      context: ./collectd
+    volumes:
+      - ./collectd/conf:/etc/collectd
+
+  # 数据库存储
+  influxdb:
+    image: influxdb:1.4.2-alpine
+    ports:
+      - 2003:2003
+      - 8086:8086
+      - 25826:25826
+    volumes:
+      - ./influxdb/conf:/etc/influxdb
+      - ./influxdb/data:/var/lib/influxdb
+      - ./influxdb/types.db:/usr/share/collectd/types.db
+
+  # Web UI: 查询
+  grafana:
+    image: grafana/grafana:4.6.2
+    ports:
+      - 3000:3000
+    volumes:
+      - ./grafana/conf:/etc/grafana
+      - ./grafana/data:/var/lib/grafana
