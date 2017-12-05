@@ -4,6 +4,8 @@
 
 
 // 类的声明使用 @interface 和 @end
+//      由于没有package的概念，类名必须全局唯一。
+//      objective-C 中 class 也是一个 Object
 // 方法
 //      `+` 代表是类方法(静态方法)
 //      `-` 代表是实例方法
@@ -30,6 +32,7 @@
     
 }
 
+
 // 一个冒号:对应一个参数
 // -(returnType) methodName;
 // -(returnType) methodName: (arg1Type) arg1Name;
@@ -40,6 +43,15 @@
 - (int) age;
 // setter
 - (void) setAge: (int) newAge;
+
+
+// 为了简化属性的声明，可以使用 @property，会自动创建下划线开头的成员变量，并生成 getter，setter。
+@property NSString *color;
+@property(readonly) int w;
+
+
+// 自定义构造函数
+- (id)initWithAge:(int)age;
 
 - (void) speak;
 @end

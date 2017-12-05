@@ -29,7 +29,7 @@ Objective-C中强制要求将类的定义（interface）与实现（implementati
         * Foundation
             * [The Foundation Framework](https://developer.apple.com/library/mac/documentation/Cocoa/Reference/Foundation/ObjC_classic/)
 
-https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html
+[About Objective-C](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html)
 
 
 
@@ -39,3 +39,4 @@ https://www.gnu.org/software/gnustep/resources/documentation/Developer/Base/Prog
 [GNUstep Base library](http://www.gnustep.org/resources/documentation/Developer/Base/Reference/Base.html)
 
 
+http://moduscreate.com/writing-a-cordova-plugin-in-swift-for-ios/
