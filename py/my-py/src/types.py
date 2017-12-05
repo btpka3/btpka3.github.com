@@ -7,11 +7,19 @@ import sys;
 
 x = 'runoob';
 sys.stdout.write(x + '\n')
+print(type(x), x.__class__)
 
 aa = 100
 print(aa)
 
 print(0.1 + 0.2)  # 同样会有精度问题
+
+print("----------------------------- bytes")
+
+bbb = b'abc'
+print(bbb, bbb.__len__(), bbb[0], bbb.hex(), bbb.decode("utf-8"))
+bbb = bytes.fromhex('0902')
+print(bbb, bbb.__len__(), bbb[0], bbb.hex(), bbb.decode("utf-8"))
 
 print("----------------------------- string")
 str = 'abcdefgh'
@@ -26,6 +34,7 @@ print(str + "TEST")  # 输出连接的字符串
 print("----------------------------- list")
 list = ['aaa', 111, 222, 'bbb', 333]
 list2 = [444, 'ccc']
+print(list2.index("aaa"))
 
 print(list)
 print(list[1])
@@ -33,6 +42,9 @@ print(list + list2)
 del list[1]
 print(list)
 print(222 in list)
+
+for x in list:
+    print("~~~~", x)
 
 print("----------------------------- tuple")
 # 元组的元素不能修改

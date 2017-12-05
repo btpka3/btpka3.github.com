@@ -2,9 +2,18 @@
 
 # 参考
 
-* [Python 3 教程](http://www.runoob.com/python3/python3-tutorial.html)
-
-
+- [Python 3 教程](http://www.runoob.com/python3/python3-tutorial.html)
+- [Python2.x与3​​.x版本区别](http://www.runoob.com/python/python-2x-3x.html)
+- [Cheat Sheet: Writing Python 2-3 compatible code](http://python-future.org/compatible_idioms.html)
+- [What’s New In Python 3.0](https://docs.python.org/3.0/whatsnew/3.0.html)
+- [python-packaging](https://python-packaging.readthedocs.io/en/latest/minimal.html)
+- http
+    - [http](https://docs.python.org/3/library/http.html)
+    - [urllib](https://docs.python.org/3/library/urllib.html)
+    - [urllib3](https://pypi.python.org/pypi/urllib3)
+    - [python-requests](http://docs.python-requests.org/en/latest/index.html)
+- hmac
+    - [hmac](https://docs.python.org/2/library/hmac.html)
 
 # 工具
 * pip 一个 installer 程序。从 python 3.4 后自带
@@ -13,13 +22,29 @@
 * virtualenv 一个 pyvenv 的替代品，支持 python 2.
 
 
+
+
+
 # pip
 
 [pip](https://pip.pypa.io/en/stable/)
 
+
 ## 常用命令
 
 ```bash
+# MacOs 安装
+brew search     python3
+brew list       python3
+brew install    python3
+brew upgrade    python3
+
+# pycharm 配置
+
+vi ~/.pycharmrc
+source ~/.bashrc
+source ~/pycharmvenv/bin/activate
+
 pip completion --bash >> ~/.profile # bash 自动完成
 pip search "query"                  # 搜索
 pip show sphinx                     # 显示特定包的详情
@@ -35,6 +60,11 @@ pip install --upgrade pip           # pip 自升级
 
 pip list                            # 列出安装了哪些包
 pip list --outdated                 # 列出已安装、但已过期的包
+
+pip3 install PyQt5
+/usr/local/Cellar/python3/3.6.3/bin/pip3 install virtualenv
+
+pip3 install aliyun-python-sdk-alidns
 ```
 
 ## 配置
@@ -94,4 +124,61 @@ timeout = 10
 ```bash
 pip install wheel
 pip install SomePackage-1.0-py2.py3-none-any.whl
+```
+
+# virtualenv
+
+
+```bash
+pip3 install virtualenv
+
+mkdir myproject
+cd myproject/
+
+# 创建一个环境 venv (不复制系统级别的安装包，也就是说是全新的）
+virtualenv -p /usr/local/Cellar/python3/3.6.3/bin/python3 \
+    --no-site-packages \
+    env-dev
+
+# 使用该环境
+source env-dev/bin/activate
+
+# 退出该环境
+deactivate
+```
+
+# pyvenv
+
+```bash
+
+# 创建一个新的环境
+pyvenv env_dev
+tree -L 3
+.
+└── env_dev
+    ├── bin
+    │   ├── activate
+    │   ├── activate.csh
+    │   ├── activate.fish
+    │   ├── easy_install
+    │   ├── easy_install-3.5
+    │   ├── pip
+    │   ├── pip3
+    │   ├── pip3.5
+    │   ├── python -> python3.5
+    │   ├── python3 -> python3.5
+    │   └── python3.5 -> /usr/local/Cellar/python3/3.5.2_1/Frameworks/Python.framework/Versions/3.5/bin/python3.5
+    ├── include
+    ├── lib
+    │   └── python3.5
+    └── pyvenv.cfg
+
+# 使用指定的环境
+source env_dev/bin/activate
+
+(env_dev) zll@mac-pro ddd$ which python
+/private/tmp/ddd/env_dev/bin/python
+
+# 退出环境
+(env_dev) zll@mac-pro ddd$ deactivate
 ```

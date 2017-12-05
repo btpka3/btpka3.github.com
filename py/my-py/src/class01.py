@@ -1,8 +1,10 @@
 #!/usr/bin/python3
+# -*- coding: utf8 -*-
 import sys
+from abc import abstractmethod
 
 
-class X:
+class X(object):
     """一个简单的类实例"""
     i = 100
 
@@ -10,7 +12,8 @@ class X:
     __private_attr = 11
 
     # 构造函数
-    def __init__(self):
+    def __init__(self, num):
+        print("------==== X.num = ", num)
         self.i += 1
         self._count = 99
 
@@ -31,8 +34,14 @@ class X:
     def count(self):
         return self._count
 
+    @abstractmethod
+    def absM(self):
 
-x = X()  # 实例化
+        return "X#absMethod"
+
+
+
+x = X(999)  # 实例化
 
 x.i += 2
 
@@ -41,30 +50,44 @@ print("x.i          = ", x.i)  # 实例变量
 print("x.count      = ", x.count)  # count
 print("x.f()        = ", x.f())  # 实例方法
 print("x.__class__  = ", x.__class__)  # <class '__main__.X'>
+print("x.absM()     = ", x.absM())
 
 print("----------------------------------- 类（静态）")
 print("X.i      = ", X.i)
 print("X.s()    = ", X.s())
 
 
+
 # 支持多继承，比如： class X1(X,Y,Z):
 # 查找类变量、方法时，先找自身，在从父类声明列表中依次从左向右查找
-
+__metaclass__ = X
 class X1(X):
+
+
+    # 构造函数
+    def __init__(self, num):
+        super(X1, self).__init__(num)
+        print("------==== X1.num = ", num)
+
+
     def f(self):  # self 参数为惯例名称，相当于 java 中的 this
         return 'hello world1 : ' + str(self.i)
 
     def getName(self):
         return "name-lalala"
 
+    #@abstractmethod
+    def absM(self):
+        return super(X1,self).absM() + " - X1#absMethod"
 
-x1 = X1()
+
+x1 = X1(888)
 
 print("----------------------------------- X1")
 print("x1.i         = ", x1.i)  # 实例变量
 print("x1.f()       = ", x1.f())  # 实例方法
 print("x1.getName() = ", x1.getName())  # 实例变量
-
+print("x1.absM()    = ", x1.absM())
 
 """
 类的专有方法(多用于运算符重载):
