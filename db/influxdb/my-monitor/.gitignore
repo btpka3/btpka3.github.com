@@ -1,0 +1,3 @@
+src/test/docker/grafana/data/*
+src/test/docker/influxdb/data/*
+!**/.gitkeep
