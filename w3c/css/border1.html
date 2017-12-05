@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .border {
+            height: 100px;
+            width: 200px;
+            background: linear-gradient(90deg, red 50%, transparent 50%),
+            linear-gradient(0deg, blue 50%, transparent 50%),
+            linear-gradient(90deg, green 50%, transparent 50%),
+            linear-gradient(0deg, yellow 50%, transparent 50%);
+            background-repeat: repeat-x, repeat-y, repeat-x, repeat-y;
+            background-size: 15px 4px, 4px 15px, 15px 4px, 4px 15px;
+            /*background-position: 0px 0px, 200px 100px, 0px 100px, 200px 0px;*/
+            padding: 10px;
+            animation: border-dance 1s infinite linear;
+        }
+
+        @keyframes border-dance {
+            0% {
+                /*background-position: 0px 0px,  0px 2000px, 2000px 2000px,2000px 0px;*/
+                /*background-position: 0% 0%, 100% 0%, 100% 100%, 0% 100%;*/
+                background-position: 0 0, 100% 0%, 100% 100%, 0% 100%;
+            }
+            100% {
+                /*background-position: 2000px 0px, 0px 0px,  0px 2000px,0px 0px;*/
+                /*background-position: 100% 0%, 100% 100%, 0% 100%, 0% 0%;*/
+                background-position: 15px 0, 100% 15px, calc(100% - 15px) 100%, 0% calc(100% - 15px);
+            }
+        }
+
+        .caiHong {
+            background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+        }
+
+        .b {
+            background-image: linear-gradient(to right, red, rgba(255, 0, 0, 0));
+        }
+
+        .b1 {
+            background-image: linear-gradient(to right, red, rgba(255, 0, 0, 0));
+            background-size: 20%;
+        }
+    </style>
+</head>
+<body>
+<div class="border">Some text</div>
+<div class="caiHong">a</div>
+<div class="b">b</div>
+<div class="b1">b1</div>
+</body>
+</html>

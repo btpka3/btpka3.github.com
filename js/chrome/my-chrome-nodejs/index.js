@@ -3,10 +3,13 @@ const argv = require('minimist')(process.argv.slice(2));
 const file = require('fs');
 
 // CLI Args
-const url = argv.url || 'https://www.baidu.com';
+const a = 'http://192.168.0.41:64444/docker/chrome-headless/test.html';
+// const a = 'https://www.baidu.com';
+
+const url = argv.url || a;
 const format = argv.format === 'jpeg' ? 'jpeg' : 'png';
-const viewportWidth = argv.viewportWidth || 1440;
-const viewportHeight = argv.viewportHeight || 2000;
+const viewportWidth = argv.viewportWidth || 500;
+const viewportHeight = argv.viewportHeight || 1200;
 const delay = argv.delay || 0;
 const userAgent = argv.userAgent;
 const fullPage = argv.full;
@@ -31,7 +34,11 @@ CDP(async function(client) {
         width: viewportWidth,
         height: viewportHeight,
         deviceScaleFactor: 0,
-        mobile: false,
+        emulateViewport:true,
+        scale:1,
+        screenWidth:1000,
+        screenHeight:2400,
+        mobile: true,
         fitWindow: false,
     };
     await Emulation.setDeviceMetricsOverride(deviceMetrics);

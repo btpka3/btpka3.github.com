@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="zh-CN" ng-app="myApp">
+<head>
+    <title>test directive</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../../bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="../../bower_components/angular/angular.js"></script>
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', ['$scope', function ($scope) {
+
+            $scope.ctrlObj = {
+                c: "ccc"
+            };
+            $scope.init = function (obj) {
+                $scope.obj = obj;
+                console.log("in controller: the obj directive exposed is : ", obj);
+            };
+            $scope.add = function () {
+                // 从 Controller 中修改 directive 内部对象
+                if ($scope.obj) {
+                    $scope.obj.a = $scope.obj.a + "a";
+                    $scope.obj.b = $scope.obj.b + "b";
+                }
+
+                // 在 Controller 中修改自身作用域内的对象
+                if ($scope.ctrlObj) {
+                    $scope.ctrlObj.c = $scope.ctrlObj.c + "c";
+                }
+            };
+
+            $scope.leave = function () {
+                if (!$scope.obj) {
+                    return;
+                }
+                // 从 Controller 中调用 directive 提供的方法
+                $scope.obj.leave();
+            }
+
+        }]);
+        app.directive('my1', function () {
+            function link(scope, element, attr) {
+            }
+
+            return {
+                restrict: 'AEC',
+                template: '' +
+                '<div style="color:{{opts.color}};">' +
+                ' {{opts.data}}' +
+                '</div>',
+                scope: {
+                    'opts': "="
+                },
+                replace: true,
+                transclude: true,
+                link: link
+            };
+        });
+        app.directive('my2', function () {
+            function link(scope, element, attr) {
+            }
+
+            return {
+                restrict: 'AEC',
+                template: '' +
+                '<div style="color:{{opts.color}};">' +
+                ' {{opts.data}}' +
+                '</div>',
+                scope: {
+                    'opts': "="
+                },
+                replace: true,
+                transclude: true,
+                link: link
+            };
+        });
+
+
+//        var i = {
+//            tag: "my1",
+//            opts: {"data":"aaa", "color":"red", "arr": ["aaa","bbb"]}
+//        };
+//
+//
+//
+//        var tpl = " <div "+ i.tag + " opts=\"" +JSON.stringify(i.opts)+"\" ></div>";
+//        var tpl = " <div "+ i.tag + " opts=\"" +JSON.stringify(i.opts).replace(/"/g,"\\\"") +"\" ></div>"
+
+    </script>
+</head>
+<body>
+<div ng-controller="myCtrl">
+    <div>
+        111
+        <my1 opts="{data:'aaa', color:'red'}"> </my1>
+        <my2 opts="{data:'bbb', color:'blue'}"> </my2>
+        222
+    </div>
+</div>
+</body>
+</html>
+
+
+
+

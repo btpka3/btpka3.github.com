@@ -1,1 +1,4 @@
 output.png
+*.iml
+.idea
+node_modules

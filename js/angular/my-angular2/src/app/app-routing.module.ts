@@ -3,6 +3,7 @@ import {RouterModule, Routes} from "@angular/router";
 // import {HeroesComponent} from "./heroes.component";
 // import {HeroDetailComponent} from "./hero-detail.component";
 // import {DashboardComponent} from "./dashboard.component";
+import {PageNotFoundComponent} from "./not-found.component";
 
 // const routes: Routes = [
 //     {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
@@ -11,10 +12,11 @@ import {RouterModule, Routes} from "@angular/router";
 //     {path: 'heroes', component: HeroesComponent}
 // ];
 const routes: Routes = [
-  {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
   {path: 'detail/:id', loadChildren: './hero-detail/hero-detail.module#HeroDetailModule'},
   {path: 'dashboard', loadChildren: "./dashboard/dashboard.module#DashboardModule"},
-  {path: 'heroes', loadChildren: "./heroes/heroes.module#HeroesModule"}
+  {path: 'heroes', loadChildren: "./heroes/heroes.module#HeroesModule"},
+  {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
+  // {path: '**', component: PageNotFoundComponent}
 ];
 
 @NgModule({

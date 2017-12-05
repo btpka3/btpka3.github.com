@@ -46,7 +46,7 @@ import 'core-js/es7/reflect';
 
 
 /** ALL Firefox browsers require the following to support `@angular/animation`. **/
-// import 'web-animations-js';  // Run `npm install --save web-animations-js`.
+import 'web-animations-js';  // Run `npm install --save web-animations-js`.
 
 
 
@@ -54,6 +54,34 @@ import 'core-js/es7/reflect';
  * Zone JS is required by Angular itself.
  */
 import 'zone.js/dist/zone';  // Included with Angular CLI.
+
+
+// //import '@webcomponents/webcomponentsjs/webcomponents-hi-sd-ce.js';
+// //import '@webcomponents/webcomponentsjs/entrypoints/webcomponents-hi-sd-ce-pf-index.js';
+// import '@webcomponents/webcomponents-platform/webcomponents-platform.js';
+// import '@webcomponents/template/template.js';
+// //import '@webcomponents/webcomponentsjs/src/promise.js';
+// import ES6Promise from 'es6-promise/lib/es6-promise/promise.js';
+//
+// /*
+// Assign the ES6 promise polyfill to window ourselves instead of using the "auto" polyfill
+// to work around https://github.com/webcomponents/webcomponentsjs/issues/837
+// */
+// if (!window["Promise"]) {
+//   window["Promise"] = ES6Promise;
+//   // save catch function with a string name to prevent renaming and dead code eliminiation with closure
+//   ES6Promise.prototype['catch'] = ES6Promise.prototype.catch;
+// }
+//
+// import '@webcomponents/html-imports/src/html-imports.js';
+// import '@webcomponents/webcomponentsjs/src/pre-polyfill.js';
+// import '@webcomponents/shadydom/src/shadydom.js';
+// import '@webcomponents/custom-elements/src/custom-elements.js';
+// import '@webcomponents/shadycss/entrypoints/scoping-shim.js';
+// import '@webcomponents/webcomponentsjs/src/post-polyfill.js';
+// import '@webcomponents/webcomponentsjs/src/unresolved.js';
+
+import 'onsenui/core-src/polyfills';
 
 
 

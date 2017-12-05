@@ -1,4 +1,5 @@
 import {Component, OnInit} from "@angular/core";
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   // selector: '[bbb-component]',
@@ -7,11 +8,12 @@ import {Component, OnInit} from "@angular/core";
 })
 export class CccComponent implements OnInit {
   v = 'c1-c2';
+  paramN: number;
 
-  constructor() {
+  constructor(private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit(): void {
-
+    this.paramN = this.activatedRoute.snapshot.queryParams["n"];
   }
 }

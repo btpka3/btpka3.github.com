@@ -8,34 +8,52 @@
 
 - angular 
     - [Can't bind to 'ngforOf' since it isn't a known native property](https://stackoverflow.com/a/35531251/533317) 
+
 - angular-cli
     - [Angular-cli is --mobile still an option?](https://github.com/angular/angular-cli/issues/5791)
+    - [Angular CLI Config Schema](https://github.com/angular/angular-cli/wiki/angular-cli)
+    - [ng build](https://github.com/angular/angular-cli/blob/master/docs/documentation/build.md)
 
 - `@angular/flex-layout`
     - [demo source](https://github.com/angular/flex-layout/tree/master/src/demo-app)
     - [Fast Starts](https://github.com/angular/flex-layout/wiki/Fast-Starts)
 
 - `material`
-    - [doc](https://material.angular.io/)
+    - [@angular/material](https://material.angular.io/)
+    - [material.io](https://material.io/)
+    - [material.io framework-examples](https://github.com/material-components/material-components-web/tree/master/framework-examples/)
 
 - ionic
     - [Using Ionic 2 with the Angular CLI](https://labs.encoded.io/2016/11/12/ionic2-with-angular-cli/)
     - [Ionic 2 + @angular/cli Seed Project](https://github.com/lathonez/clicker)
     - [Using Angular2 Router in ionic2](https://stackoverflow.com/questions/40459918/using-angular2-router-in-ionic2)
     - [Ionic 3 and Webpack 2 warning](https://github.com/ionic-team/ionic/issues/11072)
+    - [Ionic2: Can't find any information on how to implement URL routing](https://github.com/ionic-team/ionic/issues/5479)
+    - [Ionic 2 URL routing](http://plnkr.co/edit/mpWU1kG8RXUqVuqs1K5w?p=preview)
 
+- primeng
+    - [PrimeNG](https://github.com/primefaces/primeng)
+    
 - clarity
     - [Get Start](https://vmware.github.io/clarity/get-started)
+
+- onsen UI
+    - [Angular2+](https://onsen.io/v2/guide/angular2/)
+
     
 - webcomponents
     - [custom-elements](https://github.com/webcomponents/custom-elements)
+    - [whatwg - custom-elements](https://html.spec.whatwg.org/multipage/custom-elements.html#custom-elements)
     - [angular-polymer](https://github.com/platosha/angular-polymer)
+    - [Using Custom Elements in Angular](https://alligator.io/angular/using-custom-elements/)
 
 # 注意事项
 
 * 使用 yarn 来取代 npm。
 * Onsen UI 使用之后， clarity 出错 "Error: The custom element being constructed was not registered with `customElements`."
     且出错后中断路由。
+    该问题 如果引入 `../node_modules/@webcomponents/custom-elements/custom-elements.min.js` 会出现
+    但如果引入 "../node_modules/@webcomponents/custom-elements/src/custom-elements.js", 则不会报错，但是 字体图标未加载
 * OnsenModule 因为re-export 了BrowserModule，故只能在顶层route中使用，子route中数据无法双向绑定. 
   
 

@@ -9,8 +9,8 @@
 npm config set registry http://registry.npm.taobao.org/
 npm init
 
-sudo npm install -g nodemon
-sudo npm install -g grunt-cli
+npm install -g nodemon
+npm install -g grunt-cli
 npm install --save-dev grunt
 npm install --save-dev grunt-html2js
 npm install --save-dev grunt-contrib-clean
@@ -64,7 +64,7 @@ src/less/                                   # css
 src/app/controllers/xxx.js                  # state, controller
 src/app/services/xxxService.js              # 服务
 src/app/views/xxx/yyy.html                  # html模板片段
-src/app/index.js                              # angularjs 入口
+src/app/test.js                              # angularjs 入口
 
 
 target/dist/assets                          # 工程相关的 img、font
@@ -80,7 +80,7 @@ target/${pkg.name}.tar.gz                   # 最终发布包
 # 运行 http 服务器和 mock 数据
 
 ```
-nodemon mock/index.js           # 独立命令行窗口：启动 mock api
+nodemon mock/test.js           # 独立命令行窗口：启动 mock api
 grunt ; grunt watch:all         # 独立命令行窗口：监测文件修改
                                 # 通过浏览器访问  http://localhost:3000/
 ```

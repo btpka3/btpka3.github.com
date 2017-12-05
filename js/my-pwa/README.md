@@ -13,4 +13,4 @@
     
 * your-first-pwapp
     * [@Google](https://developers.google.com/web/fundamentals/getting-started/codelabs/your-first-pwapp/)
-    * [@github](https://github.com/googlecodelabs/your-first-pwapp)
+    * [@github]()https://github.com/googlecodelabs/your-first-pwapp

@@ -1,15 +1,17 @@
 
 
-
+* [angular-tour-of-heroes](https://github.com/johnpapa/angular-tour-of-heroes)
 * [angular.cn](https://angular.cn/)
 * [GettingStartedWithAngular2](https://github.com/DaveMBush/GettingStartedWithAngular2)
+* [用路由器实现惰性 (lazy) 加载](https://angular.cn/docs/ts/latest/guide/ngmodule.html#!#lazy-load)
+* [toh-6](https://github.com/angular-examples/toh-6)
+
 
 ```
 npm install -g @angular/cli
 npm install --save --save-exact angular2
 npm install --save --save-exact systemjs
 npm install --save-dev typescript live-server
-
 
 npm run tsc
 npm start

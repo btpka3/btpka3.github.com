@@ -1,0 +1,22 @@
+{
+  "name": "my-simditor",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "btpka3 <btpka3@163.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/btpka3/btpka3.github.com",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-editor": "https://github.com/wanming/angular-editor.git",
+    "simditor": "^2.3.6",
+    "angular": "^1.5.8"
+  }
+}

@@ -9,6 +9,19 @@ var gAjaxRegex = /^(https?:\/\/)ajax.googleapis.com(\/.*)/;
 var newFontHost = "fonts.lug.ustc.edu.cn";
 var newAjaxHost = "ajax.lug.ustc.edu.cn";
 
+
+function aa(requestDetails) {
+    console.log("-----1: ", requestDetails.requestId);
+    console.log("-----2: " + requestDetails);
+    return {authCredentials: "zhang3"};
+}
+
+chrome.webRequest.onAuthRequired.addListener(
+    aa,
+    {urls: ["*://*/*"]},
+    ["blocking"]
+);
+
 // chrome.webRequest.onBeforeRequest.addListener(
 //      callback,           // function
 //      filter,             // webRequest.RequestFilter

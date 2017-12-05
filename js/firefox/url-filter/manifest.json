@@ -10,15 +10,16 @@
     "*://*/*",
     "webRequest",
     "webRequestBlocking",
-    "storage"
+    "storage",
+    "proxy"
   ],
   "applications": {
     "gecko": {
-      "id": "btpka3@163.com"
+      "id": "btpka3@163.com",
+      "strict_min_version": "56.0a1"
     }
   },
   "background": {
-    "persistent": true,
     "scripts": [
       "background.js"
     ]

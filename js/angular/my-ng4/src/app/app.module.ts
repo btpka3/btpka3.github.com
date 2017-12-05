@@ -4,6 +4,7 @@ import {FormsModule} from "@angular/forms";
 import {HttpModule} from "@angular/http";
 
 import {AppComponent} from "./app.component";
+import {LocationStrategy,  HashLocationStrategy}from "@angular/common";
 
 import {TestServiceModule} from "./test-service/test-service.module";
 import {TestComponentModule} from "./test-component/test-component.module";
@@ -13,7 +14,8 @@ import {TestDirectiveModule} from "./test-directive/test-directive.module";
 import {AppRoutingModule} from "./app-routing.module";
 import {AaaComponent} from "./test-route/aaa/aaa.component";
 
-import {Routes} from "@angular/router";
+import {Routes,RouteReuseStrategy} from "@angular/router";
+import {CustomReuseStrategy} from "./CustomReuseStrategy";
 
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -70,7 +72,10 @@ const routes: Routes = [
     AppComponent,
     AaaComponent  // router 默认显示的组件
   ],
-  providers: [],
+  providers: [
+    {provide: RouteReuseStrategy, useClass: CustomReuseStrategy},
+    { provide: LocationStrategy, useClass: HashLocationStrategy }
+  ],
   bootstrap: [AppComponent]
   // bootstrap: [IonicApp]
 })

@@ -10,10 +10,10 @@ module.exports = app => {
     }
 
     const defaultOptions = {
-        url: "http://news.163.com",
-        //url: "http://192.168.0.41:7001/public/test.html",
-        w: 500, // 500
-        h: 1200, // 1200
+        //url: "https://btpka3.github.io/js/chrome/my-chrome-eggjs/app/public/test.html",
+        url: "https://btpka3.github.io/js/chrome/my-chrome-eggjs/app/public/test.html",
+        w: 320,
+        h: 568,
         fullScreen: true,
 
         x: 0,    // viewPort : x

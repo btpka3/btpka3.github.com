@@ -17,7 +17,9 @@
   <li>
     <a routerLink="index.html" routerLinkActive="active">aaa</a>
     <a routerLink="bbb" routerLinkActive="active">bbb</a>
-    <a routerLink="ccc" routerLinkActive="active">ccc</a>
+    <a routerLink="ccc" routerLinkActive="active" [queryParams]="{n: 888}"
+       queryParamsHandling="merge"
+    >ccc</a>
     <a routerLink="http" routerLinkActive="active">http</a>
     <a routerLink="flex" routerLinkActive="active">flex</a>
     <a routerLink="mat" routerLinkActive="active">mat</a>
@@ -41,21 +43,22 @@
 <!--</div>-->
 
 <!--<div>-->
-  <!--<mat-test></mat-test>-->
+<!--<mat-test></mat-test>-->
 <!--</div>-->
 
 <div style="border: 1px solid red;" title="oauth 测试区">
 
-  <h1 *ngIf="!name">
-    Hallo
-  </h1>
-  <h1 *ngIf="name">
-    Hallo, {{name}}
-  </h1>
 
-  <button class="btn btn-default" (click)="login()">Login</button>
-  <button class="btn btn-default" (click)="logoff()">Logout</button>
-  <button class="btn btn-default" (click)="showAt()">show at</button>
+  <div *ngIf="!name">
+    <h1> Hello </h1>
+    <button class="btn btn-default" (click)="login()">Login</button>
+  </div>
+
+  <div *ngIf="name">
+    <h1>Hallo, {{name}}</h1>
+    <button class="btn btn-default" (click)="logoff()">Logout</button>
+    <button class="btn btn-default" (click)="showAt()">show at</button>
+  </div>
 
 
   <div>

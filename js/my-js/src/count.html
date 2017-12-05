@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+
+
+    /**
+     * 封装一个count方法，能实现如此调用：count(a)(b)(c)(d)(e)…
+     * 并且返回的值为参数连乘的结果，
+     * 即a*b*c*d*e*…。如count(1)(3)(7) 得到21
+     */
+    function count(n) {
+        var a = n;
+        console.log("in count(n)    : ", a);
+
+        function multiple(x) {
+            a = a * x;
+            console.log("in multiple(x) : ", a);
+            return multiple
+        }
+
+        // 无法实现 count(a) 的 返回值既是 Function，又是 Number, 所以只能通过额外的函数 返回计算后的结果。
+        multiple.result = function () {
+            return a;
+        };
+
+        return multiple;
+    }
+    console.log(count(1)(3)(7).result());
+
+</script>
+
+</body>
+</html>

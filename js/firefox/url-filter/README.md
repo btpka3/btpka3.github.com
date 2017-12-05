@@ -65,6 +65,7 @@ zip -r ../beastify.xpi *    # 打zip包，但后缀是 xpi
     
     cd url-filter
     web-ext run
+    web-ext --firefox=nightly run
     
     # 打包
     # 登录 https://addons.mozilla.org/en-US/firefox/ ，在 Tools/Manager API keys 下找到你的 key
@@ -73,8 +74,9 @@ zip -r ../beastify.xpi *    # 打zip包，但后缀是 xpi
     web-ext sign --api-key=$AMO_JWT_ISSUER --api-secret=$AMO_JWT_SECRET
     ```
 
-
-
+- [bug - SOCKS: Username/Password Authentication (V5)](https://bugzilla.mozilla.org/show_bug.cgi?id=122752)
+- [webextensions-examples/proxy-blocker](https://github.com/mdn/webextensions-examples/tree/master/proxy-blocker)
+- [JavaScript APIs - Google Chrome](https://developer.chrome.com/extensions/api_index)
 
  
  

@@ -1,0 +1,23 @@
+# NOTICE: 该特性已经从Web标准中移除，应当使用 Service Workers （实验性的）来取代。
+# https://developer.mozilla.org/en-US/docs/Web/HTML/Using_the_application_cache
+
+
+# 何时缓存失效？
+# 1. 用户清空浏览器缓存
+# 2. manifest 文件被修改
+# 3. 由程序来更新应用缓存
+
+
+CACHE MANIFEST
+# 文件将在首次下载后进行缓存
+
+
+
+NETWORK
+# 文件需要与服务器的连接，且不会被缓存
+
+
+FALLBACK
+# 规定指定的页面无法访问时的回退页面
+
+

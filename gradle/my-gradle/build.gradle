@@ -133,3 +133,10 @@ task wrapper(type: Wrapper) { gradleVersion = '2.13' }
 //applicationDefaultJvmArgs = [
 //    "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005"
 //]
+
+// gradle testDsl --stacktrace
+task testDsl{
+    println "-------testDsl: $it"
+    def e =  new Exception("testDsl");
+    e.printStackTrace();
+}

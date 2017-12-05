@@ -3,9 +3,9 @@
 import * as Rx from "rxjs/Rx";
 
 var a = Rx.Observable.of(1, 2, 3)
-    .map(x => x * 2);
+    .map(x => x * 2)
+    .reduce()
+;
 
 console.log("test01 : a instanceof Rx.Observable == " + (a instanceof Rx.Observable));
 console.log(a) ;
-
-

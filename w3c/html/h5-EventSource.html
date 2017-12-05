@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" manifest="h5-application-cache.appcache">
+<head>
+    <meta charset="UTF-8">
+    <title>Html5 EventSource</title>
+</head>
+<body>
+<div>    TODO:xxx</div>
+<pre>
+    1. 通过回车符和换行符的空行（“\r\n”）来分隔来分隔消息
+    2. 每个事件的数据可能由多行组成。
+    3. 类型为空白，表示该行是注释，会在处理时被忽略。
+</pre>
+
+<ul>相关技术说明：
+    <li>轮训：定时发送请求，请求立即返回，大多数请求往往没有有效数据</li>
+    <li>长轮训：发起请求后，如果服务器端有数据，就立即返回，否则则保持连接，直到有数据或超时。client端收到数据后立即再次发送请求</li>
+    <li>Server Sent Events : 响应返回一个"永不关闭"的流，通过空行分割不同类型的消息。该流由浏览器解析，并调用对应的JS。
+        如果只单向监听数据，而提交实时数据，可以使用该方式。
+    </li>
+    <li>WebSocket: 建议尽量还是使用该方式，使用单一技术，减少技术复杂度。</li>
+</ul>
+</body>
+</html>
