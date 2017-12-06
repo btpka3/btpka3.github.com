@@ -5,7 +5,8 @@ https://github.com/fouber/blog/issues/10
 
 
 ```bash
-webpack-dev-server
+#webpack-dev-server
+node_modules/.bin/webpack-dev-server
 #浏览器直接访问 http://localhost:8080/
 
 webpack --env.prod

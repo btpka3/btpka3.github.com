@@ -1,8 +1,8 @@
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
-var ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
-var OfflinePlugin = require('offline-plugin');
+//var ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
+//var OfflinePlugin = require('offline-plugin');
 var ImageminPlugin = require('imagemin-webpack-plugin').default;
 var BellOnBundlerErrorPlugin = require('bell-on-bundler-error-plugin');
 // var FaviconsWebpackPlugin = require('favicons-webpack-plugin');
@@ -52,13 +52,13 @@ const plugins = [
     new GenFutureStates({
         "htmlDir": "../" // 相对于 output.path
     }),
-    new BundleAnalyzerPlugin({
-        analyzerMode: 'static',
-        reportFilename: 'report.html',
-        openAnalyzer: false,
-        generateStatsFile: true,
-        statsFilename: 'report.json',
-    }),
+    // new BundleAnalyzerPlugin({
+    //     analyzerMode: 'static',
+    //     reportFilename: 'report.html',
+    //     openAnalyzer: false,
+    //     generateStatsFile: true,
+    //     statsFilename: 'report.json',
+    // }),
     new BellOnBundlerErrorPlugin(),
     new webpack.BannerPlugin("copyright @ kingsilk.net"),
     // new webpack.ProvidePlugin({
@@ -66,10 +66,10 @@ const plugins = [
     //     jQuery: "jquery",
     //     "window.jQuery": "jquery"
     // }),
-    new ChunkManifestPlugin({
-        filename: "manifest.json",
-        manifestVariable: "webpackManifest"
-    }),
+    // new ChunkManifestPlugin({
+    //     filename: "manifest.json",
+    //     manifestVariable: "webpackManifest"
+    // }),
     new webpack.optimize.CommonsChunkPlugin({
         name: "commons",
         minChunks: 2
