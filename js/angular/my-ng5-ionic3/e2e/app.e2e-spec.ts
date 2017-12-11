@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('my-ng4-ionic3 App', () => {
+describe('my-ng5-ionic3 App', () => {
   let page: AppPage;
 
   beforeEach(() => {
