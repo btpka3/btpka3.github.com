@@ -1,3 +1,6 @@
+
+<!--
+
 <h1>
   {{title}}
 </h1>
@@ -27,12 +30,16 @@
     <a routerLink="ionic" routerLinkActive="active">ionic</a>
     <a routerLink="clarity" routerLinkActive="active">clarity</a>
     <a routerLink="ons" routerLinkActive="active">Onsen UI</a>
+    <a routerLink="sort-chip" routerLinkActive="active">sort-chip</a>
+    <a routerLink="sort-select" routerLinkActive="active">sort-select</a>
   </li>
 </ul>
 
 <div style="border:1px solid blue;" title="路由内容区域">
-  <router-outlet></router-outlet>
-</div>
+-->
+  <router-outlet ></router-outlet>
+
+<!--</div>-->
 
 <!--<div style="text-align: center; margin: 10px">-->
 <!--<ons-range [(value)]="value"  ></ons-range>-->
@@ -46,25 +53,25 @@
 <!--<mat-test></mat-test>-->
 <!--</div>-->
 
-<div style="border: 1px solid red;" title="oauth 测试区">
+<!--<div style="border: 1px solid red;" title="oauth 测试区">-->
 
 
-  <div *ngIf="!name">
-    <h1> Hello </h1>
-    <button class="btn btn-default" (click)="login()">Login</button>
-  </div>
+  <!--<div *ngIf="!name">-->
+    <!--<h1> Hello </h1>-->
+    <!--<button class="btn btn-default" (click)="login()">Login</button>-->
+  <!--</div>-->
 
-  <div *ngIf="name">
-    <h1>Hallo, {{name}}</h1>
-    <button class="btn btn-default" (click)="logoff()">Logout</button>
-    <button class="btn btn-default" (click)="showAt()">show at</button>
-  </div>
-
-
-  <div>
-    Username/Passwort zum Testen: max/geheim
-  </div>
+  <!--<div *ngIf="name">-->
+    <!--<h1>Hallo, {{name}}</h1>-->
+    <!--<button class="btn btn-default" (click)="logoff()">Logout</button>-->
+    <!--<button class="btn btn-default" (click)="showAt()">show at</button>-->
+  <!--</div>-->
 
 
-  <div i18n="你的姓名@@your.name" i18n-title title="Angular logo">your username</div>
-</div>
+  <!--<div>-->
+    <!--Username/Passwort zum Testen: max/geheim-->
+  <!--</div>-->
+
+
+  <!--<div i18n="你的姓名@@your.name" i18n-title title="Angular logo">your username</div>-->
+<!--</div>-->

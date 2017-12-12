@@ -1,8 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
-
-
 /*
+@import "~ionic-angular/css/ionic.css";
 
 
 @import '~font-awesome/css/font-awesome.min.css';
@@ -10,7 +9,26 @@
 @import '~primeng/resources/themes/omega/theme.css';
 @import '~primeng/resources/primeng.min.css';
  */
-
 @import '~material-design-icons-iconfont/dist/fonts/material-icons.css';
+@import '~dragula/dist/dragula.css';
+@import '~perfect-scrollbar/css/perfect-scrollbar.css';
 /*@import '~clarity-icons/clarity-icons.min.css';*/
 /*@import '~clarity-ui/clarity-ui.min.css';*/
+
+html, body {
+  height: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  display:flex;
+  max-height: 100%;
+}
+
+app-root {
+  /* 可以通过 `@HostBinding('style.height') appRootHeight = '100%';` 设置 */
+  /*height: 100%;*/
+}
+.myClass {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}

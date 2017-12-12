@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, HostBinding, OnInit} from "@angular/core";
 import {MyService} from "./test-service/my.service";
 import {JwksValidationHandler, OAuthService} from 'angular-oauth2-oidc';
 
@@ -11,6 +11,12 @@ import {authConfig} from './auth.config';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+
+  @HostBinding('style.height') appRootHeight = '100%';
+  @HostBinding('style.width') appRootWidth = '100%';
+  @HostBinding('style.display') appRootDisplay = 'flex';
+  @HostBinding('attr.role') role = 'admin1';
+  @HostBinding('class.fxFlex11') flex = true;
   title = 'app works!';
   myServiceResult;
   myPipeSrc = "myPipeSrc";

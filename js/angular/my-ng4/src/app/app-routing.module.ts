@@ -18,6 +18,8 @@ const routes: Routes = [
 
     /* canLoad: [AuthGuard] */
   },
+  {path: 'sort-chip', loadChildren: './sort-chip/sort-chip.module#SortChipModule'},
+  {path: 'sort-select', loadChildren: './sort-select/sort-select.module#SortSelectModule'},
 ];
 
 @NgModule({
