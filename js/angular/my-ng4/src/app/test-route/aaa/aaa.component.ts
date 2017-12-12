@@ -12,6 +12,7 @@ export class AaaComponent implements OnInit {
   @HostBinding('attr.role') role = 'admin';
 
   v = 'a1-a2';
+  checked=false;
 
   /**
    * 因为使用了 CustomReuseStrategy，所以，该状态得以保存，

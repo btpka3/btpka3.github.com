@@ -28,6 +28,8 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatIconModule} from '@angular/material/icon';
 import {PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface, PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import { HttpClientModule } from '@angular/common/http';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 /*
 该模块因为 re-export 了 BrowserModule， 所以不能放到 子路由中 lazy 加载。
  */
@@ -51,6 +53,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   // ],
 
   imports: [
+    MatCheckboxModule,
+    HttpClientModule,
     PerfectScrollbarModule,
     MatIconModule,
     MatToolbarModule,

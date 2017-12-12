@@ -14,34 +14,58 @@
   <mat-icon>face</mat-icon>
 </mat-toolbar>
 
-<perfect-scrollbar fxFlex class="aaa">
-  <ol>
-    <li>sss</li>
-    <li>sss</li>
-    <li>sss</li>
-    <li>sss</li>
-    <li>sss</li>
-    <li>sss</li>
-    <li>sss</li>
-    <li>sss</li>
-    <li>sss</li>
-    <li>sss</li>
-    <li>sss</li>
-    <li>sss</li>
-    <li>sss</li>
-    <li>sss</li>
-    <li>sss</li>
-    <li>sss</li>
-    <li>sss</li>
-    <li>sss</li>
-    <li>sss</li>
-    <li>sss</li>
-    <li>sss</li>
-    <li>sss</li>
-    <li>sss</li>
-    <li>sss</li>
-  </ol>
-</perfect-scrollbar>
+<mat-sidenav-container  >
+  <mat-sidenav mode="over" [opened]="checked">Sidenav content</mat-sidenav>
+  <mat-sidenav-content>
+
+    <perfect-scrollbar fxFlex class="aaa" >
+      <ol>
+        <li>sss <mat-checkbox  [(ngModel)]="checked">Checked</mat-checkbox></li>
+        <li>
+          <a routerLink="/index.html" routerLinkActive="active">aaa</a>
+          <a routerLink="/bbb" routerLinkActive="active">bbb</a>
+          <a routerLink="/ccc" routerLinkActive="active" [queryParams]="{n: 888}"
+             queryParamsHandling="merge"
+          >ccc</a>
+          <a routerLink="/http" routerLinkActive="active">http</a>
+          <a routerLink="/flex" routerLinkActive="active">flex</a>
+          <a routerLink="/mat" routerLinkActive="active">mat</a>
+          <a routerLink="/primeng" routerLinkActive="active">primeng</a>
+          <a routerLink="/ionic" routerLinkActive="active">ionic</a>
+          <a routerLink="/clarity" routerLinkActive="active">clarity</a>
+          <a routerLink="/ons" routerLinkActive="active">Onsen UI</a>
+          <a routerLink="/sort-chip" routerLinkActive="active">sort-chip</a>
+          <a routerLink="/sort-select" routerLinkActive="active">sort-select</a>
+        </li>
+        <li>sss</li>
+        <li>sss</li>
+        <li>sss</li>
+        <li>sss</li>
+        <li>sss</li>
+        <li>sss</li>
+        <li>sss</li>
+        <li>sss</li>
+        <li>sss</li>
+        <li>sss</li>
+        <li>sss</li>
+        <li>sss</li>
+        <li>sss</li>
+        <li>sss</li>
+        <li>sss</li>
+        <li>sss</li>
+        <li>sss</li>
+        <li>sss</li>
+        <li>sss</li>
+        <li>sss</li>
+        <li>sss</li>
+        <li>sss</li>
+        <li>sss</li>
+      </ol>
+    </perfect-scrollbar>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
 
 
 

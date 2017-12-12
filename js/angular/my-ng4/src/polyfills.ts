@@ -81,7 +81,7 @@ import 'zone.js/dist/zone';  // Included with Angular CLI.
 // import '@webcomponents/webcomponentsjs/src/post-polyfill.js';
 // import '@webcomponents/webcomponentsjs/src/unresolved.js';
 
-import 'onsenui/core-src/polyfills';
+//import 'onsenui/core-src/polyfills';
 
 
 
