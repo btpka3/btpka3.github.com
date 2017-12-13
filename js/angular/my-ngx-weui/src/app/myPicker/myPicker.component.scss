@@ -1,0 +1,36 @@
+[aaa-component], .aaa {
+  background-color: aquamarine;
+}
+
+.bbb {
+  background-color: chartreuse;
+}
+
+.example-icon {
+  padding: 0 14px;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+:host {
+  color: red;
+}
+
+.mat-toolbar {
+  min-height: 30px;
+}
+
+// 注意：如果只有 `.mat-toolbar-row {  height: 24px;  }` 会因为被覆盖而失效。
+// scss 没有正确处理 `>>>`
+
+//.mat-toolbar >>> .mat-toolbar-row {  height: 24px;  }
+//.mat-toolbar /deep/ .mat-toolbar-row {  height: 24px;  }
+.mat-toolbar ::ng-deep .mat-toolbar-row {  height: 24px;  }
+
+// FIMXME: 同时应用了两个边框
+//:host-context(body)  {
+//  border: 3px solid red;
+//}
+

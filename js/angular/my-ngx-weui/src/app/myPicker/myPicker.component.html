@@ -1,0 +1,32 @@
+111
+
+
+<div class="weui-cells weui-cells_form">
+  <div class="weui-cell">
+    <div class="weui-cell__hd">
+      <label class="weui-label">YearMonth</label>
+    </div>
+    <div class="weui-cell__bd">
+      <weui-date-picker placeholder="Pick a Year&Month"
+                        [min]="DT.min"
+                        [max]="DT.max"
+                        type="date-ym"
+                        [(ngModel)]="res.ym"
+                        name="date-ym"></weui-date-picker>
+
+      <input type="text" class="form-control" id="name"
+             required
+             [(ngModel)]="res.name" name="name">
+
+      <!--[(ngModel)]="res.ym"-->
+
+    </div>
+
+
+  </div>
+</div>
+<div><weui-city-picker required placeholder="Pick a City"
+                       [(ngModel)]="res.city"
+                       name="city"
+                       [data]="cityData"
+                       (change)="onCityChange($event)"></weui-city-picker></div>
