@@ -13,7 +13,6 @@ export class AaaComponent implements OnInit {
 
   v = 'a1-a2';
   checked=false;
-
   /**
    * 因为使用了 CustomReuseStrategy，所以，该状态得以保存，
    * 但是 /bbb 下面是异步加载的独立模块。所以 /bbb 中的数值没有保存

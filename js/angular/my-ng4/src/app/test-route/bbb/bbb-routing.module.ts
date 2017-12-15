@@ -7,7 +7,7 @@ import {RouterModule} from "@angular/router";
   imports: [
     RouterModule.forChild([{path: '', component: BbbComponent}]),
   ],
-  // exports: [RouterModule]
+  exports: [RouterModule] // 该行需要的
 })
 export class BbbRoutingModule {
 }

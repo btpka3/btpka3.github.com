@@ -5,6 +5,7 @@ import {AaaComponent} from "./test-route/aaa/aaa.component";
 
 const routes: Routes = [
   {path: '', redirectTo: '/index.html', pathMatch: 'full'},
+  //{path: 'index.html', component: AaaComponent}, // 该方式是直接打包到 main.bundle.js 中了
   {path: 'index.html', component: AaaComponent}, // 该方式是直接打包到 main.bundle.js 中了
   {path: 'bbb', loadChildren: './test-route/bbb/bbb.module#BbbModule'},
   {path: 'ccc', loadChildren: './test-route/ccc/ccc.module#CccModule'},
@@ -20,6 +21,7 @@ const routes: Routes = [
   },
   {path: 'sort-chip', loadChildren: './sort-chip/sort-chip.module#SortChipModule'},
   {path: 'sort-select', loadChildren: './sort-select/sort-select.module#SortSelectModule'},
+  {path: '**', redirectTo: ''},
 ];
 
 @NgModule({

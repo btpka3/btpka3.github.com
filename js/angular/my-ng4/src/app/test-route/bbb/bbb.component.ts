@@ -30,4 +30,7 @@ export class BbbComponent implements OnInit {
     //this.router.navigateByUrl('/ccc?n=987', {skipLocationChange: true});
     this.router.navigate(['/ccc'], { queryParams: { n: 999 },  queryParamsHandling: "merge" });
   }
+  // goAaa(): void {
+  //   this.router.navigate(['../index.html'], {relativeTo: this.router});
+  // }
 }

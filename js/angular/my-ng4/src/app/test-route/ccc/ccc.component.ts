@@ -9,6 +9,7 @@ import {ActivatedRoute} from '@angular/router';
 export class CccComponent implements OnInit {
   v = 'c1-c2';
   paramN: number;
+  n: number = 0;
 
   constructor(private activatedRoute: ActivatedRoute) {
   }
@@ -16,4 +17,9 @@ export class CccComponent implements OnInit {
   ngOnInit(): void {
     this.paramN = this.activatedRoute.snapshot.queryParams["n"];
   }
+
+  changeNum(): void {
+    this.n++;
+  }
+
 }

@@ -1,4 +1,8 @@
 
 <div class="bbb" (click)="changeNum()">bbb.v = {{v}}, n = {{n}}</div>
 <button (click)="back()"> history back</button>
+<a routerLink="../index.html" routerLinkActive="active">aaa</a>
 <button (click)="goCcc()"> goTo /ccc</button>
+<a routerLink="/ccc" routerLinkActive="active" [queryParams]="{n: 999}"
+   queryParamsHandling="merge"
+>ccc</a>

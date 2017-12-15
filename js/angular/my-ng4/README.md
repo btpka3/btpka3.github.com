@@ -54,6 +54,10 @@
 
 - onsen UI
     - [Angular2+](https://onsen.io/v2/guide/angular2/)
+    
+- ngx-weiui
+    - [weiui](https://weui.io/)
+    - [ngx-weiui](https://cipchk.github.io/ngx-weui)
 
     
 - webcomponents
@@ -130,6 +134,8 @@ ng serve
 ```
 
 # FIXME
+
+* sticky 路由？
 
 * 如何使用 OAuth2？
 

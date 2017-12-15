@@ -13,24 +13,47 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
   }
 
   store(route: ActivatedRouteSnapshot, handle: DetachedRouteHandle): void {
-    console.debug('CustomReuseStrategy:store', route, handle);
-    this.handlers[route.routeConfig.path] = handle;
+    let p = this.getFullPath(route);
+    console.debug('CustomReuseStrategy:store', p, route, handle);
+    //this.handlers[route.routeConfig.path] = handle;
+    this.handlers[p] = handle;
   }
 
   shouldAttach(route: ActivatedRouteSnapshot): boolean {
-    console.debug('CustomReuseStrategy:shouldAttach', route);
-    return !!route.routeConfig && !!this.handlers[route.routeConfig.path];
+    let p = this.getFullPath(route);
+    //let rtn = !!route.routeConfig && !!this.handlers[route.routeConfig.path];
+    let rtn = !!route.routeConfig && !!this.handlers[p];
+    console.debug('CustomReuseStrategy:shouldAttach', p, rtn, route);
+    return rtn;
   }
 
   retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle {
-    console.debug('CustomReuseStrategy:retrieve', route);
+    let p = this.getFullPath(route);
+    console.debug('CustomReuseStrategy:retrieve', p, route);
     if (!route.routeConfig) return null;
-    return this.handlers[route.routeConfig.path];
+    //return this.handlers[route.routeConfig.path];
+    return this.handlers[p];
   }
 
   shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
-    console.debug('CustomReuseStrategy:shouldReuseRoute', future, curr);
-    return future.routeConfig === curr.routeConfig;
+    let rtn = future.routeConfig === curr.routeConfig;
+    console.debug('CustomReuseStrategy:shouldReuseRoute', rtn, future, curr);
+    return rtn;
+  }
+
+  // FIXME : 没有考虑参数
+  getFullPath(route: ActivatedRouteSnapshot): string {
+    let rootPath = null;
+
+    if (route.parent) {
+      rootPath = this.getFullPath(route.parent)
+    }
+
+    if (route.routeConfig) {
+      return rootPath + route.routeConfig.path;
+    } else {
+      return null;
+    }
   }
 
 }
