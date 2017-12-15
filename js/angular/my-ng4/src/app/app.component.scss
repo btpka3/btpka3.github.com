@@ -1,0 +1,19 @@
+[routerLink].active{
+  background-color: chartreuse;
+}
+// ddddd
+.abcdefg{color:red;}
+:host {
+  //@extend .md-whiteframe-z2;
+
+  min-width: 600px !important;
+  width: 100%;
+
+  // 当小于 600px 时，百分比宽度。否则600px;
+  @media (min-width: 600px) {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+}
