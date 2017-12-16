@@ -6,6 +6,7 @@
 ng new \
   --routing false \
   --style scss \
+  --service-worker \
   --skip-install \
   my-ng5-ionic3
 
@@ -29,6 +30,7 @@ EOF
 
 
 # 参考
-
+- [ionic-preview-app](https://github.com/ionic-team/ionic-preview-app/)
 - [Using Ionic 2 with the Angular CLI](https://labs.encoded.io/2016/11/12/ionic2-with-angular-cli/)
 - [jvitor83/angular-pwa-seed](https://github.com/jvitor83/angular-pwa-seed/tree/master/src)
+- [Ion-content hidden when using angular 2 router-outlet](https://forum.ionicframework.com/t/ion-content-hidden-when-using-angular-2-router-outlet/75935)

@@ -1,0 +1,48 @@
+<mat-sidenav-container fxFlex>
+  <mat-sidenav mode="push" [opened]="checked">
+
+    <ion-list >
+      <button ion-item detail-push mode="ios">
+        Home
+      </button>
+      <button ion-item>
+        <ion-icon name="leaf" item-start></ion-icon>
+        Friends
+
+        <ion-icon name="arrow-forward" item-end></ion-icon>
+      </button>
+      <button ion-item>
+        Events
+        <ion-icon name="heart"></ion-icon>
+      </button>
+      <button ion-item>
+        Close Menu & Close Menu & Close Menu & Close Menu &
+      </button>
+    </ion-list>
+
+  </mat-sidenav>
+  <mat-sidenav-content fxFlex class="aaa">
+    <ion-list>
+
+      <ion-item>
+        <ion-label fixed>Username</ion-label>
+        <ion-input type="text" value=""></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label fixed>Password</ion-label>
+        <ion-input type="password"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-toggle checked="false"></ion-toggle>
+        <ion-label>
+          Muggle Studies
+        </ion-label>
+        <ion-icon name='body' item-start></ion-icon>
+      </ion-item>
+
+    </ion-list>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>

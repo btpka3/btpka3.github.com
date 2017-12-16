@@ -1,0 +1,27 @@
+<ion-item>
+  <ion-label>Gender</ion-label>
+  <ion-select [(ngModel)]="gender" interface="popover">
+    <ion-option value="f">Female</ion-option>
+    <ion-option value="m">Male</ion-option>
+  </ion-select>
+</ion-item>
+
+<ion-item>
+  <ion-label>Toppings</ion-label>
+  <ion-select [(ngModel)]="toppings" multiple="true"  >
+    <ion-option>Bacon</ion-option>
+    <ion-option>Black Olives</ion-option>
+    <ion-option>Extra Cheese</ion-option>
+    <ion-option>Mushrooms</ion-option>
+    <ion-option>Pepperoni</ion-option>
+    <ion-option>Sausage</ion-option>
+  </ion-select>
+</ion-item>
+
+<ion-item >
+  <ion-label>Gender</ion-label>
+  <ion-select [(ngModel)]="gender" interface="action-sheet">
+    <ion-option value="f">Female</ion-option>
+    <ion-option value="m">Male</ion-option>
+  </ion-select>
+</ion-item>

@@ -1,0 +1,84 @@
+<!--<ion-split-pane>-->
+  <!--<ion-menu [content]="content">-->
+    <!--<ion-content>-->
+      <!--<ion-list>-->
+        <!--<p>some menu content, could be list items</p>-->
+      <!--</ion-list>-->
+    <!--</ion-content>-->
+  <!--</ion-menu>-->
+
+
+  <!--<ion-nav #content>-->
+
+    <ion-header>
+
+      <ion-navbar>
+        <button ion-button icon-only menuToggle>
+          <ion-icon name="menu" (click)="openMenu()"></ion-icon>
+        </button>
+
+        <ion-title>
+          Page Title
+        </ion-title>
+
+        <ion-buttons end>
+          <button ion-button icon-only>
+            <ion-icon name="options"></ion-icon>
+          </button>
+        </ion-buttons>
+      </ion-navbar>
+
+    </ion-header>
+
+    <!--<ion-content #content1 padding>-->
+
+
+      <button ion-button color="secondary">Secondary</button>
+      <button ion-button color="danger" small (click)="showAlert()">
+        alert
+      </button>
+      <button ion-button color="dark" outline (click)="presentActionSheet()">Dark</button>
+      <ion-item>
+        <ion-icon name="logo-twitter" item-start></ion-icon>
+        Followers
+        <ion-badge item-end>260k</ion-badge>
+      </ion-item>
+
+
+      <ion-list>
+
+        <ion-item>
+          <ion-label>Pepperoni</ion-label>
+
+          <ion-checkbox></ion-checkbox>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Sausage</ion-label>
+          <ion-checkbox disabled="true"></ion-checkbox>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Mushrooms</ion-label>
+          <ion-checkbox></ion-checkbox>
+        </ion-item>
+
+      </ion-list>
+
+<ion-chip>
+  <ion-icon name="heart" color="dark"></ion-icon>
+  <ion-label>Default</ion-label>
+</ion-chip>
+<ion-list>
+  <ion-item *ngFor="let item of items"> {{item}} </ion-item>
+</ion-list>
+
+<!--<ion-infinite-scroll (ionInfinite)="$event.waitFor(doInfinite())">-->
+  <!--<ion-infinite-scroll-content></ion-infinite-scroll-content>-->
+<!--</ion-infinite-scroll>-->
+    <!--</ion-content>-->
+  <!--</ion-nav>-->
+<!--</ion-split-pane>-->
+<!--
+<ion-content>
+</ion-content>-->

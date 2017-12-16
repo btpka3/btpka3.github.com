@@ -1,9 +1,9 @@
 import {Component, HostBinding, OnInit} from "@angular/core";
 import {MyService} from "./test-service/my.service";
 import {JwksValidationHandler, OAuthService} from 'angular-oauth2-oidc';
-import { SwUpdate } from '@angular/service-worker';
+import {SwUpdate} from '@angular/service-worker';
 import {authConfig} from './auth.config';
-
+import {environment} from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -71,9 +71,11 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.myServiceResult = "aaa : " + this.myService.add(1, 2);
 
-    this.swUpdate.available.subscribe(event => {
-      console.log('A newer version is now available. Refresh the page now to update the cache');
-    });
-    this.swUpdate.checkForUpdate();
+    if (environment.production) {
+      this.swUpdate.available.subscribe(event => {
+        console.log('A newer version is now available. Refresh the page now to update the cache');
+      });
+      this.swUpdate.checkForUpdate();
+    }
   }
 }

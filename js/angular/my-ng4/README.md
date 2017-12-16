@@ -186,6 +186,13 @@ ng serve
 * i18n 如何支持运行时切换语言？
 
 
+* `Can't resolve './app/app.module.ngfactory'`
+  
+    - 删除 node_modules
+    - `ncu -u` 更新 package.json
+    - `yarn` 重新安装
+    - `ng build --prod`
+
 # service worker
 
 @angular/service-worker 的相关文档，在 angular.cn 上还没有更新，只能去[官网](https://angular.io/guide/service-worker-intro)查看.
