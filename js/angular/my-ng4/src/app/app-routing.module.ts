@@ -15,10 +15,10 @@ const routes: Routes = [
   {path: 'primeng', loadChildren: './primeng/primeng.module#PrimeNgModule'},
   {path: 'ionic', loadChildren: './ionic/ionic.module#IonicDemoModule'},
   {path: 'clarity', loadChildren: './clarity/clarity.module#ClModule'},
-  {path: 'ons', loadChildren: './ons/ons.module#OnsModule'
-
-    /* canLoad: [AuthGuard] */
-  },
+  // {path: 'ons', loadChildren: './ons/ons.module#OnsModule'
+  //
+  //   /* canLoad: [AuthGuard] */
+  // },
   {path: 'sort-chip', loadChildren: './sort-chip/sort-chip.module#SortChipModule'},
   {path: 'sort-select', loadChildren: './sort-select/sort-select.module#SortSelectModule'},
   {path: '**', redirectTo: ''},

@@ -186,6 +186,92 @@ ng serve
 * i18n 如何支持运行时切换语言？
 
 
+# service worker
+
+@angular/service-worker 的相关文档，在 angular.cn 上还没有更新，只能去[官网](https://angular.io/guide/service-worker-intro)查看.
+
+新建项目时 可以通过 `ng new --service-worker yourProjectName` 添加。
+老项目则通过以下步骤完成
+
+- `yarn add @angular/service-worker`
+- `ng set apps.0.serviceWorker=true`
+
+- `vi src/app/app.module.ts`
+  
+  ```ts
+  import { ServiceWorkerModule } from '@angular/service-worker';
+  import { environment } from '../environments/environment';
+  @NgModule({
+    imports: [
+      // ...
+      ServiceWorkerModule.register('/ngsw-worker.js', {enabled: environment.production})
+    ],
+  }
+  })
+  export class AppModule { }
+  ```
+
+- `vi src/ngsw-config.json`
+
+  ```json
+  {
+    "index": "/index.html",
+    "assetGroups": [
+      {
+        "name": "app",
+        "installMode": "prefetch",
+        "resources": {
+          "files": [
+            "/favicon.ico",
+            "/index.html"
+          ],
+          "versionedFiles": [
+            "/*.bundle.css",
+            "/*.bundle.js",
+            "/*.chunk.js"
+          ]
+        }
+      },
+      {
+        "name": "assets",
+        "installMode": "lazy",
+        "updateMode": "prefetch",
+        "resources": {
+          "files": [
+            "/assets/**"
+          ]
+        }
+      }
+    ]
+  }
+  ```
+- `ng build --prod`
+- `http-server dist/`
+
+测试：
+
+- 先启动服务器访问
+- 再关闭服务访问
+- chrome 浏览器中访问 `chrome://inspect/#service-workers` 
+
+
+检查更新， 请查看 [Service Worker doesn't get updated #7665](https://github.com/angular/angular-cli/issues/7665)
+`vi src/app/app.component.ts` :
+
+```js
+import { SwUpdate } from '@angular/service-worker';
+export class AppComponent implements OnInit {
+  constructor(private swUpdate: SwUpdate) { }
+  ngOninit() {
+    this.swUpdate.available.subscribe(event => {
+      console.log('A newer version is now available. Refresh the page now to update the cache');
+    });
+    this.swUpdate.checkForUpdate()
+  }
+}
+```
+
+
 # MyNg4
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.6.

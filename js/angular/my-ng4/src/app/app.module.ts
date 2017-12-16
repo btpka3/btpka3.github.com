@@ -2,6 +2,7 @@ import {BrowserModule} from "@angular/platform-browser";
 import {NgModule} from "@angular/core";
 import {FormsModule} from "@angular/forms";
 import {HttpModule} from "@angular/http";
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 import {AppComponent} from "./app.component";
 import {HashLocationStrategy, LocationStrategy} from "@angular/common";
@@ -30,6 +31,8 @@ import {PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface, PerfectScroll
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { HttpClientModule } from '@angular/common/http';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+
+import { environment } from '../environments/environment';
 /*
 该模块因为 re-export 了 BrowserModule， 所以不能放到 子路由中 lazy 加载。
  */
@@ -53,6 +56,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   // ],
 
   imports: [
+    ServiceWorkerModule.register('/ngsw-worker.js', {enabled: environment.production}),
+
     MatCheckboxModule,
     HttpClientModule,
     PerfectScrollbarModule,

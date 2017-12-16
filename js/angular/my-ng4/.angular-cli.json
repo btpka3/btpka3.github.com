@@ -9,7 +9,12 @@
       "outDir": "dist",
       "assets": [
         "assets",
-        { "glob": "favicon.ico", "input": "./", "output": "./assets" }
+        {
+  "glob": "favicon.ico",
+  "input": "./",
+  "output": "./assets",
+  "allowOutsideOutDir": false
+}
       ],
       "index": "index.html",
       "main": "main.ts",
@@ -18,22 +23,18 @@
       "tsconfig": "tsconfig.app.json",
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
+      "serviceWorker": true,
       "styles": [
         "../node_modules/clarity-icons/clarity-icons.css",
         "../node_modules/clarity-ui/clarity-ui.css",
-
         "../node_modules/onsenui/css/onsenui.css",
         "../node_modules/onsenui/css/onsen-css-components.css",
-
         "../node_modules/font-awesome/css/font-awesome.css",
         "../node_modules/primeng/resources/themes/omega/theme.css",
         "../node_modules/primeng/resources/primeng.css",
-
         "styles.css"
-
       ],
       "scripts": [
-
         "../node_modules/clarity-icons/index.js"
       ],
       "environmentSource": "environments/environment.ts",
@@ -66,6 +67,7 @@
   },
   "defaults": {
     "styleExt": "scss",
-    "component": {}
+    "component": {
+    }
   }
 }
