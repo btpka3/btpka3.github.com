@@ -1,0 +1,12 @@
+.demo > div {
+  margin-top: 3px;
+}
+
+:host /deep/ .ui-slider-handle {
+  background-color: #c0ca33;
+  border: 0 none;
+  border-radius: 50%;
+  background-image: none;
+  width: 16px !important;
+  height: 16px !important;
+}

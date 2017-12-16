@@ -1,0 +1,30 @@
+<div class="demo">
+
+
+  <div>
+    <p-dropdown [options]="cities1" [(ngModel)]="selectedCity1">
+      <ng-template let-city pTemplate="item">
+        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+          {{!city.value? "00" : city.value.id }}
+          <div style="font-size:14px;float:right;margin-top:4px">{{city.label}}</div>
+        </div>
+      </ng-template>
+    </p-dropdown>
+  </div>
+  <div>
+    <p-dropdown [options]="cities2" [(ngModel)]="selectedCity2" optionLabel="name"
+                [filter]="true" filterBy="label,value.name"
+    ></p-dropdown>
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+

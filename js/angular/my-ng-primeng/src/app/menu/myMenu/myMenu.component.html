@@ -1,0 +1,22 @@
+<div class="demo">
+
+
+  <div>
+    <p-menu [model]="items"></p-menu>
+  </div>
+
+  <div>
+    <p-menu #menu2 popup="true" [model]="items2"></p-menu>
+    <button type="button" pButton icon="fa fa-list" label="Show" (click)="menu2.toggle($event)"></button>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
