@@ -1,0 +1,40 @@
+<div class="demo">
+  <div>
+    <mat-form-field>
+      <mat-select placeholder="Favorite food" [(value)]="selected">
+        <mat-option *ngFor="let food of foods" [value]="food.value">
+          {{ food.viewValue }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <p>You selected: {{selected}} </p>
+  </div>
+
+  <div>
+    <mat-form-field>
+      <mat-select placeholder="Favorite food" [(ngModel)]="selectedValue">
+        <mat-option *ngFor="let food of foods" [value]="food">
+          {{ food.viewValue }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <p>You selected: {{selectedValue|json}} </p>
+  </div>
+  <div>
+
+    <mat-form-field>
+      <mat-select placeholder="Pokemon" multiple>
+        <mat-option>-- None --</mat-option>
+        <mat-optgroup *ngFor="let group of pokemonGroups" [label]="group.name"
+                      [disabled]="group.disabled">
+          <mat-option *ngFor="let pokemon of group.pokemon" [value]="pokemon.value">
+            {{ pokemon.viewValue }}
+          </mat-option>
+        </mat-optgroup>
+      </mat-select>
+    </mat-form-field>
+
+  </div>
+</div>

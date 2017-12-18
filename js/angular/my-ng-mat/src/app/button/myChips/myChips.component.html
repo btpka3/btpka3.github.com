@@ -1,0 +1,30 @@
+<div class="demo">
+
+  <div>
+    <mat-chip-list>
+      <mat-chip>Papadum</mat-chip>
+      <mat-chip>Naan</mat-chip>
+      <mat-chip>Dal</mat-chip>
+      <mat-chip>o</mat-chip>
+    </mat-chip-list>
+
+  </div>
+
+  <div>
+    <mat-form-field class="demo-chip-list">
+      <mat-chip-list #chipList>
+        <mat-chip *ngFor="let fruit of fruits" [selectable]="selectable"
+                  [removable]="removable" (remove)="remove(fruit)">
+          {{fruit.name}}
+          <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+        </mat-chip>
+        <input placeholder="New fruit..."
+               [matChipInputFor]="chipList"
+               [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+               [matChipInputAddOnBlur]="addOnBlur"
+               (matChipInputTokenEnd)="add($event)" />
+      </mat-chip-list>
+    </mat-form-field>
+  </div>
+
+</div>
