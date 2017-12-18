@@ -9,6 +9,8 @@ import {MySplitButtonComponent} from "./button/mySplitButton/mySplitButton.compo
 
 import {MyHomeComponent} from "./myHome/myHome.component";
 
+import {MyPanelComponent} from "./panel/myPanel/myPanel.component";
+
 import {MyMenuComponent} from "./menu/myMenu/myMenu.component";
 
 
@@ -20,6 +22,9 @@ const routes: Routes = [
 
   {path: 'button/myButton', component: MyButtonComponent},
   {path: 'button/mySplitButton', component: MySplitButtonComponent},
+
+
+  {path: 'panel/myPanelButton', component: MyPanelComponent},
 
 
   {path: 'menu/myMenu', component: MyMenuComponent},

@@ -17,6 +17,7 @@ import {
   TabViewModule,
   SliderModule,
   DropdownModule,
+  PanelModule,
 } from 'primeng/primeng';
 
 import {environment} from '../environments/environment';
@@ -29,6 +30,7 @@ import {MyMenuComponent} from "./menu/myMenu/myMenu.component";
 import {MyDropdownComponent} from "./input/myDropdown/myDropdown.component"
 import {MySliderComponent} from "./input/mySlider/mySlider.component";
 
+import {MyPanelComponent} from "./panel/myPanel/myPanel.component";
 
 import {MyButtonComponent} from "./button/myButton/myButton.component";
 import {MySplitButtonComponent} from "./button/mySplitButton/mySplitButton.component";
@@ -42,6 +44,8 @@ import {MySplitButtonComponent} from "./button/mySplitButton/mySplitButton.compo
 
     MyButtonComponent,
     MySplitButtonComponent,
+
+    MyPanelComponent,
 
     MyMenuComponent,
 
@@ -65,6 +69,7 @@ import {MySplitButtonComponent} from "./button/mySplitButton/mySplitButton.compo
     MenuModule,
     SliderModule,
     DropdownModule,
+    PanelModule,
 
     ServiceWorkerModule.register('/ngsw-worker.js', {enabled: environment.production})
   ],
