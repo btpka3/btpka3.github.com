@@ -5,6 +5,18 @@ import {HttpModule} from "@angular/http";
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 import {AppComponent} from "./app.component";
+import {XxxComponent} from "./test-route/xxx/xxx.component";
+import {X11Component} from "./test-route/xxx/x11/x11.component";
+import {X12Component} from "./test-route/xxx/x12/x12.component";
+import {X21Component} from "./test-route/xxx/x21/x21.component";
+import {X22Component} from "./test-route/xxx/x22/x22.component";
+
+
+import {YyyComponent} from "./test-route/xxx/yyy/yyy.component";
+import {Y11Component} from "./test-route/xxx/yyy/y11/y11.component";
+import {Y12Component} from "./test-route/xxx/yyy/y12/y12.component";
+import {Y13Component} from "./test-route/xxx/yyy/y13/y13.component";
+
 import {HashLocationStrategy, LocationStrategy} from "@angular/common";
 
 import {TestServiceModule} from "./test-service/test-service.module";
@@ -89,11 +101,21 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   declarations: [
     //MatComponent,
     AppComponent,
-    AaaComponent  // router 默认显示的组件
+    AaaComponent,  // router 默认显示的组件
+    XxxComponent,
+    X11Component,
+    X12Component,
+    X21Component,
+    X22Component,
+
+    YyyComponent,
+    Y11Component,
+    Y12Component,
+    Y13Component,
   ],
   providers: [
     {provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG},
-    {provide: RouteReuseStrategy, useClass: CustomReuseStrategy},
+    //{provide: RouteReuseStrategy, useClass: CustomReuseStrategy},
     {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],
   bootstrap: [AppComponent]

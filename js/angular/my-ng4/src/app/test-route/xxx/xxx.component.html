@@ -1,0 +1,56 @@
+<div class="header">
+  <router-outlet name="header"></router-outlet>
+</div>
+
+<ol>
+  <li> q={{q}}, mq1={{mq1}}, mq2={{mq2}}</li>
+  <li><a href="#/xxx/(header:11//footer:11)">href = 11+11</a></li>
+  <li><a [routerLink]="['/xxx', {outlets: {'header': ['21'], 'footer': ['22']}}]">routerLink = 21+22</a></li>
+  <li><a [routerLink]="['/xxx',
+    {outlets: {
+      'header': ['11',{mq1:'mq1-aa',mq2:'mq2-aa'}],
+      'footer': ['11',{mq1:'mq1-bb',mq2:'mq2-bb'}]
+      }}]"
+  >routerLink+matrix parameter = 11+11</a></li>
+  <li><a [routerLink]="['/xxx',
+    {mq1:'mq1-00', mq2:'mq2-00'},
+    {outlets: {
+      'header': ['1', 'id-bb',{mq1:'mq1-aa',mq2:'mq2-aa'}],
+      'footer': ['11',{mq1:'mq1-bb',mq2:'mq2-bb'}]
+      }
+    }]"
+  >routerLink+matrix parameter+path parameter = 11+11</a></li>
+
+  <li><a
+    [routerLink]="['/xxx',
+      {mq1:'mq1-00', mq2:'mq2-00'},
+      {outlets: {
+        'header': ['1', 'id-bb',{mq1:'mq1-aa',mq2:'mq2-aa'}],
+        'footer': ['11',{mq1:'mq1-bb',mq2:'mq2-bb'}]
+        }
+      }]"
+    [queryParams]="{q: 'qq'}"
+    fragment="education"
+  >routerLink+matrix parameter+path parameter+query parameter = 11+11</a></li>
+
+  <li><a
+    [routerLink]="['/xxx',
+      {mq1:'mq1-00', mq2:'mq2-00'},
+      {outlets: {
+        'header': ['21',{mq1:'mq1-aa',mq2:'mq2-aa'}],
+        'footer': ['yyy',{mq1:'mq1-bb',mq2:'mq2-bb'},
+          {outlets: {
+            'header2': ['11',{mq1:'mq1-cc',mq2:'mq2-cc'}],
+            'footer2': ['12',{mq1:'mq1-dd',mq2:'mq2-dd'}]
+          }}]
+        }
+      }]"
+    [queryParams]="{q: 'qq'}"
+    fragment="education"
+  >routerLink + nested = 21+yyy</a></li>
+</ol>
+
+<div class="footer">
+
+  <router-outlet name="footer"></router-outlet>
+</div>

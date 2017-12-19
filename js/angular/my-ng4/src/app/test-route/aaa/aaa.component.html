@@ -28,6 +28,11 @@
           <a routerLink="/ccc" routerLinkActive="active" [queryParams]="{n: 888}"
              queryParamsHandling="merge"
           >ccc</a>
+
+          <a [routerLink]="['/xxx', {outlets: {'header': ['11'], 'footer': ['12']}}]" routerLinkActive="active">xxx</a>
+
+
+
           <a routerLink="/http" routerLinkActive="active">http</a>
           <a routerLink="/flex" routerLinkActive="active">flex</a>
           <a routerLink="/mat" routerLinkActive="active">mat</a>
