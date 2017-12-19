@@ -1,0 +1,16 @@
+<mat-sidenav-container class="example-container" fxFlex >
+
+
+
+  <mat-sidenav mode="over" #sideNav >
+    Sidenav content
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+
+    <button mat-button color="primary" (click)="sideNav.open()">Open</button>
+    Main content
+
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

@@ -2,7 +2,7 @@
 
   <div>
     <mat-list>
-      <mat-list-item> Pepper</mat-list-item>
+      <mat-list-item class=""> Pepper</mat-list-item>
       <mat-list-item> Salt</mat-list-item>
       <mat-list-item> Paprika</mat-list-item>
     </mat-list>
@@ -10,8 +10,27 @@
 
   <div>
     <mat-nav-list>
-      <a mat-list-item [href]="link.href" *ngFor="let link of links"> {{ link.title }} </a>
+      <!-- [href]="link.href" -->
+      <!--<a mat-list-item  *ngFor="let link of links"> {{ link.title }} </a>-->
+      <mat-list-item *ngFor="let link of links">
+        <a matLine >{{ link.title }}</a>
+        <button mat-icon-button  >
+          <mat-icon>info</mat-icon>
+        </button>
+      </mat-list-item>
     </mat-nav-list>
+  </div>
+
+  <div>
+    <mat-list dense>
+      <mat-list-item *ngFor="let link of links">
+        <h3 matLine> {{link.title}} </h3>
+        <p matLine>
+          <span> {{link.href}} </span>
+          <span class="demo-2"> -- 111 </span>
+        </p>
+      </mat-list-item>
+    </mat-list>
   </div>
 
 </div>

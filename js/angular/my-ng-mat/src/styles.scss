@@ -1,2 +1,24 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import "~material-design-icons-iconfont/dist/material-design-icons.css";
+
+html, body {
+  height: 100%;
+  width: 100%;
+  max-height: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  display: flex;
+  flex: 1 1 100%;
+}
+
+body {
+  border: 1px solid red;
+}
+
+app-root {
+  box-sizing: border-box;
+  flex: 1 1 100%;
+  align-items: stretch;
+  display: flex;
+}

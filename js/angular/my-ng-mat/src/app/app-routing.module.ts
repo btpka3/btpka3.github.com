@@ -13,10 +13,24 @@ import {MyInputComponent} from "./form/myInput/myInput.component";
 import {MySelectComponent} from "./form/mySelect/mySelect.component";
 
 import {MyListComponent} from "./layout/myList/myList.component";
+import {MyExpansionComponent} from "./layout/myExpansion/myExpansion.component";
 
 import {MyToolbarComponent} from "./navigation/myToolbar/myToolbar.component";
+import {MySidenavComponent} from "./navigation/mySidenav/mySidenav.component";
 
 import {MySnackBarComponent} from "./pops/mySnackBar/mySnackBar.component";
+
+
+import {BpacAboutComponent} from "./bpac/about/BpacAbout.component";
+import {BpacCombineProxyListComponent} from "./bpac/proxy/combine/BpacCombineProxyList.component";
+import {BpacDynamicProxyDetailComponent} from "./bpac/proxy/dynamic/BpacDynamicProxyDetail.component";
+import {BpacDynamicProxyTestComponent} from "./bpac/proxy/dynamic/test/BpacDynamicProxyTest.component";
+import {BpacSimpleProxyListComponent} from "./bpac/proxy/simple/BpacSimpleProxyList.component";
+import {BpacSimpleProxyDetailComponent} from "./bpac/proxy/simple/detail/BpacSimpleProxyDetail.component";
+import {BpacSideNavComponent} from "./bpac/sideNav/BpacSideNav.component";
+import {BpacStatusComponent} from "./bpac/status/BpacStatus.component";
+
+
 
 const routes: Routes = [
   {path: '', component: MyHomeComponent},
@@ -30,10 +44,22 @@ const routes: Routes = [
   {path: 'form/mySelect', component: MySelectComponent},
 
   {path: 'layout/myList', component: MyListComponent},
+  {path: 'layout/myExpansion', component: MyExpansionComponent},
 
   {path: 'navigation/myToolbar', component: MyToolbarComponent},
+  {path: 'navigation/mySidenav', component: MySidenavComponent},
 
   {path: 'pops/mySnackBar', component: MySnackBarComponent},
+
+
+  {path: 'bpac/about', component: BpacAboutComponent},
+  {path: 'bpac/proxy/combine', component: BpacCombineProxyListComponent},
+  {path: 'bpac/proxy/dynamic', component: BpacDynamicProxyDetailComponent},
+  {path: 'bpac/proxy/dynamic/test', component: BpacDynamicProxyTestComponent},
+  {path: 'bpac/proxy/simple', component: BpacSimpleProxyListComponent},
+  {path: 'bpac/proxy/simple/:id', component: BpacSimpleProxyDetailComponent},
+  {path: 'bpac/sideNav', component: BpacSideNavComponent},
+  {path: 'bpac/status', component: BpacStatusComponent},
 
   {path: '**', redirectTo: ''}
 ];

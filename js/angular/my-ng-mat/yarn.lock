@@ -130,6 +130,12 @@
   dependencies:
     tslib "^1.7.1"
 
+"@angular/flex-layout@^2.0.0-beta.12":
+  version "2.0.0-beta.12"
+  resolved "http://registry.npm.taobao.org/@angular/flex-layout/download/@angular/flex-layout-2.0.0-beta.12.tgz#80970dc1d60f27fa41537659926f3238f759f343"
+  dependencies:
+    tslib "^1.7.1"
+
 "@angular/forms@^5.0.0":
   version "5.1.1"
   resolved "http://registry.npm.taobao.org/@angular/forms/download/@angular/forms-5.1.1.tgz#e38858a44e7b57b61f375087b76a79d6e2679b14"

@@ -1,0 +1,12 @@
+@import '~@angular/material/theming';
+
+.demo > div {
+  margin-top: 3px;
+}
+
+:host /deep/ .example-container > mat-sidenav {
+
+  // https://material.io/guidelines/style/color.html#color-color-palette
+  background-color: map_get($mat-purple, 200);
+}
+

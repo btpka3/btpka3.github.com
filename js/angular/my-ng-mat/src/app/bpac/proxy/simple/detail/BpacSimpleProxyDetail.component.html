@@ -1,0 +1,91 @@
+<mat-sidenav-container class="example-container" fxFlex>
+
+
+  <mat-sidenav mode="over" #sideNav>
+    Sidenav content
+
+  </mat-sidenav>
+
+  <mat-sidenav-content fxFlex="" fxLayout="column">
+
+
+    <mat-toolbar color="primary">
+
+
+      <button mat-icon-button>
+        <mat-icon class="example-icon">favorite</mat-icon>
+      </button>
+      <span>BPAC</span>
+      <span fxFlex></span>
+      <button mat-icon-button>
+        <mat-icon class="example-icon">favorite</mat-icon>
+      </button>
+      <!--<mat-toolbar-row> </mat-toolbar-row>-->
+    </mat-toolbar>
+    <div>
+
+      BpacSimpleProxyList.component.html
+
+    </div>
+
+
+    <div fxLayout="column" class="f">
+
+      <div fxLayout="row" class="row2" fxLayoutAlign="start center">
+        <mat-form-field fxFlex>
+          <mat-select placeholder="Type">
+            <mat-option *ngFor="let food of foods" [value]="food.value">
+              {{ food.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-checkbox fxFlex>Enabled</mat-checkbox>
+      </div>
+
+      <div fxLayout="row" class="row2">
+        <mat-form-field fxFlex>
+          <input matInput placeholder="Id" value="abcdef123456">
+        </mat-form-field>
+        <mat-form-field fxFlex>
+          <input matInput placeholder="名称" value="代理A">
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="row" class="row2">
+        <mat-form-field fxFlex>
+          <input matInput placeholder="Host" value="btpka3.github.io">
+        </mat-form-field>
+        <mat-form-field fxFlex>
+          <input matInput placeholder="Port" value="9999">
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="row" class="row2">
+        <mat-form-field fxFlex="">
+          <input matInput placeholder="Username" value="zhangll">
+        </mat-form-field>
+        <mat-form-field fxFlex="">
+          <input matInput placeholder="Password" type="password" value="123456">
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="row" class="row2" fxLayoutAlign="start center">
+
+        <mat-form-field fxFlex>
+          <input matInput placeholder="Timeout" value="3">
+        </mat-form-field>
+
+        <mat-slide-toggle fxFlex>ProxyDNS</mat-slide-toggle>
+
+      </div>
+
+      <div>
+
+      </div>
+    </div>
+
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
+

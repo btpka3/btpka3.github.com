@@ -2,11 +2,11 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
-import {FormsModule,ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ServiceWorkerModule} from '@angular/service-worker';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AppComponent} from './app.component';
-
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -65,11 +65,22 @@ import {MyInputComponent} from "./form/myInput/myInput.component";
 import {MySelectComponent} from "./form/mySelect/mySelect.component";
 
 import {MyListComponent} from "./layout/myList/myList.component";
+import {MyExpansionComponent} from "./layout/myExpansion/myExpansion.component";
 
 import {MyToolbarComponent} from "./navigation/myToolbar/myToolbar.component";
+import {MySidenavComponent} from "./navigation/mySidenav/mySidenav.component";
 
 import {MySnackBarComponent} from "./pops/mySnackBar/mySnackBar.component";
 
+
+import {BpacAboutComponent} from "./bpac/about/BpacAbout.component";
+import {BpacCombineProxyListComponent} from "./bpac/proxy/combine/BpacCombineProxyList.component";
+import {BpacDynamicProxyDetailComponent} from "./bpac/proxy/dynamic/BpacDynamicProxyDetail.component";
+import {BpacDynamicProxyTestComponent} from "./bpac/proxy/dynamic/test/BpacDynamicProxyTest.component";
+import {BpacSimpleProxyListComponent} from "./bpac/proxy/simple/BpacSimpleProxyList.component";
+import {BpacSimpleProxyDetailComponent} from "./bpac/proxy/simple/detail/BpacSimpleProxyDetail.component";
+import {BpacSideNavComponent} from "./bpac/sideNav/BpacSideNav.component";
+import {BpacStatusComponent} from "./bpac/status/BpacStatus.component";
 
 @NgModule({
   declarations: [
@@ -85,10 +96,22 @@ import {MySnackBarComponent} from "./pops/mySnackBar/mySnackBar.component";
     MySelectComponent,
 
     MyListComponent,
+    MyExpansionComponent,
 
     MyToolbarComponent,
+    MySidenavComponent,
 
     MySnackBarComponent,
+
+    BpacAboutComponent,
+    BpacCombineProxyListComponent,
+    BpacDynamicProxyDetailComponent,
+    BpacDynamicProxyTestComponent,
+    BpacSimpleProxyListComponent,
+    BpacSimpleProxyDetailComponent,
+    BpacSideNavComponent,
+    BpacStatusComponent,
+
 
   ],
   imports: [
@@ -96,6 +119,8 @@ import {MySnackBarComponent} from "./pops/mySnackBar/mySnackBar.component";
     ReactiveFormsModule,
     BrowserModule,
     BrowserAnimationsModule,
+
+    FlexLayoutModule,
 
     MatAutocompleteModule,
     MatCheckboxModule,
