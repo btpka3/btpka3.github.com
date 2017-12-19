@@ -170,11 +170,11 @@ module.exports = app => {
 
 
         }
-        await Emulation.forceViewport({
-            x: opts.x,
-            y: opts.y,
-            scale: 1
-        });
+        // await Emulation.forceViewport({
+        //     x: opts.x,
+        //     y: opts.y,
+        //     scale: 1
+        // });
         console.log("--------- 77777 :");
 
         await timeout(0);

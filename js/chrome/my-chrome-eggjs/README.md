@@ -1,35 +1,28 @@
 # my-chrome-eggjs
 
 
+# 目的
+- 学习 eggjs
+- 学习 chrome 的 headless 操作
+- 尝试 通过浏览器对网页进行截图
 
-## QuickStart
+# 参考
 
-<!-- add docs here for user -->
+- [eggjs](https://eggjs.org)
+- [chrome-remote-interface](https://github.com/cyrus-and/chrome-remote-interface)
+- [btpka3/chrome-headless@docker hub](https://hub.docker.com/r/btpka3/chrome-headless/)
 
-see [egg docs][egg] for more detail.
 
-### Development
-```shell
-npm install
-npm install --save chrome-remote-interface minimist
+ 
 
-npm run dev
-open http://localhost:7001/news
+# 运行
+```bash
+# 启动 chrome 无头浏览模式，
+
+google-chrome --headless --remote-debugging-port=9222
+
+$ npm install
+$ npm run dev
+# 浏览器访问 http://localhost:7001/img
 ```
-
-### Deploy
-
-Use `EGG_SERVER_ENV=prod` to enable prod mode
-
-```shell
-$ EGG_SERVER_ENV=prod npm start
-```
-
-### npm scripts
-
-- Use `npm run lint` to check code style.
-- Use `npm test` to run unit test.
-- Use `npm run autod` to auto detect dependencies upgrade, see [autod](https://www.npmjs.com/package/autod) for more detail.
-
-
-[egg]: https://eggjs.org
+ 
