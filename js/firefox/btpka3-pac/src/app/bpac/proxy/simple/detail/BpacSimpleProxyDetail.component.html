@@ -1,0 +1,95 @@
+<mat-sidenav-container class="example-container" fxFlex>
+
+
+  <mat-sidenav mode="over" #sideNav>
+    Sidenav content
+
+  </mat-sidenav>
+
+  <mat-sidenav-content fxFlex="" fxLayout="column">
+
+
+    <mat-toolbar color="primary">
+
+
+      <button mat-icon-button>
+        <mat-icon class="example-icon">favorite</mat-icon>
+      </button>
+      <span>BPAC</span>
+      <span fxFlex></span>
+      <button mat-icon-button>
+        <mat-icon >delete_forever</mat-icon>
+      </button>
+      <!--<mat-toolbar-row> </mat-toolbar-row>-->
+    </mat-toolbar>
+    <div (click)="logSimpleProxy()">
+
+      BpacSimpleProxyList.component.html {{id}}
+
+    </div>
+
+
+    <form #f="ngForm"  fxLayout="column" class="f">
+
+      <div fxLayout="row" class="row2" fxLayoutAlign="start center">
+
+        <mat-form-field fxFlex>
+          <input matInput placeholder="Id" name="id" [(ngModel)]="simpleProxy.id">
+        </mat-form-field>
+
+        <mat-checkbox fxFlex  name="disabled"  [(ngModel)]="simpleProxy.disabled">Disabled</mat-checkbox>
+      </div>
+
+      <div fxLayout="row" class="row2">
+
+        <mat-form-field fxFlex>
+          <mat-select placeholder="Type" name="type" [(ngModel)]="simpleProxy.type" (ngModelChange)="logSimpleProxy()">
+            <mat-option *ngFor="let opt of typeOptions" [value]="opt.value">
+              {{ opt.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex>
+          <input matInput placeholder="名称" name="name" [(ngModel)]="simpleProxy.name">
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="row" class="row2">
+        <mat-form-field fxFlex>
+          <input matInput placeholder="Host" name="host" [(ngModel)]="simpleProxy.host">
+        </mat-form-field>
+        <mat-form-field fxFlex>
+          <input matInput placeholder="Port" name="port" type="number" [(ngModel)]="simpleProxy.port">
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="row" class="row2">
+        <mat-form-field fxFlex="">
+          <input matInput placeholder="Username" name="username" [(ngModel)]="simpleProxy.username">
+        </mat-form-field>
+        <mat-form-field fxFlex="">
+          <input matInput placeholder="Password" name="password" type="password" [(ngModel)]="simpleProxy.password">
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="row" class="row2" fxLayoutAlign="start center">
+
+        <mat-form-field fxFlex>
+          <input matInput placeholder="Timeout" name="timeout" [(ngModel)]="simpleProxy.timeout">
+        </mat-form-field>
+
+        <mat-slide-toggle fxFlex name="proxyDNS" [(ngModel)]="simpleProxy.proxyDNS">ProxyDNS</mat-slide-toggle>
+
+      </div>
+
+      <div>
+        <button mat-raised-button color="warn">cancel</button>
+        <button mat-raised-button color="primary">save</button>
+      </div>
+    </form>
+
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
+

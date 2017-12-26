@@ -1,1 +1,23 @@
-/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '~material-design-icons-iconfont/dist/fonts/material-icons.css';
+@import '~dragula/dist/dragula.css';
+
+
+html, body {
+  height: 100%;
+  width: 100%;
+  max-height: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  display: flex;
+  flex: 1 1 100%;
+}
+
+app-root {
+  box-sizing: border-box;
+  flex: 1 1 100%;
+  align-items: stretch;
+  display: flex;
+}
+

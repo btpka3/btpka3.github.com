@@ -1,0 +1,55 @@
+<mat-sidenav-container class="example-container" fxFlex>
+
+
+  <mat-sidenav mode="over" #sideNav>
+    Sidenav content
+
+  </mat-sidenav>
+
+  <mat-sidenav-content fxFlex="" fxLayout="column">
+
+
+    <mat-toolbar color="primary">
+
+
+      <button mat-icon-button>
+        <mat-icon class="example-icon">favorite</mat-icon>
+      </button>
+      <span>组合代理详情</span>
+      <span fxFlex></span>
+      <button mat-icon-button>
+        <mat-icon class="example-icon">favorite</mat-icon>
+      </button>
+      <!--<mat-toolbar-row> </mat-toolbar-row>-->
+    </mat-toolbar>
+    <div>
+
+      BpacSimpleProxyList.component.html
+
+    </div>
+
+
+    <div fxLayout="column" class="f">
+
+
+      <mat-form-field fxFlex>
+        <input matInput placeholder="名称" value="代理A">
+      </mat-form-field>
+
+
+      <mat-checkbox fxFlex>Enabled</mat-checkbox>
+
+      <div fxLayout="row" class="row2" routerLink="/bpac/proxy/combine/2/candidates">
+
+        代理列表
+        <button mat-icon-button>
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      </div>
+
+    </div>
+
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
+

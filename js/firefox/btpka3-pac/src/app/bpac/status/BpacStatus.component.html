@@ -1,0 +1,97 @@
+<mat-sidenav-container class="example-container" fxFlex>
+
+
+  <mat-sidenav mode="over" #sideNav>
+    Sidenav content
+
+    <mat-nav-list>
+      <mat-list-item>
+        <a matLine routerLink="/bpac/status">状态</a>
+        <button mat-icon-button>
+          <mat-icon>info</mat-icon>
+        </button>
+      </mat-list-item>
+      <mat-list-item>
+        <a matLine routerLink="/bpac/proxy/simple">基本代理</a>
+        <button mat-icon-button>
+          <mat-icon>info</mat-icon>
+        </button>
+      </mat-list-item>
+      <mat-list-item>
+        <a matLine routerLink="/bpac/proxy/combine">组合代理</a>
+        <button mat-icon-button>
+          <mat-icon>info</mat-icon>
+        </button>
+      </mat-list-item>
+      <mat-list-item>
+        <a matLine routerLink="/bpac/proxy/dynamic">动态代理</a>
+        <button mat-icon-button>
+          <mat-icon>info</mat-icon>
+        </button>
+      </mat-list-item>
+      <mat-list-item>
+        <a matLine routerLink="/bpac/about">关于</a>
+        <button mat-icon-button>
+          <mat-icon>info</mat-icon>
+        </button>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content fxFlex="" fxLayout="column">
+
+
+    <mat-toolbar color="primary">
+
+
+      <button mat-icon-button (click)="sideNav.open()">
+        <mat-icon class="example-icon">menu</mat-icon>
+      </button>
+      <span>BPAC</span>
+      <span fxFlex></span>
+      <!--
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon class="example-icon">open_in_new</mat-icon>
+      </button>-->
+      <!--<mat-toolbar-row> </mat-toolbar-row>-->
+    </mat-toolbar>
+    <div>
+
+
+      <mat-menu #menu>
+        <button mat-menu-item> Settings</button>
+        <button mat-menu-item> Help</button>
+      </mat-menu>
+    </div>
+
+
+    <div>当前加载失败的资源</div>
+    <div>
+      <mat-nav-list>
+        <mat-list-item>
+          <a matLine routerLink="/bpac/status">http://xxx.baidu.com</a>
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>add</mat-icon>
+          </button>
+        </mat-list-item>
+        <mat-list-item>
+          <a matLine routerLink="/bpac/status">http://xxx.baidu.com</a>
+          <button mat-icon-button>
+            <mat-icon>add</mat-icon>
+          </button>
+        </mat-list-item>
+      </mat-nav-list>
+    </div>
+
+    <div>
+      <mat-form-field style="width: 100%;">
+        <mat-select placeholder="当前使用的代理">
+          <mat-option *ngFor="let food of foods" [value]="food.value">
+            {{ food.viewValue }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

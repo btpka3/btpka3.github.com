@@ -1,0 +1,52 @@
+<mat-sidenav-container class="example-container" fxFlex>
+
+
+  <mat-sidenav mode="over" #sideNav>
+    Sidenav content
+
+  </mat-sidenav>
+
+  <mat-sidenav-content fxFlex="" fxLayout="column">
+
+
+    <mat-toolbar color="primary">
+      <button mat-icon-button>
+        <mat-icon>keyboard_arrow_left</mat-icon>
+      </button>
+      <span>动态代理列表</span>
+      <span fxFlex></span>
+      <button mat-icon-button>
+        <mat-icon>add</mat-icon>
+      </button>
+      <!--<mat-toolbar-row> </mat-toolbar-row>-->
+    </mat-toolbar>
+    <div>
+
+      BpacDynamicProxyList.component.html
+
+    </div>
+
+
+    <div fxLayout="column" class="f">
+      <mat-nav-list>
+
+        <mat-list-item>
+          <a matLine routerLink="/bpac/proxy/dynamic/1">http://xxx.baidu.com</a>
+          <button mat-icon-button>
+            <mat-icon>chevron_right</mat-icon>
+          </button>
+        </mat-list-item>
+
+        <mat-list-item>
+          <a matLine routerLink="/bpac/proxy/dynamic/2">http://xxx.baidu.com</a>
+          <button mat-icon-button>
+            <mat-icon>chevron_right</mat-icon>
+          </button>
+        </mat-list-item>
+      </mat-nav-list>
+    </div>
+
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
+

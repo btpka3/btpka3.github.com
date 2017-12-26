@@ -1,0 +1,108 @@
+
+<mat-sidenav-container class="example-container" fxFlex>
+
+
+  <mat-sidenav mode="over" #sideNav>
+    Sidenav content
+
+  </mat-sidenav>
+
+  <mat-sidenav-content fxFlex="" fxLayout="column">
+
+
+    <mat-toolbar color="primary">
+
+
+      <button mat-icon-button>
+        <mat-icon>keyboard_arrow_left</mat-icon>
+      </button>
+      <span>动态代理详情</span>
+      <span fxFlex></span>
+      <button mat-icon-button>
+        <mat-icon >add</mat-icon>
+      </button>
+      <!--<mat-toolbar-row> </mat-toolbar-row>-->
+    </mat-toolbar>
+    <div>
+
+      BpacDynamicProxyDetail.component.html
+
+    </div>
+
+
+    <div fxLayout="column" class="f">
+      <mat-card>
+        <mat-card-header fxLayout="row">
+          <mat-card-title>*.google.com</mat-card-title>
+          <img mat-card-avatar src="https://material.angular.io/assets/img/examples/shiba1.jpg">
+          <mat-card-subtitle>sss</mat-card-subtitle>
+          <div fxFlex=""></div>
+          <button mat-icon-button>
+            <mat-icon >arrow_upward</mat-icon>
+          </button>
+          <button mat-icon-button>
+            <mat-icon >arrow_downward</mat-icon>
+          </button>
+        </mat-card-header>
+
+        <mat-card-content>
+          <mat-nav-list>
+
+            <mat-list-item>
+              代理类型 : 简单
+
+            </mat-list-item>
+
+            <mat-list-item>
+              代理名称 : 代理A
+            </mat-list-item>
+          </mat-nav-list>
+        </mat-card-content>
+
+        <mat-card-actions align="end">
+          <button mat-button color="warn">删除</button>
+          <button mat-button>测试</button>
+        </mat-card-actions>
+
+      </mat-card>
+
+      <mat-card>
+        <mat-card-header fxLayout="row">
+          <mat-card-title>*.google.com</mat-card-title>
+          <img mat-card-avatar src="https://material.angular.io/assets/img/examples/shiba1.jpg">
+          <mat-card-subtitle>sss</mat-card-subtitle>
+          <div fxFlex=""></div>
+          <button mat-icon-button>
+            <mat-icon >arrow_upward</mat-icon>
+          </button>
+          <button mat-icon-button>
+            <mat-icon >arrow_downward</mat-icon>
+          </button>
+        </mat-card-header>
+
+        <mat-card-content>
+          <mat-nav-list>
+
+            <mat-list-item>
+              代理类型 : 简单
+
+            </mat-list-item>
+
+            <mat-list-item>
+              代理名称 : 代理A
+            </mat-list-item>
+          </mat-nav-list>
+        </mat-card-content>
+
+        <mat-card-actions align="end">
+          <button mat-button color="warn">删除</button>
+          <button mat-button>测试</button>
+        </mat-card-actions>
+
+      </mat-card>
+    </div>
+
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
+

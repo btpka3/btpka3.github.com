@@ -22,28 +22,18 @@
     }
   },
   "background": {
-    "page": "background.html"
+    "page": "index.html"
   },
   "browser_action": {
     "browser_style": true,
     "default_title": "Wa haha",
     "default_icon": "icons/icon.svg",
-    "default_popup": "popup/choose_beast.html"
+    "default_popup": "index.html#/action"
   },
   "options_ui": {
-    "page": "options/options.html",
+    "page": "index.html#/options",
     "browser_style": true,
     "open_in_tab": true
   },
-  "content_scripts": [
-    {
-      "matches": [
-        "*://*/*"
-      ],
-      "js": [
-        "index.js"
-      ]
-    }
-  ],
   "content_security_policy": "script-src 'self'; object-src 'self';"
 }

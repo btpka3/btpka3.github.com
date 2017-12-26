@@ -1,0 +1,45 @@
+{
+  "user": {
+  },
+  "proxies": [
+    {
+      "id": "xxxx",
+      "category": "simple",
+      "enabled": true,
+      "name": "xxx",
+      "host": "xxx",
+      "port": 999,
+      "username": "xxx",
+      "password": "xxx",
+      "timeout": 33,
+      "proxyDNS": true
+    },
+    {
+      "id": "xxxx",
+      "category": "combine",
+      "enabled": true,
+      "name": "xxx",
+      "simpleProxyIds": [
+        "id1",
+        "id2",
+        "id3"
+      ]
+    },
+    {
+      "id": "xxxx",
+      "category": "dynamic",
+      "enabled": true,
+      "name": "xxx",
+      "items": [
+        {
+          "pattern": "xxx",
+          "proxyIds": [
+            "",
+            "",
+            ""
+          ]
+        }
+      ]
+    }
+  ]
+}

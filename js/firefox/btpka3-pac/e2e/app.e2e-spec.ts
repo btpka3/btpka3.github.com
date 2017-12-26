@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('btpka3-pac1 App', () => {
+describe('btpka3-pac App', () => {
   let page: AppPage;
 
   beforeEach(() => {

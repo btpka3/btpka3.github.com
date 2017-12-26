@@ -5,7 +5,6 @@
   },
   "apps": [
     {
-      "name":"background",
       "root": "src",
       "outDir": "dist",
       "assets": [
@@ -13,37 +12,11 @@
         "favicon.ico",
         "manifest.json"
       ],
-      "index": "index.background.html",
-      "main": "app/background/main.ts",
+      "index": "index.html",
+      "main": "main.ts",
       "polyfills": "polyfills.ts",
       "test": "test.ts",
-      "tsconfig": "tsconfig.json",
-      "testTsconfig": "tsconfig.spec.json",
-      "prefix": "app",
-      "styles": [
-        "styles.scss"
-      ],
-      "scripts": [],
-      "environmentSource": "environments/environment.ts",
-      "environments": {
-        "dev": "environments/environment.ts",
-        "prod": "environments/environment.prod.ts"
-      }
-    },
-    {
-      "name":"content_scripts",
-      "root": "src",
-      "outDir": "dist",
-      "assets": [
-        "assets",
-        "favicon.ico",
-        "manifest.json"
-      ],
-      "index": "index.content_script.html",
-      "main": "app/content_scripts/main.content_scripts.ts",
-      "polyfills": "polyfills.ts",
-      "test": "test.ts",
-      "tsconfig": "tsconfig.json",
+      "tsconfig": "tsconfig.app.json",
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
@@ -83,9 +56,6 @@
   },
   "defaults": {
     "styleExt": "scss",
-    "class": {
-      "spec": false
-    },
     "component": {}
   }
 }

@@ -1,0 +1,62 @@
+<mat-sidenav-container class="example-container" fxFlex>
+
+
+  <mat-sidenav mode="over" #sideNav>
+    Sidenav content
+
+  </mat-sidenav>
+
+  <mat-sidenav-content fxFlex="" fxLayout="column">
+
+
+    <mat-toolbar color="primary">
+
+
+      <button mat-icon-button>
+        <mat-icon class="example-icon">favorite</mat-icon>
+      </button>
+      <span>BPAC</span>
+      <span fxFlex></span>
+      <button mat-icon-button>
+        <mat-icon class="example-icon">favorite</mat-icon>
+      </button>
+      <!--<mat-toolbar-row> </mat-toolbar-row>-->
+    </mat-toolbar>
+    <div>
+
+      BpacDynamicProxy.component.html
+
+    </div>
+
+
+    <div fxLayout="column" class="f">
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Email" [formControl]="emailFormControl">
+        <button mat-button matSuffix mat-icon-button>
+          <mat-icon>close</mat-icon>
+        </button>
+        <button mat-button matSuffix mat-icon-button>
+          <mat-icon>close</mat-icon>
+        </button>
+        <button mat-button matSuffix mat-icon-button>
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+          Please enter a valid email address
+        </mat-error>
+        <mat-error>
+          &nbsp; <!-- *ngIf="emailFormControl.hasError('required')" -->
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="column" class="f">
+      <mat-form-field flex>
+        <input matInput>
+      </mat-form-field>
+    </div>
+
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
+
