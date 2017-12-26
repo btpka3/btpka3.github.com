@@ -23,29 +23,33 @@
         <li>sss <div class="bbb" (click)="changeNum()">bbb.v = {{v}}, n = {{n}}</div></li>
         <li>sss <mat-checkbox  [(ngModel)]="checked">Checked</mat-checkbox></li>
         <li>
-          <a routerLink="/index.html" routerLinkActive="active">aaa</a>
-          <a routerLink="/bbb" routerLinkActive="active">bbb</a>
-          <a routerLink="/ccc" routerLinkActive="active" [queryParams]="{n: 888}"
-             queryParamsHandling="merge"
-          >ccc</a>
 
-          <a [routerLink]="['/xxx', {outlets: {'header': ['11'], 'footer': ['12']}}]" routerLinkActive="active">xxx</a>
+          <ol>
+            <li routerLink="/index.html" routerLinkActive="active">aaa</li>
+            <li routerLink="/bbb" routerLinkActive="active">bbb</li>
+            <li routerLink="/ccc" routerLinkActive="active" [queryParams]="{n: 888}"
+               queryParamsHandling="merge"
+            >ccc</li>
+
+            <li [routerLink]="['/xxx', {outlets: {'header': ['11'], 'footer': ['12']}}]" routerLinkActive="active">xxx</li>
 
 
+            <li routerLink="/watch" routerLinkActive="active">watch</li>
+            <li routerLink="/http" routerLinkActive="active">http</li>
+            <li routerLink="/flex" routerLinkActive="active">flex</li>
+            <li routerLink="/mat" routerLinkActive="active">mat</li>
+            <li routerLink="/primeng" routerLinkActive="active">primeng</li>
+            <li routerLink="/ionic" routerLinkActive="active">ionic</li>
+            <li routerLink="/clarity" routerLinkActive="active">clarity</li>
+            <!--<a routerLink="/ons" routerLinkActive="active">Onsen UI</a>-->
+            <li routerLink="/sort-chip" routerLinkActive="active">sort-chip</li>
+            <li routerLink="/sort-select" routerLinkActive="active">sort-select</li>
+          </ol>
 
-          <a routerLink="/http" routerLinkActive="active">http</a>
-          <a routerLink="/flex" routerLinkActive="active">flex</a>
-          <a routerLink="/mat" routerLinkActive="active">mat</a>
-          <a routerLink="/primeng" routerLinkActive="active">primeng</a>
-          <a routerLink="/ionic" routerLinkActive="active">ionic</a>
-          <a routerLink="/clarity" routerLinkActive="active">clarity</a>
-          <!--<a routerLink="/ons" routerLinkActive="active">Onsen UI</a>-->
-          <a routerLink="/sort-chip" routerLinkActive="active">sort-chip</a>
-          <a routerLink="/sort-select" routerLinkActive="active">sort-select</a>
         </li>
 
-        <li>sss12</li>
-        <li>sss</li>
+        <li>sss12  <span highlight> ddddd </span></li>
+        <li>sss  <span my-directive highlightColor="yellow"> MyDirective - yellow</span> </li>
         <li>sss</li>
         <li>sss</li>
         <li>sss</li>

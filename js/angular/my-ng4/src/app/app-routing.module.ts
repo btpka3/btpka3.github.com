@@ -1,6 +1,9 @@
 import {NgModule} from "@angular/core";
 import {RouterModule, Routes} from "@angular/router";
 // import {AaaModule} from "./test-route/aaa/aaa.module";
+
+import {MyWatchComponent} from "./core/watch/MyWatch.component";
+
 import {AaaComponent} from "./test-route/aaa/aaa.component";
 import {XxxComponent} from "./test-route/xxx/xxx.component";
 import {X11Component} from "./test-route/xxx/x11/x11.component";
@@ -16,6 +19,7 @@ import {Y13Component} from "./test-route/xxx/yyy/y13/y13.component";
 const routes: Routes = [
   {path: '', redirectTo: '/index.html', pathMatch: 'full'},
   //{path: 'index.html', component: AaaComponent}, // 该方式是直接打包到 main.bundle.js 中了
+  {path: 'watch', component: MyWatchComponent},
   {path: 'index.html', component: AaaComponent}, // 该方式是直接打包到 main.bundle.js 中了
   {path: 'bbb', loadChildren: './test-route/bbb/bbb.module#BbbModule'},
   {path: 'ccc', loadChildren: './test-route/ccc/ccc.module#CccModule'},

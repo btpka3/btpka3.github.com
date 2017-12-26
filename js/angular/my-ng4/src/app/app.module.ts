@@ -5,6 +5,12 @@ import {HttpModule} from "@angular/http";
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 import {AppComponent} from "./app.component";
+
+import {MyWatchComponent} from "./core/watch/MyWatch.component";
+import {MyPubComponent} from "./core/watch/MyPub.component";
+import {MySubComponent} from "./core/watch/MySub.component";
+import {MyDemoService} from "./core/watch/MyDemo.service";
+
 import {XxxComponent} from "./test-route/xxx/xxx.component";
 import {X11Component} from "./test-route/xxx/x11/x11.component";
 import {X12Component} from "./test-route/xxx/x12/x12.component";
@@ -16,6 +22,7 @@ import {YyyComponent} from "./test-route/xxx/yyy/yyy.component";
 import {Y11Component} from "./test-route/xxx/yyy/y11/y11.component";
 import {Y12Component} from "./test-route/xxx/yyy/y12/y12.component";
 import {Y13Component} from "./test-route/xxx/yyy/y13/y13.component";
+
 
 import {HashLocationStrategy, LocationStrategy} from "@angular/common";
 
@@ -51,6 +58,9 @@ import { environment } from '../environments/environment';
 // import { OnsenModule } from 'ngx-onsenui';
 // import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 //import {ClarityIcons}from "clarity-icons";
+
+import {HighlightDirective} from "./core/HighlightDirective";
+
 
 const routes: Routes = [
   {path: '', redirectTo: '/index.html', pathMatch: 'full'},
@@ -101,6 +111,12 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   declarations: [
     //MatComponent,
     AppComponent,
+
+    MyWatchComponent,
+    MyPubComponent,
+    MySubComponent,
+
+
     AaaComponent,  // router 默认显示的组件
     XxxComponent,
     X11Component,
@@ -112,11 +128,14 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     Y11Component,
     Y12Component,
     Y13Component,
+
+    HighlightDirective
   ],
   providers: [
     {provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG},
     //{provide: RouteReuseStrategy, useClass: CustomReuseStrategy},
-    {provide: LocationStrategy, useClass: HashLocationStrategy}
+    {provide: LocationStrategy, useClass: HashLocationStrategy},
+    MyDemoService
   ],
   bootstrap: [AppComponent]
   // bootstrap: [IonicApp]
