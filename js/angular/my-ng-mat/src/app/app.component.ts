@@ -14,7 +14,6 @@ import {environment} from '../environments/environment';
 export class AppComponent implements OnInit {
   title = 'app';
 
-
   constructor(private swUpdate: SwUpdate) {
   }
 

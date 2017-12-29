@@ -3,6 +3,7 @@
 
   <mat-sidenav mode="over" #sideNav>
     Sidenav content
+
   </mat-sidenav>
 
   <mat-sidenav-content fxFlex="" fxLayout="column">
@@ -14,33 +15,46 @@
       <button mat-icon-button>
         <mat-icon>keyboard_arrow_left</mat-icon>
       </button>
-      <span>组合代理列表</span>
+      <span>候选列表</span>
       <span fxFlex></span>
       <button mat-icon-button [matMenuTriggerFor]="menu">
         <mat-icon>add</mat-icon>
       </button>
       <!--<mat-toolbar-row> </mat-toolbar-row>-->
+
+
     </mat-toolbar>
+
+
+    <mat-menu #menu>
+      <button mat-menu-item> Settings</button>
+      <button mat-menu-item> Help</button>
+    </mat-menu>
+
+
     <div>
-      BpacCombineProxyList.component.html
+
+      CandidateList.component.html
+
     </div>
 
-    <div>
 
+    <div fxLayout="column" class="f">
       <mat-nav-list>
         <mat-list-item>
-          <a matLine routerLink="/bpac/proxy/combine/1">http://xxx.baidu.com</a>
-          <button mat-icon-button [matMenuTriggerFor]="menu">
-            <mat-icon>chevron_right</mat-icon>
+          <a matLine>http://xxx.baidu.com</a>
+          <button mat-icon-button>
+            <mat-icon>delete</mat-icon>
           </button>
         </mat-list-item>
         <mat-list-item>
-          <a matLine routerLink="/bpac/proxy/combine/2">http://xxx.baidu.com</a>
+          <a matLine>http://xxx.baidu.com</a>
           <button mat-icon-button>
-            <mat-icon>chevron_right</mat-icon>
+            <mat-icon>delete</mat-icon>
           </button>
         </mat-list-item>
       </mat-nav-list>
+
     </div>
 
   </mat-sidenav-content>

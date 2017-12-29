@@ -1,0 +1,51 @@
+{
+  "user": {
+  },
+  "proxyList": {
+    "simple": [
+      {
+        "id": "xxxx",
+        "type": "simple",
+        "enabled": true,
+        "name": "xxx",
+        "host": "xxx",
+        "port": 999,
+        "username": "xxx",
+        "password": "xxx",
+        "timeout": 33,
+        "proxyDNS": true
+      }
+    ],
+    "combine": [
+      {
+        "id": "xxxx",
+        "type": "combine",
+        "enabled": true,
+        "name": "xxx",
+        "simples": [
+          "id1",
+          "id2",
+          "id3"
+        ]
+      }
+    ],
+    "dynamic": [
+      {
+        "id": "xxxx",
+        "type": "dynamic",
+        "enabled": true,
+        "name": "xxx",
+        "simples": [
+          {
+            "pattern": "xxx",
+            "tests": [
+              "",
+              "",
+              ""
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

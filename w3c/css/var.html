@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Insert title here</title>
+    <style type="text/css">
+
+        :root {
+            /*--my-color: #369;*/
+        }
+
+        .my-button {
+            background-color: var(--my-color, #cd0000);
+        }
+
+        .my-div {
+            --my-color: green;
+        }
+/*
+// 变量计算后如果是非法值，将会使用默认值。
+body {
+  --color: 20px;
+  background-color: #369;
+  background-color: var(--color, #cd0000);   // 背景色是透明的，因为 "20px" 不是一个合法的颜色
+}
+
+// 变量替换后中间是有空格的（可以通过 calc 避免）
+body {
+  --size: 20;
+  font-size: var(--size)px;              // == "font-size: 20 px" 有空格的
+  font-size: calc(var(--size) * 1px);   // OK : 20px
+
+  // 变量可以传递计算变量
+  --columns: 4;
+  --margins: calc(24px / var(--columns));
+}
+ */
+    </style>
+</head>
+<body>
+<!--
+https://www.cnblogs.com/asds/p/6148680.html
+ -->
+<div>
+    <div class="my-button">
+        button 1
+    </div>
+    <div class="my-button my-div">
+        button 2
+    </div>
+</div>
+
+</body>
+</html>

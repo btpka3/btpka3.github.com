@@ -37,8 +37,9 @@ addon script
 
 cd url-filter               # 根目录
 zip -r ../beastify.xpi *    # 打zip包，但后缀是 xpi
-
 ```
+
+注意：
 
 # 参考
 
@@ -65,7 +66,7 @@ zip -r ../beastify.xpi *    # 打zip包，但后缀是 xpi
     
     cd url-filter
     web-ext run
-    web-ext --firefox=nightly run
+    web-ext --browser-console --firefox=nightly  run 
     
     # 打包
     # 登录 https://addons.mozilla.org/en-US/firefox/ ，在 Tools/Manager API keys 下找到你的 key

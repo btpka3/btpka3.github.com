@@ -39,6 +39,8 @@
 background_script   : 对应主应用
 content_script      : 作为资源文件
 proxxy_script      : 作为资源文件
+
+
 ```
 
 # 开发

@@ -13,7 +13,10 @@ import {Location} from '@angular/common';
 import {ActivatedRoute, Event, NavigationStart, Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
 
-import {ProxyCategoryEnum, SimpleProxy, SimpleProxyTyp1eEnum,} from "../../../common/ProxyStoreService";
+import {
+  PacProxyTypeEnum, ProxyCategoryEnum, SimpleProxy,
+  SimpleProxyTyp1eEnum,
+} from "../../../common/ProxyStoreService";
 
 @Component({
   ///selector: '[aaa-component]',
@@ -37,12 +40,18 @@ export class BpacSimpleProxyDetailComponent implements OnInit, OnChanges, AfterV
 
   typeOptions = [
     //{value: SimpleProxyTyp1eEnum.DIRECT, viewValue: 'DIRECT'},
-    {value: SimpleProxyTyp1eEnum.PROXY, viewValue: 'PROXY'},
-    {value: SimpleProxyTyp1eEnum.SOCKS, viewValue: 'SOCKS'},
-    {value: SimpleProxyTyp1eEnum.HTTP, viewValue: 'HTTP'},
-    {value: SimpleProxyTyp1eEnum.HTTPS, viewValue: 'HTTPS'},
-    {value: SimpleProxyTyp1eEnum.SOCKS4, viewValue: 'SOCKS4'},
-    {value: SimpleProxyTyp1eEnum.SOCKS5, viewValue: 'SOCKS5'},
+    // {value: SimpleProxyTyp1eEnum.PROXY, viewValue: 'PROXY'},
+    // {value: SimpleProxyTyp1eEnum.SOCKS, viewValue: 'SOCKS'},
+    // {value: SimpleProxyTyp1eEnum.HTTP, viewValue: 'HTTP'},
+    // {value: SimpleProxyTyp1eEnum.HTTPS, viewValue: 'HTTPS'},
+    // {value: SimpleProxyTyp1eEnum.SOCKS4, viewValue: 'SOCKS4'},
+    // {value: SimpleProxyTyp1eEnum.SOCKS5, viewValue: 'SOCKS5'},
+
+    {value: PacProxyTypeEnum.HTTP, viewValue: 'HTTP'},
+    {value: PacProxyTypeEnum.HTTPS, viewValue: 'HTTPS'},
+    {value: PacProxyTypeEnum.SOCKS, viewValue: 'PROXY'},
+    {value: PacProxyTypeEnum.SOCKS4, viewValue: 'SOCKS4'},
+    {value: PacProxyTypeEnum.DIRECT, viewValue: 'DIRECT'}
   ];
 
 
@@ -76,7 +85,7 @@ export class BpacSimpleProxyDetailComponent implements OnInit, OnChanges, AfterV
       this.simpleProxy = {
         id: params.id,
         category: ProxyCategoryEnum.SIMPLE,
-        type: SimpleProxyTyp1eEnum.SOCKS5,
+        type: PacProxyTypeEnum.SOCKS,
         host: null,
         port: null
       };

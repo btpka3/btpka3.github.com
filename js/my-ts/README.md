@@ -2,32 +2,26 @@
 https://www.typescriptlang.org
 https://github.com/DefinitelyTyped/DefinitelyTyped
 
-```
-
+```bash
 npm install -g typescript
 npm install --save-dev typescript
-npm install --save rxjs
-npm install --save-dev @types/rx
-npm install --save-dev @types/node
-npm install --save-dev gulp gulp-typescript 
-npm install --save-dev babel-cli babel-preset-latest babel-polyfill gulp-babel
 
-npm install --save \
-    rxjs
+yarn add rxjs
+yarn add -D             \
+    @types/rx           \
+    babel-cli           \
+    babel-polyfill      \
+    babel-preset-env    \
+    babel-preset-latest \
+    graceful-fs         \
+    gulp                \
+    gulp-babel          \
+    gulp-typescript     \
+    minimatch           \
+    typescript          
 
-
-npm install --save-dev \
-    typescript \
-    babel-cli \
-    babel-preset-env \
-    babel-polyfill \
-    gulp \
-    gulp-babel \
-    gulp-typescript
+#    @types/es6-shim    # 全局安装的 typescript 中已经包含了
  
-npm install --save-dev \
-    @types/rx \
-    @types/es6-shim \
 
 #编译单个文件（不使用 tsconfig.json)
 #tsc src/rx/test01.ts
@@ -40,8 +34,7 @@ node dist/ts/rx/test01.js
  
  
 
-# 命令行下运行
-tsc xxx.ts
+ 
 
 # 通过 IDEA Inetllij 运行
 # https://www.jetbrains.com/help/idea/running-typescript.html

@@ -75,8 +75,11 @@ import {MySnackBarComponent} from "./pops/mySnackBar/mySnackBar.component";
 
 import {BpacAboutComponent} from "./bpac/about/BpacAbout.component";
 import {BpacCombineProxyListComponent} from "./bpac/proxy/combine/BpacCombineProxyList.component";
-import {BpacDynamicProxyDetailComponent} from "./bpac/proxy/dynamic/BpacDynamicProxyDetail.component";
-import {BpacDynamicProxyTestComponent} from "./bpac/proxy/dynamic/test/BpacDynamicProxyTest.component";
+import {BpacCombineProxyDetailComponent} from "./bpac/proxy/combine/detail/BpacCombineProxyDetail.component";
+import {CandidateListComponent} from "./bpac/proxy/combine/detail/CandidateList/CandidateList.component";
+import {BpacDynamicProxyListComponent} from "./bpac/proxy/dynamic/BpacDynamicProxyList.component";
+import {BpacDynamicProxyDetailComponent} from "./bpac/proxy/dynamic/detail/BpacDynamicProxyDetail.component";
+import {BpacDynamicProxyTestComponent} from "./bpac/proxy/dynamic/detail/test/BpacDynamicProxyTest.component";
 import {BpacSimpleProxyListComponent} from "./bpac/proxy/simple/BpacSimpleProxyList.component";
 import {BpacSimpleProxyDetailComponent} from "./bpac/proxy/simple/detail/BpacSimpleProxyDetail.component";
 import {BpacSideNavComponent} from "./bpac/sideNav/BpacSideNav.component";
@@ -105,6 +108,9 @@ import {BpacStatusComponent} from "./bpac/status/BpacStatus.component";
 
     BpacAboutComponent,
     BpacCombineProxyListComponent,
+    BpacCombineProxyDetailComponent,
+    CandidateListComponent,
+    BpacDynamicProxyListComponent,
     BpacDynamicProxyDetailComponent,
     BpacDynamicProxyTestComponent,
     BpacSimpleProxyListComponent,

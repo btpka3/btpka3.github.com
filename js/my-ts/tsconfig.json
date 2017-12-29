@@ -1,10 +1,11 @@
 {
   "rootDir": "src",
   "include": [
-    "./src/**/*.ts"
+    "src/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "**/*.spec.ts"
   ],
   "compilerOptions": {
     "moduleResolution": "node",

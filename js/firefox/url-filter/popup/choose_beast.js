@@ -38,3 +38,10 @@ document.addEventListener("click", function(e) {
 
 });
 
+
+document.getElementById("btn").addEventListener("click",function(e){
+    // ------- btn : moz-extension://c6835e9c-4551-af49-8e25-bb2400b30929/popup/choose_beast.html#aaa
+    console.log("------- btn : " + window.location.href);
+    alert(1);
+});
+

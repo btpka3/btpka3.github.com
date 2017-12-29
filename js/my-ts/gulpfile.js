@@ -8,7 +8,10 @@ gulp.task("default", function () {
     return gulp.src(['src/**/*.ts', 'src/**/*.tsx'])
         .pipe(ts({
             noImplicitAny: true,
-            "target": "es6",
+            //"target": "es6",
+            "target": "es2015",
+            "module": "commonjs",
+            "moduleResolution": "node",
             //out: 'output.js'
         }))
         .pipe(gulp.dest('dist/ts'))

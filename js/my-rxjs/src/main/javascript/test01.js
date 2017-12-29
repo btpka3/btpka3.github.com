@@ -26,7 +26,7 @@ test01();
 
 function test02() {
     Rx.Observable.range(0, 5)
-        .average()
+        //.average()
         .subscribe(
             function (x) {
                 console.log('Next: ' + x);

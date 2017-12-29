@@ -45,12 +45,12 @@
 
 
       <button mat-icon-button>
-        <mat-icon class="example-icon">favorite</mat-icon>
+        <mat-icon class="example-icon">menu</mat-icon>
       </button>
       <span>BPAC</span>
       <span fxFlex></span>
       <button mat-icon-button [matMenuTriggerFor]="menu">
-        <mat-icon class="example-icon">favorite</mat-icon>
+        <mat-icon class="example-icon">open_in_new</mat-icon>
       </button>
       <!--<mat-toolbar-row> </mat-toolbar-row>-->
     </mat-toolbar>
@@ -58,27 +58,26 @@
       <button mat-button color="primary" (click)="sideNav.open()">Open</button>
       BpacStatus.component.html
 
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item> Settings </button>
-        <button mat-menu-item> Help </button>
+      <mat-menu #menu>
+        <button mat-menu-item> Settings</button>
+        <button mat-menu-item> Help</button>
       </mat-menu>
     </div>
 
+
+    <div>当前加载失败的资源</div>
     <div>
-
-
-
       <mat-nav-list>
         <mat-list-item>
           <a matLine routerLink="/bpac/status">http://xxx.baidu.com</a>
           <button mat-icon-button [matMenuTriggerFor]="menu">
-            <mat-icon>info</mat-icon>
+            <mat-icon>add</mat-icon>
           </button>
         </mat-list-item>
         <mat-list-item>
           <a matLine routerLink="/bpac/status">http://xxx.baidu.com</a>
           <button mat-icon-button>
-            <mat-icon>info</mat-icon>
+            <mat-icon>add</mat-icon>
           </button>
         </mat-list-item>
       </mat-nav-list>
@@ -86,7 +85,7 @@
 
     <div>
       <mat-form-field style="width: 100%;">
-        <mat-select placeholder="Favorite food">
+        <mat-select placeholder="当前使用的代理">
           <mat-option *ngFor="let food of foods" [value]="food.value">
             {{ food.viewValue }}
           </mat-option>

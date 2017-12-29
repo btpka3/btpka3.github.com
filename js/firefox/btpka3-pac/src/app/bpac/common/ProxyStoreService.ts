@@ -10,7 +10,7 @@ export interface AbstractProxy {
 
 export interface SimpleProxy extends AbstractProxy {
   category: ProxyCategoryEnum.SIMPLE,
-  type: SimpleProxyTyp1eEnum,
+  type: PacProxyTypeEnum,
   host: string,
   port: number,
   proxyDNS?: boolean,
@@ -35,19 +35,38 @@ export interface DynamicProxyItem {
 }
 
 export enum ProxyCategoryEnum {
-  SIMPLE,
-  COMBINE,
-  DYNAMIC
+  SIMPLE="SIMPLE",
+  COMBINE="COMBINE",
+  DYNAMIC="DYNAMIC"
 }
 
 export enum SimpleProxyTyp1eEnum {
-  DIRECT,
-  PROXY,
-  SOCKS,
-  HTTP,
-  HTTPS,
-  SOCKS4,
-  SOCKS5
+  DIRECT = "DIRECT",
+  PROXY = "PROXY",
+  SOCKS = "SOCKS",
+  HTTP = "HTTP",
+  HTTPS = "HTTPS",
+  SOCKS4 = "SOCKS4",
+  SOCKS5 = "SOCKS5"
+}
+
+
+export enum PacProxyTypeEnum {
+  HTTP = "http",
+  HTTPS = "https",
+  SOCKS4 = "socks4",
+  SOCKS = "socks",
+  DIRECT = "direct"
+}
+
+export type PacProxy = {
+  type: PacProxyTypeEnum,
+  host?: string,
+  port?: number,
+  username?: string,
+  password?: string,
+  proxyDNS?: boolean,
+  failoverTimeout?: number
 }
 
 @Injectable()
