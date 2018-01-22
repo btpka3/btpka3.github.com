@@ -2,7 +2,7 @@
 
     angular.module('MyApp', ['ngMaterial', 'ngMessages', 'ngMdIcons'])
         .controller('DemoCtrl', ['$scope', '$http', '$log', function ($scope, $http, $log) {
-            var resourceUrl = "http://a.localhost:10001/o2/photo";
+            //var resourceUrl = "http://a.localhost:10001/o2/photo";
 
             var vm = $scope.vm = {
                 reqMsg: null    // 请求的消息
@@ -13,7 +13,7 @@
 
 
             connectWs();
-            connectHi();
+            //connectHi();
 
 
             $scope.sendWs = function () {
@@ -42,7 +42,7 @@
                 //ws.close();
             }
             function connectHi() {
-                hi = new SockJS('/myWs');
+                hi = new SockJS('/myHi');
                 hi.onopen = function () {
                     $log.log('connectHi : open');
                 };

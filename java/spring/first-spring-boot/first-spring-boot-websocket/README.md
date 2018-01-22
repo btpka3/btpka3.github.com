@@ -1,8 +1,14 @@
 ## 运行
 
-```
-gradle bootRun
+```bash
+# bootRun 运行
+gradle :first-spring-boot-websocket:bootRun
+# 浏览器访问 http://localhost:8080/ws.html
 
+# 修改 src/test/docker/nginx/conf.d/default.conf 中 upsteam 地址为自己的 ip 地址
+# 启动 nginx
+cd first-spring-boot-websocket/src/test/docker
+docker-compose up
 # 浏览器访问 http://localhost/ws.html
 ```
 ## 参考
