@@ -1,0 +1,24 @@
+
+# 《Compose file version 3 reference》
+# https://docs.docker.com/compose/compose-file/
+
+version: '3'
+
+services:
+
+  rocketmq:
+    build:
+      context: ./rocketmq
+    ports:
+      - "9876:9876"
+      - "10911:10911"
+    volumes:
+      - ./rocketmq/store:/root/store
+
+networks:
+ my-rocketmq:
+
+#volumes:
+#  V_NGINX_CONF: /data0/conf/soft/nginx/prod
+
+

@@ -6,6 +6,15 @@
 # 步骤
 
 ```bash
+# 启动 RocketMq
+docker-compose up --build
+
+# java 运行相应的 demo。
+```
+
+# ~~步骤(OLD)~~
+
+```bash
 # 以为还没有独立发布的压缩包，需要从源码构建
 git clone git@github.com:apache/rocketmq.git
 cd rocketmq

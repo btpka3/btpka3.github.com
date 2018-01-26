@@ -1,0 +1,3 @@
+
+/rocketmq/store/*
+!**/.gitkeep
