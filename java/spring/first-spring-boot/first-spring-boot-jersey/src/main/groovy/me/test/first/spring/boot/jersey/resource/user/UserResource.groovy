@@ -121,5 +121,37 @@ curl -v \
         return Response.status(Response.Status.OK).entity(data).build()
     }
 
+
+
+/*
+curl -v \
+    -X POST \
+    -H "Accept: application/json" \
+    -H "Content-Type: application/json" \
+    -d '{"name":"zhang3","age": 23, "addr" : "addr1"}' \
+    "http://localhost:8080/api/user/postJson"
+
+{"inHeader":{"age":31,"hobbies":["hobby1","hobby2"]},"inQuery":{"name":"zhao6","addrs":["addr1","addr2"]},"inPath":{"companyId":"companyId1"}}
+ */
+    @Path("/postJson")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(
+            value = "查询JSON",
+            notes = "你猜~~##")
+    Object postJson(
+        JsonReq1 r
+    ) {
+        def data = [
+            clazz:r.getClass(),
+            name: r.name,
+            age: r.age,
+                addr: r instanceof JsonReq2 ? ((JsonReq2)r).addr : "N/A"
+        ]
+
+        return Response.status(Response.Status.OK).entity(data).build()
+    }
+
 }
 

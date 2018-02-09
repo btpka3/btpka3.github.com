@@ -15,7 +15,7 @@
 gradle bootRun
 
 # 访问 
-http://localhost:8080/webjars/swagger-ui/2.2.10/index.html
+http://localhost:8080/webjars/swagger-ui/2.2.10/index.html?url=http://localhost:8080/api/swagger.yaml
 http://localhost:8080/api/rest
 http://localhost:8080/api/swagger.json
 http://localhost:8080/api/swagger.yaml
