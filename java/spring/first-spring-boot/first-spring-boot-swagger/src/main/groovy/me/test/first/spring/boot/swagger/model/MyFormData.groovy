@@ -2,6 +2,7 @@ package me.test.first.spring.boot.swagger.model
 
 import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
+import org.springframework.util.MultiValueMap
 
 //@JsonIgnoreProperties(["metaClass"])
 //@CompileStatic
@@ -61,5 +62,15 @@ class MyFormData extends AbstractForm {
 
     void setHobbies(List<String> hobbies) {
         this.map.put("hobbies", hobbies)
+    }
+
+    @Override
+    void addAll(String key, List<? extends String> values) {
+        // TODO
+    }
+
+    @Override
+    void addAll(MultiValueMap<String, String> values) {
+        // TODO
     }
 }

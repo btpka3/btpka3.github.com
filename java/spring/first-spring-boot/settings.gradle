@@ -1,6 +1,6 @@
 rootProject.name = 'first-spring-boot'
 
-include 'first-spring-boot-amqp'
+//include 'first-spring-boot-amqp'
 include 'first-spring-boot-batch'
 include 'first-spring-boot-data-elasticsearch'
 include 'first-spring-boot-data-geode'

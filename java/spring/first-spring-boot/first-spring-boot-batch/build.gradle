@@ -9,8 +9,8 @@ dependencies {
     compile('org.springframework.boot:spring-boot-actuator')
     compile('org.springframework.boot:spring-boot-starter-batch')
     compile('org.projectlombok:lombok')
-    compile('com.h2database:h2:1.4.196')
-    compile('commons-dbcp:commons-dbcp')
+    compile('com.h2database:h2')
+    compile('org.apache.commons:commons-dbcp2')
 }
 
 

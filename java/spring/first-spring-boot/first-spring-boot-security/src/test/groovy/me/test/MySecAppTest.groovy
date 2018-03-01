@@ -3,16 +3,16 @@ package me.test
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.context.embedded.EmbeddedWebApplicationContext
-import org.springframework.boot.context.embedded.LocalServerPort
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.LocalHostUriTemplateHandler
 import org.springframework.boot.test.web.client.TestRestTemplate
+import org.springframework.boot.web.server.LocalServerPort
 import org.springframework.http.*
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 import org.springframework.util.Base64Utils
 import org.springframework.util.LinkedMultiValueMap
 import org.springframework.util.MultiValueMap
+import org.springframework.web.context.WebApplicationContext
 import org.springframework.web.util.UriComponentsBuilder
 
 import static org.assertj.core.api.Assertions.assertThat
@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat
 public class MySecAppTest {
 
     @Autowired
-    EmbeddedWebApplicationContext applicationContext;
+    WebApplicationContext applicationContext;
 
     @Autowired
     TestRestTemplate restTemplate;

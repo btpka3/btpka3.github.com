@@ -41,7 +41,7 @@ class SecConf {
 
 
     @Bean
-    @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
+    @Order(SecurityProperties.DEFAULT_FILTER_ORDER)
     WebSecurityConfigurerAdapter webSecurityConfigurerAdapter() {
         return new WebSecurityConfigurerAdapter() {
 

@@ -9,7 +9,7 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath("io.spring.gradle:dependency-management-plugin:1.0.0.RELEASE")
+        classpath("io.spring.gradle:dependency-management-plugin:1.0.4.RELEASE")
         classpath("gradle.plugin.com.gorylenko.gradle-git-properties:gradle-git-properties:1.4.17")
     }
 }
@@ -34,7 +34,7 @@ allprojects {
 
     dependencyManagement {
         dependencies {
-            dependency('com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.8.7')
+            //dependency('com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.8.7')
 //            dependency('org.apache.httpcomponents:httpclient:4.5.3')
             dependency('org.apache.cxf:cxf-spring-boot-starter-jaxws:3.1.10')
             dependency('org.apache.cxf:cxf-rt-frontend-jaxrs:3.1.10')
@@ -87,7 +87,8 @@ allprojects {
             dependency("io.github.openfeign:feign-jaxrs:${feignVersion}")
             dependency("io.github.openfeign:feign-jackson:${feignVersion}")
 
-            dependency('org.apache.geode:geode-core:1.1.1')
+
+            //dependency('org.apache.geode:geode-core:1.1.1')
 
         }
     }
@@ -172,16 +173,16 @@ subprojects {
 
 
     bootRun {
-        addResources = true
+        //addResources = true
         systemProperties = System.properties
     }
 
     springBoot {
         //mainClass = System.properties['mainClass']
         buildInfo {
-            additionalProperties = [
-                    'foo': 'bar'
-            ]
+//            additionalProperties = [
+//                    'foo': 'bar'
+//            ]
         }
     }
 

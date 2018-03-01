@@ -41,7 +41,7 @@ public class User {
      */
     boolean delete = false;
 
-    @Field(type = FieldType.String, store = true)
+    @Field(type = FieldType.text, store = true)
     String name;
 
     Integer age;

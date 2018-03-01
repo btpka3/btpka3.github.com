@@ -1,10 +1,12 @@
 dependencies {
-    compile('org.apache.geode:geode-core:1.1.1')
+    //compile('org.apache.geode:geode-core:1.1.1')
 
-    compile('org.springframework.boot:spring-boot-starter-jdbc')
-    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    //compile('org.springframework.boot:spring-boot-starter-jdbc')
+    //compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    //compile('org.springframework.boot:spring-boot-starter-data-gemfire')
+    compile('org.springframework.data:spring-data-geode')
     //runtime('com.h2database:h2')
-    compile('com.h2database:h2')
+    //compile('com.h2database:h2')
     //compile('org.flywaydb:flyway-core')
 }
 
