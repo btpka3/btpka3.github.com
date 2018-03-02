@@ -1,7 +1,7 @@
 package me.test.first.spring.boot.cxf.acl.conf
 
-import ch.qos.logback.classic.Logger
 import org.h2.tools.Server
+import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.BeansException
 import org.springframework.beans.factory.annotation.Autowired

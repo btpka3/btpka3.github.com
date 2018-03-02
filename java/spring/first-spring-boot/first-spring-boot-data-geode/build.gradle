@@ -8,6 +8,20 @@ dependencies {
     //runtime('com.h2database:h2')
     //compile('com.h2database:h2')
     //compile('org.flywaydb:flyway-core')
+    //compile('org.slf4j:log4j-over-slf4j')
+
+    compile("org.springframework.boot:spring-boot-starter")
+    compile("org.springframework.boot:spring-boot-starter-log4j2")
+    //compile("org.springframework.boot:spring-boot-starter-logging")
+
+    compile('org.codehaus.groovy:groovy-all')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+    compile("org.springframework.boot:spring-boot-devtools")
+    compile('com.fasterxml.jackson.dataformat:jackson-dataformat-xml')
+    compile('org.apache.httpcomponents:httpclient')
+
+    testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
 test {

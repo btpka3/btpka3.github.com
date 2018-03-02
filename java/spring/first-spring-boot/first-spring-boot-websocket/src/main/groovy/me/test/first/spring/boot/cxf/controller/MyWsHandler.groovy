@@ -1,6 +1,6 @@
 package me.test.first.spring.boot.cxf.controller
 
-import ch.qos.logback.classic.Logger
+import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import org.springframework.web.socket.TextMessage

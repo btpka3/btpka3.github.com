@@ -11,6 +11,16 @@ dependencies {
     compile "io.springfox:springfox-data-rest"
     compile "io.springfox:springfox-staticdocs"
     compile 'io.springfox:springfox-swagger-ui'
+
+    compile('org.codehaus.groovy:groovy-all')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+    compile("org.springframework.boot:spring-boot-devtools")
+    compile('com.fasterxml.jackson.dataformat:jackson-dataformat-xml')
+    compile('org.apache.httpcomponents:httpclient')
+
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    compile("org.springframework.boot:spring-boot-starter-logging")
 }
 
 

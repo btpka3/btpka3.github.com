@@ -14,7 +14,7 @@ class Test1 {
 
         Region<String, String> region = cache
                 .<String, String> createClientRegionFactory(ClientRegionShortcut.CACHING_PROXY)
-                .create("hello");
+                .create("regionA");
 
         region.put("1", "Hello");
         region.put("2", "World");

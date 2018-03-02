@@ -6,6 +6,16 @@
 
 
 dependencies {
+    compile('org.codehaus.groovy:groovy-all')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+    compile("org.springframework.boot:spring-boot-devtools")
+    compile('com.fasterxml.jackson.dataformat:jackson-dataformat-xml')
+    compile('org.apache.httpcomponents:httpclient')
+
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    compile("org.springframework.boot:spring-boot-starter-logging")
+
     compile('org.springframework.boot:spring-boot-actuator')
 }
 
