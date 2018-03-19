@@ -1,0 +1,32 @@
+
+# 错误处理相关
+server.error.include-stacktrace: on_trace_param
+#server.error.path: /error
+
+# template 相关
+#spring.thymeleaf.prefix: classpath:/templates/
+
+# JacksonProperties
+spring.jackson:
+  default-property-inclusion: non_absent
+
+security.basic.enabled: false
+security.user.password: 123456
+
+logging.level:
+  org.springframework.web: INFO
+  org.springframework.security: INFO
+  org.springframework.boot.actuate.audit.listener.AuditListener: DEBUG
+  org.springframework.boot.web.support.ErrorPageFilter: DEBUG
+  org.springframework.web.servlet.view.ContentNegotiatingViewResolver: DEBUG
+  org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping: DEBUG
+#  org.apache.http: DEBUG
+
+
+spring.devtools.restart.exclude: static/**,public/**,templates/**,resources/**
+
+
+# JacksonProperties
+spring.jackson.joda-date-time-format: yyyy-MM-dd'T'HH:mm:ss.SSSZ
+spring.jackson.default-property-inclusion: non_null
+
