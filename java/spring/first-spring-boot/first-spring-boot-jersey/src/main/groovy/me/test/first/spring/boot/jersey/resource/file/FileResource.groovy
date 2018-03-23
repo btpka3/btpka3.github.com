@@ -10,7 +10,18 @@ import javax.ws.rs.*
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 
+/*
+ 上传文件限制大小：
+  @FormDataParam("file") InpuptStream inStream
+  然后用 Commons-io, BoundedInputStream 包装限定一下。
 
+Spring配置文件配置项: spring.http.multipart.max-file-size
+只对 Spring 的 DispatcherServlet 有用。
+    MultipartProperties
+    -> MultipartAutoConfiguration
+    -> MultipartConfigElement
+    -> DispatcherServletRegistrationConfiguration
+*/
 // multipart/form-data
 // application/octet-stream
 @javax.inject.Singleton
