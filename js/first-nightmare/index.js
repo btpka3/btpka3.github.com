@@ -25,7 +25,7 @@ nightmare
                     // 标题
                     "title": tr.querySelector("td:nth-child(2) span.txt b").getAttribute("title"),
                     // 歌手
-                    "title": tr.querySelector("td:last-child div.text[title]").getAttribute("title")
+                    "singer": tr.querySelector("td:last-child div.text[title]").getAttribute("title")
 
                     // 评论数- 待后续补充
                     //"commentCount"
@@ -52,7 +52,7 @@ nightmare
                             console.log("-----" + err + " : " + rank.id)
                         });
             }
-            //nightmare.halt(); FIXME not tested this line
+            nightmare.halt();
 
             console.log(rankArr);
             var json = JSON.stringify(rankArr, null, 4);
