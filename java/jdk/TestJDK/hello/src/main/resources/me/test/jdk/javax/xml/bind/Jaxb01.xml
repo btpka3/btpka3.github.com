@@ -1,0 +1,58 @@
+<!-- 解析XML时，注意防范 XXE攻击 -->
+
+<!-- 测试简单属性 -->
+<user name="zhang3" age="21">
+
+    <!-- 测试子元素 -->
+    <height>182</height>
+
+    <!-- 测试日期 1 -->
+    <birthday>2016-01-18T23:41:00+08:00</birthday>
+
+    <!-- 测试日期 2 -->
+    <birthday2>1521259692</birthday2>
+
+    <!--&lt;!&ndash; 测试日期 3 &ndash;&gt;-->
+    <!--<birthday3>1521259692</birthday3>-->
+
+    <!--&lt;!&ndash; 测试 通过名称直接映射的 Enum &ndash;&gt;-->
+    <!--<gender>M</gender>-->
+
+    <!--&lt;!&ndash; 测试 通过自定义代码映射的 Enum &ndash;&gt;-->
+    <!--<gender2>Male</gender2>-->
+
+    <!--&lt;!&ndash; 测试 Boolean &ndash;&gt;-->
+    <!--<agree>true</agree>-->
+
+    <!--&lt;!&ndash; 测试 通过自定义代码映射的 Boolean &ndash;&gt;-->
+    <!--<agree2>Yes</agree2>-->
+
+    <!--&lt;!&ndash; 测试 Optional 有值的情况 &ndash;&gt;-->
+    <!--<weight>75.10</weight>-->
+
+    <!--&lt;!&ndash; 测试 Optional 无值的情况 &ndash;&gt;-->
+    <!--&lt;!&ndash;<weight2>88.88</weight2>&ndash;&gt;-->
+
+
+
+    <!--&lt;!&ndash; 测试 List &ndash;&gt;-->
+    <!--<items>-->
+
+        <!--&lt;!&ndash; 测试 TEXT 节点 &ndash;&gt;-->
+        <!--<item name="apple">red</item>-->
+        <!--<item name="banana">yellow</item>-->
+    <!--</items>-->
+
+
+    <!--&lt;!&ndash; 测试 任意元素 内容  &ndash;&gt;-->
+    <!--<div>-->
+        <!--<item name="Orange">orange</item>-->
+        <!--<span>high</span>-->
+    <!--</div>-->
+
+    <!--&lt;!&ndash; 测试 混合(元素+文本) 内容  &ndash;&gt;-->
+    <!--<div2>this is a  <span>bold</span> text.-->
+    <!--</div2>-->
+
+
+</user>
