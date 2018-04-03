@@ -1,0 +1,6 @@
+rootProject.name = 'first-spring-data-jpa'
+
+include 'my-domain'
+include 'my-app'
+
+

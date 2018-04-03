@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
+                 http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd"
+                 version="2.1">
+
+
+    <persistence-unit-metadata>
+        <description>test</description>
+        <xml-mapping-metadata-complete/>
+        <persistence-unit-defaults>
+            <description>test</description>
+            <access></access>
+            <entity-listeners>
+                <entity-listener class="org.hibernate.userguide.events.DefaultEntityListener">
+                    <pre-persist method-name="onPersist"/>
+                    <pre-update method-name="onUpdate"/>
+                </entity-listener>
+            </entity-listeners>
+        </persistence-unit-defaults>
+    </persistence-unit-metadata>
+
+    <package>ejava.jpa.hibernatemigration.legacyhbm</package>
+    <access>FIELD</access>
+
+    <mapped-superclass class="ejava.jpa.hibernatemigration.legacyhbm.Person"
+                       access="FIELD">
+        <attributes>
+            <id name="id">
+                <generated-value strategy="IDENTITY"/>
+            </id>
+            <basic name="name" optional="false">
+                <column length="32"/>
+            </basic>
+        </attributes>
+    </mapped-superclass>
+
+
+    <entity class="ejava.jpa.hibernatemigration.legacyhbm.Customer"
+            access="FIELD">
+        <table name="HMIG_CUSTOMER"/>
+        <attributes>
+            <basic name="email">
+                <column length="32"/>
+            </basic>
+            <basic name="level">
+                <column length="8"/>
+                <enumerated>STRING</enumerated>
+            </basic>
+            <one-to-many name="purchases" mapped-by="customer"/>
+        </attributes>
+    </entity>
+
+    <entity class="Sale">
+        <table name="HMIG_SALE"/>
+        <attributes>
+            <id name="id">
+                <column length="36"/>
+            </id>
+            <basic name="amount" optional="false">
+                <column precision="7" scale="2"/>
+            </basic>
+            <basic name="dateTime" optional="false">
+                <column name="SALE_TIME"/>
+                <temporal>TIMESTAMP</temporal>
+            </basic>
+
+            <many-to-one name="customer" optional="false">
+                <join-column name="CUSTOMER_ID"/>
+            </many-to-one>
+            <many-to-many name="salesClerks">
+                <join-table name="HMIG_SALE_CLERK">
+                    <join-column name="SALE_ID"/>
+                    <inverse-join-column name="CLERK_ID"/>
+                </join-table>
+            </many-to-many>
+        </attributes>
+    </entity>
+</entity-mappings>

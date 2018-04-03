@@ -1,0 +1,52 @@
+server.port : 9090
+
+# 错误处理相关
+server.error.include-stacktrace: on_trace_param
+#server.error.path: /error
+
+# template 相关
+#spring.thymeleaf.prefix: classpath:/templates/
+
+
+
+security.basic.enabled: false
+security.user.password: 123456
+
+logging.level:
+  org.springframework.web                                                       : INFO
+  org.springframework.security                                                  : INFO
+  org.springframework.boot.actuate.audit.listener.AuditListener                 : DEBUG
+  org.springframework.boot.web.support.ErrorPageFilter                          : DEBUG
+  org.springframework.web.servlet.view.ContentNegotiatingViewResolver           : DEBUG
+  org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping   : DEBUG
+  # 用来追踪 restTemplate 请求
+  org.apache.http                                                               : DEBUG
+
+#spring.devtools.restart.exclude: static/**,public/**,templates/**,resources/**
+
+spring.datasource:
+  url: jdbc:mysql://localhost/sakila?useSSL=false
+  username: root
+  password: 123456
+  driver-class-name: com.mysql.jdbc.Driver
+
+
+
+# DevToolsProperties
+#spring.devtools.restart.additional-paths:
+#  - ../data-core/build/libs/
+#  - ../data-domain/build/libs/
+
+
+
+# RepositoryRestConfiguration
+spring.data.rest.basePath: /api
+
+
+# JacksonProperties
+spring.jackson.serialization.write_dates_as_timestamps: false
+spring.jackson.serialization.WRITE_DATES_AS_TIMESTAMPS: false
+spring.jackson.date-format: yyyy-MM-dd'T'HH:mm:ss.SSSZ
+spring.jackson.joda-date-time-format: yyyy-MM-dd'T'HH:mm:ss.SSSZ
+spring.jackson.default-property-inclusion: non_null
+

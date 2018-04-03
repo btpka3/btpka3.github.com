@@ -1,0 +1,21 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<!-- 示例文件 -->
+<hibernate-mapping package="me.test">
+    <class entity-name="Book" name="Book" table="my_book">
+        <id name="isbn" column="isbn" length="32" type="string"/>
+        <property name="title" not-null="true" length="50" type="string"/>
+        <property name="author" not-null="true" length="50" type="string"/>
+        <property name="sex"
+                  not-null="true"
+                  update="false"/>
+
+        <subclass name="DomesticCat"
+                  discriminator-value="D">
+            <property name="name"
+                      type="string"/>
+        </subclass>
+    </class>
+</hibernate-mapping>
