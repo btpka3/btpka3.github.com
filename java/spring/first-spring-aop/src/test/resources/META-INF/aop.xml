@@ -1,0 +1,36 @@
+<aspectj>
+
+
+    <weaver options="-verbose">
+        <!-- Weave types that are within the javax.* or org.aspectj.*
+             packages. Also weave all types in the foo package that do
+             not have the @NoWeave annotation. -->
+        <include within="me.test.*"/>
+
+        <!--<exclude within="bar.*"/>-->
+        <!--<dump within="somepack.*"/>-->
+    </weaver>
+
+    <aspects>
+        <!-- declare two existing aspects to the weaver -->
+        <aspect name="me.test.MyAspect"/>
+
+        <!-- define a concrete aspect inline -->
+        <!--<concrete-aspect name="com.xyz.tracing.MyTracing"-->
+                         <!--extends="tracing.AbstractTracing"-->
+                         <!--precedence="com.xyz.first, *">-->
+            <!--<pointcut name="tracingScope" expression="within(org.maw.*)"/>-->
+        <!--</concrete-aspect>-->
+
+        <!-- Of the set of aspects declared to the weaver
+             use aspects matching the type pattern "com..*" for weaving. -->
+        <!--<include within="com..*"/>-->
+
+        <!-- Of the set of aspects declared to the weaver
+             do not use any aspects with the @CoolAspect annotation for weaving -->
+        <!--<exclude within="@CoolAspect *"/>-->
+
+    </aspects>
+
+
+</aspectj>

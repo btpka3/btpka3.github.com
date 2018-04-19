@@ -14,7 +14,7 @@ public class MyAspect {
 
     private final Logger logger = LoggerFactory.getLogger(MyAspect.class);
 
-    @Before("execution(* me.test.MyImpl.*(..))")
+    @Before("within(*) && execution(* me.test.MyImpl.*(..))")
     public void doAccessCheck(JoinPoint jp) {
 
         logger.debug(jp.getSignature() + " is invoked.");
