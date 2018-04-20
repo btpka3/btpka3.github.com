@@ -6,4 +6,9 @@
   <context:component-scan base-package="me.test" />
   <aop:aspectj-autoproxy proxy-target-class="true" />
 
+
+  <bean id="str" class="java.lang.String">
+    <constructor-arg value="222"/>
+  </bean>
+
 </beans>

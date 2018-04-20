@@ -4,6 +4,12 @@
     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
   <context:component-scan base-package="me.test" />
+
+
+  <bean id="str" class="java.lang.String">
+    <constructor-arg value="111"/>
+  </bean>
+
   <!--<aop:aspectj-autoproxy proxy-target-class="false" />-->
   <!--<context:load-time-weaver aspectj-weaving="on" />-->
 
