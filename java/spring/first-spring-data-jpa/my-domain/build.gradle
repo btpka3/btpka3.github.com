@@ -81,6 +81,11 @@ dependencies {
     compile('joda-time:joda-time')
     //querydslapt('com.querydsl:querydsl-apt')
     //compileOnly('org.projectlombok:lombok')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    //testCompile('com.h2database:h2')
+    testCompile('mysql:mysql-connector-java')
+    testCompile('org.springframework.boot:spring-boot-starter-logging')
+    testCompile('org.assertj:assertj-core')
 }
 
 lombok { // optional: values below are the defaults

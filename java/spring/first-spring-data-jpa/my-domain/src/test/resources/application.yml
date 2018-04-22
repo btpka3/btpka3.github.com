@@ -24,13 +24,20 @@ logging.level:
 
 #spring.devtools.restart.exclude: static/**,public/**,templates/**,resources/**
 
+# DataSourceProperties
+#spring.datasource:
+#  url: jdbc:h2:mem:db;MODE=MYSQL;TRACE_LEVEL_SYSTEM_OUT=1
+#  username: sa
+#  password: ''
+#  driver-class-name: org.h2.Driver
+#  initialization-mode: always
+#
+
 spring.datasource:
   url: jdbc:mysql://localhost/sakila?useSSL=false
   username: root
   password: 123456
   driver-class-name: com.mysql.jdbc.Driver
-
-
 
 # DevToolsProperties
 #spring.devtools.restart.additional-paths:
@@ -54,3 +61,5 @@ spring.jackson:
 
 # JpaProperties
 #spring.jpa.hibernate.ddl-auto: validate
+spring.jpa.properties.hibernate.enable_lazy_load_no_trans: true
+

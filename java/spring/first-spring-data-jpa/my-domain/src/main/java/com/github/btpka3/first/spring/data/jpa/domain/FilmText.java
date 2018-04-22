@@ -6,10 +6,11 @@ import lombok.ToString;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Data
-@ToString
-//@Entity(name = "film_text")
+@Entity
+@Table(name = "film_text")
 public class FilmText {
 
     @Id

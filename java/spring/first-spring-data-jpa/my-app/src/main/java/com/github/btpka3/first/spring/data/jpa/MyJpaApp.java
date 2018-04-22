@@ -13,6 +13,21 @@ import static com.querydsl.core.types.dsl.Expressions.allOf;
 public class MyJpaApp {
     public static void main(String[] args) {
         ConfigurableApplicationContext appCtx = SpringApplication.run(MyJpaApp.class, args);
+        test2(appCtx);
+    }
+
+    public static void test1(ConfigurableApplicationContext appCtx){
+        Country c = new Country();
+        c.setCountryId(111);
+        System.out.println(c);
+        CountryRepo countryRepo = appCtx.getBean(CountryRepo.class);
+        QCountry qCountry = QCountry.country1;
+        System.out.println(countryRepo.findAll(allOf(
+                qCountry.country.isNotNull()
+        )));
+    }
+
+    public static void test2(ConfigurableApplicationContext appCtx){
         Country c = new Country();
         c.setCountryId(111);
         System.out.println(c);

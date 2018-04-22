@@ -1,46 +1,66 @@
 package com.github.btpka3.first.spring.data.jpa.domain;
 
 import lombok.Data;
-import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Data
-@ToString
-//@Entity(name="customer")
+@Entity
+@Table(name = "customer")
 public class Customer {
 
+
+    public static final String C_CUSTOMER_ID = "customer_id";
+    public static final String C_STORE_ID = "store_id";
+    public static final String C_FIRST_NAME = "first_name";
+    public static final String C_LAST_NAME = "last_name";
+    public static final String C_EMAIL = "email";
+    public static final String C_ADDRESS_ID = "address_id";
+    public static final String C_ACTIVE = "active";
+    public static final String C_CREATE_DATE = "create_date";
+    public static final String C_LAST_UPDATE = "last_update";
+
+
+    public static final String A_CUSTOMER_ID = "customerId";
+    public static final String A_STORE = "store";
+    public static final String A_FIRST_NAME = "firstName";
+    public static final String A_LAST_NAME = "lastName";
+    public static final String A_EMAIL = "email";
+    public static final String A_ADDRESS = "address";
+    public static final String A_ACTIVE = "active";
+    public static final String A_CREATE_DATE = "createDate";
+    public static final String A_LAST_UPDATE = "lastUpdate";
+
+
     @Id
-    @Column(name = "customer_id")
+    @Column(name = C_CUSTOMER_ID)
     private Integer customerId;
 
-    // TODO
-    @Column(name = "store_id")
-    private Integer storeId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = C_STORE_ID)
+    private Store store;
 
-    @Column(name = "first_name")
+    @Column(name = C_FIRST_NAME)
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column(name = C_LAST_NAME)
     private String lastName;
 
-    @Column(name = "email")
+    @Column(name = C_EMAIL)
     private String email;
 
-    // TODO
-    @Column(name = "address_id")
-    private Integer addressId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = C_ADDRESS_ID)
+    private Address address;
 
-    @Column(name = "active")
+    @Column(name = C_ACTIVE)
     private Boolean active;
 
-    @Column(name = "create_date")
+    @Column(name = C_CREATE_DATE)
     private Date createDate;
 
-    @Column(name = "last_update")
+    @Column(name = C_LAST_UPDATE)
     private Date lastUpdate;
 
 }

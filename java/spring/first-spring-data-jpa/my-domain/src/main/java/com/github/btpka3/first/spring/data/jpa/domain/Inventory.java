@@ -8,19 +8,20 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
 
+
 @Data
 @Entity
-@Table(name = "category")
-public class Category {
+@Table(name = "inventory")
+public class Inventory {
 
     @Id
-    @Column(name = "category_id")
-    private Integer categoryId;
+    @Column(name = "inventory_id")
+    private Integer inventoryId;
 
-    @Column(name = "name")
-    private String name;
+    // TODO
+    @Column(name = "film_id")
+    private Integer film_id;
 
     @Column(name = "last_update")
     private Date lastUpdate;
-
 }
