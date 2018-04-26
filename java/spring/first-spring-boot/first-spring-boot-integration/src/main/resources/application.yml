@@ -1,3 +1,6 @@
+# ServerProperties
+server.port: 10001
+
 
 # 错误处理相关
 server.error.include-stacktrace: on_trace_param
@@ -5,7 +8,6 @@ server.error.include-stacktrace: on_trace_param
 
 # template 相关
 #spring.thymeleaf.prefix: classpath:/templates/
-
 
 
 security.basic.enabled: false
@@ -26,5 +28,33 @@ logging.level.org.apache.http: DEBUG
 spring.jackson.joda-date-time-format: yyyy-MM-dd'T'HH:mm:ss.SSSZ
 spring.jackson.default-property-inclusion: non_null
 
+# IntegrationProperties
+spring.integration.jdbc.initialize-schema: always
 
 
+# DataSourceProperties
+#spring.datasource:
+#  url: jdbc:mysql://localhost/sakila?useSSL=false
+#  username: root
+#  password: 123456
+#  driver-class-name: com.mysql.jdbc.Driver
+
+# DataSourceProperties
+spring.datasource:
+  url: jdbc:h2:tcp://localhost:9092/.first-spring-boot-integration
+  #url: jdbc:h2:~/.first-spring-boot-database
+  #username: sa
+  #password:
+  driver-class-name: "org.h2.Driver"
+  #schema: classpath:schema.sql
+  #data: classpath:data.sql
+
+
+# RabbitProperties, RabbitAutoConfiguration
+spring.rabbitmq:
+  addresses: localhost
+  port: 5672
+  username: guest
+  password: guest
+  enabled: true
+  virtual-host: /

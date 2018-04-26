@@ -18,7 +18,11 @@ dependencies {
 
     compile('org.springframework.boot:spring-boot-starter-integration')
     compile("org.springframework.boot:spring-boot-starter-amqp")
+    compile('org.springframework.boot:spring-boot-starter-jdbc')
     compile("org.springframework.integration:spring-integration-amqp")
+    compile("org.springframework.integration:spring-integration-jdbc")
+    compile('com.h2database:h2')
+    //compile("org.springframework.integration:spring-integration-mongodb")
 }
 
 

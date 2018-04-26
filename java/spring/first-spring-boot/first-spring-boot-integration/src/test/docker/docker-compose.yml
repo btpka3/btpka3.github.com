@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  h2:
+    build:
+      context: ./h2
+    ports:
+      - 9092:9092
+      - 81:81
+  rabbitmq:
+    image: "rabbitmq:3.7.4-alpine"
+    ports:
+      - "4369:4369"   # epmd , a peer discovery service used by RabbitMQ nodes and CLI tools
+      - "5671:5671"   # AMQP                  [TLS]
+      - "5672:5672"   # AMQP
+      - "25672:25672" # used by Erlang for inter-node and CLI tools communication
+      - "1883:1883"   # MQTT                       , provided by rabbitmq_mqtt
+      - "8883:8883"   # MQTTS                 [TLS], provided by rabbitmq_mqtt
+      - "15671:15671" # HTTPS WEB             [TLS], provided by rabbitmq_management
+                      # STOMP-over-WebSockets [TLS], provided by rabbitmq_web_stomp
+                      # MQTT-over-WebSockets  [TLS], provided by rabbitmq_web_mqtt
+      - "15672:15672" # HTTP WEB                   , provided by rabbitmq_management
+      - "15674:15674" # STOMP-over-WebSockets      , provided by rabbitmq_web_stomp
+      - "15675:15675" # MQTT-over-WebSockets       , provided by rabbitmq_web_mqtt
+    volumes:
+      #- ./rabbitmq/rabbitmq.config:/etc/rabbitmq/rabbitmq.config
+      - ./rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins
+      #- ../resources:/etc/rabbitmq/mq

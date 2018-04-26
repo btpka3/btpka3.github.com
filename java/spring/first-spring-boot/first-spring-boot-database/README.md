@@ -59,5 +59,5 @@ DataSourceAutoConfiguration
 1. spring-data-jpa
 
 ## 参考
-
+* first-spring-data-jpa
 * 《[使用 Spring Data JPA 简化 JPA 开发](http://www.ibm.com/developerworks/cn/opensource/os-cn-spring-jpa/)》

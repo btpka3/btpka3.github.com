@@ -9,53 +9,68 @@ import org.springframework.integration.amqp.inbound.AmqpInboundChannelAdapter
 import org.springframework.integration.annotation.ServiceActivator
 import org.springframework.integration.channel.DirectChannel
 import org.springframework.integration.config.EnableIntegration
+import org.springframework.integration.jdbc.lock.DefaultLockRepository
+import org.springframework.integration.jdbc.lock.JdbcLockRegistry
+import org.springframework.integration.support.locks.LockRegistry
 import org.springframework.messaging.Message
 import org.springframework.messaging.MessageChannel
 import org.springframework.messaging.MessageHandler
 import org.springframework.messaging.MessagingException
+
+import javax.sql.DataSource
 
 @Configuration
 @EnableIntegration
 class IntegrationConf {
 
     @Bean
-    public MessageChannel amqpInputChannel() {
-        return new DirectChannel();
+    public DefaultLockRepository lockRepository(DataSource dataSource) {
+        return new DefaultLockRepository(dataSource);
     }
 
     @Bean
-    public AmqpInboundChannelAdapter inbound(
-            SimpleMessageListenerContainer listenerContainer,
-            @Qualifier("amqpInputChannel")
-                    MessageChannel channel
-    ) {
-        AmqpInboundChannelAdapter adapter = new AmqpInboundChannelAdapter(listenerContainer);
-        adapter.setOutputChannel(channel);
-        return adapter;
+    public LockRegistry lockRegistry(DefaultLockRepository repo) {
+        return new JdbcLockRegistry(repo);
     }
 
-    @Bean
-    public SimpleMessageListenerContainer container(ConnectionFactory connectionFactory) {
-        SimpleMessageListenerContainer container =
-                new SimpleMessageListenerContainer(connectionFactory);
-        container.setQueueNames("foo");
-        container.setConcurrentConsumers(2);
-        // ...
-        return container;
-    }
-
-
-    @Bean
-    @ServiceActivator(inputChannel = "amqpInputChannel")
-    public MessageHandler handler() {
-        return new MessageHandler() {
-
-            @Override
-            public void handleMessage(Message<?> message) throws MessagingException {
-                System.out.println(message.getPayload());
-            }
-
-        };
-    }
+//    @Bean
+//    public MessageChannel amqpInputChannel() {
+//        return new DirectChannel();
+//    }
+//
+//    @Bean
+//    public AmqpInboundChannelAdapter inbound(
+//            SimpleMessageListenerContainer listenerContainer,
+//            @Qualifier("amqpInputChannel")
+//                    MessageChannel channel
+//    ) {
+//        AmqpInboundChannelAdapter adapter = new AmqpInboundChannelAdapter(listenerContainer);
+//        adapter.setOutputChannel(channel);
+//        return adapter;
+//    }
+//
+//    @Bean
+//    public SimpleMessageListenerContainer container(ConnectionFactory connectionFactory) {
+//        SimpleMessageListenerContainer container =
+//                new SimpleMessageListenerContainer(connectionFactory);
+//        container.setQueueNames("foo");
+//        container.setConcurrentConsumers(2);
+//        // ...
+//        return container;
+//    }
+//
+//
+//    @Bean
+//    @ServiceActivator(inputChannel = "amqpInputChannel")
+//    public MessageHandler handler() {
+//        return new MessageHandler() {
+//
+//            @Override
+//            public void handleMessage(Message<?> message) throws MessagingException {
+//                System.out.println(message.getPayload());
+//            }
+//
+//        };
+//    }
 
 }

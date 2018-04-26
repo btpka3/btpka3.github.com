@@ -1,11 +1,18 @@
 
 
+## 启动
+
+```bash
+docker-compose -f first-spring-boot-integration/src/test/docker/docker-compose.yml up
+```
+
+## 参考
+- [spring-integration-jdbc-lock](https://github.com/vpavic/spring-integration-jdbc-lock)
+- [spring-integration-samples](https://github.com/spring-projects/spring-integration-samples)
 
 
+## 笔记
 ```text
-
-
-
 @IntegrationAutoConfiguration
 @EnableIntegration
 @EnablePublisher
