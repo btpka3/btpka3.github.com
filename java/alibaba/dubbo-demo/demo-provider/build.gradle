@@ -1,0 +1,32 @@
+jar {
+    enabled = true
+}
+
+bootJar {
+    classifier = 'boot'
+}
+
+dependencies {
+    compile project(':demo-api')
+    compile('org.springframework.boot:spring-boot-starter')
+//    compile('org.springframework.cloud:spring-cloud-starter-zookeeper')
+
+    compile("com.alibaba:dubbo-config-spring")
+    compile("com.alibaba:dubbo-registry-zookeeper")
+    compile("com.alibaba:dubbo-rpc-dubbo")
+    compile("com.alibaba:dubbo-remoting-netty")
+    compile("com.alibaba:dubbo-serialization-jdk")
+    compile("com.alibaba:dubbo-serialization-hessian2")
+
+
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('org.mockito:mockito-core')
+
+
+}
+
+test {
+    include 'me/test/**'
+    testLogging.showStandardStreams = false
+}
+

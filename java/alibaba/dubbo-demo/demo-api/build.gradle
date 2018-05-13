@@ -1,0 +1,19 @@
+jar {
+    enabled = true
+}
+bootJar {
+    enabled = false
+}
+
+dependencies {
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('org.mockito:mockito-core')
+}
+
+
+test {
+    include 'me/test/**'
+    testLogging.showStandardStreams = false
+
+}
+

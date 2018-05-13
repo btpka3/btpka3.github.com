@@ -1,0 +1,17 @@
+#spring:
+#  application:
+#    name: demo-provider
+#  profiles:
+#    active: default,dev
+
+
+
+# ZookeeperProperties
+spring.cloud.zookeeper:
+  connectString: localhost:2181
+  enabled: true
+  baseSleepTimeMs: 50
+  maxRetries: 10
+  maxSleepMs: 500
+  blockUntilConnectedWait: 10
+  blockUntilConnectedUnit: SECONDS
