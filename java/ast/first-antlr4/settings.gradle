@@ -1,0 +1,6 @@
+rootProject.name = 'first-antlr4'
+
+//include 'xxx-api'
+//includeBuild './my-querydsl-plugin'
+
+
