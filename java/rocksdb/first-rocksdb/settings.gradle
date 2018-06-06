@@ -1,0 +1,6 @@
+rootProject.name = 'first-rocksdb'
+
+//include 'xxx-api'
+//includeBuild './my-querydsl-plugin'
+
+
