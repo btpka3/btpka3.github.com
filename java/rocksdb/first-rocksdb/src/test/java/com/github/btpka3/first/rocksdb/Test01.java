@@ -47,31 +47,25 @@ public class Test01 {
                     .setCompactionStyle(CompactionStyle.UNIVERSAL);
 
 
-            // 注意 ： ttl 支持
             try (final RocksDB db = RocksDB.open(options, "/tmp/first-rocksdb/test01")) {
 
+
+                // 测试持久存储读取
                 byte[] key = "hi".getBytes();
                 byte[] value1 = db.get(readOptions, key);
 
-                if (value1 == null) {
-                    logger.debug("get1 : null");
-                } else {
-                    logger.debug("get1 : " + new String(value1));
-                    db.delete(key);
-                }
+                logger.debug("get1 : " + (value1 != null ? new String(value1) : null));
+                db.delete(key);
 
+                // 保存新值
                 String newValue = "world @ " + new Date();
                 logger.debug("put1 : " + newValue);
                 db.put(key, newValue.getBytes());
 
+                // 测试内存中取值
                 byte[] value2 = db.get(readOptions, key);
 
-                if (value2 == null) {
-                    logger.debug("get2 : null");
-                } else {
-                    logger.debug("get2 : " + new String(value2));
-                    db.delete(key);
-                }
+                logger.debug("get2 : " + (value2 != null ? new String(value2) : null));
 
             } catch (final RocksDBException e) {
                 logger.debug(e.getMessage(), e);
