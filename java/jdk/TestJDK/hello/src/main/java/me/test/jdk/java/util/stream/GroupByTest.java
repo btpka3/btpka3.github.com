@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 public class GroupByTest {
     public static void main(String[] args) {
 
-        test3();
+        test2();
     }
 
 

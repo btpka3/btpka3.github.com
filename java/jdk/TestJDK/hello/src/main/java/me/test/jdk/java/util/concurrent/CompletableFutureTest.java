@@ -1,6 +1,7 @@
 package me.test.jdk.java.util.concurrent;
 
-import java.util.concurrent.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * 就是JavaScript 中的 Promise 嘛~

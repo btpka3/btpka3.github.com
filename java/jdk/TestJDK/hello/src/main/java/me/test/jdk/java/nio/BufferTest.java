@@ -35,6 +35,7 @@ public class BufferTest {
         buf.put("123");
         print(" 3", buf);
 
+        // 只有转换了之后，才能读取内容
         buf.flip();
         print(" 4", buf);
 
@@ -63,10 +64,9 @@ public class BufferTest {
         print("10", buf);
 
 
-        // 清空缓存, 进入带写入模式。
+        // 清空缓存, 进入待写入模式。
         buf.clear();
         print("10", buf);
-
 
     }
 
