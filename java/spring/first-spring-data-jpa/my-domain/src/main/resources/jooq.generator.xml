@@ -1,0 +1,20 @@
+<generator>
+    <database>
+        <name>org.jooq.meta.extensions.jpa.JPADatabase</name>
+        <properties>
+            <!-- A comma separated list of Java packages, that contain your entities -->
+            <property>
+                <key>packages</key>
+                <value>com.example.entities</value>
+            </property>
+
+            <!-- Whether JPA 2.1 AttributeConverters should be auto-mapped to jOOQ Converters.
+                 Custom <forcedType/> configurations will have a higher priority than these auto-mapped converters.
+                 This defaults to true. -->
+            <property>
+                <key>use-attribute-converters</key>
+                <value>true</value>
+            </property>
+        </properties>
+    </database>
+</generator>

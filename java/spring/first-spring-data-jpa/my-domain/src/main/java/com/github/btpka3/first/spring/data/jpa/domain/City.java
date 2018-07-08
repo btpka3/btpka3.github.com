@@ -1,11 +1,22 @@
 package com.github.btpka3.first.spring.data.jpa.domain;
 
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
+//@Getter
+//@Setter
+//@NoArgsConstructor
+//@RequiredArgsConstructor
+
+// toString 会有递归死循环风险
+@ToString(exclude = {"country", "addressList"})
+//@EqualsAndHashCode
+
+//@Value
 @Data
 @Entity
 @Table(name = "city")
@@ -19,7 +30,9 @@ public class City {
     public static final String A_CITY_ID = "cityId";
     public static final String A_CITY = "city";
     public static final String A_COUNTRY_ID = "countryId";
+    public static final String A_COUNTRY = "country";
     public static final String A_LAST_UPDATE = "lastUpdate";
+    public static final String A_ADDRESS_LIST = "addressList";
 
     @Id
     @Column(name = C_CITY_ID)

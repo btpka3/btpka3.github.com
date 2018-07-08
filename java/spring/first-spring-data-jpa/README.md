@@ -28,7 +28,8 @@
 参考 `org.hibernate.tool.hbm2ddl.SchemaUpdate#main(String[])`
 
 ```bash
-
+# 通过docker 本地启动 mysql 数据库，如何创建，咱时省略。
+docker start my-mysql
 
 ```
 

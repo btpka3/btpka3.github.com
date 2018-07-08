@@ -54,3 +54,7 @@ spring.jackson:
 
 # JpaProperties
 #spring.jpa.hibernate.ddl-auto: validate
+
+# JooqProperties
+spring.jooq:
+  sql-dialect: MySQL

@@ -1,10 +1,13 @@
 package com.github.btpka3.first.spring.data.jpa.domain;
 
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Date;
 
+// 注意：这里不能用自己类的静态常量
+@ToString(exclude = {"city"})
 @Data
 @Entity
 @Table(name = "address")
@@ -53,5 +56,6 @@ public class Address {
 
     @Column(name = C_LAST_UPDATE)
     private Date lastUpdate;
+
 
 }
