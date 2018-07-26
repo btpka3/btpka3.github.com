@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+  <bean id="main" class="me.test.maven.first.jar.Main"></bean>
+
+<!--
+  <bean id="dataSource"
+        class="org.apache.commons.dbcp.BasicDataSource"
+    destroy-method="close">
+    <property name="driverClassName"                value="${his.jdbc.driverClassName}" />
+    <property name="url"                            value="${his.jdbc.url}" />
+    <property name="username"                       value="${his.jdbc.username}" />
+    <property name="password"                       value="${his.jdbc.password}" />
+    <property name="defaultAutoCommit"              value="true" />
+    <property name="logAbandoned"                   value="false" />
+    <property name="removeAbandoned"                value="true" />
+    <property name="removeAbandonedTimeout"         value="150" />
+    <property name="testWhileIdle"                  value="true" />
+    <property name="timeBetweenEvictionRunsMillis"  value="300000" />
+    <property name="minEvictableIdleTimeMillis"     value="320000" />
+    <property name="initialSize"                    value="5" />
+    <property name="maxIdle"                        value="10" />
+    <property name="minIdle"                        value="5" />
+    <property name="maxActive"                      value="15" />
+    <property name="maxWait"                        value="3000" />
+    <property name="testOnBorrow"                   value="true" />
+    <property name="testOnReturn"                   value="false" />
+  </bean>
+  <bean id="transactionManager"
+        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <property name="dataSource"                     ref="dataSource" />
+  </bean>
+ -->
+
+</beans>
