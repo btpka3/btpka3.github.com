@@ -12,7 +12,7 @@ dependencies {
     compile "io.springfox:springfox-staticdocs"
     compile 'io.springfox:springfox-swagger-ui'
 
-    compile('org.codehaus.groovy:groovy-all')
+    compile('org.codehaus.groovy:groovy')
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.springframework.boot:spring-boot-starter-thymeleaf')
     compile("org.springframework.boot:spring-boot-devtools")

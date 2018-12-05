@@ -11,7 +11,8 @@ import org.springframework.stereotype.*;
 import java.util.*;
 
 @SpringBootApplication
-@Component
+
+@Component;
 public class Test01 {
     @Autowired
     TestConfig testConfig;

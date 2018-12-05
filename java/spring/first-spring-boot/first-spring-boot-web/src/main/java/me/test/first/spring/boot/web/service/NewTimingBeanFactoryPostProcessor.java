@@ -25,7 +25,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 public class NewTimingBeanFactoryPostProcessor
-    implements Ordered, BeanFactoryPostProcessor,InstantiationStrategy {
+        implements Ordered, BeanFactoryPostProcessor, InstantiationStrategy {
 
     private static final Logger log = LoggerFactory.getLogger(NewTimingBeanFactoryPostProcessor.class);
 
@@ -36,7 +36,9 @@ public class NewTimingBeanFactoryPostProcessor
     @Override
     public Object instantiate(RootBeanDefinition bd, String beanName, BeanFactory owner) throws BeansException {
         TimingItem i = new TimingItem();
-        i.setBeanClass(bd.getBeanClass());
+        if (bd.hasBeanClass()) {
+            i.setBeanClass(bd.getBeanClass());
+        }
         i.setBeanName(beanName);
         i.setStartTime(System.currentTimeMillis());
 
@@ -56,7 +58,9 @@ public class NewTimingBeanFactoryPostProcessor
 
 
         TimingItem i = new TimingItem();
-        i.setBeanClass(bd.getBeanClass());
+        if (bd.hasBeanClass()) {
+            i.setBeanClass(bd.getBeanClass());
+        }
         i.setBeanName(beanName);
         i.setStartTime(System.currentTimeMillis());
 
@@ -73,7 +77,9 @@ public class NewTimingBeanFactoryPostProcessor
     @Override
     public Object instantiate(RootBeanDefinition bd, String beanName, BeanFactory owner, Object factoryBean, Method factoryMethod, Object... args) throws BeansException {
         TimingItem i = new TimingItem();
-        i.setBeanClass(bd.getBeanClass());
+        if (bd.hasBeanClass()) {
+            i.setBeanClass(bd.getBeanClass());
+        }
         i.setBeanName(beanName);
         i.setStartTime(System.currentTimeMillis());
 
@@ -110,33 +116,35 @@ public class NewTimingBeanFactoryPostProcessor
     }
 
 
-    public static String top100(Collection<TimingItem> items){
+    public static String top100(Collection<TimingItem> items) {
         StringBuilder buf = new StringBuilder();
         AtomicInteger idx = new AtomicInteger(0);
         items.stream()
 
-            // 按照初始化执行的时间逆序排序（耗时越长，排名越靠前）
-            .sorted(Comparator.comparingLong((TimingItem i) -> {
-                if (i.getStartTime() == null || i.getEndTime() == null) {
-                    return 0L;
-                }
-                return i.getEndTime() - i.getStartTime();
-            }).reversed())
+                // 按照初始化执行的时间逆序排序（耗时越长，排名越靠前）
+                .sorted(Comparator.comparingLong((TimingItem i) -> {
+                    if (i.getStartTime() == null || i.getEndTime() == null) {
+                        return 0L;
+                    }
+                    return i.getEndTime() - i.getStartTime();
+                }).reversed())
 
-            // 只要前 100 名
-            .limit(100)
-            .forEach(i -> {
-                idx.addAndGet(1);
-                String s = String.format(
-                    "%5d | %7d | %s | %d | %s%n",
-                    idx.get(),
-                    i.getEndTime() - i.getStartTime(),
-                    i.getBeanClass().getName(),
-                    i.getBeanHashCode(),
-                    i.getBeanName()
-                );
-                buf.append(s);
-            });
+                // 只要前 100 名
+                .limit(100)
+                .forEach(i -> {
+                    idx.addAndGet(1);
+                    String s = String.format(
+                            "%5d | %7d | %s | %d | %s%n",
+                            idx.get(),
+                            i.getEndTime() - i.getStartTime(),
+                            i.getBeanClass() != null
+                                    ? i.getBeanClass().getName()
+                                    : "",
+                            i.getBeanHashCode(),
+                            i.getBeanName()
+                    );
+                    buf.append(s);
+                });
         return buf.toString();
     }
 
