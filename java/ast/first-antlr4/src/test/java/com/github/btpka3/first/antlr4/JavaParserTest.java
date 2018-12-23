@@ -1,10 +1,7 @@
 package com.github.btpka3.first.antlr4;
 
 import com.github.javaparser.JavaParser;
-import com.github.javaparser.ast.CompilationUnit;
-import com.github.javaparser.ast.Modifier;
-import com.github.javaparser.ast.NodeList;
-import com.github.javaparser.ast.PackageDeclaration;
+import com.github.javaparser.ast.*;
 import com.github.javaparser.ast.body.*;
 import com.github.javaparser.ast.comments.JavadocComment;
 import com.github.javaparser.ast.expr.*;
@@ -15,7 +12,10 @@ import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import org.junit.Test;
 
 import java.io.InputStream;
+import java.util.Comparator;
 import java.util.EnumSet;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.github.javaparser.ast.type.PrimitiveType.intType;
 
@@ -133,6 +133,9 @@ public class JavaParserTest {
         AnnotationExpr field1Ann = new NormalAnnotationExpr(new Name("Autowired"), new NodeList<>());
         field1.addAnnotation(field1Ann);
 
+        AnnotationExpr field1Ann2 = new MarkerAnnotationExpr(new Name("Autowired11") );
+        field1.addAnnotation(field1Ann2);
+
         field1.addAnnotation(new SingleMemberAnnotationExpr(
                 new Name("Qualifier"),
                 new StringLiteralExpr("xxxBean")
@@ -150,7 +153,7 @@ public class JavaParserTest {
                 "name",
                 new StringLiteralExpr("zhang3")
         );
-        field1.addVariable( field1VarDecl);
+        field1.addVariable(field1VarDecl);
         type.addMember(field1);
 
         // create a method
@@ -182,7 +185,37 @@ public class JavaParserTest {
         call.addArgument(new StringLiteralExpr("Hello World!"));
         block.addStatement(call);
 
+        MethodCallExpr call2 = new MethodCallExpr(null, "println");
+        block.addStatement(call2);
 
+        MethodCallExpr call3 = new MethodCallExpr(new NameExpr("out"), "println");
+        call3.addArgument(new StringLiteralExpr("hi~"));
+        block.addStatement(call3);
+
+        // messageSource.getMessage( "实体{0}未在此事件下定义" , new Object[]{ entityCode}, UfLocale.get()  ) );
+        MethodCallExpr call4 = new MethodCallExpr(new NameExpr("messageSource"), "getMessage");
+        call4.addArgument(new StringLiteralExpr("实体{0}未在此事件下定义"));
+        call4.addArgument(new FieldAccessExpr(new NameExpr("AAA"), "aaa"));
+
+        // `new Object[] { entityCode }`
+        call4.addArgument(new ArrayCreationExpr(
+                null,
+                JavaParser.parseClassOrInterfaceType("Object"),
+                new NodeList<>(new ArrayCreationLevel()),
+                new ArrayInitializerExpr(null, new NodeList<>(new NameExpr("entityCode")))
+        ));
+
+        // `new Object[] {}`
+        call4.addArgument(new ArrayCreationExpr(
+                JavaParser.parseClassOrInterfaceType("Object"),
+                new NodeList<>(new ArrayCreationLevel()),
+                new ArrayInitializerExpr()
+        ));
+        call4.addArgument(new MethodCallExpr(
+                new NameExpr("UfLocale"),
+                "get"
+        ));
+        block.addStatement(call4);
 
         // 插入字段2
         FieldDeclaration field2 = new FieldDeclaration();
@@ -194,11 +227,38 @@ public class JavaParserTest {
                 "age",
                 new IntegerLiteralExpr("11")
         );
-        field2.addVariable( field2VarDecl);
-        type.getMembers().add(1,field2);
+        field2.addVariable(field2VarDecl);
+        type.getMembers().add(1, field2);
 
 
+        System.out.println("================================== : insert");
         System.out.println(cu);
+
+
+        System.out.println("================================== : sort");
+        List<BodyDeclaration<?>> l = type.getMembers().stream()
+                .sorted(Comparator.comparing(bodyDeclaration -> {
+                    if (bodyDeclaration instanceof FieldDeclaration) {
+                        return ((FieldDeclaration) bodyDeclaration).getVariable(0).getName().getIdentifier();
+                    } else if (bodyDeclaration instanceof MethodDeclaration) {
+                        return ((MethodDeclaration) bodyDeclaration).getName().getIdentifier();
+                    }
+                    return "";
+                }))
+                .collect(Collectors.toList());
+
+        NodeList<BodyDeclaration<?>> sortedMembers = NodeList.nodeList(l);
+        type.setMembers(sortedMembers);
+        System.out.println(cu);
+
+
+        System.out.println("================================== : add import");
+
+        ImportDeclaration importDec = new ImportDeclaration("java.util.Date", false, false);
+        cu.addImport(importDec);
+        System.out.println(cu);
+
+
     }
 
 

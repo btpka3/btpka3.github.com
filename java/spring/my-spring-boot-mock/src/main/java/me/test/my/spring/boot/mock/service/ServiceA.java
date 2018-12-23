@@ -1,7 +1,9 @@
 package me.test.my.spring.boot.mock.service;
 
-import org.springframework.beans.factory.annotation.*;
-import org.springframework.stereotype.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.stream.Stream;
 
 @Service
 public class ServiceA {
@@ -22,4 +24,15 @@ public class ServiceA {
 
 
     }
+
+    public void s() {
+        Stream.of(1, 2, 3)
+                .forEach(System.out::println);
+    }
+
+
+    public void x() {
+        System.out.println(c.str(8));
+    }
+
 }

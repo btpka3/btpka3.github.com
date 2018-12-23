@@ -1,0 +1,6 @@
+rootProject.name = 'mybatis-demo2'
+
+//include 'xxx-api'
+//includeBuild './my-querydsl-plugin'
+
+

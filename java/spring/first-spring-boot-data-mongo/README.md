@@ -23,6 +23,36 @@ http://localhost:8080/tplAdd1
 * [spring-boot-querydsl demo](https://github.com/mariuszs/spring-boot-querydsl/blob/master/build.gradle)
 * [Querying Mongodb](http://www.querydsl.com/static/querydsl/latest/reference/html/ch02s07.html#d0e1737)
 
+# 自动创建 Repo 实现
+
+```txt
+org.springframework.data.repository.config.RepositoryBeanDefinitionRegistrarSupport#registerBeanDefinitions()
+org.springframework.data.repository.config.RepositoryBeanDefinitionBuilder#build()
+"org.springframework.data.jpa.repository.support.JpaRepositoryFactoryBean"
+
+JpaRepositoryFactoryBean#setBeanFactory(BeanFactory)
+RepositoryProxyPostProcessor
+  CrudMethodMetadataPostProcessor
+  EventPublishingRepositoryProxyPostProcessor
+  PersistenceExceptionTranslationRepositoryProxyPostProcessor
+  TransactionalRepositoryProxyPostProcessor
+
+RepositoryFactorySupport
+  #afterPropertiesSet()
+  #initAndReturn()
+  #getRepository()
+
+JpaRepositoryFactoryBean
+  #createRepositoryFactory()
+  #doCreateRepositoryFactory()
+
+CrudMethodMetadataPostProcessor
+AuditingBeanFactoryPostProcessor
+EntityManagerBeanDefinitionRegistrarPostProcessor
+BeanDefinitionUtils
+```
+
+
 # 总结
 1. idea intellij 要修改后手动触发 Build Project。若有必要请手动修改该快捷键。
 1. 自动更新索引:  索引变更需要手动在原有数据库清除索引，然后spring-data-mongo才能新建搜因

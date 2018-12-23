@@ -1,0 +1,14 @@
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0">
+
+    <!-- 引用的服务 -->
+    <reference ref="aaa"
+               interface="com.github.btpka3.first.felix.my.module.a.api.Aaa"></reference>
+
+    <bean id="b1"
+          class="com.github.btpka3.first.felix.my.module.b.impl.B1"
+          init-method="startUp"
+    >
+        <property name="b1" ref="b1"></property>
+    </bean>
+
+</blueprint>

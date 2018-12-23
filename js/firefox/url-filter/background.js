@@ -59,6 +59,11 @@ chrome.webRequest.onBeforeRequest.addListener(
 );
 
 
+chrome.cookies.onChanged.addListener(function (changeInfo){
+    console.log("cookie changed : "+JSON.stringify(changeInfo));
+});
+
+
 function replaceGoogleFontUrl(srcUrl) {
     var matches = gFontRegex.exec(srcUrl);
 

@@ -1,0 +1,5 @@
+rootProject.name = 'first-drools'
+
+include 'my-app'
+
+

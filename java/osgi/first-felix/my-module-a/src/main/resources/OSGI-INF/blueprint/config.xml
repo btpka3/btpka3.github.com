@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0" >
+    <bean id="aaa"
+          class="com.github.btpka3.first.felix.my.module.a.impl.AaaImpl"
+          init-method="startup"
+    >
+    </bean>
+
+    <!-- 要暴露的服务，以及要其实例 -->
+    <service ref="aaa"
+             interface="com.github.btpka3.first.felix.my.module.a.api.Aaa"></service>
+</blueprint>

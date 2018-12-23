@@ -45,7 +45,7 @@ dependencyManagement {
 //        dependency('org.grails:grails-validation:3.1.11')
 //        dependency('org.webjars:swagger-ui:2.2.10')
 //        dependency('javax.ws.rs:jsr311-api:1.1.1')
-//        dependency('javax.ws.rs:javax.ws.rs-api:2.0.1')
+        dependency('mockito-java8:2.0.1')
 //
 ////            dependency('org.glassfish.jersey.ext:jersey-spring3:2.25.1')
 ////            dependency('org.glassfish.jersey.media:jersey-media-multipart:2.25.1')

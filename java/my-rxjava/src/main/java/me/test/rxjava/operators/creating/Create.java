@@ -1,20 +1,25 @@
 package me.test.rxjava.operators.creating;
 
-import io.reactivex.*;
-import io.reactivex.parallel.*;
-import io.reactivex.schedulers.*;
-import me.test.rxjava.*;
+import io.reactivex.BackpressureStrategy;
+import io.reactivex.Flowable;
+import io.reactivex.FlowableEmitter;
+import io.reactivex.parallel.ParallelFlowable;
+import io.reactivex.schedulers.Schedulers;
+import me.test.rxjava.U;
 
-import java.time.*;
-import java.util.*;
-import java.util.concurrent.*;
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Create {
 
 
     public static void main(String[] args) {
 
-        create02();
+        create03();
 
     }
 
@@ -59,10 +64,10 @@ public class Create {
 
             List<Integer> finishedTaskIds = new ArrayList<>();
 
-            Runnable checkFinished = ()->{
+            Runnable checkFinished = () -> {
                 for (int i = 0; i < 3; i++) {
                     // 只要有一个没完成，就返回
-                    if(!finishedTaskIds.contains(i)){
+                    if (!finishedTaskIds.contains(i)) {
                         return;
                     }
                     e.onComplete();
@@ -104,5 +109,84 @@ public class Create {
             e.printStackTrace();
         }
         U.print("done.", "");
+    }
+
+
+    /**
+     * 按 3，7，11 的整倍数创建子流。
+     */
+    public static void create03() {
+        System.out.println("----------------------create03");
+
+        long startTime = System.currentTimeMillis();
+
+        AtomicInteger count3 = new AtomicInteger(0);
+        AtomicInteger total3 = new AtomicInteger(0);
+        AtomicReference<FlowableEmitter> emitterRef3 = new AtomicReference<>();
+        Flowable.<Integer>create(e -> {
+            U.print("3.create", e);
+            emitterRef3.set(e);
+        }, BackpressureStrategy.DROP)
+                .doOnNext(i -> count3.addAndGet(1))
+                .subscribe(i -> total3.addAndGet(i),
+                        (e) -> U.print("3.error", e),
+                        () -> U.print("3.complete", " count = " + count3.get() + ", total = " + total3.get())
+                );
+
+        AtomicInteger count7 = new AtomicInteger(0);
+        AtomicInteger total7 = new AtomicInteger(0);
+        AtomicReference<FlowableEmitter> emitterRef7 = new AtomicReference<>();
+        Flowable.<Integer>create(e -> {
+            U.print("7.create", e);
+            emitterRef7.set(e);
+        }, BackpressureStrategy.DROP)
+                .doOnNext(i -> count7.addAndGet(1))
+                .subscribe(i -> total7.addAndGet(i),
+                        (e) -> U.print("7.error", e),
+                        () -> U.print("7.complete", " count = " + count7.get() + ", total = " + total7.get())
+                );
+
+        AtomicInteger count11 = new AtomicInteger(0);
+        AtomicInteger total11 = new AtomicInteger(0);
+        AtomicReference<FlowableEmitter> emitterRef11 = new AtomicReference<>();
+        Flowable.<Integer>create(e -> {
+            U.print("11.create", e);
+            emitterRef11.set(e);
+        }, BackpressureStrategy.DROP)
+                .doOnNext(i -> count11.addAndGet(1))
+                .subscribe(i -> total11.addAndGet(i),
+                        (e) -> U.print("11.error", e),
+                        () -> U.print("11.complete", " count = " + count11.get() + ", total = " + total11.get())
+                );
+
+        Flowable.range(0, 1000)
+                .subscribe((i) -> {
+                            if (i % 3 == 0) {
+                                emitterRef3.get().onNext(i);
+                            } else if (i % 7 == 0) {
+                                emitterRef7.get().onNext(i);
+                            } else if (i % 11 == 0) {
+                                emitterRef11.get().onNext(i);
+                            }
+                        },
+                        (e) -> {
+                            U.print("error", e);
+                            emitterRef3.get().onError(e);
+                            emitterRef7.get().onError(e);
+                            emitterRef11.get().onError(e);
+                        },
+                        () -> {
+                            U.print("complete", "");
+                            emitterRef3.get().onComplete();
+                            emitterRef7.get().onComplete();
+                            emitterRef11.get().onComplete();
+                        }
+                );
+
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

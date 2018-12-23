@@ -6,9 +6,10 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("io.spring.gradle:dependency-management-plugin:1.0.3.RELEASE")
+        classpath("io.spring.gradle:dependency-management-plugin:1.0.6.RELEASE")
     }
 }
+
 
 apply plugin: 'eclipse'
 apply plugin: 'idea'
@@ -42,15 +43,28 @@ dependencyManagement {
         cacheChangingModulesFor 0, 'seconds'
     }
     imports {
-        //mavenBom("net.kingsilk:qh-clients-bom:${qhCientsBomVersion}")
+        //mavenBom "io.projectreactor:reactor-bom:Bismuth-RELEASE"
+        mavenBom("org.springframework.boot:spring-boot-starter-parent:${springBootVersion}")
     }
     dependencies {
-        dependency("io.reactivex.rxjava2:rxjava:2.1.3")
+        dependency("io.reactivex.rxjava2:rxjava:2.2.3")
         dependency("io.reactivex.rxjava2:rxjava-joins:0.22.0")
+        dependency("org.apache.commons:commons-io:1.3.2")
+
     }
 }
 
 
 dependencies {
+    compile 'io.projectreactor:reactor-core'
+    compile 'org.apache.commons:commons-io'
     compile('io.reactivex.rxjava2:rxjava')
+    compile('org.apache.commons:commons-lang3')
+    compileOnly('org.projectlombok:lombok')
+    testCompile('org.projectlombok:lombok')
+    //testCompile("io.projectreactor:reactor-test")
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('org.mockito:mockito-core')
+
+
 }

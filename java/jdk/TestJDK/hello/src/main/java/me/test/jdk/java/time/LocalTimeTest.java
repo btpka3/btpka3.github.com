@@ -3,6 +3,7 @@ package me.test.jdk.java.time;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
@@ -40,7 +41,10 @@ public class LocalTimeTest {
         LocalDateTime ldt = LocalDateTime.now();
         System.out.println("LocalDateTime : " + ldt);
         // Instant instant = ldt.toInstant(ZoneOffset.UTC);
-        Instant instant = ldt.atZone(ZoneId.systemDefault()).toInstant();
+        Instant instant = ldt.atZone(
+                // ZoneId.systemDefault()
+                ZoneOffset.ofHours(8)
+        ).toInstant();
         System.out.println("Instant       : " + instant);
         Date date = Date.from(instant);
         System.out.println("Date          : " + date);
@@ -54,6 +58,7 @@ public class LocalTimeTest {
         System.out.println("formated str  : " + text);
         LocalDateTime parsedDateLdt = LocalDateTime.parse(text, DateTimeFormatter.ISO_DATE_TIME);
         System.out.println("parsed        : " + parsedDateLdt);
+        System.out.println("parsed1        : " + LocalDateTime.parse("2018-10-22 17-11-48", DateTimeFormatter.ofPattern("yyyy-MM-dd HH-mm-ss")));
     }
 
     static void settingLocalDateTime() {

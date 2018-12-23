@@ -1,0 +1,132 @@
+buildscript {
+    ext {
+        //springBootVersion = '1.5.2.RELEASE'
+    }
+    repositories {
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("io.spring.gradle:dependency-management-plugin:1.0.4.RELEASE")
+        classpath("gradle.plugin.com.gorylenko.gradle-git-properties:gradle-git-properties:1.4.17")
+    }
+}
+
+allprojects {
+
+    apply plugin: 'eclipse'
+    apply plugin: 'idea'
+//    apply plugin: 'org.springframework.boot'
+    //apply plugin: 'application'
+    apply plugin: 'project-report'
+
+    apply plugin: 'java'
+    apply plugin: 'maven'
+    apply plugin: "com.gorylenko.gradle-git-properties"
+
+    apply plugin: 'org.springframework.boot'
+    apply plugin: "io.spring.dependency-management"
+
+    repositories {
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        maven { url 'https://repo.spring.io/libs-milestone' }
+        mavenCentral()
+    }
+
+
+    idea {
+        module {
+            downloadJavadoc = false
+            downloadSources = true
+        }
+    }
+    eclipse {
+        classpath {
+            downloadSources = true
+        }
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom("org.springframework.boot:spring-boot-starter-parent:${springBootVersion}")
+            mavenBom("org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}")
+        }
+
+        dependencies {
+
+
+            dependency('log4j:log4j:1.2.17')
+
+
+            dependency('org.apache.commons:commons-math3:3.6.1')
+            dependency('commons-io:commons-io:2.6')
+            dependency("org.rocksdb:rocksdbjni:5.13.2")
+
+
+        }
+    }
+
+
+    dependencies {
+        compile('org.springframework.boot:spring-boot-starter')
+
+        compile('org.springframework.boot:spring-boot-starter')
+        compile("commons-io:commons-io")
+        compile("org.rocksdb:rocksdbjni")
+
+
+
+        testCompile('org.springframework.boot:spring-boot-starter-test')
+        testCompile('org.mockito:mockito-core')
+    }
+
+
+    bootRun {
+        //addResources = true
+        systemProperties = System.properties
+    }
+
+    springBoot {
+        buildInfo {
+            properties {
+                additional = [
+                        'a': 'alpha',
+                        'b': 'bravo'
+                ]
+            }
+        }
+    }
+
+    jar {
+        manifest {
+            attributes "Implementation-Version": project.version
+        }
+    }
+
+    // gradle -DmainClass=me.test.Example execute
+    task execute(type: JavaExec) {
+        main = System.getProperty('mainClass')
+        classpath = sourceSets.main.runtimeClasspath
+    }
+
+    task sourcesJar(type: Jar, dependsOn: classes) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        classifier = 'javadoc'
+        from javadoc.destinationDir
+    }
+
+    artifacts {
+        archives sourcesJar
+        //archives javadocJar
+    }
+
+    gitProperties {
+        gitRepositoryRoot = new File("${project.rootDir}/../../..")
+    }
+
+
+}

@@ -25,7 +25,7 @@
     - `/META-INF/aop.xml` 存在与否
     - `@EnableAspectJAutoProxy`
 - AspectJ LTW 时， `@Aspect` 类的实例是怎么初始化的，它如何依赖注入 spring 管理的其他 bean ？    
- 
+- LTW 和 运行时（spring 基于代理的）AOP 为何没重复AOP？
 
 ## 参考
 

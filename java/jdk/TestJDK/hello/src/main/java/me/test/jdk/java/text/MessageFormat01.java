@@ -50,6 +50,13 @@ public class MessageFormat01 {
                 "ccc"
         ));
 
+        // 单引号是转义字符
+        System.out.println(MessageFormat.format(
+                "DDA : '{0}',''{1}'',{2}",
+                "aaa",
+                "bbb",
+                "ccc"
+        ));
 
     }
 }

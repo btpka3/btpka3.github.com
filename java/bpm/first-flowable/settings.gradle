@@ -1,0 +1,6 @@
+rootProject.name = 'first-flowable'
+
+//include 'xxx-api'
+//includeBuild './my-querydsl-plugin'
+
+

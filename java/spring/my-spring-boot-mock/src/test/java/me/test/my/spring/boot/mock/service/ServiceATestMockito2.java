@@ -1,16 +1,18 @@
 package me.test.my.spring.boot.mock.service;
 
 
-import org.junit.*;
-import org.junit.runner.*;
-import org.mockito.*;
-import org.mockito.junit.*;
-import org.slf4j.*;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
+import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.Mockito.*;
 
 //@RunWith(MockitoJUnitRunner.class)
@@ -71,6 +73,24 @@ public class ServiceATestMockito2 {
             assertThat(e.getMessage()).isEqualTo("ERR");
         }
 
+    }
+
+    @Test
+    public void s1() throws IOException {
+        ServiceA a = new ServiceA();
+
+        // FIXME: 修改 consumer 调用
+        a.s();
+    }
+
+    @Test
+    public void x1() {
+        ServiceA a = new ServiceA();
+        a.c = mockC;
+
+        when(mockC.str(anyInt()))
+                .thenAnswer(iv -> "C999");
+        a.x();
     }
 
 }
