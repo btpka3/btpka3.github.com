@@ -30,10 +30,14 @@ spring.jackson.default-property-inclusion: non_null
 
 
 
+# 如果想通过 h2 web 控制台 配合 单元测试，来检查数据库内容，可以：
+# (1) 独立命令启动 H2 数据库
 # java -jar `find $HOME/.m2/repository/com/h2database/h2 -type f -name "*.jar"|grep -v sources |tail -n 1`
-
+# (2) 仿照 UserTest （不事务回滚），一个一个的运行 test case
+# (3) 通过  http://localhost:8082 访问 h2 控制台
 spring.datasource.driver-class-name: org.h2.Driver
+#spring.datasource.url: jdbc:h2:tcp://localhost/~/.first-spring-seccurity
 spring.datasource.url: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
 spring.datasource.username: sa
-spring.datasource.password: sa
+spring.datasource.password:
 spring.h2.console.enabled: true

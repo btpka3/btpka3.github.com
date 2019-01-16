@@ -1,4 +1,4 @@
-package me.test.demo.acl;
+package me.test.demo.common;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.security.acls.model.MutableAclService;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
@@ -19,9 +18,6 @@ import org.springframework.test.context.junit4.SpringRunner;
         JdbcTemplateTest.Application.class
 })
 public class JdbcTemplateTest {
-
-    private MutableAclService mutableAclService;
-
 
     @Autowired
     JdbcTemplate jdbcTemplate;
