@@ -34,6 +34,7 @@ allprojects {
 
     dependencyManagement {
         imports {
+            mavenBom("org.infinispan:infinispan-bom:${infinispanVersion}")
             mavenBom("org.springframework.boot:spring-boot-starter-parent:${springBootVersion}")
         }
 
@@ -100,6 +101,8 @@ allprojects {
             dependency("io.github.openfeign:feign-httpclient:${feignVersion}")
             dependency("io.github.openfeign:feign-jaxrs:${feignVersion}")
             dependency("io.github.openfeign:feign-jackson:${feignVersion}")
+            dependency("org.infinispan:infinispan-spring-boot-starter-embedded:${infinispanStarterVersion}")
+            dependency("org.infinispan:infinispan-spring-boot-starter:${infinispanStarterVersion}")
 
 
             //dependency('org.apache.geode:geode-core:1.1.1')
