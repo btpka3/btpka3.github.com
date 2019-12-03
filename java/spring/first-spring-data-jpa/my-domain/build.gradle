@@ -1,45 +1,19 @@
-//jar {
-//    baseName = 'demo'
-//    version = '0.0.1-SNAPSHOT'
-//}
-
-
 plugins {
     id 'io.franzbecker.gradle-lombok' version '1.11'
     id "com.ewerk.gradle.plugins.querydsl" version "1.0.9"
-//    id "org.springframework.boot" version "${springBootVersion}"
-    id "org.springframework.boot" //version "2.0.0.RELEASE"
-    // https://github.com/etiennestuder/gradle-jooq-plugin
-    id 'nu.studer.jooq' //version '3.0.0'
+    id "org.springframework.boot"
 }
-//apply plugin: 'org.springframework.boot'
 apply plugin: "java"
-//apply plugin: 'nu.studer.jooq'
 
 jar {
     enabled = true
 }
 bootJar {
     enabled = false
-    //classifier = 'boot'
 }
-//test {
-//    include 'me/test/**'
-//    testLogging.showStandardStreams = false
-//}
-
-// https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-gradle-plugin.html#build-tool-plugins-gradle-repackage-configuration
-//bootRepackage {
-//    enabled = false
-//}
-
 
 sourceSets {
-//    generated {
-//        java {
-//            //srcDirs = ['src/main/generated']
-//        }
-//    }
+
     querydsl
 
     main {
@@ -54,113 +28,19 @@ sourceSets {
     }
 }
 
-//
-//configurations {
-////    springAgent
-////    querydslapt
-////    querydslapt
-//}
-
-//buildscript {
-////    repositories {
-////        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
-////        mavenCentral()
-////    }
-//    dependencies {
-//        //classpath("com.github.btpka3:my-querydsl-plugin")
-//    }
-//
-//}
-////apply plugin: 'com.github.btpka3.gradle.plugins.querydsl'
-
 dependencies {
-    //compile project(":data-core")
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('com.querydsl:querydsl-jpa')
-    //compile('com.querydsl:querydsl-apt')
     compile('com.querydsl:querydsl-core')
     compile('com.querydsl:querydsl-collections')
     compile('joda-time:joda-time')
-    compile 'org.jooq:jooq'
-    //compile 'org.jooq:jooq-meta'
-    jooqRuntime 'org.jooq:jooq-codegen'
-    runtime 'org.jooq:jooq-meta-extensions'
-    jooqRuntime 'org.jooq:jooq-meta-extensions:3.10.5'
-    jooqRuntime 'com.h2database:h2'
-    compile 'com.h2database:h2'
-//    jooqRuntime 'org.slf4j:jcl-over-slf4j'
-//    jooqRuntime 'org.slf4j:slf4j-simple'
-    jooqRuntime("commons-logging:commons-logging:1.2")
-    jooqRuntime("org.hibernate:hibernate-core:5.2.14.Final")
-    //jooqRuntime("org.hibernate:hibernate-core")
-
-    //querydslapt('com.querydsl:querydsl-apt')
-    //compileOnly('org.projectlombok:lombok')
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('com.h2database:h2')
     testCompile('mysql:mysql-connector-java')
     testCompile('org.springframework.boot:spring-boot-starter-logging')
     testCompile('org.assertj:assertj-core')
 
-}
-jooq {
-    jooq {
-        version = '3.10.5' // the default (can be omitted)
-        edition = 'OSS'    // the default (can be omitted), other allowed values are PRO, PRO_JAVA_6, and TRIAL
-    }
-    samplexx(sourceSets.main) {
-        jdbc {
-            driver = 'org.h2.Driver'
-            url = 'jdbc:h2:~/test;AUTO_SERVER=TRUE'
-            user = 'sa'
-            password = ''
-        }
-        generator {
-//            name = 'org.jooq.codegen.DefaultGenerator'
-            name = 'org.jooq.util.DefaultGenerator'
-            database {
-//                name = 'org.jooq.meta.h2.H2Database'
-                name = 'org.jooq.util.h2.H2Database'
-                includes = '.*'
-                excludes = ''
-            }
-            target {
-                packageName = 'nu.studer.sample'
-            }
-        }
-    }
-    sampleJpa(sourceSets.main) {
-        generator {
-//            name = 'org.jooq.codegen.DefaultGenerator'
-//            name = 'org.jooq.util.DefaultGenerator'
-            strategy {
-//                name = 'org.jooq.codegen.DefaultGeneratorStrategy'
-                name = 'org.jooq.util.DefaultGeneratorStrategy'
-                // ...
-            }
-            database {
-                name = 'org.jooq.util.jpa.JPADatabase'
-                properties {
-                    property {
-                        key = 'packages'
-                        value = 'com.github.btpka3.first.spring.data.jpa'
-                    }
-                }
-            }
-            generate {
-                relations = true
-                deprecated = false
-                records = true
-                immutablePojos = true
-                fluentSetters = true
-                // ...
-            }
-            target {
-                packageName = 'nu.studer.sample'
-                // directory = ...
-            }
-        }
-    }
+
 }
 lombok { // optional: values below are the defaults
     version = "1.16.20"
@@ -171,12 +51,10 @@ querydsl {
     //springDataMongo = true
     //library = 'com.querydsl:querydsl-apt:4.1.4'
     jpa = true
-    library = 'com.querydsl:querydsl-apt'
+    //library = 'com.querydsl:querydsl-apt'
     //querydslSourcesDir = 'src/querydsl/java'
 }
 
-//println "---- zll 1_1: "+project.extensions.querydsl.querydslSourcesDir
-//println "---- zll 1_2: "+project.extensions.querydsl
 
 idea {
     module {
@@ -184,41 +62,3 @@ idea {
         generatedSourceDirs += file('src/querydsl/java')
     }
 }
-
-test {
-    include 'me/test/**'
-    testLogging.showStandardStreams = false
-}
-
-// ------------------ bak
-
-//task generateQueryDSL(type: GroovyCompile, group: 'build', description: 'Generates the QueryDSL query types') {
-//
-//    source = sourceSets.main.groovy
-//    classpath = configurations.compile + configurations.querydslapt
-//
-//    groovyOptions.javaAnnotationProcessing = true
-//    options.compilerArgs << "-proc:only"
-//    options.compilerArgs << "-processor" << "org.springframework.data.mongodb.repository.support.MongoAnnotationProcessor"
-//
-//    destinationDir = sourceSets.generated.java.srcDirs.iterator().next()
-//}
-//
-//compileJava {
-//    dependsOn generateQueryDSL
-//    source generateQueryDSL.destinationDir
-//}
-//
-//compileGeneratedJava {
-//    dependsOn generateQueryDSL
-//    options.warnings = false
-//    classpath += sourceSets.main.runtimeClasspath
-//}
-//clean {
-//    delete sourceSets.generated.java.srcDirs
-//}
-
-//project.tasks.compileJava.dependsOn project.tasks.compileQuerydsl
-//compileGroovy {
-//    dependsOn compileQueryDsl
-//}

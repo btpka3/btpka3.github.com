@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 /**
+ * 在 jar 中找特定内容
  * @date 2018-12-03
  */
 public class Zfind {
@@ -40,7 +41,8 @@ public class Zfind {
 
     public static boolean contentMatchInZip(String content) {
 
-        return content.contains("jmenv.tbsite.net");
+//        return content.contains("jmenv.tbsite.net");
+        return content.contains("WEB-INF/logback.xml");
         //return true;
     }
 

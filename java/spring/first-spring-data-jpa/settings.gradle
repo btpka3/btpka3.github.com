@@ -1,6 +1,8 @@
 rootProject.name = 'first-spring-data-jpa'
 
 include 'my-domain'
+include 'my-domain-jooq'
+include 'my-domain-querydsl'
 include 'my-app'
 
 

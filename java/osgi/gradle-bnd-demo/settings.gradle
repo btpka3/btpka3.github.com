@@ -1,0 +1,15 @@
+
+
+pluginManagement {
+    resolutionStrategy {
+    }
+    repositories {
+        mavenLocal()
+        gradlePluginPortal()
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        mavenCentral()
+    }
+}
+
+rootProject.name = 'gradle-bnd-demo'
+

@@ -1,5 +1,5 @@
-package com.github.btpka3.first.felix.my.module.a.api;
+package com.github.btpka3.gradle.bnd.demo.api;
 
-public interface Aaa {
-    String hello(String name) ;
+public interface Hi {
+    String hi(String name) ;
 }

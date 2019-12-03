@@ -9,7 +9,7 @@ buildscript {
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
         classpath("io.spring.gradle:dependency-management-plugin:1.0.4.RELEASE")
-        classpath("gradle.plugin.com.gorylenko.gradle-git-properties:gradle-git-properties:1.4.17")
+        //classpath("gradle.plugin.com.gorylenko.gradle-git-properties:gradle-git-properties:1.4.17")
     }
 }
 
@@ -23,7 +23,7 @@ allprojects {
 
     apply plugin: 'java'
     apply plugin: 'maven'
-    apply plugin: "com.gorylenko.gradle-git-properties"
+//    apply plugin: "com.gorylenko.gradle-git-properties"
 
     apply plugin: 'org.springframework.boot'
     apply plugin: "io.spring.dependency-management"
@@ -131,9 +131,9 @@ allprojects {
         //archives javadocJar
     }
 
-    gitProperties {
-        gitRepositoryRoot = new File("${project.rootDir}/../../..")
-    }
+//    gitProperties {
+//        gitRepositoryRoot = new File("${project.rootDir}/../../..")
+//    }
 
 
 }

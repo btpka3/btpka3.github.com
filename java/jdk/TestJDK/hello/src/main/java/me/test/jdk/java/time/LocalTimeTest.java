@@ -20,6 +20,7 @@ public class LocalTimeTest {
         format();
         settingLocalDateTime();
         plus();
+        minus();
     }
 
 
@@ -89,4 +90,15 @@ public class LocalTimeTest {
         System.out.println("new LocalDateTime : " + newLdt);
     }
 
+     static void minus() {
+        System.out.println("============================= minus");
+
+        LocalDateTime ldt = LocalDateTime.of(2019, 6, 21, 02, 24, 58, 444 * 1000 * 1000);
+
+        LocalDateTime newLdt = ldt
+                .minusDays(6*30);
+
+        System.out.println("LocalDateTime     : " + ldt);
+        System.out.println("new LocalDateTime : " + newLdt);
+    }
 }

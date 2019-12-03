@@ -1,13 +1,8 @@
 
-//jar {
-//    baseName = 'demo'
-//    version = '0.0.1-SNAPSHOT'
-//}
-
-
 dependencies {
 
     compile project(":my-domain")
+    compile project(":my-domain-jooq")
 
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.springframework.boot:spring-boot-starter-jdbc')
@@ -25,19 +20,5 @@ dependencies {
     compile('org.jooq:jooq-codegen')
     compile('org.jooq:jooq-meta')
     compile('org.jooq:jooq-meta-extensions')
-}
-
-test {
-    include 'me/test/**'
-    testLogging.showStandardStreams = false
-    // listen to events in the test execution lifecycle
-//    beforeTest { descriptor ->
-//        logger.lifecycle("Running test: " + descriptor)
-//    }
-//
-//    // listen to standard out and standard error of the test JVM(s)
-//    onOutput { descriptor, event ->
-//        logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message )
-//    }
 }
 

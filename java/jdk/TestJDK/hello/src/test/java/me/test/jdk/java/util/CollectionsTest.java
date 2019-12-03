@@ -1,6 +1,7 @@
 package me.test.jdk.java.util;
 
-import java.io.IOException;
+import org.junit.Test;
+
 import java.util.*;
 
 /**
@@ -8,12 +9,9 @@ import java.util.*;
  */
 public class CollectionsTest {
 
-    public static void main(String[] args) throws IOException {
-        test02();
 
-    }
-
-    public static void test01() {
+    @Test
+    public void test01() {
         List<String> list1 = Arrays.asList("aa", "bb", "cc", "dd");
         List<String> list2 = Arrays.asList("cc", "dd", "xx", "yy");
 
@@ -22,7 +20,8 @@ public class CollectionsTest {
         System.out.println(list1.retainAll(list2));
     }
 
-    public static void test02() {
+    @Test
+    public void test02() {
         Set<String> set1 = new HashSet<>(Arrays.asList("aa", "bb", "11", "22"));
         Set<String> set2 = new HashSet<>(Arrays.asList("11", "22", "xx", "yy"));
 
@@ -38,6 +37,13 @@ public class CollectionsTest {
         Set<String> onlyInSet2 = new HashSet<>(set2);
         onlyInSet2.removeAll(intersection);
         System.out.println("onlyInSet2 = " + onlyInSet2);
+    }
+
+    @Test
+    public void test03() {
+        List<String> list1 = Arrays.asList("aa", "bb", "cc", "dd");
+        Collections.shuffle(list1);
+        System.out.println(list1);
     }
 
 }

@@ -3,8 +3,8 @@ package com.github.btpka3.first.spring.data.jpa.domain;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Date;
+import java.util.EnumSet;
 
 /**
  * 电影
@@ -59,51 +59,5 @@ public class Film {
 
     @Column(name = "last_update")
     private Date lastUpdate;
-
-
-    public static class FilmRatingEnumConverter implements AttributeConverter<FilmRatingEnum, String> {
-
-        @Override
-        public String convertToDatabaseColumn(FilmRatingEnum attribute) {
-
-            return attribute.getCode();
-        }
-
-        @Override
-        public FilmRatingEnum convertToEntityAttribute(String str) {
-            Optional<FilmRatingEnum> opt = Arrays.stream(FilmRatingEnum.values())
-                    .filter(e -> Objects.equals(e.getCode(), str))
-                    .findFirst();
-            if (opt.isPresent()) {
-                return opt.get();
-            }
-
-            throw new RuntimeException("invalid code '" + str + "' for FilmRatingEnum");
-
-        }
-    }
-
-
-    public static class SpecialFeaturesConverter implements AttributeConverter<EnumSet<FilmSpecialFeatureEnum>, String> {
-
-        @Override
-        public String convertToDatabaseColumn(EnumSet<FilmSpecialFeatureEnum> attribute) {
-
-            return attribute.stream()
-                    .map(e -> e.getCode())
-                    .collect(Collectors.joining(","));
-        }
-
-        @Override
-        public EnumSet<FilmSpecialFeatureEnum> convertToEntityAttribute(String dbData) {
-            return Arrays.stream(dbData.split(","))
-                    .map(s -> Arrays.stream(FilmSpecialFeatureEnum.values())
-                            .filter(e -> Objects.equals(e.getCode(), s))
-                            .findFirst()
-                            .orElse(null)
-                    )
-                    .filter(Objects::nonNull)
-                    .collect(Collectors.toCollection(() -> EnumSet.noneOf(FilmSpecialFeatureEnum.class)));
-        }
-    }
 }
+

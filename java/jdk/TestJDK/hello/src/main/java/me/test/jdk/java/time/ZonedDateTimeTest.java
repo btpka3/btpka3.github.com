@@ -1,9 +1,6 @@
 package me.test.jdk.java.time;
 
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
@@ -13,24 +10,27 @@ import java.util.Date;
 public class ZonedDateTimeTest {
 
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
 
-        fromDate();
-        toDate();
-        format();
-        plus();
+//        fromDate();
+//        toDate();
+//        format();
+//        plus();
+        zone();
     }
 
 
     // ZonedDateTime <- Instant <- Date
     static void fromDate() {
         System.out.println("============================= fromDate");
+
+
         Date date = new Date();
-        System.out.println("Date          : " + date);
+        System.out.println("Date          : " + date + ", time=" + date.getTime() + ", Instant=" + Instant.now(Clock.systemDefaultZone()).toEpochMilli());
         Instant instant = date.toInstant();
-        System.out.println("Instant       : " + instant);
+        System.out.println("Instant       : " + instant + ",  " + instant.toEpochMilli());
         ZonedDateTime zdt = ZonedDateTime.ofInstant(instant, ZoneOffset.UTC);
-        System.out.println("LocalDateTime : " + zdt);
+        System.out.println("LocalDateTime : " + zdt + ", time=");
     }
 
     // ZonedDateTime -> Instant -> Date
@@ -57,6 +57,8 @@ public class ZonedDateTimeTest {
 
 
     }
+
+
     static void plus() {
         System.out.println("============================= plus");
         ZoneId.systemDefault();
@@ -74,6 +76,18 @@ public class ZonedDateTimeTest {
         System.out.println("ZonedDateTime     : " + zdt);
         System.out.println("new ZonedDateTime : " + newZdt);
     }
+
+
+      static void zone() {
+        System.out.println("============================= zone");
+        ZonedDateTime currentDate = ZonedDateTime.now(ZoneOffset.UTC);
+
+        System.out.println(currentDate);
+        System.out.println(currentDate.toInstant().toEpochMilli());
+        System.out.println(System.currentTimeMillis());
+        System.out.println(ZoneId.systemDefault());
+    }
+
 
 
 }

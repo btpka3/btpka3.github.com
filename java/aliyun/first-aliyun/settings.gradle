@@ -1,0 +1,6 @@
+rootProject.name = 'first-aliyun'
+
+include 'first-green'
+include 'first-mq'
+
+

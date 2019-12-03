@@ -7,21 +7,17 @@ import org.springframework.data.querydsl.EntityPathResolver;
 
 import javax.persistence.EntityManager;
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * 保留该接口，方法统一追加自定义方法
  */
-public class MyRepoImpl<T, ID extends Serializable>
+public class BaseRepoImpl<T, ID extends Serializable>
         extends QuerydslJpaPredicateExecutor<T>
-        implements MyRepo<T, ID> {
+        implements BaseRepo<T, ID> {
 
-    public MyRepoImpl(JpaEntityInformation<T, ?> entityInformation, EntityManager entityManager, EntityPathResolver resolver, CrudMethodMetadata metadata) {
+    public BaseRepoImpl(JpaEntityInformation<T, ?> entityInformation, EntityManager entityManager, EntityPathResolver resolver, CrudMethodMetadata metadata) {
         super(entityInformation, entityManager, resolver, metadata);
     }
 
-    @Override
-    public List<T> findAll() {
-        return null;
-    }
+    // TODO add custom method impl
 }

@@ -1,21 +1,30 @@
-//jar {
-//    baseName = 'demo'
-//    version = '0.0.1-SNAPSHOT'
-//}
+import aQute.bnd.gradle.Bundle
 
 
-apply plugin: 'osgi'
+plugins {
+    id 'java'
+//    id "org.springframework.boot"
+    id "biz.aQute.bnd.builder"
+}
+
+
+
 
 
 jar {
     enabled = true
 
-    manifest {
-        instruction 'Private-Package', 'com.github.btpka3.first.felix.my.module.a.impl'
-        instruction 'Bundle-Vendor', 'btpka3'
-        instruction 'Bundle-Description', 'Demo Framework'
-        instruction 'Bundle-DocURL', 'http://www.test.com'
-    }
+    bnd(
+            'Bundle-Name': 'overwrittenSpecialOsgiName',
+            'Private-Package': 'com.github.btpka3.first.felix.my.module.a.impl',
+            'Bundle-Vendor': 'btpka3.github.io',
+            'Bundle-Description': 'test my module a',
+            'Bundle-DocURL': 'http://btpka3.github.io/my-module-a'
+    )
+}
+
+task bundle(type: Bundle) {
+    from sourceSets.main.output
 }
 
 dependencies {
@@ -26,24 +35,13 @@ dependencies {
     compile('org.apache.logging.log4j:log4j-jcl:2.10.0')
     compile('org.apache.felix:org.apache.felix.framework:5.6.0')
     compile('org.osgi:osgi.annotation:7.0.0')
+    compile('org.osgi:org.osgi.core:6.0.0')
+    compile('org.osgi:org.osgi.service.component:1.4.0')
+    compile('org.osgi:org.osgi.service.component.annotations:1.4.0')
+    compile('org.osgi:org.osgi.service.metatype.annotations:1.4.0')
+    compile('org.apache.felix:org.apache.felix.framework:6.0.2')
 }
-bootJar {
-    enabled = false
-    //classifier = 'boot'
-}
-
-
-test {
-    include 'me/test/**'
-    testLogging.showStandardStreams = false
-    // listen to events in the test execution lifecycle
-//    beforeTest { descriptor ->
-//        logger.lifecycle("Running test: " + descriptor)
-//    }
-//
-//    // listen to standard out and standard error of the test JVM(s)
-//    onOutput { descriptor, event ->
-//        logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message )
-//    }
-}
+//bootJar {
+//    enabled = false
+//}
 

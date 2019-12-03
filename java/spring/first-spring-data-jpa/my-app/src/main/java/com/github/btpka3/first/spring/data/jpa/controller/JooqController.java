@@ -1,17 +1,16 @@
 package com.github.btpka3.first.spring.data.jpa.controller;
 
 
-import com.github.btpka3.first.spring.data.jpa.domain.QCountry;
 import com.github.btpka3.first.spring.data.jpa.repo.CountryRepo;
+import org.jooq.Condition;
 import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import static com.querydsl.core.types.dsl.Expressions.allOf;
+import static com.github.btpka3.first.spring.data.jpa.jooq.Tables.FILM;
+import static org.jooq.impl.DSL.trueCondition;
 
 /**
  *
@@ -29,11 +28,37 @@ public class JooqController {
     @RequestMapping("/list")
     @ResponseBody
     Object list() {
-
-
-        return this.dsl.selectFrom(AUTHOR)
-                .where(AUTHOR.DATE_OF_BIRTH.greaterThan(new GregorianCalendar(1980, 0, 1)))
-                .fetch(AUTHOR.DATE_OF_BIRTH);
-
+        return this.dsl.selectFrom(FILM)
+                .where(FILM.TITLE.like("%A%"))
+                .and(FILM.DESCRIPTION.like("%Touch%")
+                        .or(FILM.DESCRIPTION.like("%Doc%"))
+                )
+                .orderBy(FILM.TITLE.asc())
+                .limit(10)
+                .offset(10 * 1)
+                .fetch();
     }
+
+    // https://www.jooq.org/doc/3.0/manual/sql-building/dynamic-sql/
+    Condition dynamicSql() {
+
+        Condition result = trueCondition();
+        if (1 < 2) {
+            result = result.and(FILM.DESCRIPTION.like("%Touch%"));
+        }
+        return result;
+    }
+
+    String toSql() {
+        return this.dsl.selectFrom(FILM)
+                .where(FILM.TITLE.like("%A%"))
+                .and(FILM.DESCRIPTION.like("%Touch%")
+                        .or(FILM.DESCRIPTION.like("%Doc%"))
+                )
+                .orderBy(FILM.TITLE.asc())
+                .limit(10)
+                .offset(10 * 1)
+                .getSQL();
+    }
+
 }
