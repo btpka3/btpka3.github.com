@@ -1,0 +1,54 @@
+// Sharing dependency versions between projects : https://docs.gradle.org/6.0.1/userguide/platforms.html
+// https://docs.gradle.org/6.0.1/userguide/java_platform_plugin.html#java_platform_plugin
+
+plugins {
+    id 'java-platform'
+    id 'maven-publish'
+}
+
+//class MyAlignmentRule implements ComponentMetadataRule {
+//    void execute(ComponentMetadataContext ctx) {
+//        ctx.details.with {
+//            if (id.group.startsWith("com.fasterxml.jackson")) {
+//                // declare that Jackson modules all belong to the Jackson virtual platform
+//                belongsTo("com.fasterxml.jackson:jackson-platform:${id.version}")
+//            }
+//        }
+//    }
+//}
+
+dependencies {
+
+
+//    implementation platform("org.infinispan:infinispan-bom:${infinispanVersion}")
+//    implementation platform("org.springframework.boot:spring-boot-starter-parent:${springBootVersion}")
+//
+//    // Forcefully downgrade the Jackson platform to 2.8.9
+//    components.all(MyAlignmentRule)
+//    implementation enforcedPlatform('com.fasterxml.jackson:jackson-platform:2.8.9')
+//
+//
+//    implementation "com.kjetland:mbknor-jackson-jsonschema_2.12:1.0.34"
+//
+//
+    constraints {
+        api(project(":first-spring-boot-test"))
+
+        api 'commons-httpclient:commons-httpclient:3.1'
+        runtime 'org.postgresql:postgresql:42.2.5'
+    }
+
+//    constraints {
+//        api 'commons-httpclient:commons-httpclient:3.1'
+//        runtime 'org.postgresql:postgresql:42.2.5'
+//    }
+
+}
+
+publishing {
+    publications {
+        myPlatform(MavenPublication) {
+            from components.javaPlatform
+        }
+    }
+}

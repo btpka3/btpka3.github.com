@@ -13,8 +13,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
 
 /**
  * @author dangqian.zll
@@ -93,7 +91,7 @@ public class Jackson8601Test {
         }
     }
 
-    @Test
+    @Test(expected = Exception.class)
     public void x() throws ParseException {
         DateFormat df = new SimpleDateFormat("yyyy-MM-ddTHH:mm:ss.SSSZ");
         Date d = df.parse("2019-07-03T07:37:56.197Z");

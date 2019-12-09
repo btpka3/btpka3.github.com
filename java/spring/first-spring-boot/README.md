@@ -5,9 +5,13 @@
 gradle build
 
 ```
+./gradlew wrapper --gradle-version=6.0.1 --distribution-type=all
 ./gradlew  first-spring-boot-security:bootRun
 ./gradlew  first-spring-boot-web:bootRun
 ```
+
+// https://docs.gradle.org/current/userguide/dependency_management.html#controlling_transitive_dependencies
+// https://docs.gradle.org/current/userguide/java_library_plugin.html#sec:java_library_configurations_graph
 
 
 
