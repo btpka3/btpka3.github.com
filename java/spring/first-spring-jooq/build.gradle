@@ -1,0 +1,185 @@
+buildscript {
+    ext {
+        //springBootVersion = '1.5.2.RELEASE'
+    }
+    repositories {
+        maven { url "https://maven.aliyun.com/nexus/content/groups/public/" }
+        mavenCentral()
+    }
+//    dependencies {
+//        implementation 'mysql:mysql-connector-java:6.0.6'
+//    }
+}
+
+
+plugins {
+    id 'org.springframework.boot' version '2.2.4.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'java'
+    id "nu.studer.jooq" version "4.1"
+}
+
+group = 'com.github.btpka3'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+
+repositories {
+    //mavenLocal()
+    maven { url "https://maven.aliyun.com/nexus/content/groups/public/" }
+    mavenCentral()
+}
+
+// https://docs.gradle.org/current/userguide/java_plugin.html
+configurations {
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+jooq {
+    version = '3.12.3' // the default (can be omitted)
+    edition = 'OSS'    // the default (can be omitted), other allowed values are PRO, PRO_JAVA_6, and TRIAL
+    generateSchemaSourceOnCompilation = true
+    sakila(sourceSets.main) {
+        jdbc {
+            //driver = 'com.mysql.jdbc.Driver'
+            driver = 'com.mysql.cj.jdbc.Driver'
+            url = 'jdbc:mysql://localhost:3306/sakila'
+            user = 'root'
+            password = '123456'
+            properties {
+                property {
+                    key = 'ssl'
+                    value = 'true'
+                }
+                property {
+                    key = 'verifyServerCertificate'
+                    value = 'false'
+                }
+            }
+        }
+        generator {
+            name = 'org.jooq.codegen.DefaultGenerator'
+            strategy {
+                name = 'org.jooq.codegen.DefaultGeneratorStrategy'
+                // ...
+            }
+            database {
+                name = 'org.jooq.meta.mysql.MySQLDatabase'
+                inputSchema = 'sakila'
+                unsignedTypes = false
+//                forcedTypes {
+//                    forcedType {
+//                        name = 'varchar'
+//                        expression = '.*'
+//                        types = 'JSONB?'
+//                    }
+//                    forcedType {
+//                        name = 'varchar'
+//                        expression = '.*'
+//                        types = 'INET'
+//                    }
+//                }
+                // ...
+            }
+            generate {
+                relations = true
+                deprecated = false
+                records = true
+                immutablePojos = true
+                fluentSetters = true
+                // ...
+            }
+            target {
+                //packageName = 'nu.studer.sample'
+                packageName = 'com.github.btpka3.first.spring.jooq.domain'
+                // directory = ...
+            }
+        }
+    }
+}
+
+//buildscript {
+//    repositories {
+//        mavenLocal()
+//        mavenCentral()
+//    }
+//
+//    dependencies {
+//        classpath 'org.jooq:jooq-codegen:3.12.4'
+//        classpath 'com.h2database:h2:1.4.199'
+//    }
+//}
+
+
+repositories {
+    mavenCentral()
+}
+
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-jooq'
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+    implementation 'org.jooq:jooq:3.12.4'
+    jooqRuntime 'mysql:mysql-connector-java:6.0.6'
+    implementation 'mysql:mysql-connector-java:6.0.6'
+//    implementation 'org.jooq:jooq'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+
+//task xxx {
+//    doLast {
+//        // Use your favourite XML builder to construct the code generation configuration file
+//        // ----------------------------------------------------------------------------------
+//        def writer = new StringWriter()
+//        def xml = new groovy.xml.MarkupBuilder(writer)
+//                .configuration('xmlns': 'http://www.jooq.org/xsd/jooq-codegen-3.12.0.xsd') {
+//                    jdbc() {
+//                        driver('com.mysql.jdbc.Driver')
+//                        url('jdbc:mysql://localhost:3306/sakila')
+//                        user('sa')
+//                        password('123456')
+//                    }
+//                    generator() {
+//                        database() {
+//                        }
+//
+//                        // Watch out for this caveat when using MarkupBuilder with "reserved names"
+//                        // - https://github.com/jOOQ/jOOQ/issues/4797
+//                        // - http://stackoverflow.com/a/11389034/521799
+//                        // - https://groups.google.com/forum/#!topic/jooq-user/wi4S9rRxk4A
+//                        generate([:]) {
+//                            pojos true
+//                            daos true
+//                        }
+//                        target() {
+//                            packageName('com.github.btpka3.first.spring.jooq.domain')
+////                            packageName('org.jooq.example.gradle.db')
+//                            directory('src/main/java')
+//                        }
+//                    }
+//                }
+//
+//        // Run the code generator
+//        // ----------------------
+//        org.jooq.codegen.GenerationTool.generate(writer.toString())
+//
+//        println 'tutorialspoint'
+//    }
+//}
