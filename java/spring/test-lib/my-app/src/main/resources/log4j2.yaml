@@ -1,0 +1,41 @@
+
+# 参考：org.apache.logging.log4j.core.config.yaml.YamlConfigurationFactory
+# 还要依赖 jackson 等额外类库才行
+Configuration:
+  status: info
+  name: YAMLConfigTest
+  properties:
+    property:
+      name: filename
+      value: target/test-yaml.log
+  thresholdFilter:
+    level: debug
+  appenders:
+    Console:
+      name: STDOUT
+      PatternLayout:
+        Pattern: "%d %p %C{1.} [%t] %m%n"
+    File:
+      name: File
+      fileName: ${filename}
+      PatternLayout:
+        Pattern: "%d %p %C{1.} [%t] %m%n"
+      Filters:
+        ThresholdFilter:
+          level: error
+
+  Loggers:
+    logger:
+      - name: com.github.btpka3
+        level: info
+        additivity: false
+        ThreadContextMapFilter:
+          KeyValuePair:
+            key: test
+            value: 123
+        AppenderRef:
+          ref: STDOUT
+    Root:
+      level: info
+      AppenderRef:
+        ref: STDOUT
