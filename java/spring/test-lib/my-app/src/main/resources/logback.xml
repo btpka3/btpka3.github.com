@@ -18,6 +18,21 @@
         </encoder>
     </appender>
 
+    <!--
+     阿里云 SLS 服务入口
+     https://help.aliyun.com/document_detail/29008.html
+     https://github.com/aliyun/aliyun-log-logback-appender/blob/master/README.md
+     -->
+    <appender name="sls" class="com.aliyun.openservices.log.logback.LoghubAppender">
+        <endpoint>xxx.cn-hangzhou-intranet.log.aliyuncs.com</endpoint>
+        <accessKeyId>your accesskey id</accessKeyId>
+        <accessKeySecret>your accesskey</accessKeySecret>
+        <project>your project</project>
+        <logStore>your logStore</logStore>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+        </encoder>
+    </appender>
+
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>
     </root>
