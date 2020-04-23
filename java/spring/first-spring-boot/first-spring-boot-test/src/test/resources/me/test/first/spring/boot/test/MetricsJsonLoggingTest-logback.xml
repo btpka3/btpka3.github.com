@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<configuration debug="true">
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%-4relative [%thread] %-5level %logger{35} - %msg %n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="json.appender.CONSOLE"
+              class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <pattern>
+                    <omitEmptyFields>true</omitEmptyFields>
+                    <pattern>{"app":"csis"}</pattern>
+                </pattern>
+                <timestamp>
+                    <fieldName>time</fieldName>
+                </timestamp>
+                <version>
+                    <fieldName>v</fieldName>
+                    <version>1</version>
+                </version>
+                <message>
+                    <fieldName>msg</fieldName>
+                </message>
+                <loggerName>
+                    <fieldName>logger</fieldName>
+                </loggerName>
+                <threadName>
+                    <fieldName>thread</fieldName>
+                </threadName>
+                <logLevel>
+                    <fieldName>level</fieldName>
+                </logLevel>
+                <stackTrace>
+                    <fieldName>stack_trace</fieldName>
+                </stackTrace>
+                <throwableClassName>
+                    <fieldName>throwable_class</fieldName>
+                    <useSimpleClassName>false</useSimpleClassName>
+                </throwableClassName>
+                <mdc/>
+                <logstashMarkers/>
+                <uuid>
+                    <fieldName>uuid</fieldName>
+                    <strategy>random</strategy>
+                </uuid>
+            </providers>
+        </encoder>
+    </appender>
+
+
+    <logger name="json" level="INFO" additivity="false">
+        <appender-ref ref="json.appender.CONSOLE"/>
+    </logger>
+
+
+    <root>
+        <level value="WARN"/>
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+</configuration>

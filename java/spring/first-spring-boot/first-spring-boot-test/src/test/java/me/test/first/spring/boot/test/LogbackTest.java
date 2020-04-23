@@ -15,8 +15,14 @@ public class LogbackTest {
 
     @Test
     public void test01() {
-        log.info("test01");
-    }
 
+        Exception e = new RuntimeException("test Exception");
+
+        log.info("test01");
+        log.info("info exception :", e);
+        log.error("error exception :", e);
+        log.info("info null exception :", e);
+        log.error("error null exception :", e);
+    }
 
 }

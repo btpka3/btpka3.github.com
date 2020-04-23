@@ -1,5 +1,7 @@
 package me.test.jdk.java.time;
 
+import org.junit.Test;
+
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -10,18 +12,10 @@ import java.util.Date;
 public class ZonedDateTimeTest {
 
 
-    public static void main(String[] args) {
-
-//        fromDate();
-//        toDate();
-//        format();
-//        plus();
-        zone();
-    }
-
-
     // ZonedDateTime <- Instant <- Date
-    static void fromDate() {
+
+    @Test
+    public void fromDate() {
         System.out.println("============================= fromDate");
 
 
@@ -34,7 +28,8 @@ public class ZonedDateTimeTest {
     }
 
     // ZonedDateTime -> Instant -> Date
-    static void toDate() {
+    @Test
+    public void toDate() {
         System.out.println("============================= toDate");
         ZonedDateTime zdt = ZonedDateTime.now();
         System.out.println("ZonedDateTime : " + zdt);
@@ -44,7 +39,8 @@ public class ZonedDateTimeTest {
         System.out.println("Date          : " + date);
     }
 
-    static void format() {
+    @Test
+    public void format() {
         System.out.println("============================= format");
         ZonedDateTime zdt = ZonedDateTime.now();
         System.out.println("ZonedDateTime : " + zdt);
@@ -58,8 +54,8 @@ public class ZonedDateTimeTest {
 
     }
 
-
-    static void plus() {
+    @Test
+    public void plus() {
         System.out.println("============================= plus");
         ZoneId.systemDefault();
         ZonedDateTime zdt = ZonedDateTime.of(2000, 1, 2, 11, 22, 33, 444 * 1000 * 1000, ZoneId.of("Asia/Shanghai"));
@@ -77,8 +73,8 @@ public class ZonedDateTimeTest {
         System.out.println("new ZonedDateTime : " + newZdt);
     }
 
-
-      static void zone() {
+    @Test
+    public void zone() {
         System.out.println("============================= zone");
         ZonedDateTime currentDate = ZonedDateTime.now(ZoneOffset.UTC);
 
@@ -86,8 +82,32 @@ public class ZonedDateTimeTest {
         System.out.println(currentDate.toInstant().toEpochMilli());
         System.out.println(System.currentTimeMillis());
         System.out.println(ZoneId.systemDefault());
+
     }
 
+    @Test
+    public void zone02() {
+        System.out.println("============================= zone02");
+        ZonedDateTime t0 = ZonedDateTime.now(ZoneOffset.UTC);
+        ZonedDateTime t8 = t0.withZoneSameInstant(ZoneId.of("+08:00"));
+        ZonedDateTime t80 = t8.minusSeconds(t8.getOffset().getTotalSeconds());
+
+        System.out.println("t0 = " + t0 + ", zone.totallSeconds = " + t0.getOffset().getTotalSeconds());
+        System.out.println("t8 = " + t8 + ", zone.totallSeconds = " + t8.getOffset().getTotalSeconds());
+
+        Date d0 = Date.from(t0.toInstant());
+        Date d8 = Date.from(t8.toInstant());
+        Date d80 = Date.from(t80.toInstant());
+        System.out.println("d0 = " + d0);
+        System.out.println("d8 = " + d8);
+        System.out.println("d80 = " + d80);
+
+    }
+
+    protected Date toGmt0(ZonedDateTime time) {
+        ZonedDateTime gmt0 = time.minusSeconds(time.getOffset().getTotalSeconds());
+        return Date.from(gmt0.toInstant());
+    }
 
 
 }

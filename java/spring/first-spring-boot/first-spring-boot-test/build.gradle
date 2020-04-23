@@ -13,6 +13,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-cache'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation "org.springframework.boot:spring-boot-devtools"
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml'
     implementation 'org.apache.httpcomponents:httpclient'
@@ -22,9 +23,13 @@ dependencies {
     implementation 'org.infinispan:infinispan-spring-boot-starter'
     implementation 'org.infinispan:infinispan-spring4-embedded'
     implementation 'io.micrometer:micrometer-registry-prometheus'
+    implementation 'io.micrometer:micrometer-test'
 
     compileOnly 'org.projectlombok:lombok'
-//    annotationProcessor 'org.projectlombok:lombok'
+    testCompileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
+
     implementation('joda-time:joda-time')
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -38,6 +43,11 @@ dependencies {
 
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml'
     implementation 'com.fasterxml.jackson.module:jackson-module-jsonSchema'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation "org.mongodb:bson"
+
+    implementation 'net.logstash.logback:logstash-logback-encoder'
+    implementation 'com.fasterxml.uuid:java-uuid-generator'
 }
 
 
@@ -58,4 +68,8 @@ test {
 //        logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message )
 //    }
 }
-
+//
+//buildScan {
+//    termsOfServiceUrl = 'https://gradle.com/terms-of-service'
+//    termsOfServiceAgree = 'no'
+//}
