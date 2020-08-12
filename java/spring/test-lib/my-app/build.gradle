@@ -39,9 +39,9 @@ idea {
 
 dependencies {
     implementation 'com.github.btpka3:my-lib:0.1.0-SNAPSHOT'
-    runtimeOnly 'ch.qos.logback:logback-classic:1.2.3'
+    implementation 'ch.qos.logback:logback-classic:1.2.3'
     // https://github.com/aliyun/aliyun-log-logback-appender/blob/master/README.md
-    runtimeOnly 'com.aliyun.openservices:aliyun-log-logback-appender:0.1.15'
+//    runtimeOnly 'com.aliyun.openservices:aliyun-log-logback-appender:0.1.15'
 
     compileOnly 'com.google.code.findbugs:jsr305:1.3.9'
     implementation "org.slf4j:slf4j-api:1.7.30"

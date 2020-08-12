@@ -97,13 +97,21 @@ public class MdcEx {
             @Nonnull String key,
             @Nullable Object value
     ) {
-        List<Xxx.Pair<String, Object>> list = new ArrayList<>(1);
-        list.add(new Xxx.Pair<>(key, value));
-        return new Xxx(list);
+        return Xxx.EMPTY.withMdc(key, value);
+    }
+
+    public Xxx withMdcWhen(
+            boolean expression,
+            @Nonnull String key,
+            @Nullable Object value
+    ) {
+        return Xxx.EMPTY.withMdc(key, value);
     }
 
 
     public static class Xxx {
+
+        public static final Xxx EMPTY = new Xxx();
 
 
         private static class Pair<K, V> {
@@ -134,6 +142,10 @@ public class MdcEx {
 
         private List<Pair<String, Object>> list = Collections.emptyList();
 
+        public Xxx() {
+            this(Collections.emptyList());
+        }
+
         public Xxx(List<Pair<String, Object>> list) {
             this.list = list;
         }
@@ -145,6 +157,17 @@ public class MdcEx {
             List<Pair<String, Object>> list = new ArrayList<>(this.list.size() + 1);
             list.addAll(this.list);
             list.add(new Pair<>(key, value));
+            return new Xxx(list);
+        }
+
+        public Xxx withMdcWhen(
+                boolean expression,
+                @Nonnull String key,
+                @Nullable Object value
+        ) {
+            if (expression) {
+                return withMdc(key, value);
+            }
             return new Xxx(list);
         }
 

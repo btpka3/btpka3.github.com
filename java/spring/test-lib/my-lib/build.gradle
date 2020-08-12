@@ -16,7 +16,8 @@ plugins {
     id 'idea'
     id 'maven'
     id 'project-report'
-    id 'java'
+    // id 'java'
+    id 'java-library'
     id 'maven-publish'
 //    id 'java-platform'
 //    id "io.spring.dependency-management" version "1.0.8.RELEASE"
@@ -39,7 +40,13 @@ idea {
 dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.12'
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
-    implementation "org.slf4j:slf4j-api:1.7.30"
-    implementation "net.logstash.logback:logstash-logback-encoder:6.3"
+    api "org.slf4j:slf4j-api:1.7.30"
+//    implementation "net.logstash.logback:logstash-logback-encoder:6.3"
+    implementation "com.alibaba.security.green:green-commons-log:0.1.0-SNAPSHOT"
+    //runtimeOnly 'com.aliyun.openservices:aliyun-log-logback-appender:0.1.15'
+//    testImplementation 'org.apache.commons:commons-lang3:3.9'
+    testCompileOnly 'org.mockito:mockito-core:3.3.3'
+
+
 }
 

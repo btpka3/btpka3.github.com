@@ -78,5 +78,8 @@ public class JooqTest {
 
 
     }
-
+    // TODO 大数据量读取
+    // TODO 打印拼接好的 sql
+    // TODO 注册自定义函数
+    // TODO Record 转换为 Domain bean 或者自定义POJO
 }

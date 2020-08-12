@@ -1,17 +1,24 @@
-{
-  "app": "csis",
-  "time": "2020-04-23T01:35:36.401+08:00",
-  "v": "1",
-  "msg": "aa",
-  "logger": "json",
-  "thread": "logging-metrics-publisher",
-  "level": "INFO",
-  "type": "GAUGE",
-  "name": "jvm.memory.committed",
-  "tag_area": "heap",
-  "tag_id": "PS Eden Space",
-  "tag_region": "us-east-1",
-  "m_value": 3.31350016E8,
-  "value": 3.31350016E8,
-  "uuid": "b7349ca8-12e8-463a-b49c-a812e8663a72"
-}
+[
+  "ddfk_META_mtee_sns_unify_check",
+  {
+    "r": {
+      "autoAuditExpiredTime": 1587607827,
+      "csiTexts": [
+        {
+          "content": "成人电影网3"
+        }
+      ],
+      "srcId": "4318712983",
+      "auditFirstMode": 1,
+      "csiImages": [],
+      "version": "2.1.3",
+      "manualAuditExpiredTime": 1587694167,
+      "allText": "成人电影网3。。。",
+      "csiUser": {
+        "uid": 158250
+      },
+      "gmtCreate": "2020-04-23 10:09:27",
+      "firstProductName": "circle_post"
+    }
+  }
+]

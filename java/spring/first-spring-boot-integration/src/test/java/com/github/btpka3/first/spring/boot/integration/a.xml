@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:int="http://www.springframework.org/schema/integration"
+       xmlns:int-file="http://www.springframework.org/schema/integration/file"
+       xsi:schemaLocation="
+   http://www.springframework.org/schema/beans
+   https://www.springframework.org/schema/beans/spring-beans.xsd
+   http://www.springframework.org/schema/integration
+   https://www.springframework.org/schema/integration/spring-integration.xsd
+   http://www.springframework.org/schema/integration/file
+   https://www.springframework.org/schema/integration/file/spring-integration-file.xsd
+   ">
+
+    <int:service-activator
+            input-channel="filesInChannel"
+            output-channel="filesOutChannel"
+    >
+        <bean class="org.springframework.integration.samples.fileprocessing.FileProcessor"/>
+    </int:service-activator>
+
+    <int-file:inbound-channel-adapter
+            id="filesInChannel"
+            directory="file:input">
+        <int:poller id="poller" fixed-rate="100"/>
+    </int-file:inbound-channel-adapter>
+
+
+    <int:channel id="filesOutChannel"
+                 fixed-subscriber="false"
+                 message-converter="ss"
+                 datatype="java.lang.Number"
+    >
+        <int:rendezvous-queue/>
+        <int:dispatcher/>
+        <int:queue/>
+        <int:priority-queue/>
+        <int:interceptors></int:interceptors>
+    </int:channel>
+
+
+</beans>

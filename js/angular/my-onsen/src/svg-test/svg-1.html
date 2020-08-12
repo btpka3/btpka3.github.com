@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    @keyframes hideshow {
+      0% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    .text1 {
+      animation: hideshow 5s ease infinite;
+    }
+
+    #s1 circle {
+      fill: green;
+    }
+
+    #s1 rect {
+      x: 50;
+      y: 50;
+    }
+
+    #s1 circle:hover {
+      fill: blue;
+    }
+  </style>
+</head>
+<body>
+
+<svg id="s1" viewBox="0 0 100 100" style="border: 1px solid red;width:400px; height:200px">
+  <circle cx="50" cy="50" r="40" stroke="black" stroke-width="2" fill="red" style="z-index: 1;" class="text1"
+
+  />
+  <rect width="45" height="45" style="fill:#ff0000;stroke: none; z-index: -1;" rx="6" ry="6">
+
+    <animate attributeType="XML" attributeName="x" from="50" to="100"
+             dur="5s" repeatCount="indefinite"/>
+  </rect>
+
+
+</svg>
+
+
+<svg viewBox="0 0 100 240" style="border: 1px solid red;width:480px; height:200px">
+  <rect height="80" width="220" x="10" y="10" style="fill:#ff0000;stroke: none;"/>
+</svg>
+
+
+</body>
+</html>

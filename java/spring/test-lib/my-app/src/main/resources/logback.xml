@@ -11,18 +11,72 @@
         </encoder>
     </appender>
 
+    <!--    <appender name="jsonConsole" class="ch.qos.logback.core.ConsoleAppender">-->
+    <!--        <encoder class="net.logstash.logback.encoder.LogstashEncoder">-->
+    <!--            <customFields>{"appname":"boot2-demo"}</customFields>-->
+    <!--            <jsonGeneratorDecorator class="net.logstash.logback.decorate.PrettyPrintingJsonGeneratorDecorator"/>-->
+    <!--            <throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">-->
+    <!--                <shortenedClassNameLength>20</shortenedClassNameLength>-->
+    <!--                <exclude>sun\.reflect\..*\.invoke.*</exclude>-->
+    <!--                <exclude>net\.sf\.cglib\.proxy\.MethodProxy\.invoke</exclude>-->
+    <!--&lt;!&ndash;                <evaluator class="myorg.MyCustomEvaluator"/>&ndash;&gt;-->
+    <!--                <rootCauseFirst>true</rootCauseFirst>-->
+    <!--                <inlineHash>true</inlineHash>-->
+    <!--            </throwableConverter>-->
+    <!--        </encoder>-->
+    <!--    </appender>-->
+
     <appender name="jsonConsole" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
-            <customFields>{"appname":"boot2-demo"}</customFields>
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
             <jsonGeneratorDecorator class="net.logstash.logback.decorate.PrettyPrintingJsonGeneratorDecorator"/>
+            <providers>
+                <pattern>
+                    <omitEmptyFields>true</omitEmptyFields>
+                    <pattern>{"app":"mtee3","x":"","y":[]}</pattern>
+                </pattern>
+                <timestamp>
+                    <fieldName>time</fieldName>
+                </timestamp>
+                <version>
+                    <fieldName>v</fieldName>
+                    <version>1</version>
+                </version>
+                <message>
+                    <fieldName>msg</fieldName>
+                </message>
+                <loggerName>
+                    <fieldName>logger</fieldName>
+                </loggerName>
+                <threadName>
+                    <fieldName>thread</fieldName>
+                </threadName>
+                <logLevel>
+                    <fieldName>level</fieldName>
+                </logLevel>
+                <stackTrace>
+                    <fieldName>stack_trace</fieldName>
+                </stackTrace>
+                <throwableClassName>
+                    <fieldName>throwable_class</fieldName>
+                    <useSimpleClassName>false</useSimpleClassName>
+                </throwableClassName>
+                <mdc/>
+                <logstashMarkers/>
+            </providers>
         </encoder>
+    </appender>
+
+    <appender name="jsonConsole2" class="ch.qos.logback.core.ConsoleAppender">
+        <providers class="com.alibaba.security.green.commons.log.logstash.LoggingEventJsonExProviders">
+                <addDefault>true</addDefault>
+            </providers>
     </appender>
 
     <!--
      阿里云 SLS 服务入口
      https://help.aliyun.com/document_detail/29008.html
      https://github.com/aliyun/aliyun-log-logback-appender/blob/master/README.md
-     -->
+
     <appender name="sls" class="com.aliyun.openservices.log.logback.LoghubAppender">
         <endpoint>xxx.cn-hangzhou-intranet.log.aliyuncs.com</endpoint>
         <accessKeyId>your accesskey id</accessKeyId>
@@ -32,13 +86,13 @@
         <encoder class="net.logstash.logback.encoder.LogstashEncoder">
         </encoder>
     </appender>
-
+ -->
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>
     </root>
 
     <logger name="com.github.btpka3" level="INFO" additivity="false">
-        <appender-ref ref="jsonConsole"/>
+        <appender-ref ref="jsonConsole2"/>
     </logger>
 
 </configuration>

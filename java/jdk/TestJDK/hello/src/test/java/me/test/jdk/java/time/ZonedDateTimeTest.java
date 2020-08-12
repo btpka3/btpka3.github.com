@@ -2,9 +2,12 @@ package me.test.jdk.java.time;
 
 import org.junit.Test;
 
+import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  *
@@ -107,6 +110,29 @@ public class ZonedDateTimeTest {
     protected Date toGmt0(ZonedDateTime time) {
         ZonedDateTime gmt0 = time.minusSeconds(time.getOffset().getTotalSeconds());
         return Date.from(gmt0.toInstant());
+    }
+
+@Test
+public void test() {
+
+    ZonedDateTime now = ZonedDateTime.now();
+    Date dateAtSystemZone = Date.from(now.toInstant());
+    Date dateAtGmt0 = toGmt0(now);
+
+    SimpleDateFormat sdfWithoutZone = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+    SimpleDateFormat sdfWithZoneGmt0 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.ITALIAN);
+    sdfWithZoneGmt0.setTimeZone(TimeZone.getTimeZone("GMT"));
+
+    System.out.println(""
+            + "\ndateAtSystemZone          = " + dateAtSystemZone
+            + "\ndateAtGmt0                = " + dateAtGmt0
+            + "\ndiffInMillis              = " + (dateAtSystemZone.getTime() - dateAtGmt0.getTime())
+            + "\n"
+            + "\ndateWithSystemZone.format = " + sdfWithoutZone.format(dateAtSystemZone)
+            + "\ndateAtGmt0.format         = " + sdfWithoutZone.format(dateAtGmt0)
+            + "\n"
+            + "\ndateFormatWithGmt0        = " + sdfWithZoneGmt0.format(dateAtSystemZone)
+    );
     }
 
 

@@ -4,6 +4,9 @@ import org.junit.Test;
 
 import java.util.*;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 /**
  *
  */
@@ -44,6 +47,15 @@ public class CollectionsTest {
         List<String> list1 = Arrays.asList("aa", "bb", "cc", "dd");
         Collections.shuffle(list1);
         System.out.println(list1);
+    }
+
+    @Test
+    public void test04() {
+        Set<String> set1 = new HashSet<>(Arrays.asList("a" + 1, "b" + 1));
+        Set<String> set2 = new LinkedHashSet<>(Arrays.asList("b1", "a1"));
+
+        assertEquals(set1, set2);
+        assertTrue(Objects.equals(set1, set2));
     }
 
 }

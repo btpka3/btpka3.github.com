@@ -5,6 +5,9 @@ import org.junit.Test;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -35,6 +38,20 @@ public class DateTimeFormatterTest {
         System.out.println("sdf.format    : " + df.format(new Date()));
         System.out.println("sdf.parse     : " + df.parse("2019-07-03T07:37:56.197Z"));
 
+    }
+
+    @Test
+    public void test02() {
+        System.out.println("============================= fromDate");
+        Date date = new Date();
+        System.out.println("Date          : " + date);
+        Instant instant = date.toInstant();
+        System.out.println("Instant       : " + instant);
+        LocalDateTime ldt = LocalDateTime.ofInstant(instant, ZoneOffset.systemDefault());
+
+        System.out.println("LocalDateTime : " + ldt);
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        System.out.println("LocalDateTime : " + dtf.format(ldt));
     }
 
 }

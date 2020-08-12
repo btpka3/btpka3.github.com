@@ -75,12 +75,16 @@ public class MetricsJsonLoggingTest {
                     return null;
                 }
             };
-            return new LoggingMeterRegistryEx(
+
+
+            LoggingMeterRegistryEx reg =  new LoggingMeterRegistryEx(
                     config,
                     Clock.SYSTEM,
                     TimeUnit.MILLISECONDS,
                     new NamedThreadFactory("logging-metrics-publisher")
             );
+            reg.meterF
+            return reg;
         }
 
         @Bean

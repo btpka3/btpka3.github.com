@@ -1,0 +1,68 @@
+buildscript {
+    ext {
+        //springBootVersion = '1.5.2.RELEASE'
+    }
+    repositories {
+        maven { url "https://maven.aliyun.com/nexus/content/groups/public/" }
+        mavenCentral()
+//        maven {
+//            url "https://plugins.gradle.org/m2/"
+//        }
+    }
+}
+
+
+plugins {
+    id 'idea'
+    id 'project-report'
+    id "org.springframework.boot" version "${springBootVersion}" //apply false
+    id 'java'
+}
+
+
+repositories {
+    maven { url "https://maven.aliyun.com/nexus/content/groups/public/" }
+    mavenCentral()
+}
+
+
+dependencies {
+
+
+//    implementation platform("org.springframework.boot:spring-boot-starter-parent:${springBootVersion}")
+    implementation platform("org.springframework.boot:spring-boot-starter-parent:${springBootVersion}")
+    implementation "org.springframework.boot:spring-boot-starter-integration"
+    implementation "org.springframework.integration:spring-integration-file"
+    implementation "org.springframework.boot:spring-boot-starter-json"
+    testImplementation ("org.springframework.boot:spring-boot-starter-test"){
+        exclude group: 'org.junit.vintage' , module: 'junit-vintage-engine'
+    }
+
+//     implementation platform('org.springframework.boot:spring-boot-dependencies:1.5.8.RELEASE')
+
+
+//    constraints {
+//        implementation "org.springframework.boot:spring-boot-starter-integration"
+//        implementation "com.kjetland:mbknor-jackson-jsonschema_2.12:1.0.34"
+//
+//        implementation 'net.logstash.logback:logstash-logback-encoder:6.3'
+//        implementation 'com.fasterxml.uuid:java-uuid-generator:3.2.0'
+//        implementation "org.infinispan:infinispan-spring-boot-starter-embedded:${infinispanStarterVersion}"
+//        implementation "org.infinispan:infinispan-spring-boot-starter:${infinispanStarterVersion}"
+//        implementation "org.mongodb:bson:4.0.2"
+//    }
+
+
+}
+
+//configurations {
+//    all*.exclude group: 'xml-apis', module: 'xmlParserAPIs'
+//}
+
+
+idea {
+    module {
+        downloadJavadoc = false
+        downloadSources = true
+    }
+}

@@ -18,7 +18,7 @@ public class CartesianProductTest {
     public void test01() {
         Flowable<String> f1 = Flowable.fromArray("11", "22", "33");
         Flowable<String> f2 = Flowable.fromArray("aa", "bb", "cc");
-f1.repeat()
+
         f1.flatMap(str1 -> f2.map(str2 -> Pair.of(str1, str2)))
                 .subscribe(
                         i -> logger.debug("subscribe : onNext : {}", i),
