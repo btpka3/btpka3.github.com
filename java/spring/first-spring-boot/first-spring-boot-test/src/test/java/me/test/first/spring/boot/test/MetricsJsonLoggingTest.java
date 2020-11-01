@@ -83,7 +83,6 @@ public class MetricsJsonLoggingTest {
                     TimeUnit.MILLISECONDS,
                     new NamedThreadFactory("logging-metrics-publisher")
             );
-            reg.meterF
             return reg;
         }
 

@@ -8,6 +8,8 @@ gradle bootRun
 # 如果是命令行,可以
 gradle build
 ```
+
+JwtAuthenticationProvider
  
 
 ## URL设计

@@ -12,6 +12,8 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-logging")
 
     compile('org.springframework.boot:spring-boot-starter-security')
+    compile('org.springframework.boot:spring-boot-starter-oauth2-client')
+    compile('org.springframework.boot:spring-boot-starter-oauth2-resource-server')
 }
 
 test {

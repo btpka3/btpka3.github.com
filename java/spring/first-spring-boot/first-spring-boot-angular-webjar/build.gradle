@@ -49,11 +49,6 @@ dependencies {
     implementation 'net.logstash.logback:logstash-logback-encoder'
     implementation 'com.fasterxml.uuid:java-uuid-generator'
 
-    implementation 'com.github.vladimir-bukhtoyarov:bucket4j-core:4.10.0'
-
-    implementation "io.github.resilience4j:resilience4j-spring-boot2:1.6.1"
-    implementation('org.springframework.boot:spring-boot-starter-actuator')
-    implementation('org.springframework.boot:spring-boot-starter-aop')
 }
 
 
