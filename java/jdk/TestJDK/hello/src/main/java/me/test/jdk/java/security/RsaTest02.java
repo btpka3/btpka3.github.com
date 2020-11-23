@@ -1,17 +1,18 @@
 package me.test.jdk.java.security;
 
 
-import org.bouncycastle.jce.provider.*;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.util.encoders.Base64;
-import org.bouncycastle.util.encoders.*;
-import sun.security.rsa.*;
+import org.bouncycastle.util.encoders.Hex;
 
-import javax.crypto.*;
-import java.math.*;
+import javax.crypto.Cipher;
 import java.security.*;
-import java.security.interfaces.*;
-import java.security.spec.*;
-import java.util.*;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
+import java.util.ArrayList;
+import java.util.List;
 
 /*
 应孟的请求帮助尝试模拟登录时，使用JS进行RSA加密的处理。
@@ -59,9 +60,12 @@ public class RsaTest02 {
         String pubModulus = "00ba3d972efea794358c211077993f867f0bb61cac53a1e5ab37518459da74c8f93ef648bcd42ebad48de5ad7ede2df77f65111c1f29277a27f17a6494b5e271e5e5c35e4c8c347d34df86a32579483fc26bdebe149c47cc3901ecbe0abc395fc2918b7f5ef8876c647f516bc7568e352f0217224a358bdbd489106e9258597577";
         String pubExponent = "010001";
 
-        RSAPublicKey pubKey = new RSAPublicKeyImpl(
-                new BigInteger(Hex.decode(pubModulus)),
-                new BigInteger(Hex.decode(pubExponent)));
+        RSAPublicKey pubKey = null;
+
+//                = new RSAPublicKeyImpl(
+//                null,
+//                new BigInteger(Hex.decode(pubModulus)),
+//                new BigInteger(Hex.decode(pubExponent)));
 
         String msg = "933125";
         System.out.println("msg: " + msg);
