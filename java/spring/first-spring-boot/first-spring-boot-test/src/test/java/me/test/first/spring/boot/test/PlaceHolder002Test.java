@@ -1,15 +1,14 @@
 package me.test.first.spring.boot.test;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -18,7 +17,7 @@ import java.util.Properties;
 /**
  *
  */
-@RunWith(SpringRunner.class)
+@SpringBootTest
 @Import({
         PlaceHolder002Test.Conf.class
 })
@@ -95,13 +94,13 @@ public class PlaceHolder002Test {
 
     @Test
     public void test01() {
-        Assert.assertEquals(6, map1.size());
-        Assert.assertEquals("a11", map1.get("aaa"));
-        Assert.assertNull(map1.get("bbb"));
-        Assert.assertEquals("c11", map1.get("ccc"));
-        Assert.assertEquals("", map1.get("ddd"));
-        Assert.assertEquals("e10", map1.get("eee"));
-        Assert.assertNull(map1.get("fff"));
+        Assertions.assertEquals(6, map1.size());
+        Assertions.assertEquals("a11", map1.get("aaa"));
+        Assertions.assertNull(map1.get("bbb"));
+        Assertions.assertEquals("c11", map1.get("ccc"));
+        Assertions.assertEquals("", map1.get("ddd"));
+        Assertions.assertEquals("e10", map1.get("eee"));
+        Assertions.assertNull(map1.get("fff"));
     }
 
 

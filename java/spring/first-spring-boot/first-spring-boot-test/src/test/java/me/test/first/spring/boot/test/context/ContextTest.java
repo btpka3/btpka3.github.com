@@ -1,7 +1,7 @@
 package me.test.first.spring.boot.test.context;
 
 import me.test.first.spring.boot.test.context.a.CccSerivce;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**

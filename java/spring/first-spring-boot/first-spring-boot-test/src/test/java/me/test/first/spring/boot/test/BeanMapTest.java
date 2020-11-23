@@ -1,7 +1,7 @@
 package me.test.first.spring.boot.test;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.cglib.beans.BeanMap;
 
 import java.util.Date;
@@ -22,15 +22,15 @@ public class BeanMapTest {
         bean.setAge(11);
 
         BeanMap beanMap = BeanMap.create(bean);
-        Assert.assertEquals(4, beanMap.size());
-        Assert.assertSame("zhang3", beanMap.get("name"));
-        Assert.assertSame(now, beanMap.get("birthday"));
-        Assert.assertTrue((Boolean) beanMap.get("male"));
-        Assert.assertEquals(11, beanMap.get("age"));
+        Assertions.assertEquals(4, beanMap.size());
+        Assertions.assertSame("zhang3", beanMap.get("name"));
+        Assertions.assertSame(now, beanMap.get("birthday"));
+        Assertions.assertTrue((Boolean) beanMap.get("male"));
+        Assertions.assertEquals(11, beanMap.get("age"));
 
         // 通过Map 来修改 Bean
         beanMap.put("name", "li4");
-        Assert.assertSame("li4", bean.getName());
+        Assertions.assertSame("li4", bean.getName());
 
 
     }

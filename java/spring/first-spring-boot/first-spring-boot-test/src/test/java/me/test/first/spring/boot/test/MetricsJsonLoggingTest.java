@@ -13,8 +13,7 @@ import io.micrometer.core.instrument.util.NamedThreadFactory;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import net.logstash.logback.marker.LogstashMarker;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +44,6 @@ import static net.logstash.logback.marker.Markers.empty;
  * @see MetricsAutoConfiguration
  * @see JvmMetricsAutoConfiguration
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest(
         properties = {
                 //"logback.configurationFile=me/test/first/spring/boot/test/MetricsJsonLoggingTest-logback.xml"

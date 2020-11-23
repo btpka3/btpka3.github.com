@@ -6,7 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.StdDateFormat;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -91,10 +92,12 @@ public class Jackson8601Test {
         }
     }
 
-    @Test(expected = Exception.class)
-    public void x() throws ParseException {
-        DateFormat df = new SimpleDateFormat("yyyy-MM-ddTHH:mm:ss.SSSZ");
-        Date d = df.parse("2019-07-03T07:37:56.197Z");
-        System.out.println(d);
+    @Test
+    public void x() {
+        Assertions.assertThrows(ParseException.class, () -> {
+            DateFormat df = new SimpleDateFormat("yyyy-MM-ddTHH:mm:ss.SSSZ");
+            Date d = df.parse("2019-07-03T07:37:56.197Z");
+            System.out.println(d);
+        });
     }
 }

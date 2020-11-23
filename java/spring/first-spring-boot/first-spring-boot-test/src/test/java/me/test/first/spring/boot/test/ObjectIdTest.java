@@ -1,7 +1,7 @@
 package me.test.first.spring.boot.test;
 
 import org.bson.types.ObjectId;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 

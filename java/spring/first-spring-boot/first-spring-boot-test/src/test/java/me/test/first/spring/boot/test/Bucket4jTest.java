@@ -4,15 +4,13 @@ import io.github.bucket4j.Bandwidth;
 import io.github.bucket4j.Bucket;
 import io.github.bucket4j.Bucket4j;
 import io.github.bucket4j.Refill;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 /**
  * @author dangqian.zll
@@ -34,9 +32,9 @@ public class Bucket4jTest {
                 .build();
 
         for (int i = 1; i <= 10; i++) {
-            assertTrue(bucket.tryConsume(1));
+            Assertions.assertTrue(bucket.tryConsume(1));
         }
-        Assert.assertFalse(bucket.tryConsume(1));
+        Assertions.assertFalse(bucket.tryConsume(1));
 
     }
 
@@ -51,14 +49,14 @@ public class Bucket4jTest {
                 .build();
 
         // 第一次： ok
-        assertTrue(bucket.tryConsume(1));
+        Assertions.assertTrue(bucket.tryConsume(1));
         // 第二个次： 过快，false
-        assertFalse(bucket.tryConsume(1));
+        Assertions.assertFalse(bucket.tryConsume(1));
 
         // 第三次：等待2秒，ok
         Executors.newScheduledThreadPool(1)   // schedule another request for 2 seconds later
                 .schedule(
-                        () -> assertTrue(bucket.tryConsume(1)),
+                        () -> Assertions.assertTrue(bucket.tryConsume(1)),
                         2,
                         TimeUnit.SECONDS
                 );
@@ -97,7 +95,7 @@ public class Bucket4jTest {
                 .build();
 
         // FIXME: 如何 retry ? 如何 同步等待？
-     }
+    }
 
 
 }

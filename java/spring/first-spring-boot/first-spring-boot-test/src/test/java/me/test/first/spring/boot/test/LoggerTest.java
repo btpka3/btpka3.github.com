@@ -1,7 +1,7 @@
 package me.test.first.spring.boot.test;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +14,7 @@ public class LoggerTest {
     @Test
     public void test01() {
         A a = new B();
-        Assert.assertEquals("me.test.first.spring.boot.test.LoggerTest$B", a.getLogger().getName());
+        Assertions.assertEquals("me.test.first.spring.boot.test.LoggerTest$B", a.getLogger().getName());
     }
 
     public static class A {

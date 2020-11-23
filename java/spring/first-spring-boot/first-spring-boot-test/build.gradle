@@ -23,7 +23,7 @@ dependencies {
     implementation 'org.infinispan:infinispan-spring-boot-starter'
     implementation 'org.infinispan:infinispan-spring4-embedded'
     implementation 'io.micrometer:micrometer-registry-prometheus'
-    implementation 'io.micrometer:micrometer-test'
+    //implementation 'io.micrometer:micrometer-test'
 
     compileOnly 'org.projectlombok:lombok'
     testCompileOnly 'org.projectlombok:lombok'
@@ -54,6 +54,27 @@ dependencies {
     implementation "io.github.resilience4j:resilience4j-spring-boot2:1.6.1"
     implementation('org.springframework.boot:spring-boot-starter-actuator')
     implementation('org.springframework.boot:spring-boot-starter-aop')
+
+    implementation('io.github.resilience4j:resilience4j-reactor:1.6.1')
+    implementation 'io.github.resilience4j:resilience4j-all:1.6.1'
+    implementation 'io.github.resilience4j:resilience4j-consumer:1.6.1'
+    implementation 'io.github.resilience4j:resilience4j-spring-boot2:1.6.1'
+    implementation 'io.github.resilience4j:resilience4j-rxjava2:1.6.1'
+    implementation 'io.github.resilience4j:resilience4j-reactor:1.6.1'
+    implementation 'io.github.resilience4j:resilience4j-micrometer:1.6.1'
+    implementation 'io.github.resilience4j:resilience4j-metrics:1.6.1'
+    implementation 'io.github.resilience4j:resilience4j-prometheus:1.6.1'
+    implementation('org.ehcache:ehcache:3.7.1')
+
+    implementation('io.projectreactor.addons:reactor-extra')
+    //implementation('io.projectreactor.addons:reactor-tools')
+    implementation('io.projectreactor.addons:reactor-adapter')
+    implementation('io.projectreactor.addons:reactor-pool')
+    testImplementation('io.projectreactor:reactor-test')
+
+    implementation('org.apache.tika:tika-parsers:1.24.1')
+
+
 }
 
 
@@ -61,7 +82,8 @@ test {
     include 'me/test/**'
     testLogging.showStandardStreams = false
 
-    useJUnit()
+    //useJUnit()
+    useJUnitPlatform()
     maxHeapSize = '1G'
     systemProperties = System.properties
     // listen to events in the test execution lifecycle

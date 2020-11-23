@@ -16,8 +16,8 @@ import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 import com.nimbusds.jwt.proc.ConfigurableJWTProcessor;
 import com.nimbusds.jwt.proc.DefaultJWTProcessor;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -69,12 +69,12 @@ public class JwtTest {
         signedJWT = SignedJWT.parse(s);
 
         JWSVerifier verifier = new RSASSAVerifier(rsaPublicJWK);
-        Assert.assertTrue(signedJWT.verify(verifier));
+        Assertions.assertTrue(signedJWT.verify(verifier));
 
         // Retrieve / verify the JWT claims according to the app requirements
-        Assert.assertEquals("alice", signedJWT.getJWTClaimsSet().getSubject());
-        Assert.assertEquals("https://c2id.com", signedJWT.getJWTClaimsSet().getIssuer());
-        Assert.assertTrue(new Date().before(signedJWT.getJWTClaimsSet().getExpirationTime()));
+        Assertions.assertEquals("alice", signedJWT.getJWTClaimsSet().getSubject());
+        Assertions.assertEquals("https://c2id.com", signedJWT.getJWTClaimsSet().getIssuer());
+        Assertions.assertTrue(new Date().before(signedJWT.getJWTClaimsSet().getExpirationTime()));
 
     }
 

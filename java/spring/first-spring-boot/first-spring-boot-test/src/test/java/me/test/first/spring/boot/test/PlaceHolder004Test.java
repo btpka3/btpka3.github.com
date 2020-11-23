@@ -1,9 +1,9 @@
 package me.test.first.spring.boot.test;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
@@ -13,20 +13,19 @@ import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * @author dangqian.zll
  * @date 2019-12-04
  */
-@RunWith(SpringRunner.class)
+@SpringBootTest
 @ContextConfiguration(classes = {
         PlaceHolder004Test.Conf.class,
         PlaceHolder004Test.Conf2.class
 })
 public class PlaceHolder004Test {
 
-    public PlaceHolder004Test(){
+    public PlaceHolder004Test() {
         System.out.println(System.getProperty("xxx"));
     }
 

@@ -1,16 +1,19 @@
 package me.test.first.spring.boot.test;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 /**
  * @author dangqian.zll
  * @date 2019-12-04
  */
-@RunWith(SpringRunner.class)
+//@ExtendWith(MockitoExtension.class)
+@SpringBootTest
+//@ExtendWith(SpringExtension.class)
 @TestPropertySource(locations = "classpath:PlaceHolder003Test.properties")
 public class PlaceHolder003Test {
 

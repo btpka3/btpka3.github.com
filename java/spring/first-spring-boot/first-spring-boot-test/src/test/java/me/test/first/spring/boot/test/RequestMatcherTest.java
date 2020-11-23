@@ -1,6 +1,6 @@
 package me.test.first.spring.boot.test;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 

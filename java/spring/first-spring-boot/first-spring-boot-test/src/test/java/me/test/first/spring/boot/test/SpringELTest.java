@@ -1,7 +1,7 @@
 package me.test.first.spring.boot.test;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.context.expression.BeanFactoryResolver;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.expression.EvaluationContext;
@@ -59,7 +59,7 @@ public class SpringELTest {
         );
         String str = exp.getValue(String.class);
 
-        Assert.assertTrue(str.startsWith("number:0."));
+        Assertions.assertTrue(str.startsWith("number:0."));
     }
 
 
@@ -74,7 +74,7 @@ public class SpringELTest {
         Expression exp = parser.parseExpression("name");
         String name = (String) exp.getValue(context);
 
-        Assert.assertEquals("zhang3", name);
+        Assertions.assertEquals("zhang3", name);
     }
 
 
@@ -89,7 +89,7 @@ public class SpringELTest {
         Expression exp = parser.parseExpression("#this.toString()");
         String name = (String) exp.getValue(context);
 
-        Assert.assertEquals("MyPojo[name=zhang3]", name);
+        Assertions.assertEquals("MyPojo[name=zhang3]", name);
     }
 
     @Test
@@ -103,10 +103,10 @@ public class SpringELTest {
         Expression exp = parser.parseExpression("#primes.?[#this>10]");
         List<Integer> primesGreaterThanTen = (List<Integer>) exp.getValue(context);
 
-        Assert.assertEquals(3, primesGreaterThanTen.size());
-        Assert.assertTrue(primesGreaterThanTen.contains(11));
-        Assert.assertTrue(primesGreaterThanTen.contains(13));
-        Assert.assertTrue(primesGreaterThanTen.contains(17));
+        Assertions.assertEquals(3, primesGreaterThanTen.size());
+        Assertions.assertTrue(primesGreaterThanTen.contains(11));
+        Assertions.assertTrue(primesGreaterThanTen.contains(13));
+        Assertions.assertTrue(primesGreaterThanTen.contains(17));
     }
 
     @Test
@@ -122,7 +122,7 @@ public class SpringELTest {
         Expression exp = parser.parseExpression("name+#age");
         String name = (String) exp.getValue(context);
 
-        Assert.assertEquals("zhang335", name);
+        Assertions.assertEquals("zhang335", name);
     }
 
 
@@ -140,7 +140,7 @@ public class SpringELTest {
         Expression exp = parser.parseExpression("#trimAllWhitespace(#str)");
         String newStr = (String) exp.getValue(context);
 
-        Assert.assertEquals("abc", newStr);
+        Assertions.assertEquals("abc", newStr);
     }
 
 
@@ -160,7 +160,7 @@ public class SpringELTest {
         Expression exp = parser.parseExpression("'hi,'+@str");
         String newStr = (String) exp.getValue(context);
 
-        Assert.assertEquals("hi,zhang3", newStr);
+        Assertions.assertEquals("hi,zhang3", newStr);
 
     }
 
@@ -201,9 +201,9 @@ public class SpringELTest {
         Expression exp = parser.parseExpression("#list.?[age>20].![name]");
         List<String> newList = (List<String>) exp.getValue(context);
 
-        Assert.assertEquals(2, newList.size());
-        Assert.assertTrue(newList.contains("li4"));
-        Assert.assertTrue(newList.contains("wang5"));
+        Assertions.assertEquals(2, newList.size());
+        Assertions.assertTrue(newList.contains("li4"));
+        Assertions.assertTrue(newList.contains("wang5"));
 
     }
 

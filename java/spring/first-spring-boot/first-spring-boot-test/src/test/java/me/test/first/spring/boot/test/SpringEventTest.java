@@ -3,8 +3,7 @@ package me.test.first.spring.boot.test;
 import lombok.Builder;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationEventPublisher;
@@ -15,13 +14,11 @@ import org.springframework.core.task.TaskRejectedException;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * @author dangqian.zll
  * @date 2020/9/21
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest(
         classes = SpringEventTest.Conf.class,
         webEnvironment = SpringBootTest.WebEnvironment.NONE
