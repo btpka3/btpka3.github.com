@@ -43,7 +43,7 @@ public class GrepSortInJavaData {
             recList.add(buf.toString());
         }
 
-        File dir = new File("/home/admin/logs/test");
+        File dir = new File("/Users/zll/logs/test");
         FileUtils.deleteDirectory(dir);
         dir.mkdirs();
 

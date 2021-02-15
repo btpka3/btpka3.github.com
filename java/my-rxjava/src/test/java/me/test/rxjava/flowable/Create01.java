@@ -3,7 +3,7 @@ package me.test.rxjava.flowable;
 import io.reactivex.Emitter;
 import io.reactivex.Flowable;
 import org.apache.commons.lang3.RandomUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

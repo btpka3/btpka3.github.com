@@ -1,0 +1,10 @@
+<root>   <!-- sss -->
+    <cc>cc</cc> <!-- cc01 -->
+    <!-- aa01 --> <aa>aa</aa>
+    <!--
+      comment bb01
+      comment bb02
+    -->
+
+    <bb>bb</bb>
+</root>

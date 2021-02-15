@@ -4,7 +4,7 @@ import io.reactivex.Completable;
 import io.reactivex.CompletableOnSubscribe;
 import io.reactivex.CompletableSource;
 import io.reactivex.Flowable;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

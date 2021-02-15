@@ -22,4 +22,6 @@ public class StreamTest {
 
         System.out.println(newList);
     }
+
+
 }

@@ -1,9 +1,11 @@
 package me.test.reactor;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Mono;
+
+import java.time.Duration;
 
 /**
  * @author dangqian.zll
@@ -17,16 +19,20 @@ public class TimeoutTest {
     public void test01() throws InterruptedException {
         Mono.just("aaa")
                 .map(s -> {
-                    log.info("data={}", s)
-                    Thread.sleep(6 * 1000);
+                    log.info("data={}", s);
+                    try {
+                        Thread.sleep(6 * 1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     return s + "bbb";
                 })
 
-                .timeout(3, TimeUnit.SECOND)
+                .timeout(Duration.ofSeconds(3))
                 .subscribe(
-                        i -> logger.debug("subscribe : onNext : {}", i),
-                        err -> logger.error("subscribe : onError", err),
-                        () -> logger.debug("subscribe : onComplete")
+                        i -> log.debug("subscribe : onNext : {}", i),
+                        err -> log.error("subscribe : onError", err),
+                        () -> log.debug("subscribe : onComplete")
                 );
 
         Thread.sleep(10000);

@@ -1,14 +1,15 @@
 package me.test.rxjava.flowable;
 
+import io.reactivex.Flowable;
+import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Test;
-
-import io.reactivex.Flowable;
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 public class Timeout01 {
+
+    Logger log = LoggerFactory.getLogger(Timeout01.class);
 
     @Test
     public void test01() {
