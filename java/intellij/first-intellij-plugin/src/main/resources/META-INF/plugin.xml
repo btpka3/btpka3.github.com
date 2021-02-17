@@ -1,0 +1,26 @@
+<idea-plugin>
+    <id>com.github.btpka3.first-intellij-plugin</id>
+    <name>btpka3 study intellij</name>
+    <vendor email="btpka3@163.com" url="https://github.com/btpka3">test</vendor>
+
+    <description><![CDATA[test test test test test test test test test test test test test ]]></description>
+
+    <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <fileType name="POM" implementationClass="com.github.btpka3.first.intellij.plugin.PomLanguageFileType"
+                  fieldName="INSTANCE" language="POM" extensions="pom.xml"/>
+
+        <lang.parserDefinition language="POM"
+                               implementationClass="com.github.btpka3.first.intellij.plugin.PomParserDefinition"/>
+
+        <lang.formatter language="POM"
+                        implementationClass="com.github.btpka3.first.intellij.plugin.PomFormattingModelBuilder"/>
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+    </actions>
+</idea-plugin>
