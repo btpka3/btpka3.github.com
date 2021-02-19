@@ -1,13 +1,20 @@
-<idea-plugin>
+<idea-plugin require-restart="false">
     <id>com.github.btpka3.first-intellij-plugin</id>
     <name>btpka3 study intellij</name>
     <vendor email="btpka3@163.com" url="https://github.com/btpka3">test</vendor>
+    <version>1.0.0-SNAPSHOT</version>
+    <change-notes>Initial release of the plugin.</change-notes>
+    <!--    <idea-version since-build="193" until-build="193.*"/>-->
+    <!--    <depends optional="true" config-file="mysecondplugin.xml">com.MySecondPlugin</depends>-->
+
 
     <description><![CDATA[test test test test test test test test test test test test test ]]></description>
 
     <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
          on how to target different products -->
     <depends>com.intellij.modules.platform</depends>
+
+    <resource-bundle>com.github.btpka3.messages</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
         <fileType name="POM" implementationClass="com.github.btpka3.first.intellij.plugin.PomLanguageFileType"
@@ -18,9 +25,32 @@
 
         <lang.formatter language="POM"
                         implementationClass="com.github.btpka3.first.intellij.plugin.PomFormattingModelBuilder"/>
+        <!--        <appStarter implementation=""/> -->
     </extensions>
 
     <actions>
-        <!-- Add your actions here -->
+        <action id="demoMyAction"
+                class="com.github.btpka3.first.intellij.plugin.DemoAction"
+                text="My Action text"
+                description="My Action description"
+                icon="DemoIcons.SPRING"
+        >
+            <synonym text="btpka3 demo action"/>
+            <override-text place="MainMenu" text="Pop Dialog Action btpka3"/>
+            <keyboard-shortcut first-keystroke="control alt A" second-keystroke="C" keymap="$default"/>
+            <mouse-shortcut keystroke="control button3 doubleClick" keymap="$default"/>
+            <add-to-group group-id="ToolsMenu" anchor="first"/>
+        </action>
     </actions>
+
+    <applicationListeners>
+        <listener class="com.github.btpka3.first.intellij.plugin.DemoBulkFileListener"
+                  topic="com.intellij.openapi.vfs.newvfs.BulkFileListener"/>
+    </applicationListeners>
+
+    <extensionPoints>
+        <extensionPoint name="com.github.btpka3.myDynamicExtensionPoint"
+                        beanClass="com.github.btpka3.first.intellij.plugin.DemoExtensionPoint"
+                        dynamic="true"/>
+    </extensionPoints>
 </idea-plugin>
