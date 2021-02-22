@@ -1,0 +1,10 @@
+<dependencies>
+    <dependency> <!-- ddd-000 -->
+        <!-- aaa-000 -->
+        <artifactId>joda-time</artifactId> <!-- aaa-111 --> aaa
+        bbb <!-- ggg-000 -->
+        <groupId>joda-time</groupId> <!-- ggg-111 -->
+        <!-- vvv-000 -->
+        <version>2.8.1</version> <!-- vvv-111 -->
+    </dependency>
+</dependencies>
