@@ -23,6 +23,8 @@ dependencies {
     implementation 'org.infinispan:infinispan-spring-boot-starter'
     implementation 'org.infinispan:infinispan-spring4-embedded'
     implementation 'io.micrometer:micrometer-registry-prometheus'
+    implementation 'org.hamcrest:hamcrest'
+    implementation 'org.codehaus.groovy:groovy'
     //implementation 'io.micrometer:micrometer-test'
 
     compileOnly 'org.projectlombok:lombok'
@@ -73,6 +75,7 @@ dependencies {
     testImplementation('io.projectreactor:reactor-test')
 
     implementation('org.apache.tika:tika-parsers:1.24.1')
+    implementation('javax.inject:javax.inject:1')
 
 
 }
