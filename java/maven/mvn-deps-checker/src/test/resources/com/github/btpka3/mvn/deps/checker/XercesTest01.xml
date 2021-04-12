@@ -1,10 +1,45 @@
-<root>   <!-- sss -->
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns:beans="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:vm-plugins="http://www.alibaba.com/schema/services/template/engines/velocity/plugins"
+        xmlns:dr-factories="http://www.alibaba.com/schema/services/data-resolver/factories"
+        xmlns:tpl-engines="http://www.alibaba.com/schema/services/template/engines"
+        xmlns:services="http://www.alibaba.com/schema/services"
+        xmlns:mapping-rules="http://www.alibaba.com/schema/services/mapping-rules"
+        xmlns:ml-adapters="http://www.alibaba.com/schema/services/module-loader/adapters"
+        xmlns:ml-factories="http://www.alibaba.com/schema/services/module-loader/factories"
+        xmlns:pull-factories="http://www.alibaba.com/schema/services/pull/factories"
+        xmlns:request-contexts="http://www.alibaba.com/schema/services/request-contexts"
+        xmlns:session-encoders="http://www.alibaba.com/schema/services/request-contexts/session/encoders"
+        xmlns:session-encrypters="http://www.alibaba.com/schema/services/request-contexts/session/encrypters"
+        xmlns:session-idgens="http://www.alibaba.com/schema/services/request-contexts/session/idgens"
+        xmlns:model-encoders="http://www.alibaba.com/schema/services/request-contexts/session/model-encoders"
+        xmlns:session-stores="http://www.alibaba.com/schema/services/request-contexts/session/stores"
+        xmlns:p="http://www.springframework.org/schema/p" xsi:schemaLocation="
+                 http://www.alibaba.com/schema/services/template/engines                        http://localhost:8080/schema/services-template-engines.xsd
+                 http://www.alibaba.com/schema/services/template/engines/velocity/plugins       http://localhost:8080/schema/services-template-engines-velocity-plugins.xsd
+                 http://www.alibaba.com/schema/services/mapping-rules                           http://localhost:8080/schema/services-mapping-rules.xsd
+                 http://www.alibaba.com/schema/services/data-resolver/factories                 http://localhost:8080/schema/services-data-resolver-factories.xsd
+                 http://www.alibaba.com/schema/services                                         http://localhost:8080/schema/services.xsd
+                 http://www.alibaba.com/schema/services/module-loader/adapters                  http://localhost:8080/schema/services-module-loader-adapters.xsd
+                 http://www.alibaba.com/schema/services/module-loader/factories                 http://localhost:8080/schema/services-module-loader-factories.xsd
+                 http://www.alibaba.com/schema/services/pull/factories                          http://localhost:8080/schema/services-pull-factories.xsd
+                 http://www.alibaba.com/schema/services/request-contexts                        http://localhost:8080/schema/services-request-contexts.xsd
+                 http://www.alibaba.com/schema/services/request-contexts/session/encoders       http://localhost:8080/schema/services-request-contexts-session-encoders.xsd
+                 http://www.alibaba.com/schema/services/request-contexts/session/idgens         http://localhost:8080/schema/services-request-contexts-session-idgens.xsd
+                 http://www.alibaba.com/schema/services/request-contexts/session/model-encoders http://localhost:8080/schema/services-request-contexts-session-model-encoders.xsd
+                 http://www.alibaba.com/schema/services/request-contexts/session/stores         http://localhost:8080/schema/services-request-contexts-session-stores.xsd
+                 http://www.springframework.org/schema/beans                                    http://localhost:8080/schema/www.springframework.org/schema/beans/spring-beans.xsd
+             "
+>   <!-- sss -->
     <cc>cc</cc> <!-- cc01 -->
     <!-- aa01 --> <aa>aa</aa>
+
     <!--
       comment bb01
       comment bb02
     -->
 
-    <bb>bb</bb>
+    <bb b2="bb2"
+        b1="bb1">bb</bb>
 </root>

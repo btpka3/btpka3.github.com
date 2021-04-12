@@ -1,0 +1,5 @@
+rootProject.name = 'first-spring-cloud-function'
+
+
+include 'demo-function'
+include 'demo-web'

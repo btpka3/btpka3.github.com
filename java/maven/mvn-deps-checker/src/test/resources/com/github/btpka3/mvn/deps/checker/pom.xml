@@ -1,0 +1,2109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.taobao</groupId>
+        <artifactId>parent</artifactId>
+        <version>2.0.0</version>
+    </parent>
+
+    <groupId>com.taobao.csi</groupId>
+    <artifactId>csi-parent</artifactId>
+    <version>1.5.9</version>
+    <packaging>pom</packaging>
+
+    <description>
+        csi:common security investigate
+    </description>
+
+    <name>csi</name>
+    <organization>
+        <name>taobao</name>
+        <url>http://csi.alibaba-inc.com/</url>
+    </organization>
+    <inceptionYear>2014</inceptionYear>
+    <developers>
+        <developer>
+            <name>yufei.qyf</name>
+            <email>yufei.qyf@alibaba-inc.com</email>
+            <roles>
+                <role>developer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <toolkit-common.version>1.0</toolkit-common.version>
+        <toolkit-service.version>1.0</toolkit-service.version>
+        <toolkit-webx.version>2.0</toolkit-webx.version>
+        <springext-plugin-version>1.0</springext-plugin-version>
+        <autoconfig-plugin-version>1.0.5</autoconfig-plugin-version>
+        <webx-group>com.alibaba.citrus</webx-group>
+        <uniface-i18n.version>0.2.0</uniface-i18n.version>
+
+        <!--<powermock.version>1.6.5</powermock.version>-->
+        <spring.version>4.3.24.RELEASE</spring.version>
+        <slf4j.version>1.7.25</slf4j.version>
+        <logback.version>1.2.3</logback.version>
+        <hsf.version>2.2.1.8</hsf.version>
+        <mockito.version>2.23.4</mockito.version>
+        <springfox.version>2.9.2</springfox.version>
+        <swagger.version>1.5.20</swagger.version>
+        <jackson2.version>2.9.9</jackson2.version>
+        <lombok.version>1.18.12</lombok.version>
+        <httpcomponents.version>4.4.13</httpcomponents.version>
+        <infinispan.version>9.4.15.Final</infinispan.version>
+        <spring.security.version>4.2.12.RELEASE</spring.security.version>
+        <spring-integration.version>4.3.22.RELEASE</spring-integration.version>
+        <sentinel.version>3.9.21</sentinel.version>
+        <druid.version>1.1.22</druid.version>
+        <scheculerx2.version>1.1.3</scheculerx2.version>
+        <pandora.boot.version>2020-04-release</pandora.boot.version>
+        <elasticsearch.version>6.2.3</elasticsearch.version>
+        <green-punish.version>0.5.8-SNAPSHOT</green-punish.version>
+        <resilience4j.version>1.6.1</resilience4j.version>
+        <blackcat-client.version>0.1.10</blackcat-client.version>
+    </properties>
+
+    <modules>
+        <!--        <module>csi-biz</module>-->
+        <module>ruler-biz</module>
+        <module>csi-web</module>
+        <!-- 通过 csis.release 中的 build.output -->
+        <!--        <module>deploy</module>-->
+    </modules>
+
+    <dependencyManagement>
+
+        <dependencies>
+            <!-- 引入BOM -->
+            <dependency>
+                <groupId>com.taobao.csi</groupId>
+                <artifactId>csi-common-bom</artifactId>
+                <version>2.2.8-SNAPSHOT</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!--            <dependency>-->
+            <!--                <groupId>org.codehaus.groovy</groupId>-->
+            <!--                <artifactId>groovy-all</artifactId>-->
+            <!--                <version>2.5.10</version>-->
+            <!--                <type>pom</type>-->
+            <!--                <scope>import</scope>-->
+            <!--            </dependency>-->
+            <dependency>
+                <groupId>io.github.resilience4j</groupId>
+                <artifactId>resilience4j-bom</artifactId>
+                <version>${resilience4j.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.infinispan</groupId>
+                <artifactId>infinispan-bom</artifactId>
+                <version>${infinispan.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-framework-bom</artifactId>
+                <version>${spring.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.integration</groupId>
+                <artifactId>spring-integration-bom</artifactId>
+                <version>${spring-integration.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.taobao.pandora</groupId>
+                <artifactId>pandora-boot-starter-bom</artifactId>
+                <version>${pandora.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.security.green</groupId>
+                <artifactId>green-punish-bom</artifactId>
+                <version>${green-punish.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+
+            <dependency>
+                <groupId>com.taobao.pandora</groupId>
+                <artifactId>taobao-hsf.sar</artifactId>
+                <version>2020-04-release</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.integration</groupId>
+                <artifactId>spring-integration-java-dsl</artifactId>
+                <version>1.2.3.RELEASE</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>com.alibaba.blackcat</groupId>
+                <artifactId>blackcat-client</artifactId>
+                <version>${blackcat-client.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>jcl-over-slf4j</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.junit.jupiter</groupId>
+                        <artifactId>junit-jupiter-api</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>log4j</groupId>
+                        <artifactId>log4j</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>ch.qos.logback</groupId>
+                        <artifactId>logback-classic</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>ch.qos.logback</groupId>
+                        <artifactId>logback-core</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.sec</groupId>
+                <artifactId>saas-sdk</artifactId>
+                <version>1.2.6</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.projectlombok</groupId>
+                        <artifactId>lombok</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-redis</artifactId>
+                <version>1.8.22.RELEASE</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.security.uniface</groupId>
+                <artifactId>uniface-api</artifactId>
+                <version>1.2.7</version>
+            </dependency>
+
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>8.0.19</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.nimbusds</groupId>
+                <artifactId>nimbus-jose-jwt </artifactId>
+                <version>5.7</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-core</artifactId>
+                <version>${spring.security.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-web</artifactId>
+                <version>${spring.security.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-config</artifactId>
+                <version>${spring.security.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-acl</artifactId>
+                <version>${spring.security.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-test</artifactId>
+                <version>${spring.security.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.security.green</groupId>
+                <artifactId>green-commons-log</artifactId>
+                <version>0.1.3</version>
+            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>com.alibaba.security.green</groupId>-->
+<!--                <artifactId>green-mtee-ext</artifactId>-->
+<!--                <version>0.1.0</version>-->
+<!--            </dependency>-->
+
+            <!--            <dependency>-->
+            <!--                <groupId>com.taobao.csi</groupId>-->
+            <!--                <artifactId>csi-biz</artifactId>-->
+            <!--                <version>${project.version}</version>-->
+            <!--            </dependency>-->
+            <dependency>
+                <groupId>com.taobao.csi</groupId>
+                <artifactId>ruler-biz</artifactId>
+                <version>${project.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.taobao.common.uic.uic-common</groupId>
+                        <artifactId>common-uic-common</artifactId>
+                    </exclusion>
+                    <!--                    <exclusion>-->
+                    <!--                        <groupId>com.taobao.punishcenter</groupId>-->
+                    <!--                        <artifactId>punishcenter-common</artifactId>-->
+                    <!--                    </exclusion>-->
+                    <exclusion>
+                        <artifactId>log4j</artifactId>
+                        <groupId>log4j</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>com.taobao.csi</groupId>
+                <artifactId>csi-web</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.codehaus.groovy</groupId>
+                <artifactId>groovy-all</artifactId>
+                <version>2.4.19</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>19.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.pipe</groupId>
+                <artifactId>pipe-client</artifactId>
+                <version>1.0.5-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.security</groupId>
+                <artifactId>tenant-log</artifactId>
+                <version>1.3.2</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.security</groupId>
+                <artifactId>tenant-tracing-core</artifactId>
+                <version>1.4.1</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-log4j12</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.apache.hadoop.thirdparty.guava</groupId>
+                        <artifactId>guava</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.junit.jupiter</groupId>
+                        <artifactId>junit-jupiter-api</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.taobao.csp</groupId>
+                        <artifactId>switchcenter</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.taobao.metaq.final</groupId>
+                        <artifactId>metaq-client</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <!--            <dependency>-->
+            <!--                <groupId>org.springframework.integration</groupId>-->
+            <!--                <artifactId>spring-integration-jdbc</artifactId>-->
+            <!--                <version>${spring-integration.version}</version>-->
+            <!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>org.springframework.integration</groupId>-->
+            <!--                <artifactId>spring-integration-redis</artifactId>-->
+            <!--                <version>${spring-integration.version}</version>-->
+            <!--            </dependency>-->
+
+            <dependency>
+                <groupId>com.aliyun.oss</groupId>
+                <artifactId>aliyun-sdk-oss</artifactId>
+                <version>3.8.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.security.uniface</groupId>
+                <artifactId>uniface-i18n-core</artifactId>
+                <version>${uniface-i18n.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.security.uniface</groupId>
+                <artifactId>uniface-i18n</artifactId>
+                <version>${uniface-i18n.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.taobao.csi</groupId>
+                <artifactId>ruler-common</artifactId>
+                <version>1.3.5</version>
+            </dependency>
+
+            <dependency>
+                <groupId>javax.annotation</groupId>
+                <artifactId>javax.annotation-api</artifactId>
+                <version>1.3.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.velocity</groupId>
+                <artifactId>velocity</artifactId>
+                <version>1.6.4</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-fileupload</groupId>
+                <artifactId>commons-fileupload</artifactId>
+                <version>1.4</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.taobao.vbs</groupId>
+                <artifactId>vbs-api</artifactId>
+                <version>2.2.24</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.alibaba.smeta</groupId>
+                        <artifactId>smeta-model</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.alibaba.ctu</groupId>
+                        <artifactId>tools-utils</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>spring</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>com.taobao.wireless.mtop</groupId>
+                <artifactId>mtop-pandora-export-agent</artifactId>
+                <version>1.0.5.8</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-jelly</groupId>
+                <artifactId>commons-jelly</artifactId>
+                <version>1.0.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>1.4.197</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-dbcp2</artifactId>
+                <version>2.1.1</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+
+            <dependency>
+                <groupId>net.sf.json-lib</groupId>
+                <artifactId>json-lib</artifactId>
+                <version>2.4</version>
+                <classifier>jdk15</classifier>
+                <exclusions>
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+
+            <dependency>
+                <groupId>com.alibaba.citrus</groupId>
+                <artifactId>citrus-webx-all</artifactId>
+                <version>3.3.1-s</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+                <version>1.1.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.taobao.hsf</groupId>
+                <artifactId>hsf.service.address</artifactId>
+                <version>2.1.2.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.elasticsearch.client</groupId>
+                <artifactId>transport</artifactId>
+                <version>${elasticsearch.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>io.netty</groupId>
+                        <artifactId>*</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.apache.logging.log4j</groupId>
+                        <artifactId>log4j-core</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.elasticsearch.client</groupId>
+                <artifactId>elasticsearch-rest-high-level-client</artifactId>
+                <version>${elasticsearch.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.apache.logging.log4j</groupId>
+                        <artifactId>log4j-core</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>com.taobao.hsf</groupId>
+                <artifactId>hsf-io-serialize-kryo</artifactId>
+                <version>${hsf.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.taobao.hsf</groupId>
+                <artifactId>hsf-app-spring</artifactId>
+                <version>${hsf.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>com.taobao.hsf</groupId>
+                <artifactId>hsf-app-api</artifactId>
+                <version>${hsf.version}</version>
+            </dependency>
+
+            <!--            <dependency>-->
+            <!--                <groupId>com.alibaba.middleware</groupId>-->
+            <!--                <artifactId>sdk</artifactId>-->
+            <!--                <version>2020-04-release</version>-->
+            <!--                <scope>provided</scope>-->
+            <!--            </dependency>-->
+
+
+            <!-- metaq -->
+            <dependency>
+                <groupId>com.taobao.metaq.final</groupId>
+                <artifactId>metaq-client</artifactId>
+                <version>4.3.0.Final</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.taobao.diamond</groupId>
+                        <artifactId>diamond-client</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.alibaba.unit.rule</groupId>
+                        <artifactId>unitrouter</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>com.taobao.diamond</groupId>
+                <artifactId>diamond-client</artifactId>
+                <version>3.8.18</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.taobao.hsf</groupId>
+                <artifactId>hsf-all</artifactId>
+                <version>2.2.8.9</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.taobao.eagleeye</groupId>
+                <artifactId>eagleeye-core</artifactId>
+                <version>1.8.4.6</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>log4j</groupId>
+                        <artifactId>log4j</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-log4j12</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>javax.servlet</groupId>
+                        <artifactId>javax.servlet-api</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>com.taobao.csp</groupId>
+                <artifactId>sentinel</artifactId>
+                <version>${sentinel.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>io.netty</groupId>
+                        <artifactId>*</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>spring</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.taobao.diamond</groupId>
+                        <artifactId>diamond-client</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.taobao.eagleeye</groupId>
+                        <artifactId>eagleeye-core</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>spring</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>log4j</groupId>
+                        <artifactId>log4j</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>io.netty</groupId>
+                        <artifactId>netty-all</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>4.1.51.Final</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.taobao.csp</groupId>
+                <artifactId>switchcenter</artifactId>
+                <version>2.1.1.1</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>log4j</groupId>
+                        <artifactId>log4j</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <!-- 按照官方文档，应当直接一依赖 tair-mc-client ，而非依赖 tair-client   -->
+            <dependency>
+                <groupId>com.taobao.tair</groupId>
+                <artifactId>tair-mc-client</artifactId>
+                <version>4.2.9</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>org.slf4j</artifactId>
+                        <groupId>slf4j-log4j12</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>log4j</artifactId>
+                        <groupId>log4j</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>slf4j-api</artifactId>
+                        <groupId>org.slf4j</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>ch.qos.logback</groupId>
+                        <artifactId>logback-classic</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.taobao.diamond</groupId>
+                        <artifactId>diamond-client</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.taobao.common</groupId>
+                        <artifactId>fulllinkstresstesting</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>com.taobao.tair</groupId>
+                <artifactId>tair-client</artifactId>
+                <version>4.2.9</version>
+            </dependency>
+            <dependency>
+                <groupId>com.taobao.vipserver</groupId>
+                <artifactId>vipserver-client</artifactId>
+                <version>4.8.5</version>
+            </dependency>
+
+            <!-- 统一 metrics 的版本 -->
+            <dependency>
+                <groupId>com.alibaba.middleware</groupId>
+                <artifactId>metrics-core-impl</artifactId>
+                <version>2.0.6</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.middleware</groupId>
+                <artifactId>metrics-core-api</artifactId>
+                <version>2.0.6</version>
+            </dependency>
+
+
+            <!--<dependency>-->
+            <!--<groupId>com.taobao.hsf</groupId>-->
+            <!--<artifactId>hsf.common</artifactId>-->
+            <!--<version>2.1.1.7</version>-->
+            <!--<exclusions>-->
+            <!--<exclusion>-->
+            <!--<groupId>log4j</groupId>-->
+            <!--<artifactId>log4j</artifactId>-->
+            <!--</exclusion>-->
+            <!--<exclusion>-->
+            <!--<groupId>org.slf4j</groupId>-->
+            <!--<artifactId>slf4j-log4j12</artifactId>-->
+            <!--</exclusion>-->
+            <!--</exclusions>-->
+            <!--<scope>provided</scope>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+            <!--<groupId>com.taobao.hsf</groupId>-->
+            <!--<artifactId>hsf.consumer.default</artifactId>-->
+            <!--<version>1.3.3</version>-->
+            <!--<scope>provided</scope>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+            <!--<groupId>com.taobao.hsf</groupId>-->
+            <!--<artifactId>hsf.connector.spring</artifactId>-->
+            <!--<version>1.3.3</version>-->
+            <!--<scope>provided</scope>-->
+            <!--</dependency>-->
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+                <scope>provided</scope>
+                <optional>true</optional>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>1.9.3</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-core</artifactId>
+                <version>${spring.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <!--            <dependency>-->
+            <!--                <groupId>org.springframework</groupId>-->
+            <!--                <artifactId>spring-aop</artifactId>-->
+            <!--                <version>${spring.version}</version>-->
+            <!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>org.springframework</groupId>-->
+            <!--                <artifactId>spring-aspects</artifactId>-->
+            <!--                <version>${spring.version}</version>-->
+            <!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>org.springframework</groupId>-->
+            <!--                <artifactId>spring-context-support</artifactId>-->
+            <!--                <version>${spring.version}</version>-->
+            <!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>org.springframework</groupId>-->
+            <!--                <artifactId>spring-jdbc</artifactId>-->
+            <!--                <version>${spring.version}</version>-->
+            <!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>org.springframework</groupId>-->
+            <!--                <artifactId>spring-tx</artifactId>-->
+            <!--                <version>${spring.version}</version>-->
+            <!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>org.springframework</groupId>-->
+            <!--                <artifactId>spring-beans</artifactId>-->
+            <!--                <version>${spring.version}</version>-->
+            <!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>org.springframework</groupId>-->
+            <!--                <artifactId>spring-context</artifactId>-->
+            <!--                <version>${spring.version}</version>-->
+            <!--            </dependency>-->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>${spring.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <!--            <dependency>-->
+            <!--                <groupId>org.springframework</groupId>-->
+            <!--                <artifactId>spring-web</artifactId>-->
+            <!--                <version>${spring.version}</version>-->
+            <!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>org.springframework</groupId>-->
+            <!--                <artifactId>spring-webmvc</artifactId>-->
+            <!--                <version>${spring.version}</version>-->
+            <!--            </dependency>-->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-orm</artifactId>
+                <version>2.5.6.SEC01</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.unit.rule</groupId>
+                <artifactId>unitrouter</artifactId>
+                <version>1.1.6</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>1.2.67</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>com.alibaba.dna</groupId>
+                <artifactId>dna-client</artifactId>
+                <version>1.0.5</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.taobao.eagleeye</groupId>
+                        <artifactId>eagleeye-core</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.ods</groupId>
+                <artifactId>ods-client-all</artifactId>
+                <version>2.1.9</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>log4j</groupId>
+                        <artifactId>log4j</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.taobao.tair</groupId>
+                        <artifactId>tair-mc-client</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.alibaba.unit.rule</groupId>
+                        <artifactId>unitrouter</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.typesafe.akka</groupId>
+                        <artifactId>akka-actor_2.11</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.taobao.metaq.final</groupId>
+                        <artifactId>metaq-client</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.apache.commons</groupId>
+                        <artifactId>commons-lang3</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.taobao.eagleeye</groupId>
+                        <artifactId>eagleeye-core</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.taobao.diamond</groupId>
+                        <artifactId>diamond-client</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.taobao.configserver</groupId>
+                        <artifactId>config-client</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.taobao.configserver</groupId>
+                        <artifactId>config-client</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.sun</groupId>
+                        <artifactId>tools</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>com.taobao.security</groupId>
+                <artifactId>ibatis</artifactId>
+                <version>2.3.4.726.bugfix</version>
+            </dependency>
+            <dependency>
+                <groupId>com.taobao.tddl</groupId>
+                <artifactId>tddl-client</artifactId>
+                <version>5.2.6</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.taobao.common</groupId>
+                        <artifactId>fulllinkstresstesting</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>log4j</groupId>
+                        <artifactId>log4j</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-lang</groupId>
+                <artifactId>commons-lang</artifactId>
+                <version>2.6</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.4</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>2.6</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>1.14</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.platform.shared</groupId>
+                <artifactId>buc.sso.client</artifactId>
+                <version>0.5.1</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-api</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-log4j12</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>log4j</groupId>
+                        <artifactId>log4j</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+
+            <dependency>
+                <groupId>com.alibaba.platform.shared</groupId>
+                <artifactId>acl.api</artifactId>
+                <version>1.1.6</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>com.alibaba.external</artifactId>
+                        <groupId>*</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>com.aliyun.tair</groupId>
+                <artifactId>tairjedis-sdk</artifactId>
+                <version>1.5.0</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.taobao.eagleeye</groupId>
+                        <artifactId>eagleeye-core</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <!--            <dependency>-->
+            <!--                <groupId>javax.servlet</groupId>-->
+            <!--                <artifactId>servlet-api</artifactId>-->
+            <!--                <version>2.5</version>-->
+            <!--            </dependency>-->
+
+            <!-- FIMXE: 3.1.0 版本只有 tomcat 8 以上版本才支持
+                 我们使用的 ali-tomcat 却是 7.x 的
+                 而 onelog 却又要求使用 3.1.
+             -->
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>3.1.0</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.dt</groupId>
+                <artifactId>onelog-core</artifactId>
+                <version>4.0.8</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.jaxrs</groupId>
+                <artifactId>jackson-jaxrs-json-provider</artifactId>
+                <version>${jackson2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.jaxrs</groupId>
+                <artifactId>jackson-jaxrs-base</artifactId>
+                <version>${jackson2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-jsr310</artifactId>
+                <version>${jackson2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-jsr353</artifactId>
+                <version>${jackson2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-jdk8</artifactId>
+                <version>${jackson2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.uuid</groupId>
+                <artifactId>java-uuid-generator</artifactId>
+                <version>3.2.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.code.findbugs</groupId>
+                <artifactId>jsr305</artifactId>
+                <version>1.3.9</version>
+                <scope>provided</scope>
+                <optional>true</optional>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.schedulerx</groupId>
+                <artifactId>schedulerx-worker</artifactId>
+                <version>${scheculerx2.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>log4j</groupId>
+                        <artifactId>log4j</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.taobao.spas.sdk</groupId>
+                        <artifactId>spas-sdk-client</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.taobao.diamond</groupId>
+                        <artifactId>diamond-client</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <!--
+            <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>1.2.17</version>
+                 </dependency>
+            -->
+
+
+            <!-- 跟csi-common的logback冲突
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>1.7.5</version>
+            </dependency>
+            -->
+
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.12</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${mockito.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <!--<dependency>-->
+            <!--<groupId>org.powermock</groupId>-->
+            <!--<artifactId>powermock-module-junit4</artifactId>-->
+            <!--<version>${powermock.version}</version>-->
+            <!--<scope>test</scope>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+            <!--<groupId>org.powermock</groupId>-->
+            <!--<artifactId>powermock-api-mockito</artifactId>-->
+            <!--<version>${powermock.version}</version>-->
+            <!--<scope>test</scope>-->
+            <!--</dependency>-->
+            <dependency>
+                <groupId>com.taobao.tlog</groupId>
+                <artifactId>tlog-client</artifactId>
+                <version>2.0.1</version>
+            </dependency>
+            <!--            <dependency>-->
+            <!--                <groupId>com.taobao.hsf</groupId>-->
+            <!--                <artifactId>LightApi</artifactId>-->
+            <!--                <version>1.1.3</version>-->
+            <!--                <exclusions>-->
+            <!--                    <exclusion>-->
+            <!--                        <groupId>javax.servlet</groupId>-->
+            <!--                        <artifactId>servlet-api</artifactId>-->
+            <!--                    </exclusion>-->
+            <!--                </exclusions>-->
+            <!--            </dependency>-->
+            <dependency>
+                <groupId>com.alibaba.security</groupId>
+                <artifactId>websiteanalyze-client</artifactId>
+                <version>1.0.2-SNAPSHOT</version>
+            </dependency>
+
+
+            <!--            <dependency>-->
+            <!--                <groupId>com.alibaba.schedulerx</groupId>-->
+            <!--                <artifactId>schedulerx-client</artifactId>-->
+            <!--                <version>2.2.2</version>-->
+            <!--                <exclusions>-->
+            <!--                    <exclusion>-->
+            <!--                        <groupId>log4j</groupId>-->
+            <!--                        <artifactId>log4j</artifactId>-->
+            <!--                    </exclusion>-->
+            <!--                    <exclusion>-->
+            <!--                        <groupId>com.taobao.middleware</groupId>-->
+            <!--                        <artifactId>logger.api</artifactId>-->
+            <!--                    </exclusion>-->
+            <!--                    <exclusion>-->
+            <!--                        <groupId>com.taobao.eagleeye</groupId>-->
+            <!--                        <artifactId>eagleeye-core</artifactId>-->
+            <!--                    </exclusion>-->
+            <!--                    <exclusion>-->
+            <!--                        <groupId>com.taobao.diamond</groupId>-->
+            <!--                        <artifactId>diamond-client</artifactId>-->
+            <!--                    </exclusion>-->
+            <!--                    <exclusion>-->
+            <!--                        <groupId>com.alibaba</groupId>-->
+            <!--                        <artifactId>druid</artifactId>-->
+            <!--                    </exclusion>-->
+            <!--                </exclusions>-->
+            <!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>org.quartz-scheduler</groupId>-->
+            <!--                <artifactId>quartz</artifactId>-->
+            <!--                <version>2.2.3</version>-->
+            <!--            </dependency>-->
+            <dependency>
+                <groupId>org.freemarker</groupId>
+                <artifactId>freemarker</artifactId>
+                <version>2.3.28</version>
+            </dependency>
+            <!--            <dependency>-->
+            <!--                <groupId>org.quartz-scheduler</groupId>-->
+            <!--                <artifactId>quartz-jobs</artifactId>-->
+            <!--                <version>2.2.3</version>-->
+            <!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>com.alibaba.external</groupId>-->
+            <!--                <artifactId>opensymphony.quartz</artifactId>-->
+            <!--                <version>999-not-exist</version>-->
+            <!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>opensymphony</groupId>-->
+            <!--                <artifactId>quartz</artifactId>-->
+            <!--                <version>999-not-exist</version>-->
+            <!--            </dependency>-->
+            <dependency>
+                <!-- https://yuque.antfin-inc.com/sp/securityjar/secpkginfo -->
+                <groupId>com.taobao.security</groupId>
+                <artifactId>security</artifactId>
+<!--                <version>2.1.1-SNAPSHOT</version>-->
+                <version>3.1.1-SNAPSHOT</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>commons-jelly</groupId>
+                        <artifactId>commons-jelly</artifactId>
+                    </exclusion>
+<!--                    <exclusion>-->
+<!--                        <groupId>com.alibaba.common.logging</groupId>-->
+<!--                        <artifactId>toolkit-common-logging</artifactId>-->
+<!--                    </exclusion>-->
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.alibaba.external</groupId>
+                        <artifactId>*</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>javax.servlet</groupId>
+                        <artifactId>servlet-api</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>commons-beanutils</groupId>
+                        <artifactId>commons-beanutils-bean-collections</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>jdom</groupId>
+                        <artifactId>jdom</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>com.taobao.mtee</groupId>
+                <artifactId>mtee-service</artifactId>
+                <version>1.4.0</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>com.taobao.common.uic.uic-common</groupId>
+                <artifactId>uic-client-starter</artifactId>
+                <version>3.7.5.54</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>log4j</groupId>
+                        <artifactId>log4j</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>log4j-over-slf4j</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.taobao.common</groupId>
+                        <artifactId>fulllinkstresstesting</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-log4j12</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.taobao.diamond</groupId>
+                        <artifactId>diamond-client</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.taobao.eagleeye</groupId>
+                        <artifactId>eagleeye-core</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.taobao.csp</groupId>
+                        <artifactId>switchcenter</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.taobao.tair</groupId>
+                        <artifactId>tair-mc-client</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.taobao.csp</groupId>
+                        <artifactId>hotsensor</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.alibaba.middleware</groupId>
+                        <artifactId>metrics-core-api</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>jdom</groupId>
+                        <artifactId>jdom</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.platform.shared</groupId>
+                <artifactId>havana.internal.tair.client</artifactId>
+                <version>0.9.14</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>log4j</groupId>
+                        <artifactId>log4j</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-log4j12</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.taobao.diamond</groupId>
+                        <artifactId>diamond-client</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.alibaba.external</groupId>
+                        <artifactId>*</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.taobao.tair</groupId>
+                        <artifactId>tair-mc-client</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.taobao.tair</groupId>
+                        <artifactId>tair-mc-client</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>com.taobao.common.monitor</groupId>
+                <artifactId>common-monitor</artifactId>
+                <version>1.2.1</version>
+            </dependency>
+
+            <!--
+            <dependency>
+                <groupId>org.apach.httpclient</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>4.5.1</version>
+            </dependency>
+            -->
+
+
+            <!--            <dependency>-->
+            <!--                <groupId>com.alibaba.toolkit</groupId>-->
+            <!--                <artifactId>toolkit-webx-all-in-one</artifactId>-->
+            <!--                <version>2.0.3</version>-->
+            <!--                <exclusions>-->
+            <!--                    <exclusion>-->
+            <!--                        <artifactId>org.apache.commons</artifactId>-->
+            <!--                        <groupId>commons-io</groupId>-->
+            <!--                    </exclusion>-->
+            <!--                    <exclusion>-->
+            <!--                        <groupId>commons-logging</groupId>-->
+            <!--                        <artifactId>commons-logging</artifactId>-->
+            <!--                    </exclusion>-->
+            <!--                </exclusions>-->
+            <!--            </dependency>-->
+
+            <dependency>
+                <groupId>com.taobao.keycenter</groupId>
+                <artifactId>keycenter-client</artifactId>
+                <version>2.3.7</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-log4j12</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.taobao.hsf</groupId>
+                        <artifactId>hsfunit</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>4.5.1</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-httpclient</groupId>
+                <artifactId>commons-httpclient</artifactId>
+                <version>3.1</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpcore</artifactId>
+                <version>4.4.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.alimonitor</groupId>
+                <artifactId>alimonitor-jmonitor</artifactId>
+                <version>0.6.2</version>
+
+                <exclusions>
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <!-- ================================================= -->
+            <!-- 日志及相关依赖（用slf4j+logback） -->
+            <!-- ================================================= -->
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <!--<version>1.2.3.8-struct</version>-->
+                <version>${logback.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.taobao.eagleeye</groupId>
+                        <artifactId>eagleeye-core</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-core</artifactId>
+                <!--<version>1.2.3.5-struct</version>-->
+                <version>${logback.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.logback-extensions</groupId>
+                <artifactId>logback-ext-spring</artifactId>
+                <version>0.1.5</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>log4j-over-slf4j</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>jcl-over-slf4j</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>1.2.17</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.taobao.middleware</groupId>
+                <artifactId>logger.api</artifactId>
+                <version>0.2.5</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.aliyun.openservices</groupId>
+                <artifactId>aliyun-log-logback-appender</artifactId>
+                <version>0.1.15</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.logstash.logback</groupId>
+                <artifactId>logstash-logback-encoder</artifactId>
+                <version>6.3</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>com.aliababa.goc</groupId>
+                <artifactId>changefree-client</artifactId>
+                <version>1.2.2</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.security</groupId>
+                <artifactId>security-all</artifactId>
+                <version>1.2-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.aliyun.shared</groupId>
+                <artifactId>riskcontrol.api</artifactId>
+                <version>1.8.1103</version>
+            </dependency>
+
+            <!--            <dependency>-->
+            <!--                <groupId>com.taobao.csi</groupId>-->
+            <!--                <artifactId>csi-common2</artifactId>-->
+            <!--                <version>0.1.0-SNAPSHOT</version>-->
+            <!--            </dependency>-->
+
+<!--            <dependency>-->
+<!--                <groupId>com.taobao.csi</groupId>-->
+<!--                <artifactId>csi-decision</artifactId>-->
+<!--                <version>0.4.14</version>-->
+<!--                <exclusions>-->
+<!--                    <exclusion>-->
+<!--                        <groupId>org.apache.commons</groupId>-->
+<!--                        <artifactId>commons-codec</artifactId>-->
+<!--                    </exclusion>-->
+<!--                </exclusions>-->
+<!--            </dependency>-->
+
+
+            <dependency>
+                <groupId>com.alibaba.security</groupId>
+                <artifactId>tenant-tracing-api</artifactId>
+                <version>1.2.12</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.taobao.metaq.final</groupId>
+                        <artifactId>metaq-client</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.jdom</groupId>
+                <artifactId>jdom</artifactId>
+                <version>1.1.3</version>
+            </dependency>
+            <!--            <dependency>-->
+            <!--                <groupId>jdom</groupId>-->
+            <!--                <artifactId>jdom</artifactId>-->
+            <!--                <version>1.1</version>-->
+            <!--            </dependency>-->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${springfox.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-data-rest</artifactId>
+                <version>${springfox.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-bean-validators</artifactId>
+                <version>${springfox.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${springfox.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-petstore</artifactId>
+                <version>${springfox.version}</version>
+            </dependency>
+            <!-- 接入天启（DOOM)
+             - https://yuque.antfin-inc.com/heavenlypalace/faq/urzhw4
+             -->
+            <dependency>
+                <groupId>com.alibaba.business.qa</groupId>
+                <artifactId>biz-simulator-sdk</artifactId>
+                <version>3.0.1-sdk</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mongodb</groupId>
+                <artifactId>bson</artifactId>
+                <version>4.0.2</version>
+            </dependency>
+            <dependency>
+                <groupId>io.searchbox</groupId>
+                <artifactId>jest</artifactId>
+                <version>5.3.3</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.engine</groupId>
+                <artifactId>engine-module</artifactId>
+                <version>2.6.14</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.security</groupId>
+                <artifactId>tenant-client</artifactId>
+                <version>3.1.5</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.taobao.metaq.final</groupId>
+                        <artifactId>metaq-client</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>apache-log4j</groupId>
+                        <artifactId>log4j</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>log4j-over-slf4j</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.alibaba.security.uniface</groupId>
+                        <artifactId>uniface-i18n</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.taobao.tddl</groupId>
+                        <artifactId>tddl-client</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>ch.qos.logback</groupId>
+                        <artifactId>logback-classic</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-log4j12</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>com.taobao.punishcenter</groupId>
+                <artifactId>punishcenter-common</artifactId>
+                <version>1.8.9</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.taobao.eagleeye</groupId>
+                        <artifactId>eagleeye-core</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.alibaba.external</groupId>
+                        <artifactId>*</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.alibaba.platform.shared</groupId>
+                        <artifactId>havana.oneid.api</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.jboss.netty</groupId>
+                        <artifactId>netty</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.taobao.hsf.ndi</groupId>
+                        <artifactId>hsf.app.ndi</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.taobao.hsf</groupId>
+                        <artifactId>hsf.app.spring</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.taobao.hsf</groupId>
+                        <artifactId>hsf.lib</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.taobao.hsf</groupId>
+                        <artifactId>hsf.services</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.taobao.hsf</groupId>
+                        <artifactId>hsf.notify.spring</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>apache-codec</groupId>
+                        <artifactId>commons-codec</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.taobao.diamond</groupId>
+                        <artifactId>diamond-client</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-log4j12</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>log4j</artifactId>
+                        <groupId>log4j</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.taobao.tair</groupId>
+                        <artifactId>tair-client</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.taobao.vsearch</groupId>
+                        <artifactId>vsearch-client</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.taobao.tair</groupId>
+                        <artifactId>tair-mc-client</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.alibaba.toolkit.common.logging</groupId>
+                        <artifactId>logging</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.taobao.common.uic.uic-common</groupId>
+                        <artifactId>common-uic-common</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>com.taobao.punishcenter</groupId>
+                <artifactId>punishcenter-client</artifactId>
+                <version>1.0.7</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-log4j12</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>log4j</groupId>
+                        <artifactId>log4j</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.taobao.metaq.final</groupId>
+                        <artifactId>metaq-client</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.taobao.diamond</groupId>
+                        <artifactId>diamond-client</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.alibaba.rocketmq</groupId>
+                        <artifactId>rocketmq-client</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <!-- Maven build -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <argLine>-Dspring.profiles.active=default,daily -Dfile.encoding=UTF-8 @{argLine}</argLine>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <configuration>
+                    <append>true</append>
+                    <excludes>
+                        <exclude>com/taobao/csi/web/conf/*</exclude>
+                        <exclude>com/alibaba/security/green/evid/conf/*</exclude>
+                        <exclude>com/taobao/ruler/conf/*</exclude>
+                    </excludes>
+                </configuration>
+                <executions>
+                    <!--
+                       Prepares the property pointing to the JaCoCo runtime agent which
+                       is passed as VM argument when Maven the Surefire plugin is executed.
+                    -->
+                    <execution>
+                        <id>pre-unit-test</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                        <configuration>
+                            <!--Sets the name of the property containing the settings for JaCoCo runtime agent. -->
+                            <!--<propertyName>argLine</propertyName>-->
+                        </configuration>
+                    </execution>
+                    <!--
+                      Ensures that the code coverage report for unit tests is created after a
+                      unit tests have been run.
+                    -->
+                    <execution>
+                        <id>post-unit-test</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <configuration>
+                            <excludes>
+                                <exclude>**/*.xlsx</exclude>
+                            </excludes>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+
+            <!-- itest -->
+            <!--            <plugin>-->
+            <!--                <groupId>com.taobao.itest</groupId>-->
+            <!--                <artifactId>itest-maven-plugin</artifactId>-->
+            <!--                <configuration>-->
+            <!--                    <itestAppUrl>http://itest.taobao.net:8088/</itestAppUrl>-->
+            <!--                    <encoding>utf-8</encoding>-->
+            <!--                </configuration>-->
+            <!--                <version>0.5</version>-->
+            <!--            </plugin>-->
+            <!--            <plugin>-->
+            <!--                <groupId>org.codehaus.mojo</groupId>-->
+            <!--                <artifactId>cobertura-maven-plugin</artifactId>-->
+            <!--                <version>2.5.1</version>-->
+            <!--                <configuration>-->
+            <!--                    <check>-->
+            <!--                        <branchRate>40</branchRate>-->
+            <!--                        <lineRate>60</lineRate>-->
+            <!--                        <haltOnFailure>false</haltOnFailure>-->
+            <!--                        <totalBranchRate>40</totalBranchRate>-->
+            <!--                        <totalLineRate>60</totalLineRate>-->
+            <!--                        <packageLineRate>40</packageLineRate>-->
+            <!--                        <packageBranchRate>60</packageBranchRate>-->
+            <!--                    </check>-->
+            <!--                    <instrumentation>-->
+            <!--                        <excludes>-->
+            <!--                            <exclude>**/*Tests.class</exclude>-->
+            <!--                            <exclude>**/*Test.class</exclude>-->
+            <!--                        </excludes>-->
+            <!--                    </instrumentation>-->
+            <!--                </configuration>-->
+            <!--                <executions>-->
+            <!--                    <execution>-->
+            <!--                        <goals>-->
+            <!--                            <goal>clean</goal>-->
+            <!--                        </goals>-->
+            <!--                    </execution>-->
+            <!--                </executions>-->
+            <!--            </plugin>-->
+            <!--            <plugin>-->
+            <!--                <groupId>com.alibaba.citrus.tool</groupId>-->
+            <!--                <artifactId>springext-maven-plugin</artifactId>-->
+            <!--                <version>1.2</version>-->
+            <!--            </plugin>-->
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <!--                                <banDuplicateClasses>-->
+                                <!--                                    <ignoreClasses>-->
+                                <!--                                        <ignoreClass>com.xyz.i18n.Messages</ignoreClass>-->
+                                <!--                                        <ignoreClass>com.xyz.i19n.Messages.*</ignoreClass>-->
+                                <!--                                        <ignoreClass>org.slf4j.*</ignoreClass>-->
+                                <!--                                        <ignoreClass>org.w3c.dom.events.*</ignoreClass>-->
+                                <!--                                        <ignoreClass>com.alibaba.smeta.client.DictClient</ignoreClass>-->
+                                <!--                                        &lt;!&ndash;                                        <ignoreClass>org.slf4j.impl.StaticMDCBinder</ignoreClass>&ndash;&gt;-->
+                                <!--                                        &lt;!&ndash;                                        <ignoreClass>org.slf4j.impl.StaticMarkerBinder</ignoreClass>&ndash;&gt;-->
+                                <!--                                        &lt;!&ndash;                                        <ignoreClass>org.slf4j.impl.StaticLoggerBinder</ignoreClass>&ndash;&gt;-->
+                                <!--                                    </ignoreClasses>-->
+                                <!--                                    <findAllDuplicates>true</findAllDuplicates>-->
+                                <!--                                    <ignoreWhenIdentical>true</ignoreWhenIdentical>-->
+                                <!--                                </banDuplicateClasses>-->
+
+
+                                <bannedDependencies>
+                                    <message>使用 统一使用 netty-all</message>
+                                    <excludes>
+                                        <exclude>io.netty:*</exclude>
+                                    </excludes>
+                                    <includes>
+                                        <include>io.netty:netty-all</include>
+                                    </includes>
+                                </bannedDependencies>
+
+                                <bannedDependencies>
+                                    <message>使用 slf4j+logback，不要使用其他日志框架和 slf4j binding</message>
+                                    <excludes>
+
+                                        <exclude>log4j:log4j</exclude>
+                                        <exclude>org.apache.logging.log4j</exclude>
+                                        <exclude>commons-logging:commons-logging</exclude>
+                                        <!--
+                                        org.apache.commons.logging.impl.LogFactoryImpl 类找不到问题
+                                        META/services/org.apache.commons.logging.LogFactory 被多次指定
+                                        https://yuque.antfin-inc.com/schedulerx/igu2vh/yygd7z#7n2Kx
+                                        https://www.atatech.org/articles/165861
+                                        -->
+<!--                                         <exclude>com.alibaba.shared:toolkit.common.logging</exclude>-->
+<!--                                        <exclude>com.alibaba.toolkit.common.logging:logging</exclude>-->
+<!--                                        <exclude>com.alibaba.common.logging:toolkit-common-logging</exclude>-->
+
+                                        <exclude>org.slf4j:slf4j-log4j12</exclude>
+                                        <exclude>org.slf4j:slf4j-jdk14</exclude>
+                                        <exclude>org.slf4j:slf4j-nop</exclude>
+                                        <exclude>org.slf4j:slf4j-simple</exclude>
+                                        <exclude>org.slf4j:slf4j-jcl</exclude>
+                                        <exclude>com.alibaba.external:jakarta.commons.logging</exclude>
+                                    </excludes>
+                                    <includes>
+                                        <include>org.apache.logging.log4j:log4j-api</include>
+                                        <include>org.apache.logging.log4j:log4j-to-slf4j</include>
+                                    </includes>
+                                </bannedDependencies>
+
+                                <bannedDependencies>
+                                    <message>请使用 com.alibaba.common.logging:toolkit-common-logging 替代</message>
+                                    <excludes>
+                                        <exclude>com.alibaba.toolkit.common.logging:logging</exclude>
+                                    </excludes>
+                                </bannedDependencies>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+
+        <pluginManagement>
+
+
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>3.1.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>0.8.4</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>2.4</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>3.0.0-M2</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>extra-enforcer-rules</artifactId>
+                            <version>1.2</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.7.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>3.0.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.22.2</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-report-plugin</artifactId>
+                    <version>2.22.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>3.0.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>3.7.1</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.apache.maven.doxia</groupId>
+                            <artifactId>doxia-site-renderer</artifactId>
+                            <version>1.8.1</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.apache.maven.doxia</groupId>
+                            <artifactId>doxia-module-markdown</artifactId>
+                            <version>1.8</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+
+    <distributionManagement>
+        <site>
+            <id>csis</id>
+            <url>file:/tmp/csis</url>
+        </site>
+    </distributionManagement>
+
+    <!-- Reports -->
+    <reporting>
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+                <configuration>
+                    <showSuccess>false</showSuccess>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>com.taobao.csi.web.conf.*</exclude>
+                    </excludes>
+                </configuration>
+
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </reporting>
+</project>

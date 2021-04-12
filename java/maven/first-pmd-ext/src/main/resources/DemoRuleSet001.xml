@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+
+<ruleset name="Basic POM"
+         xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
+
+    <description>
+        Rules concerning basic maven guidelines.
+    </description>
+
+    <rule name="DontCallBossShort"
+          language="java"
+          message="Boss wants to talk to you."
+          class="net.sourceforge.pmd.lang.rule.XPathRule" >
+        <description>
+            TODO
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="xpath">
+                <value>
+                    <![CDATA[
+/build/pluginManagement/plugins/plugin/dependencies/dependency | /dependencyManagement/dependencies/dependency
+]]>
+                </value>
+            </property>
+        </properties>
+    </rule>
+
+    <rule name="NoInlineScript"
+          language="jsp"
+          since="4.0"
+          class="net.sourceforge.pmd.lang.rule.XPathRule"
+          message="Avoiding inlining HTML script content"
+          externalInfoUrl="${pmd.website.baseurl}/pmd_rules_jsp_design.html#noinlinescript">
+        <description>
+            Avoid inlining HTML script content.  Consider externalizing the HTML script using the 'src' attribute on the "script" element.
+            Externalized script could be reused between pages.  Browsers can also cache the script, reducing overall download bandwidth.
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="version" value="2.0"/>
+            <property name="xpath">
+                <value>
+<![CDATA[
+//HtmlScript[@Image != '']
+]]>
+                </value>
+            </property>
+        </properties>
+    </rule>
+</ruleset>

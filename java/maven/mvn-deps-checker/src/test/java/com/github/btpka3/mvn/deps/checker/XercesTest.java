@@ -4,6 +4,7 @@ import io.vavr.Tuple;
 import io.vavr.Tuple3;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.*;
 import org.w3c.dom.bootstrap.DOMImplementationRegistry;
@@ -16,10 +17,7 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
@@ -27,6 +25,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.BiFunction;
+import java.util.function.Supplier;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -38,6 +38,14 @@ public class XercesTest {
 
     String pomXmlFile = "/Users/zll/data0/work/git-repo/ali/ali_security/arm-mbus/pom.xml";
 
+
+    /**
+     * 直接使用 OutputFormat 来配置格式化
+     *
+     * @throws ParserConfigurationException
+     * @throws IOException
+     * @throws SAXException
+     */
 
     @Test
     public void format01() throws ParserConfigurationException, IOException, SAXException {
@@ -57,8 +65,13 @@ public class XercesTest {
         }
     }
 
+    /**
+     * 使用 LSSerializer 进行格式化。
+     *
+     * @throws Exception
+     */
     @Test
-    public void format02() throws ParserConfigurationException, IOException, SAXException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    public void format02() throws Exception {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = dbf.newDocumentBuilder();
         InputSource is = new InputSource(new InputStreamReader(new FileInputStream(pomXmlFile), StandardCharsets.UTF_8));
@@ -77,23 +90,9 @@ public class XercesTest {
         writer.getDomConfig().setParameter("xml-declaration", true);
 
         LSOutput output = impl.createLSOutput();
-        output.setByteStream(new FileOutputStream("/tmp/Dom4jTest.test01.xml"));
+        output.setByteStream(new FileOutputStream("/tmp/Dom4jTest.test02.xml"));
         output.setEncoding("UTF-8");
         writer.write(document, output);
-    }
-
-    @Test
-    public void customFormat01() throws Exception {
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        DocumentBuilder db = dbf.newDocumentBuilder();
-        InputSource is = new InputSource(new InputStreamReader(new FileInputStream(pomXmlFile), StandardCharsets.UTF_8));
-        Document document = db.parse(is);
-
-        System.out.println(document);
-
-
-        document.getChildNodes().item(0).getNodeType();
-
     }
 
 
@@ -123,8 +122,13 @@ public class XercesTest {
 
     }
 
+    /**
+     * 自定义排序。
+     *
+     * @throws Exception
+     */
     @Test
-    public void sss() throws Exception {
+    public void custom() throws Exception {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = dbf.newDocumentBuilder();
         InputSource is = new InputSource(new InputStreamReader(XercesTest.class.getResourceAsStream("XercesTest01.xml"), StandardCharsets.UTF_8));
@@ -135,7 +139,6 @@ public class XercesTest {
         NodeList nodeList = root.getChildNodes();
 
         Element nullEle = document.createElement("______null");
-
 
         List<Tuple3<AtomicReference<Element>, List<Node>, AtomicBoolean>> groupList = new ArrayList<>();
 
@@ -253,7 +256,11 @@ public class XercesTest {
         StringWriter writer = new StringWriter();
         Source source = new DOMSource(document);
         Transformer transformer = TransformerFactory.newInstance().newTransformer();
-        //transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+        transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+//        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+//        System.out.println(transformer.getOutputProperties());
+        //transformer.setOutputProperty(OutputKeys.STANDALONE, "yes");
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
         transformer.transform(source, new StreamResult(writer));
         return writer.toString();
     }
@@ -261,6 +268,127 @@ public class XercesTest {
 
     protected Tuple3<AtomicReference<Element>, List<Node>, AtomicBoolean> newEmptyGroup() {
         return Tuple.of(new AtomicReference(null), new ArrayList<>(), new AtomicBoolean(false));
+    }
+
+
+    @Test
+    public void notOutputStandalone() throws Exception {
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder db = dbf.newDocumentBuilder();
+        InputSource is = new InputSource(new StringReader("<?xml version=\"1.0\" encoding=\"UTF-8\"?><root></root>"));
+        Document document = db.parse(is);
+
+
+        boolean standalone = document.getXmlStandalone();
+        Assertions.assertFalse(standalone);
+
+        document.setXmlStandalone(true);
+
+        String newXmlStr = toString(document);
+        System.out.println(newXmlStr);
+        Assertions.assertFalse(newXmlStr.contains("standalone"));
+    }
+
+
+    @Test
+    public void newLineBetweenAttributes() throws Exception {
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder db = dbf.newDocumentBuilder();
+        InputSource is = new InputSource(new StringReader(
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
+                        "<root a=\"a1\"" +
+                        "      b=\"b1\">" +
+                        "</root>"
+
+        ));
+        Document document = db.parse(is);
+        boolean standalone = document.getXmlStandalone();
+        Assertions.assertFalse(standalone);
+        String newXmlStr = toString(document);
+        System.out.println(newXmlStr);
+    }
+
+
+    @Test
+    public void indent4space() throws Exception {
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder db = dbf.newDocumentBuilder();
+        InputSource is = new InputSource(new StringReader(
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
+                        "<root>\n" +
+                        "<a>aaa</a>" +
+                        "<b>bbb</b>\n" +
+                        "</root>"
+        ));
+        Document document = db.parse(is);
+
+        Supplier<String> docToStr1 = () -> {
+            try {
+                DOMImplementationRegistry registry = DOMImplementationRegistry.newInstance();
+                DOMImplementationLS impl = (DOMImplementationLS) registry.getDOMImplementation("LS");
+                LSSerializer writer = impl.createLSSerializer();
+
+                writer.getDomConfig().setParameter("format-pretty-print", Boolean.TRUE);
+
+                LSOutput output = impl.createLSOutput();
+                ByteArrayOutputStream byteArrOut = new ByteArrayOutputStream();
+                output.setByteStream(byteArrOut);
+                output.setEncoding("UTF-8");
+                writer.write(document, output);
+                return new String(byteArrOut.toByteArray(), StandardCharsets.UTF_8);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        };
+        String newXmlStr = docToStr1.get();
+        System.out.println(newXmlStr);
+        Assertions.assertTrue(newXmlStr.contains("    <a>aaa</a>\n"));
+        Assertions.assertTrue(newXmlStr.contains("    <b>bbb</b>\n"));
+    }
+
+
+    @Test
+    public void noXmlOutput01() throws Exception {
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder db = dbf.newDocumentBuilder();
+        InputSource is = new InputSource(new StringReader(
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
+                        "<root>\n" +
+                        "<a>aaa</a>" +
+                        "<b>bbb</b>\n" +
+                        "</root>"
+        ));
+        Document document = db.parse(is);
+
+        BiFunction<Document, Boolean, String> docToStr = (Document doc, Boolean declareXml) -> {
+            try {
+                DOMImplementationRegistry registry = DOMImplementationRegistry.newInstance();
+                DOMImplementationLS impl = (DOMImplementationLS) registry.getDOMImplementation("LS");
+                LSSerializer writer = impl.createLSSerializer();
+
+                writer.getDomConfig().setParameter("xml-declaration", declareXml);
+
+                LSOutput output = impl.createLSOutput();
+                ByteArrayOutputStream byteArrOut = new ByteArrayOutputStream();
+                output.setByteStream(byteArrOut);
+                output.setEncoding("UTF-8");
+                writer.write(doc, output);
+                return new String(byteArrOut.toByteArray(), StandardCharsets.UTF_8);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        };
+        {
+            String newXmlStr = docToStr.apply(document, true);
+            System.out.println(newXmlStr);
+            Assertions.assertTrue(newXmlStr.startsWith("<?xml"));
+        }
+        System.out.println("------------");
+        {
+            String newXmlStr = docToStr.apply(document, false);
+            System.out.println(newXmlStr);
+            Assertions.assertFalse(newXmlStr.startsWith("<?xml"));
+        }
     }
 
 }
