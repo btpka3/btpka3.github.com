@@ -1,0 +1,46 @@
+plugins {
+	id 'org.springframework.boot' version '2.4.5'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'com.github.btpka3'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+}
+
+ext {
+	set('testcontainersVersion', "1.15.2")
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	testImplementation 'org.testcontainers:junit-jupiter'
+	testImplementation "org.testcontainers:selenium"
+
+	testImplementation 'org.seleniumhq.selenium:htmlunit-driver'
+	testImplementation 'org.seleniumhq.selenium:selenium-remote-driver'
+	testImplementation 'org.seleniumhq.selenium:selenium-java'
+	testImplementation 'org.seleniumhq.selenium:selenium-api'
+
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.testcontainers:testcontainers-bom:${testcontainersVersion}"
+	}
+}
+
+test {
+	useJUnitPlatform()
+	testLogging {
+		showStandardStreams = true
+		//exceptionFormat = TestExceptionFormat.FULL
+		//events("skipped", "failed")
+	}
+}
