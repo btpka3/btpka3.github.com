@@ -153,6 +153,85 @@ public class SpringELTest {
         Assertions.assertEquals("zhang335", name);
     }
 
+    @Test
+    public void testRootObjectPojoProp() {
+        StandardEvaluationContext context = new StandardEvaluationContext();
+        context.setVariable("str", "aaa");
+
+        MyPojo pojo = new MyPojo();
+        pojo.setName("li4");
+        pojo.setAge(21);
+        context.setRootObject(pojo);
+
+        ExpressionParser parser = new SpelExpressionParser();
+        Expression exp = parser.parseExpression("'xxx_' + name");
+        String newStr = (String) exp.getValue(context);
+
+        Assertions.assertEquals("xxx_aaa", newStr);
+    }
+
+
+    @Test
+    public void testRootObjectMapProp() {
+        StandardEvaluationContext context = new StandardEvaluationContext();
+        context.setVariable("str", "aaa");
+
+        Map map = new HashMap(4);
+        map.put("name", "aaa");
+        context.setRootObject(map);
+
+        ExpressionParser parser = new SpelExpressionParser();
+        Expression exp = parser.parseExpression("'xxx_' + #root['name']");
+        String newStr = (String) exp.getValue(context);
+
+        Assertions.assertEquals("xxx_aaa", newStr);
+    }
+
+    @Test
+    public void testVariable() {
+
+
+        StandardEvaluationContext context = new StandardEvaluationContext();
+        context.setVariable("str", "aaa");
+
+        ExpressionParser parser = new SpelExpressionParser();
+        Expression exp = parser.parseExpression("'xxx_' + #str");
+        String newStr = (String) exp.getValue(context);
+
+        Assertions.assertEquals("xxx_aaa", newStr);
+    }
+
+    @Test
+    public void testTemplate() {
+
+        StandardEvaluationContext context = new StandardEvaluationContext();
+        context.setVariable("str", "aaa");
+
+        ExpressionParser parser = new SpelExpressionParser();
+        Expression exp = parser.parseExpression("xxx_#{#str}", new TemplateParserContext());
+        String newStr = (String) exp.getValue(context);
+
+        Assertions.assertEquals("xxx_aaa", newStr);
+    }
+
+//    @Test
+//    public void testPlaceHolder() {
+//
+//        PropertyResolver propertyResolver =null;
+//                ApplicationContext applicationContext = null;
+//
+//        StandardEvaluationContext context = new StandardEvaluationContext();
+//        context.setVariable("str", "aaa");
+//
+//        ExpressionParser parser = new SpelExpressionParser();
+//        Expression exp = parser.parseExpression("'xxx_' + $val");
+//
+//        ParserContext parserContext = new TemplateParserContext();
+//        parserContext.isTemplate()
+//        String newStr = (String) exp.getValue(context);
+//
+//        Assertions.assertEquals("xxx_aaa", newStr);
+//    }
 
     @Test
     public void testFunction01() throws NoSuchMethodException {

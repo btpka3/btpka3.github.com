@@ -25,6 +25,7 @@ dependencies {
     implementation 'io.micrometer:micrometer-registry-prometheus'
     implementation 'org.hamcrest:hamcrest'
     implementation 'org.codehaus.groovy:groovy'
+    implementation 'com.nimbusds:nimbus-jose-jwt'
     //implementation 'io.micrometer:micrometer-test'
 
     compileOnly 'org.projectlombok:lombok'
@@ -43,6 +44,7 @@ dependencies {
 
     implementation 'com.kjetland:mbknor-jackson-jsonschema_2.12'
 
+    implementation 'com.alibaba:fastjson:1.2.76'
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml'
     implementation 'com.fasterxml.jackson.module:jackson-module-jsonSchema'
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
@@ -67,6 +69,13 @@ dependencies {
     implementation 'io.github.resilience4j:resilience4j-metrics:1.6.1'
     implementation 'io.github.resilience4j:resilience4j-prometheus:1.6.1'
     implementation('org.ehcache:ehcache:3.7.1')
+    // https://drewnoakes.com/code/exif/
+    // https://github.com/drewnoakes/metadata-extractor
+    implementation('com.drewnoakes:metadata-extractor:2.15.0')
+
+    implementation('net.lingala.zip4j:zip4j:2.7.0')
+
+
 
     implementation('io.projectreactor.addons:reactor-extra')
     //implementation('io.projectreactor.addons:reactor-tools')

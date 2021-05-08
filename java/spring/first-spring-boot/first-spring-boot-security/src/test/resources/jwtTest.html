@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Jwt test</title>
+    <script type="module">
+        import {SignJWT} from "https://unpkg.com/jose@3.11.5/dist/browser/jwt/sign.js";
+        import {jwtVerify} from "https://unpkg.com/jose@3.11.5/dist/browser/jwt/verify.js";
+
+        // 秘钥
+        const secretString = "NjGEkRGtCmBA2qshryghPMjw3W0K7VlL";
+        const encoder = new TextEncoder()
+        const secretStringUint8Array = encoder.encode(secretString)
+        let key = await crypto.subtle.importKey(
+            "raw",
+            secretStringUint8Array,
+            {
+                "name": "HMAC",
+                hash: {name: "SHA-256"}
+            },
+            true,
+            ["sign", "verify"]
+        );
+
+        let jwtStr;
+
+        // 生成 JWT
+        {
+            // 自定义的额外 playload
+            let playload = {
+                "foo": "bar",
+            };
+
+            jwtStr = await new SignJWT(playload)
+                .setProtectedHeader({
+                    kid: 'keyId001',
+                    alg: 'HS256'
+                })
+                // 如果没有参数，则使用系统时间作为 IssuedAt
+                .setIssuer('urn:example:issuer')
+                .setAudience('urn:example:audience')
+                // 2022-04-04 04:04:04.000
+                .setIssuedAt(1617480244)
+                // 2022-02-02 02:02:02.000
+                .setExpirationTime(1643738522)
+
+                // 计算签名
+                .sign(key);
+
+            console.log("generated jwtStr = ", jwtStr)
+        }
+
+        // 验证 JWT
+        {
+            const jwtVerifyResult = await jwtVerify(
+                jwtStr,
+                key,
+
+                // 自动校验该选项，如果校验不通过，jwtVerify 会报错
+                {
+                    audience: 'urn:example:audience'
+                }
+            )
+
+            console.log("jwtVerifyResult = ", jwtVerifyResult)
+            console.assert("urn:example:issuer" === jwtVerifyResult.payload.iss, "iss not match");
+        }
+    </script>
+</head>
+<body>
+<ul>请查看浏览器的 console 输出。参考 <a href="https://github.com/panva/jose">jose</a> 的 <a
+        href="https://github.com/panva/jose/tree/main/docs">API 文档</a>。
+    <li><a href="https://github.com/panva/jose/blob/main/docs/classes/jwt_sign.signjwt.md#readme">生成JWT</a></li>
+    <li><a href="https://github.com/panva/jose/blob/main/docs/functions/jwt_verify.jwtverify.md#readme">验证JWT</a></li>
+</ul>
+
+</body>
+</html>

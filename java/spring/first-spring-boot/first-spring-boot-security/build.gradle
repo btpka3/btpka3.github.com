@@ -19,5 +19,9 @@ dependencies {
 test {
     include 'me/test/**'
     testLogging.showStandardStreams = false
+    useJUnitPlatform()
+    maxHeapSize = '1G'
+    systemProperties = System.properties
+
 }
 
