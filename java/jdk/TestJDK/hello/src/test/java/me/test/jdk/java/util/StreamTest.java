@@ -2,8 +2,10 @@ package me.test.jdk.java.util;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -141,5 +143,62 @@ public class StreamTest {
     public static class Node {
         String name;
         List<Node> nodes;
+    }
+
+    public static class User {
+        private String name;
+        private Integer age;
+
+        @Override
+        public String toString() {
+            return "User{" +
+                    "name='" + name + '\'' +
+                    ", age=" + age +
+                    '}';
+        }
+    }
+
+    @Test
+    public void groupBy01() {
+        List<User> list = new ArrayList<>();
+        {
+            User user = new User();
+            user.name = "zhang3";
+            user.age = 10;
+            list.add(user);
+        }
+        {
+            User user = new User();
+            user.name = "li4";
+            user.age = 11;
+            list.add(user);
+        }
+        {
+            User user = new User();
+            user.name = "wang5";
+            user.age = 20;
+            list.add(user);
+        }
+        {
+            User user = new User();
+            user.name = "zhao6";
+            user.age = 21;
+            list.add(user);
+        }
+        {
+            User user = new User();
+            user.name = "qian7";
+            user.age = 30;
+            list.add(user);
+        }
+
+       Map<Integer, List<User>> map=list.stream()
+                .collect(Collectors.groupingBy(
+                        (User user) -> {
+                            return user.age == null ? (Integer) null : (Integer)(user.age / 10);
+                        },
+                        Collectors.toList()
+                ));
+        System.out.println(map);
     }
 }
