@@ -19,6 +19,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
+import java.net.URL;
+import java.nio.ByteBuffer;
+import java.nio.channels.Channels;
+import java.nio.channels.FileChannel;
+import java.nio.channels.ReadableByteChannel;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.zip.ZipEntry;
@@ -34,6 +39,8 @@ import java.util.zip.ZipEntry;
  * @see <a href="http://www.lingala.net/zip4j.html">Zip4j</a>
  * @see <a href="https://pzemtsov.github.io/2019/04/13/searching-for-better-indexof.html">Experiments in program optimisation</a>
  * @see <a href="https://stackoverflow.com/questions/4585527/detect-eof-for-jpg-images">Detect Eof for JPG images</a>
+ * @see <a href="https://en.wikipedia.org/wiki/JPEG">JPEG</a>
+ * @see JpegSegmentReader#readSegments
  */
 public class JpgFileExtractTest {
 
@@ -111,6 +118,43 @@ public class JpgFileExtractTest {
 //        JpegSegmentData segmentTypeBytes = JpegSegmentReader.readSegments(file, null);
 
     }
+
+    @SneakyThrows
+    @Test
+    public void y() {
+
+        {
+            DataInputStream dataInputStream = new DataInputStream(JpgFileExtractTest.class.getResourceAsStream("a.jpg"));
+            Assertions.assertEquals(0xFFD8, dataInputStream.readUnsignedShort());
+        }
+        {
+            URL defaultImage = JpgFileExtractTest.class.getResource("a.jpg");
+            File imageFile = new File(defaultImage.toURI());
+
+            RandomAccessFile randomAccessFile = new RandomAccessFile(imageFile, "r");
+
+            byte[]bytes = new byte[2];
+            randomAccessFile.read(bytes,0,2);
+            // segment : SOI
+            Assertions.assertEquals(0xFF, randomAccessFile.read());
+            Assertions.assertEquals(0xD8, randomAccessFile.read());
+        }
+
+        {
+            ByteBuffer byteBuffer = ByteBuffer.allocate(2);
+            ReadableByteChannel inChannel = Channels.newChannel(JpgFileExtractTest.class.getResourceAsStream("a.jpg"));
+            int count = inChannel.read(byteBuffer);
+            Assertions.assertEquals(2, count);
+
+            byteBuffer.flip();
+            Assertions.assertEquals(0xFFD8, byteBuffer.getShort() & 0xffff);
+            // FIXME: 不方便得知读取了多少字节了
+        }
+
+
+
+    }
+
 
     private static final byte SEGMENT_IDENTIFIER = (byte) 0xFF;
     private static final byte SEGMENT_SOS = (byte) 0xDA;

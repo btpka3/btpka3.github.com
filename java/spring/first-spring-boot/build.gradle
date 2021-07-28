@@ -21,7 +21,7 @@ plugins {
     id 'groovy'
     id 'eclipse'
     id 'idea'
-    id 'maven'
+    //id 'maven'
     id 'project-report'
 //    id "io.spring.dependency-management" version "1.0.8.RELEASE"
     id "org.springframework.boot" version "${springBootVersion}" apply false
@@ -231,22 +231,22 @@ allprojects {
 //        //archives javadocJar
 //    }
 
-    uploadArchives {
-        dependsOn assemble  // 没有这句，uploadArchives 只上传没有 bootRepackage 的 jar 包`
-        repositories {
-            mavenDeployer {
-                repository(url: "http://mvn.kingsilk.xyz/content/repositories/releases/") {
-                    authentication(userName: "admin", password: "admin123")
-                }
-                snapshotRepository(url: "http://mvn.kingsilk.xyz/content/repositories/snapshots/") {
-                    authentication(userName: "admin", password: "admin123")
-                }
-                //pom.version = "0.1.0-SNAPSHOT"
-                //pom.artifactId = "simple-project"
-                //pom.groupId = "com.example"
-            }
-        }
-    }
+//    uploadArchives {
+//        dependsOn assemble  // 没有这句，uploadArchives 只上传没有 bootRepackage 的 jar 包`
+//        repositories {
+//            mavenDeployer {
+//                repository(url: "http://mvn.kingsilk.xyz/content/repositories/releases/") {
+//                    authentication(userName: "admin", password: "admin123")
+//                }
+//                snapshotRepository(url: "http://mvn.kingsilk.xyz/content/repositories/snapshots/") {
+//                    authentication(userName: "admin", password: "admin123")
+//                }
+//                //pom.version = "0.1.0-SNAPSHOT"
+//                //pom.artifactId = "simple-project"
+//                //pom.groupId = "com.example"
+//            }
+//        }
+//    }
 }
 
 
@@ -264,7 +264,7 @@ class MyAlignmentRule implements ComponentMetadataRule {
 subprojects {
 
 
-    apply plugin: 'maven'
+//    apply plugin: 'maven'
 //    apply plugin: "io.spring.dependency-management"
 
     println "~~~~~~" + name

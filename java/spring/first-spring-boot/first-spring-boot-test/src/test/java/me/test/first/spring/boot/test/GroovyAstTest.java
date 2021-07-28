@@ -39,6 +39,16 @@ public class GroovyAstTest {
         System.out.println("varNames = " + visitor.getVarNames());
     }
 
+
+    @Test
+    public void findExprs01() {
+
+        AstBuilder astBuilder = new AstBuilder();
+        List<ASTNode> list = astBuilder.buildFromString("1 && 2222 || !(333 || 4)");
+
+        System.out.println(list);
+    }
+
     public static class MyASTTransformation implements ASTTransformation {
 
         @Override
