@@ -26,4 +26,8 @@ public class MyPojo {
 
     private String name;
     private MyPojo myPojo;
+
+    public String getNameStr() {
+        return this.name + "," + (myPojo != null ? myPojo.getName() : "");
+    }
 }
