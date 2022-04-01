@@ -2,6 +2,8 @@ package me.test;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.nimbusds.jose.*;
+import com.nimbusds.jose.crypto.DirectDecrypter;
+import com.nimbusds.jose.crypto.DirectEncrypter;
 import com.nimbusds.jose.crypto.RSASSASigner;
 import com.nimbusds.jose.crypto.RSASSAVerifier;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -19,10 +21,15 @@ import com.nimbusds.jwt.proc.DefaultJWTProcessor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.util.Date;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author dangqian.zll
@@ -72,8 +79,8 @@ public class JwtTest {
         Assertions.assertTrue(signedJWT.verify(verifier));
 
         // Retrieve / verify the JWT claims according to the app requirements
-        Assertions.assertEquals("alice", signedJWT.getJWTClaimsSet().getSubject());
-        Assertions.assertEquals("https://c2id.com", signedJWT.getJWTClaimsSet().getIssuer());
+        assertEquals("alice", signedJWT.getJWTClaimsSet().getSubject());
+        assertEquals("https://c2id.com", signedJWT.getJWTClaimsSet().getIssuer());
         Assertions.assertTrue(new Date().before(signedJWT.getJWTClaimsSet().getExpirationTime()));
 
     }
@@ -133,5 +140,41 @@ public class JwtTest {
 
         // Print out the token claims set
         System.out.println(claimsSet.toJSONObject());
+    }
+
+    @Test
+    public void jwe01() throws NoSuchAlgorithmException, JOSEException, ParseException {
+        // Get the expected key length for JWE enc "A128CBC-HS256"
+        int keyBitLength = EncryptionMethod.A128CBC_HS256.cekBitLength();
+
+        // Generate key
+        KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+        keyGen.init(keyBitLength);
+        SecretKey key = keyGen.generateKey();
+
+        // Create the header
+        JWEHeader header = new JWEHeader.Builder(JWEAlgorithm.DIR, EncryptionMethod.A128GCM)
+                .compressionAlgorithm(CompressionAlgorithm.DEF)
+                .build();
+
+        // Set the plain text
+        Payload payload = new Payload("Hello world!");
+
+        // Create the JWE object and encrypt it
+        JWEObject jweObject = new JWEObject(header, payload);
+        jweObject.encrypt(new DirectEncrypter(key));
+
+        // Serialise to compact JOSE form...
+        String jweString = jweObject.serialize();
+
+        // Parse into JWE object again...
+        jweObject = JWEObject.parse(jweString);
+
+        // Decrypt
+        jweObject.decrypt(new DirectDecrypter(key));
+
+        // Get the plain text
+        payload = jweObject.getPayload();
+        assertEquals("Hello world!", payload.toString());
     }
 }

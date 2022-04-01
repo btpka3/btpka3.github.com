@@ -1,27 +1,27 @@
 
 
 dependencies {
-    compile('org.codehaus.groovy:groovy')
-    compile('org.springframework.boot:spring-boot-starter-web')
-    compile('org.springframework.boot:spring-boot-starter-thymeleaf')
-    compile("org.springframework.boot:spring-boot-devtools")
-    compile('com.fasterxml.jackson.dataformat:jackson-dataformat-xml')
-    compile('org.apache.httpcomponents:httpclient')
+    //compile('org.codehaus.groovy:groovy')
+    implementation('org.springframework.boot:spring-boot-starter-web')
+    implementation('org.springframework.boot:spring-boot-starter-thymeleaf')
+    implementation("org.springframework.boot:spring-boot-devtools")
+    implementation('com.fasterxml.jackson.dataformat:jackson-dataformat-xml')
+    implementation('org.apache.httpcomponents:httpclient')
 
-    testCompile('org.springframework.boot:spring-boot-starter-test')
-    compile("org.springframework.boot:spring-boot-starter-logging")
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+    implementation("org.springframework.boot:spring-boot-starter-logging")
 
-    compile('org.springframework.boot:spring-boot-starter-security')
-    compile('org.springframework.boot:spring-boot-starter-oauth2-client')
-    compile('org.springframework.boot:spring-boot-starter-oauth2-resource-server')
+    implementation('org.springframework.boot:spring-boot-starter-security')
+    implementation('org.springframework.boot:spring-boot-starter-oauth2-client')
+    implementation('org.springframework.boot:spring-boot-starter-oauth2-resource-server')
 }
-
-test {
-    include 'me/test/**'
-    testLogging.showStandardStreams = false
-    useJUnitPlatform()
-    maxHeapSize = '1G'
-    systemProperties = System.properties
-
-}
+//
+//test {
+//    include 'me/test/**'
+//    testLogging.showStandardStreams = false
+//    useJUnitPlatform()
+//    maxHeapSize = '1G'
+//    systemProperties = System.properties
+//
+//}
 

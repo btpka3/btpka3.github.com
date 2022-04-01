@@ -6,20 +6,21 @@
 
 
 dependencies {
-    compile('org.springframework.boot:spring-boot-starter-webflux')
-    compile('org.springframework.boot:spring-boot-starter-json')
-    compile('org.springframework.boot:spring-boot-starter-reactor-netty')
-    compile('org.springframework.boot:spring-boot-starter-thymeleaf')
-    compile("org.springframework.boot:spring-boot-devtools")
+    implementation('org.springframework.boot:spring-boot-starter-webflux')
+    implementation('org.springframework.boot:spring-boot-starter-json')
+    implementation('org.springframework.boot:spring-boot-starter-reactor-netty')
+    implementation('org.springframework.boot:spring-boot-starter-thymeleaf')
+    implementation("org.springframework.boot:spring-boot-devtools")
+    implementation('org.springframework.boot:spring-boot-starter-security')
     //compile('com.fasterxml.jackson.dataformat:jackson-dataformat-xml')
     //compile('org.apache.httpcomponents:httpclient')
 
-    testCompile('org.springframework.boot:spring-boot-starter-test')
-    testCompile('org.mockito:mockito-core')
-    testCompile('org.junit.jupiter:junit-jupiter-api')
-    compile("org.springframework.boot:spring-boot-starter-logging")
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+    testImplementation('org.mockito:mockito-core')
+    testImplementation('org.junit.jupiter:junit-jupiter-api')
+    implementation("org.springframework.boot:spring-boot-starter-logging")
 
-    compile('org.springframework.boot:spring-boot-actuator')
+    implementation('org.springframework.boot:spring-boot-actuator')
 }
 
 

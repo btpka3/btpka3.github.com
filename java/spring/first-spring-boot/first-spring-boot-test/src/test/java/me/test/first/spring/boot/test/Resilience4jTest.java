@@ -33,7 +33,6 @@ import javax.cache.configuration.MutableConfiguration;
 import javax.cache.spi.CachingProvider;
 import java.time.Duration;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -83,7 +82,6 @@ public class Resilience4jTest {
     protected String errToResult(Throwable e) {
         return "bbb";
     }
-
 
 
     @Test
@@ -278,9 +276,17 @@ public class Resilience4jTest {
         }
     }
 
+    /**
+     * 注意: 并非匀速，瞬间全部消费, 那只能最小化设计 cycle ？
+     * 比如 100 qps, 设计成 limitForPeriod =1 + limitRefreshPeriod = 10ms ，
+     * 而非 limitForPeriod =100 + limitRefreshPeriod = 1s
+     *
+     * @throws InterruptedException
+     */
     @Test
     public void rateLimit01() throws InterruptedException {
 
+        // 允许 qps 2：最长等待3秒，如果3秒后仍未获得令牌，则报错。
         RateLimiterConfig config = RateLimiterConfig.custom()
                 // 多久一个循环周期
                 .limitRefreshPeriod(Duration.ofSeconds(1))

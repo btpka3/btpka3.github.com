@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<configuration debug="true">
+
+    <property name="a" value="aaa"/>
+
+    <logger name="l.a" level="INFO" additivity="false">
+    </logger>
+
+</configuration>
