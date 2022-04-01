@@ -20,7 +20,6 @@ public class Inject04Test {
     @Configuration
     public static class Conf {
 
-        @Lazy
         @Bean
         MyPojo pojo1(
                 @Qualifier("pojo2") MyPojo myPojo

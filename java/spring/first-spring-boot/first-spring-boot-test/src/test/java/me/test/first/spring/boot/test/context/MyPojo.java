@@ -30,4 +30,8 @@ public class MyPojo {
     public String getNameStr() {
         return this.name + "," + (myPojo != null ? myPojo.getName() : "");
     }
+
+    public String toString() {
+        return name;
+    }
 }

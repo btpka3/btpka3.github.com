@@ -24,7 +24,6 @@ public class Inject05Test {
     @Configuration
     public static class Conf {
 
-        @Lazy
         @Bean
         MyPojo pojo1(
                 @Qualifier("pojo2") MyPojo myPojo
@@ -49,6 +48,7 @@ public class Inject05Test {
         public void handEvent(ContextStartedEvent event) {
             System.out.println("Context Start Event received.");
         }
+
         @EventListener
         public void handEvent(ContextRefreshedEvent event) {
             MyPojo pojo1 = (MyPojo) event.getApplicationContext().getBean("pojo1");
