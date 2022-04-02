@@ -10,14 +10,17 @@ import org.springframework.beans.factory.config.DependencyDescriptor;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.annotation.AnnotationConfigUtils;
 import org.springframework.context.annotation.ContextAnnotationAutowireCandidateResolver;
+import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 import java.util.*;
 
 /**
- * @author dangqian.zll
- * @date 2022/4/2
+ * 相比父类，增加以下修改：
+ * 1. 对 TargetSource 实例，增加 resolvedTarget 字段，不再每次都从 Spring 的 ApplicationContext 中找 bean
+ * 2. 提供 {@link #triggerPreload()} 方法, 以便能按需提前（比如 ： {@link ContextRefreshedEvent} 时）触发找bean。
+ *
  * @see <a href="https://www.concretepage.com/spring/example_customautowireconfigurer_spring>Spring CustomAutowireConfigurer Example</a>
  * @see org.springframework.beans.factory.support.DefaultListableBeanFactory#doResolveDependency
  * @see AnnotationConfigUtils#registerAnnotationConfigProcessors(org.springframework.beans.factory.support.BeanDefinitionRegistry, java.lang.Object)
