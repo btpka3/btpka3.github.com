@@ -84,7 +84,7 @@ public class Inject06Test {
             System.out.printf("%3d : %15s : %9d%n", i, nameStr, rt);
         }
 
-        System.out.println(getClass() + "#test start");
+        System.out.println(getClass() + "#test end");
     }
 
 
