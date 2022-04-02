@@ -12,9 +12,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
+ * 测试目的：针对 @Configuration + @Bean + @Lazy ,
+ * 通过 BeanFactoryPostProcessor + 自定义 ContextAnnotationAutowireCandidateResolver + @EventListener
+ * 更 优雅、无代码侵入 地 提前触发找bean，
+ * 避免 服务 ready 后找bean而引发RT冲高后回落。
  */
-
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @ContextConfiguration
 public class Inject07Test {
@@ -64,17 +66,10 @@ public class Inject07Test {
 
     @Test
     public void test() {
-        // 成功：相比 Inject03Test
-        // 使用 Spring Event，通过 ContextRefreshedEvent 提前触发找bean。
-        // 假设这里是启动后要高QPS调用的业务代码，
-        // debug 执行该语句时，观测 org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency 不会再执行了
-
         System.out.println(getClass() + "#test start");
 
         for (int i = 0; i < 10; i++) {
             long startTime = System.nanoTime();
-            // 成功：相比 Inject01Test， 使用 @Lazy 后成功
-            // 但：org.springframework.beans.factory.support.DefaultListableBeanFactory#doResolveDependency 被调用了3次
             String nameStr = map.get("pojo2").getNameStr();
             long endTime = System.nanoTime();
             long rt = endTime - startTime;

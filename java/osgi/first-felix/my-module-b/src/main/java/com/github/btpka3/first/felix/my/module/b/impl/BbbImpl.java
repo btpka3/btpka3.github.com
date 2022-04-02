@@ -1,13 +1,26 @@
 package com.github.btpka3.first.felix.my.module.b.impl;
 
-import com.github.btpka3.first.felix.my.module.b.api.Bbb;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.log.Logger;
+import org.osgi.service.log.LoggerFactory;
 
-public class BbbImpl implements Bbb {
+public class BbbImpl {
 
+    @Reference(service = LoggerFactory.class)
+    private Logger logger;
 
-
-    @Override
-    public String hi(String name) {
-        return null;
+    @Activate
+    public void open() {
+        System.out.println("BbbImpl activated,");
+        logger.info("BbbImpl activated.");
     }
+
+    @Deactivate
+    public void close() {
+        System.out.println("BbbImpl deactivated,");
+        logger.info("BbbImpl deactivated.");
+    }
+
 }

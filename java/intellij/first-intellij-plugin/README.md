@@ -24,9 +24,22 @@
 - LanguageParserDefinitions.INSTANCE.forLanguage(language).createFile(fileViewProvider)
 - com.intellij.psi.util.PsiTreeUtil.getParentOfType
 - com.intellij.psi.util.PsiTreeUtil.findChildrenOfType
+- com.intellij.lang.xml.XmlFormattingModel
 
 XmlText#getChildren()[0] == XmlASTFactory$1
 
 XmlASTFactory$1#getChildren()[0] == XmlTokenImpl (text="<![CDATA[", elementType="XML_CDATA_START") 
 XmlASTFactory$1#getChildren()[1] == XmlTokenImpl (text="ggg",       elementType="XML_DATA_CHARACTERS" )
 XmlASTFactory$1#getChildren()[2] == XmlTokenImpl (text="]]>",       elementType="XML_CDATA_END")
+
+- com.intellij.psi.codeStyle.autodetect.IndentOptionsDetectorImpl.calcLineIndentInfo
+- com.intellij.psi.codeStyle.autodetect.FormatterBasedLineIndentInfoBuilder
+- com.intellij.codeInsight.actions.ReformatCodeProcessor
+- com.intellij.psi.codeStyle.CodeStyleManager.reformatText 
+- com.intellij.psi.impl.source.codeStyle.CodeFormatterFacade.processText
+- com.intellij.formatting.FormatterImpl.format
+- com.intellij.formatting.FormatProcessor.format 
+- com.intellij.formatting.FormattingProgressTask
+- com.intellij.formatting.WhiteSpace.performModification
+- com.intellij.formatting.WhiteSpace.arrangeLineFeeds
+- com.intellij.formatting.engine.WrapProcessor.processWrap  # 缩进

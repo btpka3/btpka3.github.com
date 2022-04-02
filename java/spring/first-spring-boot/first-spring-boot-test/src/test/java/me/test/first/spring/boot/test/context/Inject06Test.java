@@ -1,6 +1,7 @@
 package me.test.first.spring.boot.test.context;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Bean;
@@ -13,23 +14,18 @@ import org.springframework.context.event.EventListener;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
- *
+ * 测试目的：
+ * 针对 @Configuration + @Bean + @Lazy ,
+ * 通过 @EventListener 机制提前触发找bean，
+ * 避免 服务 ready 后找bean而引发RT冲高后回落。
+ * 该解法可行，但需要手动对每个 @Lazy注入的地方添加代码，太 ugly
  */
-
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
-//@ContextConfiguration("classpath:/me/test/first/spring/boot/test/context/Inject06Test.xml")
 @ContextConfiguration
 public class Inject06Test {
-
-    /**
-     * 通过静态机制，减少spring 找bean，以方便观测注入详情。
-     */
-    static Map<String, MyPojo> map = new HashMap<>(4);
 
     @Configuration
     public static class Conf {
@@ -46,7 +42,6 @@ public class Inject06Test {
             pojo.setName("zhang3");
             pojo.setMyPojo(myPojo);
 
-            map.put("pojo1", pojo);
             return pojo;
         }
 
@@ -59,10 +54,8 @@ public class Inject06Test {
 
             MyPreloader.INSTANCE.addPreload(() -> myPojo.toString());
 
-
             pojo.setName("li4");
             pojo.setMyPojo(myPojo);
-            map.put("pojo2", pojo);
             return pojo;
         }
 
@@ -70,6 +63,28 @@ public class Inject06Test {
         MyPreloader myPreloader() {
             return MyPreloader.INSTANCE;
         }
+    }
+
+
+    @Qualifier("pojo2")
+    @Autowired
+    MyPojo myPojo2;
+
+
+    @Test
+    public void test() {
+
+        System.out.println(getClass() + "#test start");
+
+        for (int i = 0; i < 10; i++) {
+            long startTime = System.nanoTime();
+            String nameStr = myPojo2.getNameStr();
+            long endTime = System.nanoTime();
+            long rt = endTime - startTime;
+            System.out.printf("%3d : %15s : %9d%n", i, nameStr, rt);
+        }
+
+        System.out.println(getClass() + "#test start");
     }
 
 
@@ -104,28 +119,5 @@ public class Inject06Test {
             System.out.println("ContextStoppedEvent");
         }
 
-    }
-
-
-    @Test
-    public void test() {
-        // 成功：相比 Inject03Test
-        // 使用 Spring Event，通过 ContextRefreshedEvent 提前触发找bean。
-        // 假设这里是启动后要高QPS调用的业务代码，
-        // debug 执行该语句时，观测 org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency 不会再执行了
-
-        System.out.println(getClass() + "#test start");
-
-        for (int i = 0; i < 10; i++) {
-            long startTime = System.nanoTime();
-            // 成功：相比 Inject01Test， 使用 @Lazy 后成功
-            // 但：org.springframework.beans.factory.support.DefaultListableBeanFactory#doResolveDependency 被调用了3次
-            String nameStr = map.get("pojo2").getNameStr();
-            long endTime = System.nanoTime();
-            long rt = endTime - startTime;
-            System.out.printf("%3d : %15s : %9d%n", i, nameStr, rt);
-        }
-
-        System.out.println(getClass() + "#test start");
     }
 }

@@ -19,11 +19,13 @@ import java.util.*;
  * @author dangqian.zll
  * @date 2022/4/2
  * @see <a href="https://www.concretepage.com/spring/example_customautowireconfigurer_spring>Spring CustomAutowireConfigurer Example</a>
+ * @see org.springframework.beans.factory.support.DefaultListableBeanFactory#doResolveDependency
  * @see AnnotationConfigUtils#registerAnnotationConfigProcessors(org.springframework.beans.factory.support.BeanDefinitionRegistry, java.lang.Object)
  * @see ContextAnnotationAutowireCandidateResolver#getLazyResolutionProxyIfNecessary(org.springframework.beans.factory.config.DependencyDescriptor, java.lang.String)
  * @see CustomAutowireConfigurer
  * @see QualifierAnnotationAutowireCandidateResolver
  * @see ContextAnnotationAutowireCandidateResolver
+ * @see org.springframework.aop.framework.CglibAopProxy.DynamicAdvisedInterceptor#intercept(java.lang.Object, java.lang.reflect.Method, java.lang.Object[], org.springframework.cglib.proxy.MethodProxy)
  */
 public class MyLazyContextAnnotationAutowireCandidateResolver extends ContextAnnotationAutowireCandidateResolver {
 
@@ -82,6 +84,9 @@ public class MyLazyContextAnnotationAutowireCandidateResolver extends ContextAnn
 
             @Override
             public void releaseTarget(Object target) {
+                // org.springframework.aop.framework.CglibAopProxy.DynamicAdvisedInterceptor 会每次目标被调用后，finally 调用该方法
+                // 我们避免重置为空，防止每次都查找 bean
+                //this.resolvedTarget = null;
             }
         };
 
@@ -107,13 +112,6 @@ public class MyLazyContextAnnotationAutowireCandidateResolver extends ContextAnn
     public void triggerPreloadObject(Object obj) {
         if (obj == null) {
             return;
-        }
-        if (obj instanceof TargetSource) {
-            try {
-                ((TargetSource) obj).getTarget();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         }
         obj.toString();
     }

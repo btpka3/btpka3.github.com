@@ -1,13 +1,12 @@
 package com.github.btpka3.first.intellij.plugin;
 
-import com.intellij.formatting.FormattingContext;
-import com.intellij.formatting.FormattingModel;
-import com.intellij.formatting.FormattingModelBuilder;
+import com.intellij.formatting.*;
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.xml.XMLLanguage;
 import com.intellij.lang.xml.XmlASTFactory;
 import com.intellij.lang.xml.XmlFormattingModel;
 import com.intellij.lang.xml.XmlFormattingModelBuilder;
+import com.intellij.notification.Notifications;
 import com.intellij.openapi.command.CommandProcessor;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
@@ -15,6 +14,9 @@ import com.intellij.psi.PsiWhiteSpace;
 import com.intellij.psi.formatter.FormattingDocumentModelImpl;
 import com.intellij.psi.formatter.xml.XmlBlock;
 import com.intellij.psi.formatter.xml.XmlPolicy;
+import com.intellij.psi.impl.source.SourceTreeToPsiMap;
+import com.intellij.psi.impl.source.tree.TreeElement;
+import com.intellij.psi.impl.source.tree.TreeUtil;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlElementType;
@@ -60,28 +62,46 @@ public class PomFormattingModelBuilder implements FormattingModelBuilder {
     @NotNull
     public FormattingModel createModel(@NotNull FormattingContext formattingContext) {
 
-        System.out.println("first.intellij.plugin first log");
+        if (formattingContext.getFormattingMode() == FormattingMode.REFORMAT) {
 
-        // com.intellij.psi.impl.source.xml.XmlDocumentImpl : formattingContext.getNode().getFirstChildNode().getClass()
+            System.out.println("first.intellij.plugin first log");
 
-        PsiFile containingFile = formattingContext.getContainingFile();
-        final FormattingDocumentModelImpl documentModel = FormattingDocumentModelImpl.createOn(containingFile);
+            // com.intellij.psi.impl.source.xml.XmlDocumentImpl : formattingContext.getNode().getFirstChildNode().getClass()
 
-        ASTNode rootNode = formattingContext.getNode();
+            PsiFile containingFile = formattingContext.getContainingFile();
+            final FormattingDocumentModelImpl documentModel = FormattingDocumentModelImpl.createOn(containingFile);
 
-        process(rootNode);
+            ASTNode rootNode = formattingContext.getNode();
 
-        XmlBlock xmlBlock = new XmlBlock(
-                formattingContext.getNode(),
-                null,
-                null,
-                new XmlPolicy(formattingContext.getCodeStyleSettings(), documentModel),
-                null,
-                null,
-                false
-        );
+//            process(rootNode);
 
-        return new XmlFormattingModel(containingFile, xmlBlock, documentModel);
+            XmlBlock xmlBlock = new XmlBlock(
+                    formattingContext.getNode(),
+                    null,
+                    null,
+                    new XmlPolicy(formattingContext.getCodeStyleSettings(), documentModel),
+                    null,
+                    null,
+                    false
+            );
+
+
+//            FormattingModelProvider.createFormattingModelForPsiFile(
+//                    containingFile,
+//                    xmlBlock,
+//                    formattingContext.getCodeStyleSettings()
+//            );
+
+            return new XmlFormattingModel(containingFile, xmlBlock, documentModel);
+        } else {
+            // @see XmlFormattingModelBuilder
+            final ASTNode root = TreeUtil.getFileElement((TreeElement) SourceTreeToPsiMap.psiElementToTree(formattingContext.getPsiElement()));
+            PsiFile containingFile = formattingContext.getContainingFile();
+            final FormattingDocumentModelImpl documentModel = FormattingDocumentModelImpl.createOn(containingFile);
+            XmlBlock xmlBlock = new XmlBlock(root, null, null, new XmlPolicy(formattingContext.getCodeStyleSettings(), documentModel), null, null, false);
+            return new XmlFormattingModel(containingFile, xmlBlock, documentModel);
+        }
+
     }
 
 

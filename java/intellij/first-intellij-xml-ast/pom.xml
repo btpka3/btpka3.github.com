@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Maven POM -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+
+    <groupId>com.github.btpka3</groupId>
+    <artifactId>first-intellij-xml-ast</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+
+
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!--<checkstyle.config.location>${user.dir}/checkstyle.xml</checkstyle.config.location>-->
+
+    </properties>
+
+    <build>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <argLine>-Denforcer.skip=true -Dautoconfig.skip=true -Dfile.encoding=UTF-8 @{argLine}</argLine>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default-cli</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireReleaseDeps>
+                                    <message>When deploy release (non-snapshot) jars , snapshot dependencies is not
+                                        allowed. See https://topic.atatech.org/articles/196909
+                                    </message>
+                                    <onlyWhenRelease>true</onlyWhenRelease>
+                                    <searchTransitive>false</searchTransitive>
+                                </requireReleaseDeps>
+
+                                <banDuplicateClasses>
+                                    <ignoreClasses>
+                                        <ignoreClass>com.xyz.i18n.Messages</ignoreClass>
+                                        <ignoreClass>com.xyz.i19n.Messages.*</ignoreClass>
+                                        <ignoreClass>com.esotericsoftware.minlog.*</ignoreClass>
+                                        <ignoreClass>com.taobao.spas.sdk.common.*</ignoreClass>
+                                        <ignoreClass>org.apache.commons.logging.*</ignoreClass>
+                                        <ignoreClass>com.alibaba.smeta.client.*</ignoreClass>
+                                    </ignoreClasses>
+                                    <findAllDuplicates>true</findAllDuplicates>
+                                    <ignoreWhenIdentical>false</ignoreWhenIdentical>
+                                    <scopes>
+                                        <scope>compile</scope>
+                                        <scope>provided</scope>
+                                    </scopes>
+                                </banDuplicateClasses>
+
+                                <banCircularDependencies/>
+
+                                <enforceBytecodeVersion>
+                                    <maxJdkVersion>1.8</maxJdkVersion>
+                                </enforceBytecodeVersion>
+
+                                <bannedDependencies>
+                                    <message>请统一使用 com.alibaba.middleware:sdk 中依赖的
+                                        com.alibaba.middleware:eagleeye-core-sdk
+                                    </message>
+                                    <excludes>
+                                        <exclude>com.taobao.eagleeye:eagleeye-sdk</exclude>
+                                        <exclude>com.taobao.eagleeye:eagleeye-core</exclude>
+                                        <!--<exclude>com.taobao.eagleeye:eagleeye-logs</exclude>-->
+                                    </excludes>
+                                </bannedDependencies>
+
+                                <bannedDependencies>
+                                    <message>请统一使用 com.alibaba.middleware:sdk 中依赖的
+                                        com.alibaba.middleware:diamond-client-sdk
+                                    </message>
+                                    <excludes>
+                                        <exclude>com.taobao.diamond:diamond-client</exclude>
+                                    </excludes>
+                                </bannedDependencies>
+
+
+                                <bannedDependencies>
+                                    <message>请统一使用 com.alibaba.middleware:sdk 中依赖的
+                                        com.alibaba.middleware:vipserver-client-sdk
+                                    </message>
+                                    <excludes>
+                                        <exclude>com.taobao.vipserver:vipserver-client</exclude>
+                                    </excludes>
+                                </bannedDependencies>
+
+
+                                <bannedDependencies>
+                                    <message>请统一使用 com.alibaba.middleware:sdk 中依赖的
+                                        com.alibaba.middleware:unitrouter-sdk
+                                    </message>
+                                    <excludes>
+                                        <exclude>com.alibaba.unit.rule:unitrouter</exclude>
+                                    </excludes>
+                                </bannedDependencies>
+
+                                <bannedDependencies>
+                                    <message>请统一使用 com.alibaba.middleware:sdk 中依赖的
+                                        com.alibaba.middleware:rocketmq-client-sdk
+                                    </message>
+                                    <excludes>
+                                        <exclude>com.alibaba.rocketmq:rocketmq-client</exclude>
+                                    </excludes>
+                                </bannedDependencies>
+
+                                <bannedDependencies>
+                                    <message>请统一使用 com.alibaba.middleware:sdk 中依赖的
+                                        com.alibaba.middleware:notify-tr-client-sdk
+                                    </message>
+                                    <excludes>
+                                        <exclude>com.taobao.notify:notify-tr-client</exclude>
+                                    </excludes>
+                                </bannedDependencies>
+
+                                <bannedDependencies>
+                                    <message>请统一使用 com.alibaba.middleware:sdk 中依赖的
+                                        com.alibaba.middleware:metaq-client-sdk
+                                    </message>
+                                    <excludes>
+                                        <exclude>com.taobao.metaq.final:metaq-client</exclude>
+                                    </excludes>
+                                </bannedDependencies>
+
+                                <bannedDependencies>
+                                    <message>请统一使用 com.alibaba.middleware:sdk 中依赖的
+                                        com.alibaba.middleware:hsf-notify-client-sdk
+                                    </message>
+                                    <excludes>
+                                        <exclude>com.taobao.hsf:hsf.notify.spring</exclude>
+                                    </excludes>
+                                </bannedDependencies>
+
+                                <bannedDependencies>
+                                    <message>请统一使用 com.alibaba.middleware:sdk 中依赖的 com.alibaba.middleware:hsf-sdk
+                                    </message>
+                                    <excludes>
+                                        <exclude>com.taobao.hsf:hsf.services</exclude>
+                                        <exclude>com.taobao.hsf:hsf.app.spring</exclude>
+                                        <exclude>com.taobao.hsf:hsf.remoting</exclude>
+                                    </excludes>
+                                </bannedDependencies>
+
+
+                                <bannedDependencies>
+                                    <message>请统一使用 com.alibaba.middleware:sdk 中依赖的
+                                        com.alibaba.middleware:tair-plugin-sdk
+                                    </message>
+                                    <excludes>
+                                        <exclude>com.taobao.tair:tair-mc-client</exclude>
+                                        <exclude>com.taobao.tair:tair-client</exclude>
+                                    </excludes>
+                                </bannedDependencies>
+
+                                <bannedDependencies>
+                                    <message>请统一使用 com.alibaba.middleware:sdk 中依赖的
+                                        com.alibaba.middleware:tddl-client-sdk
+                                    </message>
+                                    <excludes>
+                                        <exclude>com.taobao.tddl:tddl-client</exclude>
+                                    </excludes>
+                                </bannedDependencies>
+
+                                <bannedDependencies>
+                                    <message>请统一使用 com.alibaba.middleware:sdk 中依赖的
+                                        com.alibaba.middleware:buc.sso.client.plugin-sdk
+                                    </message>
+                                    <excludes>
+                                        <exclude>com.alibaba.platform.shared:buc.sso.client</exclude>
+                                    </excludes>
+                                </bannedDependencies>
+
+                                <bannedDependencies>
+                                    <message>请统一使用 com.alibaba.middleware:sdk 中依赖的 com.alibaba.middleware:acl.plugin-sdk
+                                    </message>
+                                    <excludes>
+                                        <exclude>com.alibaba.platform.shared:acl.api</exclude>
+                                    </excludes>
+                                </bannedDependencies>
+
+
+                                <bannedDependencies>
+                                    <message>自身的工程源码中请不要使用过时的依赖，但依赖的二方包中可能仍在使用，所以请将相关过时依赖改为 scope=runtime</message>
+                                    <excludes>
+                                        <exclude>commons-collections:commons-collections:*:*:compile</exclude>
+                                    </excludes>
+                                </bannedDependencies>
+                                <bannedDependencies>
+                                    <message>自身的工程源码中不直接使用的依赖，请设置scope=runtime</message>
+                                    <excludes>
+                                        <exclude>org.slf4j:jcl-over-slf4j:*:*:compile</exclude>
+                                    </excludes>
+                                </bannedDependencies>
+
+                                <bannedDependencies>
+                                    <message>使用 slf4j+logback，不要使用其他日志框架和 slf4j binding</message>
+                                    <excludes>
+                                        <exclude>com.alibaba.shared:toolkit.common.logging</exclude>
+                                        <exclude>commons-logging:commons-logging</exclude>
+                                        <exclude>log4j:log4j</exclude>
+                                        <exclude>org.apache.logging.log4j</exclude>
+                                        <exclude>org.slf4j:slf4j-jcl</exclude>
+                                        <exclude>org.slf4j:slf4j-jdk14</exclude>
+                                        <exclude>org.slf4j:slf4j-log4j12</exclude>
+                                        <exclude>org.slf4j:slf4j-nop</exclude>
+                                        <exclude>org.slf4j:slf4j-simple</exclude>
+                                    </excludes>
+                                    <includes>
+                                        <include>org.apache.logging.log4j:log4j-api</include>
+                                        <include>org.apache.logging.log4j:log4j-to-slf4j</include>
+                                    </includes>
+                                </bannedDependencies>
+
+                                <bannedDependencies>
+                                    <message>请使用 commons-codec:commons-codec</message>
+                                    <excludes>
+                                        <exclude>apache-codec:commons-codec</exclude>
+                                        <exclude>org.apache.commons:commons-codec</exclude>
+                                    </excludes>
+                                </bannedDependencies>
+
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-checkstyle-plugin</artifactId>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>validate</id>-->
+<!--                        <phase>validate</phase>-->
+<!--                        <configuration>-->
+<!--                            <configLocation>${maven.multiModuleProjectDirectory}/checkstyle.xml</configLocation>-->
+<!--                            <encoding>UTF-8</encoding>-->
+<!--                            <consoleOutput>true</consoleOutput>-->
+<!--                            <failsOnError>true</failsOnError>-->
+<!--                            <failOnViolation>true</failOnViolation>-->
+<!--                            <includeTestSourceDirectory>true</includeTestSourceDirectory>-->
+<!--                            <logViolationsToConsole>true</logViolationsToConsole>-->
+<!--                            &lt;!&ndash;<linkXRef>false</linkXRef>&ndash;&gt;-->
+<!--                        </configuration>-->
+<!--                        <goals>-->
+<!--                            <goal>check</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
+        </plugins>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.0</version>
+                    <!--                    <configuration>-->
+                    <!--                        <annotationProcessorPaths>-->
+                    <!--                            <path>-->
+                    <!--                                <groupId>org.projectlombok</groupId>-->
+                    <!--                                <artifactId>lombok</artifactId>-->
+                    <!--                                <version>${lombok.version}</version>-->
+                    <!--                            </path>-->
+                    <!--                        </annotationProcessorPaths>-->
+                    <!--                    </configuration>-->
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>3.0.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>3.1.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>3.0.0-M3</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>extra-enforcer-rules</artifactId>
+                            <version>1.2</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.0.0-M5</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>0.8.6</version>
+                    <configuration>
+                        <append>true</append>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>pre-unit-test</id>
+                            <goals>
+                                <goal>prepare-agent</goal>
+                            </goals>
+                            <configuration>
+                                <!--Sets the name of the property containing the settings for JaCoCo runtime agent. -->
+                                <!--<propertyName>argLine</propertyName>-->
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>post-unit-test</id>
+                            <phase>test</phase>
+                            <goals>
+                                <goal>report</goal>
+                            </goals>
+                            <configuration>
+                                <excludes>
+                                    <exclude>**/*.xlsx</exclude>
+                                </excludes>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>3.1.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-pmd-plugin</artifactId>
+                    <version>3.14.0</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.alibaba.p3c</groupId>
+                            <artifactId>p3c-pmd</artifactId>
+                            <version>2.1.1</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>3.1.1</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>3.9.1</version>
+                    <dependencies>
+                        <!--                        <dependency>-->
+                        <!--                            <groupId>org.apache.maven.doxia</groupId>-->
+                        <!--                            <artifactId>doxia-module-twiki</artifactId>-->
+                        <!--                            <version>1.9</version>-->
+                        <!--                        </dependency>-->
+                        <!--                        <dependency>-->
+                        <!--                            <groupId>org.apache.maven.plugins</groupId>-->
+                        <!--                            <artifactId>maven-plugin-plugin</artifactId>-->
+                        <!--                            <version>3.6.0</version>-->
+                        <!--                        </dependency>-->
+                        <dependency>
+                            <groupId>org.apache.maven.doxia</groupId>
+                            <artifactId>doxia-site-renderer</artifactId>
+                            <version>1.9.1</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.apache.maven.doxia</groupId>
+                            <artifactId>doxia-module-markdown</artifactId>
+                            <version>1.9</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>3.0.0-M1</version>
+                </plugin>
+                <plugin>
+                    <groupId>com.alibaba.security.mtee.bundle</groupId>
+                    <artifactId>mtee-bundle-maven-plugin</artifactId>
+                    <version>1.0.3</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+    <distributionManagement>
+        <site>
+            <id>green-punish</id>
+            <url>file:/tmp/green-punish</url>
+        </site>
+    </distributionManagement>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </reporting>
+</project>

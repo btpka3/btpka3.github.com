@@ -1,12 +1,12 @@
 package com.github.btpka3.first.felix.my.module.a;
 
 
-import org.osgi.framework.BundleActivator;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceEvent;
-import org.osgi.framework.ServiceListener;
+import org.osgi.framework.*;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.log.LoggerFactory;
 
 
+@Component
 public class Activator implements BundleActivator, ServiceListener {
     /**
      * Implements BundleActivator.start(). Prints
@@ -19,6 +19,16 @@ public class Activator implements BundleActivator, ServiceListener {
     public void start(BundleContext context) {
         System.out.println("Starting to listen for service events.");
         context.addServiceListener(this);
+
+        try {
+            ServiceReference<LoggerFactory> ref = context.getServiceReference(LoggerFactory.class);
+            if (ref != null) {
+                LoggerFactory loggerFactory = context.getService(ref);
+                loggerFactory.getLogger(Activator.class).warn("MyActivator, wa wa wa");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**

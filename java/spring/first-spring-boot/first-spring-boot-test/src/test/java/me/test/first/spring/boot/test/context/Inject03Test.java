@@ -14,7 +14,8 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.test.context.ContextConfiguration;
 
 /**
- *
+ * 测试目的：
+ * 使用 @Configuration + @Bean + @Lazy , 能完成循环依赖，能完成功能逻辑，但效率太差。
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @ContextConfiguration
@@ -57,8 +58,6 @@ public class Inject03Test {
 
         for (int i = 0; i < 10; i++) {
             long startTime = System.nanoTime();
-            // 成功：相比 Inject01Test， 使用 @Lazy 后成功
-            // 但：org.springframework.beans.factory.support.DefaultListableBeanFactory#doResolveDependency 被调用了3次
             String nameStr = myPojo2.getNameStr();
             long endTime = System.nanoTime();
             long rt = endTime - startTime;

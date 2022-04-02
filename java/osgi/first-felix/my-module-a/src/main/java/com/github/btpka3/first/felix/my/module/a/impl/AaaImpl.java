@@ -2,49 +2,49 @@ package com.github.btpka3.first.felix.my.module.a.impl;
 
 
 import com.github.btpka3.first.felix.my.module.a.api.Aaa;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
-import org.osgi.service.component.annotations.Reference;
+import org.apache.commons.lang3.StringUtils;
+import org.osgi.service.component.annotations.*;
 import org.osgi.service.component.propertytypes.ServiceDescription;
 import org.osgi.service.component.propertytypes.ServiceRanking;
 import org.osgi.service.component.propertytypes.ServiceVendor;
-import org.osgi.service.metatype.annotations.Designate;
+import org.osgi.service.log.Logger;
+import org.osgi.service.log.LoggerFactory;
 
-@Component(service = Aaa.class,configurationPolicy= ConfigurationPolicy.REQUIRE)
+@Component(
+//        service = Aaa.class,
+//        configurationPolicy = ConfigurationPolicy.REQUIRE,
+//        immediate = true
+)
 //@Designate(ocd = MyServiceConfiguration.class)
 @ServiceDescription("My simple service")
 @ServiceRanking(1001)
-@ServiceVendor("Feike")
+@ServiceVendor("btpka3")
 public class AaaImpl implements Aaa {
-
-    private static Log log = LogFactory.getLog(AaaImpl.class);
+    @Reference(
+            service = LoggerFactory.class,
+            policy = ReferencePolicy.STATIC,
+            cardinality = ReferenceCardinality.MANDATORY
+    )
+    private volatile Logger logger;
 
     @Override
     public String hello(String name) {
-        String msg = "hello " + name;
-        log.info(msg);
+        String msg = "AaaImpl hello " + name;
+        System.out.println(msg + ",");
+        logger.info(StringUtils.trimToEmpty(msg) + ".");
         return msg;
     }
 
-    public void startUp(){
-        System.out.println("aaa service startup");
+    @Activate
+    public void open() {
+        System.out.println("AaaImpl activated,");
+        logger.info("AaaImpl activated.");
     }
 
-//
-//    @Activate
-//	private MyServiceConfiguration config;
-//
-//	private boolean author;
-//
-//	@Reference
-//	private SlingSettingsService settings;
-//
-//	@Activate
-//	public void activate(MyServiceConfiguration config) {
-//		author = settings.getRunModes().contains("author");
-//	}
 
+    @Deactivate
+    public void close() {
+        System.out.println("AaaImpl deactivated,");
+        logger.info("AaaImpl deactivated.");
+    }
 }
