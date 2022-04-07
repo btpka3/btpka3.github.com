@@ -1,11 +1,9 @@
 package me.test.jdk.java.util;
 
+import org.apache.commons.collections4.MapUtils;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -192,13 +190,60 @@ public class StreamTest {
             list.add(user);
         }
 
-       Map<Integer, List<User>> map=list.stream()
+        Map<Integer, List<User>> map = list.stream()
                 .collect(Collectors.groupingBy(
                         (User user) -> {
-                            return user.age == null ? (Integer) null : (Integer)(user.age / 10);
+                            return user.age == null ? (Integer) null : (Integer) (user.age / 10);
                         },
                         Collectors.toList()
                 ));
         System.out.println(map);
     }
+
+
+    @Test
+    public void testGeneric01() {
+
+        List<Map> aaa = new ArrayList<>(4);
+        {
+            Map m = new HashMap(4);
+            m.put("value", "v1");
+            aaa.add(m);
+        }
+        {
+            Map m = new HashMap(4);
+            m.put("value", "v2");
+            aaa.add(m);
+        }
+        List<String> result = aaa.stream()
+                .map((Function<Map, String>) rec -> MapUtils.getString(rec, "value"))
+                .collect(Collectors.toList());
+
+        System.out.println(result);
+    }
+
+//    @Test
+//    public void testGeneric02() {
+//
+//        List<Map<String, Object>> aaa = new ArrayList<>(4);
+//        {
+//            Map m = new HashMap(4);
+//            m.put("value", "v1");
+//            aaa.add(m);
+//        }
+//        {
+//            Map m = new HashMap(4);
+//            m.put("value", "v2");
+//            aaa.add(m);
+//        }
+//        List<String> result = aaa.stream()
+//                // 编译错误 , 参考 testGeneric01()
+//                // java: incompatible types: java.lang.Object cannot be converted to java.util.List<java.lang.String>
+//                .<String>map((Map rec) -> (String) MapUtils.getString(rec, "value"))
+//                .map(String.class::cast)
+//                .collect(Collectors.toList());
+//
+//        System.out.println(result);
+//    }
+
 }
