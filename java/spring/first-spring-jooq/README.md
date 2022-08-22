@@ -18,3 +18,19 @@ docker start my-mysql
 docker start my-mysql
 
 ```
+
+- gradle plugin : [nu.studer.jooq](https://github.com/etiennestuder/gradle-jooq-plugin)
+- 示例数据库： [sakiladb/mysql](https://github.com/sakiladb/mysql)
+- docker 镜像: [sakiladb/mysql](https://hub.docker.com/r/sakiladb/mysql)
+
+# 启动数据库
+```bash
+
+cd src/test/resoures
+docker-compose up
+```
+
+# 生成代码
+```bash
+./gradlew clean build
+```

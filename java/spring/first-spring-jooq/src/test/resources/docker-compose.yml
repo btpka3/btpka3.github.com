@@ -1,0 +1,14 @@
+version: '2'
+services:
+  db-server:
+    image: sakiladb/mysql:5.7
+    container_name: sakiladb
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+    ports:
+      - 3306:3306
+    networks:
+      - first-spring-jooq-network
+networks:
+  first-spring-jooq-network:
+    driver: bridge
