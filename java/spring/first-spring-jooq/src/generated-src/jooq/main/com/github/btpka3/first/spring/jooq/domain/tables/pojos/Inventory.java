@@ -16,10 +16,12 @@ public class Inventory implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private final Integer       inventoryId;
-    private final Short         filmId;
-    private final Byte          storeId;
-    private final LocalDateTime lastUpdate;
+    private Integer       inventoryId;
+    private Short         filmId;
+    private Byte          storeId;
+    private LocalDateTime lastUpdate;
+
+    public Inventory() {}
 
     public Inventory(Inventory value) {
         this.inventoryId = value.inventoryId;
@@ -48,10 +50,26 @@ public class Inventory implements Serializable {
     }
 
     /**
+     * Setter for <code>sakila.inventory.inventory_id</code>.
+     */
+    public Inventory setInventoryId(Integer inventoryId) {
+        this.inventoryId = inventoryId;
+        return this;
+    }
+
+    /**
      * Getter for <code>sakila.inventory.film_id</code>.
      */
     public Short getFilmId() {
         return this.filmId;
+    }
+
+    /**
+     * Setter for <code>sakila.inventory.film_id</code>.
+     */
+    public Inventory setFilmId(Short filmId) {
+        this.filmId = filmId;
+        return this;
     }
 
     /**
@@ -62,10 +80,26 @@ public class Inventory implements Serializable {
     }
 
     /**
+     * Setter for <code>sakila.inventory.store_id</code>.
+     */
+    public Inventory setStoreId(Byte storeId) {
+        this.storeId = storeId;
+        return this;
+    }
+
+    /**
      * Getter for <code>sakila.inventory.last_update</code>.
      */
     public LocalDateTime getLastUpdate() {
         return this.lastUpdate;
+    }
+
+    /**
+     * Setter for <code>sakila.inventory.last_update</code>.
+     */
+    public Inventory setLastUpdate(LocalDateTime lastUpdate) {
+        this.lastUpdate = lastUpdate;
+        return this;
     }
 
     @Override

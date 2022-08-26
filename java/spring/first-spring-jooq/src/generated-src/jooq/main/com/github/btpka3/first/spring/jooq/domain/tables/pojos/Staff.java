@@ -16,17 +16,19 @@ public class Staff implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private final Byte          staffId;
-    private final String        firstName;
-    private final String        lastName;
-    private final Short         addressId;
-    private final byte[]        picture;
-    private final String        email;
-    private final Byte          storeId;
-    private final Byte          active;
-    private final String        username;
-    private final String        password;
-    private final LocalDateTime lastUpdate;
+    private Byte          staffId;
+    private String        firstName;
+    private String        lastName;
+    private Short         addressId;
+    private byte[]        picture;
+    private String        email;
+    private Byte          storeId;
+    private Byte          active;
+    private String        username;
+    private String        password;
+    private LocalDateTime lastUpdate;
+
+    public Staff() {}
 
     public Staff(Staff value) {
         this.staffId = value.staffId;
@@ -76,10 +78,26 @@ public class Staff implements Serializable {
     }
 
     /**
+     * Setter for <code>sakila.staff.staff_id</code>.
+     */
+    public Staff setStaffId(Byte staffId) {
+        this.staffId = staffId;
+        return this;
+    }
+
+    /**
      * Getter for <code>sakila.staff.first_name</code>.
      */
     public String getFirstName() {
         return this.firstName;
+    }
+
+    /**
+     * Setter for <code>sakila.staff.first_name</code>.
+     */
+    public Staff setFirstName(String firstName) {
+        this.firstName = firstName;
+        return this;
     }
 
     /**
@@ -90,10 +108,26 @@ public class Staff implements Serializable {
     }
 
     /**
+     * Setter for <code>sakila.staff.last_name</code>.
+     */
+    public Staff setLastName(String lastName) {
+        this.lastName = lastName;
+        return this;
+    }
+
+    /**
      * Getter for <code>sakila.staff.address_id</code>.
      */
     public Short getAddressId() {
         return this.addressId;
+    }
+
+    /**
+     * Setter for <code>sakila.staff.address_id</code>.
+     */
+    public Staff setAddressId(Short addressId) {
+        this.addressId = addressId;
+        return this;
     }
 
     /**
@@ -104,10 +138,26 @@ public class Staff implements Serializable {
     }
 
     /**
+     * Setter for <code>sakila.staff.picture</code>.
+     */
+    public Staff setPicture(byte[] picture) {
+        this.picture = picture;
+        return this;
+    }
+
+    /**
      * Getter for <code>sakila.staff.email</code>.
      */
     public String getEmail() {
         return this.email;
+    }
+
+    /**
+     * Setter for <code>sakila.staff.email</code>.
+     */
+    public Staff setEmail(String email) {
+        this.email = email;
+        return this;
     }
 
     /**
@@ -118,10 +168,26 @@ public class Staff implements Serializable {
     }
 
     /**
+     * Setter for <code>sakila.staff.store_id</code>.
+     */
+    public Staff setStoreId(Byte storeId) {
+        this.storeId = storeId;
+        return this;
+    }
+
+    /**
      * Getter for <code>sakila.staff.active</code>.
      */
     public Byte getActive() {
         return this.active;
+    }
+
+    /**
+     * Setter for <code>sakila.staff.active</code>.
+     */
+    public Staff setActive(Byte active) {
+        this.active = active;
+        return this;
     }
 
     /**
@@ -132,6 +198,14 @@ public class Staff implements Serializable {
     }
 
     /**
+     * Setter for <code>sakila.staff.username</code>.
+     */
+    public Staff setUsername(String username) {
+        this.username = username;
+        return this;
+    }
+
+    /**
      * Getter for <code>sakila.staff.password</code>.
      */
     public String getPassword() {
@@ -139,10 +213,26 @@ public class Staff implements Serializable {
     }
 
     /**
+     * Setter for <code>sakila.staff.password</code>.
+     */
+    public Staff setPassword(String password) {
+        this.password = password;
+        return this;
+    }
+
+    /**
      * Getter for <code>sakila.staff.last_update</code>.
      */
     public LocalDateTime getLastUpdate() {
         return this.lastUpdate;
+    }
+
+    /**
+     * Setter for <code>sakila.staff.last_update</code>.
+     */
+    public Staff setLastUpdate(LocalDateTime lastUpdate) {
+        this.lastUpdate = lastUpdate;
+        return this;
     }
 
     @Override

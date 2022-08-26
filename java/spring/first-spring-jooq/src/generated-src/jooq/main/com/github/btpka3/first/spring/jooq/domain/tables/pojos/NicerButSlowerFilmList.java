@@ -18,14 +18,16 @@ public class NicerButSlowerFilmList implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private final Short                        fid;
-    private final String                       title;
-    private final String                       description;
-    private final String                       category;
-    private final BigDecimal                   price;
-    private final Short                        length;
-    private final NicerButSlowerFilmListRating rating;
-    private final String                       actors;
+    private Short                        fid;
+    private String                       title;
+    private String                       description;
+    private String                       category;
+    private BigDecimal                   price;
+    private Short                        length;
+    private NicerButSlowerFilmListRating rating;
+    private String                       actors;
+
+    public NicerButSlowerFilmList() {}
 
     public NicerButSlowerFilmList(NicerButSlowerFilmList value) {
         this.fid = value.fid;
@@ -66,10 +68,26 @@ public class NicerButSlowerFilmList implements Serializable {
     }
 
     /**
+     * Setter for <code>sakila.nicer_but_slower_film_list.FID</code>.
+     */
+    public NicerButSlowerFilmList setFid(Short fid) {
+        this.fid = fid;
+        return this;
+    }
+
+    /**
      * Getter for <code>sakila.nicer_but_slower_film_list.title</code>.
      */
     public String getTitle() {
         return this.title;
+    }
+
+    /**
+     * Setter for <code>sakila.nicer_but_slower_film_list.title</code>.
+     */
+    public NicerButSlowerFilmList setTitle(String title) {
+        this.title = title;
+        return this;
     }
 
     /**
@@ -80,10 +98,26 @@ public class NicerButSlowerFilmList implements Serializable {
     }
 
     /**
+     * Setter for <code>sakila.nicer_but_slower_film_list.description</code>.
+     */
+    public NicerButSlowerFilmList setDescription(String description) {
+        this.description = description;
+        return this;
+    }
+
+    /**
      * Getter for <code>sakila.nicer_but_slower_film_list.category</code>.
      */
     public String getCategory() {
         return this.category;
+    }
+
+    /**
+     * Setter for <code>sakila.nicer_but_slower_film_list.category</code>.
+     */
+    public NicerButSlowerFilmList setCategory(String category) {
+        this.category = category;
+        return this;
     }
 
     /**
@@ -94,10 +128,26 @@ public class NicerButSlowerFilmList implements Serializable {
     }
 
     /**
+     * Setter for <code>sakila.nicer_but_slower_film_list.price</code>.
+     */
+    public NicerButSlowerFilmList setPrice(BigDecimal price) {
+        this.price = price;
+        return this;
+    }
+
+    /**
      * Getter for <code>sakila.nicer_but_slower_film_list.length</code>.
      */
     public Short getLength() {
         return this.length;
+    }
+
+    /**
+     * Setter for <code>sakila.nicer_but_slower_film_list.length</code>.
+     */
+    public NicerButSlowerFilmList setLength(Short length) {
+        this.length = length;
+        return this;
     }
 
     /**
@@ -108,10 +158,26 @@ public class NicerButSlowerFilmList implements Serializable {
     }
 
     /**
+     * Setter for <code>sakila.nicer_but_slower_film_list.rating</code>.
+     */
+    public NicerButSlowerFilmList setRating(NicerButSlowerFilmListRating rating) {
+        this.rating = rating;
+        return this;
+    }
+
+    /**
      * Getter for <code>sakila.nicer_but_slower_film_list.actors</code>.
      */
     public String getActors() {
         return this.actors;
+    }
+
+    /**
+     * Setter for <code>sakila.nicer_but_slower_film_list.actors</code>.
+     */
+    public NicerButSlowerFilmList setActors(String actors) {
+        this.actors = actors;
+        return this;
     }
 
     @Override

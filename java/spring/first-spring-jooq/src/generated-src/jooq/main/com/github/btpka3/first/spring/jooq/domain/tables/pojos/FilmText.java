@@ -15,9 +15,11 @@ public class FilmText implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private final Short  filmId;
-    private final String title;
-    private final String description;
+    private Short  filmId;
+    private String title;
+    private String description;
+
+    public FilmText() {}
 
     public FilmText(FilmText value) {
         this.filmId = value.filmId;
@@ -43,6 +45,14 @@ public class FilmText implements Serializable {
     }
 
     /**
+     * Setter for <code>sakila.film_text.film_id</code>.
+     */
+    public FilmText setFilmId(Short filmId) {
+        this.filmId = filmId;
+        return this;
+    }
+
+    /**
      * Getter for <code>sakila.film_text.title</code>.
      */
     public String getTitle() {
@@ -50,10 +60,26 @@ public class FilmText implements Serializable {
     }
 
     /**
+     * Setter for <code>sakila.film_text.title</code>.
+     */
+    public FilmText setTitle(String title) {
+        this.title = title;
+        return this;
+    }
+
+    /**
      * Getter for <code>sakila.film_text.description</code>.
      */
     public String getDescription() {
         return this.description;
+    }
+
+    /**
+     * Setter for <code>sakila.film_text.description</code>.
+     */
+    public FilmText setDescription(String description) {
+        this.description = description;
+        return this;
     }
 
     @Override

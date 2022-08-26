@@ -15,15 +15,17 @@ public class CustomerList implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private final Short  id;
-    private final String name;
-    private final String address;
-    private final String zipCode;
-    private final String phone;
-    private final String city;
-    private final String country;
-    private final String notes;
-    private final Byte   sid;
+    private Short  id;
+    private String name;
+    private String address;
+    private String zipCode;
+    private String phone;
+    private String city;
+    private String country;
+    private String notes;
+    private Byte   sid;
+
+    public CustomerList() {}
 
     public CustomerList(CustomerList value) {
         this.id = value.id;
@@ -67,10 +69,26 @@ public class CustomerList implements Serializable {
     }
 
     /**
+     * Setter for <code>sakila.customer_list.ID</code>.
+     */
+    public CustomerList setId(Short id) {
+        this.id = id;
+        return this;
+    }
+
+    /**
      * Getter for <code>sakila.customer_list.name</code>.
      */
     public String getName() {
         return this.name;
+    }
+
+    /**
+     * Setter for <code>sakila.customer_list.name</code>.
+     */
+    public CustomerList setName(String name) {
+        this.name = name;
+        return this;
     }
 
     /**
@@ -81,10 +99,26 @@ public class CustomerList implements Serializable {
     }
 
     /**
+     * Setter for <code>sakila.customer_list.address</code>.
+     */
+    public CustomerList setAddress(String address) {
+        this.address = address;
+        return this;
+    }
+
+    /**
      * Getter for <code>sakila.customer_list.zip code</code>.
      */
     public String getZipCode() {
         return this.zipCode;
+    }
+
+    /**
+     * Setter for <code>sakila.customer_list.zip code</code>.
+     */
+    public CustomerList setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+        return this;
     }
 
     /**
@@ -95,10 +129,26 @@ public class CustomerList implements Serializable {
     }
 
     /**
+     * Setter for <code>sakila.customer_list.phone</code>.
+     */
+    public CustomerList setPhone(String phone) {
+        this.phone = phone;
+        return this;
+    }
+
+    /**
      * Getter for <code>sakila.customer_list.city</code>.
      */
     public String getCity() {
         return this.city;
+    }
+
+    /**
+     * Setter for <code>sakila.customer_list.city</code>.
+     */
+    public CustomerList setCity(String city) {
+        this.city = city;
+        return this;
     }
 
     /**
@@ -109,6 +159,14 @@ public class CustomerList implements Serializable {
     }
 
     /**
+     * Setter for <code>sakila.customer_list.country</code>.
+     */
+    public CustomerList setCountry(String country) {
+        this.country = country;
+        return this;
+    }
+
+    /**
      * Getter for <code>sakila.customer_list.notes</code>.
      */
     public String getNotes() {
@@ -116,10 +174,26 @@ public class CustomerList implements Serializable {
     }
 
     /**
+     * Setter for <code>sakila.customer_list.notes</code>.
+     */
+    public CustomerList setNotes(String notes) {
+        this.notes = notes;
+        return this;
+    }
+
+    /**
      * Getter for <code>sakila.customer_list.SID</code>.
      */
     public Byte getSid() {
         return this.sid;
+    }
+
+    /**
+     * Setter for <code>sakila.customer_list.SID</code>.
+     */
+    public CustomerList setSid(Byte sid) {
+        this.sid = sid;
+        return this;
     }
 
     @Override

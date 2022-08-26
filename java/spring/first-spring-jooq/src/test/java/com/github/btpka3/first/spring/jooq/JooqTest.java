@@ -1,5 +1,6 @@
 package com.github.btpka3.first.spring.jooq;
 
+import com.github.btpka3.first.spring.jooq.domain.tables.pojos.Address;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Result;
@@ -62,16 +63,18 @@ public class JooqTest {
 
         List<Result<Record>> list = this.dsl
                 .select(
-                        concat(trim(ADDRESS.CITY_ID.cast(VARCHAR(100))), trim(ADDRESS.ADDRESS_ID.cast(VARCHAR(100)))),
-                        ADDRESS.CITY_ID,
-                        ADDRESS.ADDRESS_ID
+                        ADDRESS.ADDRESS_ID.as("aid"),
+                        ADDRESS.CITY_ID.as("cid"),
+                        ADDRESS.PHONE.as("p"),
+                        concat(concat(ADDRESS.ADDRESS_ID.cast(VARCHAR(100)), "|"), ADDRESS.PHONE).as("concat"),
+                        when(ADDRESS.PHONE.isNull(), "nill")
+                                .otherwise(ADDRESS.PHONE)
+                                .as("case"),
+                        jsonArray(ADDRESS.ADDRESS_ID, ADDRESS.CITY_ID).as("jsonArray")
                 )
                 .from(ADDRESS)
                 .where(ADDRESS.CITY_ID.eq((short) 300))
-                .offset(0)
-                .limit(10)
                 .fetchMany();
-        System.out.println("111111");
         System.out.println(list);
     }
 
@@ -120,23 +123,29 @@ public class JooqTest {
     // TODO 打印拼接好的 sql
     // TODO 注册自定义函数
     // TODO Record 转换为 Domain bean 或者自定义POJO
+
+    /**
+     * @see <a href="https://www.jooq.org/doc/3.17/manual-single-page/#pojos">5.3.6. POJOs</a>
+     */
     @Test
-    public void selectPojo() {
-        List<Result<Record>> list = this.dsl
+    public void selectIntoPojo() {
+        Address result = this.dsl
                 .select(
-                        ADDRESS.ADDRESS_ID.as("aid"),
-                        ADDRESS.CITY_ID.as("cid"),
-                        ADDRESS.PHONE.as("p"),
-                        concat(concat(ADDRESS.ADDRESS_ID.cast(VARCHAR(100)), "|"), ADDRESS.PHONE).as("concat"),
-                        when(ADDRESS.PHONE.isNull(), "nill")
-                                .otherwise(ADDRESS.PHONE)
-                                .as("case"),
-                        jsonArray(ADDRESS.ADDRESS_ID, ADDRESS.CITY_ID).as("jsonArray")
+                        ADDRESS.ADDRESS_ID,
+                        ADDRESS.ADDRESS_,
+                        ADDRESS.ADDRESS2,
+                        ADDRESS.DISTRICT,
+                        ADDRESS.CITY_ID,
+                        ADDRESS.POSTAL_CODE,
+                        ADDRESS.PHONE,
+                        ADDRESS.LOCATION,
+                        ADDRESS.LAST_UPDATE
                 )
                 .from(ADDRESS)
-                .where(ADDRESS.CITY_ID.eq((short) 300))
-                .fetchMany();
-        System.out.println(list);
+                .limit(1)
+                .fetchAny()
+                .into(Address.class);
+        System.out.println(result);
 
     }
 

@@ -16,10 +16,12 @@ public class Store implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private final Byte          storeId;
-    private final Byte          managerStaffId;
-    private final Short         addressId;
-    private final LocalDateTime lastUpdate;
+    private Byte          storeId;
+    private Byte          managerStaffId;
+    private Short         addressId;
+    private LocalDateTime lastUpdate;
+
+    public Store() {}
 
     public Store(Store value) {
         this.storeId = value.storeId;
@@ -48,10 +50,26 @@ public class Store implements Serializable {
     }
 
     /**
+     * Setter for <code>sakila.store.store_id</code>.
+     */
+    public Store setStoreId(Byte storeId) {
+        this.storeId = storeId;
+        return this;
+    }
+
+    /**
      * Getter for <code>sakila.store.manager_staff_id</code>.
      */
     public Byte getManagerStaffId() {
         return this.managerStaffId;
+    }
+
+    /**
+     * Setter for <code>sakila.store.manager_staff_id</code>.
+     */
+    public Store setManagerStaffId(Byte managerStaffId) {
+        this.managerStaffId = managerStaffId;
+        return this;
     }
 
     /**
@@ -62,10 +80,26 @@ public class Store implements Serializable {
     }
 
     /**
+     * Setter for <code>sakila.store.address_id</code>.
+     */
+    public Store setAddressId(Short addressId) {
+        this.addressId = addressId;
+        return this;
+    }
+
+    /**
      * Getter for <code>sakila.store.last_update</code>.
      */
     public LocalDateTime getLastUpdate() {
         return this.lastUpdate;
+    }
+
+    /**
+     * Setter for <code>sakila.store.last_update</code>.
+     */
+    public Store setLastUpdate(LocalDateTime lastUpdate) {
+        this.lastUpdate = lastUpdate;
+        return this;
     }
 
     @Override

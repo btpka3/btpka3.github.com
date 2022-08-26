@@ -5,13 +5,11 @@ package com.github.btpka3.first.spring.jooq.domain.tables;
 
 
 import com.github.btpka3.first.spring.jooq.domain.Sakila;
-import com.github.btpka3.first.spring.jooq.domain.tables.records.CustomerListRecord;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row9;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -25,7 +23,7 @@ import org.jooq.impl.TableImpl;
  * VIEW
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class CustomerList extends TableImpl<CustomerListRecord> {
+public class CustomerList extends TableImpl<Record> {
 
     private static final long serialVersionUID = 1L;
 
@@ -38,60 +36,60 @@ public class CustomerList extends TableImpl<CustomerListRecord> {
      * The class holding records for this type
      */
     @Override
-    public Class<CustomerListRecord> getRecordType() {
-        return CustomerListRecord.class;
+    public Class<Record> getRecordType() {
+        return Record.class;
     }
 
     /**
      * The column <code>sakila.customer_list.ID</code>.
      */
-    public final TableField<CustomerListRecord, Short> ID = createField(DSL.name("ID"), SQLDataType.SMALLINT.nullable(false).defaultValue(DSL.inline("0", SQLDataType.SMALLINT)), this, "");
+    public final TableField<Record, Short> ID = createField(DSL.name("ID"), SQLDataType.SMALLINT.nullable(false).defaultValue(DSL.inline("0", SQLDataType.SMALLINT)), this, "");
 
     /**
      * The column <code>sakila.customer_list.name</code>.
      */
-    public final TableField<CustomerListRecord, String> NAME = createField(DSL.name("name"), SQLDataType.VARCHAR(91), this, "");
+    public final TableField<Record, String> NAME = createField(DSL.name("name"), SQLDataType.VARCHAR(91), this, "");
 
     /**
      * The column <code>sakila.customer_list.address</code>.
      */
-    public final TableField<CustomerListRecord, String> ADDRESS = createField(DSL.name("address"), SQLDataType.VARCHAR(50).nullable(false), this, "");
+    public final TableField<Record, String> ADDRESS = createField(DSL.name("address"), SQLDataType.VARCHAR(50).nullable(false), this, "");
 
     /**
      * The column <code>sakila.customer_list.zip code</code>.
      */
-    public final TableField<CustomerListRecord, String> ZIP_CODE = createField(DSL.name("zip code"), SQLDataType.VARCHAR(10), this, "");
+    public final TableField<Record, String> ZIP_CODE = createField(DSL.name("zip code"), SQLDataType.VARCHAR(10), this, "");
 
     /**
      * The column <code>sakila.customer_list.phone</code>.
      */
-    public final TableField<CustomerListRecord, String> PHONE = createField(DSL.name("phone"), SQLDataType.VARCHAR(20).nullable(false), this, "");
+    public final TableField<Record, String> PHONE = createField(DSL.name("phone"), SQLDataType.VARCHAR(20).nullable(false), this, "");
 
     /**
      * The column <code>sakila.customer_list.city</code>.
      */
-    public final TableField<CustomerListRecord, String> CITY = createField(DSL.name("city"), SQLDataType.VARCHAR(50).nullable(false), this, "");
+    public final TableField<Record, String> CITY = createField(DSL.name("city"), SQLDataType.VARCHAR(50).nullable(false), this, "");
 
     /**
      * The column <code>sakila.customer_list.country</code>.
      */
-    public final TableField<CustomerListRecord, String> COUNTRY = createField(DSL.name("country"), SQLDataType.VARCHAR(50).nullable(false), this, "");
+    public final TableField<Record, String> COUNTRY = createField(DSL.name("country"), SQLDataType.VARCHAR(50).nullable(false), this, "");
 
     /**
      * The column <code>sakila.customer_list.notes</code>.
      */
-    public final TableField<CustomerListRecord, String> NOTES = createField(DSL.name("notes"), SQLDataType.VARCHAR(6).nullable(false).defaultValue(DSL.inline("", SQLDataType.VARCHAR)), this, "");
+    public final TableField<Record, String> NOTES = createField(DSL.name("notes"), SQLDataType.VARCHAR(6).nullable(false).defaultValue(DSL.inline("", SQLDataType.VARCHAR)), this, "");
 
     /**
      * The column <code>sakila.customer_list.SID</code>.
      */
-    public final TableField<CustomerListRecord, Byte> SID = createField(DSL.name("SID"), SQLDataType.TINYINT.nullable(false), this, "");
+    public final TableField<Record, Byte> SID = createField(DSL.name("SID"), SQLDataType.TINYINT.nullable(false), this, "");
 
-    private CustomerList(Name alias, Table<CustomerListRecord> aliased) {
+    private CustomerList(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);
     }
 
-    private CustomerList(Name alias, Table<CustomerListRecord> aliased, Field<?>[] parameters) {
+    private CustomerList(Name alias, Table<Record> aliased, Field<?>[] parameters) {
         super(alias, null, aliased, parameters, DSL.comment("VIEW"), TableOptions.view("create view `customer_list` as select `cu`.`customer_id` AS `ID`,concat(`cu`.`first_name`,' ',`cu`.`last_name`) AS `name`,`a`.`address` AS `address`,`a`.`postal_code` AS `zip code`,`a`.`phone` AS `phone`,`sakila`.`city`.`city` AS `city`,`sakila`.`country`.`country` AS `country`,if(`cu`.`active`,'active','') AS `notes`,`cu`.`store_id` AS `SID` from (((`sakila`.`customer` `cu` join `sakila`.`address` `a` on((`cu`.`address_id` = `a`.`address_id`))) join `sakila`.`city` on((`a`.`city_id` = `sakila`.`city`.`city_id`))) join `sakila`.`country` on((`sakila`.`city`.`country_id` = `sakila`.`country`.`country_id`)))"));
     }
 
@@ -116,7 +114,7 @@ public class CustomerList extends TableImpl<CustomerListRecord> {
         this(DSL.name("customer_list"), null);
     }
 
-    public <O extends Record> CustomerList(Table<O> child, ForeignKey<O, CustomerListRecord> key) {
+    public <O extends Record> CustomerList(Table<O> child, ForeignKey<O, Record> key) {
         super(child, key, CUSTOMER_LIST);
     }
 
@@ -149,14 +147,5 @@ public class CustomerList extends TableImpl<CustomerListRecord> {
     @Override
     public CustomerList rename(Name name) {
         return new CustomerList(name, null);
-    }
-
-    // -------------------------------------------------------------------------
-    // Row9 type methods
-    // -------------------------------------------------------------------------
-
-    @Override
-    public Row9<Short, String, String, String, String, String, String, String, Byte> fieldsRow() {
-        return (Row9) super.fieldsRow();
     }
 }

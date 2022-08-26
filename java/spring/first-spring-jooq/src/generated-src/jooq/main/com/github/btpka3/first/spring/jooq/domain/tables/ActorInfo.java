@@ -5,13 +5,11 @@ package com.github.btpka3.first.spring.jooq.domain.tables;
 
 
 import com.github.btpka3.first.spring.jooq.domain.Sakila;
-import com.github.btpka3.first.spring.jooq.domain.tables.records.ActorInfoRecord;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row4;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -25,7 +23,7 @@ import org.jooq.impl.TableImpl;
  * VIEW
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class ActorInfo extends TableImpl<ActorInfoRecord> {
+public class ActorInfo extends TableImpl<Record> {
 
     private static final long serialVersionUID = 1L;
 
@@ -38,35 +36,35 @@ public class ActorInfo extends TableImpl<ActorInfoRecord> {
      * The class holding records for this type
      */
     @Override
-    public Class<ActorInfoRecord> getRecordType() {
-        return ActorInfoRecord.class;
+    public Class<Record> getRecordType() {
+        return Record.class;
     }
 
     /**
      * The column <code>sakila.actor_info.actor_id</code>.
      */
-    public final TableField<ActorInfoRecord, Short> ACTOR_ID = createField(DSL.name("actor_id"), SQLDataType.SMALLINT.nullable(false).defaultValue(DSL.inline("0", SQLDataType.SMALLINT)), this, "");
+    public final TableField<Record, Short> ACTOR_ID = createField(DSL.name("actor_id"), SQLDataType.SMALLINT.nullable(false).defaultValue(DSL.inline("0", SQLDataType.SMALLINT)), this, "");
 
     /**
      * The column <code>sakila.actor_info.first_name</code>.
      */
-    public final TableField<ActorInfoRecord, String> FIRST_NAME = createField(DSL.name("first_name"), SQLDataType.VARCHAR(45).nullable(false), this, "");
+    public final TableField<Record, String> FIRST_NAME = createField(DSL.name("first_name"), SQLDataType.VARCHAR(45).nullable(false), this, "");
 
     /**
      * The column <code>sakila.actor_info.last_name</code>.
      */
-    public final TableField<ActorInfoRecord, String> LAST_NAME = createField(DSL.name("last_name"), SQLDataType.VARCHAR(45).nullable(false), this, "");
+    public final TableField<Record, String> LAST_NAME = createField(DSL.name("last_name"), SQLDataType.VARCHAR(45).nullable(false), this, "");
 
     /**
      * The column <code>sakila.actor_info.film_info</code>.
      */
-    public final TableField<ActorInfoRecord, String> FILM_INFO = createField(DSL.name("film_info"), SQLDataType.CLOB, this, "");
+    public final TableField<Record, String> FILM_INFO = createField(DSL.name("film_info"), SQLDataType.CLOB, this, "");
 
-    private ActorInfo(Name alias, Table<ActorInfoRecord> aliased) {
+    private ActorInfo(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);
     }
 
-    private ActorInfo(Name alias, Table<ActorInfoRecord> aliased, Field<?>[] parameters) {
+    private ActorInfo(Name alias, Table<Record> aliased, Field<?>[] parameters) {
         super(alias, null, aliased, parameters, DSL.comment("VIEW"), TableOptions.view("create view `actor_info` as select `a`.`actor_id` AS `actor_id`,`a`.`first_name` AS `first_name`,`a`.`last_name` AS `last_name`,group_concat(distinct concat(`c`.`name`,': ',(select group_concat(`f`.`title` order by `f`.`title` ASC separator ', ') from ((`sakila`.`film` `f` join `sakila`.`film_category` `fc` on((`f`.`film_id` = `fc`.`film_id`))) join `sakila`.`film_actor` `fa` on((`f`.`film_id` = `fa`.`film_id`))) where ((`fc`.`category_id` = `c`.`category_id`) and (`fa`.`actor_id` = `a`.`actor_id`)))) order by `c`.`name` ASC separator '; ') AS `film_info` from (((`sakila`.`actor` `a` left join `sakila`.`film_actor` `fa` on((`a`.`actor_id` = `fa`.`actor_id`))) left join `sakila`.`film_category` `fc` on((`fa`.`film_id` = `fc`.`film_id`))) left join `sakila`.`category` `c` on((`fc`.`category_id` = `c`.`category_id`))) group by `a`.`actor_id`,`a`.`first_name`,`a`.`last_name`"));
     }
 
@@ -91,7 +89,7 @@ public class ActorInfo extends TableImpl<ActorInfoRecord> {
         this(DSL.name("actor_info"), null);
     }
 
-    public <O extends Record> ActorInfo(Table<O> child, ForeignKey<O, ActorInfoRecord> key) {
+    public <O extends Record> ActorInfo(Table<O> child, ForeignKey<O, Record> key) {
         super(child, key, ACTOR_INFO);
     }
 
@@ -124,14 +122,5 @@ public class ActorInfo extends TableImpl<ActorInfoRecord> {
     @Override
     public ActorInfo rename(Name name) {
         return new ActorInfo(name, null);
-    }
-
-    // -------------------------------------------------------------------------
-    // Row4 type methods
-    // -------------------------------------------------------------------------
-
-    @Override
-    public Row4<Short, String, String, String> fieldsRow() {
-        return (Row4) super.fieldsRow();
     }
 }

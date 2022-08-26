@@ -16,9 +16,11 @@ public class SalesByStore implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private final String     store;
-    private final String     manager;
-    private final BigDecimal totalSales;
+    private String     store;
+    private String     manager;
+    private BigDecimal totalSales;
+
+    public SalesByStore() {}
 
     public SalesByStore(SalesByStore value) {
         this.store = value.store;
@@ -44,6 +46,14 @@ public class SalesByStore implements Serializable {
     }
 
     /**
+     * Setter for <code>sakila.sales_by_store.store</code>.
+     */
+    public SalesByStore setStore(String store) {
+        this.store = store;
+        return this;
+    }
+
+    /**
      * Getter for <code>sakila.sales_by_store.manager</code>.
      */
     public String getManager() {
@@ -51,10 +61,26 @@ public class SalesByStore implements Serializable {
     }
 
     /**
+     * Setter for <code>sakila.sales_by_store.manager</code>.
+     */
+    public SalesByStore setManager(String manager) {
+        this.manager = manager;
+        return this;
+    }
+
+    /**
      * Getter for <code>sakila.sales_by_store.total_sales</code>.
      */
     public BigDecimal getTotalSales() {
         return this.totalSales;
+    }
+
+    /**
+     * Setter for <code>sakila.sales_by_store.total_sales</code>.
+     */
+    public SalesByStore setTotalSales(BigDecimal totalSales) {
+        this.totalSales = totalSales;
+        return this;
     }
 
     @Override

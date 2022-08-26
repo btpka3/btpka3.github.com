@@ -15,14 +15,16 @@ public class StaffList implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private final Byte   id;
-    private final String name;
-    private final String address;
-    private final String zipCode;
-    private final String phone;
-    private final String city;
-    private final String country;
-    private final Byte   sid;
+    private Byte   id;
+    private String name;
+    private String address;
+    private String zipCode;
+    private String phone;
+    private String city;
+    private String country;
+    private Byte   sid;
+
+    public StaffList() {}
 
     public StaffList(StaffList value) {
         this.id = value.id;
@@ -63,10 +65,26 @@ public class StaffList implements Serializable {
     }
 
     /**
+     * Setter for <code>sakila.staff_list.ID</code>.
+     */
+    public StaffList setId(Byte id) {
+        this.id = id;
+        return this;
+    }
+
+    /**
      * Getter for <code>sakila.staff_list.name</code>.
      */
     public String getName() {
         return this.name;
+    }
+
+    /**
+     * Setter for <code>sakila.staff_list.name</code>.
+     */
+    public StaffList setName(String name) {
+        this.name = name;
+        return this;
     }
 
     /**
@@ -77,10 +95,26 @@ public class StaffList implements Serializable {
     }
 
     /**
+     * Setter for <code>sakila.staff_list.address</code>.
+     */
+    public StaffList setAddress(String address) {
+        this.address = address;
+        return this;
+    }
+
+    /**
      * Getter for <code>sakila.staff_list.zip code</code>.
      */
     public String getZipCode() {
         return this.zipCode;
+    }
+
+    /**
+     * Setter for <code>sakila.staff_list.zip code</code>.
+     */
+    public StaffList setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+        return this;
     }
 
     /**
@@ -91,10 +125,26 @@ public class StaffList implements Serializable {
     }
 
     /**
+     * Setter for <code>sakila.staff_list.phone</code>.
+     */
+    public StaffList setPhone(String phone) {
+        this.phone = phone;
+        return this;
+    }
+
+    /**
      * Getter for <code>sakila.staff_list.city</code>.
      */
     public String getCity() {
         return this.city;
+    }
+
+    /**
+     * Setter for <code>sakila.staff_list.city</code>.
+     */
+    public StaffList setCity(String city) {
+        this.city = city;
+        return this;
     }
 
     /**
@@ -105,10 +155,26 @@ public class StaffList implements Serializable {
     }
 
     /**
+     * Setter for <code>sakila.staff_list.country</code>.
+     */
+    public StaffList setCountry(String country) {
+        this.country = country;
+        return this;
+    }
+
+    /**
      * Getter for <code>sakila.staff_list.SID</code>.
      */
     public Byte getSid() {
         return this.sid;
+    }
+
+    /**
+     * Setter for <code>sakila.staff_list.SID</code>.
+     */
+    public StaffList setSid(Byte sid) {
+        this.sid = sid;
+        return this;
     }
 
     @Override

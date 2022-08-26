@@ -16,9 +16,11 @@ public class Category implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private final Byte          categoryId;
-    private final String        name;
-    private final LocalDateTime lastUpdate;
+    private Byte          categoryId;
+    private String        name;
+    private LocalDateTime lastUpdate;
+
+    public Category() {}
 
     public Category(Category value) {
         this.categoryId = value.categoryId;
@@ -44,6 +46,14 @@ public class Category implements Serializable {
     }
 
     /**
+     * Setter for <code>sakila.category.category_id</code>.
+     */
+    public Category setCategoryId(Byte categoryId) {
+        this.categoryId = categoryId;
+        return this;
+    }
+
+    /**
      * Getter for <code>sakila.category.name</code>.
      */
     public String getName() {
@@ -51,10 +61,26 @@ public class Category implements Serializable {
     }
 
     /**
+     * Setter for <code>sakila.category.name</code>.
+     */
+    public Category setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    /**
      * Getter for <code>sakila.category.last_update</code>.
      */
     public LocalDateTime getLastUpdate() {
         return this.lastUpdate;
+    }
+
+    /**
+     * Setter for <code>sakila.category.last_update</code>.
+     */
+    public Category setLastUpdate(LocalDateTime lastUpdate) {
+        this.lastUpdate = lastUpdate;
+        return this;
     }
 
     @Override

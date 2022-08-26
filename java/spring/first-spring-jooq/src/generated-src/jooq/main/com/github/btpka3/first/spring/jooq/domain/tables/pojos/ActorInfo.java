@@ -15,10 +15,12 @@ public class ActorInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private final Short  actorId;
-    private final String firstName;
-    private final String lastName;
-    private final String filmInfo;
+    private Short  actorId;
+    private String firstName;
+    private String lastName;
+    private String filmInfo;
+
+    public ActorInfo() {}
 
     public ActorInfo(ActorInfo value) {
         this.actorId = value.actorId;
@@ -47,10 +49,26 @@ public class ActorInfo implements Serializable {
     }
 
     /**
+     * Setter for <code>sakila.actor_info.actor_id</code>.
+     */
+    public ActorInfo setActorId(Short actorId) {
+        this.actorId = actorId;
+        return this;
+    }
+
+    /**
      * Getter for <code>sakila.actor_info.first_name</code>.
      */
     public String getFirstName() {
         return this.firstName;
+    }
+
+    /**
+     * Setter for <code>sakila.actor_info.first_name</code>.
+     */
+    public ActorInfo setFirstName(String firstName) {
+        this.firstName = firstName;
+        return this;
     }
 
     /**
@@ -61,10 +79,26 @@ public class ActorInfo implements Serializable {
     }
 
     /**
+     * Setter for <code>sakila.actor_info.last_name</code>.
+     */
+    public ActorInfo setLastName(String lastName) {
+        this.lastName = lastName;
+        return this;
+    }
+
+    /**
      * Getter for <code>sakila.actor_info.film_info</code>.
      */
     public String getFilmInfo() {
         return this.filmInfo;
+    }
+
+    /**
+     * Setter for <code>sakila.actor_info.film_info</code>.
+     */
+    public ActorInfo setFilmInfo(String filmInfo) {
+        this.filmInfo = filmInfo;
+        return this;
     }
 
     @Override

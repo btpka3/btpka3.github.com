@@ -5,7 +5,6 @@ package com.github.btpka3.first.spring.jooq.domain.tables;
 
 
 import com.github.btpka3.first.spring.jooq.domain.Sakila;
-import com.github.btpka3.first.spring.jooq.domain.tables.records.SalesByStoreRecord;
 
 import java.math.BigDecimal;
 
@@ -13,7 +12,6 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row3;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -27,7 +25,7 @@ import org.jooq.impl.TableImpl;
  * VIEW
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class SalesByStore extends TableImpl<SalesByStoreRecord> {
+public class SalesByStore extends TableImpl<Record> {
 
     private static final long serialVersionUID = 1L;
 
@@ -40,30 +38,30 @@ public class SalesByStore extends TableImpl<SalesByStoreRecord> {
      * The class holding records for this type
      */
     @Override
-    public Class<SalesByStoreRecord> getRecordType() {
-        return SalesByStoreRecord.class;
+    public Class<Record> getRecordType() {
+        return Record.class;
     }
 
     /**
      * The column <code>sakila.sales_by_store.store</code>.
      */
-    public final TableField<SalesByStoreRecord, String> STORE = createField(DSL.name("store"), SQLDataType.VARCHAR(101), this, "");
+    public final TableField<Record, String> STORE = createField(DSL.name("store"), SQLDataType.VARCHAR(101), this, "");
 
     /**
      * The column <code>sakila.sales_by_store.manager</code>.
      */
-    public final TableField<SalesByStoreRecord, String> MANAGER = createField(DSL.name("manager"), SQLDataType.VARCHAR(91), this, "");
+    public final TableField<Record, String> MANAGER = createField(DSL.name("manager"), SQLDataType.VARCHAR(91), this, "");
 
     /**
      * The column <code>sakila.sales_by_store.total_sales</code>.
      */
-    public final TableField<SalesByStoreRecord, BigDecimal> TOTAL_SALES = createField(DSL.name("total_sales"), SQLDataType.DECIMAL(27, 2), this, "");
+    public final TableField<Record, BigDecimal> TOTAL_SALES = createField(DSL.name("total_sales"), SQLDataType.DECIMAL(27, 2), this, "");
 
-    private SalesByStore(Name alias, Table<SalesByStoreRecord> aliased) {
+    private SalesByStore(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);
     }
 
-    private SalesByStore(Name alias, Table<SalesByStoreRecord> aliased, Field<?>[] parameters) {
+    private SalesByStore(Name alias, Table<Record> aliased, Field<?>[] parameters) {
         super(alias, null, aliased, parameters, DSL.comment("VIEW"), TableOptions.view("create view `sales_by_store` as select concat(`c`.`city`,',',`cy`.`country`) AS `store`,concat(`m`.`first_name`,' ',`m`.`last_name`) AS `manager`,sum(`p`.`amount`) AS `total_sales` from (((((((`sakila`.`payment` `p` join `sakila`.`rental` `r` on((`p`.`rental_id` = `r`.`rental_id`))) join `sakila`.`inventory` `i` on((`r`.`inventory_id` = `i`.`inventory_id`))) join `sakila`.`store` `s` on((`i`.`store_id` = `s`.`store_id`))) join `sakila`.`address` `a` on((`s`.`address_id` = `a`.`address_id`))) join `sakila`.`city` `c` on((`a`.`city_id` = `c`.`city_id`))) join `sakila`.`country` `cy` on((`c`.`country_id` = `cy`.`country_id`))) join `sakila`.`staff` `m` on((`s`.`manager_staff_id` = `m`.`staff_id`))) group by `s`.`store_id` order by `cy`.`country`,`c`.`city`"));
     }
 
@@ -88,7 +86,7 @@ public class SalesByStore extends TableImpl<SalesByStoreRecord> {
         this(DSL.name("sales_by_store"), null);
     }
 
-    public <O extends Record> SalesByStore(Table<O> child, ForeignKey<O, SalesByStoreRecord> key) {
+    public <O extends Record> SalesByStore(Table<O> child, ForeignKey<O, Record> key) {
         super(child, key, SALES_BY_STORE);
     }
 
@@ -121,14 +119,5 @@ public class SalesByStore extends TableImpl<SalesByStoreRecord> {
     @Override
     public SalesByStore rename(Name name) {
         return new SalesByStore(name, null);
-    }
-
-    // -------------------------------------------------------------------------
-    // Row3 type methods
-    // -------------------------------------------------------------------------
-
-    @Override
-    public Row3<String, String, BigDecimal> fieldsRow() {
-        return (Row3) super.fieldsRow();
     }
 }

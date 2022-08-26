@@ -16,9 +16,11 @@ public class Country implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private final Short         countryId;
-    private final String        country;
-    private final LocalDateTime lastUpdate;
+    private Short         countryId;
+    private String        country;
+    private LocalDateTime lastUpdate;
+
+    public Country() {}
 
     public Country(Country value) {
         this.countryId = value.countryId;
@@ -44,6 +46,14 @@ public class Country implements Serializable {
     }
 
     /**
+     * Setter for <code>sakila.country.country_id</code>.
+     */
+    public Country setCountryId(Short countryId) {
+        this.countryId = countryId;
+        return this;
+    }
+
+    /**
      * Getter for <code>sakila.country.country</code>.
      */
     public String getCountry() {
@@ -51,10 +61,26 @@ public class Country implements Serializable {
     }
 
     /**
+     * Setter for <code>sakila.country.country</code>.
+     */
+    public Country setCountry(String country) {
+        this.country = country;
+        return this;
+    }
+
+    /**
      * Getter for <code>sakila.country.last_update</code>.
      */
     public LocalDateTime getLastUpdate() {
         return this.lastUpdate;
+    }
+
+    /**
+     * Setter for <code>sakila.country.last_update</code>.
+     */
+    public Country setLastUpdate(LocalDateTime lastUpdate) {
+        this.lastUpdate = lastUpdate;
+        return this;
     }
 
     @Override

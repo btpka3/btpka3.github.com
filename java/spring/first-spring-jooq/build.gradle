@@ -1,17 +1,24 @@
 import org.jooq.meta.jaxb.Logging
+import org.jooq.meta.jaxb.*;
+import static org.jooq.impl.DSL.*;
+import org.jooq.*;
+import org.jooq.impl.*;
 
 buildscript {
     ext {
         //springBootVersion = '1.5.2.RELEASE'
-        //jooq.version = '3.16.1'
+        //jooq.version = '3.16.7'
     }
+//    ext["jooq.version"]='3.17.3'
+    ext["jooq.version"]='3.16.7'
     repositories {
         maven { url "https://maven.aliyun.com/nexus/content/groups/public/" }
         mavenCentral()
     }
     configurations['classpath'].resolutionStrategy.eachDependency {
         if (requested.group == 'org.jooq') {
-            useVersion '3.16.1'
+            useVersion '3.16.7'
+            //useVersion '3.17.3'
         }
     }
 }
@@ -61,9 +68,10 @@ configurations {
 }
 
 jooq {
-    //version = '3.17.3'
-    version = '3.16.1'
+    // version = '3.17.3'
+    version = '3.16.7'
     edition = nu.studer.gradle.jooq.JooqEdition.OSS
+    // org.jooq.meta.jaxb.Configuration
     configurations {
         sakila {
             generateSchemaSourceOnCompilation = false
@@ -95,13 +103,41 @@ jooq {
                         name = 'org.jooq.meta.mysql.MySQLDatabase'
                         inputSchema = 'sakila'
                         unsignedTypes = false
+
+                        //userType = 'java.time.Year'
+                        forcedTypes {
+//                            forcedType {
+//
+//                                objectType = "COLUMN"
+//                                // Specify the Java type of your custom type. This corresponds to the Converter's <U> type.
+//                                userType = 'byte[]'
+//
+//                                // Associate that custom type with your converter.
+//                                 converter = '''org.jooq.Converters.identity(byte[].class)'''
+//                                // converter = 'org.jooq.impl.IdentityConverter'
+////                                converter = '''org.jooq.Converter.ofNullable(
+////                                    Object.class, byte[].class,
+////                                    java.util.function.Function::identity, java.util.function.Function::identity
+////                                )'''
+//
+//
+//                                // A Java regex matching fully-qualified columns, attributes, parameters. Use the pipe to separate several expressions.
+//                                includeExpression = 'ADDRESS\\.LOCATION'
+//
+//                                includeTypes = "geometry"
+//                            }
+
+                        }
                     }
                     generate {
                         relations = true
                         deprecated = false
-                        records = true
-                        immutablePojos = true
+                        pojos = true
+                        records = false
+                        immutablePojos = false
                         fluentSetters = true
+                        // 关闭 spatial 空间数据 的转换
+                        spatialTypes = false
                     }
                     target {
                         packageName = 'com.github.btpka3.first.spring.jooq.domain'
@@ -130,7 +166,8 @@ dependencies {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
 //    implementation 'org.jooq:jooq:3.17.3'
-    implementation 'org.jooq:jooq:3.16.1'
+    implementation 'org.jooq:jooq:3.16.7'
+    testImplementation('org.jooq:jooq-codegen:3.16.7')
     jooqGenerator 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.0'
     jooqGenerator 'mysql:mysql-connector-java:8.0.30'
     implementation 'mysql:mysql-connector-java:8.0.30'

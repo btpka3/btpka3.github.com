@@ -16,8 +16,10 @@ public class SalesByFilmCategory implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private final String     category;
-    private final BigDecimal totalSales;
+    private String     category;
+    private BigDecimal totalSales;
+
+    public SalesByFilmCategory() {}
 
     public SalesByFilmCategory(SalesByFilmCategory value) {
         this.category = value.category;
@@ -40,10 +42,26 @@ public class SalesByFilmCategory implements Serializable {
     }
 
     /**
+     * Setter for <code>sakila.sales_by_film_category.category</code>.
+     */
+    public SalesByFilmCategory setCategory(String category) {
+        this.category = category;
+        return this;
+    }
+
+    /**
      * Getter for <code>sakila.sales_by_film_category.total_sales</code>.
      */
     public BigDecimal getTotalSales() {
         return this.totalSales;
+    }
+
+    /**
+     * Setter for <code>sakila.sales_by_film_category.total_sales</code>.
+     */
+    public SalesByFilmCategory setTotalSales(BigDecimal totalSales) {
+        this.totalSales = totalSales;
+        return this;
     }
 
     @Override

@@ -5,13 +5,11 @@ package com.github.btpka3.first.spring.jooq.domain.tables;
 
 
 import com.github.btpka3.first.spring.jooq.domain.Sakila;
-import com.github.btpka3.first.spring.jooq.domain.tables.records.StaffListRecord;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row8;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -25,7 +23,7 @@ import org.jooq.impl.TableImpl;
  * VIEW
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class StaffList extends TableImpl<StaffListRecord> {
+public class StaffList extends TableImpl<Record> {
 
     private static final long serialVersionUID = 1L;
 
@@ -38,55 +36,55 @@ public class StaffList extends TableImpl<StaffListRecord> {
      * The class holding records for this type
      */
     @Override
-    public Class<StaffListRecord> getRecordType() {
-        return StaffListRecord.class;
+    public Class<Record> getRecordType() {
+        return Record.class;
     }
 
     /**
      * The column <code>sakila.staff_list.ID</code>.
      */
-    public final TableField<StaffListRecord, Byte> ID = createField(DSL.name("ID"), SQLDataType.TINYINT.nullable(false).defaultValue(DSL.inline("0", SQLDataType.TINYINT)), this, "");
+    public final TableField<Record, Byte> ID = createField(DSL.name("ID"), SQLDataType.TINYINT.nullable(false).defaultValue(DSL.inline("0", SQLDataType.TINYINT)), this, "");
 
     /**
      * The column <code>sakila.staff_list.name</code>.
      */
-    public final TableField<StaffListRecord, String> NAME = createField(DSL.name("name"), SQLDataType.VARCHAR(91), this, "");
+    public final TableField<Record, String> NAME = createField(DSL.name("name"), SQLDataType.VARCHAR(91), this, "");
 
     /**
      * The column <code>sakila.staff_list.address</code>.
      */
-    public final TableField<StaffListRecord, String> ADDRESS = createField(DSL.name("address"), SQLDataType.VARCHAR(50).nullable(false), this, "");
+    public final TableField<Record, String> ADDRESS = createField(DSL.name("address"), SQLDataType.VARCHAR(50).nullable(false), this, "");
 
     /**
      * The column <code>sakila.staff_list.zip code</code>.
      */
-    public final TableField<StaffListRecord, String> ZIP_CODE = createField(DSL.name("zip code"), SQLDataType.VARCHAR(10), this, "");
+    public final TableField<Record, String> ZIP_CODE = createField(DSL.name("zip code"), SQLDataType.VARCHAR(10), this, "");
 
     /**
      * The column <code>sakila.staff_list.phone</code>.
      */
-    public final TableField<StaffListRecord, String> PHONE = createField(DSL.name("phone"), SQLDataType.VARCHAR(20).nullable(false), this, "");
+    public final TableField<Record, String> PHONE = createField(DSL.name("phone"), SQLDataType.VARCHAR(20).nullable(false), this, "");
 
     /**
      * The column <code>sakila.staff_list.city</code>.
      */
-    public final TableField<StaffListRecord, String> CITY = createField(DSL.name("city"), SQLDataType.VARCHAR(50).nullable(false), this, "");
+    public final TableField<Record, String> CITY = createField(DSL.name("city"), SQLDataType.VARCHAR(50).nullable(false), this, "");
 
     /**
      * The column <code>sakila.staff_list.country</code>.
      */
-    public final TableField<StaffListRecord, String> COUNTRY = createField(DSL.name("country"), SQLDataType.VARCHAR(50).nullable(false), this, "");
+    public final TableField<Record, String> COUNTRY = createField(DSL.name("country"), SQLDataType.VARCHAR(50).nullable(false), this, "");
 
     /**
      * The column <code>sakila.staff_list.SID</code>.
      */
-    public final TableField<StaffListRecord, Byte> SID = createField(DSL.name("SID"), SQLDataType.TINYINT.nullable(false), this, "");
+    public final TableField<Record, Byte> SID = createField(DSL.name("SID"), SQLDataType.TINYINT.nullable(false), this, "");
 
-    private StaffList(Name alias, Table<StaffListRecord> aliased) {
+    private StaffList(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);
     }
 
-    private StaffList(Name alias, Table<StaffListRecord> aliased, Field<?>[] parameters) {
+    private StaffList(Name alias, Table<Record> aliased, Field<?>[] parameters) {
         super(alias, null, aliased, parameters, DSL.comment("VIEW"), TableOptions.view("create view `staff_list` as select `s`.`staff_id` AS `ID`,concat(`s`.`first_name`,' ',`s`.`last_name`) AS `name`,`a`.`address` AS `address`,`a`.`postal_code` AS `zip code`,`a`.`phone` AS `phone`,`sakila`.`city`.`city` AS `city`,`sakila`.`country`.`country` AS `country`,`s`.`store_id` AS `SID` from (((`sakila`.`staff` `s` join `sakila`.`address` `a` on((`s`.`address_id` = `a`.`address_id`))) join `sakila`.`city` on((`a`.`city_id` = `sakila`.`city`.`city_id`))) join `sakila`.`country` on((`sakila`.`city`.`country_id` = `sakila`.`country`.`country_id`)))"));
     }
 
@@ -111,7 +109,7 @@ public class StaffList extends TableImpl<StaffListRecord> {
         this(DSL.name("staff_list"), null);
     }
 
-    public <O extends Record> StaffList(Table<O> child, ForeignKey<O, StaffListRecord> key) {
+    public <O extends Record> StaffList(Table<O> child, ForeignKey<O, Record> key) {
         super(child, key, STAFF_LIST);
     }
 
@@ -144,14 +142,5 @@ public class StaffList extends TableImpl<StaffListRecord> {
     @Override
     public StaffList rename(Name name) {
         return new StaffList(name, null);
-    }
-
-    // -------------------------------------------------------------------------
-    // Row8 type methods
-    // -------------------------------------------------------------------------
-
-    @Override
-    public Row8<Byte, String, String, String, String, String, String, Byte> fieldsRow() {
-        return (Row8) super.fieldsRow();
     }
 }

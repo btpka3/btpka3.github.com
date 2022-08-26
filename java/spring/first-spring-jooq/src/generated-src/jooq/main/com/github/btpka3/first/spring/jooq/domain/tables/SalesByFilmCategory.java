@@ -5,7 +5,6 @@ package com.github.btpka3.first.spring.jooq.domain.tables;
 
 
 import com.github.btpka3.first.spring.jooq.domain.Sakila;
-import com.github.btpka3.first.spring.jooq.domain.tables.records.SalesByFilmCategoryRecord;
 
 import java.math.BigDecimal;
 
@@ -13,7 +12,6 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row2;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -27,7 +25,7 @@ import org.jooq.impl.TableImpl;
  * VIEW
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class SalesByFilmCategory extends TableImpl<SalesByFilmCategoryRecord> {
+public class SalesByFilmCategory extends TableImpl<Record> {
 
     private static final long serialVersionUID = 1L;
 
@@ -40,25 +38,25 @@ public class SalesByFilmCategory extends TableImpl<SalesByFilmCategoryRecord> {
      * The class holding records for this type
      */
     @Override
-    public Class<SalesByFilmCategoryRecord> getRecordType() {
-        return SalesByFilmCategoryRecord.class;
+    public Class<Record> getRecordType() {
+        return Record.class;
     }
 
     /**
      * The column <code>sakila.sales_by_film_category.category</code>.
      */
-    public final TableField<SalesByFilmCategoryRecord, String> CATEGORY = createField(DSL.name("category"), SQLDataType.VARCHAR(25).nullable(false), this, "");
+    public final TableField<Record, String> CATEGORY = createField(DSL.name("category"), SQLDataType.VARCHAR(25).nullable(false), this, "");
 
     /**
      * The column <code>sakila.sales_by_film_category.total_sales</code>.
      */
-    public final TableField<SalesByFilmCategoryRecord, BigDecimal> TOTAL_SALES = createField(DSL.name("total_sales"), SQLDataType.DECIMAL(27, 2), this, "");
+    public final TableField<Record, BigDecimal> TOTAL_SALES = createField(DSL.name("total_sales"), SQLDataType.DECIMAL(27, 2), this, "");
 
-    private SalesByFilmCategory(Name alias, Table<SalesByFilmCategoryRecord> aliased) {
+    private SalesByFilmCategory(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);
     }
 
-    private SalesByFilmCategory(Name alias, Table<SalesByFilmCategoryRecord> aliased, Field<?>[] parameters) {
+    private SalesByFilmCategory(Name alias, Table<Record> aliased, Field<?>[] parameters) {
         super(alias, null, aliased, parameters, DSL.comment("VIEW"), TableOptions.view("create view `sales_by_film_category` as select `c`.`name` AS `category`,sum(`p`.`amount`) AS `total_sales` from (((((`sakila`.`payment` `p` join `sakila`.`rental` `r` on((`p`.`rental_id` = `r`.`rental_id`))) join `sakila`.`inventory` `i` on((`r`.`inventory_id` = `i`.`inventory_id`))) join `sakila`.`film` `f` on((`i`.`film_id` = `f`.`film_id`))) join `sakila`.`film_category` `fc` on((`f`.`film_id` = `fc`.`film_id`))) join `sakila`.`category` `c` on((`fc`.`category_id` = `c`.`category_id`))) group by `c`.`name` order by `total_sales` desc"));
     }
 
@@ -85,7 +83,7 @@ public class SalesByFilmCategory extends TableImpl<SalesByFilmCategoryRecord> {
         this(DSL.name("sales_by_film_category"), null);
     }
 
-    public <O extends Record> SalesByFilmCategory(Table<O> child, ForeignKey<O, SalesByFilmCategoryRecord> key) {
+    public <O extends Record> SalesByFilmCategory(Table<O> child, ForeignKey<O, Record> key) {
         super(child, key, SALES_BY_FILM_CATEGORY);
     }
 
@@ -118,14 +116,5 @@ public class SalesByFilmCategory extends TableImpl<SalesByFilmCategoryRecord> {
     @Override
     public SalesByFilmCategory rename(Name name) {
         return new SalesByFilmCategory(name, null);
-    }
-
-    // -------------------------------------------------------------------------
-    // Row2 type methods
-    // -------------------------------------------------------------------------
-
-    @Override
-    public Row2<String, BigDecimal> fieldsRow() {
-        return (Row2) super.fieldsRow();
     }
 }

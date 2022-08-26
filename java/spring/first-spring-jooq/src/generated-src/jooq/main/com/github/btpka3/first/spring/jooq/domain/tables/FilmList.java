@@ -6,7 +6,6 @@ package com.github.btpka3.first.spring.jooq.domain.tables;
 
 import com.github.btpka3.first.spring.jooq.domain.Sakila;
 import com.github.btpka3.first.spring.jooq.domain.enums.FilmListRating;
-import com.github.btpka3.first.spring.jooq.domain.tables.records.FilmListRecord;
 
 import java.math.BigDecimal;
 
@@ -14,7 +13,6 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row8;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -28,7 +26,7 @@ import org.jooq.impl.TableImpl;
  * VIEW
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class FilmList extends TableImpl<FilmListRecord> {
+public class FilmList extends TableImpl<Record> {
 
     private static final long serialVersionUID = 1L;
 
@@ -41,55 +39,55 @@ public class FilmList extends TableImpl<FilmListRecord> {
      * The class holding records for this type
      */
     @Override
-    public Class<FilmListRecord> getRecordType() {
-        return FilmListRecord.class;
+    public Class<Record> getRecordType() {
+        return Record.class;
     }
 
     /**
      * The column <code>sakila.film_list.FID</code>.
      */
-    public final TableField<FilmListRecord, Short> FID = createField(DSL.name("FID"), SQLDataType.SMALLINT.defaultValue(DSL.inline("0", SQLDataType.SMALLINT)), this, "");
+    public final TableField<Record, Short> FID = createField(DSL.name("FID"), SQLDataType.SMALLINT.defaultValue(DSL.inline("0", SQLDataType.SMALLINT)), this, "");
 
     /**
      * The column <code>sakila.film_list.title</code>.
      */
-    public final TableField<FilmListRecord, String> TITLE = createField(DSL.name("title"), SQLDataType.VARCHAR(128), this, "");
+    public final TableField<Record, String> TITLE = createField(DSL.name("title"), SQLDataType.VARCHAR(128), this, "");
 
     /**
      * The column <code>sakila.film_list.description</code>.
      */
-    public final TableField<FilmListRecord, String> DESCRIPTION = createField(DSL.name("description"), SQLDataType.CLOB, this, "");
+    public final TableField<Record, String> DESCRIPTION = createField(DSL.name("description"), SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>sakila.film_list.category</code>.
      */
-    public final TableField<FilmListRecord, String> CATEGORY = createField(DSL.name("category"), SQLDataType.VARCHAR(25).nullable(false), this, "");
+    public final TableField<Record, String> CATEGORY = createField(DSL.name("category"), SQLDataType.VARCHAR(25).nullable(false), this, "");
 
     /**
      * The column <code>sakila.film_list.price</code>.
      */
-    public final TableField<FilmListRecord, BigDecimal> PRICE = createField(DSL.name("price"), SQLDataType.DECIMAL(4, 2).defaultValue(DSL.inline("4.99", SQLDataType.DECIMAL)), this, "");
+    public final TableField<Record, BigDecimal> PRICE = createField(DSL.name("price"), SQLDataType.DECIMAL(4, 2).defaultValue(DSL.inline("4.99", SQLDataType.DECIMAL)), this, "");
 
     /**
      * The column <code>sakila.film_list.length</code>.
      */
-    public final TableField<FilmListRecord, Short> LENGTH = createField(DSL.name("length"), SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> LENGTH = createField(DSL.name("length"), SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>sakila.film_list.rating</code>.
      */
-    public final TableField<FilmListRecord, FilmListRating> RATING = createField(DSL.name("rating"), SQLDataType.VARCHAR(5).defaultValue(DSL.inline("G", SQLDataType.VARCHAR)).asEnumDataType(com.github.btpka3.first.spring.jooq.domain.enums.FilmListRating.class), this, "");
+    public final TableField<Record, FilmListRating> RATING = createField(DSL.name("rating"), SQLDataType.VARCHAR(5).defaultValue(DSL.inline("G", SQLDataType.VARCHAR)).asEnumDataType(com.github.btpka3.first.spring.jooq.domain.enums.FilmListRating.class), this, "");
 
     /**
      * The column <code>sakila.film_list.actors</code>.
      */
-    public final TableField<FilmListRecord, String> ACTORS = createField(DSL.name("actors"), SQLDataType.CLOB, this, "");
+    public final TableField<Record, String> ACTORS = createField(DSL.name("actors"), SQLDataType.CLOB, this, "");
 
-    private FilmList(Name alias, Table<FilmListRecord> aliased) {
+    private FilmList(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);
     }
 
-    private FilmList(Name alias, Table<FilmListRecord> aliased, Field<?>[] parameters) {
+    private FilmList(Name alias, Table<Record> aliased, Field<?>[] parameters) {
         super(alias, null, aliased, parameters, DSL.comment("VIEW"), TableOptions.view("create view `film_list` as select `sakila`.`film`.`film_id` AS `FID`,`sakila`.`film`.`title` AS `title`,`sakila`.`film`.`description` AS `description`,`sakila`.`category`.`name` AS `category`,`sakila`.`film`.`rental_rate` AS `price`,`sakila`.`film`.`length` AS `length`,`sakila`.`film`.`rating` AS `rating`,group_concat(concat(`sakila`.`actor`.`first_name`,' ',`sakila`.`actor`.`last_name`) separator ', ') AS `actors` from ((((`sakila`.`category` left join `sakila`.`film_category` on((`sakila`.`category`.`category_id` = `sakila`.`film_category`.`category_id`))) left join `sakila`.`film` on((`sakila`.`film_category`.`film_id` = `sakila`.`film`.`film_id`))) join `sakila`.`film_actor` on((`sakila`.`film`.`film_id` = `sakila`.`film_actor`.`film_id`))) join `sakila`.`actor` on((`sakila`.`film_actor`.`actor_id` = `sakila`.`actor`.`actor_id`))) group by `sakila`.`film`.`film_id`,`sakila`.`category`.`name`"));
     }
 
@@ -114,7 +112,7 @@ public class FilmList extends TableImpl<FilmListRecord> {
         this(DSL.name("film_list"), null);
     }
 
-    public <O extends Record> FilmList(Table<O> child, ForeignKey<O, FilmListRecord> key) {
+    public <O extends Record> FilmList(Table<O> child, ForeignKey<O, Record> key) {
         super(child, key, FILM_LIST);
     }
 
@@ -147,14 +145,5 @@ public class FilmList extends TableImpl<FilmListRecord> {
     @Override
     public FilmList rename(Name name) {
         return new FilmList(name, null);
-    }
-
-    // -------------------------------------------------------------------------
-    // Row8 type methods
-    // -------------------------------------------------------------------------
-
-    @Override
-    public Row8<Short, String, String, String, BigDecimal, Short, FilmListRating, String> fieldsRow() {
-        return (Row8) super.fieldsRow();
     }
 }
