@@ -1,4 +1,4 @@
-package me.test.jdk.java;
+package me.test.jdk.java.sql;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

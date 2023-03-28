@@ -1,4 +1,4 @@
-package me.test.jdk.java.rmi.server;
+package me.test.jdk.java.server;
 
 import java.io.IOException;
 import java.net.ServerSocket;

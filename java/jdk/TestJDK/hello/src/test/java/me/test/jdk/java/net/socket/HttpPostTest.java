@@ -1,7 +1,5 @@
 package me.test.jdk.java.net.socket;
 
-import me.test.jdk.java.nio.ChannelTest;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
