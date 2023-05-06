@@ -1,0 +1,4 @@
+- [Spring Cloud Data Flow](https://dataflow.spring.io/)
+- github: [Spring Cloud Data Flow](https://github.com/spring-cloud/spring-cloud-dataflow/)
+- [ETL with Spring Cloud Data Flow](https://www.baeldung.com/spring-cloud-data-flow-etl)
+- [Spring Cloud Stream - and Spring Integration](https://spring.io/blog/2019/10/25/spring-cloud-stream-and-spring-integration)

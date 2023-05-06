@@ -1,5 +1,8 @@
 package me.test.jdk.java.util.regex;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -44,6 +47,15 @@ public class TestRegex {
          * reg1 match result : ['aa\'bb', '', '111', 'cc\'dd', '', '222']
          * reg2 match result : ['aa\', ',', ',NULL,0,', '),(', 'dd', '', '222']
          */
+    }
+
+    @Test
+    public void x(){
+        String REGEX_A_NUM = "^A\\d+$";
+        Pattern P_ANum = Pattern.compile(REGEX_A_NUM);
+        String s = "A22851";
+        boolean result = P_ANum.matcher(s).matches();
+        Assert.assertTrue(result);
     }
 
 }

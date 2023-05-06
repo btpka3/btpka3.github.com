@@ -1,0 +1,46 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.0.3'
+	id 'io.spring.dependency-management' version '1.1.0'
+}
+
+group = 'com.github.btpka3'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation "org.testcontainers:testcontainers:1.17.6"
+
+	implementation 'org.apache.storm:storm-client:2.4.0'
+	implementation 'org.apache.storm:sql:2.4.0'
+	implementation 'org.apache.storm:storm-starter:2.4.0'
+	implementation 'org.apache.storm:flux:2.4.0'
+	implementation 'org.apache.storm:flux-wrappers:2.4.0'
+	implementation 'org.apache.storm:storm-metrics:2.4.0'
+	implementation 'org.apache.storm:final-package:2.4.0'
+
+	implementation 'com.alibaba.jstorm:jstorm-core:2.2.1'
+	//implementation 'com.alibaba.jstorm:jstorm-all:2.2.1'
+	implementation 'com.alibaba.jstorm:jstorm-ui:2.1.1'
+	implementation 'com.alibaba.jstorm:sequence-split-merge:2.1.1'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
