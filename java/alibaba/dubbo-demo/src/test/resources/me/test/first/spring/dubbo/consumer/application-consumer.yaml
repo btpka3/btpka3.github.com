@@ -1,0 +1,17 @@
+dubbo:
+  application:
+    name: dubbo-springboot-demo-consumer
+    #qos-port: 22223
+  protocol:
+    name: dubbo
+    port: -1
+  registry:
+    #address: zookeeper://127.0.0.1:2181
+    address: nacos://nacos.default.svc.cluster.local:8848
+spring:
+  cloud:
+    discovery:
+      enabled: false
+    nacos:
+      config:
+        enabled: false

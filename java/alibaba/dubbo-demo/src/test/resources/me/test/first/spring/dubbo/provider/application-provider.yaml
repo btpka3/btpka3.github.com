@@ -1,0 +1,27 @@
+dubbo:
+  application:
+    name: dubbo-springboot-demo-provider
+    #qos-port: 22222  # 默认端口
+  protocol:
+    name: dubbo
+    port: -1
+  registry:
+    address: nacos://nacos.default.svc.cluster.local:8848
+#  network:
+#    interface:
+#      preferred: ppp0
+#    address: zookeeper://127.0.0.1:2181
+
+#  providers:
+#    a:
+#      version: version001
+#      group: group001
+#      interfaceName: com.alibaba.security.gong9.mw.dubbo.DemoDubboService
+
+spring:
+  cloud:
+    discovery:
+      enabled: false
+    nacos:
+      config:
+        enabled: false1

@@ -1,8 +1,8 @@
 rootProject.name = 'dubbo-demo'
 
-include 'demo-api'
-include 'demo-consumer'
-include 'demo-provider'
+// include 'demo-api'
+// include 'demo-consumer'
+// include 'demo-provider'
 //includeBuild './my-querydsl-plugin'
 
 

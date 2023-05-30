@@ -1,0 +1,19 @@
+version: "3.9"
+services:
+  # https://hub.docker.com/_/zookeeper
+  zoo1:
+    image : "zookeeper:3.8.1-temurin"
+    restart: always
+    #hostname: zoo1
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    ports:
+      - "2181:2181"
+    environment:
+      ZOO_MY_ID: 1
+      ZOO_SERVERS: server.1=zoo1:2888:3888;2181
+  dubbo-admin:
+    build : admin/
+    ports:
+      - "38080:38080"
