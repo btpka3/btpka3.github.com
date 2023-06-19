@@ -1,0 +1,8 @@
+
+sc-config-consul/src/test/docker/consul/config/*
+sc-config-consul/src/test/docker/consul/data/*
+
+sc-config-zk/src/test/docker/zookeeper/data/*
+sc-config-zk/src/test/docker/zookeeper/datalog/*
+
+!**/.gitkeep
