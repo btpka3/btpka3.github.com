@@ -381,10 +381,8 @@ public class SpringTest {
     protected void deleteAllKeys() {
         RedisTemplate<Object, Object> redisTemplate = getRedisTemplate();
         for (int keyCount = 0; keyCount < MAX_KEY_COUNT; keyCount++) {
-            for (int incrCount = 0; incrCount < MAX_INCR_COUNT_PER_KEY; incrCount++) {
-                String key = "k-" + keyCount;
-                redisTemplate.delete(key);
-            }
+            String key = "k-" + keyCount;
+            redisTemplate.delete(key);
         }
     }
 
