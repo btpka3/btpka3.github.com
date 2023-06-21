@@ -44,6 +44,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-actuator'
 
     implementation 'com.kjetland:mbknor-jackson-jsonschema_2.12'
+    implementation 'commons-io:commons-io:2.13.0'
 
     implementation 'com.alibaba:fastjson:1.2.76'
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml'
