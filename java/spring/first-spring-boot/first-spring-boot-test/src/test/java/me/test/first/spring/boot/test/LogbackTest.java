@@ -111,6 +111,18 @@ public class LogbackTest {
     }
 
 
+    @Test
+    public void checkProperty01() {
+        Logger log = LoggerFactory.getLogger("my.var");
+        System.out.println("请检查logbak初始化日志,确认 `my.log.path` 的值");
+        log.info("hello my var");
+        // 第一次运行：不指定JVM属性，则默认是输出日志到该路径
+        // cat /tmp/my/logs/root.log
+
+        // 第二次运行：指定jvm属性 `-Dmy.log.path=1`, 则期望日志时输出到该路径
+        // cat /tmp/1/root.log
+    }
+
 }
 
 
