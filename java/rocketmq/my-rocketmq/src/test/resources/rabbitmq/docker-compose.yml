@@ -1,0 +1,54 @@
+version: "3.9"
+services:
+  namesrv1:
+    build : mqnamesrv/
+    restart: always
+    ports:
+      - "9876:9876"
+##    volumes:
+##      - ./data/namesrv/logs:/home/rocketmq/logs
+##    networks:
+##      my_rabbitmq_network : {}
+#    network_mode: host
+#    command: sh mqnamesrv
+#  broker1:
+#    build : mqbroker/
+#    restart: always
+##    ports:
+##      - "10909:10909"
+##      - "10911:10911"
+##      - "10912:10912"
+#    environment:
+#      NAMESRV_ADDR: namesrv1:9876
+##    networks:
+##      my_rabbitmq_network : {}
+#    network_mode: host
+#    command: sh mqbroker
+#  proxy1:
+#    build : mqproxy/
+#    restart: always
+##    ports:
+##      - "8082:8082"
+##      - "8083:8083"
+#    environment:
+#      NAMESRV_ADDR: namesrv1:9876
+#    network_mode: host
+##    networks:
+##      my_rabbitmq_network : {}
+#    command: sh mqproxy
+  dashboard1:
+    build : dashboard/
+    restart: always
+#    ports:
+#      - "8084:8080"
+    environment:
+      NAMESRV_ADDR: namesrv1:9876
+#    extra_hosts:
+#      - "node111:127.0.0.1"
+    network_mode: host
+#    networks:
+#      my_rabbitmq_network : {}
+#networks:
+#  my_rabbitmq_network:
+#    external: true
+#    name: host
