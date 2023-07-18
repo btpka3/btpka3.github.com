@@ -1,0 +1,55 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.7.11'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+}
+group = 'com.github.btpka3'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+ext {
+    set('springCloudVersion', "2021.0.6")
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // spring boot
+    implementation 'org.springframework.boot:spring-boot-starter'
+
+
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
+//    implementation 'com.google.guava:guava:32.0.0-jre'
+
+    // nacos
+    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
+    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
+    implementation 'com.alibaba.nacos:nacos-spring-context:1.1.1'
+    implementation 'com.alibaba.boot:nacos-config-spring-boot-starter:0.2.12'
+    implementation 'com.alibaba.boot:nacos-discovery-spring-boot-starter:0.2.12'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+
+
+//
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        mavenBom "com.alibaba.cloud:spring-cloud-alibaba-dependencies:2022.0.0.0-RC2"
+        mavenBom "com.alibaba.cloud:aliyun-spring-boot-dependencies:1.0.0"
+        //mavenBom "org.springframework.cloud:spring-cloud-stream"
+    }
+}
+ 
