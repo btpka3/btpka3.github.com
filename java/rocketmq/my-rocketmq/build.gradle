@@ -20,82 +20,26 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
 //    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
-    // spring-cloud
-
-//    implementation 'org.springframework.cloud:spring-cloud-starter-bus-kafka'
-//    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
-//    implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'
-//    implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-reactor-resilience4j'
-//    implementation 'org.springframework.cloud:spring-cloud-starter-config'
-//    implementation 'org.springframework.cloud:spring-cloud-starter-zookeeper-config'
-//    implementation 'org.springframework.cloud:spring-cloud-starter-zookeeper-discovery'
 
     // consul ：服务发现+配置管理
-//    implementation 'org.springframework.cloud:spring-cloud-starter-consul-discovery'
 //    implementation 'org.springframework.cloud:spring-cloud-stream-reactive'
     implementation 'org.springframework.cloud:spring-cloud-stream'
-//    implementation 'org.springframework.cloud:spring-cloud-stream-binders'
-//    implementation 'org.springframework.cloud:spring-cloud-stream-binder-kafka'
-//    implementation 'org.springframework.cloud:spring-cloud-stream-binder-rabbit'
-    // https://github.com/spring-cloud/spring-cloud-stream-binder-aws-kinesis
-//    implementation 'org.springframework.cloud:spring-cloud-stream-binder-kinesis'
-//    implementation 'org.springframework.cloud:spring-cloud-stream-binder-servlet'
-//
-//    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
-    //implementation 'org.springframework.cloud:spring-cloud-starter-feign'
-    // https://www.baeldung.com/spring-boot-opentelemetry-setup
-    // 应该排除掉： org.springframework.cloud:spring-cloud-sleuth-brave
-    // 替换为: org.springframework.cloud:spring-cloud-sleuth-otel-autoconfigure 使用 OpenTelemetry
-//    implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
-//    implementation 'org.springframework.cloud:spring-cloud-sleuth-otel-autoconfigure'
-//    implementation 'io.opentelemetry:opentelemetry-exporter-otlp' // 1.23.1
-//
-//    implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-client'
-//    implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-discoveryclient'
-//    implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-client-config'
-//    implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-client-loadbalancer'
-//    implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-client-all'
 
-    // spring-cloud-alibaba
-//    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
-//    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel'
-//    //implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-seata'
-//    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
-//    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-sidecar'
-//    implementation 'com.alibaba.cloud:spring-cloud-starter-alicloud-schedulerX'
-    implementation 'com.alibaba.cloud:spring-cloud-starter-stream-rocketmq'
+
+    //implementation 'com.alibaba.cloud:spring-cloud-starter-stream-rocketmq'
     //implementation 'com.alibaba.cloud:spring-cloud-stream-binder-rocketmq'
 
     implementation 'org.apache.rocketmq:rocketmq-spring-boot-starter:2.2.3'
     implementation 'org.apache.rocketmq:rocketmq-client-java:5.0.5'
     implementation 'org.apache.rocketmq:rocketmq-client:5.1.3'
 
-    // aliyun-spring-boot
-//    implementation 'com.alibaba.cloud:aliyun-oss-spring-boot-starter'
-//    implementation 'com.alibaba.cloud:aliyun-sms-spring-boot-starter'
-//    implementation 'com.alibaba.cloud:aliyun-schedulerx-spring-boot-starter'
-//    implementation 'com.alibaba.cloud:aliyun-redis-spring-boot-starter'
-//    implementation 'com.alibaba.cloud:aliyun-rds-spring-boot-starter'
 
-    // nacos
-    //implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
-    //implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery '
-//    implementation 'com.alibaba.nacos:nacos-spring-context:1.1.1'
-//    implementation 'com.alibaba.boot:nacos-config-spring-boot-starter:0.2.12'
-//    implementation 'com.alibaba.boot:nacos-discovery-spring-boot-starter:0.2.12'
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
 
-    // https://cn.dubbo.apache.org/zh-cn/overview/mannual/java-sdk/reference-manual/registry/nacos/
-//    implementation 'org.apache.dubbo:dubbo-spring-boot-starter:2.7.8'
-    //implementation 'com.alibaba.nacos:nacos-client:2.1.0'
-//
-//    implementation 'org.apache.dubbo:dubbo-dependencies-zookeeper-curator5:3.2.0'
-
-//    implementation 'com.alibaba.cloud:aliyun-fc-spring-boot-starter'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 }
