@@ -292,6 +292,7 @@ subprojects {
                 implementation "org.infinispan:infinispan-spring-boot-starter-embedded:${infinispanStarterVersion}"
                 implementation "org.infinispan:infinispan-spring-boot-starter:${infinispanStarterVersion}"
                 implementation "org.mongodb:bson:4.0.2"
+                implementation "org.jsoup:jsoup:1.16.1"
             }
 
 

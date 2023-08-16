@@ -37,6 +37,8 @@ dependencies {
     testCompileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
+    implementation "org.jsoup:jsoup"
+    implementation "io.vavr:vavr:0.10.4"
 
     implementation('joda-time:joda-time')
 

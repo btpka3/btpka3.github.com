@@ -1,6 +1,7 @@
 package me.test.first.spring.boot.test;
 
 import lombok.Data;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.convert.ConversionService;
@@ -37,6 +38,11 @@ public class ConverterTest {
         appCtx.start();
         MyPojo myPojo = (MyPojo) appCtx.getBean("myPojo");
         System.out.println("myPojo=" + myPojo);
+
+        // 注意 properties 中 的Value不要有行尾空格，但等号前后可以有空格
+        Assertions.assertEquals("v1", myPojo.getMyProps().get("k1"));
+        Assertions.assertEquals("v2", myPojo.getMyProps().get("k2"));
+        Assertions.assertEquals("v3", myPojo.getMyProps().get("k3"));
 
     }
 
