@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.core.annotation.Order;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class InjectListTest {
     @Configuration
     public static class Conf {
 
+        @Order(3)
         @Bean
         MyPojo pojo1() {
             MyPojo pojo = new MyPojo();
@@ -34,6 +36,7 @@ public class InjectListTest {
             return pojo;
         }
 
+        @Order(2)
         @Bean
         MyPojo pojo2() {
             MyPojo pojo = new MyPojo();
@@ -42,6 +45,7 @@ public class InjectListTest {
             return pojo;
         }
 
+        @Order(1)
         @Bean
         MyPojo pojo3() {
             MyPojo pojo = new MyPojo();
@@ -65,7 +69,8 @@ public class InjectListTest {
         @Bean
         MyContainer myContainer(
                 @Lazy
-                @Qualifier("myPojoList") List<MyPojo> myPojoList,
+                @Qualifier("myPojoList")
+                List<MyPojo> myPojoList,
                 @Lazy
                 @Qualifier("pojo3") MyPojo pojo3
         ) {
