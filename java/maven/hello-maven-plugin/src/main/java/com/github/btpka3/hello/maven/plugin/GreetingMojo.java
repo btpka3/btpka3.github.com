@@ -13,8 +13,13 @@ import java.util.Map;
 /**
  * Hello world!
  */
-@Mojo(name = "sayhi", requiresProject = true, requiresDirectInvocation = true, aggregator = true, threadSafe = true)
+@Mojo(name = "sayhi", requiresProject = false, requiresDirectInvocation = true, aggregator = true, threadSafe = true)
 public class GreetingMojo extends AbstractMojo {
+
+    @Parameter(required = false, defaultValue = "li4")
+    protected String username = "zhang3";
+
+
     @Parameter(defaultValue = "${project}", required = true, readonly = true)
     protected MavenProject project;
 
@@ -22,8 +27,14 @@ public class GreetingMojo extends AbstractMojo {
         return project;
     }
 
+    public GreetingMojo(){
+        System.out.println("2222");
+    }
+
+
+
     public void execute() throws MojoExecutionException {
-        getLog().info("Hello, world.");
+        getLog().info("Hello, world. " + username);
 
         if (project.getOriginalModel().getVersion() == null) {
             throw new MojoExecutionException("Project version is inherited from parent.");
@@ -34,8 +45,11 @@ public class GreetingMojo extends AbstractMojo {
             final MavenProject project = getProject();
 
             getLog().info("Local aggregation root: " + project.getBasedir());
-            Map<String, Model> reactorModels = PomHelper.getReactorModels(project, getLog());
-            getLog().info("reactorModels: " + reactorModels);
+
+            if (project.getBasedir() != null) {
+                Map<String, Model> reactorModels = PomHelper.getReactorModels(project, getLog());
+                getLog().info("reactorModels: " + reactorModels);
+            }
         } catch (IOException e) {
             throw new MojoExecutionException(e.getMessage(), e);
         }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<homepages xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:utils="http://www.w3.org/2001/XMLSchema-instancex"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://www.w3.org/2001/XMLSchema-instancex xxx.xsd
+        http://www.w3.org/1999/xlink https://www.w3.org/XML/2008/06/xlink.xsd"
+>
+
+    <homepage xlink:type="simple"
+              xlink:href="http://www.runoob.com"
+              utils:myAttribute="true"
+    >
+        Visit Runoob
+    </homepage>
+
+</homepages>

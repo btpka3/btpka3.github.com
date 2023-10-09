@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified"
+           xmlns="http://www.w3.org/2001/XMLSchema-instancex"
+           targetNamespace="http://www.w3.org/2001/XMLSchema-instancex">
+
+
+    <!--    <xs:import namespace="http://maven.apache.org/POM/4.0.0" schemaLocation="http://maven.apache.org/xsd/maven-4.0.0.xsd"/>-->
+
+
+    <xs:attribute name="myAttribute" type="xs:string"/>
+
+    <xs:element name="globalExclude" type="GlobalExclude">
+        <xs:annotation>
+            <xs:documentation source="description">xxx</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="GlobalExclude">
+        <xs:annotation>
+            <xs:documentation source="description">xxx</xs:documentation>
+        </xs:annotation>
+        <xs:all>
+            <xs:element minOccurs="0" name="exclusions">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="exclusion" minOccurs="0" maxOccurs="unbounded" type="Exclusion"/>
+                    </xs:sequence>
+                    <xs:attribute name="id1" type="xs:string"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element minOccurs="0" name="bar">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:any processContents="skip" minOccurs="0" maxOccurs="unbounded"/>  <!-- 允许任意元素 -->
+                    </xs:sequence>
+                    <xs:anyAttribute processContents="skip"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:all>
+        <xs:attribute name="id0" type="xs:string"/>
+        <xs:anyAttribute processContents="skip"/>  <!-- 允许当前元素上声明任意属性，比如其他 namespace 的属性 -->
+    </xs:complexType>
+    <xs:complexType name="Exclusion">
+        <xs:annotation>
+            <xs:documentation source="description">xxx</xs:documentation>
+        </xs:annotation>
+        <xs:all>
+            <xs:element minOccurs="0" name="artifactId" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation source="version">4.0.0+</xs:documentation>
+                    <xs:documentation source="description">The artifact ID of the project to exclude.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="groupId" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation source="version">4.0.0+</xs:documentation>
+                    <xs:documentation source="description">The group ID of the project to exclude.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:all>
+        <xs:attribute name="id2" type="xs:string"/>
+    </xs:complexType>
+
+</xs:schema>
