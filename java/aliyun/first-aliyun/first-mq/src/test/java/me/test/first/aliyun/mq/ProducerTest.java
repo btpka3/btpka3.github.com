@@ -1,7 +1,7 @@
 package me.test.first.aliyun.mq;
 
 import com.aliyun.openservices.ons.api.*;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

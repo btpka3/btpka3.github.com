@@ -1,0 +1,50 @@
+//jar {
+//    baseName = 'demo'
+//    version = '0.0.1-SNAPSHOT'
+//}
+
+
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-cache')
+//    compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+    compile("org.springframework.boot:spring-boot-devtools")
+    compile('com.fasterxml.jackson.dataformat:jackson-dataformat-xml')
+    compile('org.apache.httpcomponents:httpclient')
+    //compile('org.ehcache:ehcache')
+//    compile('javax.cache:cache-api')
+//    compile('org.infinispan:infinispan-jcache')
+//    compile('org.infinispan:infinispan-spring-boot-starter-embedded')
+//    compile('org.infinispan:infinispan-spring-boot-starter')
+//    compile('org.infinispan:infinispan-spring4-embedded')
+//    compile('io.micrometer:micrometer-registry-prometheus')
+
+    
+
+    testCompile('com.aliyun:aliyun-java-sdk-core')
+    testCompile('com.aliyun:aliyun-java-sdk-cr')
+    testCompile('com.alibaba:fastjson')
+
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('org.mockito:mockito-core')
+    compile("org.springframework.boot:spring-boot-starter-logging")
+
+    compile('org.springframework.boot:spring-boot-actuator')
+}
+
+
+
+test {
+    include 'me/test/**'
+    testLogging.showStandardStreams = false
+    // listen to events in the test execution lifecycle
+//    beforeTest { descriptor ->
+//        logger.lifecycle("Running test: " + descriptor)
+//    }
+//
+//    // listen to standard out and standard error of the test JVM(s)
+//    onOutput { descriptor, event ->
+//        logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message )
+//    }
+}
+

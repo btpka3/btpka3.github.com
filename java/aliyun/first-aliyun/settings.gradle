@@ -1,7 +1,8 @@
 rootProject.name = 'first-aliyun'
 
-include 'first-green'
+//include 'first-green'
 include 'first-mq'
-include 'first-oss'
+//include 'first-oss'
+//include 'first-acr'
 
 
