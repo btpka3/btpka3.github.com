@@ -8,8 +8,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.core.annotation.Order;
+import org.springframework.test.context.ContextConfiguration;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
@@ -17,12 +17,14 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * 验证通过 @Bean 注入 自定义的 list 类型的 bean。
+ *
  * @author dangqian.zll
  * @date 2021/11/9
  */
 @SpringBootTest
 @ContextConfiguration
-public class InjectListTest {
+public class InjectList1Test {
 
     @Configuration
     public static class Conf {

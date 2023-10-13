@@ -28,9 +28,9 @@ dependencies {
     implementation 'io.micrometer:micrometer-registry-prometheus'
     implementation 'org.hamcrest:hamcrest'
     implementation 'org.codehaus.groovy:groovy'
-    implementation 'com.nimbusds:nimbus-jose-jwt'
+    implementation 'com.nimbusds:nimbus-jose-jwt:9.35'
     //implementation 'com.mysql:mysql-connector-j:8.0.33'
-    implementation 'mysql:mysql-connector-java'
+    implementation 'mysql:mysql-connector-java:8.0.33'
     //implementation 'io.micrometer:micrometer-test'
 
     compileOnly 'org.projectlombok:lombok'
@@ -82,6 +82,8 @@ dependencies {
     implementation('com.drewnoakes:metadata-extractor:2.15.0')
 
     implementation('net.lingala.zip4j:zip4j:2.7.0')
+
+    implementation('org.springframework.boot:spring-boot-starter-thymeleaf')
 
 
 
