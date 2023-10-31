@@ -21,7 +21,7 @@ import org.apache.maven.model.Exclusion;
 public class ExcludeConf {
 
     /**
-     * dependencyManagement 中声明的 dependency 列表（含各自的单独的传递依赖），已经 resolve 后的。
+     * dependencyManagement 中声明的 dependency 列表（含各自的单独的传递依赖），已经 resolve 后的，且包含传递依赖信息。
      */
     Set<DependencyNode> dependencyNodes;
 

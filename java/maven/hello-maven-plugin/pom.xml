@@ -91,6 +91,12 @@
             <artifactId>enforcer-rules</artifactId>
             <version>${maven-enforcer.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-enforcer-plugin</artifactId>
+            <type>maven-plugin</type>
+            <version>${maven-enforcer.version}</version>
+        </dependency>
 
         <!--        <dependency>-->
         <!--            <groupId>org.apache.maven</groupId>-->

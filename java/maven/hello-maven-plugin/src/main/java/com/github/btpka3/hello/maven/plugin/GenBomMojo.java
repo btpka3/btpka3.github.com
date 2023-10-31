@@ -11,7 +11,6 @@ import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.DefaultArtifact;
 import org.apache.maven.artifact.handler.DefaultArtifactHandler;
 import org.apache.maven.artifact.resolver.filter.ArtifactFilter;
-import org.apache.maven.artifact.resolver.filter.ScopeArtifactFilter;
 import org.apache.maven.enforcer.rules.utils.ArtifactUtils;
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.model.Dependency;
@@ -22,17 +21,13 @@ import org.apache.maven.model.building.ModelBuildingRequest;
 import org.apache.maven.model.building.Result;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.*;
 import org.apache.maven.project.*;
 import org.apache.maven.repository.internal.ArtifactDescriptorUtils;
 import org.apache.maven.shared.dependency.graph.DependencyGraphBuilder;
 import org.apache.maven.shared.dependency.graph.DependencyGraphBuilderException;
-import org.apache.maven.shared.dependency.graph.traversal.BuildingDependencyNodeVisitor;
+import org.apache.maven.shared.dependency.graph.DependencyNode;
 import org.apache.maven.shared.dependency.graph.traversal.DependencyNodeVisitor;
-import org.eclipse.aether.graph.DefaultDependencyNode;
-import org.eclipse.aether.graph.DependencyNode;
-import org.eclipse.aether.graph.DependencyVisitor;
 import org.eclipse.aether.resolution.ArtifactRequest;
 import org.eclipse.aether.resolution.ArtifactResolutionException;
 import org.eclipse.aether.resolution.ArtifactResult;
@@ -42,18 +37,8 @@ import java.io.StringWriter;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.github.btpka3.hello.maven.plugin.SerializingDependencyNodeVisitor.STANDARD_TOKENS;
-import static org.apache.maven.artifact.Artifact.SCOPE_COMPILE;
 
-
-@Mojo(
-        name = "gen-bom",
-        defaultPhase = LifecyclePhase.NONE,
-        requiresProject = false,
-        requiresDependencyCollection = ResolutionScope.NONE,
-        requiresDependencyResolution = ResolutionScope.NONE,
-        threadSafe = true
-)
+@Mojo(name = "gen-bom", defaultPhase = LifecyclePhase.NONE, requiresProject = false, requiresDependencyCollection = ResolutionScope.NONE, requiresDependencyResolution = ResolutionScope.NONE, threadSafe = true)
 public class GenBomMojo extends AbstractMojo {
 
 
@@ -79,105 +64,74 @@ public class GenBomMojo extends AbstractMojo {
 //                "jakarta.annotation:jakarta.annotation-api:[1.0,2.0)",
 //                "jakarta.xml.bind:jakarta.xml.bind-api:[2.0,3.0)",
 //                "jakarta.activation:jakarta.activation-api:(1.0,2.0)",
-                "*:*:[9999.0-empty-to-avoid-conflict-with-guava]"
-        );
+                "*:*:[9999.0-empty-to-avoid-conflict-with-guava]");
     }
 
-    //    public MavenProject getProject() {
-////        MavenProject mavenProject = new MavenProject();
-////        mavenProject.setFile(new File("/Users/zll/data0/work/git-repo/github/btpka3/btpka3.github.com/java/maven/hello-maven-plugin/src/test/resources/bom.tpl.xml"));
-////        Dependency dependency =new Dependency();
-////        dependency.setGroupId("org.apache.zookeeper");
-////        dependency.setArtifactId("zookeeper");
-////        mavenProject.getDependencies().add(dependency);
-//        ProjectBuildingRequest buildingRequest = new DefaultProjectBuildingRequest(this.session.getProjectBuildingRequest());
-//        buildingRequest.setRepositorySession(this.session.getRepositorySession());
-//        buildingRequest.setProject(null);
-////        buildingRequest.setProject(mavenProject);
-//        buildingRequest.setResolveDependencies(true);
-//
-//        Artifact artifact = createArtifact("org.apache.zookeeper", "zookeeper", null, null);
-//        try {
-//            return this.projectBuilder.build(artifact, buildingRequest).getProject();
-//        } catch (ProjectBuildingException e) {
-//            throw new IllegalStateException("Error while creating Maven project from Artifact '" + artifact + "'.", e);
+
+//    public MavenProject genProject() {
+//        MavenProject project = new MavenProject();
+//        {
+//            Dependency dependency = new Dependency();
+//            dependency.setGroupId("org.apache.zookeeper");
+//            dependency.setArtifactId("zookeeper");
+//            dependency.setVersion("3.8.1");
+//            project.getDependencies().add(dependency);
 //        }
+//        {
+//            Dependency dependency = new Dependency();
+//            dependency.setGroupId("ch.qos.logback");
+//            dependency.setArtifactId("logback-classic");
+//            dependency.setVersion("1.4.11");
+//            project.getDependencies().add(dependency);
+//        }
+//        return project;
 //    }
 
-//    private static RepositorySystemSession getVerboseRepositorySession(MavenProject project) {
-//        @SuppressWarnings("deprecation")
-//        RepositorySystemSession repositorySession = project.getProjectBuildingRequest().getRepositorySession();
-//        DefaultRepositorySystemSession verboseRepositorySession = new DefaultRepositorySystemSession(repositorySession);
-//        verboseRepositorySession.setConfigProperty(CONFIG_PROP_VERBOSE, "true");
-//        verboseRepositorySession.setReadOnly();
-//        repositorySession = verboseRepositorySession;
-//        return repositorySession;
+//    protected void showDepsLikeTreeMojo() throws DependencyGraphBuilderException {
+//        ArtifactFilter artifactFilter = new ScopeArtifactFilter("compile");
+//
+//        ProjectBuildingRequest buildingRequest = new DefaultProjectBuildingRequest(this.session.getProjectBuildingRequest());
+//        buildingRequest.setProject(this.genProject());
+//        org.apache.maven.shared.dependency.graph.DependencyNode rootNode = dependencyGraphBuilder.buildDependencyGraph(buildingRequest, artifactFilter);
+//
+//        StringWriter writer = new StringWriter();
+//        DependencyNodeVisitor visitor = new org.apache.maven.shared.dependency.graph.traversal.SerializingDependencyNodeVisitor(writer,
+//                org.apache.maven.shared.dependency.graph.traversal.SerializingDependencyNodeVisitor.STANDARD_TOKENS);
+//        visitor = new BuildingDependencyNodeVisitor(visitor);
+//        rootNode.accept(visitor);
+//        String str = writer.toString();
+//        getLog().info("====== showDepsLikeTreeMojo: tree : \n" + str);
+//
 //    }
 
-    public MavenProject genProject() {
-        MavenProject project = new MavenProject();
-        {
-            Dependency dependency = new Dependency();
-            dependency.setGroupId("org.apache.zookeeper");
-            dependency.setArtifactId("zookeeper");
-            dependency.setVersion("3.8.1");
-            project.getDependencies().add(dependency);
-        }
-        {
-            Dependency dependency = new Dependency();
-            dependency.setGroupId("ch.qos.logback");
-            dependency.setArtifactId("logback-classic");
-            dependency.setVersion("1.4.11");
-            project.getDependencies().add(dependency);
-        }
-        return project;
-    }
-
-    protected void showDepsLikeTreeMojo() throws DependencyGraphBuilderException {
-        ArtifactFilter artifactFilter = new ScopeArtifactFilter("compile");
-
-        ProjectBuildingRequest buildingRequest = new DefaultProjectBuildingRequest(this.session.getProjectBuildingRequest());
-        buildingRequest.setProject(this.genProject());
-        org.apache.maven.shared.dependency.graph.DependencyNode rootNode = dependencyGraphBuilder.buildDependencyGraph(buildingRequest, artifactFilter);
-
-        StringWriter writer = new StringWriter();
-        DependencyNodeVisitor visitor = new org.apache.maven.shared.dependency.graph.traversal.SerializingDependencyNodeVisitor(writer,
-                org.apache.maven.shared.dependency.graph.traversal.SerializingDependencyNodeVisitor.STANDARD_TOKENS);
-        visitor = new BuildingDependencyNodeVisitor(visitor);
-        rootNode.accept(visitor);
-        String str = writer.toString();
-        getLog().info("====== showDepsLikeTreeMojo: tree : \n" + str);
-
-    }
-
-    /**
-     * 该方式的缺点: 依赖只会打印1次。
-     *
-     * @param project
-     * @throws DependencyResolutionException
-     */
-    public void showDeps(MavenProject project) throws DependencyResolutionException {
-        DefaultDependencyResolutionRequest request = new DefaultDependencyResolutionRequest();
-        request.setMavenProject(project);
-
-//        request.setRepositorySession(getVerboseRepositorySession(project));
-        request.setRepositorySession(this.session.getRepositorySession());
-        // only download the poms, not the artifacts
-        request.setResolutionFilter((node, parents) -> false);
-
-
-        DependencyResolutionResult result = dependenciesResolver.resolve(request);
-        DependencyNode root = result.getDependencyGraph();
-
-        getLog().info("====== root : " + root);
-        getLog().info("====== root.children : " + root.getChildren());
-
-        String str = getDependencyTreeStr(root);
-        getLog().info("====== tree : \n" + str);
-
-
-        //ArtifactFilter transitiveDependencyFilter = createTransitiveDependencyFilter(project);
-    }
+//    /**
+//     * 该方式的缺点: 依赖只会打印1次。
+//     *
+//     * @param project
+//     * @throws DependencyResolutionException
+//     */
+//    public void showDeps(MavenProject project) throws DependencyResolutionException {
+//        DefaultDependencyResolutionRequest request = new DefaultDependencyResolutionRequest();
+//        request.setMavenProject(project);
+//
+////        request.setRepositorySession(getVerboseRepositorySession(project));
+//        request.setRepositorySession(this.session.getRepositorySession());
+//        // only download the poms, not the artifacts
+//        request.setResolutionFilter((node, parents) -> false);
+//
+//
+//        DependencyResolutionResult result = dependenciesResolver.resolve(request);
+//        DependencyNode root = result.getDependencyGraph();
+//
+//        getLog().info("====== root : " + root);
+//        getLog().info("====== root.children : " + root.getChildren());
+//
+//        String str = getDependencyTreeStr(root);
+//        getLog().info("====== tree : \n" + str);
+//
+//
+//        //ArtifactFilter transitiveDependencyFilter = createTransitiveDependencyFilter(project);
+//    }
 
     ExcludeConf excludeConf = new ExcludeConf();
 
@@ -188,94 +142,99 @@ public class GenBomMojo extends AbstractMojo {
     private org.eclipse.aether.RepositorySystem repoSystem;
 
 
-    protected boolean isRawDependency(List<Dependency> rawDependencyList, Dependency dependency) {
-        return rawDependencyList.stream().anyMatch(rawDep ->
-                Objects.equals(rawDep.getGroupId(), dependency.getGroupId())
-                        && Objects.equals(rawDep.getArtifactId(), dependency.getArtifactId())
-                        && Objects.equals(rawDep.getClassifier(), dependency.getClassifier())
-                        && Objects.equals(rawDep.getScope(), dependency.getScope())
+    protected boolean isRawDependency(List<Dependency> rawDependencyList, Dependency resolvedDependency) {
+        return rawDependencyList.stream().anyMatch(rawDep -> Objects.equals(rawDep.getGroupId(), resolvedDependency.getGroupId()) && Objects.equals(rawDep.getArtifactId(), resolvedDependency.getArtifactId()) && Objects.equals(rawDep.getClassifier(), resolvedDependency.getClassifier()) && Objects.equals(rawDep.getScope(), resolvedDependency.getScope())
 
         );
     }
 
 
-    public void execute2() throws MojoExecutionException {
-        try {
-            MavenProject project = genMavenProjectFromTemplate(bomTemplate);
-            project.setPackaging("jar");
-            {
-                Dependency dependency = new Dependency();
-                dependency.setGroupId("io.grpc");
-                dependency.setArtifactId("grpc-all");
-                dependency.setVersion("1.58.0");
+//    public void execute2() throws MojoExecutionException {
+//        try {
+//            MavenProject project = genMavenProjectFromTemplate(bomTemplate);
+//            project.setPackaging("jar");
+//            {
+//                Dependency dependency = new Dependency();
+//                dependency.setGroupId("io.grpc");
+//                dependency.setArtifactId("grpc-all");
+//                dependency.setVersion("1.58.0");
+//
+//                Exclusion exclusion = new Exclusion();
+//                exclusion.setGroupId("com.google.guava");
+//                exclusion.setArtifactId("guava");
+//                dependency.addExclusion(exclusion);
+//                project.getDependencies().add(dependency);
+//            }
+//            {
+//                Dependency dependency = new Dependency();
+//                dependency.setGroupId("com.google.guava");
+//                dependency.setArtifactId("guava");
+//                dependency.setVersion("32.0.1-jre");
+//
+//                project.getDependencies().add(dependency);
+//            }
+//
+//            ArtifactFilter artifactFilter = (a) -> true;
+//            org.apache.maven.shared.dependency.graph.DependencyNode dependencyNode = getDependencyNode(project, artifactFilter);
+//            getLog().debug("========== tpl.xml dependencies : \n" + getDependencyTreeStr(dependencyNode));
+//        } catch (Exception e) {
+//            throw new MojoExecutionException("err", e);
+//        }
+//    }
 
-                Exclusion exclusion = new Exclusion();
-                exclusion.setGroupId("com.google.guava");
-                exclusion.setArtifactId("guava");
-                dependency.addExclusion(exclusion);
-                project.getDependencies().add(dependency);
-            }
-            {
-                Dependency dependency = new Dependency();
-                dependency.setGroupId("com.google.guava");
-                dependency.setArtifactId("guava");
-                dependency.setVersion("32.0.1-jre");
 
-                project.getDependencies().add(dependency);
-            }
-
-            ArtifactFilter artifactFilter = (a) -> true;
-            org.apache.maven.shared.dependency.graph.DependencyNode dependencyNode = getDependencyNode(project, artifactFilter);
-            getLog().debug("========== tpl.xml dependencies : \n" + getDependencyTreeStr(dependencyNode));
-        } catch (Exception e) {
-            throw new MojoExecutionException("err", e);
+    List<Dependency> getRawDependencyList() throws MojoExecutionException {
+        Result<? extends Model> tplResult = buildTemplateRawModel(new File(bomTemplate));
+        if (tplResult.hasErrors()) {
+            throw new MojoExecutionException("template pom file has error : " + bomTemplate, tplResult.getProblems().iterator().next().getException());
         }
+
+        // version 会有占位符
+        List<Dependency> rawDependencyList = tplResult.get().getDependencyManagement().getDependencies();
+        getLog().info("====== raw dependencyList.size : " + rawDependencyList.size());
+
+        // 排除 import 的 bom 依赖
+        return rawDependencyList.stream().filter(dep -> !(Objects.equals("pom", dep.getType()) && Objects.equals("import", dep.getScope()))).collect(Collectors.toList());
+    }
+
+    Set<DependencyNode> getResolvedDependencyNodes() throws ArtifactResolutionException, MojoExecutionException, DependencyGraphBuilderException {
+        List<Dependency> rawDependencyList = getRawDependencyList();
+
+        MavenProject tplProject = genMavenProjectFromTemplate(bomTemplate);
+        List<Dependency> dependencyList = tplProject.getDependencyManagement().getDependencies();
+        getLog().info("====== dependencyList.size : " + dependencyList.size());
+        Set<DependencyNode> resolvedDependencyNodes = new HashSet<>();
+        for (Dependency dependency : dependencyList) {
+
+            String type = dependency.getType();
+            if (!Objects.equals("jar", type) && !Objects.equals("pom", type) && !Objects.equals("bundle", type)) {
+                getLog().debug("====== dependencyManagement.dependencies : type=" + type + " found :  " + dependency);
+                continue;
+            }
+
+            // 只有模板pom.xml 中 dependencyManagement 下的 dependencies 才能给添加 exclude。
+            if (!isRawDependency(rawDependencyList, dependency)) {
+                continue;
+            }
+
+
+            Artifact artifact = toArtifact(dependency);
+            if (!isTargetType(artifact)) {
+                continue;
+            }
+
+            DependencyNode dependencyNode = getDependencyTree(artifact);
+            resolvedDependencyNodes.add(dependencyNode);
+            getLog().debug("========== excludeConf.dependencyNodes : \n" + getDependencyTreeStr(dependencyNode));
+        }
+        return resolvedDependencyNodes;
     }
 
 
     public void execute() throws MojoExecutionException {
         try {
-            Result<? extends Model> tplResult = buildRawModel(new File(bomTemplate));
-            if (tplResult.hasErrors()) {
-                throw new MojoExecutionException("template pom file has error : " + bomTemplate, tplResult.getProblems().iterator().next().getException());
-            }
 
-            // version 会有占位符
-            List<Dependency> rawDependencyList = tplResult.get().getDependencyManagement().getDependencies();
-            getLog().info("====== raw dependencyList.size : " + rawDependencyList.size());
-
-            // 排除 import 的 bom 依赖
-            rawDependencyList = rawDependencyList.stream()
-                    .filter(dep -> !(Objects.equals("pom", dep.getType()) && Objects.equals("import", dep.getScope())))
-                    .collect(Collectors.toList());
-
-            MavenProject tplProject = genMavenProjectFromTemplate(bomTemplate);
-            List<Dependency> dependencyList = tplProject.getDependencyManagement().getDependencies();
-            getLog().info("====== dependencyList.size : " + dependencyList.size());
-            excludeConf.dependencyNodes = new HashSet<>();
-            for (Dependency dependency : dependencyList) {
-
-                String type = dependency.getType();
-                if (!Objects.equals("jar", type) && !Objects.equals("pom", type) && !Objects.equals("bundle", type)) {
-                    getLog().debug("====== dependencyManagement.dependencies : type=" + type + " found :  " + dependency);
-                    continue;
-                }
-
-                // 只有模板pom.xml 中 dependencyManagement 下的 dependencies 才能给添加 exclude。
-                if (!isRawDependency(rawDependencyList, dependency)) {
-                    continue;
-                }
-
-
-                Artifact artifact = toArtifact(dependency);
-                if (!isTargetType(artifact)) {
-                    continue;
-                }
-
-                org.apache.maven.shared.dependency.graph.DependencyNode dependencyNode = getDependencyTree(artifact);
-                excludeConf.dependencyNodes.add(dependencyNode);
-                getLog().debug("========== excludeConf.dependencyNodes : \n" + getDependencyTreeStr(dependencyNode));
-            }
+            excludeConf.dependencyNodes = getResolvedDependencyNodes();
 
             excludeConf.usedDependencies = genUsedDependencies(excludeConf.dependencyNodes);
             if (getLog().isDebugEnabled()) {
@@ -283,7 +242,7 @@ public class GenBomMojo extends AbstractMojo {
             }
             excludeConf.excludeDependencies = new HashMap<>();
 
-            for (org.apache.maven.shared.dependency.graph.DependencyNode dependencyNode : excludeConf.dependencyNodes) {
+            for (DependencyNode dependencyNode : excludeConf.dependencyNodes) {
                 Set<Exclusion> exclusions = findExcludeDependencies(dependencyNode);
                 if (!exclusions.isEmpty()) {
                     excludeConf.excludeDependencies.put(dependencyNode, exclusions);
@@ -298,15 +257,20 @@ public class GenBomMojo extends AbstractMojo {
 //            MavenProject finalProject = genMavenProjectFromTemplateWithDependencies(bomTemplate, excludeConf.usedDependencies);
 //            lastCheck(finalProject);
 
-            getLog().info("====== excludeConf.dependencyNodes : " + excludeConf.dependencyNodes.size()
-                    + " : " + excludeConf.dependencyNodes);
+            getLog().info("====== excludeConf.dependencyNodes : " + excludeConf.dependencyNodes.size() + " : " + excludeConf.dependencyNodes);
             getLog().info("====== Done.");
         } catch (Exception e) {
             throw new MojoExecutionException("err", e);
         }
     }
 
-    protected Result<? extends Model> buildRawModel(File pomFile) {
+    /**
+     * 从bom模板文件中解析，但不 resolve，以便获取 dependencyManagement 下声明了多少个 atrtifact。
+     *
+     * @param pomFile
+     * @return
+     */
+    protected Result<? extends Model> buildTemplateRawModel(File pomFile) {
         return modelBuilder.buildRawModel(pomFile, ModelBuildingRequest.VALIDATION_LEVEL_MAVEN_3_1, true);
     }
 
@@ -346,159 +310,19 @@ public class GenBomMojo extends AbstractMojo {
 
     }
 
-    protected static class ExcludeDependencyCollector implements DependencyNodeVisitor {
-        List<String> excludePatterns;
-
-        Set<Exclusion> excludes;
-
-        public ExcludeDependencyCollector(List<String> excludePatterns) {
-            this.excludePatterns = excludePatterns;
-            this.excludes = new HashSet<>();
-        }
-
-        public Set<Exclusion> getExcludes() {
-            return excludes;
-        }
-
-        protected Exclusion toExclusion(String excludePattern, Artifact artifact) {
-            if (excludePattern.startsWith("*:*:")) {
-                Exclusion exclusion = new Exclusion();
-                exclusion.setGroupId(artifact.getGroupId());
-                exclusion.setArtifactId(artifact.getArtifactId());
-                return exclusion;
-            }
-
-            String[] arr = excludePattern.split(":");
-            if (arr.length == 1 || (arr.length >= 2 && Objects.equals("*", arr[1]))) {
-                Exclusion exclusion = new Exclusion();
-                exclusion.setGroupId(artifact.getGroupId());
-                exclusion.setArtifactId("*");
-                return exclusion;
-            }
-
-            Exclusion exclusion = new Exclusion();
-            exclusion.setGroupId(artifact.getGroupId());
-            exclusion.setArtifactId(artifact.getArtifactId());
-            return exclusion;
-        }
-
-        protected boolean isAdded(Exclusion toBeAdd) {
-            return this.excludes.stream()
-                    .anyMatch(added -> Objects.equals(added.getGroupId(), toBeAdd.getGroupId())
-                            && Objects.equals(added.getArtifactId(), toBeAdd.getArtifactId()));
-        }
-
-        protected void addIfNeeded(Exclusion toBeAdd) {
-            if (!isAdded(toBeAdd)) {
-                this.excludes.add(toBeAdd);
-            }
-        }
-
-        @Override
-        public boolean visit(org.apache.maven.shared.dependency.graph.DependencyNode node) {
-            for (String excludePattern : excludePatterns) {
-                if (ArtifactUtils.compareDependency(excludePattern, node.getArtifact())) {
-                    Exclusion exclusion = toExclusion(excludePattern, node.getArtifact());
-                    addIfNeeded(exclusion);
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        @Override
-        public boolean endVisit(org.apache.maven.shared.dependency.graph.DependencyNode node) {
-            return true;
-        }
-    }
-
-    protected static class UsedDependencyCollector implements DependencyNodeVisitor {
-
-        final Comparator<org.apache.maven.shared.dependency.graph.DependencyNode> c =
-
-                Comparator.comparing(
-                                (org.apache.maven.shared.dependency.graph.DependencyNode node) -> node.getArtifact().getGroupId(),
-                                Comparator.nullsLast(Comparator.naturalOrder())
-                        )
-                        .thenComparing(
-                                (org.apache.maven.shared.dependency.graph.DependencyNode node) -> node.getArtifact().getArtifactId(),
-                                Comparator.nullsLast(Comparator.naturalOrder())
-                        )
-                        .thenComparing(
-                                (org.apache.maven.shared.dependency.graph.DependencyNode node) -> node.getArtifact().getClassifier(),
-                                Comparator.nullsLast(Comparator.naturalOrder())
-                        )
-//                        .thenComparing(
-//                                (org.apache.maven.shared.dependency.graph.DependencyNode node) -> node.getArtifact().getType(),
-//                                Comparator.nullsLast(Comparator.naturalOrder())
-//                        )
-                ;
-        org.apache.maven.shared.dependency.graph.DependencyNode root;
-
-        Set<org.apache.maven.shared.dependency.graph.DependencyNode> dependencyNodes;
-
-        Set<org.apache.maven.shared.dependency.graph.DependencyNode> usedDependencyNodes;
 
 
-        public UsedDependencyCollector(org.apache.maven.shared.dependency.graph.DependencyNode root, Set<org.apache.maven.shared.dependency.graph.DependencyNode> dependencyNodes) {
-            this.root = root;
-            this.dependencyNodes = dependencyNodes;
-            this.usedDependencyNodes = new HashSet<>(dependencyNodes.size());
-        }
-
-        public Set<org.apache.maven.shared.dependency.graph.DependencyNode> getUsedDependencyNodes() {
-            return Collections.unmodifiableSet(usedDependencyNodes);
-        }
-
-        protected org.apache.maven.shared.dependency.graph.DependencyNode findTarget(
-                org.apache.maven.shared.dependency.graph.DependencyNode currentNode) {
 
 
-            return dependencyNodes.stream()
-                    .filter(targetNode -> c.compare(targetNode, currentNode) == 0)
-                    .findFirst()
-                    .orElse(null);
+    protected Map<DependencyNode, Set<DependencyNode>> genUsedDependencies(Set<DependencyNode> dependencyNodes) {
 
-        }
-
-        protected boolean isRoot(org.apache.maven.shared.dependency.graph.DependencyNode node) {
-            return c.compare(root, node) == 0;
-        }
-
-        @Override
-        public boolean visit(org.apache.maven.shared.dependency.graph.DependencyNode node) {
-
-            if (isRoot(node)) {
-                return true;
-            }
-
-            org.apache.maven.shared.dependency.graph.DependencyNode targetNode = findTarget(node);
-            if (targetNode != null) {
-                usedDependencyNodes.add(targetNode);
-            }
-
-            return true;
-        }
-
-        @Override
-        public boolean endVisit(org.apache.maven.shared.dependency.graph.DependencyNode node) {
-            return true;
-        }
-    }
-
-    protected Map<org.apache.maven.shared.dependency.graph.DependencyNode,
-            Set<org.apache.maven.shared.dependency.graph.DependencyNode>>
-    genUsedDependencies(Set<org.apache.maven.shared.dependency.graph.DependencyNode> dependencyNodes) {
-
-
-        Map<org.apache.maven.shared.dependency.graph.DependencyNode, Set<org.apache.maven.shared.dependency.graph.DependencyNode>> map = new HashMap<>(dependencyNodes.size());
-        for (org.apache.maven.shared.dependency.graph.DependencyNode dependencyNode : dependencyNodes) {
+        Map<DependencyNode, Set<DependencyNode>> map = new HashMap<>(dependencyNodes.size());
+        for (DependencyNode dependencyNode : dependencyNodes) {
 
             UsedDependencyCollector collector = new UsedDependencyCollector(dependencyNode, dependencyNodes);
             dependencyNode.accept(collector);
 
-            Set<org.apache.maven.shared.dependency.graph.DependencyNode> usedDependencyNodes = collector.getUsedDependencyNodes();
+            Set<DependencyNode> usedDependencyNodes = collector.getUsedDependencyNodes();
 
             if (!usedDependencyNodes.isEmpty()) {
                 map.put(dependencyNode, collector.getUsedDependencyNodes());
@@ -508,29 +332,16 @@ public class GenBomMojo extends AbstractMojo {
         return map;
     }
 
-    protected String toUsedDependencyStr(Map<org.apache.maven.shared.dependency.graph.DependencyNode,
-            Set<org.apache.maven.shared.dependency.graph.DependencyNode>> map) {
-        return map.entrySet().stream()
-                .map(entry -> entry.getKey().getArtifact()
-                        + entry.getValue().stream()
-                        .map(n -> n.getArtifact().toString())
-                        .collect(Collectors.joining("\n   |- ", "\n   |- ", "")))
-                .collect(Collectors.joining("\n"))
-                ;
+    protected String toUsedDependencyStr(Map<DependencyNode, Set<DependencyNode>> map) {
+        return map.entrySet().stream().map(entry -> entry.getKey().getArtifact() + entry.getValue().stream().map(n -> n.getArtifact().toString()).collect(Collectors.joining("\n   |- ", "\n   |- ", ""))).collect(Collectors.joining("\n"));
     }
 
-    protected String toExcludeDependenciesStr(Map<org.apache.maven.shared.dependency.graph.DependencyNode, Set<Exclusion>> excludesMap) {
-        return excludesMap.entrySet().stream()
-                .map(entry -> entry.getKey().getArtifact()
-                        + entry.getValue().stream()
-                        .map(n -> n.getGroupId() + ":" + n.getArtifactId())
-                        .collect(Collectors.joining("\n   |- ", "\n   |- ", "")))
-                .collect(Collectors.joining("\n"))
-                ;
+    protected String toExcludeDependenciesStr(Map<DependencyNode, Set<Exclusion>> excludesMap) {
+        return excludesMap.entrySet().stream().map(entry -> entry.getKey().getArtifact() + entry.getValue().stream().map(n -> n.getGroupId() + ":" + n.getArtifactId()).collect(Collectors.joining("\n   |- ", "\n   |- ", ""))).collect(Collectors.joining("\n"));
     }
 
 
-    protected Set<Exclusion> findExcludeDependencies(org.apache.maven.shared.dependency.graph.DependencyNode node) throws DependencyGraphBuilderException {
+    protected Set<Exclusion> findExcludeDependencies(DependencyNode node) throws DependencyGraphBuilderException {
 
         MavenProject project = genMavenProjectFromTemplate(bomTemplate);
 
@@ -541,29 +352,23 @@ public class GenBomMojo extends AbstractMojo {
         dependency.setVersion(node.getArtifact().getVersion());
         //dependency.setClassifier(node.getArtifact().getClassifier());
 
-        excludeConf.usedDependencies.entrySet().stream()
-                .filter(entry -> {
-                    org.apache.maven.shared.dependency.graph.DependencyNode curNode = entry.getKey();
-                    return Objects.equals(curNode.getArtifact().getGroupId(), node.getArtifact().getGroupId())
-                            && Objects.equals(curNode.getArtifact().getArtifactId(), node.getArtifact().getArtifactId())
-                            //&& Objects.equals(curNode.getArtifact().getClassifier(), node.getArtifact().getClassifier())
-                            ;
-                })
-                .map(Map.Entry::getValue)
-                .findFirst()
-                .ifPresent(shouldExcludeDeps -> shouldExcludeDeps.forEach(dep -> {
-                            Exclusion exclusion = new Exclusion();
-                            exclusion.setGroupId(dep.getArtifact().getGroupId());
-                            exclusion.setArtifactId(dep.getArtifact().getArtifactId());
-                            dependency.addExclusion(exclusion);
-                        })
-                );
+        excludeConf.usedDependencies.entrySet().stream().filter(entry -> {
+            DependencyNode curNode = entry.getKey();
+            return Objects.equals(curNode.getArtifact().getGroupId(), node.getArtifact().getGroupId()) && Objects.equals(curNode.getArtifact().getArtifactId(), node.getArtifact().getArtifactId())
+                    //&& Objects.equals(curNode.getArtifact().getClassifier(), node.getArtifact().getClassifier())
+                    ;
+        }).map(Map.Entry::getValue).findFirst().ifPresent(shouldExcludeDeps -> shouldExcludeDeps.forEach(dep -> {
+            Exclusion exclusion = new Exclusion();
+            exclusion.setGroupId(dep.getArtifact().getGroupId());
+            exclusion.setArtifactId(dep.getArtifact().getArtifactId());
+            dependency.addExclusion(exclusion);
+        }));
 
 
         project.getDependencies().add(dependency);
 
         ArtifactFilter artifactFilter = (a) -> true;
-        org.apache.maven.shared.dependency.graph.DependencyNode dependencyNode = getDependencyNode(project, artifactFilter);
+        DependencyNode dependencyNode = getDependencyNode(project, artifactFilter);
         ExcludeDependencyCollector collector = new ExcludeDependencyCollector(this.xxxConf.excludeArtifactList);
         dependencyNode.accept(collector);
         return collector.getExcludes();
@@ -572,15 +377,7 @@ public class GenBomMojo extends AbstractMojo {
 
     Artifact toArtifact(Dependency dependency) {
 
-        return new DefaultArtifact(
-                dependency.getGroupId(),
-                dependency.getArtifactId(),
-                dependency.getVersion(),
-                dependency.getScope(),
-                dependency.getType(),
-                dependency.getClassifier(),
-                new DefaultArtifactHandler()
-        );
+        return new DefaultArtifact(dependency.getGroupId(), dependency.getArtifactId(), dependency.getVersion(), dependency.getScope(), dependency.getType(), dependency.getClassifier(), new DefaultArtifactHandler());
     }
 
 
@@ -600,26 +397,26 @@ public class GenBomMojo extends AbstractMojo {
             throw new RuntimeException(e);
         }
     }
-
-    protected MavenProject genMavenProjectFromTemplateWithDependencies(String bomTemplate, Map<DependencyNode, Set<DependencyNode>> x) {
-        return null;
-    }
-
-    protected void outputFinalPom() {
-        // String bomTemplate, ExcludeConf excludeConf
-    }
+//
+//    protected MavenProject genMavenProjectFromTemplateWithDependencies(String bomTemplate, Map<DependencyNode, Set<DependencyNode>> x) {
+//        return null;
+//    }
+//
+//    protected void outputFinalPom() {
+//        // String bomTemplate, ExcludeConf excludeConf
+//    }
 
     protected void lastCheck(MavenProject finalProject) {
 
     }
 
+//
+//    protected DependencyNode toDependencyNode(DependencyNode node) {
+//        return null;
+//    }
 
-    protected DependencyNode toDependencyNode(org.apache.maven.shared.dependency.graph.DependencyNode node) {
-        return null;
-    }
 
-
-    protected org.apache.maven.shared.dependency.graph.DependencyNode getDependencyTree(Artifact artifact) throws DependencyGraphBuilderException {
+    protected DependencyNode getDependencyTree(Artifact artifact) throws DependencyGraphBuilderException {
         MavenProject project = getMavenProject4SingleArtifact(artifact);
         ArtifactFilter artifactFilter = (a) -> true;
         return getDependencyNode(project, artifactFilter);
@@ -640,7 +437,7 @@ public class GenBomMojo extends AbstractMojo {
         }
     }
 
-    protected org.apache.maven.shared.dependency.graph.DependencyNode getDependencyNode(MavenProject project, ArtifactFilter artifactFilter) throws DependencyGraphBuilderException {
+    protected DependencyNode getDependencyNode(MavenProject project, ArtifactFilter artifactFilter) throws DependencyGraphBuilderException {
         ProjectBuildingRequest buildingRequest = new DefaultProjectBuildingRequest(this.session.getProjectBuildingRequest());
 //        ProjectBuildingRequest buildingRequest = new DefaultProjectBuildingRequest(this.session.getProjectBuildingRequest());
         //buildingRequest.setResolveDependencies(true);
@@ -649,63 +446,62 @@ public class GenBomMojo extends AbstractMojo {
 
     }
 
+//    protected String getDependencyTreeStr(DependencyNode root) {
+//        StringWriter writer = new StringWriter();
+//        SerializingDependencyNodeVisitor v = new SerializingDependencyNodeVisitor(writer, STANDARD_TOKENS);
+//        accept(toDependencyNodeEx(null, root), v);
+//        return writer.toString();
+//    }
+
     protected String getDependencyTreeStr(DependencyNode root) {
         StringWriter writer = new StringWriter();
-        SerializingDependencyNodeVisitor v = new SerializingDependencyNodeVisitor(writer, STANDARD_TOKENS);
-        accept(toDependencyNodeEx(null, root), v);
-        return writer.toString();
-    }
-
-    protected String getDependencyTreeStr(org.apache.maven.shared.dependency.graph.DependencyNode root) {
-        StringWriter writer = new StringWriter();
-        org.apache.maven.shared.dependency.graph.traversal.SerializingDependencyNodeVisitor v = new org.apache.maven.shared.dependency.graph.traversal.SerializingDependencyNodeVisitor(writer,
-                org.apache.maven.shared.dependency.graph.traversal.SerializingDependencyNodeVisitor.STANDARD_TOKENS);
+        org.apache.maven.shared.dependency.graph.traversal.SerializingDependencyNodeVisitor v = new org.apache.maven.shared.dependency.graph.traversal.SerializingDependencyNodeVisitor(writer, org.apache.maven.shared.dependency.graph.traversal.SerializingDependencyNodeVisitor.STANDARD_TOKENS);
         root.accept(v);
         return writer.toString();
     }
 
 
-    protected void showDepsLikeForArtifactDependencyGraphMojo() {
-        ProjectBuildingRequest buildingRequest = new DefaultProjectBuildingRequest(this.session.getProjectBuildingRequest());
-        buildingRequest.setRepositorySession(this.session.getRepositorySession());
-        buildingRequest.setProject(null);
-        buildingRequest.setResolveDependencies(true);
-        //buildingRequest.setActiveProfileIds(this.profiles);
+//    protected void showDepsLikeForArtifactDependencyGraphMojo() {
+//        ProjectBuildingRequest buildingRequest = new DefaultProjectBuildingRequest(this.session.getProjectBuildingRequest());
+//        buildingRequest.setRepositorySession(this.session.getRepositorySession());
+//        buildingRequest.setProject(null);
+//        buildingRequest.setResolveDependencies(true);
+//        //buildingRequest.setActiveProfileIds(this.profiles);
+//
+//        Artifact artifact = new DefaultArtifact("org.apache.zookeeper", "zookeeper", "3.8.1", SCOPE_COMPILE, "jar", null, new DefaultArtifactHandler());
+//        try {
+//            ProjectBuildingResult result = this.projectBuilder.build(artifact, buildingRequest);
+//            MavenProject project = result.getProject();
+//            getLog().info("====== showDepsLikeForArtifactDependencyGraphMojo : project.artifact : " + project.getArtifact());
+//            showDeps(project);
+//
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//    }
 
-        Artifact artifact = new DefaultArtifact("org.apache.zookeeper", "zookeeper", "3.8.1", SCOPE_COMPILE, "jar", null, new DefaultArtifactHandler());
-        try {
-            ProjectBuildingResult result = this.projectBuilder.build(artifact, buildingRequest);
-            MavenProject project = result.getProject();
-            getLog().info("====== showDepsLikeForArtifactDependencyGraphMojo : project.artifact : " + project.getArtifact());
-            showDeps(project);
 
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+//    public boolean accept(DependencyNodeEx node, DependencyVisitor visitor) {
+//
+//        if (visitor.visitEnter(node)) {
+//            for (DependencyNode child : node.getChildren()) {
+//                if (!accept(toDependencyNodeEx(node, child), visitor)) {
+//                    break;
+//                }
+//            }
+//        }
+//
+//        return visitor.visitLeave(node);
+//    }
 
-    }
+//    protected DependencyNodeEx toDependencyNodeEx(Artifact artifact) {
+//        return new DependencyNodeExImpl(null, new DefaultDependencyNode(RepositoryUtils.toArtifact(artifact)));
+//    }
 
-
-    public boolean accept(DependencyNodeEx node, DependencyVisitor visitor) {
-
-        if (visitor.visitEnter(node)) {
-            for (DependencyNode child : node.getChildren()) {
-                if (!accept(toDependencyNodeEx(node, child), visitor)) {
-                    break;
-                }
-            }
-        }
-
-        return visitor.visitLeave(node);
-    }
-
-    protected DependencyNodeEx toDependencyNodeEx(Artifact artifact) {
-        return new DependencyNodeExImpl(null, new DefaultDependencyNode(RepositoryUtils.toArtifact(artifact)));
-    }
-
-    protected DependencyNodeEx toDependencyNodeEx(DependencyNode parent, DependencyNode node) {
-        return new DependencyNodeExImpl(parent, node);
-    }
+//    protected DependencyNodeEx toDependencyNodeEx(DependencyNode parent, DependencyNode node) {
+//        return new DependencyNodeExImpl(parent, node);
+//    }
 
 
 //    private Artifact createArtifact(String artifact) {
@@ -746,18 +542,18 @@ public class GenBomMojo extends AbstractMojo {
 //        return new DefaultArtifact(groupId, artifactId, (String) null, SCOPE_COMPILE, type, classifier, new DefaultArtifactHandler());
 //    }
 
-
-    //@Override
-    public void execute1() throws MojoExecutionException, MojoFailureException {
-        try {
-            MavenProject project = genProject();
-
-            showDeps(project);
-            showDepsLikeForArtifactDependencyGraphMojo();
-            showDepsLikeTreeMojo();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        getLog().info("Hello, world.");
-    }
+//
+//    //@Override
+//    public void execute1() throws MojoExecutionException, MojoFailureException {
+//        try {
+//            MavenProject project = genProject();
+//
+//            showDeps(project);
+//            showDepsLikeForArtifactDependencyGraphMojo();
+//            showDepsLikeTreeMojo();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        getLog().info("Hello, world.");
+//    }
 }

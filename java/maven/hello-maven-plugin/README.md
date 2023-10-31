@@ -12,7 +12,8 @@ mvn com.github.ferstl:depgraph-maven-plugin:4.0.2:for-artifact \
 
 
 # 生成bom 测试
-BOM_TEMPLATE=`pwd`/src/test/resources/resources/bom.tpl.xml
+BOM_TEMPLATE=`pwd`/src/test/resources/bom.tpl.xml
+ls -l $BOM_TEMPLATE
 cd /tmp
 mvnDebug -Dbom.template=${BOM_TEMPLATE} com.github.btpka3:hello-maven-plugin:1.0.0-SNAPSHOT:gen-bom
 ```
