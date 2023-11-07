@@ -40,6 +40,8 @@ dependencies {
     implementation "org.jsoup:jsoup"
     implementation "io.vavr:vavr:0.10.4"
 
+    implementation 'com.github.houbb:opencc4j:1.8.1'
+
     implementation('joda-time:joda-time')
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

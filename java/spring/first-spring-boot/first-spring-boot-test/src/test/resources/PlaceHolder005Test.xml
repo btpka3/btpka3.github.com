@@ -9,7 +9,7 @@
         http://www.springframework.org/schema/context/spring-context-4.2.xsd
         ">
 
-    <context:property-placeholder location="classpath:PlaceHolder005Test.properties"/>
+    <context:property-placeholder location="classpath:PlaceHolder005Test.properties" local-override="true"/>
 
     <bean id="myVarTest" class="java.lang.String">
         <constructor-arg value="___${importKey}___"/>

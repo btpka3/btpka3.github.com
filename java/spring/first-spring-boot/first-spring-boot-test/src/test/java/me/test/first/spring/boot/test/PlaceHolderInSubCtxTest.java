@@ -86,6 +86,7 @@ public class PlaceHolderInSubCtxTest {
         parentAppCtx.start();
 
         System.out.println("================= 111");
+        // p1={"a":"a1","b":"b1","c":"parent_default_c1"}
         System.out.println("p1=" + JSON.toJSONString(parentAppCtx.getBean("p1")));
 
         AnnotationConfigApplicationContext childAppCtx = new AnnotationConfigApplicationContext();
@@ -95,7 +96,9 @@ public class PlaceHolderInSubCtxTest {
         childAppCtx.start();
 
         System.out.println("================= 222");
+        // p1={"a":"a1","b":"b1","c":"parent_default_c1"}
         System.out.println("p1=" + JSON.toJSONString(childAppCtx.getBean("p1")));
+        // p2={"a":"a1","b":"b1","c":"c2"}
         System.out.println("p2=" + JSON.toJSONString(childAppCtx.getBean("p2")));
 
         ConfigurableEnvironment parentEnv = parentAppCtx.getEnvironment();
