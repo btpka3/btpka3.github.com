@@ -8,14 +8,18 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 
 @SpringBootTest(
-        classes = BfppTest.Conf.class,
+        classes = {
+                Bfpp01Test.Conf.class,
+                Bfpp01Test.MyBfpp.class
+        },
         webEnvironment = SpringBootTest.WebEnvironment.NONE
 )
 @Slf4j
-public class BfppTest {
+public class Bfpp01Test {
 
 
     @Configuration
@@ -33,6 +37,7 @@ public class BfppTest {
         System.out.println("aaa");
     }
 
+    @Component
     public static class MyBfpp implements BeanFactoryPostProcessor {
 
         @Override
