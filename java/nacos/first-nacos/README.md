@@ -54,7 +54,7 @@ namespaceId=public
 dataId=gong9.mw.tddl.conf
 group=gong9-mw
 
-curl -v -X GET "${NACOS_ADDR}/nacos/v2/cs/config?dataId=${dataId}&group=${group}&namespaceId=${namespaceId}"
+curl -v "${NACOS_ADDR}/nacos/v2/cs/config?dataId=${dataId}&group=${group}&namespaceId=${namespaceId}"
 ```
 
 

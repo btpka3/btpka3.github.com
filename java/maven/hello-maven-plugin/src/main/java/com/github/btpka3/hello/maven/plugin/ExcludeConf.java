@@ -26,9 +26,9 @@ public class ExcludeConf {
     Set<DependencyNode> dependencyNodes;
 
     /**
-     * dependencyManagement 中声明的 dependency 被依赖请看。
-     * KEY: dependencyManagement 中声明的 dependency A
-     * VALUE: dependencyManagement 中声明的 dependency B, 且 B 有传递依赖 A。
+     * dependencyManagement 中声明的 dependency 之间的依赖关系。
+     * KEY: 被依赖方 : dependencyManagement 中声明的 dependency A
+     * VALUE: 依赖方 : dependencyManagement 中声明的 dependency B, 且 B 有传递依赖 A。
      */
     Map<DependencyNode, Set<DependencyNode>> usedDependencies;
 

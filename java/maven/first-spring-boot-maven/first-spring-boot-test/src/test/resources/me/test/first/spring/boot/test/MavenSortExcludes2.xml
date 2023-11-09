@@ -1,0 +1,18 @@
+<exclusions>
+    <exclusion>
+        <artifactId>a02</artifactId>
+        <groupId>g02</groupId>
+    </exclusion>
+    <exclusion>
+        <artifactId>a03</artifactId>
+        <groupId>g03</groupId>
+    </exclusion>
+    <exclusion>
+        <groupId>g02</groupId>
+        <artifactId>a02</artifactId>
+    </exclusion>
+    <exclusion>
+        <groupId>g01</groupId>
+        <artifactId>a01</artifactId>
+    </exclusion>
+</exclusions>

@@ -1,0 +1,13 @@
+name: zhang3
+age: 20
+father:
+  name: wang5
+  age: 60
+ext:
+  a: aaa
+  b: bbb
+children:
+  - name: child1
+    age: 3
+  - name: child2
+    age: 5

@@ -1,0 +1,25 @@
+rootProject.name = 'first-spring-boot-maven'
+
+include 'platform'
+////include 'first-spring-boot-amqp'
+//include 'first-spring-boot-batch'
+//include 'first-spring-boot-data-elasticsearch'
+//include 'first-spring-boot-data-geode'
+////include 'first-spring-boot-data-mongo'
+//include 'first-spring-boot-database'
+//include 'first-spring-boot-feign'
+//include 'first-spring-boot-integration'
+//include 'first-spring-boot-jersey'
+//include 'first-spring-boot-security'
+//include 'first-spring-boot-security-acl'
+////include 'first-spring-boot-shell'
+//include 'first-spring-boot-swagger'
+//include 'first-spring-boot-web'
+//include 'first-spring-boot-test'
+//include 'first-spring-boot-webflux'
+//include 'first-spring-boot-websocket'
+//include 'test01'
+//include 'first-spring-boot-gorm-mongo'./
+//includeBuild './my-querydsl-plugin'
+
+

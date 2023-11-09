@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<configuration debug="true">
+
+    <property scope="context" name="b" value="bbb"/>
+
+    <appender name="myConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+    </appender>
+
+    <logger name="l.b" level="ERROR" additivity="false">
+        <appender-ref ref="myConsoleAppender"/>
+    </logger>
+
+<!--    <if condition='true'>-->
+<!--        <then>-->
+<!--            <logger name="l.b" level="TRACE">-->
+<!--            </logger>-->
+<!--        </then>-->
+<!--    </if>-->
+
+    <logger name="l.b" level="TRACE">
+    </logger>
+
+</configuration>

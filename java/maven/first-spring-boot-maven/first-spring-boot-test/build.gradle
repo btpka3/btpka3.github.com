@@ -1,0 +1,123 @@
+//jar {
+//    baseName = 'demo'
+//    version = '0.0.1-SNAPSHOT'
+//}
+configurations {
+
+}
+
+dependencies {
+//    api platform(project(":platform"))
+    // implementation(project(":lib"))
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation "org.springframework.boot:spring-boot-devtools"
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml'
+    implementation 'org.apache.httpcomponents:httpclient'
+    implementation 'javax.cache:cache-api'
+    implementation 'org.infinispan:infinispan-jcache'
+    implementation 'org.infinispan:infinispan-spring-boot-starter-embedded'
+    implementation 'org.infinispan:infinispan-spring-boot-starter'
+    implementation 'org.infinispan:infinispan-spring4-embedded'
+    implementation 'io.micrometer:micrometer-registry-prometheus'
+    implementation 'org.hamcrest:hamcrest'
+    implementation 'org.codehaus.groovy:groovy'
+    implementation 'com.nimbusds:nimbus-jose-jwt:9.35'
+    //implementation 'com.mysql:mysql-connector-j:8.0.33'
+    implementation 'mysql:mysql-connector-java:8.0.33'
+    //implementation 'io.micrometer:micrometer-test'
+
+    compileOnly 'org.projectlombok:lombok'
+    testCompileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
+    implementation "org.jsoup:jsoup"
+    implementation "io.vavr:vavr:0.10.4"
+
+    implementation('joda-time:joda-time')
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.mockito:mockito-core'
+
+    implementation "org.springframework.boot:spring-boot-starter-logging"
+
+    implementation 'org.springframework.boot:spring-boot-actuator'
+
+    implementation 'com.kjetland:mbknor-jackson-jsonschema_2.12'
+    implementation 'commons-io:commons-io:2.13.0'
+
+    implementation 'com.alibaba:fastjson:1.2.76'
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml'
+    implementation 'com.fasterxml.jackson.module:jackson-module-jsonSchema'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation "org.mongodb:bson"
+
+    implementation 'net.logstash.logback:logstash-logback-encoder'
+    implementation 'com.fasterxml.uuid:java-uuid-generator'
+
+    implementation 'com.github.vladimir-bukhtoyarov:bucket4j-core:4.10.0'
+
+    implementation "io.github.resilience4j:resilience4j-spring-boot2:1.6.1"
+    implementation('org.springframework.boot:spring-boot-starter-actuator')
+    implementation('org.springframework.boot:spring-boot-starter-aop')
+
+    implementation('io.github.resilience4j:resilience4j-reactor:1.6.1')
+    implementation 'io.github.resilience4j:resilience4j-all:1.6.1'
+    implementation 'io.github.resilience4j:resilience4j-consumer:1.6.1'
+    implementation 'io.github.resilience4j:resilience4j-spring-boot2:1.6.1'
+    implementation 'io.github.resilience4j:resilience4j-rxjava2:1.6.1'
+    implementation 'io.github.resilience4j:resilience4j-reactor:1.6.1'
+    implementation 'io.github.resilience4j:resilience4j-micrometer:1.6.1'
+    implementation 'io.github.resilience4j:resilience4j-metrics:1.6.1'
+    implementation 'io.github.resilience4j:resilience4j-prometheus:1.6.1'
+    implementation('org.ehcache:ehcache:3.7.1')
+    // https://drewnoakes.com/code/exif/
+    // https://github.com/drewnoakes/metadata-extractor
+    implementation('com.drewnoakes:metadata-extractor:2.15.0')
+
+    implementation('net.lingala.zip4j:zip4j:2.7.0')
+
+
+
+    implementation('io.projectreactor.addons:reactor-extra')
+    //implementation('io.projectreactor.addons:reactor-tools')
+    implementation('io.projectreactor.addons:reactor-adapter')
+    implementation('io.projectreactor.addons:reactor-pool')
+    testImplementation('io.projectreactor:reactor-test')
+
+    implementation('org.apache.tika:tika-parsers:1.24.1')
+    implementation('javax.inject:javax.inject:1')
+
+
+}
+
+
+test {
+    include 'me/test/**'
+    testLogging.showStandardStreams = false
+
+    //useJUnit()
+    useJUnitPlatform()
+    maxHeapSize = '1G'
+    systemProperties = System.properties
+    // listen to events in the test execution lifecycle
+//    beforeTest { descriptor ->
+//        logger.lifecycle("Running test: " + descriptor)
+//    }
+//
+//    // listen to standard out and standard error of the test JVM(s)
+//    onOutput { descriptor, event ->
+//        logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message )
+//    }
+}
+//
+//buildScan {
+//    termsOfServiceUrl = 'https://gradle.com/terms-of-service'
+//    termsOfServiceAgree = 'no'
+//}

@@ -5,6 +5,7 @@
 - [Spring Boot Gradle Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/3.0.3/gradle-plugin/reference/htmlsingle/)
 - [GraalVM Community Images](https://www.graalvm.org/latest/docs/getting-started/container-images/)
 - [GraalVM Container](https://github.com/search?q=repo%3Agraalvm%2Fcontainer++&type=registrypackages)
+- [Building Cross Platform Native Images With GraalVM](https://blogs.oracle.com/developers/post/building-cross-platform-native-images-with-graalvm)
 
 # Building a Native Image Using Buildpacks
 

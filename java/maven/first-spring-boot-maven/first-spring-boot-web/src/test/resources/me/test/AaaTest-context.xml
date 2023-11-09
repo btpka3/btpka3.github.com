@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+
+
+    <bean id="str" class="java.lang.String">
+        <constructor-arg value="998877"/>
+    </bean>
+
+
+    <!--
+        由于 Bbb 类不是 interface, 而是 concrete classes。
+        mock 的出来的类是 Bbb 的子类。
+        而 Bbb 中因为有 @Autowired 注解字段，
+        会造成 Spring 从当前 ApplicationContext 中获取相关 bean 而出错。
+        因此，
+        - 要么改为面向接口
+        - 要么配合使用 @InjectMocks
+    -->
+
+    <!--
+    <bean class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="me.test.Bbb"/>
+    </bean>
+    -->
+
+</beans>

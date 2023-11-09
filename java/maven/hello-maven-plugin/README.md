@@ -24,7 +24,7 @@ mvnDebug -Dbom.template=${BOM_TEMPLATE} com.github.btpka3:hello-maven-plugin:1.0
 # maven plugin 开发文档
 - [PluginParameterExpressionEvaluator](https://maven.apache.org/ref/3.9.4/maven-core/apidocs/org/apache/maven/plugin/PluginParameterExpressionEvaluator.html)
   @Parameter 的字段可以使用哪些 placeholder, 以及替换后的 java 类型
-
+- [Pretty-Print XML in Java](https://www.baeldung.com/java-pretty-print-xml)
 
 # design
 

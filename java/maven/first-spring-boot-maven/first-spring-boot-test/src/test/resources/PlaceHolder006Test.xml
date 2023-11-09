@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.2.xsd
+        ">
+
+    <context:property-placeholder location="classpath:PlaceHolder006Test_01.properties" ignore-unresolvable="true"/>
+    <context:property-placeholder location="classpath:PlaceHolder006Test_02.properties" ignore-unresolvable="true"/>
+
+    <bean id="myVarA" class="java.lang.String">
+        <constructor-arg value="___${a}___"/>
+    </bean>
+    <bean id="myVarB" class="java.lang.String">
+        <constructor-arg value="___${b}___"/>
+    </bean>
+    <bean id="myVarC" class="java.lang.String">
+        <constructor-arg value="___${c}___"/>
+    </bean>
+
+</beans>

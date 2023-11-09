@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+
+    <bean id="pojo1" class="me.test.first.spring.boot.test.context.MyPojo">
+        <property name="name" value="zhang3"/>
+        <property name="myPojo" ref="pojo2"/>
+    </bean>
+    <bean id="pojo2"  class="me.test.first.spring.boot.test.context.MyPojo">
+        <property name="name" value="li4"/>
+        <property name="myPojo" ref="pojo1"/>
+    </bean>
+
+</beans>

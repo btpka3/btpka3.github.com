@@ -11,7 +11,6 @@ import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.DefaultArtifact;
 import org.apache.maven.artifact.handler.DefaultArtifactHandler;
 import org.apache.maven.artifact.resolver.filter.ArtifactFilter;
-import org.apache.maven.enforcer.rules.utils.ArtifactUtils;
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.model.Dependency;
 import org.apache.maven.model.Exclusion;
@@ -27,7 +26,6 @@ import org.apache.maven.repository.internal.ArtifactDescriptorUtils;
 import org.apache.maven.shared.dependency.graph.DependencyGraphBuilder;
 import org.apache.maven.shared.dependency.graph.DependencyGraphBuilderException;
 import org.apache.maven.shared.dependency.graph.DependencyNode;
-import org.apache.maven.shared.dependency.graph.traversal.DependencyNodeVisitor;
 import org.eclipse.aether.resolution.ArtifactRequest;
 import org.eclipse.aether.resolution.ArtifactResolutionException;
 import org.eclipse.aether.resolution.ArtifactResult;
@@ -38,6 +36,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 
+/**
+ * @see <a href="https://github.com/jboss/bom-builder-maven-plugin">已经停止维护：jboss/bom-builder-maven-plugin</a>
+ */
 @Mojo(name = "gen-bom", defaultPhase = LifecyclePhase.NONE, requiresProject = false, requiresDependencyCollection = ResolutionScope.NONE, requiresDependencyResolution = ResolutionScope.NONE, threadSafe = true)
 public class GenBomMojo extends AbstractMojo {
 
@@ -65,6 +66,40 @@ public class GenBomMojo extends AbstractMojo {
 //                "jakarta.xml.bind:jakarta.xml.bind-api:[2.0,3.0)",
 //                "jakarta.activation:jakarta.activation-api:(1.0,2.0)",
                 "*:*:[9999.0-empty-to-avoid-conflict-with-guava]");
+    }
+
+
+    public void execute() throws MojoExecutionException {
+        try {
+
+            excludeConf.dependencyNodes = getResolvedDependencyNodes();
+
+            excludeConf.usedDependencies = genUsedDependencies(excludeConf.dependencyNodes);
+            if (getLog().isDebugEnabled()) {
+                getLog().debug("========== excludeConf.usedDependencies : \n" + toUsedDependencyStr(excludeConf.usedDependencies));
+            }
+            excludeConf.excludeDependencies = new HashMap<>();
+
+            for (DependencyNode dependencyNode : excludeConf.dependencyNodes) {
+                Set<Exclusion> exclusions = findExcludeDependencies(dependencyNode);
+                if (!exclusions.isEmpty()) {
+                    excludeConf.excludeDependencies.put(dependencyNode, exclusions);
+                }
+            }
+            if (getLog().isDebugEnabled()) {
+                getLog().debug("========== excludeConf.excludeDependencies : \n" + toExcludeDependenciesStr(excludeConf.excludeDependencies));
+            }
+//
+//
+//            outputFinalPom();
+//            MavenProject finalProject = genMavenProjectFromTemplateWithDependencies(bomTemplate, excludeConf.usedDependencies);
+//            lastCheck(finalProject);
+
+            getLog().info("====== excludeConf.dependencyNodes : " + excludeConf.dependencyNodes.size() + " : " + excludeConf.dependencyNodes);
+            getLog().info("====== Done.");
+        } catch (Exception e) {
+            throw new MojoExecutionException("err", e);
+        }
     }
 
 
@@ -231,39 +266,6 @@ public class GenBomMojo extends AbstractMojo {
     }
 
 
-    public void execute() throws MojoExecutionException {
-        try {
-
-            excludeConf.dependencyNodes = getResolvedDependencyNodes();
-
-            excludeConf.usedDependencies = genUsedDependencies(excludeConf.dependencyNodes);
-            if (getLog().isDebugEnabled()) {
-                getLog().debug("========== excludeConf.usedDependencies : \n" + toUsedDependencyStr(excludeConf.usedDependencies));
-            }
-            excludeConf.excludeDependencies = new HashMap<>();
-
-            for (DependencyNode dependencyNode : excludeConf.dependencyNodes) {
-                Set<Exclusion> exclusions = findExcludeDependencies(dependencyNode);
-                if (!exclusions.isEmpty()) {
-                    excludeConf.excludeDependencies.put(dependencyNode, exclusions);
-                }
-            }
-            if (getLog().isDebugEnabled()) {
-                getLog().debug("========== excludeConf.excludeDependencies : \n" + toExcludeDependenciesStr(excludeConf.excludeDependencies));
-            }
-//
-//
-//            outputFinalPom();
-//            MavenProject finalProject = genMavenProjectFromTemplateWithDependencies(bomTemplate, excludeConf.usedDependencies);
-//            lastCheck(finalProject);
-
-            getLog().info("====== excludeConf.dependencyNodes : " + excludeConf.dependencyNodes.size() + " : " + excludeConf.dependencyNodes);
-            getLog().info("====== Done.");
-        } catch (Exception e) {
-            throw new MojoExecutionException("err", e);
-        }
-    }
-
     /**
      * 从bom模板文件中解析，但不 resolve，以便获取 dependencyManagement 下声明了多少个 atrtifact。
      *
@@ -311,9 +313,6 @@ public class GenBomMojo extends AbstractMojo {
     }
 
 
-
-
-
     protected Map<DependencyNode, Set<DependencyNode>> genUsedDependencies(Set<DependencyNode> dependencyNodes) {
 
         Map<DependencyNode, Set<DependencyNode>> map = new HashMap<>(dependencyNodes.size());
@@ -352,17 +351,21 @@ public class GenBomMojo extends AbstractMojo {
         dependency.setVersion(node.getArtifact().getVersion());
         //dependency.setClassifier(node.getArtifact().getClassifier());
 
-        excludeConf.usedDependencies.entrySet().stream().filter(entry -> {
-            DependencyNode curNode = entry.getKey();
-            return Objects.equals(curNode.getArtifact().getGroupId(), node.getArtifact().getGroupId()) && Objects.equals(curNode.getArtifact().getArtifactId(), node.getArtifact().getArtifactId())
-                    //&& Objects.equals(curNode.getArtifact().getClassifier(), node.getArtifact().getClassifier())
-                    ;
-        }).map(Map.Entry::getValue).findFirst().ifPresent(shouldExcludeDeps -> shouldExcludeDeps.forEach(dep -> {
-            Exclusion exclusion = new Exclusion();
-            exclusion.setGroupId(dep.getArtifact().getGroupId());
-            exclusion.setArtifactId(dep.getArtifact().getArtifactId());
-            dependency.addExclusion(exclusion);
-        }));
+        excludeConf.usedDependencies.entrySet().stream()
+                .filter(entry -> {
+                    DependencyNode curNode = entry.getKey();
+                    return Objects.equals(curNode.getArtifact().getGroupId(), node.getArtifact().getGroupId()) && Objects.equals(curNode.getArtifact().getArtifactId(), node.getArtifact().getArtifactId())
+                            //&& Objects.equals(curNode.getArtifact().getClassifier(), node.getArtifact().getClassifier())
+                            ;
+                })
+                .map(Map.Entry::getValue)
+                .findFirst()
+                .ifPresent(shouldExcludeDeps -> shouldExcludeDeps.forEach(dep -> {
+                    Exclusion exclusion = new Exclusion();
+                    exclusion.setGroupId(dep.getArtifact().getGroupId());
+                    exclusion.setArtifactId(dep.getArtifact().getArtifactId());
+                    dependency.addExclusion(exclusion);
+                }));
 
 
         project.getDependencies().add(dependency);
@@ -397,14 +400,17 @@ public class GenBomMojo extends AbstractMojo {
             throw new RuntimeException(e);
         }
     }
-//
+
+    //
 //    protected MavenProject genMavenProjectFromTemplateWithDependencies(String bomTemplate, Map<DependencyNode, Set<DependencyNode>> x) {
 //        return null;
 //    }
 //
-//    protected void outputFinalPom() {
-//        // String bomTemplate, ExcludeConf excludeConf
-//    }
+    protected void outputFinalPom() {
+        MavenProject project = genMavenProjectFromTemplate(bomTemplate);
+
+        // String bomTemplate, ExcludeConf excludeConf
+    }
 
     protected void lastCheck(MavenProject finalProject) {
 

@@ -91,4 +91,81 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default-cli</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <ignoreCache>false</ignoreCache>
+                            <rules>
+                                <requireMavenVersion>
+                                    <message>Please use maven 3.5.0+ to build.</message>
+                                    <version>3.5.0</version>
+                                </requireMavenVersion>
+                                <banDuplicatePomDependencyVersions>
+                                    <message>duplicate dependencies declared。</message>
+                                </banDuplicatePomDependencyVersions>
+                                <dependencyConvergence>
+                                    <!-- 依赖的jar包版本未明确指定，将依赖maven内在的版本解决机制（广度优先），潜在使用的版本不符合预期，请通过 &lt;dependencyManagement&gt; 明确指定其版本号。-->
+                                    <uniqueVersions>true</uniqueVersions>
+<!--                                    <xx>xxx</xx>-->
+                                </dependencyConvergence>
+
+<!--                                <banDuplicateClasses>-->
+<!--                                    <findAllDuplicates>true</findAllDuplicates>-->
+<!--                                    <ignoreWhenIdentical>false</ignoreWhenIdentical>-->
+<!--                                    <scopes>-->
+<!--                                        <scope>compile</scope>-->
+<!--                                        <scope>runtime</scope>-->
+<!--                                    </scopes>-->
+<!--                                    <ignoreClasses>-->
+<!--                                        <ignoreClass>org.slf4j.*</ignoreClass>-->
+<!--                                    </ignoreClasses>-->
+<!--                                </banDuplicateClasses>-->
+                                <bannedDependencies>
+                                    <message>jackson 1.x 统一使用 asl 协议的版本
+                                        - org.codehaus.jackson:jackson-mapper-asl
+                                        - org.codehaus.jackson:jackson-core-asl
+                                    </message>
+                                    <excludes>
+                                        <exclude>org.codehaus.jackson:jackson-mapper-lgpl</exclude>
+                                        <exclude>org.codehaus.jackson:jackson-core-lgpl</exclude>
+                                    </excludes>
+                                </bannedDependencies>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>3.3.0</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.sonatype.ossindex.maven</groupId>
+                            <artifactId>ossindex-maven-enforcer-rules</artifactId>
+                            <version>3.2.0</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>extra-enforcer-rules</artifactId>
+                            <version>1.6.1</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 </project>

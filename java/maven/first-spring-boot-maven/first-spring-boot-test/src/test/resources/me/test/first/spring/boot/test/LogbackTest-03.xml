@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<configuration debug="true">
+
+    <appender name="myFileAppender"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+    </appender>
+
+    <property scope="context" name="b" value="bbb-999"/>
+
+    <logger name="l.b" level="INFO" additivity="false">
+        <appender-ref ref="myFileAppender"/>
+    </logger>
+
+</configuration>

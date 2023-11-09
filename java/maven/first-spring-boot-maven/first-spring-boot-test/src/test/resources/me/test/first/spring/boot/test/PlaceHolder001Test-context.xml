@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.2.xsd
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+">
+
+    <context:property-placeholder properties-ref="myProps"
+                                  null-value="@null"/>
+
+    <util:map id="map1" key-type="java.lang.String" value-type="java.lang.String">
+        <entry key="aaa" value="a11"/>
+        <entry key="bbb" value="${conf.bbb:#{null}}"/>
+        <entry key="ccc" value="${conf.ccc:#{'c11'}}"/>
+        <entry key="ddd" value="${conf.ddd:d11}"/>
+        <entry key="eee" value="${conf.eee:e11}"/>
+        <entry key="fff" value="${conf.fff}"/>
+<!--        <entry key="ggg" value="${conf.ggg}"/>-->
+    </util:map>
+
+    <util:properties id="myProps">
+        <prop key="conf.ddd"></prop>
+        <prop key="conf.eee">e10</prop>
+        <prop key="conf.fff">@null</prop>
+    </util:properties>
+</beans>

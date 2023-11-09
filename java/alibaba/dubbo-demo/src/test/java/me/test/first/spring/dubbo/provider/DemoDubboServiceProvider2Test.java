@@ -10,11 +10,16 @@ import org.apache.dubbo.config.bootstrap.DubboBootstrap;
 import org.junit.jupiter.api.Test;
 
 /**
+ * 不依赖 spring 的 纯java编程方式启动 provider
+ *
  * @author dangqian.zll
  * @date 2023/5/12
  * @see <a href="https://github.com/apache/dubbo-samples/blob/master/1-basic/dubbo-samples-api/src/main/java/org/apache/dubbo/samples/provider/Application.java">dubbo-samples/1-basic/dubbo-samples-api : provider </a>
  */
 public class DemoDubboServiceProvider2Test {
+
+//    String REGISTRY_ADDR = "zookeeper://127.0.0.1:2181";
+    String REGISTRY_ADDR = "nacos://nacos.default.svc.cluster.local:8848";
 
 
     @SneakyThrows
@@ -35,7 +40,7 @@ public class DemoDubboServiceProvider2Test {
         // connect registry configuration
         RegistryConfig registry = new RegistryConfig();
         //registry.setAddress("zookeeper://127.0.0.1:2181");
-        registry.setAddress("nacos://nacos.default.svc.cluster.local:8848");
+        registry.setAddress(REGISTRY_ADDR);
 
         // service provider protocol configuration
         ProtocolConfig protocol = new ProtocolConfig();
@@ -60,10 +65,10 @@ public class DemoDubboServiceProvider2Test {
         // https://cn.dubbo.apache.org/zh-cn/overview/mannual/java-sdk/reference-manual/config/api/
         // 故这里使用 DubboBootstrap#start(), 而不是 serviceConfig.export()
         DubboBootstrap.getInstance()
-            .application(application)
-            .registry(registry)
+                .application(application)
+                .registry(registry)
 //            .service(serviceConfig)
-            .start();
+                .start();
 
         DubboBootstrap.getInstance().service(serviceConfig);
 
