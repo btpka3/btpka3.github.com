@@ -1,0 +1,104 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.github.btpka3</groupId>
+        <artifactId>first-shaded</artifactId>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <artifactId>shaded-aliyun-sdk-oss</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+            <version>3.17.2</version>
+            <!-- !!! 为何 默认 createDependencyReducedPom=true,
+            这里如果没有 optional=true 的情况下，
+            最终的 my-biz 的war里还是有相关传递毅依赖的jar ？？？ -->
+<!--            <optional>true</optional>-->
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+<!--                            <shadedArtifactAttached>true</shadedArtifactAttached>-->
+<!--                            <useBaseVersion>true</useBaseVersion>-->
+<!--                            <createDependencyReducedPom>true</createDependencyReducedPom>-->
+<!--                            <useDependencyReducedPomInJar>true</useDependencyReducedPomInJar>-->
+<!--                            <shadedArtifactAttached>false</shadedArtifactAttached>-->
+<!--                            <shadedClassifierName>jar-with-dependencies</shadedClassifierName>-->
+<!--                            <generateUniqueDependencyReducedPom>true</generateUniqueDependencyReducedPom>-->
+                            <promoteTransitiveDependencies>true</promoteTransitiveDependencies>
+                            <artifactSet>
+                                <includes>
+                                    <include>com.aliyun.oss:aliyun-sdk-oss</include>
+                                </includes>
+<!--                                <excludes>-->
+<!--                                    <exclude>io.opentracing:*</exclude>-->
+<!--                                    <exclude>javax.*</exclude>-->
+<!--                                </excludes>-->
+                            </artifactSet>
+                            <relocations>
+<!--                                <relocation>-->
+<!--                                    <pattern>com.aliyun.oss.OSSClient</pattern>-->
+<!--                                    <shadedPattern>com.aliyun.oss.shade.OSSClient</shadedPattern>-->
+<!--                                    <excludes>-->
+<!--                                        <exclude>com.aliyun.oss.OSSClientBuilder</exclude>-->
+<!--                                        <exclude>com.aliyun.oss.OSSClientBuilder$1</exclude>-->
+<!--                                        <exclude>com.aliyun.oss.OSSClientBuilder$OSSClientBuilderImpl</exclude>-->
+<!--                                    </excludes>-->
+<!--                                </relocation>-->
+                                <relocation>
+                                    <pattern>com.aliyun.oss</pattern>
+                                    <shadedPattern>shaded.com.aliyun.oss</shadedPattern>
+<!--                                    <excludes>-->
+<!--&lt;!&ndash;                                        <exclude>com/aliyun/oss/**</exclude>&ndash;&gt;-->
+<!--                                        <exclude>com.aliyun.oss.**</exclude>-->
+<!--                                    </excludes>-->
+                                    <includes>
+                                        <include>com.aliyun.oss.OSSClient</include>
+                                    </includes>
+                                </relocation>
+
+                                <relocation>
+                                    <pattern>com.aliyuncs</pattern>
+                                    <shadedPattern>shaded.com.aliyuncs</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>com.aliyuncs</pattern>
+                                    <shadedPattern>shaded.com.aliyuncs</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>com.google</pattern>
+                                    <shadedPattern>shaded.com.google</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>com.vladium</pattern>
+                                    <shadedPattern>shaded.com.vladium</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>org</pattern>
+                                    <shadedPattern>shaded.org</shadedPattern>
+                                </relocation>
+
+                            </relocations>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

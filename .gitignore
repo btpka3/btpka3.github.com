@@ -1,4 +1,5 @@
 java/test/first-selenium/default.etcd
+.flattened-pom.xml
 target
 classes
 out
@@ -27,6 +28,8 @@ _site
 *.xpi
 gradle/my-gradle/data
 js/my-ts/dist
+dependency-reduced-pom.xml
+dependency-reduced-pom-*.xml
 .tmp
 .slcache
 .asscache
