@@ -1,0 +1,24 @@
+
+- [Spring Cloud Kubernetes](https://docs.spring.io/spring-cloud-kubernetes/docs/current/reference/html/#discoveryclient-for-kubernetes)
+- fabric8 :  Java client for Kubernetes & OpenShift 【已经不再维护】
+  - web home : [fabric8.io](http://fabric8.io/)
+  - github : [fabric8io/kubernetes-client](https://github.com/fabric8io/kubernetes-client)
+- kubernetes-client
+  - github : [kubernetes-client/java](https://github.com/kubernetes-client/java)
+  - web home : [kubernetes.io](https://kubernetes.io/)
+- 阿里云EDAS
+  - API:
+    - [ListApplication - 获取应用列表](https://help.aliyun.com/zh/edas/developer-reference/api-edas-2017-08-01-listapplication?)
+    - [InsertK8sApplication - 创建K8s应用](https://help.aliyun.com/zh/edas/developer-reference/api-edas-2017-08-01-insertk8sapplication)
+    - [DeleteK8sApplication - 删除容器服务K8s应用](https://help.aliyun.com/zh/edas/developer-reference/api-edas-2017-08-01-deletek8sapplication)
+    - [UpdateK8sApplicationBaseInfo - 更新K8s应用基本信息](https://help.aliyun.com/zh/edas/developer-reference/api-edas-2017-08-01-updatek8sapplicationbaseinfo)
+    - [UpdateK8sApplicationConfig - 修改K8s集群中应用配置](https://help.aliyun.com/zh/edas/developer-reference/api-edas-2017-08-01-updatek8sapplicationconfig)
+    - [StartK8sAppPrecheck - 开始K8s应用变更预检](https://help.aliyun.com/zh/edas/developer-reference/api-edas-2017-08-01-startk8sappprecheck)    
+    - [DeployK8sApplication - 部署K8s应用](https://help.aliyun.com/zh/edas/developer-reference/api-edas-2017-08-01-deployk8sapplication)
+      - ✅Envs:自定义环境变量
+      - ✅LocalVolume:自定义数据卷
+      - ？？？自定义 /etc/hosts
+    - [StartK8sApplication - 启动K8s应用](https://help.aliyun.com/zh/edas/developer-reference/api-edas-2017-08-01-startk8sapplication)
+    - [StopK8sApplication - 停止K8s应用](https://help.aliyun.com/zh/edas/developer-reference/api-edas-2017-08-01-stopk8sapplication)
+    - [GetK8sApplication - 获取K8s应用信息](https://help.aliyun.com/zh/edas/developer-reference/api-edas-2017-08-01-getk8sapplication)
+    - [DescribeAppInstanceList - 查询K8s应用实例列表](https://help.aliyun.com/zh/edas/developer-reference/api-edas-2017-08-01-describeappinstancelist)
