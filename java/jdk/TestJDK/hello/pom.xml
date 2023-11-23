@@ -7,20 +7,32 @@
     <parent>
         <groupId>me.test</groupId>
         <artifactId>test-jdk-root</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>hello</artifactId>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <!--        <junit.version>4.9</junit.version>-->
+
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>21.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>jsr305</artifactId>
+            <version>3.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.30</version>
+        </dependency>
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
@@ -44,7 +56,6 @@
         <dependency>
             <groupId>me.test</groupId>
             <artifactId>apt</artifactId>
-            <version>1.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
@@ -125,14 +136,18 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.3</version>
                 <configuration>
-                    <annotationProcessors>
-                        <annotationProcessor>me.test.jdk.javax.annotation.processing.MyProcessor</annotationProcessor>
-                    </annotationProcessors>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <encoding>UTF8</encoding>
+
+<!--                    <annotationProcessors>-->
+<!--                        <annotationProcessor>me.test.jdk.javax.annotation.processing.MyProcessor</annotationProcessor>-->
+<!--                    </annotationProcessors>-->
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>me.test.jdk.javafx.JavafxTest01</mainClass>
                 </configuration>
             </plugin>
         </plugins>

@@ -8,8 +8,11 @@ import javafx.scene.layout.*;
 import javafx.stage.*;
 
 /**
+ * mvn clean javafx:run
  *
  * http://docs.oracle.com/javase/8/javase-clienttechnologies.htm
+ * @see <a href="https://gluonhq.com/products/javafx/">JavaFX</a>
+ * @see <a href="https://openjfx.io/openjfx-docs/#install-javafx">https://openjfx.io/openjfx-docs/#install-javafx</a>
  */
 public class JavafxTest01 extends Application {
 
