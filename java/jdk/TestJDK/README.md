@@ -8,6 +8,6 @@
 
 
 ```bash
- mvn -Dmaven.test.skip=true clean package
-
+mvn -Dmaven.test.skip=true clean package
+mvn clean javafx:run -pl hello
 ```
