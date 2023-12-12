@@ -18,6 +18,7 @@ import java.util.zip.ZipEntry;
  * @author dangqian.zll
  * @date 2023/8/15
  * @see <a href="https://stackoverflow.com/questions/18567552/how-to-retransform-a-class-at-runtime">how to retransform a class at runtime</a>
+ * @see <a href="https://www.baeldung.com/jvm-list-all-classes-loaded">List All the Classes Loaded in the JVM</a>
  */
 public class AgentMain {
 
