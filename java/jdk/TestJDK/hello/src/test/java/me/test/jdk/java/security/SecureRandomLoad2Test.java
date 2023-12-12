@@ -5,6 +5,7 @@ import sun.security.provider.AbstractDrbg;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.concurrent.*;
 
 /**
@@ -30,9 +31,13 @@ import java.util.concurrent.*;
  * 原因是 UUID 使用了内部单例的一个 SecureRandom 对象，当使用 DRBG 算法时，效果较差。相比多实例 SecureRandom
  * DRBG 算法的 SecureRandom 多实例性能 大约是 单实例的 性能的5倍。
  * 多实例时，获取随机数耗时都比较平均，而单实例时会有大量长耗时（锁竞争）：
- * sun.security.provider.AbstractDrbg#generateAlgorithm(byte[], byte[]) 的所有实现都是 synchronized
+ * sun.security.provider.AbstractDrbg#generateAlgorithm(byte[], byte[]) 的所有实现都是 synchronized。
+ *
+ * 想法：应该可以通过 java-agent 机制，针对使用 DRBG 算法时， 修改 java.util.UUID#randomUUID() 方法调用前，
+ * 都将 java.util.UUID.Holder#numberGenerator 设置成一个新对象/或者对象池里无人使用的对对象。
  *
  * @see sun.security.provider.AbstractDrbg#generateAlgorithm(byte[], byte[])
+ * @see UUID#randomUUID()
  */
 public class SecureRandomLoad2Test {
 
