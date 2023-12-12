@@ -1,11 +1,8 @@
 package me.test.jdk.java.security;
 
-import sun.security.provider.AbstractDrbg;
-
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Objects;
-import java.util.UUID;
 import java.util.concurrent.*;
 
 /**
@@ -37,7 +34,7 @@ import java.util.concurrent.*;
  * 都将 java.util.UUID.Holder#numberGenerator 设置成一个新对象/或者对象池里无人使用的对对象。
  *
  * @see sun.security.provider.AbstractDrbg#generateAlgorithm(byte[], byte[])
- * @see UUID#randomUUID()
+ * @see java.util.UUID#randomUUID()
  */
 public class SecureRandomLoad2Test {
 
