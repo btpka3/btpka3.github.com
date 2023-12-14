@@ -3,4 +3,5 @@
 
 ----
 mvn -Dmaven.test.skip clean package
+java -cp target/print-all-clz-0.1.0-SNAPSHOT.jar me.test.PrintAllClz 28534
 ----

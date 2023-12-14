@@ -199,9 +199,11 @@
                 <configuration>
                     <archive>
                         <manifestEntries>
+                            <Agent-Class>me.test.PrintAllClz</Agent-Class>
                             <Premain-Class>me.test.PrintAllClz</Premain-Class>
-                            <Can-Redefine-Classes>false</Can-Redefine-Classes>
-                            <Can-Retransform-Classes>flase</Can-Retransform-Classes>
+                            <Permissions>all-permissions</Permissions>
+<!--                            <Can-Redefine-Classes>false</Can-Redefine-Classes>-->
+<!--                            <Can-Retransform-Classes>false</Can-Retransform-Classes>-->
                         </manifestEntries>
                     </archive>
                 </configuration>
@@ -235,11 +237,6 @@
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>flatten-maven-plugin</artifactId>
                     <version>1.4.1</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.openjfx</groupId>
-                    <artifactId>javafx-maven-plugin</artifactId>
-                    <version>0.0.8</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>

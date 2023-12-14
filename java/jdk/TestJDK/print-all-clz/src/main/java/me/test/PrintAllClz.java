@@ -1,16 +1,36 @@
 package me.test;
 
+import com.sun.tools.attach.AgentInitializationException;
+import com.sun.tools.attach.AgentLoadException;
+import com.sun.tools.attach.AttachNotSupportedException;
+import com.sun.tools.attach.VirtualMachine;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.lang.instrument.Instrumentation;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.security.CodeSource;
+import java.security.ProtectionDomain;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public class PrintAllClz {
+
+    public static void main(String[] args) throws Exception {
+        VirtualMachine vm = VirtualMachine.attach(args[0]);
+        String file = PrintAllClz.class.getProtectionDomain().getCodeSource().getLocation().getFile();
+        System.out.println("begin to load agent : " + file);
+        try {
+            vm.loadAgent(file);
+        } finally {
+            vm.detach();
+        }
+    }
 
     public static void agentmain(String agentArgs, Instrumentation inst) throws IOException {
         System.out.println("agent come in");
@@ -27,13 +47,13 @@ public class PrintAllClz {
                         if (targetJarList.isEmpty()) {
                             return true;
                         }
-                        String location = c.getProtectionDomain().getCodeSource().getLocation().toString();
+                        String location = getLocation(c);
                         return targetJarList.stream()
                                 .anyMatch(targetJar -> location.contains(targetJar));
                     })
                     .forEach(c -> {
                         try {
-                            String location = c.getProtectionDomain().getCodeSource().getLocation().toString();
+                            String location = getLocation(c);
                             w.write(c.getName());
                             w.write(" ");
                             w.write(location);
@@ -48,6 +68,15 @@ public class PrintAllClz {
             throw throwable;
         }
 
+    }
+
+    protected static String getLocation(Class c) {
+        return Optional.ofNullable(c)
+                .map(Class::getProtectionDomain)
+                .map(ProtectionDomain::getCodeSource)
+                .map(CodeSource::getLocation)
+                .map(URL::getFile)
+                .orElse("");
     }
 
 
