@@ -20,6 +20,14 @@ import java.util.concurrent.*;
  * NativePRNGBlocking    : 15.17S       -                   -
  * NativePRNGNonBlocking : 15.73S       8.04S               7.88S
  * DRBG                  :  1.99S       0.93S               4.62
+ *
+ * # Mean   :  6.6519
+ * # Std Dev: 16.2961
+ * grep -v cores DRBG.multiple.log  | grep -v total | awk '{print $3/1000000.0}' | gnuplot -e 'stats "-"'
+ * # Mean   : 36.0616
+ * # Std Dev: 16.1979
+ * grep -v cores DRBG.single.log    | grep -v total | awk '{print $3/1000000.0}' | gnuplot -e 'stats "-"'
+ *
  * </pre></code>
  * <p>
  *
