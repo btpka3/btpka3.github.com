@@ -1,13 +1,13 @@
-# 模块说明
+## 模块说明
 
-- `demo-function` : 示例 function
-- `demo-web` : 示例 PaaS， 尝试能运行时动态加载服务。
+* `demo-function` : 示例 function
+* `demo-web` : 示例 PaaS， 尝试能运行时动态加载服务。
 
 
-# 参考
-- org.springframework.cloud.function.context.FunctionProperties
-- org.springframework.cloud.function.deployer.FunctionDeployerConfiguration
-- org.springframework.cloud.function.deployer.FunctionArchiveDeployer  
+## 参考
+* org.springframework.cloud.function.context.FunctionProperties
+* org.springframework.cloud.function.deployer.FunctionDeployerConfiguration
+* org.springframework.cloud.function.deployer.FunctionArchiveDeployer
     参考： https://github.com/spring-cloud/spring-cloud-function/issues/564
     注意：这个是 package 级别 的，使用者是无法调用的。
   

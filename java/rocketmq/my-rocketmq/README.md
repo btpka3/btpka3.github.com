@@ -2,6 +2,7 @@
 
 # 目的
 学习 [RocketMQ](http://rocketmq.apache.org/)
+《[5.0速览](https://rocketmq.apache.org/version/)》 5.x 引入了POP机制（无状态）
 
 # 步骤
 

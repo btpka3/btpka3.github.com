@@ -44,3 +44,4 @@ jspm_packages
 # 注意：一定要有 最后的 '/*'
 !**/.gitkeep
 
+.sdkmanrc
