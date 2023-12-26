@@ -1,0 +1,12 @@
+
+* github : link:https://github.com/reactor/BlockHound[BlockHound]
+* link:https://blog.frankel.ch/blockhound-how-it-works/[BlockHound: how it works]
+
+
+
+## 参考
+
+[source,shell]
+----
+GRADLE_OPTS='-XX:+AllowRedefinitionToAddDeleteMethods -XX:+EnableDynamicAgentLoading -Djdk.instrument.traceUsage' ./gradlew bootJar -x test
+----
