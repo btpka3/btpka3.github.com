@@ -1,0 +1,11 @@
+
+
+
+[source,shell]
+----
+./gradlew clean build
+----
+
+
+* github : link:https://github.com/alibaba/jvm-sandbox[alibaba/jvm-sandbox]
+*
