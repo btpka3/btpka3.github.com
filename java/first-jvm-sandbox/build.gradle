@@ -22,6 +22,7 @@ repositories {
 }
 
 dependencies {
+	implementation 'org.apache.commons:commons-pool2:2.12.0'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
