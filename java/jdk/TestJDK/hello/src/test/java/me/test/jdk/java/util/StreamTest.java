@@ -1,5 +1,11 @@
 package me.test.jdk.java.util;
 
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONWriter;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.apache.commons.collections4.MapUtils;
 import org.junit.Test;
 
@@ -143,17 +149,14 @@ public class StreamTest {
         List<Node> nodes;
     }
 
+    @Data
+    @Builder(toBuilder = true)
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class User {
+        private String room;
         private String name;
         private Integer age;
-
-        @Override
-        public String toString() {
-            return "User{" +
-                    "name='" + name + '\'' +
-                    ", age=" + age +
-                    '}';
-        }
     }
 
     @Test
@@ -198,6 +201,38 @@ public class StreamTest {
                         Collectors.toList()
                 ));
         System.out.println(map);
+    }
+
+    /**
+     * groupBy + orderBy + limit (FIXME: 未实现）
+     */
+    @Test
+    public void groupBy02() {
+        List<User> list = Arrays.asList(
+                User.builder().room("room1").name("zhang3").age(3).build(),
+                User.builder().room("room2").name("li4").age(4).build(),
+                User.builder().room("room1").name("wang5").age(5).build(),
+                User.builder().room("room2").name("zhao6").age(6).build(),
+                User.builder().room("room1").name("sun7").age(7).build(),
+                User.builder().room("room2").name("qian8").age(8).build(),
+                User.builder().room("room1").name("wu9").age(9).build(),
+                User.builder().room("room2").name("zheng10").age(10).build()
+        );
+        Collections.shuffle(list);
+
+        Map<String, List<User>> map = list.stream()
+                .collect(Collectors.groupingBy(
+                        User::getRoom,
+                        Collectors.toList()
+                ));
+        for (List<User> l : map.values()) {
+            Collections.sort(l, Comparator.comparing(User::getAge));
+            if (l.size() > 2) {
+                // sublist 的修改会反应到原始list中
+                l.subList(2, l.size()).clear();
+            }
+        }
+        System.out.println(JSON.toJSONString(map, JSONWriter.Feature.PrettyFormat));
     }
 
 

@@ -1,7 +1,9 @@
 package me.test.jdk.java.util;
 
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 
+import java.security.SecureRandom;
 import java.util.*;
 
 /**
@@ -21,4 +23,13 @@ public class UUIDTest {
     public void test01() {
         UUID.randomUUID();
     }
+    @SneakyThrows
+    public void test02() {
+        SecureRandom secureRandom = SecureRandom.getInstance("DRBG");
+
+        byte[] bytes  = new byte[16];
+        secureRandom.nextBytes(bytes);
+
+    }
+
 }

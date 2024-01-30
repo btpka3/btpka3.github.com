@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * 消费事件
  */
-public class ComsumeEventTest {
+public class ConsumeEventTest {
 
 
     /**

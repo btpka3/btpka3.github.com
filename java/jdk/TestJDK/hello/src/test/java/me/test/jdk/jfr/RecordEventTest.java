@@ -1,8 +1,7 @@
 package me.test.jdk.jfr;
 
 
-import jdk.jfr.FlightRecorder;
-import jdk.jfr.Recording;
+import jdk.jfr.*;
 import jdk.jfr.consumer.RecordedEvent;
 import jdk.jfr.consumer.RecordingFile;
 import lombok.SneakyThrows;
@@ -10,7 +9,9 @@ import org.junit.jupiter.api.Test;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 生成JFR事件
@@ -21,7 +22,13 @@ public class RecordEventTest {
     @SneakyThrows
     public void testEvent() {
         Recording r = new Recording();
-        // 启用事件, 并获取栈信息
+        // 启用事件：方式1
+        Map<String, String> settings = new HashMap<>(4);
+        settings.put("Foo#enabled", "true");
+        settings.put("Foo#period", "5 s");
+        r.setSettings(settings);
+
+        // 启用事件：方式2
         r.enable(MyEvent.class).withStackTrace();
         r.start();
 
@@ -32,17 +39,27 @@ public class RecordEventTest {
 
         Path path = Files.createTempFile("recording", ".jfr");
         r.dump(path);
-
-
     }
 
     /**
      * 一次性事件
      */
     public void recordEvent() {
-        MyEvent event1 = new MyEvent();
-        event1.info = "event1 info";
-        event1.commit();
+        MyEvent event = new MyEvent();
+
+        if (event.isEnabled()) {
+            event.begin();
+            event.info = "event1 info";
+            event.commit();
+            if (event.shouldCommit()) {
+                event.commit();
+            }
+        }
+    }
+
+
+    public void producer01() {
+        //Producer myProducer = new Producer("Demo Producer", "A demo event producer.", http://www.example.com/demo/);
     }
 
     /**
@@ -55,6 +72,23 @@ public class RecordEventTest {
             MyEvent event = new MyEvent();
             event.info = "info";
             event.commit();
+        });
+    }
+
+    /**
+     * 动态事件字段。
+     *
+     * @param r
+     */
+    public void recordPeriodicEvent2(Recording r) {
+        List<AnnotationElement> annotationElements = null;
+        List<ValueDescriptor> fields = null;
+        final EventFactory factory = EventFactory.create(annotationElements, fields);
+        Event event = factory.newEvent();
+        FlightRecorder.addPeriodicEvent(event.getClass(), () -> {
+            Event foo = factory.newEvent();
+            foo.set(0, "111");
+            foo.commit();
         });
     }
 

@@ -1,0 +1,19 @@
+<configuration
+        version="2.0"
+        label="Continuous"
+        description="demo event"
+        provider="btpka3">
+
+    <!--
+    jdk.ThreadAllocationStatistics
+    -->
+    <event name="btpka3.MyEvent">
+        <setting name="enabled">true</setting>
+        <setting name="period">everyChunk</setting>
+        <setting name="stackTrace">false</setting>
+        <setting name="threshold">false</setting>
+        <setting name="threshold" control="compiler-compilation-threshold">1000 ms</setting>
+        <setting name="cutoff" control="memory-leak-detection-cutoff">0 ns</setting>
+    </event>
+
+</configuration>

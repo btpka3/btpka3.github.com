@@ -12,19 +12,12 @@ import jdk.jfr.*;
 @Description("xxx")
 @Category({ "jmc上显示的1级分类", "jmc上显示的2级分类" })
 @Enabled(false)
-// 不记录栈信息
 @StackTrace(false)
 @Registered(true)
 @Period("10s")
-public class MyEvent extends Event {
+public class MyDurattionEvent extends Event {
 
     @Label("info")
     public String info;
 
-    // 对应方法需要加上该注解, 参数为RegExpControl
-    // 返回类型必须为boolean, 参数数目只能为1个, 必须为集成SettingControl类
-//    @SettingDefinition
-//    protected boolean infoFilter(RegExpControl control) {
-//        return control.matches(uri);
-//    }
 }

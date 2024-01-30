@@ -1,0 +1,28 @@
+{
+  "ip": "127.0.0.1",
+  "host": "hostname001",
+  "pid": 101,
+  "jvmStartTime": "2024-01-01 01:01:01",
+  "scanTime": "2024-01-01 01:01:01",
+  "classLoaders": [
+    {
+      "classLoaderClass": "",
+      "classLoaderName": "",
+      "classLoaderHash": "",
+      "classes": [
+        {
+          "class" : "java.lang.String",
+          "jarPathMd5": "aabbccddeeff"
+        }
+      ]
+    }
+  ],
+  "jars" : [
+    {
+      "pathMd5": "aabbccddeeff",
+      "path": "/path/to/xxx.jar",
+      "md5" : "aabbccddeeff",
+      "size": 1024
+    }
+  ]
+}
