@@ -1,0 +1,9 @@
+me.test:
+  user-name: zhang3
+  age: 38
+  hobbies:
+    - swimming
+    - gaming
+  addresses: >
+    henan,
+    zhejiang
