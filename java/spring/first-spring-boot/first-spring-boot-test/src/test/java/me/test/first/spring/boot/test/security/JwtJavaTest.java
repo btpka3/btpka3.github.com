@@ -1,4 +1,4 @@
-package me.test;
+package me.test.first.spring.boot.test.security;
 
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
@@ -6,12 +6,17 @@ import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.JWSVerifier;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
+import com.nimbusds.jose.jwk.JWKSet;
+import com.nimbusds.jose.jwk.KeyUse;
+import com.nimbusds.jose.jwk.RSAKey;
+import com.nimbusds.jose.jwk.gen.RSAKeyGenerator;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.Date;
+import java.util.UUID;
 
 public class JwtJavaTest {
 
@@ -62,5 +67,55 @@ public class JwtJavaTest {
             // TODO: 额外验证业务上相关的值
             Assertions.assertEquals("urn:example:issuer", signedJWT.getJWTClaimsSet().getIssuer());
         }
+    }
+
+    @Test
+    public void generateJWK() throws Exception {
+        RSAKey jwk = new RSAKeyGenerator(2048)
+                .keyUse(KeyUse.SIGNATURE) // indicate the intended use of the key (optional)
+                .keyID(UUID.randomUUID().toString()) // give the key a unique ID (optional)
+                .algorithm(JWSAlgorithm.RS256)
+                .keyUse(KeyUse.SIGNATURE)
+                .generate();
+
+        /*
+[
+  // 私钥
+  {
+    "kid": "7ab14398-f4b9-4daa-8d07-4cc6bd947b58",
+    "kty": "RSA",
+    "use": "sig",
+    "alg": "HS256",
+    "e": "AQAB",
+    "n": "...", // 公钥的模值
+    "p": "...",
+    "q": "...",
+    "d": "...",
+    "qi": "...",
+    "dp": "...",
+    "dq": "..."
+  },
+  // 公钥
+  {
+    "kid": "7ab14398-f4b9-4daa-8d07-4cc6bd947b58",
+    "kty": "RSA",
+    "use": "sig",
+    "alg": "HS256",
+    "e": "AQAB",
+    "n": "..." // 公钥的模值
+  }
+]
+         */
+        System.out.println("-----------JWK(私钥、公钥）");
+        String str = "[" + jwk.toString() + "," + jwk.toPublicJWK() + "]";
+        System.out.println(str);
+        System.out.println();
+        System.out.println();
+
+        System.out.println("-----------JWKS(公钥）");
+        JWKSet jwks = new JWKSet(jwk.toPublicJWK());
+        System.out.println(jwks);
+
+
     }
 }

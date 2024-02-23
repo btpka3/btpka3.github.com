@@ -1,4 +1,4 @@
-package me.test;
+package me.test.first.spring.boot.test.security;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.nimbusds.jose.*;
