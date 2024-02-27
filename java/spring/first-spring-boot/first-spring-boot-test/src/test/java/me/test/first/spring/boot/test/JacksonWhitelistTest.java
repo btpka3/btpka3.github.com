@@ -86,7 +86,7 @@ public class JacksonWhitelistTest {
                 .build();
 
         // jackson 默认:
-        // DefaultTyping.OBJECT_AND_NON_CONCRETE
+        // JsonTypeInfo.Id.CLASS
         // DefaultTyping.OBJECT_AND_NON_CONCRETE
         // JsonTypeInfo.As.WRAPPER_ARRAY
 
