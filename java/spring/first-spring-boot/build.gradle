@@ -18,14 +18,19 @@ buildscript {
 
 
 plugins {
-    id 'groovy'
-    id 'eclipse'
-    id 'idea'
+    //id 'groovy'
+    //id 'eclipse'
+    //id 'idea'
     //id 'maven'
-    id 'project-report'
+    id 'java'
+    //id 'project-report'
 //    id "io.spring.dependency-management" version "1.0.8.RELEASE"
-    id "org.springframework.boot" version "${springBootVersion}" apply false
+    id "org.springframework.boot" version "${springBootVersion}"
+    id 'io.spring.dependency-management' version '1.1.4'
 }
+
+// ext['jackson-bom.version'] = '2.13.5'
+
 
 // https://docs.gradle.org/current/javadoc/org/gradle/api/artifacts/ComponentMetadataDetails.html
 class JacksonAlignmentRule implements ComponentMetadataRule {
@@ -200,17 +205,17 @@ allprojects {
         classpath = sourceSets.main.runtimeClasspath
     }
 
-    idea {
-        module {
-            downloadJavadoc = false
-            downloadSources = true
-        }
-    }
-    eclipse {
-        classpath {
-            downloadSources = true
-        }
-    }
+//    idea {
+//        module {
+//            downloadJavadoc = false
+//            downloadSources = true
+//        }
+//    }
+//    eclipse {
+//        classpath {
+//            downloadSources = true
+//        }
+//    }
 
 //    gitProperties {
 //        gitRepositoryRoot = new File("${project.rootDir}/../../..")
@@ -280,8 +285,8 @@ subprojects {
             implementation platform("org.springframework.boot:spring-boot-starter-parent:${springBootVersion}")
 
             // Forcefully downgrade the Jackson platform to 2.8.9
-            components.all(MyAlignmentRule)
-            implementation enforcedPlatform('com.fasterxml.jackson:jackson-platform:2.10.1')
+            //components.all(MyAlignmentRule)
+            //implementation enforcedPlatform('com.fasterxml.jackson:jackson-platform:2.10.1')
 
             constraints {
 //                api(project(":first-spring-boot-test"))

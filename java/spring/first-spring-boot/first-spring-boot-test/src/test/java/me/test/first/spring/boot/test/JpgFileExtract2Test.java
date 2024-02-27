@@ -96,6 +96,7 @@ public class JpgFileExtract2Test {
         /**
          * playload 中长度
          */
+        @Builder.Default
         private int payloadLen = -1;
 
 
