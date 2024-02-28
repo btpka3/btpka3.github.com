@@ -5,6 +5,8 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Objects;
+import java.util.jar.Attributes;
+import java.util.jar.Manifest;
 
 public class MyLoaderMain {
 
@@ -43,13 +45,17 @@ java -jar "${JAR_PATH}" mainInvokeBootInvokeBoot 3600 "${JAR_PATH}" "${JAR_PATH}
      * @param args
      */
     public static void main(String[] args) throws Exception {
-        System.out.println("111111");
+        System.out.println("111111 = " + getStartClass());
 
         if (args.length == 0) {
             // 走到这里 预期 是 spring boot loader 加载的。
             MyBiz.show();
             return;
         }
+        if (Objects.equals("NOOP", args[0])) {
+            return;
+        }
+
         String[] emptyArgs = new String[0];
 
         System.out.println("args[0] = " + args[0]);
@@ -77,6 +83,17 @@ java -jar "${JAR_PATH}" mainInvokeBootInvokeBoot 3600 "${JAR_PATH}" "${JAR_PATH}
             String springBootJar = args[1];
             invokeBoot(springBootJar, emptyArgs);
         }
+    }
+
+
+    protected static String getStartClass() throws Exception {
+        String manifestPath = "/META-INF/MANIFEST.MF";
+        URL url = MyLoaderMain.class.getResource(manifestPath);
+        System.out.println("URL(\"" + manifestPath + "\") = " + url);
+
+        Manifest manifest = new Manifest(MyLoaderMain.class.getResourceAsStream(manifestPath));
+        Attributes attributes = manifest.getMainAttributes();
+        return attributes.getValue("Start-Class");
     }
 
     protected static void invokeBoot(String springBootJar, String[] args) throws Exception {

@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import org.apache.commons.collections4.MapUtils;
 import org.junit.Test;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -235,6 +236,99 @@ public class StreamTest {
         System.out.println(JSON.toJSONString(map, JSONWriter.Feature.PrettyFormat));
     }
 
+    /**
+     *
+     */
+    @Test
+    public void groupBy03() {
+        List<User> list = Arrays.asList(
+                User.builder().room("room1").name("zhang3").age(3).build(),
+                User.builder().room("room1").name("li4").age(3).build(),
+                User.builder().room("room1").name("wang5").age(3).build(),
+                User.builder().room("room1").name("zhao6").age(5).build(),
+                User.builder().room("room2").name("sun7").age(5).build(),
+                User.builder().room("room2").name("qian8").age(5).build(),
+                User.builder().room("room2").name("wu9").age(6).build(),
+                User.builder().room("room2").name("zheng10").age(6).build()
+        );
+        Collections.shuffle(list);
+
+        Map<String, Map<Integer, List<User>>> map = list.stream()
+                .collect(Collectors.groupingBy(
+                        User::getRoom,
+                        Collectors.groupingBy(User::getAge, Collectors.toList())
+                ));
+
+        System.out.println(JSON.toJSONString(map, JSONWriter.Feature.PrettyFormat));
+    }
+
+    /**
+     * FIXME: Collectors.reducing
+     */
+    @Test
+    public void groupBy04() {
+        List<JarResult> list = Arrays.asList(
+                JarResult.builder().app("app1").jar("jar1").loadedClassCount(3).build(),
+                JarResult.builder().app("app1").jar("jar2").loadedClassCount(4).build(),
+                JarResult.builder().app("app1").jar("jar3").loadedClassCount(5).build(),
+                JarResult.builder().app("app2").jar("jar1").loadedClassCount(6).build(),
+                JarResult.builder().app("app2").jar("jar2").loadedClassCount(7).build(),
+                JarResult.builder().app("app3").jar("jar2").loadedClassCount(8).build()
+        );
+        Collections.shuffle(list);
+
+//        Object o = list.stream()
+//                .map(jarResult -> JarCountInfo.builder()
+//                        .jar(jarResult.getJar())
+//                        .loadedClassCounts(Arrays.asList(jarResult.getLoadedClassCount()))
+//                        .build())
+//                .collect(Collectors.reducing(
+//                        JarCountInfo.builder().build(),
+//                        jarResult -> JarCountInfo.builder().build(),
+//                        (info1, info2) -> {
+//                            info1.getLoadedClassCounts().addAll(info1.getLoadedClassCounts());
+//                            return info1;
+//                        }));
+//        Object o = list.stream()
+//                .collect(Collectors.groupingBy(
+//                        JarResult::getJar,
+//                        Collectors.mapping(
+//                                jarResult -> JarCountInfo.builder()
+//                                        .jar(jarResult.getJar())
+//                                        .loadedClassCounts(Arrays.asList(jarResult.getLoadedClassCount()))
+//                                        .build(),
+//                                Collectors.reducing(
+//                                        JarCountInfo.builder().build(),
+//                                        jarResult -> JarCountInfo.builder().build(),
+//                                        (info1, info2) -> {
+//                                            info1.getLoadedClassCounts().addAll(info1.getLoadedClassCounts());
+//                                            return info1;
+//                                        })
+//                        )
+//
+//                ));
+
+//        System.out.println(JSON.toJSONString(o, JSONWriter.Feature.PrettyFormat));
+    }
+
+    @Data
+    @Builder(toBuilder = true)
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class JarCountInfo implements Serializable {
+        private String jar;
+        private List<Integer> loadedClassCounts;
+    }
+
+    @Data
+    @Builder(toBuilder = true)
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static  class JarResult implements Serializable {
+        private String app;
+        private String jar;
+        private Integer loadedClassCount;
+    }
 
     @Test
     public void testGeneric01() {

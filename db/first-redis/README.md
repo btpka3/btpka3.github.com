@@ -6,9 +6,9 @@
 
 
 ```shell
-podman run --rm docker.io/library/redis:7.0.11-alpine
+docker run --rm -p 6379:6379  docker.io/library/redis:7.2-alpine
 
-podman run --rm docker.io/library/alpine:3.17.3 date
+docker run --rm docker.io/library/alpine:3.17.3 date
 ```
 
 

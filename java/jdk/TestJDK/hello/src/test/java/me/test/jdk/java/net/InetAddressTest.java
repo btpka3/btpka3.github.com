@@ -1,5 +1,7 @@
 package me.test.jdk.java.net;
 
+import lombok.SneakyThrows;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.net.InetAddress;
@@ -81,5 +83,84 @@ public class InetAddressTest {
 
     public static boolean validate(final String ip) {
         return IPv4RegexPattern.matcher(ip).matches();
+    }
+
+    @Test
+    public void test4() throws UnknownHostException {
+        //String ip = "192.168.1.1";
+        byte[] bytes = new byte[4];
+        for (byte b0 = 0; b0 <= 255; b0++) {
+            for (byte b1 = 0; b1 <= 255; b1++) {
+                for (byte b2 = 0; b2 <= 255; b2++) {
+                    for (byte b3 = 0; b3 <= 255; b3++) {
+                        bytes[0] = b0;
+                        bytes[1] = b1;
+                        bytes[2] = b2;
+                        bytes[3] = b3;
+
+                        int int1 = ipV4ToInt1(bytes);
+                        int int2 = ipV4ToInt2(bytes);
+                        int int3 = ipV4ToInt3(bytes);
+
+                        String msg = "not equal : " +
+                                "b0=" + b0 + ", " +
+                                "b1=" + b1 + ", " +
+                                "b2=" + b2 + ", " +
+                                "b2=" + b2 + ", " +
+                                "int1=" + int1 + ", " +
+                                "int2=" + int2 + ", " +
+                                "int3=" + int3;
+                        System.out.println(msg  );
+
+//                        Assert.assertEquals(msg, int1, int2);
+                        //Assert.assertEquals(msg, int1, int3);
+                    }
+                }
+            }
+        }
+    }
+
+
+    @SneakyThrows
+    public static byte[] ip2bytes(String ip) {
+        InetAddress addr = InetAddress.getByName(ip);
+        return addr.getAddress();
+    }
+
+
+    public static int ipV4ToInt1(byte[] bytes) {
+        if (bytes.length != 4) {
+            throw new RuntimeException("invalid ipv4 address : " + bytes.length);
+        }
+        byte a1 = bytes[0];
+        byte a2 = bytes[1];
+        byte a3 = bytes[2];
+        byte a4 = bytes[3];
+        return (a1 << 24) ^ (a2 << 16) ^ (a3 << 8) ^ a4;
+    }
+
+    @SneakyThrows
+    public static int ipV4ToInt2(byte[] bytes) {
+        if (bytes.length != 4) {
+            throw new RuntimeException("invalid ipv4 address : " + bytes.length);
+        }
+        int result = 0;
+        for (byte b : bytes) {
+            result = result << 8 | (b & 0xFF);
+        }
+        return result;
+    }
+
+
+    public static int ipV4ToInt3(byte[] bytes) {
+        if (bytes.length != 4) {
+            throw new RuntimeException("invalid ipv4 address : " + bytes.length);
+        }
+
+        long result = 0;
+        for (int i = 0; i < 4; i++) {
+            result += bytes[i] << (24 - (8 * i));
+        }
+        return ((Long) result).intValue();
     }
 }

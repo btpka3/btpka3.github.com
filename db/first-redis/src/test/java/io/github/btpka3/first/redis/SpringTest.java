@@ -307,7 +307,7 @@ public class SpringTest {
     @Test
     public void script01() {
 
-
+        // redis-cli 验证：
         RedisTemplate<Object, Object> redisTemplate = getRedisTemplate();
         String key = "key001";
         redisTemplate.delete(key);

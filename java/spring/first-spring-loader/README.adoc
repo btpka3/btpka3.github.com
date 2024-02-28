@@ -1,0 +1,65 @@
+
+## 参考
+link:https://github.com/spring-projects/spring-boot/blob/3d5cdb7715397db2b4b3260544624d0f919315b4/spring-boot-project/spring-boot-tools/spring-boot-loader/src/main/java/org/springframework/boot/loader/launch/JarLauncher.java#L30[org.springframework.boot.loader.launch.JarLauncher]
+
+## fat jar layout
+----
+unzip -l ./build/libs/first-spring-loader-0.0.1-SNAPSHOT.jar
+META-INF/
+META-INF/MANIFEST.MF
+META-INF/services/
+META-INF/services/java.nio.file.spi.FileSystemProvider
+org/springframework/boot/loader/*
+BOOT-INF/
+BOOT-INF/classes/com/github/btpka3/*
+BOOT-INF/classes/application.properties
+BOOT-INF/lib/
+BOOT-INF/lib/fastjson2-2.0.43.jar
+BOOT-INF/lib/spring-boot-jarmode-layertools-3.2.2.jar
+BOOT-INF/classpath.idx
+BOOT-INF/layers.idx
+----
+
+
+## classloader
+
+----
++-BootstrapClassLoader
++-jdk.internal.loader.ClassLoaders$PlatformClassLoader@342093e3
+  +-com.taobao.arthas.agent.ArthasClassloader@41de8bfc
+  +-jdk.internal.loader.ClassLoaders$AppClassLoader@531d72ca
+    +-org.springframework.boot.loader.launch.LaunchedClassLoader@5305068a
+----
+
+
+## META-INF/MANIFEST.MF
+
+----
+unzip -p ./build/libs/first-spring-loader-0.0.1-SNAPSHOT.jar META-INF/MANIFEST.MF
+Manifest-Version: 1.0
+Main-Class: org.springframework.boot.loader.launch.JarLauncher
+Start-Class: com.github.btpka3.first.spring.loader.MyMain
+Spring-Boot-Version: 3.2.2
+Spring-Boot-Classes: BOOT-INF/classes/
+Spring-Boot-Lib: BOOT-INF/lib/
+Spring-Boot-Classpath-Index: BOOT-INF/classpath.idx
+Spring-Boot-Layers-Index: BOOT-INF/layers.idx
+Build-Jdk-Spec: 17
+Implementation-Title: first-spring-loader
+Implementation-Version: 0.0.1-SNAPSHOT
+----
+
+## debug
+
+----
+./gradlew bootJar -Dorg.gradle.debug=true --no-daemon
+# 在远程java debug , 端口: 5005
+----
+
+## xxx
+----
+# 将自定义的 几个类 从 BOOT-INF/classes 移动到  root
+./gradlew clean bootJar ; unzip -l build/libs/first-spring-loader-0.0.1-SNAPSHOT.jar | grep MyLoader
+
+java -cp build/libs/first-spring-loader-0.0.1-SNAPSHOT.jar com.github.btpka3.first.spring.loader.MyLoaderMain NOOP
+----
