@@ -1,19 +1,18 @@
 package me.test.first.spring.boot.test;
 
 import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
 import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator;
-import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 import lombok.*;
 import me.test.first.spring.boot.test.json.a.Aaa;
 import me.test.first.spring.boot.test.json.c.A11;
 import me.test.first.spring.boot.test.json.c.A11Mixin;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -23,7 +22,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetails;
 
 import java.util.*;
 
-import static com.fasterxml.jackson.databind.MapperFeature.BLOCK_UNSAFE_POLYMORPHIC_BASE_TYPES;
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 import static com.fasterxml.jackson.databind.MapperFeature.USE_ANNOTATIONS;
 
 
@@ -271,7 +270,6 @@ com.fasterxml.jackson.databind.exc.MismatchedInputException: Unexpected token (S
     }
 
 
-
     /**
      * 使用注解。
      */
@@ -442,7 +440,6 @@ $.o2.getClass() = class java.util.LinkedHashMap
     @Test
     public void test02() {
         ObjectMapper objectMapper = JsonMapper.builder()
-//                .enable()
                 .disable(USE_ANNOTATIONS)
                 .build();
         Map<String, Object> map = new HashMap<>(4);
@@ -452,6 +449,48 @@ $.o2.getClass() = class java.util.LinkedHashMap
         String jsonStr = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(user);
         System.out.println("###### json =");
         System.out.println(jsonStr);
+    }
+
+    @SneakyThrows
+    @Test
+    public void test03() {
+        ObjectMapper objectMapper = JsonMapper.builder()
+                .serializationInclusion(NON_NULL)
+                .build();
+        A11 a11 = new A11();
+        a11.setName("zhang3");
+        a11.setAge(38);
+        String jsonStr = objectMapper.writeValueAsString(a11);
+        System.out.println(jsonStr);
+    }
+
+    /**
+     * 运行该单测case时，需要 A11 增加注解： `@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY)`
+     */
+    @Disabled
+    @SneakyThrows
+    @Test
+    public void test04() {
+        ObjectMapper objectMapper = JsonMapper.builder()
+                .serializationInclusion(NON_NULL)
+                .build();
+
+        PolymorphicTypeValidator validator = BasicPolymorphicTypeValidator.builder()
+                // 注意：以下 任意启用 allowIfBaseType 或者 allowIfSubType 都OK。
+                // 但仅仅启用 allowIfBaseType 时，不能配置成 "me.test.first.spring.boot.test.json.b" : 猜想是根据最顶层的接口来检查的 而检测失败。
+                //.allowIfBaseType("me.test.first.spring.boot.test.json.a")
+                .allowIfSubType("me.test.first.spring.boot.test.json.c")
+                .build();
+        objectMapper.activateDefaultTyping(validator, ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
+
+        String jsonStr = "{\"@class\":\"me.test.first.spring.boot.test.json.c.A11\",\"name\":\"zhang3\",\"age\":38}";
+
+        Aaa aaa = objectMapper.readValue(jsonStr, Aaa.class);
+
+        Assertions.assertInstanceOf(A11.class, aaa);
+        A11 newA11 = (A11) aaa;
+        Assertions.assertEquals("zhang3", newA11.getName());
+        Assertions.assertEquals(38, newA11.getAge());
     }
 
     @Data

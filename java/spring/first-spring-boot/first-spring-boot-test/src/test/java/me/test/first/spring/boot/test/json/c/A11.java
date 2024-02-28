@@ -1,6 +1,7 @@
 package me.test.first.spring.boot.test.json.c;
 
 import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import me.test.first.spring.boot.test.json.b.A10;
 
 import java.util.Map;
@@ -19,7 +20,7 @@ import java.util.Map;
 // @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS,           include = JsonTypeInfo.As.WRAPPER_OBJECT)   // {"me.test.first.spring.boot.test.json.c.A11":{"name":"zhang3","age":38}}
 // @JsonTypeInfo(use = JsonTypeInfo.Id.MINIMAL_CLASS,   include = JsonTypeInfo.As.WRAPPER_OBJECT)   // {".A11":{"name":"zhang3","age":38}}
 // @JsonTypeInfo(use = JsonTypeInfo.Id.NAME,            include = JsonTypeInfo.As.WRAPPER_OBJECT)   // {"A11":{"name":"zhang3","age":38}}
-
+//@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY)
 public class A11 extends A10 {
 
     public A11(){}

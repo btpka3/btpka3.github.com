@@ -118,4 +118,27 @@ public class JwtJavaTest {
 
 
     }
+
+    /**
+     * 从JSON文件中load JWK。
+     */
+    @Test
+    public void loadJWT() throws Exception {
+        RSAKey jwk = new RSAKeyGenerator(2048)
+                .keyUse(KeyUse.SIGNATURE)
+                .keyID(UUID.randomUUID().toString())
+                .algorithm(JWSAlgorithm.RS256)
+                .keyUse(KeyUse.SIGNATURE)
+                .generate();
+        String jwkStr = jwk.toString();
+
+        RSAKey newJwk = RSAKey.parse(jwkStr);
+        Assertions.assertEquals(jwk, newJwk);
+
+        JWKSet jwks = new JWKSet(jwk.toPublicJWK());
+        String jwksStr = jwks.toString();
+        JWKSet newJwks = JWKSet.parse(jwksStr);
+        Assertions.assertEquals(jwks, newJwks);
+
+    }
 }
