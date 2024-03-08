@@ -1,4 +1,4 @@
-package me.test.my.rocketmq.demo.simple;
+package me.test.my.rocketmq.demo.remoting.simple;
 
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
 import org.apache.rocketmq.client.producer.SendCallback;

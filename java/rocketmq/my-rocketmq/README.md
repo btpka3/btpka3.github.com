@@ -32,3 +32,37 @@ bin/mqbroker -n localhost:9876
 export NAMESRV_ADDR=localhost:9876
 # 然后运行 org.apache.rocketmq.example.simple.AsyncProducer 等例子。
 ```
+
+# 旧：remoting api 
+
+典型接口：
+- org.apache.rocketmq.client.consumer.DefaultMQPushConsumer
+- org.apache.rocketmq.client.producer.DefaultMQProducer
+
+
+```xml
+<dependency>
+    <groupId>org.apache.rocketmq</groupId>
+    <artifactId>rocketmq-client</artifactId>
+    <version>5.2.0</version>
+</dependency>
+```
+
+# 新：remoting api 
+
+典型接口：
+- org.apache.rocketmq.client.apis.ClientServiceProvider
+- org.apache.rocketmq.client.apis.producer.Producer
+- org.apache.rocketmq.client.apis.ClientServiceProvider
+- org.apache.rocketmq.client.apis.consumer.PushConsumer
+
+
+```xml
+<dependency>
+    <groupId>org.apache.rocketmq</groupId>
+    <artifactId>rocketmq-client-java</artifactId>
+    <version>5.0.6</version>
+</dependency>
+```
+
+

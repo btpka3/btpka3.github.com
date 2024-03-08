@@ -1,4 +1,4 @@
-package me.test.my.rocketmq.demo.filter;
+package me.test.my.rocketmq.demo.remoting.filter;
 
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.MessageSelector;

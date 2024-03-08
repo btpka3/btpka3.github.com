@@ -1,4 +1,4 @@
-package me.test.my.rocketmq.demo.ordered;
+package me.test.my.rocketmq.demo.remoting.ordered;
 
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.ConsumeOrderlyContext;

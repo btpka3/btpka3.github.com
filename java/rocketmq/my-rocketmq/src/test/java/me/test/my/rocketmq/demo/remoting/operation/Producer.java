@@ -1,4 +1,4 @@
-package me.test.my.rocketmq.demo.operation;
+package me.test.my.rocketmq.demo.remoting.operation;
 
 
 import org.apache.commons.cli.CommandLine;

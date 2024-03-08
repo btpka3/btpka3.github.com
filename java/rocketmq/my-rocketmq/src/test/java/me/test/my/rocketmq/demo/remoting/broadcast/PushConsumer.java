@@ -1,4 +1,4 @@
-package me.test.my.rocketmq.demo.broadcast;
+package me.test.my.rocketmq.demo.remoting.broadcast;
 
 
 import java.util.List;

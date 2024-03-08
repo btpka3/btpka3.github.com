@@ -1,4 +1,4 @@
-package me.test.my.rocketmq.demo.filter;
+package me.test.my.rocketmq.demo.remoting.filter;
 
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;

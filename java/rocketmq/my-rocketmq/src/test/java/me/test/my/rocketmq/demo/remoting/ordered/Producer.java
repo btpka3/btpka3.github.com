@@ -1,4 +1,4 @@
-package me.test.my.rocketmq.demo.ordered;
+package me.test.my.rocketmq.demo.remoting.ordered;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;

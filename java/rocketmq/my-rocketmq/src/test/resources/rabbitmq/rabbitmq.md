@@ -68,8 +68,8 @@ java -Drocketmq.namesrv.addr=127.0.0.1:9876 \
 
 ## 启动示例程序
 老的编程方式：
-- 启动 consumer : [DemoMqConsumerService.java](../../java/me/test/my/rocketmq/demo/remoting/consumer/DemoMqConsumerService.java) 
-- 启动 producer : [DemoMqProducerService.java](../../java/me/test/my/rocketmq/demo/remoting/producer/DemoMqProducerService.java)
+- 启动 consumer : [DemoMqConsumerService.java](../../java/me/test/my/rocketmq/demo/remoting/my/consumer/DemoMqConsumerService.java) 
+- 启动 producer : [DemoMqProducerService.java](../../java/me/test/my/rocketmq/demo/remoting/my/producer/DemoMqProducerService.java)
 
 
 #  docker 启动

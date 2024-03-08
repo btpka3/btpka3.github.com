@@ -1,4 +1,4 @@
-package me.test.my.rocketmq.demo.schedule;
+package me.test.my.rocketmq.demo.remoting.schedule;
 
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;

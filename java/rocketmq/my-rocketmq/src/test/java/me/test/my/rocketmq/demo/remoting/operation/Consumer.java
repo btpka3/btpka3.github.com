@@ -1,4 +1,4 @@
-package me.test.my.rocketmq.demo.operation;
+package me.test.my.rocketmq.demo.remoting.operation;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
