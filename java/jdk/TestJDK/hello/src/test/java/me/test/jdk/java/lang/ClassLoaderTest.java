@@ -1,5 +1,7 @@
 package me.test.jdk.java.lang;
 
+import io.github.classgraph.ClassGraph;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -7,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLClassLoader;
 import java.net.URLConnection;
 import java.util.function.Supplier;
 
@@ -81,4 +84,58 @@ public class ClassLoaderTest {
         }
 
     }
+
+    @Test
+    public void testJdkClassLoader() {
+
+        ClassLoader platformClassLoader = ClassLoader.getPlatformClassLoader();
+        // jdk.internal.loader.ClassLoaders$PlatformClassLoader
+        System.out.println("platformClassLoader = " + platformClassLoader.getClass());
+        ClassLoader systemClassLoader = ClassLoader.getSystemClassLoader();
+        // jdk.internal.loader.ClassLoaders$AppClassLoader
+        System.out.println("systemClassLoader = " + systemClassLoader.getClass());
+    }
+
+    /**
+     * URLClassLoader -> CLassPath
+     */
+    @Test
+    public void testURLClassLoader() {
+        URLClassLoader urlClassLoader = new URLClassLoader(new URL[0]);
+        urlClassLoader.getURLs();
+    }
+
+
+    /**
+     * @see <a href="https://github.com/classgraph/classgraph">ClassGraph</a>
+     */
+    @Test
+    public void classLoader2ClassPath() {
+        String classPath = System.getProperty("java.class.path");
+        System.out.println("=========== System.getProperty(\"java.class.path\") : " + classPath);
+        System.out.println("===========");
+        System.out.println();
+        printClassPath(classPath);
+        System.out.println();
+
+        classPath = new ClassGraph()
+                //.addClassLoader(xxxClassLoader)
+                .getClasspath();
+        System.out.println("=========== classPath : " + classPath);
+        System.out.println("===========");
+        System.out.println();
+        printClassPath(classPath);
+    }
+
+    protected void printClassPath(String classPath) {
+        String[] arr = classPath.split("[;:,]");
+        System.out.println(arr.length);
+        for (String s : arr) {
+            if (StringUtils.isNotBlank(s)) {
+                System.out.println(s);
+            }
+        }
+
+    }
+
 }

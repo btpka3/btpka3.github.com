@@ -1,4 +1,5 @@
 java/test/first-selenium/default.etcd
+*.hprof
 .flattened-pom.xml
 target
 classes

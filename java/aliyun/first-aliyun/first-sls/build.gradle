@@ -34,7 +34,7 @@ dependencies {
     implementation 'commons-io:commons-io:2.14.0'
     implementation 'com.alibaba.fastjson2:fastjson2:2.0.41'
     implementation 'org.apache.commons:commons-lang3:3.14.0'
-
+    implementation 'com.aliyun.openservices:loghub-client-lib:0.6.47'
 }
 
 
