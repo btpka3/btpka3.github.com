@@ -1,3 +1,6 @@
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
+
+
 //jar {
 //    baseName = 'demo'
 //    version = '0.0.1-SNAPSHOT'
@@ -99,6 +102,12 @@ dependencies {
     implementation('javax.inject:javax.inject:1')
     implementation('org.springframework.boot:spring-boot-starter-security')
     //testImplementation('org.springframework.security:spring-security-core')
+    implementation(platform("io.opentelemetry:opentelemetry-bom:1.36.0"))
+    implementation(platform("io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom-alpha:2.2.0-alpha"))
+    implementation("io.opentelemetry.instrumentation:opentelemetry-spring-boot-starter")
+    implementation("io.opentelemetry.instrumentation:opentelemetry-logback-appender-1.0")
+    implementation("io.opentelemetry:opentelemetry-exporter-logging")
+    implementation("io.opentelemetry:opentelemetry-exporter-logging-otlp")
 
 }
 

@@ -3,6 +3,10 @@
     <variable name="my.log.path" value="${my.log.path:-/tmp/my/logs}" />
     <property name="FILE_LOG_PATTERN" value="%date{ISO8601}|%thread|%level|%logger{36}|%msg%n" />
 
+    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+        <resetJUL>true</resetJUL>
+    </contextListener>
+
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%-4relative [%thread] %-5level %logger{35} - %msg %n</pattern>
@@ -32,13 +36,18 @@
 
     <root level="ERROR">
         <appender-ref ref="ROOT"/>
+        <appender-ref ref="CONSOLE"/>
     </root>
 
     <logger name="my.var" level="INFO" additivity="false">
         <appender-ref ref="ROOT"/>
     </logger>
+    <logger name="io.opentelemetry.exporter.logging" level="INFO">
+    </logger>
 
     <logger name="org.springframework" level="DEBUG">
+    </logger>
+    <logger name="me.test.first.spring.boot.test" level="INFO">
     </logger>
 
 
