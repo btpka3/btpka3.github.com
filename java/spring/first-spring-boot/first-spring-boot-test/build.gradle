@@ -14,6 +14,7 @@ dependencies {
     // implementation(project(":lib"))
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-tomcat'
     implementation 'org.springframework.boot:spring-boot-starter-cache'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
@@ -29,6 +30,7 @@ dependencies {
     implementation 'org.infinispan:infinispan-spring-boot-starter'
     implementation 'org.infinispan:infinispan-spring4-embedded'
     implementation 'io.micrometer:micrometer-registry-prometheus'
+    implementation 'io.prometheus:simpleclient_pushgateway'
     implementation 'org.hamcrest:hamcrest'
     implementation 'org.codehaus.groovy:groovy'
     implementation 'com.nimbusds:nimbus-jose-jwt:9.35'

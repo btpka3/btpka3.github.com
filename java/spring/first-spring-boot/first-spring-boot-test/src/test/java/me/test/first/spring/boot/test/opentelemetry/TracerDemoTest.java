@@ -41,8 +41,6 @@ import java.util.logging.Logger;
 /**
  * @author dangqian.zll
  * @date 2024/3/20
- * @see <a href="https://opentelemetry.io/docs/languages/java/instrumentation/#metrics">opentelemetry : Java/Instrumentation</a>
- * @see <a href="https://github.com/open-telemetry/opentelemetry-java-instrumentation/tree/main/instrumentation/logback/logback-appender-1.0/library">Appender Instrumentation for Logback version 1.0 and higher</a>
  */
 @Slf4j
 @SpringBootTest

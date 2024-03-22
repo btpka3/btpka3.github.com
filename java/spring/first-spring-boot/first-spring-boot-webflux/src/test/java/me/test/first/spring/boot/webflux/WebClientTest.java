@@ -1,5 +1,6 @@
 package me.test.first.spring.boot.webflux;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -15,7 +16,6 @@ import org.springframework.test.web.reactive.server.WebTestClient;
  * @author 当千
  * @date 2018-12-06
  */
-@RunWith(SpringRunner.class)
 @EnableAutoConfiguration
 //@Import(WebClientTest.Conf.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -40,7 +40,7 @@ public class WebClientTest {
     public void test() {
 
         System.out.println("xx = " + xx);
-        Assert.assertTrue(true);
+        Assertions.assertTrue(true);
 
         this.webClient
                 .get()

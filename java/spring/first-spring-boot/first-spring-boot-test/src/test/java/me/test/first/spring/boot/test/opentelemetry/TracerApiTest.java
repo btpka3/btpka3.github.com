@@ -30,6 +30,7 @@ import java.net.URL;
  * @date 2024/3/20
  * @see <a href="https://opentelemetry.io/docs/languages/java/instrumentation/#metrics">opentelemetry : Java/Instrumentation</a>
  * @see <a href="https://github.com/open-telemetry/opentelemetry-java-instrumentation/tree/main/instrumentation/logback/logback-appender-1.0/library">Appender Instrumentation for Logback version 1.0 and higher</a>
+ * @see <a href="https://help.aliyun.com/zh/opentelemetry/user-guide/use-opentelemetry-to-submit-the-trace-data-of-java-applications">通过OpenTelemetry上报Java应用数据</a>
  */
 public class TracerApiTest {
     OpenTelemetry openTelemetry = null;
