@@ -1,13 +1,17 @@
 package me.test.first.spring.boot.test.actuator;
 
+import io.micrometer.core.instrument.Gauge;
+import io.micrometer.core.instrument.binder.MeterBinder;
+import io.micrometer.observation.Observation;
+import io.micrometer.observation.ObservationRegistry;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RandomUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.endpoint.annotation.Endpoint;
 import org.springframework.boot.actuate.endpoint.annotation.ReadOperation;
 import org.springframework.boot.actuate.endpoint.annotation.Selector;
-import org.springframework.boot.actuate.endpoint.web.annotation.WebEndpoint;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -128,6 +132,12 @@ public class ActuatorTest {
             return http.build();
         }
 
+        @Bean
+        MeterBinder myMeterBinder() {
+            return registry -> Gauge.builder("queueSize", () -> RandomUtils.nextInt(1, 100))
+                    .register(registry);
+        }
+
         @Component
         @Endpoint(id = "my")
 //        @WebEndpoint(id = "my")
@@ -165,7 +175,7 @@ public class ActuatorTest {
             public Health health() {
                 double chance = ThreadLocalRandom.current().nextDouble();
                 Health.Builder status = Health.up();
-                if (chance > 0.9) {
+                if (chance > 0.5) {
                     status = Health.down();
                 }
                 status.withDetail("a", "aaa");
@@ -174,6 +184,28 @@ public class ActuatorTest {
                 return health;
             }
         }
+
+        //        @Component
+        public static class MyCustomObservation {
+            private final ObservationRegistry observationRegistry;
+
+            public MyCustomObservation(ObservationRegistry observationRegistry) {
+                this.observationRegistry = observationRegistry;
+            }
+
+            public void doSomething() {
+                Observation.createNotStarted("doSomething", this.observationRegistry)
+                        .lowCardinalityKeyValue("locale", "en-US")
+                        .highCardinalityKeyValue("userId", "42")
+                        .observe(() -> {
+                            System.out.println("MyCustomObservation#doSomething");
+                            // Execute business logic here
+                        });
+            }
+
+        }
+
+
     }
 
 
@@ -182,13 +214,22 @@ public class ActuatorTest {
     public void xxx() {
         Thread.sleep(60 * 60 * 1000);
 
-        // curl -v http://localhost:8080/
-        // curl -v http://localhost:8080/actuator | jq
-        // curl -v http://localhost:8080/actuator/health | jq
-        // curl -v http://localhost:8080/actuator/health/diskSpace | jq
-        // curl -v http://localhost:8080/actuator/health/random | jq
-        // curl -v http://localhost:8080/actuator/my
+        /*
+            curl -v http://localhost:8080/
+            curl -v http://localhost:8080/actuator | jq
+            curl -v http://localhost:8080/actuator/health | jq
+            curl -v http://localhost:8080/actuator/health/diskSpace | jq
+            curl -v http://localhost:8080/actuator/health/random | jq
+            curl -v http://localhost:8080/actuator/health/livenessState | jq
+            curl -v http://localhost:8080/actuator/health/readinessState | jq
 
-        // MockMvc
+            curl -v http://localhost:8080/actuator/env | jq
+            curl -v http://localhost:8080/actuator/my | jq
+
+            curl -v http://localhost:8080/actuator/info | jq
+            curl -v http://localhost:8080/actuator/metrics | jq
+            curl -v http://localhost:8080/actuator/metrics/executor.pool.core | jq
+            MockMvc
+         */
     }
 }

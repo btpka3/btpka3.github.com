@@ -110,6 +110,7 @@ dependencies {
     implementation("io.opentelemetry.instrumentation:opentelemetry-logback-appender-1.0")
     implementation("io.opentelemetry:opentelemetry-exporter-logging")
     implementation("io.opentelemetry:opentelemetry-exporter-logging-otlp")
+    implementation('io.micrometer:micrometer-tracing-bridge-otel:1.2.4')
 
 }
 
@@ -137,3 +138,10 @@ test {
 //    termsOfServiceUrl = 'https://gradle.com/terms-of-service'
 //    termsOfServiceAgree = 'no'
 //}
+
+
+// 用来将 src/test/resources/me/test/first/spring/boot/test/actuator/ActuatorTest.yaml 等文件进行替换
+// https://docs.spring.io/spring-boot/docs/current/reference/html/howto.html#howto.properties-and-configuration.expand-properties.gradle
+tasks.named('processResources') {
+    expand(project.properties)
+}

@@ -67,6 +67,48 @@ management:
   health:
     redis:
       enabled: false
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+
+  info:
+    build:
+      enabled: true
+    env:
+      enabled: true
+    git:
+      enabled: true
+    java:
+      enabled: true
+    oss:
+      enabled: true
+    app:
+      enabled: true
+  observations:
+    key-values:
+      region: "cn-hz"
+      stack: "prod"
+  defaults:
+    metrics:
+      export:
+        enabled: false
+  metrics:
+    use-global-registry: true
+  otlp:
+    metrics:
+      export:
+        url: "https://otlp.example.com:4318/v1/metrics"
+
+info:
+  git:
+    mode: "full"
+  app:
+    encoding: "@project.build.sourceEncoding@"
+    java:
+      source: "@java.version@"
+      target: "@java.version@"
+    myInfoKey1: myInfoValue1
 
 # io.opentelemetry.instrumentation.spring.autoconfigure.OpenTelemetryAutoConfiguration.OpenTelemetryAutoConfiguration
 otel:
