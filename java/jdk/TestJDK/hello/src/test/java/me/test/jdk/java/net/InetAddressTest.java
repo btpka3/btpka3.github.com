@@ -1,8 +1,8 @@
 package me.test.jdk.java.net;
 
 import lombok.SneakyThrows;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -112,8 +112,8 @@ public class InetAddressTest {
                                 "int3=" + int3;
                         System.out.println(msg  );
 
-//                        Assert.assertEquals(msg, int1, int2);
-                        //Assert.assertEquals(msg, int1, int3);
+//                        Assertions.assertEquals(msg, int1, int2);
+                        //Assertions.assertEquals(msg, int1, int3);
                     }
                 }
             }

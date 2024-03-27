@@ -2,7 +2,7 @@ package me.test.org.apache.commons.collections4.map;
 
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author dangqian.zll

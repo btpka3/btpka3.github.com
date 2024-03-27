@@ -1,6 +1,6 @@
 package me.test.jdk.java.lang.management;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import javax.management.MBeanServer;
 import javax.management.MBeanServerConnection;

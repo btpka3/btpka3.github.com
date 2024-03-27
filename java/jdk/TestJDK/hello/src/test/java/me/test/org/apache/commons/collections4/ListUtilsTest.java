@@ -1,8 +1,8 @@
 package me.test.org.apache.commons.collections4;
 
 import org.apache.commons.collections4.ListUtils;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,9 +20,9 @@ public class ListUtilsTest {
 
         List<String> list3 = ListUtils.intersection(list1, list2);
 
-        Assert.assertEquals(2, list3.size());
-        Assert.assertTrue(list3.contains("11"));
-        Assert.assertTrue(list3.contains("22"));
+        Assertions.assertEquals(2, list3.size());
+        Assertions.assertTrue(list3.contains("11"));
+        Assertions.assertTrue(list3.contains("22"));
     }
 
     @Test
@@ -32,8 +32,8 @@ public class ListUtilsTest {
 
         List<String> list3 = ListUtils.subtract(list1, list2);
 
-        Assert.assertEquals(2, list3.size());
-        Assert.assertTrue(list3.contains("aa"));
-        Assert.assertTrue(list3.contains("bb"));
+        Assertions.assertEquals(2, list3.size());
+        Assertions.assertTrue(list3.contains("aa"));
+        Assertions.assertTrue(list3.contains("bb"));
     }
 }

@@ -1,7 +1,7 @@
 package me.test.jdk.java.util;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -106,10 +106,10 @@ public class ComparatorTest {
         );
         list.sort(Comparator.nullsLast(Comparator.<String>naturalOrder()).reversed());
 
-        Assert.assertNull(null, list.get(0));
-        Assert.assertEquals("cc", list.get(1));
-        Assert.assertEquals("bb", list.get(2));
-        Assert.assertEquals("aa", list.get(3));
+        Assertions.assertNull(null, list.get(0));
+        Assertions.assertEquals("cc", list.get(1));
+        Assertions.assertEquals("bb", list.get(2));
+        Assertions.assertEquals("aa", list.get(3));
     }
 
 
@@ -128,12 +128,12 @@ public class ComparatorTest {
         ).reversed());
 
 
-        Assert.assertNull(list.get(0));
-        Assert.assertEquals("sun7", list.get(1).getName());
-        Assert.assertEquals("zhao6", list.get(2).getName());
-        Assert.assertEquals("zhou8", list.get(3).getName());
-        Assert.assertEquals("zhang3", list.get(4).getName());
-        Assert.assertEquals("wang5", list.get(5).getName());
+        Assertions.assertNull(list.get(0));
+        Assertions.assertEquals("sun7", list.get(1).getName());
+        Assertions.assertEquals("zhao6", list.get(2).getName());
+        Assertions.assertEquals("zhou8", list.get(3).getName());
+        Assertions.assertEquals("zhang3", list.get(4).getName());
+        Assertions.assertEquals("wang5", list.get(5).getName());
 
     }
 
@@ -151,10 +151,10 @@ public class ComparatorTest {
         ));
 
 
-        Assert.assertEquals("li4", list.get(0).getName());
-        Assert.assertEquals("zhao6", list.get(1).getName());
-        Assert.assertEquals("zhang3", list.get(2).getName());
-        Assert.assertEquals("wang5", list.get(3).getName());
+        Assertions.assertEquals("li4", list.get(0).getName());
+        Assertions.assertEquals("zhao6", list.get(1).getName());
+        Assertions.assertEquals("zhang3", list.get(2).getName());
+        Assertions.assertEquals("wang5", list.get(3).getName());
 
     }
 

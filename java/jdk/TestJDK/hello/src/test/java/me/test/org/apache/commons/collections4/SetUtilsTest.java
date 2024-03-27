@@ -1,8 +1,8 @@
 package me.test.org.apache.commons.collections4;
 
 import org.apache.commons.collections4.SetUtils;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -21,9 +21,9 @@ public class SetUtilsTest {
 
         Set<String> set3 = SetUtils.intersection(set1, set2);
 
-        Assert.assertEquals(2, set3.size());
-        Assert.assertTrue(set3.contains("11"));
-        Assert.assertTrue(set3.contains("22"));
+        Assertions.assertEquals(2, set3.size());
+        Assertions.assertTrue(set3.contains("11"));
+        Assertions.assertTrue(set3.contains("22"));
     }
 
     @Test
@@ -31,9 +31,9 @@ public class SetUtilsTest {
         Set<String> set1 = new HashSet<>(Arrays.asList("aa", "bb", "11", "22"));
         Set<String> set2 = new HashSet<>(Arrays.asList("11", "22", "xx", "yy"));
         Set<String> set3 = SetUtils.difference(set1, set2);
-        Assert.assertEquals(2, set3.size());
-        Assert.assertTrue(set3.contains("aa"));
-        Assert.assertTrue(set3.contains("bb"));
+        Assertions.assertEquals(2, set3.size());
+        Assertions.assertTrue(set3.contains("aa"));
+        Assertions.assertTrue(set3.contains("bb"));
 
     }
 }

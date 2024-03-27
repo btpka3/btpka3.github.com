@@ -1,6 +1,6 @@
 package me.test.jdk.java.time;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.text.SimpleDateFormat;
 import java.time.*;

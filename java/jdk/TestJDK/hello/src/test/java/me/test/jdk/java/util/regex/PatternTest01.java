@@ -1,7 +1,7 @@
 package me.test.jdk.java.util.regex;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
@@ -31,7 +31,7 @@ public class PatternTest01 {
             String input = inputs.get(i);
             String result = getExt(input);
             String expectedResult = expectedResults.get(i);
-            Assert.assertEquals(
+            Assertions.assertEquals(
                     "Expected file extension is `" + expectedResult + "` for input string `" + input + "`, but found `" + result + "`",
                     expectedResult,
                     result
@@ -46,9 +46,14 @@ public class PatternTest01 {
     }
 
 
-    @Test(expected = PatternSyntaxException.class)
+    @Test
     public void x() {
-        Pattern.compile(".*[\\u0F00-\\u0FFF]{1 ,}.*", 0);
+        try {
+            Pattern.compile(".*[\\u0F00-\\u0FFF]{1 ,}.*", 0);
+            Assertions.fail("Expected PatternSyntaxException");
+        }catch (PatternSyntaxException e){
+
+        }
     }
 
     @Test
@@ -58,7 +63,7 @@ public class PatternTest01 {
         String s = "aaaabbbb";
         Matcher m = p.matcher(s);
 
-        Assert.assertFalse(m.matches());
+        Assertions.assertFalse(m.matches());
     }
 
     @Test
@@ -68,12 +73,12 @@ public class PatternTest01 {
         String s = "aaaabbbb";
         Matcher m = p.matcher(s);
 
-        Assert.assertTrue(m.matches());
+        Assertions.assertTrue(m.matches());
         String g1 = m.group(1);
         String g2 = m.group(2);
         System.out.printf("%-30s -> g1=%s, g2=%s %n", s, g1, g2);
-        Assert.assertEquals("aaaabbb", g1);
-        Assert.assertEquals("b", g2);
+        Assertions.assertEquals("aaaabbb", g1);
+        Assertions.assertEquals("b", g2);
     }
 
 
@@ -84,12 +89,12 @@ public class PatternTest01 {
         String s = "aaaabbbb";
         Matcher m = p.matcher(s);
 
-        Assert.assertTrue(m.matches());
+        Assertions.assertTrue(m.matches());
         String g1 = m.group(1);
         String g2 = null;//m.group(2);
         System.out.printf("%-30s -> g1=%s, g2=%s %n", s, g1, g2);
-        Assert.assertEquals("aaaabbb", g1);
-        Assert.assertEquals("b", g2);
+        Assertions.assertEquals("aaaabbb", g1);
+        Assertions.assertEquals("b", g2);
     }
 
     @Test
@@ -100,13 +105,13 @@ public class PatternTest01 {
             String s = "this is my string :bababa";
             Matcher m = p.matcher(s);
 
-            Assert.assertFalse(m.matches());
+            Assertions.assertFalse(m.matches());
         }
         {
             String s = "this is my another string :lalala";
             Matcher m = p.matcher(s);
 
-            Assert.assertTrue(m.matches());
+            Assertions.assertTrue(m.matches());
         }
     }
 
@@ -118,7 +123,7 @@ public class PatternTest01 {
         String s = "aaaabbbb";
         Matcher m = p.matcher(s);
 
-        Assert.assertTrue(m.find());
+        Assertions.assertTrue(m.find());
         String g = m.group(1);
         System.out.printf("%-30s -> %s, start=%d, end=%d%n", s, g, m.start(), m.end());
     }
@@ -130,7 +135,7 @@ public class PatternTest01 {
         String s = "bbbbaaaa";
         Matcher m = p.matcher(s);
 
-        Assert.assertTrue(m.find());
+        Assertions.assertTrue(m.find());
 
         String g = m.group(1);
         System.out.printf("%-30s -> %s, start=%d, end=%d%n", s, g, m.start(), m.end());

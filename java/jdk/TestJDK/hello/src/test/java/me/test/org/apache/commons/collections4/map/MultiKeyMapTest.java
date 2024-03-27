@@ -1,8 +1,8 @@
 package me.test.org.apache.commons.collections4.map;
 
 import org.apache.commons.collections4.map.MultiKeyMap;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author dangqian.zll
@@ -18,9 +18,9 @@ public class MultiKeyMapTest {
 
         map.put("aaa", 111, "xxx");
 
-        Assert.assertEquals("xxx", map.get("aaa", 111));
-        Assert.assertNull(map.get("aaa"));
-        Assert.assertNull(map.get("111"));
+        Assertions.assertEquals("xxx", map.get("aaa", 111));
+        Assertions.assertNull(map.get("aaa"));
+        Assertions.assertNull(map.get("111"));
 
     }
 }

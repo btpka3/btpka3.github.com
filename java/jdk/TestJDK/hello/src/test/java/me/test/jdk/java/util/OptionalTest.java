@@ -1,7 +1,7 @@
 package me.test.jdk.java.util;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
@@ -21,7 +21,7 @@ public class OptionalTest {
                 .flatMap(v -> Optional.<String>ofNullable(null))
                 .orElse("bbb");
 
-        Assert.assertEquals("bbb", newValue);
+        Assertions.assertEquals("bbb", newValue);
     }
 
     @Test
@@ -31,6 +31,6 @@ public class OptionalTest {
                 .flatMap(v -> Optional.<String>ofNullable("aaa"))
                 .orElse("bbb");
 
-        Assert.assertEquals("aaa", newValue);
+        Assertions.assertEquals("aaa", newValue);
     }
 }

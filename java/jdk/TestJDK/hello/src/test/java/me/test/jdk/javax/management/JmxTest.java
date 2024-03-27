@@ -1,7 +1,7 @@
 package me.test.jdk.javax.management;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import javax.management.*;
 import java.lang.management.ManagementFactory;
@@ -37,16 +37,16 @@ public class JmxTest {
                     .findFirst()
                     .orElse(null);
 
-            Assert.assertNotNull(ageInfo);
+            Assertions.assertNotNull(ageInfo);
 
 
-            Assert.assertEquals(11, server.getAttribute(objectName, "Age"));
+            Assertions.assertEquals(11, server.getAttribute(objectName, "Age"));
 
             MBeanOperationInfo sayHiInfo = Stream.of(mBeanInfo.getOperations())
                     .filter(info -> Objects.equals("sayHi", info.getName()))
                     .findFirst()
                     .orElse(null);
-            Assert.assertNotNull(sayHiInfo);
+            Assertions.assertNotNull(sayHiInfo);
 
 
             Object result = server.invoke(
@@ -55,13 +55,13 @@ public class JmxTest {
                     new Object[]{},
                     new String[]{});
 
-            Assert.assertEquals("hi, zhang3", result);
+            Assertions.assertEquals("hi, zhang3", result);
 
 
             server.setAttribute(objectName, new Attribute("Age", 12));
 
 
-            Assert.assertEquals(12, (Object) p1.getAge());
+            Assertions.assertEquals(12, (Object) p1.getAge());
         }
 
 //        Thread.sleep(60 * 60 * 1000);

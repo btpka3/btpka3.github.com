@@ -1,7 +1,7 @@
 package me.test.jdk.java.lang;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
 
@@ -24,21 +24,21 @@ public class AnonymousClassTest {
         // ------------ Anonymous 类级别比较
 
         // 类级别 Anonymous 类  与 类实例级别的 Anonymous 类 不是同一个类
-        Assert.assertNotSame(MyPojo.staticProp1.getClass(), pojo1.prop1.getClass());
-        Assert.assertNotSame(MyPojo.staticProp1.getClass(), pojo2.prop1.getClass());
+        Assertions.assertNotSame(MyPojo.staticProp1.getClass(), pojo1.prop1.getClass());
+        Assertions.assertNotSame(MyPojo.staticProp1.getClass(), pojo2.prop1.getClass());
         // FIXME
-        Assert.assertSame(pojo1.prop1.getClass(), pojo2.prop1.getClass());
+        Assertions.assertSame(pojo1.prop1.getClass(), pojo2.prop1.getClass());
 
         // 两个
-        Assert.assertEquals(MyPojo.staticProp1, pojo1.prop1);
+        Assertions.assertEquals(MyPojo.staticProp1, pojo1.prop1);
 
         // ------------ Anonymous 类实例级别比较
         // 类级别 Anonymous 类实例  与 类实例级别的 Anonymous 类实例 是 equals 的
-        Assert.assertEquals(MyPojo.staticProp1, pojo1.prop1);
-        Assert.assertEquals(MyPojo.staticProp1, pojo2.prop1);
+        Assertions.assertEquals(MyPojo.staticProp1, pojo1.prop1);
+        Assertions.assertEquals(MyPojo.staticProp1, pojo2.prop1);
 
         // 不同 Anonymous 类实例 是 equals 的
-        Assert.assertEquals(pojo1.prop1, pojo2.prop1);
+        Assertions.assertEquals(pojo1.prop1, pojo2.prop1);
 
     }
 

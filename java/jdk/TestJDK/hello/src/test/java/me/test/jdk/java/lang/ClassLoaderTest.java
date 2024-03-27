@@ -2,7 +2,7 @@ package me.test.jdk.java.lang;
 
 import io.github.classgraph.ClassGraph;
 import org.apache.commons.lang3.StringUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

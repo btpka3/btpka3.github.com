@@ -1,7 +1,7 @@
 package me.test.jdk.java.util.regex;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +55,7 @@ public class TestRegex {
         Pattern P_ANum = Pattern.compile(REGEX_A_NUM);
         String s = "A22851";
         boolean result = P_ANum.matcher(s).matches();
-        Assert.assertTrue(result);
+        Assertions.assertTrue(result);
     }
 
 }

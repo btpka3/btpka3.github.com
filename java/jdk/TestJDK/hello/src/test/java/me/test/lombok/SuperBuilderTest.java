@@ -3,7 +3,7 @@ package me.test.lombok;
 import lombok.Data;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author dangqian.zll
