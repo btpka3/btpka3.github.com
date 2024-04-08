@@ -1,0 +1,171 @@
+{
+  "resource": {
+    "attributes": [
+      {
+        "key": "service.name",
+        "value": {
+          "stringValue": "btpka3-server"
+        }
+      },
+      {
+        "key": "service.version",
+        "value": {
+          "stringValue": "0.1.0"
+        }
+      },
+      {
+        "key": "telemetry.sdk.language",
+        "value": {
+          "stringValue": "java"
+        }
+      },
+      {
+        "key": "telemetry.sdk.name",
+        "value": {
+          "stringValue": "opentelemetry"
+        }
+      },
+      {
+        "key": "telemetry.sdk.version",
+        "value": {
+          "stringValue": "1.36.0"
+        }
+      }
+    ]
+  },
+  "scopeMetrics": [
+    {
+      "scope": {
+        "name": "my.metric",
+        "attributes": []
+      },
+      "metrics": [
+        {
+          "name": "directories_search_count",
+          "description": "Counts directories accessed while searching for files.",
+          "unit": "unit",
+          "sum": {
+            "dataPoints": [
+              {
+                "startTimeUnixNano": "1712578091761894000",
+                "timeUnixNano": "1712578172795903000",
+                "asInt": "656",
+                "exemplars": [],
+                "attributes": [
+                  {
+                    "key": "my.demo.attr1.key",
+                    "value": {
+                      "stringValue": "my.demo.att1.value"
+                    }
+                  }
+                ]
+              }
+            ],
+            "aggregationTemporality": 2,
+            "isMonotonic": true
+          }
+        },
+        {
+          "name": "my.jvm.memory.total",
+          "description": "My Reports JVM memory usage.",
+          "unit": "byte",
+          "gauge": {
+            "dataPoints": [
+              {
+                "startTimeUnixNano": "1712578091761894000",
+                "timeUnixNano": "1712578172795903000",
+                "asDouble": 2.68435456E8,
+                "exemplars": [],
+                "attributes": [
+                  {
+                    "key": "my.demo.attr2.key",
+                    "value": {
+                      "intValue": "111"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "people.ages",
+          "description": "A distribution of people's ages",
+          "unit": "years",
+          "histogram": {
+            "dataPoints": [
+              {
+                "startTimeUnixNano": "1712578091761894000",
+                "timeUnixNano": "1712578172795903000",
+                "count": "12000",
+                "sum": 686187.0,
+                "min": 1.0,
+                "max": 114.0,
+                "bucketCounts": [
+                  "0",
+                  "537",
+                  "553",
+                  "1599",
+                  "2610",
+                  "2629",
+                  "2620",
+                  "1452",
+                  "0",
+                  "0",
+                  "0",
+                  "0",
+                  "0",
+                  "0",
+                  "0",
+                  "0"
+                ],
+                "explicitBounds": [
+                  0.0,
+                  5.0,
+                  10.0,
+                  25.0,
+                  50.0,
+                  75.0,
+                  100.0,
+                  250.0,
+                  500.0,
+                  750.0,
+                  1000.0,
+                  2500.0,
+                  5000.0,
+                  7500.0,
+                  10000.0
+                ],
+                "exemplars": [],
+                "attributes": [
+                  {
+                    "key": "my.demo.attr3.key1",
+                    "value": {
+                      "boolValue": true
+                    }
+                  },
+                  {
+                    "key": "my.demo.attr3.key2",
+                    "value": {
+                      "arrayValue": {
+                        "values": [
+                          {
+                            "stringValue": "my.demo.attr3.value1"
+                          },
+                          {
+                            "stringValue": "my.demo.attr3.value2"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            ],
+            "aggregationTemporality": 2
+          }
+        }
+      ]
+    }
+  ]
+}

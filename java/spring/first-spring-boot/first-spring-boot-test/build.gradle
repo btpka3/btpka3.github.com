@@ -29,7 +29,7 @@ dependencies {
     implementation 'org.infinispan:infinispan-spring-boot-starter-embedded'
     implementation 'org.infinispan:infinispan-spring-boot-starter'
     implementation 'org.infinispan:infinispan-spring4-embedded'
-    implementation 'io.micrometer:micrometer-registry-prometheus'
+
     implementation 'io.prometheus:simpleclient_pushgateway'
     implementation 'org.hamcrest:hamcrest'
     implementation 'org.codehaus.groovy:groovy'
@@ -104,13 +104,51 @@ dependencies {
     implementation('javax.inject:javax.inject:1')
     implementation('org.springframework.boot:spring-boot-starter-security')
     //testImplementation('org.springframework.security:spring-security-core')
-    implementation(platform("io.opentelemetry:opentelemetry-bom:1.36.0"))
-    implementation(platform("io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom-alpha:2.2.0-alpha"))
-    implementation("io.opentelemetry.instrumentation:opentelemetry-spring-boot-starter")
-    implementation("io.opentelemetry.instrumentation:opentelemetry-logback-appender-1.0")
+
+    // ================================= opentelemetry
+
+    //implementation(platform("io.opentelemetry:opentelemetry-bom:1.36.0"))
     implementation("io.opentelemetry:opentelemetry-exporter-logging")
     implementation("io.opentelemetry:opentelemetry-exporter-logging-otlp")
-    implementation('io.micrometer:micrometer-tracing-bridge-otel:1.2.4')
+    implementation("io.opentelemetry:opentelemetry-exporter-otlp")
+    implementation("io.opentelemetry:opentelemetry-sdk-trace")
+    implementation("io.opentelemetry:opentelemetry-sdk")
+    implementation("io.opentelemetry:opentelemetry-api")
+
+    //implementation(platform("io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom:2.2.0"))
+    //implementation("io.opentelemetry.instrumentation:io.opentelemetry:opentelemetry-instrumentation-api")
+
+
+    //implementation(platform("io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom-alpha:2.2.0-alpha"))
+    implementation("io.opentelemetry.instrumentation:opentelemetry-spring-boot-starter")
+    implementation("io.opentelemetry.instrumentation:opentelemetry-logback-appender-1.0")
+
+    // OpenTelemetry Semantic Conventions : https://opentelemetry.io/docs/specs/semconv/
+    // OpenTelemetry Semantic Conventions for Java : https://github.com/open-telemetry/semantic-conventions-java
+    //implementation('io.opentelemetry.semconv:opentelemetry-semconv:1.24.0-alpha')
+    //implementation('io.opentelemetry.semconv:opentelemetry-semconv:1.23.1-alpha')
+    //implementation('io.opentelemetry.semconv:opentelemetry-semconv-incubating:1.24.0-alpha')
+
+    // ================================= micrometer
+
+    //implementation(platform("io.micrometer:micrometer-bom:1.12.4"))
+    implementation 'io.micrometer:micrometer-observation'
+    implementation 'io.micrometer:micrometer-registry-prometheus'
+
+    //implementation(platform("io.micrometer:micrometer-tracing-bom:1.2.4"))
+
+
+    // ================================= slf4j
+    //implementation(platform("org.slf4j:slf4j-bom:2.0.12"))
+    implementation 'org.slf4j:slf4j-ext'
+
+
+
+    // ================================= logback
+
+    implementation 'ch.qos.logback:logback-classic'
+    implementation 'ch.qos.logback:logback-core'
+
 
 }
 

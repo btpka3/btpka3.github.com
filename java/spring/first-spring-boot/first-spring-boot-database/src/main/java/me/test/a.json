@@ -1,66 +1,534 @@
 {
-  "keys": [
-    {
-      "kty": "RSA",
-      "e": "AQAB",
-      "use": "sig",
-      "kid": "CXup",
-      "n": "hrwD-lc-IwzwidCANmy4qsiZk11yp9kHykOuP0yOnwi36VomYTQVEzZXgh2sDJpGgAutdQudgwLoV8tVSsTG9SQHgJjH9Pd_9V4Ab6PANyZNG6DSeiq1QfiFlEP6Obt0JbRB3W7X2vkxOVaNoWrYskZodxU2V0ogeVL_LkcCGAyNu2jdx3j0DjJatNVk7ystNxb9RfHhJGgpiIkO5S3QiSIVhbBKaJHcZHPF1vq9g0JMGuUCI-OTSVg6XBkTLEGw1C_R73WD_oVEBfdXbXnLukoLHBS11p3OxU7f4rfxA_f_72_UwmWGJnsqS3iahbms3FkvqoL9x_Vj3GhuJSf97Q"
-    },
-    {
-      "kty": "EC",
-      "use": "sig",
-      "crv": "P-256",
-      "kid": "yGvt",
-      "x": "pvgdqM3RCshljmuCF1D2Ez1w5ei5k7-bpimWLPNeEHI",
-      "y": "JSmUhbUTqiFclVLEdw6dz038F7Whw4URobjXbAReDuM"
-    },
-    {
-      "kty": "EC",
-      "use": "sig",
-      "crv": "P-384",
-      "kid": "9nHY",
-      "x": "JPKhjhE0Bj579Mgj3Cn3ERGA8fKVYoGOaV9BPKhtnEobphf8w4GSeigMesL-038W",
-      "y": "UbJa1QRX7fo9LxSlh7FOH5ABT5lEtiQeQUcX9BW0bpJFlEVGqwec80tYLdOIl59M"
-    },
-    {
-      "kty": "EC",
-      "use": "sig",
-      "crv": "P-521",
-      "kid": "tVzS",
-      "x": "AZgkRHlIyNQJlPIwTWdHqouw41k9dS3GJO04BDEnJnd_Dd1owlCn9SMXA-JuXINn4slwbG4wcECbctXb2cvdGtmn",
-      "y": "AdBC6N9lpupzfzcIY3JLIuc8y8MnzV-ItmzHQcC5lYWMTbuM9NU_FlvINeVo8g6i4YZms2xFB-B0VVdaoF9kUswC"
-    },
-    {
-      "kty": "RSA",
-      "e": "AQAB",
-      "use": "enc",
-      "kid": "IHMc",
-      "n": "lLrhwERiPmq7XOz6Rwk8q4ey_OGcL4P56Ip01mzKMUfysIwo-nUdwDI_9ntYohpvqiTjnrtZOENhhoqne5M4hqpSfBMmCWSvWL_3wa8FanRWd6lPgGdKJ1a3vV0gLxnCbmdho1CSuSszV4736WkjdDhLcXSRN1kWwWbok94FdPD_egCyBY3cwhvuRzmUgE8LDh-VnNRh1BYc7e9yEMublza8qJpW-N5ljHEU0on08X-lsyl4djEac74H7taDcmtchPLYZy0-ZIxgLmosQ2aYIt6xycfPYsm5x9CGetUqhClpLLaTcyTGq_pH4ECdZtkYHcYJM-3q-XDZTqB6wUaggw"
-    },
-    {
-      "kty": "EC",
-      "use": "enc",
-      "crv": "P-256",
-      "kid": "1yFA",
-      "x": "_-aKZeuwWDv4v89dPGdKtpOuOepc_0qDZDhcv3omzX0",
-      "y": "Gc5b7muOqbi4QvYJO24a4IqQoOY1pPM69DcpI605Vmw"
-    },
-    {
-      "kty": "EC",
-      "use": "enc",
-      "crv": "P-384",
-      "kid": "TqZ6",
-      "x": "3Ex0yUSLvhaOriP8U78kZEEJXxkC0oQmwo1zHTe_nhgKx2YPS97-qmDdRMkByxJ9",
-      "y": "MCosrhjIYP4lkoan45MxAZE3QB6IKau5nZHpQ_qDXH8jgcIo2l3M8wdN6iI08kcW"
-    },
-    {
-      "kty": "EC",
-      "use": "enc",
-      "crv": "P-521",
-      "kid": "h38C",
-      "x": "AVMBSexPHgq536pZQjN6Si1HAdUdfiW4xrdYzNHR2A9z4zovnKi5xrQ9hWX8QUs4ejVQ3bE9ufhOYL3D7oTwx9Jb",
-      "y": "AeMeo858k_6ktxNhlpxBSwGL2hmTI1nBeGi2ZrMVl2qzdjOFf-AVFRSsE9DhAD9sWVUrGrzwONbfmqwIlgbjeH7L"
-    }
-  ]
+  "sequenceNumber": 0,
+  "timestamp": 1712569658079,
+  "nanoseconds": 79952000,
+  "level": "INFO",
+  "threadName": "Test worker",
+  "loggerName": "my.json",
+  "context": {
+    "name": "default",
+    "birthdate": 1712569657521,
+    "properties": {}
+  },
+  "mdc": {
+    "a": "a01",
+    "NDC0": "my-ndc-a=aaa1"
+  },
+  "formattedMessage": "hello : zhang3",
+  "throwable": {
+    "className": "java.lang.RuntimeException",
+    "message": "demo err",
+    "stepArray": [
+      {
+        "className": "me.test.first.spring.boot.test.LogbackTest",
+        "methodName": "json01",
+        "fileName": "LogbackTest.java",
+        "lineNumber": 148
+      },
+      {
+        "className": "jdk.internal.reflect.NativeMethodAccessorImpl",
+        "methodName": "invoke0",
+        "fileName": "NativeMethodAccessorImpl.java",
+        "lineNumber": -2
+      },
+      {
+        "className": "jdk.internal.reflect.NativeMethodAccessorImpl",
+        "methodName": "invoke",
+        "fileName": "NativeMethodAccessorImpl.java",
+        "lineNumber": 62
+      },
+      {
+        "className": "jdk.internal.reflect.DelegatingMethodAccessorImpl",
+        "methodName": "invoke",
+        "fileName": "DelegatingMethodAccessorImpl.java",
+        "lineNumber": 43
+      },
+      {
+        "className": "java.lang.reflect.Method",
+        "methodName": "invoke",
+        "fileName": "Method.java",
+        "lineNumber": 566
+      },
+      {
+        "className": "org.junit.platform.commons.util.ReflectionUtils",
+        "methodName": "invokeMethod",
+        "fileName": "ReflectionUtils.java",
+        "lineNumber": 725
+      },
+      {
+        "className": "org.junit.jupiter.engine.execution.MethodInvocation",
+        "methodName": "proceed",
+        "fileName": "MethodInvocation.java",
+        "lineNumber": 60
+      },
+      {
+        "className": "org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation",
+        "methodName": "proceed",
+        "fileName": "InvocationInterceptorChain.java",
+        "lineNumber": 131
+      },
+      {
+        "className": "org.junit.jupiter.engine.extension.TimeoutExtension",
+        "methodName": "intercept",
+        "fileName": "TimeoutExtension.java",
+        "lineNumber": 149
+      },
+      {
+        "className": "org.junit.jupiter.engine.extension.TimeoutExtension",
+        "methodName": "interceptTestableMethod",
+        "fileName": "TimeoutExtension.java",
+        "lineNumber": 140
+      },
+      {
+        "className": "org.junit.jupiter.engine.extension.TimeoutExtension",
+        "methodName": "interceptTestMethod",
+        "fileName": "TimeoutExtension.java",
+        "lineNumber": 84
+      },
+      {
+        "className": "org.junit.jupiter.engine.execution.ExecutableInvoker$ReflectiveInterceptorCall",
+        "methodName": "lambda$ofVoidMethod$0",
+        "fileName": "ExecutableInvoker.java",
+        "lineNumber": 115
+      },
+      {
+        "className": "org.junit.jupiter.engine.execution.ExecutableInvoker",
+        "methodName": "lambda$invoke$0",
+        "fileName": "ExecutableInvoker.java",
+        "lineNumber": 105
+      },
+      {
+        "className": "org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation",
+        "methodName": "proceed",
+        "fileName": "InvocationInterceptorChain.java",
+        "lineNumber": 106
+      },
+      {
+        "className": "org.junit.jupiter.engine.execution.InvocationInterceptorChain",
+        "methodName": "proceed",
+        "fileName": "InvocationInterceptorChain.java",
+        "lineNumber": 64
+      },
+      {
+        "className": "org.junit.jupiter.engine.execution.InvocationInterceptorChain",
+        "methodName": "chainAndInvoke",
+        "fileName": "InvocationInterceptorChain.java",
+        "lineNumber": 45
+      },
+      {
+        "className": "org.junit.jupiter.engine.execution.InvocationInterceptorChain",
+        "methodName": "invoke",
+        "fileName": "InvocationInterceptorChain.java",
+        "lineNumber": 37
+      },
+      {
+        "className": "org.junit.jupiter.engine.execution.ExecutableInvoker",
+        "methodName": "invoke",
+        "fileName": "ExecutableInvoker.java",
+        "lineNumber": 104
+      },
+      {
+        "className": "org.junit.jupiter.engine.execution.ExecutableInvoker",
+        "methodName": "invoke",
+        "fileName": "ExecutableInvoker.java",
+        "lineNumber": 98
+      },
+      {
+        "className": "org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor",
+        "methodName": "lambda$invokeTestMethod$7",
+        "fileName": "TestMethodTestDescriptor.java",
+        "lineNumber": 214
+      },
+      {
+        "className": "org.junit.platform.engine.support.hierarchical.ThrowableCollector",
+        "methodName": "execute",
+        "fileName": "ThrowableCollector.java",
+        "lineNumber": 73
+      },
+      {
+        "className": "org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor",
+        "methodName": "invokeTestMethod",
+        "fileName": "TestMethodTestDescriptor.java",
+        "lineNumber": 210
+      },
+      {
+        "className": "org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor",
+        "methodName": "execute",
+        "fileName": "TestMethodTestDescriptor.java",
+        "lineNumber": 135
+      },
+      {
+        "className": "org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor",
+        "methodName": "execute",
+        "fileName": "TestMethodTestDescriptor.java",
+        "lineNumber": 66
+      },
+      {
+        "className": "org.junit.platform.engine.support.hierarchical.NodeTestTask",
+        "methodName": "lambda$executeRecursively$6",
+        "fileName": "NodeTestTask.java",
+        "lineNumber": 151
+      },
+      {
+        "className": "org.junit.platform.engine.support.hierarchical.ThrowableCollector",
+        "methodName": "execute",
+        "fileName": "ThrowableCollector.java",
+        "lineNumber": 73
+      },
+      {
+        "className": "org.junit.platform.engine.support.hierarchical.NodeTestTask",
+        "methodName": "lambda$executeRecursively$8",
+        "fileName": "NodeTestTask.java",
+        "lineNumber": 141
+      },
+      {
+        "className": "org.junit.platform.engine.support.hierarchical.Node",
+        "methodName": "around",
+        "fileName": "Node.java",
+        "lineNumber": 137
+      },
+      {
+        "className": "org.junit.platform.engine.support.hierarchical.NodeTestTask",
+        "methodName": "lambda$executeRecursively$9",
+        "fileName": "NodeTestTask.java",
+        "lineNumber": 139
+      },
+      {
+        "className": "org.junit.platform.engine.support.hierarchical.ThrowableCollector",
+        "methodName": "execute",
+        "fileName": "ThrowableCollector.java",
+        "lineNumber": 73
+      },
+      {
+        "className": "org.junit.platform.engine.support.hierarchical.NodeTestTask",
+        "methodName": "executeRecursively",
+        "fileName": "NodeTestTask.java",
+        "lineNumber": 138
+      },
+      {
+        "className": "org.junit.platform.engine.support.hierarchical.NodeTestTask",
+        "methodName": "execute",
+        "fileName": "NodeTestTask.java",
+        "lineNumber": 95
+      },
+      {
+        "className": "java.util.ArrayList",
+        "methodName": "forEach",
+        "fileName": "ArrayList.java",
+        "lineNumber": 1541
+      },
+      {
+        "className": "org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService",
+        "methodName": "invokeAll",
+        "fileName": "SameThreadHierarchicalTestExecutorService.java",
+        "lineNumber": 41
+      },
+      {
+        "className": "org.junit.platform.engine.support.hierarchical.NodeTestTask",
+        "methodName": "lambda$executeRecursively$6",
+        "fileName": "NodeTestTask.java",
+        "lineNumber": 155
+      },
+      {
+        "className": "org.junit.platform.engine.support.hierarchical.ThrowableCollector",
+        "methodName": "execute",
+        "fileName": "ThrowableCollector.java",
+        "lineNumber": 73
+      },
+      {
+        "className": "org.junit.platform.engine.support.hierarchical.NodeTestTask",
+        "methodName": "lambda$executeRecursively$8",
+        "fileName": "NodeTestTask.java",
+        "lineNumber": 141
+      },
+      {
+        "className": "org.junit.platform.engine.support.hierarchical.Node",
+        "methodName": "around",
+        "fileName": "Node.java",
+        "lineNumber": 137
+      },
+      {
+        "className": "org.junit.platform.engine.support.hierarchical.NodeTestTask",
+        "methodName": "lambda$executeRecursively$9",
+        "fileName": "NodeTestTask.java",
+        "lineNumber": 139
+      },
+      {
+        "className": "org.junit.platform.engine.support.hierarchical.ThrowableCollector",
+        "methodName": "execute",
+        "fileName": "ThrowableCollector.java",
+        "lineNumber": 73
+      },
+      {
+        "className": "org.junit.platform.engine.support.hierarchical.NodeTestTask",
+        "methodName": "executeRecursively",
+        "fileName": "NodeTestTask.java",
+        "lineNumber": 138
+      },
+      {
+        "className": "org.junit.platform.engine.support.hierarchical.NodeTestTask",
+        "methodName": "execute",
+        "fileName": "NodeTestTask.java",
+        "lineNumber": 95
+      },
+      {
+        "className": "java.util.ArrayList",
+        "methodName": "forEach",
+        "fileName": "ArrayList.java",
+        "lineNumber": 1541
+      },
+      {
+        "className": "org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService",
+        "methodName": "invokeAll",
+        "fileName": "SameThreadHierarchicalTestExecutorService.java",
+        "lineNumber": 41
+      },
+      {
+        "className": "org.junit.platform.engine.support.hierarchical.NodeTestTask",
+        "methodName": "lambda$executeRecursively$6",
+        "fileName": "NodeTestTask.java",
+        "lineNumber": 155
+      },
+      {
+        "className": "org.junit.platform.engine.support.hierarchical.ThrowableCollector",
+        "methodName": "execute",
+        "fileName": "ThrowableCollector.java",
+        "lineNumber": 73
+      },
+      {
+        "className": "org.junit.platform.engine.support.hierarchical.NodeTestTask",
+        "methodName": "lambda$executeRecursively$8",
+        "fileName": "NodeTestTask.java",
+        "lineNumber": 141
+      },
+      {
+        "className": "org.junit.platform.engine.support.hierarchical.Node",
+        "methodName": "around",
+        "fileName": "Node.java",
+        "lineNumber": 137
+      },
+      {
+        "className": "org.junit.platform.engine.support.hierarchical.NodeTestTask",
+        "methodName": "lambda$executeRecursively$9",
+        "fileName": "NodeTestTask.java",
+        "lineNumber": 139
+      },
+      {
+        "className": "org.junit.platform.engine.support.hierarchical.ThrowableCollector",
+        "methodName": "execute",
+        "fileName": "ThrowableCollector.java",
+        "lineNumber": 73
+      },
+      {
+        "className": "org.junit.platform.engine.support.hierarchical.NodeTestTask",
+        "methodName": "executeRecursively",
+        "fileName": "NodeTestTask.java",
+        "lineNumber": 138
+      },
+      {
+        "className": "org.junit.platform.engine.support.hierarchical.NodeTestTask",
+        "methodName": "execute",
+        "fileName": "NodeTestTask.java",
+        "lineNumber": 95
+      },
+      {
+        "className": "org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService",
+        "methodName": "submit",
+        "fileName": "SameThreadHierarchicalTestExecutorService.java",
+        "lineNumber": 35
+      },
+      {
+        "className": "org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor",
+        "methodName": "execute",
+        "fileName": "HierarchicalTestExecutor.java",
+        "lineNumber": 57
+      },
+      {
+        "className": "org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine",
+        "methodName": "execute",
+        "fileName": "HierarchicalTestEngine.java",
+        "lineNumber": 54
+      },
+      {
+        "className": "org.junit.platform.launcher.core.EngineExecutionOrchestrator",
+        "methodName": "execute",
+        "fileName": "EngineExecutionOrchestrator.java",
+        "lineNumber": 107
+      },
+      {
+        "className": "org.junit.platform.launcher.core.EngineExecutionOrchestrator",
+        "methodName": "execute",
+        "fileName": "EngineExecutionOrchestrator.java",
+        "lineNumber": 88
+      },
+      {
+        "className": "org.junit.platform.launcher.core.EngineExecutionOrchestrator",
+        "methodName": "lambda$execute$0",
+        "fileName": "EngineExecutionOrchestrator.java",
+        "lineNumber": 54
+      },
+      {
+        "className": "org.junit.platform.launcher.core.EngineExecutionOrchestrator",
+        "methodName": "withInterceptedStreams",
+        "fileName": "EngineExecutionOrchestrator.java",
+        "lineNumber": 67
+      },
+      {
+        "className": "org.junit.platform.launcher.core.EngineExecutionOrchestrator",
+        "methodName": "execute",
+        "fileName": "EngineExecutionOrchestrator.java",
+        "lineNumber": 52
+      },
+      {
+        "className": "org.junit.platform.launcher.core.DefaultLauncher",
+        "methodName": "execute",
+        "fileName": "DefaultLauncher.java",
+        "lineNumber": 114
+      },
+      {
+        "className": "org.junit.platform.launcher.core.DefaultLauncher",
+        "methodName": "execute",
+        "fileName": "DefaultLauncher.java",
+        "lineNumber": 86
+      },
+      {
+        "className": "org.junit.platform.launcher.core.DefaultLauncherSession$DelegatingLauncher",
+        "methodName": "execute",
+        "fileName": "DefaultLauncherSession.java",
+        "lineNumber": 86
+      },
+      {
+        "className": "org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor",
+        "methodName": "processAllTestClasses",
+        "fileName": "JUnitPlatformTestClassProcessor.java",
+        "lineNumber": 119
+      },
+      {
+        "className": "org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor",
+        "methodName": "access$000",
+        "fileName": "JUnitPlatformTestClassProcessor.java",
+        "lineNumber": 94
+      },
+      {
+        "className": "org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor",
+        "methodName": "stop",
+        "fileName": "JUnitPlatformTestClassProcessor.java",
+        "lineNumber": 89
+      },
+      {
+        "className": "org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor",
+        "methodName": "stop",
+        "fileName": "SuiteTestClassProcessor.java",
+        "lineNumber": 62
+      },
+      {
+        "className": "jdk.internal.reflect.NativeMethodAccessorImpl",
+        "methodName": "invoke0",
+        "fileName": "NativeMethodAccessorImpl.java",
+        "lineNumber": -2
+      },
+      {
+        "className": "jdk.internal.reflect.NativeMethodAccessorImpl",
+        "methodName": "invoke",
+        "fileName": "NativeMethodAccessorImpl.java",
+        "lineNumber": 62
+      },
+      {
+        "className": "jdk.internal.reflect.DelegatingMethodAccessorImpl",
+        "methodName": "invoke",
+        "fileName": "DelegatingMethodAccessorImpl.java",
+        "lineNumber": 43
+      },
+      {
+        "className": "java.lang.reflect.Method",
+        "methodName": "invoke",
+        "fileName": "Method.java",
+        "lineNumber": 566
+      },
+      {
+        "className": "org.gradle.internal.dispatch.ReflectionDispatch",
+        "methodName": "dispatch",
+        "fileName": "ReflectionDispatch.java",
+        "lineNumber": 36
+      },
+      {
+        "className": "org.gradle.internal.dispatch.ReflectionDispatch",
+        "methodName": "dispatch",
+        "fileName": "ReflectionDispatch.java",
+        "lineNumber": 24
+      },
+      {
+        "className": "org.gradle.internal.dispatch.ContextClassLoaderDispatch",
+        "methodName": "dispatch",
+        "fileName": "ContextClassLoaderDispatch.java",
+        "lineNumber": 33
+      },
+      {
+        "className": "org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler",
+        "methodName": "invoke",
+        "fileName": "ProxyDispatchAdapter.java",
+        "lineNumber": 94
+      },
+      {
+        "className": "com.sun.proxy.$Proxy2",
+        "methodName": "stop",
+        "fileName": "null",
+        "lineNumber": -1
+      },
+      {
+        "className": "org.gradle.api.internal.tasks.testing.worker.TestWorker$3",
+        "methodName": "run",
+        "fileName": "TestWorker.java",
+        "lineNumber": 193
+      },
+      {
+        "className": "org.gradle.api.internal.tasks.testing.worker.TestWorker",
+        "methodName": "executeAndMaintainThreadName",
+        "fileName": "TestWorker.java",
+        "lineNumber": 129
+      },
+      {
+        "className": "org.gradle.api.internal.tasks.testing.worker.TestWorker",
+        "methodName": "execute",
+        "fileName": "TestWorker.java",
+        "lineNumber": 100
+      },
+      {
+        "className": "org.gradle.api.internal.tasks.testing.worker.TestWorker",
+        "methodName": "execute",
+        "fileName": "TestWorker.java",
+        "lineNumber": 60
+      },
+      {
+        "className": "org.gradle.process.internal.worker.child.ActionExecutionWorker",
+        "methodName": "execute",
+        "fileName": "ActionExecutionWorker.java",
+        "lineNumber": 56
+      },
+      {
+        "className": "org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker",
+        "methodName": "call",
+        "fileName": "SystemApplicationClassLoaderWorker.java",
+        "lineNumber": 113
+      },
+      {
+        "className": "org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker",
+        "methodName": "call",
+        "fileName": "SystemApplicationClassLoaderWorker.java",
+        "lineNumber": 65
+      },
+      {
+        "className": "worker.org.gradle.process.internal.worker.GradleWorkerMain",
+        "methodName": "run",
+        "fileName": "GradleWorkerMain.java",
+        "lineNumber": 69
+      },
+      {
+        "className": "worker.org.gradle.process.internal.worker.GradleWorkerMain",
+        "methodName": "main",
+        "fileName": "GradleWorkerMain.java",
+        "lineNumber": 74
+      }
+    ]
+  }
 }

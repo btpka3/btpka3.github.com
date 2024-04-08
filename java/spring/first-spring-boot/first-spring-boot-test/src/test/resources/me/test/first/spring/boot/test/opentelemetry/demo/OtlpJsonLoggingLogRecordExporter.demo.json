@@ -1,0 +1,122 @@
+{
+  "resource": {
+    "attributes": [
+      {
+        "key": "service.name",
+        "value": {
+          "stringValue": "btpka3-server"
+        }
+      },
+      {
+        "key": "service.version",
+        "value": {
+          "stringValue": "0.1.0"
+        }
+      },
+      {
+        "key": "telemetry.sdk.language",
+        "value": {
+          "stringValue": "java"
+        }
+      },
+      {
+        "key": "telemetry.sdk.name",
+        "value": {
+          "stringValue": "opentelemetry"
+        }
+      },
+      {
+        "key": "telemetry.sdk.version",
+        "value": {
+          "stringValue": "1.36.0"
+        }
+      }
+    ]
+  },
+  "scopeLogs": [
+    {
+      "scope": {
+        "name": "my.OpenTelemetryLogger",
+        "attributes": []
+      },
+      "logRecords": [
+        {
+          "timeUnixNano": "1712579360076000000",
+          "observedTimeUnixNano": "1712579360084734000",
+          "severityNumber": 17,
+          "severityText": "ERROR",
+          "body": {
+            "stringValue": "check_OpenTelemetry_log_export_result"
+          },
+          "attributes": [
+            {
+              "key": "exception.message",
+              "value": {
+                "stringValue": "demo log err"
+              }
+            },
+            {
+              "key": "exception.stacktrace",
+              "value": {
+                "stringValue": "java.lang.IllegalArgumentException: demo log err\n\tat me.test.first.spring.boot.test.opentelemetry.demo.MyLoggingService.run(MyLoggingService.java:16)\n\tat me.test.first.spring.boot.test.opentelemetry.demo.MyTraceService.b01(MyTraceService.java:85)\n\tat me.test.first.spring.boot.test.opentelemetry.demo.MyTraceService.exec(MyTraceService.java:56)\n\tat java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n\tat java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)\n\tat java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.base/java.lang.reflect.Method.invoke(Method.java:566)\n\tat org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:84)\n\tat org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54)\n\tat org.springframework.scheduling.concurrent.ReschedulingRunnable.run(ReschedulingRunnable.java:95)\n\tat java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)\n\tat java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)\n\tat java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)\n\tat java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)\n\tat java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)\n\tat java.base/java.lang.Thread.run(Thread.java:829)\n"
+              }
+            },
+            {
+              "key": "exception.type",
+              "value": {
+                "stringValue": "java.lang.IllegalArgumentException"
+              }
+            },
+            {
+              "key": "thread.name",
+              "value": {
+                "stringValue": "scheduling-1"
+              }
+            }
+          ],
+          "flags": 1,
+          "traceId": "2ac7180502c35577f96d67ac27248d80",
+          "spanId": "852db03eb20db82a"
+        },
+        {
+          "timeUnixNano": "1712579360093000000",
+          "observedTimeUnixNano": "1712579360094043000",
+          "severityNumber": 17,
+          "severityText": "ERROR",
+          "body": {
+            "stringValue": "check_OpenTelemetry_log_export_result"
+          },
+          "attributes": [
+            {
+              "key": "exception.message",
+              "value": {
+                "stringValue": "demo log err"
+              }
+            },
+            {
+              "key": "exception.stacktrace",
+              "value": {
+                "stringValue": "java.lang.IllegalArgumentException: demo log err\n\tat me.test.first.spring.boot.test.opentelemetry.demo.MyLoggingService.run(MyLoggingService.java:16)\n\tat me.test.first.spring.boot.test.opentelemetry.demo.MyTraceService.b02(MyTraceService.java:101)\n\tat me.test.first.spring.boot.test.opentelemetry.demo.MyTraceService$1.run(MyTraceService.java:64)\n\tat java.base/java.lang.Thread.run(Thread.java:829)\n"
+              }
+            },
+            {
+              "key": "exception.type",
+              "value": {
+                "stringValue": "java.lang.IllegalArgumentException"
+              }
+            },
+            {
+              "key": "thread.name",
+              "value": {
+                "stringValue": "Thread-6"
+              }
+            }
+          ],
+          "flags": 1,
+          "traceId": "2ac7180502c35577f96d67ac27248d80",
+          "spanId": "f6b2018cf1669541"
+        }
+      ]
+    }
+  ]
+}

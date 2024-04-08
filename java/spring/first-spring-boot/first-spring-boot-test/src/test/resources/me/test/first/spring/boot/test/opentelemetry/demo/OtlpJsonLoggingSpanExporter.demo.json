@@ -1,0 +1,132 @@
+{
+  "resource": {
+    "attributes": [
+      {
+        "key": "service.name",
+        "value": {
+          "stringValue": "btpka3-server"
+        }
+      },
+      {
+        "key": "service.version",
+        "value": {
+          "stringValue": "0.1.0"
+        }
+      },
+      {
+        "key": "telemetry.sdk.language",
+        "value": {
+          "stringValue": "java"
+        }
+      },
+      {
+        "key": "telemetry.sdk.name",
+        "value": {
+          "stringValue": "opentelemetry"
+        }
+      },
+      {
+        "key": "telemetry.sdk.version",
+        "value": {
+          "stringValue": "1.36.0"
+        }
+      }
+    ]
+  },
+  "scopeSpans": [
+    {
+      "scope": {
+        "name": "myDemoScope",
+        "version": "1.0.0",
+        "attributes": []
+      },
+      "spans": [
+        {
+          "traceId": "c95c6fd01e65e13fd888f6b2c52ec40c",
+          "spanId": "94b1b9c2319d64bd",
+          "parentSpanId": "daa0d7dbabfca436",
+          "name": "child-b01",
+          "kind": 1,
+          "startTimeUnixNano": "1712578120046258743",
+          "endTimeUnixNano": "1712578120166609087",
+          "attributes": [],
+          "events": [],
+          "links": [],
+          "status": {},
+          "flags": 1
+        },
+        {
+          "traceId": "c95c6fd01e65e13fd888f6b2c52ec40c",
+          "spanId": "daa0d7dbabfca436",
+          "name": "parent-aaa",
+          "kind": 3,
+          "startTimeUnixNano": "1712578120036642000",
+          "endTimeUnixNano": "1712578120171653727",
+          "attributes": [
+            {
+              "key": "http.url",
+              "value": {
+                "stringValue": "/user/1.json"
+              }
+            },
+            {
+              "key": "http.method",
+              "value": {
+                "stringValue": "GET"
+              }
+            }
+          ],
+          "events": [
+            {
+              "timeUnixNano": "1712578120041084289",
+              "name": "init",
+              "attributes": []
+            }
+          ],
+          "links": [],
+          "status": {},
+          "flags": 1
+        },
+        {
+          "traceId": "c95c6fd01e65e13fd888f6b2c52ec40c",
+          "spanId": "351d6b31a7556720",
+          "parentSpanId": "daa0d7dbabfca436",
+          "name": "child-b02",
+          "kind": 1,
+          "startTimeUnixNano": "1712578120171887709",
+          "endTimeUnixNano": "1712578120203424462",
+          "attributes": [],
+          "events": [
+            {
+              "timeUnixNano": "1712578120190225649",
+              "name": "exception",
+              "attributes": [
+                {
+                  "key": "exception.message",
+                  "value": {
+                    "stringValue": "demo exception"
+                  }
+                },
+                {
+                  "key": "exception.stacktrace",
+                  "value": {
+                    "stringValue": "java.lang.RuntimeException: demo exception\n\tat me.test.first.spring.boot.test.opentelemetry.demo.MyMetricService.randomException(MyMetricService.java:82)\n\tat me.test.first.spring.boot.test.opentelemetry.demo.MyMetricService.run(MyMetricService.java:35)\n\tat me.test.first.spring.boot.test.opentelemetry.demo.MyTraceService.b02(MyTraceService.java:94)\n\tat me.test.first.spring.boot.test.opentelemetry.demo.MyTraceService$1.run(MyTraceService.java:59)\n\tat java.base/java.lang.Thread.run(Thread.java:829)\n"
+                  }
+                },
+                {
+                  "key": "exception.type",
+                  "value": {
+                    "stringValue": "java.lang.RuntimeException"
+                  }
+                }
+              ]
+            }
+          ],
+          "links": [],
+          "status": {},
+          "flags": 1
+        }
+      ]
+    }
+  ]
+}

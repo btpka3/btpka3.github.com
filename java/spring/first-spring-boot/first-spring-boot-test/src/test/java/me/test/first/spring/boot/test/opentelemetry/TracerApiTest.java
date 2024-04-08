@@ -19,7 +19,7 @@ import io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppen
 import io.opentelemetry.sdk.trace.SdkTracerProvider;
 import io.opentelemetry.sdk.trace.export.BatchSpanProcessor;
 import io.opentelemetry.sdk.trace.samplers.Sampler;
-import io.opentelemetry.semconv.SemanticAttributes;
+//import io.opentelemetry.semconv.SemanticAttributes;
 import lombok.SneakyThrows;
 
 import java.net.HttpURLConnection;
@@ -58,7 +58,8 @@ public class TracerApiTest {
                 .startSpan();
 
         span.setAttribute("http.method", "GET");
-        span.setAttribute(SemanticAttributes.HTTP_URL, "/user/1.json");
+        //span.setAttribute(SemanticAttributes.HTTP_URL, "/user/1.json");
+        span.setAttribute("http.url", "/user/1.json");
 
         span.addEvent("init");
 
@@ -132,8 +133,10 @@ public class TracerApiTest {
         try (Scope scope = outGoing.makeCurrent()) {
             // Use the Semantic Conventions.
             // (Note that to set these, Span does not *need* to be the current instance in Context or Scope.)
-            outGoing.setAttribute(SemanticAttributes.HTTP_METHOD, "GET");
-            outGoing.setAttribute(SemanticAttributes.HTTP_URL, url.toString());
+            //outGoing.setAttribute(SemanticAttributes.HTTP_METHOD, "GET");
+            outGoing.setAttribute("http.method", "GET");
+            //outGoing.setAttribute(SemanticAttributes.HTTP_URL, url.toString());
+            outGoing.setAttribute("http.url", url.toString());
             HttpURLConnection transportLayer = (HttpURLConnection) url.openConnection();
             // Inject the request with the *current*  Context, which contains our current Span.
             openTelemetry.getPropagators().getTextMapPropagator().inject(Context.current(), transportLayer, setter);

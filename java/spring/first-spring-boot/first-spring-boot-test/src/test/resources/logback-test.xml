@@ -30,6 +30,26 @@
             </layout>
         </encoder>
     </appender>
+    <appender name="my.OpenTelemetryLogger.appender"
+              class="io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender">
+        <captureExperimentalAttributes>true</captureExperimentalAttributes>
+        <captureKeyValuePairAttributes>true</captureKeyValuePairAttributes>
+    </appender>
+    <appender name="NDC.appender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%-4relative [%thread] %-5level %logger{35} |%X| - %msg %n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- ch.qos.logback.classic.encoder.JsonEncoder 需要 logback 1.3.8+, 需要 slf4j 2.0+, 只有 spring boot 3.0+ 才支持 -->
+<!--    <appender name="CONSOLE.json.appender" class="ch.qos.logback.core.ConsoleAppender">-->
+<!--        <encoder class="ch.qos.logback.classic.encoder.JsonEncoder">-->
+<!--            <withFormattedMessage>true</withFormattedMessage>-->
+<!--            <withMessage>false</withMessage>-->
+<!--            <withArguments>false</withArguments>-->
+<!--        </encoder>-->
+<!--    </appender>-->
+
 
     <include resource="me/test/first/spring/boot/test/logback-included.xml"/>
 
@@ -42,13 +62,22 @@
     <logger name="my.var" level="INFO" additivity="false">
         <appender-ref ref="ROOT"/>
     </logger>
+    <logger name="my.ndc" level="INFO" additivity="false">
+        <appender-ref ref="NDC.appender"/>
+    </logger>
+<!--    <logger name="my.json" level="INFO" additivity="false">-->
+<!--        <appender-ref ref="CONSOLE.json.appender"/>-->
+<!--    </logger>-->
+
     <logger name="io.opentelemetry.exporter.logging" level="INFO">
     </logger>
 
     <logger name="org.springframework" level="DEBUG">
     </logger>
-    <logger name="me.test.first.spring.boot.test" level="INFO">
+    <logger name="my.OpenTelemetryLogger" level="INFO">
+        <appender-ref ref="my.OpenTelemetryLogger.appender"/>
     </logger>
+
 
 
 </configuration>

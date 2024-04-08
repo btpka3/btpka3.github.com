@@ -1,0 +1,18 @@
+2024-04-08T12:29:20.076Z ERROR 'check_OpenTelemetry_log_export_result' : 2ac7180502c35577f96d67ac27248d80 852db03eb20db82a [scopeInfo: my.OpenTelemetryLogger:] {exception.message="demo log err", exception.stacktrace="java.lang.IllegalArgumentException: demo log err
+	at me.test.first.spring.boot.test.opentelemetry.demo.MyLoggingService.run(MyLoggingService.java:16)
+	at me.test.first.spring.boot.test.opentelemetry.demo.MyTraceService.b01(MyTraceService.java:85)
+	at me.test.first.spring.boot.test.opentelemetry.demo.MyTraceService.exec(MyTraceService.java:56)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:84)
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54)
+	at org.springframework.scheduling.concurrent.ReschedulingRunnable.run(ReschedulingRunnable.java:95)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+", exception.type="java.lang.IllegalArgumentException", thread.name="scheduling-1"}

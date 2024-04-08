@@ -7,11 +7,15 @@ import com.alibaba.fastjson.JSON;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
+import org.slf4j.NDC;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author dangqian.zll
@@ -121,6 +125,56 @@ public class LogbackTest {
 
         // 第二次运行：指定jvm属性 `-Dmy.log.path=1`, 则期望日志时输出到该路径
         // cat /tmp/1/root.log
+    }
+
+    @Test
+    public void ndc01() {
+        try {
+            MDC.put("a", "a01");
+            printList(Arrays.asList("xxx", "yyy", "zzz"), 0);
+        } finally {
+            MDC.clear();
+        }
+        System.out.println("======= Done.");
+    }
+
+    /**
+     * 为了演示NDC输出，以递归的方式打印List
+     */
+    protected void printList(List list, int start) {
+        Logger log = LoggerFactory.getLogger("my.ndc");
+        if (start < 0 || start >= list.size()) {
+            return;
+        }
+        Object obj = list.get(start);
+        try {
+            NDC.push("my-ndc=" + start + "," + obj);
+            log.info("hello");
+            printList(list, start + 1);
+        } finally {
+            NDC.pop();
+        }
+        /* demo output :
+        1169 [Test worker] INFO  my.ndc |a=a01, NDC0=my-ndc=0,xxx| - hello
+        1173 [Test worker] INFO  my.ndc |NDC1=my-ndc=1,yyy, a=a01, NDC0=my-ndc=0,xxx| - hello
+        1174 [Test worker] INFO  my.ndc |NDC1=my-ndc=1,yyy, a=a01, NDC2=my-ndc=2,zzz, NDC0=my-ndc=0,xxx| - hello
+        ======= Done.
+         */
+    }
+
+    @Test
+    public void json01() {
+        Logger log = LoggerFactory.getLogger("my.json");
+        try {
+            MDC.put("a", "a01");
+            NDC.push("my-ndc-a=aaa1");
+            Throwable e = new RuntimeException("demo err");
+            log.info("hello : {}", "zhang3", e);
+            System.out.println("======= Done.");
+        } finally {
+            MDC.remove("a");
+            NDC.pop();
+        }
     }
 
 }

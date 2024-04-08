@@ -1,0 +1,126 @@
+# 完整配置项参考: spring-configuration-metadata.json
+
+debug: true
+#spring.boot.enableautoconfiguration: false
+security.basic.enabled: false
+management.security.enabled: false
+
+# org.springframework.boot.autoconfigure.web.ServerProperties
+server:
+  port: 8080
+
+# org.springframework.boot.autoconfigure.security.SecurityProperties
+spring.security:
+  user:
+    name : admin
+    password: admin
+
+#spring:
+#  autoconfigure:
+#    exclude[0]: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+#    exclude[1]: org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration
+
+
+# org.springframework.boot.actuate.autoconfigure.endpoint.EndpointAutoConfiguration
+management:
+  # org.springframework.boot.actuate.autoconfigure.web.server.ManagementServerProperties
+  server:
+    port: null
+  endpoints:
+    enabled-by-default: true
+    # org.springframework.boot.actuate.autoconfigure.endpoint.web.WebEndpointAutoConfiguration
+    # org.springframework.boot.actuate.autoconfigure.endpoint.web.WebEndpointProperties
+    web:
+      base-path: /actuator
+      discovery:
+        enabled: true
+      exposure:
+        include: "*"
+        #exclude: "env,beans"
+      cors:
+        allowed-origins: "*"
+        allowed-methods: "GET,POST"
+    # org.springframework.boot.actuate.autoconfigure.endpoint.jmx.JmxEndpointProperties
+    jmx:
+      exposure:
+        include: "*"
+        #include: "health,info,my"
+
+  endpoint:
+    # org.springframework.boot.actuate.context.ShutdownEndpoint
+    shutdown:
+      enabled: false
+    # org.springframework.boot.actuate.info.InfoEndpoint
+    info:
+      enabled: true
+    health:
+      show-details: always
+    web:
+      enabled: true
+#  metrics:
+#    export:
+#      prometheus:
+#        pushgateway:
+#          enabled: true
+#          base-url: http://localhost:9091
+#          shutdown-operation: push
+  health:
+    redis:
+      enabled: false
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+
+  info:
+    build:
+      enabled: true
+    env:
+      enabled: true
+    git:
+      enabled: true
+    java:
+      enabled: true
+    oss:
+      enabled: true
+    app:
+      enabled: true
+  observations:
+    key-values:
+      region: "cn-hz"
+      stack: "prod"
+  defaults:
+    metrics:
+      export:
+        enabled: false
+  metrics:
+    use-global-registry: true
+  otlp:
+    metrics:
+      export:
+        url: "https://otlp.example.com:4318/v1/metrics"
+
+info:
+  git:
+    mode: "full"
+  app:
+    encoding: "@project.build.sourceEncoding@"
+    java:
+      source: "@java.version@"
+      target: "@java.version@"
+    myInfoKey1: myInfoValue1
+
+## io.opentelemetry.instrumentation.spring.autoconfigure.OpenTelemetryAutoConfiguration.OpenTelemetryAutoConfiguration
+#otel:
+#  sdk:
+#    disabled: true
+#  propagators:
+#    - c1
+#    - c2
+#  resource:
+#    attributes:
+#      b: b01
+#  exporter:
+#    otlp:
+#      headers:
+#        a: a01
