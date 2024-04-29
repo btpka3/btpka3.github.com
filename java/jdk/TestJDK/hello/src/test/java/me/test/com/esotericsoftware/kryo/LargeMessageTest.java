@@ -21,13 +21,16 @@ import java.util.Map;
 public class LargeMessageTest {
 
 
+    protected boolean isJsonObjStr(byte[] data) {
+        return data.length > 2 && data[0] == '{' && data[1] == '"';
+    }
 
     @SneakyThrows
     @Test
     public void decode() {
 
         // 从SLS下载的单行日志（完整JSON）
-        String fileName = "large-message.sls.rec.json";
+        String fileName = "test1.json";
 
         File filePath = Path.of(System.getProperty("user.home"), "Downloads", fileName).toFile();
         String slsRecJsonStr = IOUtils.toString(new FileInputStream(filePath), StandardCharsets.UTF_8);
@@ -35,15 +38,25 @@ public class LargeMessageTest {
         String base64MsgStr = (String) jsonObj.get("message");
         byte[] data = Base64.decodeBase64(base64MsgStr);
 
-        Map ctx = MyKryoUtils.deserialize(data);
-        System.out.print("================");
-        String json = JSON.toJSONString(
-                ctx,
-                //SerializerFeature.WriteClassName,
-                SerializerFeature.WriteNonStringKeyAsString,
-                SerializerFeature.PrettyFormat
-        );
-        System.out.println(filePath + ":\n" + json);
+
+        System.out.println("================ " + filePath);
+        if (isJsonObjStr(data)) {
+            System.out.println(JSON.toJSONString(
+                    JSON.parse(new String(data, StandardCharsets.UTF_8)),
+                    SerializerFeature.PrettyFormat
+            ));
+        } else {
+            Map ctx = MyKryoUtils.deserialize(data);
+            String json = JSON.toJSONString(
+                    ctx,
+                    //SerializerFeature.WriteClassName,
+                    SerializerFeature.WriteNonStringKeyAsString,
+                    SerializerFeature.PrettyFormat
+            );
+            System.out.println(json);
+        }
+
+
         System.out.print("================");
 
     }
