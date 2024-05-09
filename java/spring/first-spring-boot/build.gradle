@@ -285,7 +285,7 @@ subprojects {
             implementation platform("org.springframework.boot:spring-boot-starter-parent:${springBootVersion}")
             implementation(platform("io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom:2.2.0"))
             implementation(platform("io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom-alpha:2.2.0-alpha"))
-            implementation(platform("io.opentelemetry:opentelemetry-bom:1.36.0"))
+            implementation(platform("io.opentelemetry:opentelemetry-bom:1.37.0"))
             implementation(platform("io.micrometer:micrometer-bom:1.12.4"))
             implementation(platform("io.micrometer:micrometer-tracing-bom:1.2.4"))
             //implementation(platform("org.slf4j:slf4j-bom:2.0.12"))

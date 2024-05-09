@@ -12,7 +12,7 @@ configurations {
 dependencies {
 //    api platform(project(":platform"))
     // implementation(project(":lib"))
-
+    implementation 'org.apache.commons:commons-text:1.12.0'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-tomcat'
     implementation 'org.springframework.boot:spring-boot-starter-cache'
@@ -114,6 +114,7 @@ dependencies {
     implementation("io.opentelemetry:opentelemetry-sdk-trace")
     implementation("io.opentelemetry:opentelemetry-sdk")
     implementation("io.opentelemetry:opentelemetry-api")
+    implementation 'io.opentelemetry.instrumentation:opentelemetry-logback-mdc-1.0:1.22.0-alpha'
 
     //implementation(platform("io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom:2.2.0"))
     //implementation("io.opentelemetry.instrumentation:io.opentelemetry:opentelemetry-instrumentation-api")

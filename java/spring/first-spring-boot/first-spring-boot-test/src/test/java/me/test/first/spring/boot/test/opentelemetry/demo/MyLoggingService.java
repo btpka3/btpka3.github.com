@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 /**
  * @author dangqian.zll
  * @date 2024/4/8
+ * @see io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender
+ * @see io.opentelemetry.instrumentation.logback.appender.v1_0.internal.LoggingEventMapper
  */
 @Component
 public class MyLoggingService implements Runnable {

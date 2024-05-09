@@ -1,4 +1,4 @@
-package me.test.first.spring.boot.test;
+package com.github.btpka3.first.spring.boot3;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +15,7 @@ import org.springframework.test.context.ContextConfiguration;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * @author dangqian.zll
- * @date 2021/7/28
- */
+
 @SpringBootTest
 @ActiveProfiles({"p1", "p2", "xxx"})
 @ContextConfiguration(classes = {
@@ -32,7 +29,7 @@ public class ProfileTest {
     @Autowired
     Environment env;
 
-    @ImportResource("classpath*:me/test/first/spring/boot/test/ProfileTest.xml")
+    @ImportResource("classpath*:com/github/btpka3/first/spring/boot3/ProfileTest.xml")
     @Configuration
     public static class Conf {
 
