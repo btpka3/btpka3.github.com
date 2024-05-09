@@ -17,6 +17,39 @@ import java.util.Date;
  */
 public class DateTimeFormatterTest {
 
+    /*
+    java
+    - java.time.format.DateTimeFormatter.ISO_OFFSET_DATE_TIME
+      示例结果: "2024-05-06T15:58:08.081874+08:00"
+
+    bash date command:
+    示例 :
+    `date +%Y-%m-%dT%H:%M:%S.%N%:z`
+    `date +%FT%T.%N%:z`
+    `date --iso-8601=ns`    # 示例输出: "2024-05-07T10:09:28,134277988+0800"
+
+
+    MySql
+    - CONVERT_TZ 函数:
+      示例SQL: `select CONVERT_TZ('2007-03-11 10:00:00','US/Eastern','-08:01') AS time1`
+    - STR_TO_DATE 函数:
+      示例SQL: `SELECT STR_TO_DATE('2007-03-11T10:00:00.081874','%Y-%m-%dT%H:%i:%S.%f.%z') AS time1`
+    - DATE_FORMAT 函数
+      示例SQL: `SELECT DATE_FORMAT(NOW(),'%Y-%m-%dT%H:%i:%S.%f.%z') AS time1`
+
+    阿里云SLS
+    - to_iso8601 函数：
+      示例SQL: `* | select to_iso8601(current_timestamp) AS ISO8601 limit 1`
+      示例结果: "2024-05-06T16:24:00.201+08:00"
+    - from_iso8601_timestamp 函数：
+      示例SQL: `* | select from_iso8601_timestamp('2024-05-06T15:58:08.081874+08:00') limit 1`
+
+    Postgresql
+
+    阿里云Hologres
+
+    */
+
 
     @Test
     public void format01() throws ParseException {
@@ -29,6 +62,10 @@ public class DateTimeFormatterTest {
         System.out.println("parsed0       : " + parsedDateZdt0);
         ZonedDateTime parsedDateZdt1 = ZonedDateTime.parse("2019-07-03T07:37:56.197Z", DateTimeFormatter.ISO_OFFSET_DATE_TIME);
         System.out.println("parsed1       : " + parsedDateZdt1);
+
+        text = "2024-05-07T09:58:45.139599168+08:00";
+        ZonedDateTime parsedDateZdt2 = ZonedDateTime.parse(text, DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+        System.out.println("parsed2       : " + parsedDateZdt2);
 
         System.out.println("sss           : " + DateTimeFormatter.ISO_OFFSET_DATE_TIME);
 
