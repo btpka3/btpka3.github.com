@@ -3,7 +3,7 @@ buildscript {
         //springBootVersion = '1.5.2.RELEASE'
     }
     repositories {
-        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        maven { url "https://maven.aliyun.com/nexus/content/groups/public/" }
         mavenCentral()
     }
     dependencies {
@@ -31,7 +31,7 @@ apply plugin: 'ch.raffael.markdown-doclet'
 
 
 repositories {
-    maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+    maven { url "https://maven.aliyun.com/nexus/content/groups/public/" }
     mavenCentral()
 }
 

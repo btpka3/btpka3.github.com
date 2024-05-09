@@ -11,7 +11,7 @@
 //        //springBootVersion = '1.5.2.RELEASE'
 //    }
 //    repositories {
-//        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+//        maven { url "https://maven.aliyun.com/nexus/content/groups/public/" }
 //        mavenCentral()
 //    }
 //    dependencies {
@@ -86,7 +86,7 @@ sourceSets {
 
 //buildscript {
 ////    repositories {
-////        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+////        maven { url "https://maven.aliyun.com/nexus/content/groups/public/" }
 ////        mavenCentral()
 ////    }
 //    dependencies {

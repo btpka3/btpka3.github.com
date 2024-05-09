@@ -3,7 +3,7 @@ buildscript {
         //springBootVersion = '1.5.2.RELEASE'
     }
     repositories {
-        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        maven { url "https://maven.aliyun.com/nexus/content/groups/public/" }
         mavenCentral()
     }
     dependencies {
@@ -27,7 +27,7 @@ apply plugin: "com.gorylenko.gradle-git-properties"
 apply plugin: 'project-report'
 
 repositories {
-    maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+    maven { url "https://maven.aliyun.com/nexus/content/groups/public/" }
     mavenCentral()
 }
 
