@@ -1,14 +1,12 @@
 package me.test.reactor;
 
 import org.apache.commons.lang3.math.NumberUtils;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -30,7 +28,8 @@ public class GrepSortInJava {
 
     static final Logger log = LoggerFactory.getLogger(GrepSortInJava.class);
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    @Test
+    public void test01() throws IOException, InterruptedException {
 
         String searchPath = "/home/admin/logs/test";
         String outFile = "/home/admin/logs/test/javaOut.txt";

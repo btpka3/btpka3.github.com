@@ -1,8 +1,8 @@
 package me.test.rxjava.flowable;
 
-import io.reactivex.Completable;
-import io.reactivex.Flowable;
-import io.reactivex.flowables.ConnectableFlowable;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.flowables.ConnectableFlowable;
 import me.test.rxjava.U;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;

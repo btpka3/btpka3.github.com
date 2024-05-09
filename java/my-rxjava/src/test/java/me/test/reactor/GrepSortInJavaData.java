@@ -2,6 +2,7 @@ package me.test.reactor;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.RandomUtils;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +25,8 @@ public class GrepSortInJavaData {
     static final Logger log = LoggerFactory.getLogger(GrepSortInJavaData.class);
 
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    @Test
+    public void test01() throws IOException, InterruptedException {
 
         String[] strArr = new String[]{
                 "Login",

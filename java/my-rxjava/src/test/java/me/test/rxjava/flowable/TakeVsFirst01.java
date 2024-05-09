@@ -1,6 +1,6 @@
 package me.test.rxjava.flowable;
 
-import io.reactivex.Flowable;
+import io.reactivex.rxjava3.core.Flowable;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,14 +18,6 @@ public class TakeVsFirst01 {
     public void test() {
         Flowable.empty()
                 .take(1)
-                .subscribe(
-                        i -> logger.debug("subscribe : onNext : {}", i),
-                        err -> logger.error("subscribe : onError", err),
-                        () -> logger.debug("subscribe : onComplete")
-                );
-
-        Flowable.empty()
-                .limit(1)
                 .subscribe(
                         i -> logger.debug("subscribe : onNext : {}", i),
                         err -> logger.error("subscribe : onError", err),

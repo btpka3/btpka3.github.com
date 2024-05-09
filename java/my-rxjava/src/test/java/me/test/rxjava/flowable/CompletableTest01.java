@@ -1,9 +1,7 @@
 package me.test.rxjava.flowable;
 
-import io.reactivex.Completable;
-import io.reactivex.CompletableOnSubscribe;
-import io.reactivex.CompletableSource;
-import io.reactivex.Flowable;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Flowable;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,8 +14,8 @@ import java.util.Map;
 /**
  * @author dangqian.zll
  * @date 2019-08-11
- * @see CompletableOnSubscribe
- * @see CompletableSource
+ * @see io.reactivex.rxjava3.core.CompletableOnSubscribe
+ * @see io.reactivex.rxjava3.core.CompletableSource
  */
 
 public class CompletableTest01 {

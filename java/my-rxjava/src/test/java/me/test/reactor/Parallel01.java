@@ -26,6 +26,7 @@ public class Parallel01 {
                         .subscribeOn(Schedulers.parallel())
                         .map(i -> "a" + i)
                 )
+                .subscribeOn(Schedulers.parallel())
                 .doAfterTerminate(latch::countDown)
                 .subscribe(m -> System.out.println("Subscriber received - " + m + " on thread: " + Thread.currentThread().getName()));
 
