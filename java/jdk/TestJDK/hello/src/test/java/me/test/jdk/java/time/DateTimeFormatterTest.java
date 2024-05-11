@@ -5,10 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
@@ -53,10 +50,15 @@ public class DateTimeFormatterTest {
 
     @Test
     public void format01() throws ParseException {
+        long millis = System.currentTimeMillis();
         ZonedDateTime zdt = ZonedDateTime.now();
         System.out.println("ZonedDateTime : " + zdt);
         String text = zdt.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
         System.out.println("formated str  : " + text);
+
+        Instant instantNow =Instant.ofEpochMilli(System.currentTimeMillis());
+        ZonedDateTime zonedDateTimeNow= ZonedDateTime.ofInstant(instantNow, ZoneId.systemDefault());
+        System.out.println("formated str0 : " + DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(zonedDateTimeNow));
         System.out.println("formated str1 : " + zdt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH-mm-ss")));
         ZonedDateTime parsedDateZdt0 = ZonedDateTime.parse(text, DateTimeFormatter.ISO_OFFSET_DATE_TIME);
         System.out.println("parsed0       : " + parsedDateZdt0);

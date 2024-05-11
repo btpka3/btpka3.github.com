@@ -20,6 +20,7 @@ public class InstantTest {
 
         System.out.println("============================= test01");
 
+        Instant nowInstant0 =  Instant.ofEpochMilli(System.currentTimeMillis());
 
         Date nowDate = new Date();
         Instant nowInstant = Instant.now();
