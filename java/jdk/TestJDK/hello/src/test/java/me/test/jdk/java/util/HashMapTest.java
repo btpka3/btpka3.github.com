@@ -1,17 +1,16 @@
 package me.test.jdk.java.util;
 
-import java.io.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
 import java.util.*;
 
 public class HashMapTest {
 
 
-    public static void main(String[] args) throws IOException {
-        test01();
-    }
-
-
-    public static void test01() throws IOException {
+    @Test
+    public void test01() throws IOException {
 
         //Map<String, String> m = new LinkedHashMap<>();
         Map<String, String> m = Collections.synchronizedMap(new LinkedHashMap<String, String>());
@@ -49,5 +48,14 @@ public class HashMapTest {
                 e.printStackTrace();
             }
         }).start();
+    }
+
+    @Test
+    public void computeIfAbsent01() {
+        Map<String, List<String>> map = new HashMap<>(16);
+
+        List<String> list1 = map.computeIfAbsent("a", k -> new ArrayList<>(32));
+        Assertions.assertNotNull(list1);
+        Assertions.assertSame(list1, map.get("a"));
     }
 }

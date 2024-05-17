@@ -135,6 +135,9 @@ dependencies {
     //implementation(platform("io.micrometer:micrometer-bom:1.12.4"))
     implementation 'io.micrometer:micrometer-observation'
     implementation 'io.micrometer:micrometer-registry-prometheus'
+    // micrometer -> OpenTelemetry
+    // https://docs.micrometer.io/micrometer/reference/implementations/otlp.html
+    implementation 'io.micrometer:micrometer-registry-otlp:1.13.0'
 
     //implementation(platform("io.micrometer:micrometer-tracing-bom:1.2.4"))
 

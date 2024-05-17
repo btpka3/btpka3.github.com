@@ -1,32 +1,24 @@
-package me.test.first.spring.boot.test.micrometer;
+package me.test.first.spring.boot.test.micrometer.simple;
 
 import io.micrometer.core.instrument.DistributionSummary;
-import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.distribution.ValueAtPercentile;
+import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
 import org.junit.jupiter.api.Test;
 
-import javax.annotation.Resource;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author dangqian.zll
- * @date 2024/3/28
+ * @date 2024/5/15
+ * @see <a href="https://www.baeldung.com/micrometer">Quick Guide to Micrometer</a>
  */
-public class DistributionSummaryTest extends BaseMetricsTest{
-
-    @Resource(name="loggingMeterRegistry")
-    MeterRegistry registry;
-
+public class DistributionSummaryTest {
 
     @Test
-    public void test01() throws InterruptedException {
-
-
+    public void test01() {
+        SimpleMeterRegistry registry = new SimpleMeterRegistry();
         DistributionSummary distributionSummary = DistributionSummary
                 .builder("request.size")
-                .description("a description of xxx")
-                .baseUnit("bytes")
-                .tags("region", "test")
-                .scale(1.0)
-
                 // 本地直接计算的 百分比（不可再聚合）
                 .publishPercentiles(0.3, 0.5, 0.9)
 
@@ -36,7 +28,7 @@ public class DistributionSummaryTest extends BaseMetricsTest{
                 .maximumExpectedValue(100.0)
 
                 .serviceLevelObjectives(  0.95)
-
+                .baseUnit("bytes")
                 .register(registry);
 
         distributionSummary.record(21);
@@ -50,6 +42,17 @@ public class DistributionSummaryTest extends BaseMetricsTest{
         distributionSummary.record(98);
         distributionSummary.record(99);
 
-        Thread.sleep(10000);
+        assertEquals(10, distributionSummary.count());
+        assertEquals(780, distributionSummary.totalAmount());
+        assertEquals(99, distributionSummary.max());
+        assertEquals(78, distributionSummary.mean());
+
+        ValueAtPercentile[] percentiles = distributionSummary.takeSnapshot().percentileValues();
+
+        for (int i = 0; i < percentiles.length; i++) {
+            System.out.println(" i=" + i + " : " + percentiles[i].percentile() + "," + percentiles[i].value());
+        }
+
+
     }
 }

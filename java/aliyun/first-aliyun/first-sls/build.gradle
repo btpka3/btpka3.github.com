@@ -28,6 +28,7 @@ dependencies {
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.30'
 
     implementation 'com.aliyun.openservices:aliyun-log:0.6.98'
+    implementation 'com.aliyun.openservices:aliyun-log-producer:0.3.20'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'mysql:mysql-connector-java:8.0.33'
@@ -35,6 +36,7 @@ dependencies {
     implementation 'com.alibaba.fastjson2:fastjson2:2.0.41'
     implementation 'org.apache.commons:commons-lang3:3.14.0'
     implementation 'com.aliyun.openservices:loghub-client-lib:0.6.47'
+
 }
 
 

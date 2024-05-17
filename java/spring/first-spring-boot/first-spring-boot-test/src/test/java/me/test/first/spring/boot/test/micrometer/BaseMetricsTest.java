@@ -1,6 +1,9 @@
 package me.test.first.spring.boot.test.micrometer;
 
-import lombok.*;
+import io.micrometer.core.instrument.Clock;
+import io.micrometer.core.instrument.logging.LoggingMeterRegistry;
+import io.micrometer.core.instrument.logging.LoggingRegistryConfig;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.SpringApplication;
@@ -13,6 +16,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.time.Duration;
 
 /**
  * @author dangqian.zll
@@ -52,6 +57,22 @@ public abstract class BaseMetricsTest {
         SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
             http.authorizeHttpRequests().anyRequest().permitAll();
             return http.build();
+        }
+
+        @Bean(name = "loggingMeterRegistry")
+        LoggingMeterRegistry loggingMeterRegistry() {
+
+            return new LoggingMeterRegistry(new LoggingRegistryConfig() {
+                @Override
+                public Duration step() {
+                    return Duration.ofSeconds(5);
+                }
+
+                @Override
+                public String get(String key) {
+                    return null;
+                }
+            }, Clock.SYSTEM);
         }
     }
 

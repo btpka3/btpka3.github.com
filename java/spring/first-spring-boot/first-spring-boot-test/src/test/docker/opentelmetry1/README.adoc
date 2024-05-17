@@ -1,0 +1,35 @@
+
+
+
+
+:experimental:
+
+|===
+|key | description
+
+|kbd:[Cmd+←]|光标移动到行首
+|kbd:[Cmd+→]|光标移动到行尾
+|kbd:[Cmd+Shift+↑]|选中区域向上移动
+|kbd:[Cmd+Shift+↓]|选中区域向下移动
+|kbd:[Cmd+/]|注释代码
+|kbd:[Cmd+[]|导航：向后
+|kbd:[Cmd+\]]|导航：向前
+|kbd:[Cmd+Shift+[]|导航：前一个 Tab
+|kbd:[Cmd+Shift+\]]|导航：后一个 Tab
+|kbd:[Cmd+Backspace]|删除当前行
+|kbd:[Cmd+D]|复制当前行
+|kbd:[Cmd+Shift+Backspace]|导航：回到最后一次修改处
+|kbd:[Cmd+Fn+←]|回到编辑器第一行
+|kbd:[Cmd+Fn+→]|回到编辑器最后一行
+|kbd:[Cmd+P]|显示参数
+|kbd:[Cmd+Shift+E]|显示最近修改的文件
+|kbd:[Cmd+Shift+V]|显示最近5次粘贴的内容
+|kbd:[Cmd+Option+L]|格式化代码
+|kbd:[Cmd+Option+L]|格式化代码
+|kbd:[Ctrl+Option+O]|格式化 import
+|kbd:[Ctrl+H]|显示选中class的子类
+|kbd:[Cmd+-]|折叠
+|kbd:[Cmd++]|展开
+|kbd:[Shift+Cmd+-]|全部折叠
+|kbd:[Shift+Cmd++]|全部展开
+|===

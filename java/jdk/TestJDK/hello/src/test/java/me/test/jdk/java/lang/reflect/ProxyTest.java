@@ -53,16 +53,16 @@ public class ProxyTest {
      * <p>
      * 注意：运行态单测case 需要增加以下JVM 参数
      * <pre{@code
-     *   --add-opens=java.base/java.util=ALL-UNNAMED
+     * --add-opens=java.base/java.util=ALL-UNNAMED
      * }</pre>
-     *
+     * <p>
      * 备注：如果是 <a href="https://tomcat.apache.org/tomcat-10.1-doc/setup.html">tomcat 10.1</a> , 常见需要增加以下JVM 参数：
      * <pre>{@code
-     *    --add-opens=java.base/java.lang=ALL-UNNAMED \
-     *    --add-opens=java.base/java.io=ALL-UNNAMED \
-     *    --add-opens=java.base/java.util=ALL-UNNAMED \
-     *    --add-opens=java.base/java.util.concurrent=ALL-UNNAMED \
-     *    --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED \
+     * --add-opens=java.base/java.lang=ALL-UNNAMED \
+     * --add-opens=java.base/java.io=ALL-UNNAMED \
+     * --add-opens=java.base/java.util=ALL-UNNAMED \
+     * --add-opens=java.base/java.util.concurrent=ALL-UNNAMED \
+     * --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED \
      * }</pre>
      */
     @Test
@@ -81,6 +81,11 @@ public class ProxyTest {
         assertInstanceOf(MyInterface.class, proxyObj);
         assertInstanceOf(Map.class, proxyObj);
         assertFalse(proxyObj instanceof HashMap);
+
+        assertTrue(Proxy.isProxyClass(proxyObj.getClass()));
+        MyInvocationHandler myInvocationHandler = (MyInvocationHandler) Proxy.getInvocationHandler(proxyObj);
+        assertSame(map, myInvocationHandler.target);
+
         // 因为代理对象不是 HashMap，故不能获取到字段
         // assertEquals(0.75f, (float) getFiled(proxyObj.class, null, "DEFAULT_LOAD_FACTOR"));
         // assertEquals(0.75f, (float) getFiled(proxyObj.class, map, "loadFactor"));

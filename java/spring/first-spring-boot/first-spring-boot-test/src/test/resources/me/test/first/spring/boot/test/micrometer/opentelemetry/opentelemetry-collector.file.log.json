@@ -1,0 +1,2907 @@
+{
+  "resourceMetrics": [
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "io.micrometer"
+            }
+          },
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "java"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "1.13.0"
+            }
+          },
+          {
+            "key": "attr2",
+            "value": {
+              "stringValue": "av2"
+            }
+          },
+          {
+            "key": "attr1",
+            "value": {
+              "stringValue": "av1"
+            }
+          },
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "unknown_service"
+            }
+          }
+        ]
+      },
+      "scopeMetrics": [
+        {
+          "scope": {},
+          "metrics": [
+            {
+              "name": "jvm.gc.memory.promoted",
+              "description": "Count of positive increases in the size of the old generation memory pool before GC to after GC",
+              "unit": "bytes",
+              "sum": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1715832549996000000",
+                    "timeUnixNano": "1715832565533000000",
+                    "asDouble": 24179824
+                  }
+                ],
+                "aggregationTemporality": 2,
+                "isMonotonic": true
+              }
+            },
+            {
+              "name": "jvm.threads.peak",
+              "description": "The peak live thread count since the Java virtual machine started or peak was reset",
+              "unit": "threads",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565534000000",
+                    "asDouble": 29
+                  }
+                ]
+              }
+            },
+            {
+              "name": "jvm.gc.max.data.size",
+              "description": "Max size of long-lived heap memory pool",
+              "unit": "bytes",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565532000000",
+                    "asDouble": 1073741824
+                  }
+                ]
+              }
+            },
+            {
+              "name": "application.ready.time",
+              "description": "Time taken for the application to be ready to service requests",
+              "unit": "milliseconds",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "main.application.class",
+                        "value": {
+                          "stringValue": "me.test.first.spring.boot.test.micrometer.opentelemetry.MicroMeter2OpenTelemetryTest"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565535000000",
+                    "asDouble": 7848
+                  }
+                ]
+              }
+            },
+            {
+              "name": "executor.active",
+              "description": "The approximate number of threads that are actively executing tasks",
+              "unit": "threads",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "name",
+                        "value": {
+                          "stringValue": "applicationTaskExecutor"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565532000000",
+                    "asDouble": 0
+                  }
+                ]
+              }
+            },
+            {
+              "name": "system.cpu.count",
+              "description": "The number of processors available to the Java virtual machine",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565532000000",
+                    "asDouble": 12
+                  }
+                ]
+              }
+            },
+            {
+              "name": "jvm.memory.usage.after.gc",
+              "description": "The percentage of long-lived heap pool used after the last GC event, in the range [0..1]",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "area",
+                        "value": {
+                          "stringValue": "heap"
+                        }
+                      },
+                      {
+                        "key": "pool",
+                        "value": {
+                          "stringValue": "long-lived"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565534000000",
+                    "asDouble": 0.04013466835021973
+                  }
+                ]
+              }
+            },
+            {
+              "name": "executor.pool.core",
+              "description": "The core number of threads for the pool",
+              "unit": "threads",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "name",
+                        "value": {
+                          "stringValue": "applicationTaskExecutor"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565531000000",
+                    "asDouble": 8
+                  }
+                ]
+              }
+            },
+            {
+              "name": "jvm.threads.states",
+              "description": "The current number of threads",
+              "unit": "threads",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      },
+                      {
+                        "key": "state",
+                        "value": {
+                          "stringValue": "blocked"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565530000000",
+                    "asDouble": 0
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      },
+                      {
+                        "key": "state",
+                        "value": {
+                          "stringValue": "terminated"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565530000000",
+                    "asDouble": 0
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      },
+                      {
+                        "key": "state",
+                        "value": {
+                          "stringValue": "new"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565531000000",
+                    "asDouble": 0
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      },
+                      {
+                        "key": "state",
+                        "value": {
+                          "stringValue": "timed-waiting"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565531000000",
+                    "asDouble": 17
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      },
+                      {
+                        "key": "state",
+                        "value": {
+                          "stringValue": "runnable"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565532000000",
+                    "asDouble": 4
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      },
+                      {
+                        "key": "state",
+                        "value": {
+                          "stringValue": "waiting"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565534000000",
+                    "asDouble": 2
+                  }
+                ]
+              }
+            },
+            {
+              "name": "process.cpu.usage",
+              "description": "The \"recent cpu usage\" for the Java Virtual Machine process",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565533000000",
+                    "asDouble": 0.013718007543983233
+                  }
+                ]
+              }
+            },
+            {
+              "name": "disk.free",
+              "description": "Usable space for path",
+              "unit": "bytes",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "path",
+                        "value": {
+                          "stringValue": "/Users/zll/data0/work/git-repo/github/btpka3/btpka3.github.com/java/spring/first-spring-boot/."
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565529000000",
+                    "asDouble": 22065795072
+                  }
+                ]
+              }
+            },
+            {
+              "name": "jvm.memory.max",
+              "description": "The maximum amount of memory in bytes that can be used for memory management",
+              "unit": "bytes",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "area",
+                        "value": {
+                          "stringValue": "nonheap"
+                        }
+                      },
+                      {
+                        "key": "id",
+                        "value": {
+                          "stringValue": "CodeHeap 'profiled nmethods'"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565530000000",
+                    "asDouble": 122908672
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "area",
+                        "value": {
+                          "stringValue": "heap"
+                        }
+                      },
+                      {
+                        "key": "id",
+                        "value": {
+                          "stringValue": "G1 Eden Space"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565532000000",
+                    "asDouble": -1
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "area",
+                        "value": {
+                          "stringValue": "heap"
+                        }
+                      },
+                      {
+                        "key": "id",
+                        "value": {
+                          "stringValue": "G1 Old Gen"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565532000000",
+                    "asDouble": 1073741824
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "area",
+                        "value": {
+                          "stringValue": "heap"
+                        }
+                      },
+                      {
+                        "key": "id",
+                        "value": {
+                          "stringValue": "G1 Survivor Space"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565532000000",
+                    "asDouble": -1
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "area",
+                        "value": {
+                          "stringValue": "nonheap"
+                        }
+                      },
+                      {
+                        "key": "id",
+                        "value": {
+                          "stringValue": "Metaspace"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565532000000",
+                    "asDouble": -1
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "area",
+                        "value": {
+                          "stringValue": "nonheap"
+                        }
+                      },
+                      {
+                        "key": "id",
+                        "value": {
+                          "stringValue": "Compressed Class Space"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565533000000",
+                    "asDouble": 1073741824
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "area",
+                        "value": {
+                          "stringValue": "nonheap"
+                        }
+                      },
+                      {
+                        "key": "id",
+                        "value": {
+                          "stringValue": "CodeHeap 'non-nmethods'"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565534000000",
+                    "asDouble": 5836800
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "area",
+                        "value": {
+                          "stringValue": "nonheap"
+                        }
+                      },
+                      {
+                        "key": "id",
+                        "value": {
+                          "stringValue": "CodeHeap 'non-profiled nmethods'"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565535000000",
+                    "asDouble": 122912768
+                  }
+                ]
+              }
+            },
+            {
+              "name": "executor.queued",
+              "description": "The approximate number of tasks that are queued for execution",
+              "unit": "tasks",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "name",
+                        "value": {
+                          "stringValue": "applicationTaskExecutor"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565532000000",
+                    "asDouble": 0
+                  }
+                ]
+              }
+            },
+            {
+              "name": "jvm.buffer.total.capacity",
+              "description": "An estimate of the total capacity of the buffers in this pool",
+              "unit": "bytes",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "id",
+                        "value": {
+                          "stringValue": "mapped"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565531000000",
+                    "asDouble": 0
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "id",
+                        "value": {
+                          "stringValue": "direct"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565532000000",
+                    "asDouble": 45056
+                  }
+                ]
+              }
+            },
+            {
+              "name": "executor.completed",
+              "description": "The approximate total number of tasks that have completed execution",
+              "unit": "tasks",
+              "sum": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "name",
+                        "value": {
+                          "stringValue": "applicationTaskExecutor"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1715832554088000000",
+                    "timeUnixNano": "1715832565532000000",
+                    "asDouble": 0
+                  }
+                ],
+                "aggregationTemporality": 2,
+                "isMonotonic": true
+              }
+            },
+            {
+              "name": "process.files.max",
+              "description": "The maximum file descriptor count",
+              "unit": "files",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565533000000",
+                    "asDouble": 10240
+                  }
+                ]
+              }
+            },
+            {
+              "name": "jvm.classes.loaded",
+              "description": "The number of classes that are currently loaded in the Java virtual machine",
+              "unit": "classes",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565531000000",
+                    "asDouble": 16606
+                  }
+                ]
+              }
+            },
+            {
+              "name": "system.load.average.1m",
+              "description": "The sum of the number of runnable entities queued to available processors and the number of runnable entities running on the available processors averaged over a period of time",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565534000000",
+                    "asDouble": 4.412109375
+                  }
+                ]
+              }
+            },
+            {
+              "name": "cache.removes.latency",
+              "description": "Cache removes",
+              "unit": "MILLISECONDS",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "cache",
+                        "value": {
+                          "stringValue": "default"
+                        }
+                      },
+                      {
+                        "key": "cache.manager",
+                        "value": {
+                          "stringValue": "springEmbedded"
+                        }
+                      },
+                      {
+                        "key": "name",
+                        "value": {
+                          "stringValue": "default"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565534000000",
+                    "asDouble": -1
+                  }
+                ]
+              }
+            },
+            {
+              "name": "cache.gets",
+              "description": "The number of times cache lookup methods have returned a cached (hit) or uncached (newly loaded or null) value (miss).",
+              "sum": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "cache",
+                        "value": {
+                          "stringValue": "default"
+                        }
+                      },
+                      {
+                        "key": "cache.manager",
+                        "value": {
+                          "stringValue": "springEmbedded"
+                        }
+                      },
+                      {
+                        "key": "name",
+                        "value": {
+                          "stringValue": "default"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      },
+                      {
+                        "key": "result",
+                        "value": {
+                          "stringValue": "miss"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1715832553998000000",
+                    "timeUnixNano": "1715832565531000000",
+                    "asDouble": -1
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "cache",
+                        "value": {
+                          "stringValue": "default"
+                        }
+                      },
+                      {
+                        "key": "cache.manager",
+                        "value": {
+                          "stringValue": "springEmbedded"
+                        }
+                      },
+                      {
+                        "key": "name",
+                        "value": {
+                          "stringValue": "default"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      },
+                      {
+                        "key": "result",
+                        "value": {
+                          "stringValue": "hit"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1715832553998000000",
+                    "timeUnixNano": "1715832565531000000",
+                    "asDouble": -1
+                  }
+                ],
+                "aggregationTemporality": 2,
+                "isMonotonic": true
+              }
+            },
+            {
+              "name": "jvm.buffer.memory.used",
+              "description": "An estimate of the memory that the Java virtual machine is using for this buffer pool",
+              "unit": "bytes",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "id",
+                        "value": {
+                          "stringValue": "mapped"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565532000000",
+                    "asDouble": 0
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "id",
+                        "value": {
+                          "stringValue": "direct"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565534000000",
+                    "asDouble": 45056
+                  }
+                ]
+              }
+            },
+            {
+              "name": "process.start.time",
+              "description": "Start time of the process since unix epoch.",
+              "unit": "milliseconds",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565533000000",
+                    "asDouble": 1715832545363
+                  }
+                ]
+              }
+            },
+            {
+              "name": "jvm.gc.overhead",
+              "description": "An approximation of the percent of CPU time used by GC activities over the last lookback period or since monitoring began, whichever is shorter, in the range [0..1]",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565533000000",
+                    "asDouble": 0.003846556820816213
+                  }
+                ]
+              }
+            },
+            {
+              "name": "cache.memory.size",
+              "description": "Approximate number of entries in the cache, excluding passivated entries",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "cache",
+                        "value": {
+                          "stringValue": "default"
+                        }
+                      },
+                      {
+                        "key": "cache.manager",
+                        "value": {
+                          "stringValue": "springEmbedded"
+                        }
+                      },
+                      {
+                        "key": "name",
+                        "value": {
+                          "stringValue": "default"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565532000000",
+                    "asDouble": -1
+                  }
+                ]
+              }
+            },
+            {
+              "name": "cache.memory.offHeap",
+              "description": "The amount of off-heap memory used by this cache",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "cache",
+                        "value": {
+                          "stringValue": "default"
+                        }
+                      },
+                      {
+                        "key": "cache.manager",
+                        "value": {
+                          "stringValue": "springEmbedded"
+                        }
+                      },
+                      {
+                        "key": "name",
+                        "value": {
+                          "stringValue": "default"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565530000000",
+                    "asDouble": -1
+                  }
+                ]
+              }
+            },
+            {
+              "name": "executor.pool.max",
+              "description": "The maximum allowed number of threads in the pool",
+              "unit": "threads",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "name",
+                        "value": {
+                          "stringValue": "applicationTaskExecutor"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565531000000",
+                    "asDouble": 2147483647
+                  }
+                ]
+              }
+            },
+            {
+              "name": "cache.puts.latency",
+              "description": "Cache puts",
+              "unit": "MILLISECONDS",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "cache",
+                        "value": {
+                          "stringValue": "default"
+                        }
+                      },
+                      {
+                        "key": "cache.manager",
+                        "value": {
+                          "stringValue": "springEmbedded"
+                        }
+                      },
+                      {
+                        "key": "name",
+                        "value": {
+                          "stringValue": "default"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565531000000",
+                    "asDouble": -1
+                  }
+                ]
+              }
+            },
+            {
+              "name": "cache.evictions",
+              "description": "The number of times the cache was evicted.",
+              "sum": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "cache",
+                        "value": {
+                          "stringValue": "default"
+                        }
+                      },
+                      {
+                        "key": "cache.manager",
+                        "value": {
+                          "stringValue": "springEmbedded"
+                        }
+                      },
+                      {
+                        "key": "name",
+                        "value": {
+                          "stringValue": "default"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1715832553998000000",
+                    "timeUnixNano": "1715832565531000000",
+                    "asDouble": -1
+                  }
+                ],
+                "aggregationTemporality": 2,
+                "isMonotonic": true
+              }
+            },
+            {
+              "name": "process.files.open",
+              "description": "The open file descriptor count",
+              "unit": "files",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565531000000",
+                    "asDouble": 437
+                  }
+                ]
+              }
+            },
+            {
+              "name": "cache.gets.nlatency",
+              "description": "Cache gets in nanos",
+              "unit": "NANOSECONDS",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "cache",
+                        "value": {
+                          "stringValue": "default"
+                        }
+                      },
+                      {
+                        "key": "cache.manager",
+                        "value": {
+                          "stringValue": "springEmbedded"
+                        }
+                      },
+                      {
+                        "key": "name",
+                        "value": {
+                          "stringValue": "default"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565533000000",
+                    "asDouble": -1
+                  }
+                ]
+              }
+            },
+            {
+              "name": "cache.removes.nlatency",
+              "description": "Cache removes in nanos",
+              "unit": "NANOSECONDS",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "cache",
+                        "value": {
+                          "stringValue": "default"
+                        }
+                      },
+                      {
+                        "key": "cache.manager",
+                        "value": {
+                          "stringValue": "springEmbedded"
+                        }
+                      },
+                      {
+                        "key": "name",
+                        "value": {
+                          "stringValue": "default"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565532000000",
+                    "asDouble": -1
+                  }
+                ]
+              }
+            },
+            {
+              "name": "application.started.time",
+              "description": "Time taken to start the application",
+              "unit": "milliseconds",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "main.application.class",
+                        "value": {
+                          "stringValue": "me.test.first.spring.boot.test.micrometer.opentelemetry.MicroMeter2OpenTelemetryTest"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565530000000",
+                    "asDouble": 7846
+                  }
+                ]
+              }
+            },
+            {
+              "name": "jvm.gc.memory.allocated",
+              "description": "Incremented for an increase in the size of the (young) heap memory pool after one GC to before the next",
+              "unit": "bytes",
+              "sum": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1715832549996000000",
+                    "timeUnixNano": "1715832565532000000",
+                    "asDouble": 1142947840
+                  }
+                ],
+                "aggregationTemporality": 2,
+                "isMonotonic": true
+              }
+            },
+            {
+              "name": "jvm.classes.unloaded",
+              "description": "The total number of classes unloaded since the Java virtual machine has started execution",
+              "unit": "classes",
+              "sum": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1715832550004000000",
+                    "timeUnixNano": "1715832565531000000",
+                    "asDouble": 0
+                  }
+                ],
+                "aggregationTemporality": 2,
+                "isMonotonic": true
+              }
+            },
+            {
+              "name": "request.size",
+              "description": "a description of xxx",
+              "unit": "bytes",
+              "histogram": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "test"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1715832555404000000",
+                    "timeUnixNano": "1715832565533000000",
+                    "count": "10",
+                    "sum": 780,
+                    "bucketCounts": [
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "1",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "1",
+                      "0",
+                      "0",
+                      "0",
+                      "3",
+                      "5",
+                      "0"
+                    ],
+                    "explicitBounds": [
+                      0.95,
+                      1,
+                      2,
+                      3,
+                      4,
+                      5,
+                      6,
+                      7,
+                      8,
+                      9,
+                      10,
+                      11,
+                      12,
+                      13,
+                      14,
+                      16,
+                      21,
+                      26,
+                      31,
+                      36,
+                      41,
+                      46,
+                      51,
+                      56,
+                      64,
+                      85,
+                      100
+                    ]
+                  }
+                ],
+                "aggregationTemporality": 2
+              }
+            },
+            {
+              "name": "cache.gets.latency",
+              "description": "Cache gets",
+              "unit": "MILLISECONDS",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "cache",
+                        "value": {
+                          "stringValue": "default"
+                        }
+                      },
+                      {
+                        "key": "cache.manager",
+                        "value": {
+                          "stringValue": "springEmbedded"
+                        }
+                      },
+                      {
+                        "key": "name",
+                        "value": {
+                          "stringValue": "default"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565534000000",
+                    "asDouble": -1
+                  }
+                ]
+              }
+            },
+            {
+              "name": "disk.total",
+              "description": "Total space for path",
+              "unit": "bytes",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "path",
+                        "value": {
+                          "stringValue": "/Users/zll/data0/work/git-repo/github/btpka3/btpka3.github.com/java/spring/first-spring-boot/."
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565532000000",
+                    "asDouble": 499963174912
+                  }
+                ]
+              }
+            },
+            {
+              "name": "jvm.memory.used",
+              "description": "The amount of used memory",
+              "unit": "bytes",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "area",
+                        "value": {
+                          "stringValue": "heap"
+                        }
+                      },
+                      {
+                        "key": "id",
+                        "value": {
+                          "stringValue": "G1 Old Gen"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565530000000",
+                    "asDouble": 43094272
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "area",
+                        "value": {
+                          "stringValue": "nonheap"
+                        }
+                      },
+                      {
+                        "key": "id",
+                        "value": {
+                          "stringValue": "Compressed Class Space"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565530000000",
+                    "asDouble": 11394008
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "area",
+                        "value": {
+                          "stringValue": "nonheap"
+                        }
+                      },
+                      {
+                        "key": "id",
+                        "value": {
+                          "stringValue": "CodeHeap 'non-profiled nmethods'"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565531000000",
+                    "asDouble": 3330176
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "area",
+                        "value": {
+                          "stringValue": "nonheap"
+                        }
+                      },
+                      {
+                        "key": "id",
+                        "value": {
+                          "stringValue": "CodeHeap 'non-nmethods'"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565532000000",
+                    "asDouble": 1431040
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "area",
+                        "value": {
+                          "stringValue": "nonheap"
+                        }
+                      },
+                      {
+                        "key": "id",
+                        "value": {
+                          "stringValue": "Metaspace"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565534000000",
+                    "asDouble": 91942064
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "area",
+                        "value": {
+                          "stringValue": "heap"
+                        }
+                      },
+                      {
+                        "key": "id",
+                        "value": {
+                          "stringValue": "G1 Survivor Space"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565534000000",
+                    "asDouble": 11534336
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "area",
+                        "value": {
+                          "stringValue": "nonheap"
+                        }
+                      },
+                      {
+                        "key": "id",
+                        "value": {
+                          "stringValue": "CodeHeap 'profiled nmethods'"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565534000000",
+                    "asDouble": 14328704
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "area",
+                        "value": {
+                          "stringValue": "heap"
+                        }
+                      },
+                      {
+                        "key": "id",
+                        "value": {
+                          "stringValue": "G1 Eden Space"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565534000000",
+                    "asDouble": 93323264
+                  }
+                ]
+              }
+            },
+            {
+              "name": "cache.puts",
+              "description": "The number of entries added to the cache",
+              "sum": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "cache",
+                        "value": {
+                          "stringValue": "default"
+                        }
+                      },
+                      {
+                        "key": "cache.manager",
+                        "value": {
+                          "stringValue": "springEmbedded"
+                        }
+                      },
+                      {
+                        "key": "name",
+                        "value": {
+                          "stringValue": "default"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1715832553998000000",
+                    "timeUnixNano": "1715832565532000000",
+                    "asDouble": -1
+                  }
+                ],
+                "aggregationTemporality": 2,
+                "isMonotonic": true
+              }
+            },
+            {
+              "name": "jvm.threads.live",
+              "description": "The current number of live threads including both daemon and non-daemon threads",
+              "unit": "threads",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565532000000",
+                    "asDouble": 25
+                  }
+                ]
+              }
+            },
+            {
+              "name": "cache.reset",
+              "description": "Time elapsed since the last statistics reset",
+              "unit": "SECONDS",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "cache",
+                        "value": {
+                          "stringValue": "default"
+                        }
+                      },
+                      {
+                        "key": "cache.manager",
+                        "value": {
+                          "stringValue": "springEmbedded"
+                        }
+                      },
+                      {
+                        "key": "name",
+                        "value": {
+                          "stringValue": "default"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565534000000",
+                    "asDouble": -1
+                  }
+                ]
+              }
+            },
+            {
+              "name": "jvm.gc.live.data.size",
+              "description": "Size of long-lived heap memory pool after reclamation",
+              "unit": "bytes",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565531000000",
+                    "asDouble": 36903904
+                  }
+                ]
+              }
+            },
+            {
+              "name": "cache.size",
+              "description": "The number of entries in this cache. This may be an approximation, depending on the type of cache.",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "cache",
+                        "value": {
+                          "stringValue": "default"
+                        }
+                      },
+                      {
+                        "key": "cache.manager",
+                        "value": {
+                          "stringValue": "springEmbedded"
+                        }
+                      },
+                      {
+                        "key": "name",
+                        "value": {
+                          "stringValue": "default"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565531000000",
+                    "asDouble": -1
+                  }
+                ]
+              }
+            },
+            {
+              "name": "jvm.buffer.count",
+              "description": "An estimate of the number of buffers in the pool",
+              "unit": "buffers",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "id",
+                        "value": {
+                          "stringValue": "direct"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565532000000",
+                    "asDouble": 3
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "id",
+                        "value": {
+                          "stringValue": "mapped"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565533000000",
+                    "asDouble": 0
+                  }
+                ]
+              }
+            },
+            {
+              "name": "process.cpu.time",
+              "description": "The \"cpu time\" used by the Java Virtual Machine process",
+              "unit": "ns",
+              "sum": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1715832550007000000",
+                    "timeUnixNano": "1715832565529000000",
+                    "asDouble": 21741950000
+                  }
+                ],
+                "aggregationTemporality": 2,
+                "isMonotonic": true
+              }
+            },
+            {
+              "name": "jvm.memory.committed",
+              "description": "The amount of memory in bytes that is committed for the Java virtual machine to use",
+              "unit": "bytes",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "area",
+                        "value": {
+                          "stringValue": "nonheap"
+                        }
+                      },
+                      {
+                        "key": "id",
+                        "value": {
+                          "stringValue": "CodeHeap 'non-profiled nmethods'"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565530000000",
+                    "asDouble": 3342336
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "area",
+                        "value": {
+                          "stringValue": "nonheap"
+                        }
+                      },
+                      {
+                        "key": "id",
+                        "value": {
+                          "stringValue": "Metaspace"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565530000000",
+                    "asDouble": 95023104
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "area",
+                        "value": {
+                          "stringValue": "heap"
+                        }
+                      },
+                      {
+                        "key": "id",
+                        "value": {
+                          "stringValue": "G1 Eden Space"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565531000000",
+                    "asDouble": 157286400
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "area",
+                        "value": {
+                          "stringValue": "heap"
+                        }
+                      },
+                      {
+                        "key": "id",
+                        "value": {
+                          "stringValue": "G1 Old Gen"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565531000000",
+                    "asDouble": 99614720
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "area",
+                        "value": {
+                          "stringValue": "nonheap"
+                        }
+                      },
+                      {
+                        "key": "id",
+                        "value": {
+                          "stringValue": "Compressed Class Space"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565532000000",
+                    "asDouble": 12582912
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "area",
+                        "value": {
+                          "stringValue": "heap"
+                        }
+                      },
+                      {
+                        "key": "id",
+                        "value": {
+                          "stringValue": "G1 Survivor Space"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565532000000",
+                    "asDouble": 11534336
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "area",
+                        "value": {
+                          "stringValue": "nonheap"
+                        }
+                      },
+                      {
+                        "key": "id",
+                        "value": {
+                          "stringValue": "CodeHeap 'profiled nmethods'"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565533000000",
+                    "asDouble": 14352384
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "area",
+                        "value": {
+                          "stringValue": "nonheap"
+                        }
+                      },
+                      {
+                        "key": "id",
+                        "value": {
+                          "stringValue": "CodeHeap 'non-nmethods'"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565533000000",
+                    "asDouble": 2555904
+                  }
+                ]
+              }
+            },
+            {
+              "name": "executor.pool.size",
+              "description": "The current number of threads in the pool",
+              "unit": "threads",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "name",
+                        "value": {
+                          "stringValue": "applicationTaskExecutor"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565531000000",
+                    "asDouble": 0
+                  }
+                ]
+              }
+            },
+            {
+              "name": "jvm.threads.daemon",
+              "description": "The current number of live daemon threads",
+              "unit": "threads",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565531000000",
+                    "asDouble": 10
+                  }
+                ]
+              }
+            },
+            {
+              "name": "logback.events",
+              "description": "Number of log events that were enabled by the effective log level",
+              "unit": "events",
+              "sum": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "level",
+                        "value": {
+                          "stringValue": "debug"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1715832550004000000",
+                    "timeUnixNano": "1715832565530000000",
+                    "asDouble": 911
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "level",
+                        "value": {
+                          "stringValue": "info"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1715832550004000000",
+                    "timeUnixNano": "1715832565531000000",
+                    "asDouble": 2
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "level",
+                        "value": {
+                          "stringValue": "warn"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1715832550004000000",
+                    "timeUnixNano": "1715832565532000000",
+                    "asDouble": 1
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "level",
+                        "value": {
+                          "stringValue": "error"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1715832550004000000",
+                    "timeUnixNano": "1715832565534000000",
+                    "asDouble": 0
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "level",
+                        "value": {
+                          "stringValue": "trace"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1715832550004000000",
+                    "timeUnixNano": "1715832565535000000",
+                    "asDouble": 0
+                  }
+                ],
+                "aggregationTemporality": 2,
+                "isMonotonic": true
+              }
+            },
+            {
+              "name": "cache.puts.nlatency",
+              "description": "Cache puts in nanos",
+              "unit": "NANOSECONDS",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "cache",
+                        "value": {
+                          "stringValue": "default"
+                        }
+                      },
+                      {
+                        "key": "cache.manager",
+                        "value": {
+                          "stringValue": "springEmbedded"
+                        }
+                      },
+                      {
+                        "key": "name",
+                        "value": {
+                          "stringValue": "default"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565532000000",
+                    "asDouble": -1
+                  }
+                ]
+              }
+            },
+            {
+              "name": "executor.queue.remaining",
+              "description": "The number of additional elements that this queue can ideally accept without blocking",
+              "unit": "tasks",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "name",
+                        "value": {
+                          "stringValue": "applicationTaskExecutor"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565530000000",
+                    "asDouble": 2147483647
+                  }
+                ]
+              }
+            },
+            {
+              "name": "jvm.threads.started",
+              "description": "The total number of application threads started in the JVM",
+              "unit": "threads",
+              "sum": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1715832550003000000",
+                    "timeUnixNano": "1715832565533000000",
+                    "asDouble": 50
+                  }
+                ],
+                "aggregationTemporality": 2,
+                "isMonotonic": true
+              }
+            },
+            {
+              "name": "process.uptime",
+              "description": "The uptime of the Java virtual machine",
+              "unit": "milliseconds",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565531000000",
+                    "asDouble": 20214
+                  }
+                ]
+              }
+            },
+            {
+              "name": "jvm.gc.pause",
+              "description": "Time spent in GC pause",
+              "unit": "milliseconds",
+              "histogram": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "action",
+                        "value": {
+                          "stringValue": "end of minor GC"
+                        }
+                      },
+                      {
+                        "key": "cause",
+                        "value": {
+                          "stringValue": "Metadata GC Threshold"
+                        }
+                      },
+                      {
+                        "key": "gc",
+                        "value": {
+                          "stringValue": "G1 Young Generation"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1715832551062000000",
+                    "timeUnixNano": "1715832565532000000",
+                    "count": "1",
+                    "sum": 7
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "action",
+                        "value": {
+                          "stringValue": "end of minor GC"
+                        }
+                      },
+                      {
+                        "key": "cause",
+                        "value": {
+                          "stringValue": "G1 Evacuation Pause"
+                        }
+                      },
+                      {
+                        "key": "gc",
+                        "value": {
+                          "stringValue": "G1 Young Generation"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1715832550143000000",
+                    "timeUnixNano": "1715832565535000000",
+                    "count": "7",
+                    "sum": 53
+                  }
+                ],
+                "aggregationTemporality": 2
+              }
+            },
+            {
+              "name": "cache.start",
+              "description": "Time elapsed since start",
+              "unit": "SECONDS",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "cache",
+                        "value": {
+                          "stringValue": "default"
+                        }
+                      },
+                      {
+                        "key": "cache.manager",
+                        "value": {
+                          "stringValue": "springEmbedded"
+                        }
+                      },
+                      {
+                        "key": "name",
+                        "value": {
+                          "stringValue": "default"
+                        }
+                      },
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565531000000",
+                    "asDouble": -1
+                  }
+                ]
+              }
+            },
+            {
+              "name": "system.cpu.usage",
+              "description": "The \"recent cpu usage\" of the system the application is running in",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "us-east-1"
+                        }
+                      }
+                    ],
+                    "timeUnixNano": "1715832565532000000",
+                    "asDouble": 0.16913090515686982
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "host.arch",
+            "value": {
+              "stringValue": "x86_64"
+            }
+          },
+          {
+            "key": "host.name",
+            "value": {
+              "stringValue": "m"
+            }
+          },
+          {
+            "key": "os.description",
+            "value": {
+              "stringValue": "Mac OS X 14.4.1"
+            }
+          },
+          {
+            "key": "os.type",
+            "value": {
+              "stringValue": "darwin"
+            }
+          },
+          {
+            "key": "process.command_args",
+            "value": {
+              "arrayValue": {
+                "values": [
+                  {
+                    "stringValue": "/Users/zll/.sdkman/candidates/java/11.0.20-tem/bin/java"
+                  },
+                  {
+                    "stringValue": "-Dawt.toolkit=sun.lwawt.macosx.LWCToolkit"
+                  },
+                  {
+                    "stringValue": "-Dfile.separator=/"
+                  },
+                  {
+                    "stringValue": "-Dftp.nonProxyHosts=360.cn|*.360.cn|ali.com|*.ali.com|alibaba-inc.com|*.alibaba-inc.com|alibaba.com|*.alibaba.com|alibaba.net|*.alibaba.net|alibabacorp.com|*.alibabacorp.com|alicdn.com|*.alicdn.com|alikunlun.com|*.alikunlun.com|alipay-corp.com|*.alipay-corp.com|alipay-inc.com|*.alipay-inc.com|alipay.com|*.alipay.com|alipay.net|*.alipay.net|alipayobjects.com|*.alipayobjects.com|alistatic.com|*.alistatic.com|alitrip.com|*.alitrip.com|aliway.com|*.aliway.com|aliyun-inc.com|*.aliyun-inc.com|aliyun.com|*.aliyun.com|aliyuncs.com|*.aliyuncs.com|alizoo.com|*.alizoo.com|amap.com|*.amap.com|antdigital.com|*.antdigital.com|antfin-inc.com|*.antfin-inc.com|antfin.com|*.antfin.com|antfinancial-corp.com|*.antfinancial-corp.com|antgroup-inc.cn|*.antgroup-inc.cn|antsdaq-corp.com|*.antsdaq-corp.com|anyproxy.io|*.anyproxy.io|appx.dev|*.appx.dev|appx.run|*.appx.run|apsaraun.com|*.apsaraun.com|atatech.org|*.atatech.org|axintrip.com|*.axintrip.com|baidu.com|*.baidu.com|cainiao-inc.com|*.cainiao-inc.com|cnzz.com|*.cnzz.com|dingtalk.com|*.dingtalk.com|dingtalkapps.com|*.dingtalkapps.com|drophone-hive.com|*.drophone-hive.com|drophone.com|*.drophone.com|ebanma.com|*.ebanma.com|effirst.com|*.effirst.com|ele.me|*.ele.me|ele.to|*.ele.to|eleme.cn|*.eleme.cn|eleme.com.cn|*.eleme.com.cn|eleme.io|*.eleme.io|elemecdn.cn|*.elemecdn.cn|elemecdn.com|*.elemecdn.com|elenet.me|*.elenet.me|fliggy.com|*.fliggy.com|gts.work|*.gts.work|hemaos.com|*.hemaos.com|ialicdn.com|*.ialicdn.com|keruyun.com|*.keruyun.com|koubei-corp.com|*.koubei-corp.com|laifengmi.com|*.laifengmi.com|lazada.com|*.lazada.com|lazada.sg|*.lazada.sg|lazada.vn|*.lazada.vn|ltao.com|*.ltao.com|mayibank.net|*.mayibank.net|mini-code.com|*.mini-code.com|mini.dev|*.mini.dev|miniapp.dev|*.miniapp.dev|miniprogram.dev|*.miniprogram.dev|miravia.net|*.miravia.net|mmstat.com|*.mmstat.com|mybank-corp.cn|*.mybank-corp.cn|nlark.com|*.nlark.com|oceanbase-dev.com|*.oceanbase-dev.com|oceanbase.com|*.oceanbase.com|qq.com|*.qq.com|rajax-inc.com|*.rajax-inc.com|rajax-inc.net|*.rajax-inc.net|rajax.me|*.rajax.me|shishike.com|*.shishike.com|sm.cn|*.sm.cn|t-head.cn|*.t-head.cn|taobao.com|*.taobao.com|taobao.net|*.taobao.net|taobao.org|*.taobao.org|taotian.com|*.taotian.com|tbcdn.cn|*.tbcdn.cn|tbsite.net|*.tbsite.net|tmall.com|*.tmall.com|tmall.net|*.tmall.net|ucweb.local|*.ucweb.local|weiyun.com|*.weiyun.com|wz-inc.com|*.wz-inc.com|yisou.com|*.yisou.com|yunos-inc.com|*.yunos-inc.com|yunos.com|*.yunos.com|yuque.com|*.yuque.com|zkobjects.com|*.zkobjects.com|zmxy-corp.com.cn|*.zmxy-corp.com.cn|cloudprinter-hz.taobao.ali.com|*.cloudprinter-hz.taobao.ali.com|done.cdn.alibabadesign.com|*.done.cdn.alibabadesign.com|h5.dingtalk.com|*.h5.dingtalk.com|weibo.com|*.weibo.com"
+                  },
+                  {
+                    "stringValue": "-DgopherProxySet=false"
+                  },
+                  {
+                    "stringValue": "-Dhttp.nonProxyHosts=360.cn|*.360.cn|ali.com|*.ali.com|alibaba-inc.com|*.alibaba-inc.com|alibaba.com|*.alibaba.com|alibaba.net|*.alibaba.net|alibabacorp.com|*.alibabacorp.com|alicdn.com|*.alicdn.com|alikunlun.com|*.alikunlun.com|alipay-corp.com|*.alipay-corp.com|alipay-inc.com|*.alipay-inc.com|alipay.com|*.alipay.com|alipay.net|*.alipay.net|alipayobjects.com|*.alipayobjects.com|alistatic.com|*.alistatic.com|alitrip.com|*.alitrip.com|aliway.com|*.aliway.com|aliyun-inc.com|*.aliyun-inc.com|aliyun.com|*.aliyun.com|aliyuncs.com|*.aliyuncs.com|alizoo.com|*.alizoo.com|amap.com|*.amap.com|antdigital.com|*.antdigital.com|antfin-inc.com|*.antfin-inc.com|antfin.com|*.antfin.com|antfinancial-corp.com|*.antfinancial-corp.com|antgroup-inc.cn|*.antgroup-inc.cn|antsdaq-corp.com|*.antsdaq-corp.com|anyproxy.io|*.anyproxy.io|appx.dev|*.appx.dev|appx.run|*.appx.run|apsaraun.com|*.apsaraun.com|atatech.org|*.atatech.org|axintrip.com|*.axintrip.com|baidu.com|*.baidu.com|cainiao-inc.com|*.cainiao-inc.com|cnzz.com|*.cnzz.com|dingtalk.com|*.dingtalk.com|dingtalkapps.com|*.dingtalkapps.com|drophone-hive.com|*.drophone-hive.com|drophone.com|*.drophone.com|ebanma.com|*.ebanma.com|effirst.com|*.effirst.com|ele.me|*.ele.me|ele.to|*.ele.to|eleme.cn|*.eleme.cn|eleme.com.cn|*.eleme.com.cn|eleme.io|*.eleme.io|elemecdn.cn|*.elemecdn.cn|elemecdn.com|*.elemecdn.com|elenet.me|*.elenet.me|fliggy.com|*.fliggy.com|gts.work|*.gts.work|hemaos.com|*.hemaos.com|ialicdn.com|*.ialicdn.com|keruyun.com|*.keruyun.com|koubei-corp.com|*.koubei-corp.com|laifengmi.com|*.laifengmi.com|lazada.com|*.lazada.com|lazada.sg|*.lazada.sg|lazada.vn|*.lazada.vn|ltao.com|*.ltao.com|mayibank.net|*.mayibank.net|mini-code.com|*.mini-code.com|mini.dev|*.mini.dev|miniapp.dev|*.miniapp.dev|miniprogram.dev|*.miniprogram.dev|miravia.net|*.miravia.net|mmstat.com|*.mmstat.com|mybank-corp.cn|*.mybank-corp.cn|nlark.com|*.nlark.com|oceanbase-dev.com|*.oceanbase-dev.com|oceanbase.com|*.oceanbase.com|qq.com|*.qq.com|rajax-inc.com|*.rajax-inc.com|rajax-inc.net|*.rajax-inc.net|rajax.me|*.rajax.me|shishike.com|*.shishike.com|sm.cn|*.sm.cn|t-head.cn|*.t-head.cn|taobao.com|*.taobao.com|taobao.net|*.taobao.net|taobao.org|*.taobao.org|taotian.com|*.taotian.com|tbcdn.cn|*.tbcdn.cn|tbsite.net|*.tbsite.net|tmall.com|*.tmall.com|tmall.net|*.tmall.net|ucweb.local|*.ucweb.local|weiyun.com|*.weiyun.com|wz-inc.com|*.wz-inc.com|yisou.com|*.yisou.com|yunos-inc.com|*.yunos-inc.com|yunos.com|*.yunos.com|yuque.com|*.yuque.com|zkobjects.com|*.zkobjects.com|zmxy-corp.com.cn|*.zmxy-corp.com.cn|cloudprinter-hz.taobao.ali.com|*.cloudprinter-hz.taobao.ali.com|done.cdn.alibabadesign.com|*.done.cdn.alibabadesign.com|h5.dingtalk.com|*.h5.dingtalk.com|weibo.com|*.weibo.com"
+                  },
+                  {
+                    "stringValue": "-Didea.active=true"
+                  },
+                  {
+                    "stringValue": "-Didea.vendor.name=JetBrains"
+                  },
+                  {
+                    "stringValue": "-Didea.version=2024.1.1"
+                  },
+                  {
+                    "stringValue": "-Djava.awt.graphicsenv=sun.awt.CGraphicsEnvironment"
+                  },
+                  {
+                    "stringValue": "-Djava.awt.printerjob=sun.lwawt.macosx.CPrinterJob"
+                  },
+                  {
+                    "stringValue": "-Djava.class.path=/Users/zll/.gradle/wrapper/dists/gradle-8.5-all/3zlzzgtsutfj0pbojr50n2l7z/gradle-8.5/lib/gradle-launcher-8.5.jar"
+                  },
+                  {
+                    "stringValue": "-Djava.class.version=55.0"
+                  },
+                  {
+                    "stringValue": "-Djava.home=/Users/zll/.sdkman/candidates/java/11.0.20-tem"
+                  },
+                  {
+                    "stringValue": "-Djava.library.path=/Users/zll/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:."
+                  },
+                  {
+                    "stringValue": "-Djava.runtime.name=OpenJDK Runtime Environment"
+                  },
+                  {
+                    "stringValue": "-Djava.runtime.version=11.0.20+8"
+                  },
+                  {
+                    "stringValue": "-Djava.specification.maintenance.version=2"
+                  },
+                  {
+                    "stringValue": "-Djava.specification.name=Java Platform API Specification"
+                  },
+                  {
+                    "stringValue": "-Djava.specification.vendor=Oracle Corporation"
+                  },
+                  {
+                    "stringValue": "-Djava.specification.version=11"
+                  },
+                  {
+                    "stringValue": "-Djava.vendor=Eclipse Adoptium"
+                  },
+                  {
+                    "stringValue": "-Djava.vendor.url=https://adoptium.net/"
+                  },
+                  {
+                    "stringValue": "-Djava.vendor.url.bug=https://github.com/adoptium/adoptium-support/issues"
+                  },
+                  {
+                    "stringValue": "-Djava.vendor.version=Temurin-11.0.20+8"
+                  },
+                  {
+                    "stringValue": "-Djava.version=11.0.20"
+                  },
+                  {
+                    "stringValue": "-Djava.version.date=2023-07-18"
+                  },
+                  {
+                    "stringValue": "-Djava.vm.compressedOopsMode=Zero based"
+                  },
+                  {
+                    "stringValue": "-Djava.vm.info=mixed mode"
+                  },
+                  {
+                    "stringValue": "-Djava.vm.name=OpenJDK 64-Bit Server VM"
+                  },
+                  {
+                    "stringValue": "-Djava.vm.specification.name=Java Virtual Machine Specification"
+                  },
+                  {
+                    "stringValue": "-Djava.vm.specification.vendor=Oracle Corporation"
+                  },
+                  {
+                    "stringValue": "-Djava.vm.specification.version=11"
+                  },
+                  {
+                    "stringValue": "-Djava.vm.vendor=Eclipse Adoptium"
+                  },
+                  {
+                    "stringValue": "-Djava.vm.version=11.0.20+8"
+                  },
+                  {
+                    "stringValue": "-Djdk.debug=release"
+                  },
+                  {
+                    "stringValue": "-Dlibrary.jansi.path=/Users/zll/.gradle/native/jansi/1.18/osx"
+                  },
+                  {
+                    "stringValue": "-Dline.separator=\n"
+                  },
+                  {
+                    "stringValue": "-Dorg.gradle.internal.worker.tmpdir=/Users/zll/data0/work/git-repo/github/btpka3/btpka3.github.com/java/spring/first-spring-boot/first-spring-boot-test/build/tmp/test/work"
+                  },
+                  {
+                    "stringValue": "-Dorg.gradle.native=false"
+                  },
+                  {
+                    "stringValue": "-Dos.arch=x86_64"
+                  },
+                  {
+                    "stringValue": "-Dos.name=Mac OS X"
+                  },
+                  {
+                    "stringValue": "-Dos.version=14.4.1"
+                  },
+                  {
+                    "stringValue": "-Dpath.separator=:"
+                  },
+                  {
+                    "stringValue": "-DsocksNonProxyHosts=360.cn|*.360.cn|ali.com|*.ali.com|alibaba-inc.com|*.alibaba-inc.com|alibaba.com|*.alibaba.com|alibaba.net|*.alibaba.net|alibabacorp.com|*.alibabacorp.com|alicdn.com|*.alicdn.com|alikunlun.com|*.alikunlun.com|alipay-corp.com|*.alipay-corp.com|alipay-inc.com|*.alipay-inc.com|alipay.com|*.alipay.com|alipay.net|*.alipay.net|alipayobjects.com|*.alipayobjects.com|alistatic.com|*.alistatic.com|alitrip.com|*.alitrip.com|aliway.com|*.aliway.com|aliyun-inc.com|*.aliyun-inc.com|aliyun.com|*.aliyun.com|aliyuncs.com|*.aliyuncs.com|alizoo.com|*.alizoo.com|amap.com|*.amap.com|antdigital.com|*.antdigital.com|antfin-inc.com|*.antfin-inc.com|antfin.com|*.antfin.com|antfinancial-corp.com|*.antfinancial-corp.com|antgroup-inc.cn|*.antgroup-inc.cn|antsdaq-corp.com|*.antsdaq-corp.com|anyproxy.io|*.anyproxy.io|appx.dev|*.appx.dev|appx.run|*.appx.run|apsaraun.com|*.apsaraun.com|atatech.org|*.atatech.org|axintrip.com|*.axintrip.com|baidu.com|*.baidu.com|cainiao-inc.com|*.cainiao-inc.com|cnzz.com|*.cnzz.com|dingtalk.com|*.dingtalk.com|dingtalkapps.com|*.dingtalkapps.com|drophone-hive.com|*.drophone-hive.com|drophone.com|*.drophone.com|ebanma.com|*.ebanma.com|effirst.com|*.effirst.com|ele.me|*.ele.me|ele.to|*.ele.to|eleme.cn|*.eleme.cn|eleme.com.cn|*.eleme.com.cn|eleme.io|*.eleme.io|elemecdn.cn|*.elemecdn.cn|elemecdn.com|*.elemecdn.com|elenet.me|*.elenet.me|fliggy.com|*.fliggy.com|gts.work|*.gts.work|hemaos.com|*.hemaos.com|ialicdn.com|*.ialicdn.com|keruyun.com|*.keruyun.com|koubei-corp.com|*.koubei-corp.com|laifengmi.com|*.laifengmi.com|lazada.com|*.lazada.com|lazada.sg|*.lazada.sg|lazada.vn|*.lazada.vn|ltao.com|*.ltao.com|mayibank.net|*.mayibank.net|mini-code.com|*.mini-code.com|mini.dev|*.mini.dev|miniapp.dev|*.miniapp.dev|miniprogram.dev|*.miniprogram.dev|miravia.net|*.miravia.net|mmstat.com|*.mmstat.com|mybank-corp.cn|*.mybank-corp.cn|nlark.com|*.nlark.com|oceanbase-dev.com|*.oceanbase-dev.com|oceanbase.com|*.oceanbase.com|qq.com|*.qq.com|rajax-inc.com|*.rajax-inc.com|rajax-inc.net|*.rajax-inc.net|rajax.me|*.rajax.me|shishike.com|*.shishike.com|sm.cn|*.sm.cn|t-head.cn|*.t-head.cn|taobao.com|*.taobao.com|taobao.net|*.taobao.net|taobao.org|*.taobao.org|taotian.com|*.taotian.com|tbcdn.cn|*.tbcdn.cn|tbsite.net|*.tbsite.net|tmall.com|*.tmall.com|tmall.net|*.tmall.net|ucweb.local|*.ucweb.local|weiyun.com|*.weiyun.com|wz-inc.com|*.wz-inc.com|yisou.com|*.yisou.com|yunos-inc.com|*.yunos-inc.com|yunos.com|*.yunos.com|yuque.com|*.yuque.com|zkobjects.com|*.zkobjects.com|zmxy-corp.com.cn|*.zmxy-corp.com.cn|cloudprinter-hz.taobao.ali.com|*.cloudprinter-hz.taobao.ali.com|done.cdn.alibabadesign.com|*.done.cdn.alibabadesign.com|h5.dingtalk.com|*.h5.dingtalk.com|weibo.com|*.weibo.com"
+                  },
+                  {
+                    "stringValue": "-DsocksProxyHost=127.0.0.1"
+                  },
+                  {
+                    "stringValue": "-DsocksProxyPort=13659"
+                  },
+                  {
+                    "stringValue": "-Dsun.arch.data.model=64"
+                  },
+                  {
+                    "stringValue": "-Dsun.boot.library.path=/Users/zll/.sdkman/candidates/java/11.0.20-tem/lib"
+                  },
+                  {
+                    "stringValue": "-Dsun.cpu.endian=little"
+                  },
+                  {
+                    "stringValue": "-Dsun.cpu.isalist"
+                  },
+                  {
+                    "stringValue": "-Dsun.io.unicode.encoding=UnicodeBig"
+                  },
+                  {
+                    "stringValue": "-Dsun.java.command=org.gradle.launcher.daemon.bootstrap.GradleDaemon 8.5"
+                  },
+                  {
+                    "stringValue": "-Dsun.java.launcher=SUN_STANDARD"
+                  },
+                  {
+                    "stringValue": "-Dsun.jnu.encoding=UTF-8"
+                  },
+                  {
+                    "stringValue": "-Dsun.management.compiler=HotSpot 64-Bit Tiered Compilers"
+                  },
+                  {
+                    "stringValue": "-Dsun.os.patch.level=unknown"
+                  },
+                  {
+                    "stringValue": "-Dsystem=systemValue111"
+                  },
+                  {
+                    "stringValue": "-Duser.dir=/Users/zll/data0/work/git-repo/github/btpka3/btpka3.github.com/java/spring/first-spring-boot"
+                  },
+                  {
+                    "stringValue": "-Duser.home=/Users/zll"
+                  },
+                  {
+                    "stringValue": "-Duser.name=zll"
+                  },
+                  {
+                    "stringValue": "-Duser.timezone=Asia/Shanghai"
+                  },
+                  {
+                    "stringValue": "@/Users/zll/.gradle/.tmp/gradle-worker-classpath14408832249807742607txt"
+                  },
+                  {
+                    "stringValue": "-Xmx1G"
+                  },
+                  {
+                    "stringValue": "-Dfile.encoding=UTF-8"
+                  },
+                  {
+                    "stringValue": "-Djava.io.tmpdir=/var/folders/hn/bj86pn8n6p71ltp2h0wbpv640000gp/T/"
+                  },
+                  {
+                    "stringValue": "-Duser.country=CN"
+                  },
+                  {
+                    "stringValue": "-Duser.language=en"
+                  },
+                  {
+                    "stringValue": "-Duser.variant"
+                  },
+                  {
+                    "stringValue": "-ea"
+                  },
+                  {
+                    "stringValue": "worker.org.gradle.process.internal.worker.GradleWorkerMain"
+                  },
+                  {
+                    "stringValue": "'Gradle Test Executor 20'"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "key": "process.executable.path",
+            "value": {
+              "stringValue": "/Users/zll/.sdkman/candidates/java/11.0.20-tem/bin/java"
+            }
+          },
+          {
+            "key": "process.pid",
+            "value": {
+              "intValue": "94179"
+            }
+          },
+          {
+            "key": "process.runtime.description",
+            "value": {
+              "stringValue": "Eclipse Adoptium OpenJDK 64-Bit Server VM 11.0.20+8"
+            }
+          },
+          {
+            "key": "process.runtime.name",
+            "value": {
+              "stringValue": "OpenJDK Runtime Environment"
+            }
+          },
+          {
+            "key": "process.runtime.version",
+            "value": {
+              "stringValue": "11.0.20+8"
+            }
+          },
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "unknown_service:java"
+            }
+          },
+          {
+            "key": "telemetry.distro.name",
+            "value": {
+              "stringValue": "opentelemetry-spring-boot-starter"
+            }
+          },
+          {
+            "key": "telemetry.distro.version",
+            "value": {
+              "stringValue": "2.2.0-alpha"
+            }
+          },
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "java"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "1.37.0"
+            }
+          }
+        ]
+      },
+      "scopeMetrics": [
+        {
+          "scope": {
+            "name": "io.opentelemetry.sdk.logs"
+          },
+          "metrics": [
+            {
+              "name": "queueSize",
+              "description": "The number of items queued",
+              "unit": "1",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "processorType",
+                        "value": {
+                          "stringValue": "BatchLogRecordProcessor"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1715832551086066000",
+                    "timeUnixNano": "1715832565446567000",
+                    "asInt": "0"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "scope": {
+            "name": "io.opentelemetry.sdk.trace"
+          },
+          "metrics": [
+            {
+              "name": "queueSize",
+              "description": "The number of items queued",
+              "unit": "1",
+              "gauge": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "processorType",
+                        "value": {
+                          "stringValue": "BatchSpanProcessor"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1715832551086066000",
+                    "timeUnixNano": "1715832565446567000",
+                    "asInt": "0"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "schemaUrl": "https://opentelemetry.io/schemas/1.23.1"
+    }
+  ]
+}

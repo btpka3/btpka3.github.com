@@ -1,0 +1,58 @@
+services:
+  my-opentelemetry:
+    image: docker.io/otel/opentelemetry-collector-contrib:0.96.0
+    ports:
+      - "1888:1888"
+      - "8888:8888"
+      - "8889:8889"
+      - "13133:13133"
+      - "4317:4317"
+      - "4318:4318"
+      - "55679:55679"
+    volumes:
+      - ./etc/otelcol-contrib/config.yaml:/etc/otelcol-contrib/config.yaml
+      - ./collector.file.json.log:/collector.file.json.log
+    networks:
+      - front-tier
+      - back-tier
+    configs:
+      - httpd-config
+    secrets:
+      - server-certificate
+
+  my-prometheus:
+    image: docker.io/prom/prometheus
+    ports:
+      - "9090:9090"
+#    volumes:
+#      - db-data:/etc/data
+#    networks:
+#      - back-tier
+  my-grafana:
+    image: docker.io/grafana/grafana:10.4.3
+    ports:
+      - "3000:3000"
+#    volumes:
+#      - db-data:/etc/data
+#    networks:
+#      - back-tier
+
+
+#volumes:
+#  db-data:
+#    driver: flocker
+#    driver_opts:
+#      size: "10GiB"
+#
+#configs:
+#  httpd-config:
+#    external: true
+
+#secrets:
+#  server-certificate:
+#    external: true
+
+#networks:
+#  # The presence of these objects is sufficient to define them
+#  front-tier: {}
+#  back-tier: {}

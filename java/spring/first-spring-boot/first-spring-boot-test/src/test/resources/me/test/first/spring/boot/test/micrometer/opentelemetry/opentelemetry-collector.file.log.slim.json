@@ -1,0 +1,136 @@
+{
+  "resourceMetrics": [
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "io.micrometer"
+            }
+          },
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "java"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "1.13.0"
+            }
+          },
+          {
+            "key": "attr2",
+            "value": {
+              "stringValue": "av2"
+            }
+          },
+          {
+            "key": "attr1",
+            "value": {
+              "stringValue": "av1"
+            }
+          },
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "unknown_service"
+            }
+          }
+        ]
+      },
+      "scopeMetrics": [
+        {
+          "scope": {},
+          "metrics": [
+            {
+              "name": "request.size",
+              "description": "a description of xxx",
+              "unit": "bytes",
+              "histogram": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "region",
+                        "value": {
+                          "stringValue": "test"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1715832555404000000",
+                    "timeUnixNano": "1715832565533000000",
+                    "count": "10",
+                    "sum": 780,
+                    "bucketCounts": [
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "1",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "1",
+                      "0",
+                      "0",
+                      "0",
+                      "3",
+                      "5",
+                      "0"
+                    ],
+                    "explicitBounds": [
+                      0.95,
+                      1,
+                      2,
+                      3,
+                      4,
+                      5,
+                      6,
+                      7,
+                      8,
+                      9,
+                      10,
+                      11,
+                      12,
+                      13,
+                      14,
+                      16,
+                      21,
+                      26,
+                      31,
+                      36,
+                      41,
+                      46,
+                      51,
+                      56,
+                      64,
+                      85,
+                      100
+                    ]
+                  }
+                ],
+                "aggregationTemporality": 2
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-package me.test.first.spring.boot.test;
+package me.test.first.spring.boot.test.micrometer;
 
 import io.micrometer.core.annotation.Timed;
 import io.micrometer.core.instrument.Clock;
@@ -7,19 +7,21 @@ import io.micrometer.core.instrument.DistributionSummary;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tags;
 import io.micrometer.core.instrument.Timer;
-import io.micrometer.core.instrument.*;
 import io.micrometer.core.instrument.logging.LoggingMeterRegistry;
 import io.micrometer.core.instrument.logging.LoggingRegistryConfig;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.autoconfigure.metrics.JvmMetricsAutoConfiguration;
 import org.springframework.boot.actuate.autoconfigure.metrics.MeterRegistryCustomizer;
 import org.springframework.boot.actuate.autoconfigure.metrics.MetricsAutoConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.TestPropertySource;
 
 import java.security.NoSuchAlgorithmException;
@@ -42,8 +44,14 @@ import java.util.concurrent.atomic.AtomicLong;
 @TestPropertySource
 @Slf4j
 public class MetricsTest {
-    @Configuration
+
+    @SpringBootApplication(exclude = {
+            DataSourceAutoConfiguration.class
+    })
     public static class Conf {
+        public static void main(String[] args) {
+            SpringApplication.run(MetricsTest.Conf.class, args);
+        }
 
         @Bean
         LoggingMeterRegistry loggingMeterRegistry() {
@@ -128,19 +136,48 @@ public class MetricsTest {
         n.set(1);
     }
 
+    @SneakyThrows
+    @Test
     public void timer02() {
 
-        MeterRegistry registry = null;
+        DistributionSummary distributionSummary = DistributionSummary
+                .builder("request.size")
+                .description("a description of xxx")
+                .baseUnit("bytes")
+                .tags("region", "test")
+                .scale(1.0)
 
-        DistributionSummary summary0 = DistributionSummary
-                .builder("response.size")
-                .description("a description of what this summary does") // optional
-                .baseUnit("bytes") // optional (1)
-                .tags("region", "test") // optional
-                .scale(100) // optional (2)
+                // 本地直接计算的 百分比（不可再聚合）
+                .publishPercentiles(0.3, 0.5, 0.9)
+
+                // 百分比直方图：远端可 与其他实例，按tag 汇总聚合
+                .publishPercentileHistogram()
+                .minimumExpectedValue(1.0)
+                .maximumExpectedValue(100.0)
+
+                .serviceLevelObjectives(  0.95)
+
                 .register(registry);
 
-        DistributionSummary summary1 = registry.summary("response.size");
+        distributionSummary.record(21);
+        distributionSummary.record(42);
+        distributionSummary.record(73);
+        distributionSummary.record(74);
+        distributionSummary.record(85);
+        distributionSummary.record(95);
+        distributionSummary.record(96);
+        distributionSummary.record(97);
+        distributionSummary.record(98);
+        distributionSummary.record(99);
+
+        Thread.sleep(10000);
+
+        /*
+        示例输出如下：
+        97661 [logging-metrics-publisher] INFO  i.m.c.i.l.LoggingMeterRegistry - request.size{region=test} throughput=2/s mean=78 B max=99 B
+
+         其中 "throughput=2/s" 是因为总共记录了10条记录，loggingMeterRegistry.step()=5s， 所以平均后是每秒2个请求。
+        */
     }
 }
 
