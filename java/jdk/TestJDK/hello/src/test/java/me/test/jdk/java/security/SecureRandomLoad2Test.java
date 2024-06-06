@@ -6,6 +6,8 @@ import java.util.Objects;
 import java.util.concurrent.*;
 
 /**
+ * 当有设置 JDK JVM属性 ： `-Djava.security.egd=file:/dev/./urandom` 时，SecureRandom 默认使用 DRBG 算法，否则默认使用 NativePRNG
+ *
  * <p>
  * <code><pre>
  * LOOP=1000
@@ -32,7 +34,7 @@ import java.util.concurrent.*;
  * <p>
  *
  * <p>
- * 配合 JVM 属性 -Djava.security.egd=file:/dev/./urandom， 发现 java.util.UUID#randomUUID() 会在高并发时被 BLOCK.
+ * 配合 JVM 属性 -Djava.security.egd=file:/dev/./urandom， 发现 java.util.UUID#randomUUID() 使用DRBG算法，并且高并发时会被 BLOCK.
  * 原因是 UUID 使用了内部单例的一个 SecureRandom 对象，当使用 DRBG 算法时，效果较差。相比多实例 SecureRandom
  * DRBG 算法的 SecureRandom 多实例性能 大约是 单实例的 性能的5倍。
  * 多实例时，获取随机数耗时都比较平均，而单实例时会有大量长耗时（锁竞争）：

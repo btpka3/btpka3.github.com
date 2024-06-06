@@ -351,6 +351,17 @@ public class StreamTest {
         System.out.println(result);
     }
 
+    @Test
+    public void reduce(){
+        Stream.of("aaa","bbb","ccc")
+                .reduce((a, b) -> {
+                    System.out.println("reduce : 1="+a +",2="+b);
+                    return b;
+                })
+                .ifPresent(System.out::println);
+        ;
+    }
+
 //    @Test
 //    public void testGeneric02() {
 //
