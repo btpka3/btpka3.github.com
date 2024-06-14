@@ -10,6 +10,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,6 +30,8 @@ public class ProxyTest {
                 new MyInvocationHandler(map)
         );
 
+        assertSame(proxyObj, proxyObj);
+        assertEquals(proxyObj, proxyObj);
         assertInstanceOf(MyInterface.class, proxyObj);
         assertInstanceOf(Map.class, proxyObj);
         assertFalse(proxyObj instanceof HashMap);
@@ -110,6 +113,10 @@ public class ProxyTest {
 
                 Object originalValue = method.invoke(target, args);
                 return "my-" + originalValue;
+            } else if (Objects.equals("equals", method.getName()) && args.length == 1) {
+                return proxy == args[0];
+            } else if (Objects.equals("hashCode", method.getName()) && args == null) {
+                return System.identityHashCode(proxy);
             }
             return method.invoke(target, args);
         }

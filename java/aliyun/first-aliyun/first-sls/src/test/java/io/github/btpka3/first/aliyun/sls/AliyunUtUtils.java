@@ -20,6 +20,12 @@ public class AliyunUtUtils {
         return JSON.parseObject(ossConfStr, AkSkConf.class);
     }
 
+    @SneakyThrows
+    public static SlsMsgSourceConf getSlsMsgSourceConf(String fileName) {
+        String ossConfStr = IOUtils.toString(new FileInputStream(System.getProperty("user.home") + "/Documents/data/" + fileName), StandardCharsets.UTF_8);
+        return JSON.parseObject(ossConfStr, SlsMsgSourceConf.class);
+    }
+
 
     public static void print(LogGroupData logGroupData) {
         FastLogGroup fastLogGroup = logGroupData.GetFastLogGroup();

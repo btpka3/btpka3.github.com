@@ -3,7 +3,7 @@ rootProject.name = 'first-aliyun'
 //include 'first-green'
 //include 'first-mq'
 include 'first-sls'
-//include 'first-oss'
+include 'first-oss'
 //include 'first-acr'
 
 

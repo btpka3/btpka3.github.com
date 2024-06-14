@@ -1,6 +1,8 @@
 package me.test.jdk.java.util.concurrent;
 
 import me.test.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.*;
 import java.util.concurrent.*;
@@ -56,5 +58,15 @@ public class CopyOnWriteArrayListTest {
         t2.setName("BBBBBBBBBBBBB");
         t2.start();
 
+    }
+
+    @Test
+    public void x(){
+        CopyOnWriteArrayList list =new CopyOnWriteArrayList();
+        list.add("aaa");
+        list.add("bbb");
+        list.add("ccc");
+        list.remove("aaa");
+        Assertions.assertEquals(2, list.size());
     }
 }

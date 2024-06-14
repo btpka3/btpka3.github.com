@@ -4,6 +4,7 @@ import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.joran.JoranConfigurator;
 import ch.qos.logback.core.util.StatusPrinter;
 import com.alibaba.fastjson.JSON;
+import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,7 @@ import org.slf4j.MDC;
 import org.slf4j.NDC;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
@@ -176,6 +178,20 @@ public class LogbackTest {
             NDC.pop();
         }
     }
+
+    /**
+     * @throws IOException
+     * @see ch.qos.logback.classic.joran.action.ConfigurationAction#begin(ch.qos.logback.core.joran.spi.InterpretationContext, String, org.xml.sax.Attributes)
+     */
+    @Test
+    public void defineVars() throws IOException {
+        String xmlStr = IOUtils.toString(LogbackTest.class.getResourceAsStream("LogbackTest-defineVars.xml"), StandardCharsets.UTF_8);
+        LoggerContext loggerContext = LogbackUtils.getLoggerContext();
+        loggerContext.putProperty("mySuffix", "demo");
+        loggerContext.putProperty("debug", "true");
+        LogbackUtils.configureLogback(xmlStr);
+    }
+
 
 }
 

@@ -22,6 +22,11 @@ public class ClassLoaderTest {
 
     String className = "me.test.jdk.java.lang.MyChildClass";
 
+    /**
+     * 演示自定义class loader，并直接从class文件加载类。
+     *
+     * @throws Exception
+     */
     @Test
     public void test01() throws Exception {
         ClassLoader parentClassLoader = MyClassLoader.class.getClassLoader();
@@ -85,15 +90,20 @@ public class ClassLoaderTest {
 
     }
 
+    /**
+     * 验证JDK自带的classloader 以及层级关系
+     */
     @Test
     public void testJdkClassLoader() {
 
         ClassLoader platformClassLoader = ClassLoader.getPlatformClassLoader();
         // jdk.internal.loader.ClassLoaders$PlatformClassLoader
         System.out.println("platformClassLoader = " + platformClassLoader.getClass());
+        System.out.println("platformClassLoader.parent = " + platformClassLoader.getParent());
         ClassLoader systemClassLoader = ClassLoader.getSystemClassLoader();
         // jdk.internal.loader.ClassLoaders$AppClassLoader
         System.out.println("systemClassLoader = " + systemClassLoader.getClass());
+        System.out.println("String.class.getClassLoader() = " + String.class.getClassLoader());
     }
 
     /**
@@ -105,8 +115,9 @@ public class ClassLoaderTest {
         urlClassLoader.getURLs();
     }
 
-
     /**
+     * 验证通过 ClassGraph 遍历获取 classLoader 获取classPath.
+     *
      * @see <a href="https://github.com/classgraph/classgraph">ClassGraph</a>
      */
     @Test
