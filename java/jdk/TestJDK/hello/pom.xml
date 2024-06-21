@@ -66,6 +66,7 @@
         <dependency>
             <groupId>com.alibaba.fastjson2</groupId>
             <artifactId>fastjson2</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.alibaba.fastjson2</groupId>
@@ -198,6 +199,19 @@
             <artifactId>xmlunit-assertj3</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>net.javacrumbs.json-unit</groupId>
+            <artifactId>json-unit-assertj</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+
+            <scope>test</scope>
+        </dependency>
+
 
         <dependency>
             <groupId>org.apache.commons</groupId>

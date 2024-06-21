@@ -25,6 +25,7 @@
         <lombok.version>1.18.30</lombok.version>
         <logback.version>1.5.3</logback.version>
         <fastjson2.version>2.0.49</fastjson2.version>
+        <jackson2.vesion>2.17.1</jackson2.vesion>
     </properties>
 
 
@@ -37,6 +38,15 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson</groupId>
+                <artifactId>jackson-bom</artifactId>
+                <version>${jackson2.vesion}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
             <dependency>
                 <groupId>com.esotericsoftware</groupId>
                 <artifactId>kryo</artifactId>
