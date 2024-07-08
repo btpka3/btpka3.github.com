@@ -5,32 +5,18 @@ buildscript {
         maven { url "https://maven.aliyun.com/nexus/content/groups/public/" }
         mavenCentral()
     }
-//    dependencies {
-//        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.4'
-//    }
 }
+
 
 plugins {
     id 'java'
-    //id 'org.springframework.boot' version '3.2.2'
-    //id 'io.spring.dependency-management' version '1.1.4'
-    //id 'application'
-    // shadow plugin to produce fat JARs
-    // https://github.com/johnrengelman/shadow
-    //id 'com.github.johnrengelman.shadow' version "${shadowVersion}"
+    id "org.springframework.boot" version "${springBootVersion}"
+    id 'io.spring.dependency-management' version '1.1.4'
 }
 
 group = 'io.github.btpka3'
 version = '0.0.1-SNAPSHOT'
-//mainClassName = 'org.myorg.quickstart.StreamingJob'
 description = """Flink Quickstart Job"""
-//ext {
-//    javaVersion = '1.8'
-//    flinkVersion = '1.8.0'
-//    scalaBinaryVersion = '2.11'
-//    slf4jVersion = '1.7.7'
-//    log4jVersion = '1.2.17'
-//}
 
 java {
     sourceCompatibility = '11'
@@ -38,7 +24,7 @@ java {
 
 
 repositories {
-//    maven { url "https://maven.aliyun.com/nexus/content/groups/public/" }
+    maven { url "https://maven.aliyun.com/nexus/content/groups/public/" }
     mavenCentral()
 }
 
@@ -47,15 +33,39 @@ dependencies {
     implementation "org.apache.flink:flink-java:${flinkVersion}"
     implementation "org.apache.flink:flink-streaming-java:${flinkVersion}"
     implementation "org.apache.flink:flink-table-api-java-bridge:${flinkVersion}"
+    implementation("org.apache.flink:flink-table-planner_${scalaBinaryVersion}:${flinkVersion}")
+
+    implementation 'org.apache.flink:flink-connector-mongodb:1.2.0-1.18'
+    // 对接阿里云SLS
+    implementation 'com.aliyun.openservices:flink-log-connector:0.1.38'
+    implementation "org.apache.flink:flink-connector-hive_${scalaBinaryVersion}:${flinkVersion}"
+    implementation 'org.apache.hive:hive-exec:2.3.10'
+
 //    implementation "org.apache.flink:flink-clients::${flinkVersion}"
     //testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation("org.apache.flink:flink-examples-streaming:${flinkVersion}") {
-        exclude group: 'org.jcuda'
+        //exclude group: 'org.jcuda'
     }
-    testImplementation "org.apache.flink:flink-examples-batch:${flinkVersion}"
+    testImplementation( "org.apache.flink:flink-examples-batch:${flinkVersion}" ) {
+        // exclude group: 'org.apache.logging.log4j', module: 'log4j-slf4j-impl'
+    }
     testImplementation "org.apache.flink:flink-connector-wikiedits:${flinkVersion}"
+    testImplementation "org.apache.flink:flink-test-utils:${flinkVersion}"
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.mockito:mockito-core'
+
+    compileOnly 'org.projectlombok:lombok'
+    testCompileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+configurations.all {
+    exclude group: 'org.jcuda'
+    exclude group: 'org.apache.logging.log4j', module: 'log4j-slf4j-impl'
+    exclude group: 'org.slf4j', module: 'slf4j-log4j12'
 }
