@@ -1,5 +1,6 @@
 package io.github.btpka3.first.flink.udf.udtf;
 
+import com.alibaba.fastjson.JSON;
 import io.github.btpka3.first.flink.udf.Person;
 import org.apache.flink.table.functions.FunctionContext;
 import org.apache.flink.table.functions.TableFunction;
@@ -16,40 +17,51 @@ import java.util.Objects;
  */
 public class MyPersonUdtf extends TableFunction<Person> {
 
-    @Override
-    public void open(FunctionContext context) throws Exception {
-        super.open(context);
-    }
+//    @Override
+//    public void open(FunctionContext context) throws Exception {
+//        super.open(context);
+//    }
+//
+//    @Override
+//    public void close() throws Exception {
+//        super.close();
+//    }
 
-    @Override
-    public void close() throws Exception {
-        super.close();
-    }
+    // 入参不支持直接使用POJO
+    //    public void eval(Person person) {
+//        if (person.getAge() != null) {
+//            person.setAge(person.getAge() + 100);
+//        }
+//        collect(person);
+//    }
 
-    public void eval(Person person) {
-        if (person.getAge() != null) {
+    public void eval(String jsonStr) {
+        Person person = JSON.parseObject(jsonStr, Person.class);
+
+        if (person != null && person.getAge() != null) {
             person.setAge(person.getAge() + 100);
         }
         collect(person);
     }
-    protected Person row2Person(Row row) {
-        return Person.builder()
-                .name(toString(row.getField("name")))
-                .age(toInt(row.getField("age")))
-                .build();
-    }
 
-    protected String toString(Object obj) {
-        return Objects.toString(obj, null);
-    }
-
-    protected Integer toInt(Object obj) {
-        if (obj == null) {
-            return null;
-        }
-        if (obj instanceof Number) {
-            return ((Number) obj).intValue();
-        }
-        return Integer.valueOf(obj.toString());
-    }
+//    protected Person row2Person(Row row) {
+//        return Person.builder()
+//                .name(toString(row.getField("name")))
+//                .age(toInt(row.getField("age")))
+//                .build();
+//    }
+//
+//    protected String toString(Object obj) {
+//        return Objects.toString(obj, null);
+//    }
+//
+//    protected Integer toInt(Object obj) {
+//        if (obj == null) {
+//            return null;
+//        }
+//        if (obj instanceof Number) {
+//            return ((Number) obj).intValue();
+//        }
+//        return Integer.valueOf(obj.toString());
+//    }
 }
