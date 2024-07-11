@@ -10,6 +10,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 /**
  * @author dangqian.zll
  * @date 2024/3/20
@@ -21,12 +23,12 @@ public class JsonTest {
         String jsonStr = "{\"111\":222}";
         Map map = JSON.parseObject(jsonStr, new TypeReference<Map<Long, Long>>() {
         });
-        Assertions.assertEquals(222L, map.get(111L));
+        assertEquals(222L, map.get(111L));
         Map.Entry entry = (Map.Entry) map.entrySet().toArray()[0];
-        Assertions.assertEquals(Long.class, entry.getKey().getClass());
-        Assertions.assertEquals(Long.class, entry.getValue().getClass());
+        assertEquals(Long.class, entry.getKey().getClass());
+        assertEquals(Long.class, entry.getValue().getClass());
         String newJsonStr = JSON.toJSONString(map, SerializerFeature.WriteNonStringKeyAsString);
-        Assertions.assertEquals(jsonStr, newJsonStr);
+        assertEquals(jsonStr, newJsonStr);
     }
 
     @Test
@@ -36,8 +38,17 @@ public class JsonTest {
         map.put("a", "aaa");
         map.put("b", "HelloWorld".getBytes(StandardCharsets.UTF_8));
 
-        String jsonStr = JSON.toJSONString(map, SerializerFeature.WriteNonStringKeyAsString, SerializerFeature.PrettyFormat );
+        String jsonStr = JSON.toJSONString(map, SerializerFeature.WriteNonStringKeyAsString, SerializerFeature.PrettyFormat);
         System.out.println(jsonStr);
+    }
+
+    @Test
+    public void testNull() {
+        Map map = new HashMap(8);
+        map.put("a", "aaa");
+        map.put("b", null);
+        String str = JSON.toJSONString(map, SerializerFeature.WriteMapNullValue);
+        assertEquals("{\"a\":\"aaa\",\"b\":null}", str);
     }
 
 }

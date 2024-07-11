@@ -1,18 +1,42 @@
 package me.test.jdk.java.util.concurrent;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class ConcurrentHashMapTest1 {
+public class ConcurrentHashMapTest {
 
-    public static void main(String[] args) throws Exception {
-        test01();
+    @Test
+    public void testPutNullKey() {
+
+        try {
+            Map m = new ConcurrentHashMap();
+            m.put(null, "aa");
+            Assertions.fail("should throw NPE");
+        } catch (NullPointerException e) {
+
+        }
     }
 
-    public static void test01() throws Exception {
+    @Test
+    public void testPutNullValue() {
+
+        try {
+            Map m = new ConcurrentHashMap();
+            m.put("aa", null);
+            Assertions.fail("should throw NPE");
+        } catch (NullPointerException e) {
+
+        }
+    }
+
+    @Test
+    public void testPutNullValue2() {
         Map m = new ConcurrentHashMap();
-        m.put(null, "aa");
-        System.out.println(m);
-    }
+        m.computeIfAbsent("aa", k -> null);
+        System.out.println(m.containsKey("aa"));
 
+    }
 }
