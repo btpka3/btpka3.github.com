@@ -1,36 +1,41 @@
 package me.test.jdk.java.util.concurrent;
 
+import lombok.SneakyThrows;
+import org.junit.jupiter.api.Test;
+
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CountDownLatch;
 
 /**
  * 就是JavaScript 中的 Promise 嘛~
  */
-public class CompletableFutureTest {
+public class CompletableFuture1Test {
 
-    public static void main(String[] args) throws Exception {
-        test01();
-    }
-
-    public static void test01() throws Exception {
+    @SneakyThrows
+    @Test
+    public void test01() {
         CompletableFuture<Double> futurePrice = new CompletableFuture<>();
 
         CountDownLatch c = new CountDownLatch(1);
 
         // 模拟打8折，这里忽略精度问题
-        futurePrice
+        CompletableFuture<Double> lastPriceFuture = futurePrice
+                // 原线程中执行
                 .thenApply(d -> {
                     double newPrice = d + 5;
                     System.out.println(Thread.currentThread().getName() + " : 客服加运费 = " + newPrice);
                     return newPrice;
                 })
+                // 换线程异步执行
                 .thenApplyAsync(d -> {
 
                     double newPrice = d * .8;
                     System.out.println(Thread.currentThread().getName() + " : 订单打8折 = " + newPrice);
                     return newPrice;
-                })
-                .thenAccept(d ->
+                });
+
+        // 在最后的线程中继续执行
+        lastPriceFuture.thenAccept(d ->
                         System.out.println(Thread.currentThread().getName() + " : 最终价格 = " + d)
                 )
                 .thenRunAsync(() ->
@@ -39,8 +44,7 @@ public class CompletableFutureTest {
                 .whenComplete((d, err) -> {
                     System.out.println(Thread.currentThread().getName() + " : 价格计算完毕 ");
                     c.countDown();
-                })
-        ;
+                });
 
         new Thread(() -> {
             try {
@@ -58,6 +62,7 @@ public class CompletableFutureTest {
         //Thread.sleep(5000);
 
         c.await();
-        System.out.println(Thread.currentThread().getName() + " : Done.");
+        System.out.println(Thread.currentThread().getName()
+                           + " : Done. " + futurePrice.get() + ", " + lastPriceFuture.get());
     }
 }

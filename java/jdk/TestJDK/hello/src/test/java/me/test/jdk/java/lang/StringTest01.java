@@ -2,6 +2,9 @@ package me.test.jdk.java.lang;
 
 import org.junit.jupiter.api.Test;
 
+import java.text.CharacterIterator;
+import java.text.StringCharacterIterator;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
@@ -10,16 +13,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class StringTest01 {
 
 
-    public static void main(String[] args) {
-
+    @Test
+    public void testEmoji() {
+        System.out.println("============================= testEmoji");
         System.out.println(String.format("%03d", 8));
 
-        testEmoji();
-
-    }
-
-    public static void testEmoji() {
-        System.out.println("============================= testEmoji");
 
         // 😂😍🎉👍💩
         String text = "💩";
@@ -78,12 +76,36 @@ public class StringTest01 {
                 }
                 """;
         // language=JSON
-        String str1="{\"a\":\"aaa}";
+        String str1 = "{\"a\":\"aaa}";
     }
 
+    /**
+     * 注意：java.lang.String#chars() 需要JDK9才支持。
+     */
+    @Test
+    public void streamChars() {
+        String str = " \t\n\ra b c ";
+        int firstChar = str.chars()
+                .filter(c -> !Character.isWhitespace(c))
+                .findFirst()
+                .orElse(0);
+        assertEquals('a', firstChar);
+    }
 
+    @Test
+    public void characterIterator01() {
 
-
+        String str = " \t\n\ra b c ";
+        CharacterIterator it = new StringCharacterIterator(str);
+        char firstChar = 0;
+        while (it.current() != CharacterIterator.DONE) {
+            firstChar = it.next();
+            if (!Character.isWhitespace(firstChar)) {
+                break;
+            }
+        }
+        assertEquals('a', firstChar);
+    }
 }
 
 

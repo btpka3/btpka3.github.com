@@ -1,5 +1,7 @@
 package me.test.jdk.java.util.concurrent;
 
+import org.junit.jupiter.api.Test;
+
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -8,11 +10,12 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public class CompletableFuture2Test {
 
-    public static void main(String[] args) throws Exception {
-        test01();
-    }
+    /**
+     * 同线程执行+报错
+     */
+    @Test
 
-    public static void test01() throws Exception {
+    public void test01() {
         CompletableFuture<Double> futurePrice = new CompletableFuture<>();
 
 

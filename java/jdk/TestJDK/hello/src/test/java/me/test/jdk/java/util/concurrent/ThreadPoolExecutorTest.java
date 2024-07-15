@@ -1,5 +1,6 @@
 package me.test.jdk.java.util.concurrent;
 
+import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.*;
@@ -56,5 +57,44 @@ public class ThreadPoolExecutorTest {
 
         Thread.sleep(10000);
         System.out.println("ALL END");
+    }
+
+
+    @Test
+    public void testWithCountDownLatch01() throws InterruptedException {
+
+        BasicThreadFactory factory = new BasicThreadFactory.Builder()
+                .namingPattern("my-job-%d")
+                .daemon(true)
+                .priority(Thread.MAX_PRIORITY)
+                .build();
+
+        ThreadPoolExecutor executor = new ThreadPoolExecutor(
+                3, 3,
+                1000,
+                TimeUnit.MILLISECONDS,
+                new ArrayBlockingQueue<>(10),
+                factory
+        );
+
+        long startTime = System.currentTimeMillis();
+        int count = 10;
+        CountDownLatch countDownLatch = new CountDownLatch(count);
+        for (int i = 0; i < count; i++) {
+            int jobId = i;
+            executor.submit(() -> {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                System.out.println(Thread.currentThread().getName() + ": jobId=" + jobId);
+                countDownLatch.countDown();
+            });
+        }
+        countDownLatch.await(10, TimeUnit.SECONDS);
+        long endTime = System.currentTimeMillis();
+        long totalCost = endTime - startTime;
+        System.out.println("ALL END, totalCost=" + totalCost);
     }
 }
