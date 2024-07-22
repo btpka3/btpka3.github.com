@@ -232,7 +232,21 @@
             <artifactId>guava</artifactId>
             <version>33.0.0-jre</version>
         </dependency>
-
+        <!-- for : me.test.com.esotericsoftware.kryo.DecodeMessage -->
+        <!--
+        <dependency>
+            <groupId>com.taobao.common.uic.uic-common</groupId>
+            <artifactId>common-uic-common</artifactId>
+            <version>5.0.8-realname</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.security</groupId>
+            <artifactId>risk-protocol</artifactId>
+            <version>0.1.2</version>
+            <scope>runtime</scope>
+        </dependency>
+        -->
 
     </dependencies>
 

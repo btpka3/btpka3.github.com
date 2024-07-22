@@ -18,7 +18,7 @@ public class DecodeMessage {
     @Test
     public void decode() {
 
-        String fileName = "20240522201256_2167081503924BDC1C9A6FE83C83D2A2_158230";
+        String fileName = "20240721152501_2127957D2BA63C1990266A4DB1091494_319216";
 
         File filePath = Path.of(System.getProperty("user.home"), "Downloads", fileName).toFile();
         byte[] data = IOUtils.toByteArray(new FileInputStream(filePath));

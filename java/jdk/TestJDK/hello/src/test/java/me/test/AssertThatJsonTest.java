@@ -1,30 +1,28 @@
 package me.test;
 
 import net.javacrumbs.jsonunit.JsonMatchers;
-import net.javacrumbs.jsonunit.core.Configuration;
-import net.javacrumbs.jsonunit.core.ConfigurationWhen;
-import net.javacrumbs.jsonunit.core.NumberComparator;
 import net.javacrumbs.jsonunit.core.Option;
 import net.javacrumbs.jsonunit.core.internal.DefaultNumberComparator;
-import net.javacrumbs.jsonunit.core.internal.Diff;
 import org.junit.jupiter.api.Test;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
-import static net.javacrumbs.jsonunit.core.ConfigurationWhen.path;
-import static net.javacrumbs.jsonunit.jsonpath.JsonPathAdapter.inPath;
 
 /**
  * @author dangqian.zll
  * @date 2024/6/21
+ * @see net.javacrumbs.jsonunit.core.internal.Diff
+ * @see net.javacrumbs.jsonunit.core.internal.Diff#compareValues
  */
 public class AssertThatJsonTest {
 
     @Test
     public void test01() {
 
+        // language=JSON
         String jsonStr1 = """
                 {"test":[1,2,3],"a":[2]}
                 """;
+        // language=JSON
         String jsonStr2 = """
                 {"a":[2],"test":[3,1, 2]}
                 """;
@@ -37,10 +35,11 @@ public class AssertThatJsonTest {
 
     @Test
     public void test02() {
-
+        // language=JSON
         String jsonStr1 = """
                 {"test":[1,2,3],"a":[2]}
                 """;
+        // language=JSON
         String jsonStr2 = """
                 {"test":[3,1, 2],"a":[2,3]}
                 """;
@@ -54,6 +53,7 @@ public class AssertThatJsonTest {
     @Test
     public void test03() {
 
+        // language=JSON
         String jsonStr1 = """
                 {
                     "test":[1,2,3],
@@ -63,6 +63,7 @@ public class AssertThatJsonTest {
                      "c":"c01"
                 }
                 """;
+        // language=JSON
         String jsonStr2 = """
                 {
                     "test":[1,2,3],
@@ -84,11 +85,13 @@ public class AssertThatJsonTest {
     @Test
     public void test04() {
 
+        // language=JSON
         String jsonStr1 = """
                 {
                     "a":"{\\\"x\\\":\\\"xx\\\",\\\"y\\\":\\\"yy\\\"}"
                 }
                 """;
+        // language=JSON
         String jsonStr2 = """
                 {
                     "a":"{\\\"y\\\":\\\"yy\\\",\\\"x\\\":\\\"xx\\\"}"
@@ -96,23 +99,27 @@ public class AssertThatJsonTest {
                 """;
         System.out.println(jsonStr1);
 
+        // 不支持字段 自定义 comparator
         assertThatJson(jsonStr1)
                 .when(Option.IGNORING_ARRAY_ORDER)
                 .isNotEqualTo(jsonStr2);
 
 //        assertThatJson(jsonStr1)
 //                .withConfiguration(c -> c.withNumberComparator(new DefaultNumberComparator()))
-//                .when(path("$.a"),(c, pp)->{
-//                    c.withMatcher("aaa",
-//
-//                        JsonMatchers.jsonPartMatches("$.a", JsonMatchers.isString()));
-//                });
-////                .inPath("$.a")
-////                .isString()
-////                .usingComparator((o1, o2) -> {
-////                    Diff diff = Diff.create(o2, o1, "fullJson", "$", Configuration.empty());
-////                    return diff.similar() ? 0 : 1;
+//                //.usingComparator()
+//                .withMatcher("aaax", JsonMatchers.jsonPartMatches("$.a", JsonMatchers.jsonStringEquals("{\"y\":\"yy111\",\"x\":\"xx\"}")))
+////                .when(path("$.a"),(c, pp)->{
+////                    c.withMatcher("aaa",
+////                        JsonMatchers.jsonPartMatches("$.a", JsonMatchers.isString()));
 ////                })
+//                .isEqualTo(jsonStr2)
+        ;
+//                .inPath("$.a")
+//                .isString()
+//                .usingComparator((o1, o2) -> {
+//                    Diff diff = Diff.create(o2, o1, "fullJson", "$", Configuration.empty());
+//                    return diff.similar() ? 0 : 1;
+//                })
 //                .isEqualTo(jsonStr2);
     }
 }
