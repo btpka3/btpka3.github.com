@@ -4,6 +4,8 @@ debug: true
 #spring.boot.enableautoconfiguration: false
 security.basic.enabled: false
 management.security.enabled: false
+security:
+  ignored: /**
 
 # org.springframework.boot.autoconfigure.web.ServerProperties
 server:
@@ -95,6 +97,11 @@ management:
         enabled: false
   metrics:
     use-global-registry: true
+    export:
+      defaults:
+        enabled: true
+      prometheus:
+        enabled: true
   otlp:
     metrics:
       export:

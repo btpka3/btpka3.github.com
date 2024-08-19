@@ -42,8 +42,9 @@ http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
     </beans>
 
     <!--  FIXME : bean 不能声明在 beans 后面
+    
+    -->
     <bean id="xmlY" class="java.lang.String">
         <constructor-arg value="xml-yyy"/>
     </bean>
-    -->
 </beans>
