@@ -76,6 +76,24 @@ public class TimestampTest {
 
     }
 
+    @SneakyThrows
+    @Test
+    public void DATE_FORMAT01() {
+
+        final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamTableEnvironment tEnv = StreamTableEnvironment.create(env);
+        String sql = "SELECT DATE_FORMAT(TO_TIMESTAMP('2024-01-02T03:04:05.789', 'yyyy-MM-dd''T''HH:mm:ss.SSS'), 'yyyyMMdd')";
+        Table table = tEnv.sqlQuery(sql);
+        DataStream<Row> dataStream = tEnv.toAppendStream(table, Row.class);
+
+        List<Row> list = dataStream.executeAndCollect("myJob", 100);
+        System.out.println("==== list : " + list);
+        assertEquals(1, list.size());
+        Row row0 = list.get(0);
+        assertEquals("20240102", row0.getField(0));
+
+    }
+
 
     public String getTimeStr(long epochMilli) {
         Instant instant = Instant.ofEpochMilli(epochMilli);

@@ -1,12 +1,8 @@
 package me.test.first.spring.boot.test.micrometer;
 
-import com.sun.net.httpserver.HttpServer;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Timer;
 import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
-import io.micrometer.prometheus.PrometheusConfig;
-import io.micrometer.prometheus.PrometheusMeterRegistry;
-import io.micrometer.prometheus.PrometheusRenameFilter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import me.test.first.spring.boot.test.MyApp;
@@ -19,16 +15,10 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
-import reactor.function.TupleUtils;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.InetSocketAddress;
 import java.util.concurrent.TimeUnit;
-import java.util.function.BiConsumer;
 
 /**
  * @author dangqian.zll
@@ -63,8 +53,9 @@ public class TimerTest {
         MeterRegistry registry = new SimpleMeterRegistry();
         Timer timer = Timer
                 .builder("my.timer")
-                .description("a description of what this timer does") // optional
-                .tags("region", "test") // optional
+                .description("a description of what this timer does")
+                .tags("region", "test")
+                .publishPercentileHistogram()
                 .register(registry);
 
         Runnable targetRunnable = () -> {
@@ -86,32 +77,14 @@ public class TimerTest {
 
         new Thread(r).start();
         Thread.sleep(60 * 60 * 1000);
+
     }
 
     public void x() {
-        BiConsumer<String, String> consumer = (a, b) -> System.out.println(a + b);
-        TupleUtils.consumer(consumer);
-    }
-
-
-    @SneakyThrows
-//    @Test
-    public void prometheus() {
-        PrometheusMeterRegistry prometheusRegistry = new PrometheusMeterRegistry(PrometheusConfig.DEFAULT);
-        prometheusRegistry.config().meterFilter(new PrometheusRenameFilter());
-        try {
-            HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
-            server.createContext("/prometheus", httpExchange -> {
-                String response = prometheusRegistry.scrape();
-                httpExchange.sendResponseHeaders(200, response.getBytes().length);
-                try (OutputStream os = httpExchange.getResponseBody()) {
-                    os.write(response.getBytes());
-                }
-            });
-
-            new Thread(server::start).start();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        MeterRegistry registry = null;
+        registry.get("xxxTimer")
+                .tag("xxx", "xxx")
+                .timer()
+                .count();
     }
 }

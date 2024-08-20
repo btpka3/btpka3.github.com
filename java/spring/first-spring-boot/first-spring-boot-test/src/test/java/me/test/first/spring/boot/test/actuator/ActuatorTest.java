@@ -50,9 +50,9 @@ public class ActuatorTest {
             DataSourceAutoConfiguration.class
     })
     public static class Conf {
-        public static void main(String[] args) {
-            SpringApplication.run(Conf.class, args);
-        }
+//        public static void main(String[] args) {
+//            SpringApplication.run(Conf.class, args);
+//        }
 
 
 //        @Bean

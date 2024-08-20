@@ -21,7 +21,7 @@ public class CounterTest extends BaseMetricsTest{
 
     public static class Conf{
 
-        @Path("/example")
+        @Path("/example22")
         public class ExampleResource {
 
             private final MeterRegistry registry;

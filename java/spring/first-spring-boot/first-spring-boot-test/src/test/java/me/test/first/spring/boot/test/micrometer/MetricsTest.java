@@ -1,12 +1,8 @@
 package me.test.first.spring.boot.test.micrometer;
 
 import io.micrometer.core.annotation.Timed;
-import io.micrometer.core.instrument.Clock;
-import io.micrometer.core.instrument.Counter;
-import io.micrometer.core.instrument.DistributionSummary;
-import io.micrometer.core.instrument.MeterRegistry;
-import io.micrometer.core.instrument.Tags;
 import io.micrometer.core.instrument.Timer;
+import io.micrometer.core.instrument.*;
 import io.micrometer.core.instrument.logging.LoggingMeterRegistry;
 import io.micrometer.core.instrument.logging.LoggingRegistryConfig;
 import lombok.SneakyThrows;
@@ -155,7 +151,7 @@ public class MetricsTest {
                 .minimumExpectedValue(1.0)
                 .maximumExpectedValue(100.0)
 
-                .serviceLevelObjectives(  0.95)
+                .serviceLevelObjectives(0.95)
 
                 .register(registry);
 
@@ -178,6 +174,23 @@ public class MetricsTest {
 
          其中 "throughput=2/s" 是因为总共记录了10条记录，loggingMeterRegistry.step()=5s， 所以平均后是每秒2个请求。
         */
+    }
+
+    public void testGlobalMetrics() {
+
+        // gauge
+        {
+            AtomicInteger myInt = Metrics.gauge("xxxGauge", Tags.of("k1", "v2"), new AtomicInteger(0));
+        }
+
+        // counter
+        {
+            Counter featureCounter = Metrics.counter("feature", "region", "test");
+
+        }
+
+
+
     }
 }
 

@@ -30,7 +30,7 @@ public class LargeMessageTest {
     public void decode() {
 
         // 从SLS下载的单行日志（完整JSON）
-        String fileName = "test1.json";
+        String fileName = "test2.json";
 
         File filePath = Path.of(System.getProperty("user.home"), "Downloads", fileName).toFile();
         String slsRecJsonStr = IOUtils.toString(new FileInputStream(filePath), StandardCharsets.UTF_8);

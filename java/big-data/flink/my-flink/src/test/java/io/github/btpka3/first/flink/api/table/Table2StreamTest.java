@@ -1,5 +1,6 @@
 package io.github.btpka3.first.flink.api.table;
 
+import io.github.btpka3.first.flink.udf.Person;
 import lombok.SneakyThrows;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;

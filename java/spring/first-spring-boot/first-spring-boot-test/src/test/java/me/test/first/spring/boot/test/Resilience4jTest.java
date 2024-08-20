@@ -1,8 +1,6 @@
 package me.test.first.spring.boot.test;
 
-import io.github.resilience4j.bulkhead.Bulkhead;
-import io.github.resilience4j.bulkhead.BulkheadFullException;
-import io.github.resilience4j.bulkhead.ThreadPoolBulkhead;
+import io.github.resilience4j.bulkhead.*;
 import io.github.resilience4j.cache.Cache;
 import io.github.resilience4j.circuitbreaker.CallNotPermittedException;
 import io.github.resilience4j.circuitbreaker.CircuitBreaker;
@@ -23,7 +21,9 @@ import io.vavr.CheckedFunction1;
 import io.vavr.CheckedRunnable;
 import io.vavr.concurrent.Future;
 import io.vavr.control.Try;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.junit.jupiter.api.Test;
 
@@ -32,17 +32,20 @@ import javax.cache.Caching;
 import javax.cache.configuration.MutableConfiguration;
 import javax.cache.spi.CachingProvider;
 import java.time.Duration;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeoutException;
+import java.util.List;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.LongStream;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * bulkhead : 用于控制程序的并发执行量，比如：有容量很大的线程池给所有用户执行任务，但每个用户只允许最多4个任务同时执行。
- *
  * @author dangqian.zll
  * @date 2020/11/1
  * @see <a href="https://resilience4j.readme.io/docs">Resilience4j user guide</a>
@@ -50,45 +53,154 @@ import java.util.function.Supplier;
 @Slf4j
 public class Resilience4jTest {
 
+
+    /**
+     * 用于原有链路报错时,给出替代动作（执行额外事情，返回默认值等）。
+     *
+     * @see reactor.core.publisher.Flux#doOnError(java.util.function.Consumer)
+     * @see reactor.core.publisher.Flux#subscribe(java.util.function.Consumer, java.util.function.Consumer)
+     * @see org.reactivestreams.Subscriber#onError(Throwable)
+     * @see io.reactivex.rxjava3.core.Flowable#subscribe(io.reactivex.rxjava3.functions.Consumer, io.reactivex.rxjava3.functions.Consumer)
+     * @see io.reactivex.rxjava3.core.Observable#onErrorReturn
+     */
     @Test
-    public void x() {
+    public void circuitBreaker01() {
+        // Given
+        CircuitBreaker circuitBreaker = CircuitBreaker.ofDefaults("testName");
 
-        AtomicLong c = new AtomicLong(0);
-
-        CircuitBreaker circuitBreaker = CircuitBreaker.ofDefaults("name");
-
-        Retry retry = Retry.ofDefaults("backendName");
-
-        // Decorate your call to BackendService.doSomething() with a CircuitBreaker
-        Supplier<String> decoratedSupplier = CircuitBreaker.decorateSupplier(
-                circuitBreaker,
-                () -> {
-                    long count = c.getAndAdd(1);
-                    if (count < 5) {
-                        throw new RuntimeException("err-" + count);
-                    }
-                    return "aaa";
+        // When I decorate my function and invoke the decorated function
+        Supplier<String> checkedSupplier =
+                CircuitBreaker.decorateSupplier(circuitBreaker, () -> {
+                    throw new RuntimeException("BAM!");
                 });
+        Try<String> result = Try.ofSupplier(checkedSupplier)
+                .recover(throwable -> "Hello Recovery");
 
-        // Decorate your call with automatic retry
-        decoratedSupplier = Retry.decorateSupplier(retry, decoratedSupplier);
-
-        // Execute the decorated supplier and recover from any exception
-        String result = Try.ofSupplier(decoratedSupplier)
-                .recover(throwable -> "Hello from Recovery : " + throwable.getMessage()).get();
-        System.out.println("result = " + result);
+        // Then the function should be a success,
+        // because the exception could be recovered
+        assertTrue(result.isSuccess());
+        // and the result must match the result of the recovery function.
+        assertEquals("Hello Recovery", result.get());
     }
 
-    protected String errToResult(Throwable e) {
-        return "bbb";
+    public static String getIsoTimeStr() {
+        return ZonedDateTime.now().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
     }
 
+    public static class MyJob implements Runnable {
+        long id = 0;
+        String data;
+        long sleepMs;
 
+        public MyJob(long id, String data, long sleepMs) {
+            this.id = id;
+            this.data = data;
+            this.sleepMs = sleepMs;
+        }
+
+        @Override
+        public void run() {
+            try {
+                String startTime = getIsoTimeStr();
+                Thread.sleep(sleepMs);
+                String endTime = getIsoTimeStr();
+                String msg = "biz: id=" + id
+                             + ", data=" + data
+                             + ", thread=" + Thread.currentThread().getName()
+                             + ", startTime=" + startTime
+                             + ", endTime=" + endTime;
+                System.out.println(msg);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    /**
+     * Bulkhead 用来限制最大并发数。
+     * 比如：作为业务平台实现方，会有很多业务场景接入，且每个业务场景的流量不一样。
+     * 预设有一个大的共享线程池服务业务，但每个业务场景最多允许4个任务同时执行，
+     * 防止单个业务场景过度抢占资源。
+     * <p>
+     * 注意：默认使用 SemaphoreBulkhead ，需要外部提供 线程（池）来运行，相应的任务即便等待中，也仍然会占用一个线程。
+     * <p>
+     * 如果使用 FixedThreadPoolBulkhead, 可以避免创建额额外的线程，对应的线程都一致在运行业务逻辑，而不是在等并发许可。
+     * 缺点就是对应的场景如果迟迟没有流量，其线程池中的线程则一直在等待任务。
+     *
+     * @see io.github.resilience4j.bulkhead.internal.SemaphoreBulkhead
+     * @see io.github.resilience4j.bulkhead.internal.FixedThreadPoolBulkhead
+     */
     @Test
-    public void y() {
+    public void semaphoreBulkhead01() {
 
+        BulkheadConfig config = BulkheadConfig.custom()
+                .maxConcurrentCalls(3)
+                .maxWaitDuration(Duration.ofMillis(2000))
+                .build();
+
+        BulkheadRegistry registry = BulkheadRegistry.of(config);
+
+        // 直接获取给定的实例，或者用默认配置创建后、注册、并返回
+        Bulkhead bulkhead = registry.bulkhead("name1");
+
+        List<Runnable> list = LongStream.range(0, 10)
+                .boxed()
+                .map(i -> new MyJob(i, "data" + i, 1000L))
+                // 封装
+                .map(runnable -> Bulkhead.decorateRunnable(bulkhead, runnable))
+                .collect(Collectors.toList());
+
+        // 用大线程池（8并发）去并发执行，预期实际上也只有3个在同时执行
+        testWithCountDownLatch01(list);
+    }
+
+
+    @SneakyThrows
+    public void testWithCountDownLatch01(List<Runnable> list) {
+
+        BasicThreadFactory factory = new BasicThreadFactory.Builder()
+                .namingPattern("my-job-%d")
+                .daemon(true)
+                .priority(Thread.MAX_PRIORITY)
+                .build();
+
+        ThreadPoolExecutor executor = new ThreadPoolExecutor(
+                8,
+                8,
+                60000,
+                TimeUnit.MILLISECONDS,
+                new ArrayBlockingQueue<>(10),
+                factory
+        );
+
+        long startTime = System.currentTimeMillis();
+        int count = list.size();
+        CountDownLatch countDownLatch = new CountDownLatch(count);
+
+        for (int i = 0; i < count; i++) {
+            Runnable job = list.get(i);
+            executor.submit(() -> {
+                try {
+                    job.run();
+                } finally {
+                    countDownLatch.countDown();
+                }
+            });
+        }
+        countDownLatch.await(1 * count, TimeUnit.SECONDS);
+        long endTime = System.currentTimeMillis();
+        long totalCost = endTime - startTime;
+        System.out.println("ALL END, totalCost=" + totalCost);
+    }
+
+
+    /**
+     * Retry 默认会尝试3次. 基于是否抛出异常判定为成功、失败。
+     */
+    @Test
+    public void retry01() {
         AtomicLong c = new AtomicLong(0);
-        Supplier<String> supplier = () -> {
+        Supplier<String> bizSupplier = () -> {
             long count = c.getAndAdd(1);
             if (count < 5) {
                 throw new RuntimeException("err-" + count);
@@ -96,28 +208,43 @@ public class Resilience4jTest {
             return "aaa";
         };
 
-        // Create a CircuitBreaker with default configuration
-        CircuitBreaker circuitBreaker = CircuitBreaker.ofDefaults("backendService");
+        Retry retry = Retry.ofDefaults("retry01");
+        Supplier<String> decoratedSupplier = Retry.decorateSupplier(retry, bizSupplier);
 
-        // Create a Retry with default configuration
-        // 3 retry attempts and a fixed time interval between retries of 500ms
-        Retry retry = Retry.ofDefaults("backendService");
-
-        // Create a Bulkhead with default configuration
-        Bulkhead bulkhead = Bulkhead.ofDefaults("backendService");
-
-        // Decorate your call to backendService.doSomething()
-        // with a Bulkhead, CircuitBreaker and Retry
-        // **note: you will need the resilience4j-all dependency for this
-        Supplier<String> decoratedSupplier = Decorators.ofSupplier(supplier)
-                .withCircuitBreaker(circuitBreaker)
-                .withBulkhead(bulkhead)
-                .withRetry(retry)
-                .decorate();
-
-        // Execute the decorated supplier and recover from any exception
         String result = Try.ofSupplier(decoratedSupplier)
-                .recover(throwable -> "Hello from Recovery").get();
+                .recover(throwable -> "Hello from Recovery : " + throwable.getMessage()).get();
+        System.out.println("result = " + result);
+        assertTrue(result.contains("err-2"));
+    }
+
+    /**
+     * Retry: 基于返回值判定是否成功
+     */
+    @Test
+    public void retry02() {
+
+        AtomicLong c = new AtomicLong(0);
+
+        RetryConfig config = RetryConfig.<Long>custom()
+                .maxAttempts(5)
+                .waitDuration(Duration.ofMillis(1000))
+                .retryOnResult(l -> l < 2)
+                //.retryOnException(e -> e instanceof WebServiceException)
+                //.retryExceptions(IOException.class, TimeoutException.class)
+                //.ignoreExceptions(BusinessException.class, OtherBusinessException.class)
+                .build();
+        RetryRegistry registry = RetryRegistry.of(config);
+        Retry retry = registry.retry("backendName");
+        Supplier<Long> decoratedSupplier = Retry.decorateSupplier(retry, () -> c.getAndAdd(1));
+        Long result = Try.ofSupplier(decoratedSupplier)
+                .recover(throwable -> 999L)
+                .get();
+        System.out.println("result = " + result);
+        assertEquals(2, result);
+    }
+
+    protected String errToResult(Throwable e) {
+        return "bbb";
     }
 
 
@@ -277,9 +404,11 @@ public class Resilience4jTest {
     }
 
     /**
+     * 测试case：允许 2qps, 3秒超时，则提交9个请求，会成功执行 2*(3+1)=8， 超时1个。
+     * <p>
      * 注意: 并非匀速，瞬间全部消费, 那只能最小化设计 cycle ？
-     * 比如 100 qps, 设计成 limitForPeriod =1 + limitRefreshPeriod = 10ms ，
-     * 而非 limitForPeriod =100 + limitRefreshPeriod = 1s
+     * 比如 100 qps, 设计成 (limitForPeriod=1, limitRefreshPeriod= 0ms) ，
+     * 而非 (limitForPeriod=100, limitRefreshPeriod=1s)
      *
      * @throws InterruptedException
      */
@@ -319,6 +448,15 @@ public class Resilience4jTest {
                     .start();
         }
 
+        Thread.sleep(10 * 1000);
+        System.out.println("===================== rand 2");
+        for (int i = 0; i < 9; i++) {
+            new Thread(() -> {
+                Try.run(restrictedCall)
+                        .onFailure((err) -> System.out.println(getTime() + " : " + getThreadName() + " : onFailure : " + err.getMessage()));
+            })
+                    .start();
+        }
         Thread.sleep(10 * 1000);
 
     }
@@ -424,9 +562,9 @@ public class Resilience4jTest {
             long start = System.currentTimeMillis();
             // The non-blocking variant with a CompletableFuture
             CompletableFuture<String> future = timeLimiter.executeCompletionStage(
-                    scheduler,
-                    () -> CompletableFuture.supplyAsync(supplier)
-            )
+                            scheduler,
+                            () -> CompletableFuture.supplyAsync(supplier)
+                    )
                     .toCompletableFuture();
 
             Future<String> resultFuture = Future.fromCompletableFuture(future)

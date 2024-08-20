@@ -95,7 +95,9 @@ public class ClassLoaderTest {
      */
     @Test
     public void testJdkClassLoader() {
-
+        System.out.println("java.version="+System.getProperty("java.version"));
+        System.out.println("java.specification.version="+System.getProperty("java.specification.version"));
+        System.out.println("java.runtime.version="+System.getProperty("java.runtime.version"));
         ClassLoader platformClassLoader = ClassLoader.getPlatformClassLoader();
         // jdk.internal.loader.ClassLoaders$PlatformClassLoader
         System.out.println("platformClassLoader = " + platformClassLoader.getClass());

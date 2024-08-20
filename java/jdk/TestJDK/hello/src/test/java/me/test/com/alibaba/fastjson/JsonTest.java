@@ -3,7 +3,6 @@ package me.test.com.alibaba.fastjson;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.nio.charset.StandardCharsets;
@@ -51,4 +50,43 @@ public class JsonTest {
         assertEquals("{\"a\":\"aaa\",\"b\":null}", str);
     }
 
+    @Test
+    public void testPojo() {
+
+        Student s = new Student();
+        s.setName("zhang3");
+        s.setClassRoom("classRoom1");
+        Map m = new HashMap(4);
+        m.put("p", s);
+        String str = JSON.toJSONString(m,
+                SerializerFeature.WriteMapNullValue,
+                SerializerFeature.WriteClassName,
+                SerializerFeature.PrettyFormat
+        );
+        System.out.println(str);
+    }
+
+    public static class Person {
+        private String name;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
+
+    public static class Student extends Person {
+        private String classRoom;
+
+        public String getClassRoom() {
+            return classRoom;
+        }
+
+        public void setClassRoom(String classRoom) {
+            this.classRoom = classRoom;
+        }
+    }
 }

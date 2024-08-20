@@ -13,11 +13,13 @@ import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
 import org.apache.flink.table.catalog.ResolvedSchema;
 import org.apache.flink.table.types.UnresolvedDataType;
 import org.apache.flink.table.typeutils.FieldInfoUtils;
+import org.apache.flink.types.Row;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.apache.flink.table.api.DataTypes.*;
 import static org.apache.flink.table.api.Expressions.$;
-import static org.apache.flink.table.api.Expressions.row;
 
 /**
  * @author dangqian.zll
@@ -30,7 +32,7 @@ public class PersonTableTest {
      */
     @SneakyThrows
     @Test
-    public void table2Stream() {
+    public void stream2Table01() {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         StreamTableEnvironment tEnv = StreamTableEnvironment.create(env);
 
@@ -58,6 +60,10 @@ public class PersonTableTest {
         );
 
         System.out.println("===== table.getResolvedSchema() : " + table.getResolvedSchema());
+
+        DataStream<Row> dataStream = tEnv.toAppendStream(table, Row.class);
+        List<Row> list = dataStream.executeAndCollect("myJob", 100);
+        System.out.println("==== list : " + list);
     }
 
     @SneakyThrows
@@ -87,7 +93,7 @@ public class PersonTableTest {
         myPojo.setAge(11);
 
         STRUCTURED(MyPojo.class);
-        UnresolvedDataType dataType1 =of(MyPojo.class);
+        UnresolvedDataType dataType1 = of(MyPojo.class);
         Table table1 = tEnv.fromValues(
                 dataType1,
                 myPojo
@@ -117,7 +123,6 @@ public class PersonTableTest {
             this.age = age;
         }
     }
-
 
 
 }

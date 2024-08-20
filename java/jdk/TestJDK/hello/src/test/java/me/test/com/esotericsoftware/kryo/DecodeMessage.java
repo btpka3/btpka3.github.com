@@ -18,7 +18,12 @@ public class DecodeMessage {
     @Test
     public void decode() {
 
-        String fileName = "20240721152501_2127957D2BA63C1990266A4DB1091494_319216";
+        // 黑猫发送的
+        String fileName = "20240819203434_211B4237C17B11586A185DBC1D0E0002_158230";
+
+        // mtee3_hitrisk
+//        String fileName = "20240730120217_2140CA83192D68B07FE097DE9A02B4A1_158230";
+
 
         File filePath = Path.of(System.getProperty("user.home"), "Downloads", fileName).toFile();
         byte[] data = IOUtils.toByteArray(new FileInputStream(filePath));
