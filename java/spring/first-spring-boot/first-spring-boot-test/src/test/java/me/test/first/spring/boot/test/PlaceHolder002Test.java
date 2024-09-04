@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- *
+ * 验证使用自定义 PropertyPlaceholderConfigurer
  */
 @SpringBootTest
 @Import({

@@ -8,6 +8,8 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 /**
+ * 验证 @TestPropertySource 手动指定配置文件
+ *
  * @author dangqian.zll
  * @date 2019-12-04
  */

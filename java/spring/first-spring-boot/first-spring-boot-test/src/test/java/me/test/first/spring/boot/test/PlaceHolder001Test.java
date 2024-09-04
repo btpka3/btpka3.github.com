@@ -10,6 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import java.util.Map;
 
 /**
+ * 验证使用默认 的 ${xxxTestClass}-context.xml 作为Spring bean配置文件
  * @date 2019-03-11
  */
 @SpringBootTest
@@ -27,7 +28,7 @@ public class PlaceHolder001Test {
 
     @Test
     public void testStaticMethod01() {
-        System.out.println(PlaceHolder001Test.class.getResource(".").getFile());
+        System.out.println("=========" + PlaceHolder001Test.class.getResource(".").getFile());
 
         Assertions.assertEquals(6, map1.size());
         Assertions.assertEquals("a11", map1.get("aaa"));
