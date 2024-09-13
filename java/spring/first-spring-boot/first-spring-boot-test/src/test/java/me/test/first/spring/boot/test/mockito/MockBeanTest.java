@@ -54,10 +54,6 @@ public class MockBeanTest {
         public String run() {
             return "MyService and " + myDepService.call();
         }
-
-        protected String supply() {
-            return "my001";
-        }
     }
 
     @Component
