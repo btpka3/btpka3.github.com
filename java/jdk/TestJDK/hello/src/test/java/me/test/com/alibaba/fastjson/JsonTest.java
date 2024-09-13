@@ -3,6 +3,11 @@ package me.test.com.alibaba.fastjson;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.nio.charset.StandardCharsets;
@@ -66,27 +71,55 @@ public class JsonTest {
         System.out.println(str);
     }
 
-    public static class Person {
-        private String name;
+@Test
+public void testCircleReference() {
+    Map<String, Object> f = new HashMap<>();
+    f.put("name", "father001");
+    Map<String, Object> s = new HashMap<>();
+    s.put("name", "son001");
 
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
+    f.put("son", s);
+    s.put("father", f);
+    // WORKS
+    {
+        String str = JSON.toJSONString(
+                s,
+                SerializerFeature.PrettyFormat
+        );
+        System.out.println(str);
+    }
+    // ERROR
+    {
+        // 如果有循环依赖，且使用了 SerializerFeature.DisableCircularReferenceDetect 属性，则会
+        // 抛出异常
+        try {
+            JSON.toJSONString(
+                    s,
+                    SerializerFeature.DisableCircularReferenceDetect,
+                    SerializerFeature.PrettyFormat
+            );
+            Assertions.fail("should throw exception");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
+}
 
+    @Data
+    @SuperBuilder(toBuilder = true)
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Person {
+        private String name;
+        private Person father;
+        private Person son;
+    }
+
+    @Data
+    @SuperBuilder(toBuilder = true)
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Student extends Person {
         private String classRoom;
-
-        public String getClassRoom() {
-            return classRoom;
-        }
-
-        public void setClassRoom(String classRoom) {
-            this.classRoom = classRoom;
-        }
     }
 }

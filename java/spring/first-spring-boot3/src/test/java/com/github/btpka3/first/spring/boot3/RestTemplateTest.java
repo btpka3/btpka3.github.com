@@ -23,10 +23,17 @@ import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -134,7 +141,22 @@ public class RestTemplateTest {
 
     @Test
     public void test01() {
-        String str = restTemplate.getForObject("https://www.baidu.com/", String.class);
+
+        Map<String,String> queryParams = new HashMap<>(8);
+        queryParams.put("k3", "v31");
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>(16);
+        params.setAll(queryParams);
+
+        int id = 13;
+        URI uri = UriComponentsBuilder.fromUriString("https://www.baidu.com/")
+                .uriVariables(Map.of("id", id))
+                .queryParam("k1", "v11", "v12")
+                .queryParam("k2", Arrays.asList("v21", "v22"))
+                .queryParams(params)
+                .build()
+                .toUri();
+
+        String str = restTemplate.getForObject(uri, String.class);
         System.out.println("=======================");
         System.out.println(str);
     }

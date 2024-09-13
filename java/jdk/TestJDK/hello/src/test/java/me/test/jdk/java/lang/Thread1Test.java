@@ -35,6 +35,10 @@ public class Thread1Test {
 
         Thread.sleep(3000);
     }
+    @Test
+    public void testGetStackTrace(){
+        System.out.println(Thread.currentThread().getStackTrace().length);
+    }
 
 
 }

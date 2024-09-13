@@ -1,5 +1,6 @@
 package me.test.jdk.javax.script;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import javax.script.ScriptEngine;
@@ -11,9 +12,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @see <a href="https://github.com/openjdk/nashorn">nashorn</a>
+ * @see <a href="https://www.graalvm.org/latest/reference-manual/js/ScriptEngine/">GraalVM:Js:ScriptEngine Implementation</a>
  */
-public class NashornTest {
+public class GraalJsTest {
 
     @Test
     @SuppressWarnings("unchecked")
@@ -22,7 +23,7 @@ public class NashornTest {
         List<ScriptEngineFactory> factories = manager.getEngineFactories();
         for (ScriptEngineFactory f : factories) {
             System.out.println("egine name:" + f.getEngineName());
-            // System.out.println("engine version:" + f.getEngineVersion());
+             System.out.println("engine version:" + f.getEngineVersion());
             System.out.println("language name:" + f.getLanguageName());
             System.out.println("language version:" + f.getLanguageVersion());
             System.out.println("names:" + f.getNames());
@@ -32,7 +33,7 @@ public class NashornTest {
         }
         System.out.println("-----------------------------------------------Done");
 
-        ScriptEngine engine = manager.getEngineByName("nashorn");
+        ScriptEngine engine = manager.getEngineByName("graal-js");
         engine.put("a", 4);
         engine.put("b", 6);
         Object maxNum = engine.eval("function max_num(a,b){return (a>b)?a:b;}max_num(a,b);");
@@ -47,7 +48,8 @@ public class NashornTest {
         u.put("r", "rrr");
         engine.put("RSAUtils", u);
 
-        engine.eval("var x= max_num(a,m.get('c'));");
+        engine.eval("var x= max_num(a,m['c']);");
         System.out.println("max_num:" + engine.get("x"));
+        Assertions.assertEquals(10, engine.get("x"));
     }
 }

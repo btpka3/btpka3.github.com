@@ -6,14 +6,14 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
- * @see <a href="https://github.com/openjdk/nashorn">nashorn</a>
+ * @author dangqian.zll
+ * @date 2024/9/9
+ * @see
  */
-public class NashornTest {
+public class BeanShellTest {
 
     @Test
     @SuppressWarnings("unchecked")
@@ -32,22 +32,11 @@ public class NashornTest {
         }
         System.out.println("-----------------------------------------------Done");
 
-        ScriptEngine engine = manager.getEngineByName("nashorn");
+        ScriptEngine engine = manager.getEngineByName("bsh");
         engine.put("a", 4);
         engine.put("b", 6);
-        Object maxNum = engine.eval("function max_num(a,b){return (a>b)?a:b;}max_num(a,b);");
+        Object maxNum = engine.eval("a+b");
         System.out.println("max_num:" + maxNum + ", (class = " + maxNum.getClass() + ")");
 
-        @SuppressWarnings("rawtypes")
-        Map m = new HashMap();
-        m.put("c", 10);
-        engine.put("m", m);
-
-        Map u = new HashMap();
-        u.put("r", "rrr");
-        engine.put("RSAUtils", u);
-
-        engine.eval("var x= max_num(a,m.get('c'));");
-        System.out.println("max_num:" + engine.get("x"));
     }
 }
