@@ -1,5 +1,7 @@
 package me.test.jdk.javax.script;
 
+import org.junit.jupiter.api.Test;
+
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
@@ -8,16 +10,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @see <a href="https://github.com/openjdk/nashorn">nashorn</a>
+ */
+public class JavascriptTest {
 
-public class Main {
-
+    @Test
     @SuppressWarnings("unchecked")
-    public static void main(String[] args) throws ScriptException {
+    public void test01() throws ScriptException {
         ScriptEngineManager manager = new ScriptEngineManager();
         List<ScriptEngineFactory> factories = manager.getEngineFactories();
         for (ScriptEngineFactory f : factories) {
             System.out.println("egine name:" + f.getEngineName());
-            System.out.println("engine version:" + f.getEngineVersion());
+            // System.out.println("engine version:" + f.getEngineVersion());
             System.out.println("language name:" + f.getLanguageName());
             System.out.println("language version:" + f.getLanguageVersion());
             System.out.println("names:" + f.getNames());
@@ -25,6 +30,7 @@ public class Main {
             System.out.println("extension:" + f.getExtensions());
             System.out.println("-----------------------------------------------");
         }
+        System.out.println("-----------------------------------------------Done");
 
         ScriptEngine engine = manager.getEngineByName("js");
         engine.put("a", 4);

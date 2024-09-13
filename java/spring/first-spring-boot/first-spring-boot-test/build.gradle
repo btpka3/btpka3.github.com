@@ -35,6 +35,10 @@ dependencies {
     implementation 'org.infinispan:infinispan-spring-boot-starter'
     implementation 'org.infinispan:infinispan-spring4-embedded'
 
+    implementation 'org.springframework.boot:spring-boot-starter-integration'
+    implementation 'org.springframework.integration:spring-integration-zookeeper'
+
+
     implementation 'io.prometheus:simpleclient_pushgateway'
     implementation 'org.hamcrest:hamcrest'
     implementation 'org.codehaus.groovy:groovy'
