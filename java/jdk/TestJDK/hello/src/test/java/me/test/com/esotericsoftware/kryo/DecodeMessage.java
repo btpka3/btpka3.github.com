@@ -2,6 +2,8 @@ package me.test.com.esotericsoftware.kryo;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.security.risk.protocol.model.DefaultRiskProtocol;
+import com.alibaba.security.risk.protocol.model.RiskProtocol;
 import lombok.SneakyThrows;
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
@@ -29,10 +31,11 @@ public class DecodeMessage {
                 ctx,
                 //SerializerFeature.WriteClassName,
                 SerializerFeature.WriteNonStringKeyAsString,
-                SerializerFeature.PrettyFormat
+                SerializerFeature.PrettyFormat,
+                SerializerFeature.WriteMapNullValue
         );
         System.out.println(filePath + ":\n" + json);
         System.out.print("================");
 
+        }
     }
-}

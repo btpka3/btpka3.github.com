@@ -1,10 +1,13 @@
 package me.test.jdk.java.time;
 
+import org.junit.jupiter.api.Test;
+
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.Date;
 
 /**
@@ -90,15 +93,40 @@ public class LocalTimeTest {
         System.out.println("new LocalDateTime : " + newLdt);
     }
 
-     static void minus() {
+    static void minus() {
         System.out.println("============================= minus");
 
         LocalDateTime ldt = LocalDateTime.of(2019, 6, 21, 02, 24, 58, 444 * 1000 * 1000);
 
         LocalDateTime newLdt = ldt
-                .minusDays(6*30);
+                .minusDays(6 * 30);
 
         System.out.println("LocalDateTime     : " + ldt);
         System.out.println("new LocalDateTime : " + newLdt);
+    }
+
+
+    /**
+     * String -> LocalDateTime -> millis
+     */
+    @Test
+    public void parse01() {
+        String dateStr = "2019-06-21 02:24:58";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        TemporalAccessor t = formatter.parse(dateStr);
+        System.out.println(t.getClass());
+        System.out.println(t);
+        LocalDateTime localDateTime = LocalDateTime.parse(dateStr, formatter);
+
+        System.out.println("localDateTime = " + localDateTime);
+
+        long millis = localDateTime.atZone(ZoneOffset.systemDefault())
+                .toInstant()
+                .toEpochMilli();
+        System.out.println("dateTimeInMillis = " + millis);
+
+        String fmtStr = formatter.format(LocalDateTime.ofInstant(Instant.ofEpochMilli(millis), ZoneId.systemDefault()));
+        System.out.println("fmtStr = " + fmtStr);
+
     }
 }

@@ -1,12 +1,15 @@
 package me.test.com.alibaba.fastjson;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.experimental.SuperBuilder;
+import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -71,39 +74,55 @@ public class JsonTest {
         System.out.println(str);
     }
 
-@Test
-public void testCircleReference() {
-    Map<String, Object> f = new HashMap<>();
-    f.put("name", "father001");
-    Map<String, Object> s = new HashMap<>();
-    s.put("name", "son001");
 
-    f.put("son", s);
-    s.put("father", f);
-    // WORKS
-    {
-        String str = JSON.toJSONString(
-                s,
-                SerializerFeature.PrettyFormat
-        );
-        System.out.println(str);
+    @SneakyThrows
+    @Test
+    public void testParseRef() {
+        String jsonStr = IOUtils.toString(getClass().getResourceAsStream("JsonTest001.json"), StandardCharsets.UTF_8);
+        JSONObject jsonObject = JSON.parseObject(jsonStr);
+        System.out.println(jsonObject);
     }
-    // ERROR
-    {
-        // 如果有循环依赖，且使用了 SerializerFeature.DisableCircularReferenceDetect 属性，则会
-        // 抛出异常
-        try {
-            JSON.toJSONString(
+
+    @Test
+    public void testCircleReference() {
+        Map<String, Object> f = new HashMap<>();
+        f.put("name", "father001");
+        Map<String, Object> s = new HashMap<>();
+        s.put("name", "son001");
+
+        f.put("son", s);
+        s.put("father", f);
+        // WORKS
+        {
+            String str = JSON.toJSONString(
                     s,
-                    SerializerFeature.DisableCircularReferenceDetect,
                     SerializerFeature.PrettyFormat
             );
-            Assertions.fail("should throw exception");
-        } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("=========str:\n" + str);
+            JSONObject newSon = JSON.parseObject(str);
+
+            Assertions.assertEquals("son001", newSon.get("name"));
+            JSONObject newFather = (JSONObject) newSon.get("father");
+            Assertions.assertEquals("father001", newFather.get("name"));
+            // ⭕️
+            Assertions.assertNotSame(newSon, newFather.get("son"));
+        }
+        // ERROR
+        {
+            // 如果有循环依赖，且使用了 SerializerFeature.DisableCircularReferenceDetect 属性，则会
+            // 抛出异常
+            try {
+                JSON.toJSONString(
+                        s,
+                        SerializerFeature.DisableCircularReferenceDetect,
+                        SerializerFeature.PrettyFormat
+                );
+                Assertions.fail("should throw exception");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
-}
 
     @Data
     @SuperBuilder(toBuilder = true)

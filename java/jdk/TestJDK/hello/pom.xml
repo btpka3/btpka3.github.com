@@ -23,6 +23,11 @@
             <artifactId>js-scriptengine</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.alibaba.security</groupId>
+            <artifactId>risk-protocol</artifactId>
+            <version>0.1.2</version>
+        </dependency>
+        <dependency>
             <groupId>org.graalvm.js</groupId>
             <artifactId>js</artifactId>
         </dependency>

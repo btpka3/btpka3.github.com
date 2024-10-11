@@ -23,7 +23,7 @@ public class Kryo4Serializer implements Serializer {
         //kryo.setDefaultSerializer(new com.esotericsoftware.kryo.SerializerFactory.ReflectionSerializerFactory(FieldSerializer.class));
         kryo.setRegistrationRequired(false);
         //kryo.setAutoReset(false);
-        kryo.setInstantiatorStrategy(new Kryo.DefaultInstantiatorStrategy(new StdInstantiatorStrategy()));
+//        kryo.setInstantiatorStrategy(new Kryo.DefaultInstantiatorStrategy(new StdInstantiatorStrategy()));
         return kryo;
     });
 
