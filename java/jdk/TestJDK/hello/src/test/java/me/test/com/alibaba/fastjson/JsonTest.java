@@ -14,7 +14,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -72,6 +74,37 @@ public class JsonTest {
                 SerializerFeature.PrettyFormat
         );
         System.out.println(str);
+    }
+
+
+    @Test
+    public void testPojoList() {
+
+        List<Student> list = new ArrayList<>(8);
+
+        {
+            Student s = new Student();
+            s.setName("zhang3");
+            s.setClassRoom("classRoom1");
+            list.add(s);
+        }
+        {
+            Student s = new Student();
+            s.setName("li4");
+            s.setClassRoom("classRoom2");
+            list.add(s);
+        }
+
+        String jsonStr = JSON.toJSONString(
+                list,
+                SerializerFeature.WriteMapNullValue,
+                SerializerFeature.WriteClassName,
+                SerializerFeature.PrettyFormat
+        );
+//        Object obj = JSON.parseObject(jsonStr);
+//        List list2 = JSON.parseArray(jsonStr);
+        List list2 = JSON.parseArray(jsonStr, Student.class);
+        System.out.println(list2);
     }
 
 

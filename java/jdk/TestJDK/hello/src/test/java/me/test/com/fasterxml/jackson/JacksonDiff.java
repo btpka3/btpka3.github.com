@@ -1,4 +1,4 @@
-package me.test;
+package me.test.com.fasterxml.jackson;
 
 import com.alibaba.fastjson2.JSON;
 import com.fasterxml.jackson.databind.JsonNode;

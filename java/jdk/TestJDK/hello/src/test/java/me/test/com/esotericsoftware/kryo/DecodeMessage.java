@@ -2,8 +2,6 @@ package me.test.com.esotericsoftware.kryo;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.alibaba.security.risk.protocol.model.DefaultRiskProtocol;
-import com.alibaba.security.risk.protocol.model.RiskProtocol;
 import lombok.SneakyThrows;
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
@@ -20,7 +18,7 @@ public class DecodeMessage {
     @Test
     public void decode() {
 
-        String fileName = "20240912171128_21046ADA07865F7CFD963C12FC71112D_158230";
+        String fileName = "20241223162303_213F4C0014BE2394271E7371C25E7FB9_158230";
 
         File filePath = Path.of(System.getProperty("user.home"), "Downloads", fileName).toFile();
         byte[] data = IOUtils.toByteArray(new FileInputStream(filePath));
@@ -37,5 +35,5 @@ public class DecodeMessage {
         System.out.println(filePath + ":\n" + json);
         System.out.print("================");
 
-        }
     }
+}

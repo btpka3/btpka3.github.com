@@ -31,10 +31,10 @@ public class ClassTest {
 
     @SneakyThrows
     Object setStaticFiled(Class clazz, String filedName, Object newValue) {
-        Field filed = clazz.getDeclaredField(filedName);
-        filed.setAccessible(true);
-        Object oldValue = filed.get(null);
-        filed.set(null, newValue);
+        Field field = clazz.getDeclaredField(filedName);
+        field.setAccessible(true);
+        Object oldValue = field.get(null);
+        field.set(null, newValue);
         return oldValue;
     }
 

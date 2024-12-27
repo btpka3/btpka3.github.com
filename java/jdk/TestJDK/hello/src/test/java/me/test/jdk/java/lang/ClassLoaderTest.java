@@ -140,7 +140,7 @@ public class ClassLoaderTest {
         printClassPath(classPath);
     }
 
-    protected void printClassPath(String classPath) {
+    public static void printClassPath(String classPath) {
         String[] arr = classPath.split("[;:,]");
         System.out.println(arr.length);
         for (String s : arr) {

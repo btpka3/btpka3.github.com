@@ -6,6 +6,8 @@ import com.alibaba.fastjson2.TypeReference;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -24,5 +26,17 @@ public class JsonTest {
         Assertions.assertEquals(Long.class, entry.getValue().getClass());
         String newJsonStr = JSON.toJSONString(map, JSONWriter.Feature.WriteNonStringKeyAsString);
         Assertions.assertEquals(jsonStr, newJsonStr);
+    }
+
+    @Test
+    public void testByteArray() {
+        Map m1 = new HashMap(8);
+        m1.put("a", "a01");
+        m1.put("b", "hello".getBytes(StandardCharsets.UTF_8));
+        System.out.println("======m1:\n" + m1);
+        String jsonStr = JSON.toJSONString(m1);
+        System.out.println("======jsonStr:\n" + jsonStr);
+        Map m2 = JSON.parseObject(jsonStr, Map.class);
+        System.out.println("======m2:\n" + m2);
     }
 }

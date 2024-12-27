@@ -46,9 +46,9 @@ public class ProxyTest {
 
     @SneakyThrows
     <T, V> V getFiled(Class<T> clazz, T obj, String filedName) {
-        Field filed = clazz.getDeclaredField(filedName);
-        filed.setAccessible(true);
-        return (V) filed.get(obj);
+        Field field = clazz.getDeclaredField(filedName);
+        field.setAccessible(true);
+        return (V) field.get(obj);
     }
 
     /**

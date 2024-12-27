@@ -1,0 +1,19 @@
+{
+  "@type": "java.util.HashMap",
+  "bcSourceSystem": "xxx",
+  "bizData": {
+    "@type": "java.util.HashMap",
+    "rgstCntry": "CN",
+    "authCateBrand": {
+      "@type": "java.util.HashMap",
+      "a":"aaa"
+    },
+    "knowledgeModel": {
+      "@type": "java.util.LinkedHashMap",
+      "prodBrandAttr": "ZZKD",
+      "authorization": {
+        "$ref": "$.bizData.authCateBrand"
+      }
+    }
+  }
+}
