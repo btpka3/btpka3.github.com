@@ -1,5 +1,6 @@
 package me.test.jdk.java.time;
 
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.junit.jupiter.api.Test;
 
 import java.time.Clock;
@@ -8,6 +9,8 @@ import java.time.OffsetDateTime;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.TimeZone;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 /**
  * @author dangqian.zll
@@ -20,7 +23,7 @@ public class InstantTest {
 
         System.out.println("============================= test01");
 
-        Instant nowInstant0 =  Instant.ofEpochMilli(System.currentTimeMillis());
+        Instant nowInstant0 = Instant.ofEpochMilli(System.currentTimeMillis());
 
         Date nowDate = new Date();
         Instant nowInstant = Instant.now();
@@ -64,5 +67,16 @@ public class InstantTest {
         System.out.println(date);
         System.out.println(date.getTime());
 
+    }
+
+    @Test
+    public void testAdd() {
+        // UTC 时间
+        Instant nowInstant = Instant.now();
+        Instant yesterdayInstant = nowInstant.minus(1, DAYS)
+                .truncatedTo(DAYS);
+        System.out.println(yesterdayInstant);
+        Date date = Date.from(yesterdayInstant);
+        System.out.println(DateFormatUtils.format(date, "yyyy-MM-dd HH:mm:ss"));
     }
 }

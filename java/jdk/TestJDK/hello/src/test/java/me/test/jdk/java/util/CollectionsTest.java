@@ -59,4 +59,18 @@ public class CollectionsTest {
         assertTrue(Objects.equals(set1, set2));
     }
 
+
+    @Test
+    public void test05() {
+        Vector<String> v = new Vector<String>();
+        v.add("aaa");
+        v.add("bbb");
+        v.add("ccc");
+        System.out.println("Elements in vector : " + v);
+
+        // getting enumeration of the vector element
+        Enumeration<String> elementsEnumeration = v.elements();
+        List<String> list = Collections.list(elementsEnumeration);
+        assertEquals(Arrays.asList("aaa", "bbb", "ccc"), list);
+    }
 }
