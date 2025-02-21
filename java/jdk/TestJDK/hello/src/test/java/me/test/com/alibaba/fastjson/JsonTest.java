@@ -14,10 +14,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -157,6 +154,18 @@ public class JsonTest {
         }
     }
 
+    @SneakyThrows
+    @Test
+    public void testPrettyArray() {
+        User user = User.builder()
+                .name("zhang3")
+                .hobbies(Arrays.asList("aaa", "bbb", "ccc"))
+                .build();
+
+        String jsonStr = JSON.toJSONString(user, SerializerFeature.PrettyFormat);
+        System.out.println(jsonStr);
+    }
+
     @Data
     @SuperBuilder(toBuilder = true)
     @NoArgsConstructor
@@ -173,5 +182,14 @@ public class JsonTest {
     @AllArgsConstructor
     public static class Student extends Person {
         private String classRoom;
+    }
+
+    @Data
+    @SuperBuilder(toBuilder = true)
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class User {
+        private String name;
+        private List<String> hobbies;
     }
 }
