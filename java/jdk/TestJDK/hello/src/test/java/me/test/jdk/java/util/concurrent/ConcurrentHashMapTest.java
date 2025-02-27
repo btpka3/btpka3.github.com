@@ -39,4 +39,14 @@ public class ConcurrentHashMapTest {
         System.out.println(m.containsKey("aa"));
 
     }
+
+    @Test
+    public void getNull01() {
+        try {
+            Map m = new ConcurrentHashMap();
+            m.get(null);
+            Assertions.fail("should throw NPE");
+        } catch (NullPointerException e) {
+        }
+    }
 }

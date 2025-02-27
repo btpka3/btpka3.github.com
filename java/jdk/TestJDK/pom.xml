@@ -26,11 +26,37 @@
         <logback.version>1.5.3</logback.version>
         <fastjson2.version>2.0.49</fastjson2.version>
         <jackson2.vesion>2.17.1</jackson2.vesion>
+        <graalvm-js.version>24.1.2</graalvm-js.version>
     </properties>
 
 
     <dependencyManagement>
+
         <dependencies>
+            <dependency>
+                <groupId>org.graalvm.polyglot</groupId>
+                <artifactId>polyglot</artifactId>
+                <version>${graalvm-js.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.graalvm.polyglot</groupId>
+                <artifactId>js</artifactId>
+                <version>${graalvm-js.version}</version>
+                <type>pom</type>
+            </dependency>
+<!--            -->
+<!--            <dependency>-->
+<!--                <groupId>org.graalvm.truffle</groupId>-->
+<!--                <artifactId>truffle-api</artifactId>-->
+<!--                <version>23.1.2</version>-->
+<!--                <scope>runtime</scope>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>org.graalvm.regex</groupId>-->
+<!--                <artifactId>regex</artifactId>-->
+<!--                <version>24.1.2</version>-->
+<!--                <scope>runtime</scope>-->
+<!--            </dependency>-->
             <dependency>
                 <groupId>org.openjdk.nashorn</groupId>
                 <artifactId>nashorn-core</artifactId>
@@ -42,16 +68,17 @@
                 <artifactId>bsh</artifactId>
                 <version>2.0b6</version>
             </dependency>
-            <dependency>
-                <groupId>org.graalvm.js</groupId>
-                <artifactId>js-scriptengine</artifactId>
-                <version>23.0.5</version>
-            </dependency>
-            <dependency>
-                <groupId>org.graalvm.js</groupId>
-                <artifactId>js</artifactId>
-                <version>23.0.5</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>org.graalvm.js</groupId>-->
+<!--                <artifactId>js-scriptengine</artifactId>-->
+<!--                <version>${graalvm-js.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>org.graalvm.js</groupId>-->
+<!--                <artifactId>js</artifactId>-->
+<!--                <version>${graalvm-js.version}</version>-->
+<!--                <type>pom</type>-->
+<!--            </dependency>-->
 
             <dependency>
                 <groupId>org.slf4j</groupId>
