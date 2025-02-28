@@ -91,7 +91,7 @@ dependencies {
     testAnnotationProcessor 'org.projectlombok:lombok'
 
     // https://cn.dubbo.apache.org/zh-cn/overview/mannual/java-sdk/reference-manual/registry/nacos/
-    implementation 'org.apache.dubbo:dubbo-spring-boot-starter:3.2.4'
+    implementation 'org.apache.dubbo:dubbo-spring-boot-starter:3.3.3'
     implementation 'com.alibaba.nacos:nacos-client:2.2.4'
 //
 //    implementation 'org.apache.dubbo:dubbo-dependencies-zookeeper-curator5:3.2.0'

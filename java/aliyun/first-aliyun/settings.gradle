@@ -1,9 +1,11 @@
 rootProject.name = 'first-aliyun'
 
-//include 'first-green'
+include 'platform'
+include 'first-green'
 //include 'first-mq'
 include 'first-sls'
 include 'first-oss'
-//include 'first-acr'
+include 'first-ram'
+include 'first-acr'
 
 

@@ -1,7 +1,9 @@
 package com.github.btpka3.first.javaagent;
 
 import java.lang.instrument.Instrumentation;
-
+import net.bytebuddy.agent.builder.AgentBuilder;
+import net.bytebuddy.asm.Advice;
+import net.bytebuddy.matcher.ElementMatchers;
 /**
  * @date 2023/8/15
  */
@@ -20,7 +22,12 @@ public class MyAgent {
 
         inst.addTransformer(new WatchSetTccl());
 
-
+//        new AgentBuilder.Default()
+//                .type(ElementMatchers.nameContains("YourTargetClass"))  // 指定需要监控的类
+//                .transform((builder, typeDescription, classLoader, module) ->
+//                        builder.method(ElementMatchers.isSynchronized())  // 匹配所有同步方法
+//                                .intercept(Advice.to(MethodCallAdvice.class)))
+//                .installOn(inst);
     }
 
     /**

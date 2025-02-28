@@ -10,6 +10,7 @@ import io.github.resilience4j.decorators.Decorators;
 import io.github.resilience4j.ratelimiter.RateLimiter;
 import io.github.resilience4j.ratelimiter.RateLimiterConfig;
 import io.github.resilience4j.ratelimiter.RateLimiterRegistry;
+import io.github.resilience4j.ratelimiter.configure.RateLimiterConfigurationProperties;
 import io.github.resilience4j.retry.Retry;
 import io.github.resilience4j.retry.RetryConfig;
 import io.github.resilience4j.retry.RetryRegistry;
@@ -49,6 +50,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * @author dangqian.zll
  * @date 2020/11/1
  * @see <a href="https://resilience4j.readme.io/docs">Resilience4j user guide</a>
+ * @see RateLimiterConfigurationProperties
  */
 @Slf4j
 public class Resilience4jTest {

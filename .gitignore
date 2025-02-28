@@ -8,6 +8,7 @@ out
 .springBeans
 .classpath
 .settings
+.venv
 bin
 !os/linux/prod-app-dir/app/apache-tomcat-x.x.x/bin
 *.log
@@ -35,7 +36,6 @@ dependency-reduced-pom-*.xml
 .slcache
 .asscache
 jspm_packages
-
 ~*
 
 

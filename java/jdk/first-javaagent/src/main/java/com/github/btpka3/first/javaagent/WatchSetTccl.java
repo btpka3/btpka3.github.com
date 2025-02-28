@@ -51,7 +51,7 @@ public class WatchSetTccl implements ClassFileTransformer {
                 m.addLocalVariable("startTime", CtClass.longType);
                 m.insertBefore("startTime = System.currentTimeMillis();");
             }
-            Thread.currentThread().setContextClassLoader();
+            //Thread.currentThread().setContextClassLoader();
             {
                 m.addLocalVariable("endTime", CtClass.longType);
                 m.addLocalVariable("opTime", CtClass.longType);

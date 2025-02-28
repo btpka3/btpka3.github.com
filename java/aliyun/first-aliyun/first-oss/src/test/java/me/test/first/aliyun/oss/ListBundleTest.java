@@ -1,6 +1,5 @@
 package me.test.first.aliyun.oss;
 
-import com.alibaba.fastjson.JSON;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.common.auth.CredentialsProvider;
@@ -8,15 +7,10 @@ import com.aliyun.oss.common.auth.CredentialsProviderFactory;
 import com.aliyun.oss.model.ListObjectsV2Request;
 import com.aliyun.oss.model.ListObjectsV2Result;
 import com.aliyun.oss.model.OSSObjectSummary;
-import lombok.*;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 
-import java.io.FileInputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @author dangqian.zll
@@ -25,16 +19,15 @@ import java.util.Objects;
  */
 public class ListBundleTest {
 
-    String prefix = "oss://bundle-repository/bundleV2/bundle-repo/";
-    String bucketName = "bundle-repository";
-    String keyPrefix = "bundleV2/bundle-repo/";
-
+    String bucketName = "aigc-mtee-resource-center";
+    String keyPrefix = "test";
+    String endpoint = "oss-accelerate.aliyuncs.com";
 
     @SneakyThrows
     public OSS getOss() {
 
-        AkSkConf akSkConf = getAkSkConf(" AkSkConf.more_engine.slsRead.json");
-        String endpoint = "cn-hangzhou.oss-cdn.aliyun-inc.com";
+        AkSkConf akSkConf = AkSkConf.getAkSkConf("AkSkConf.aigc_yun.aone-mtee3-online.json");
+
         String ak = akSkConf.getAccessKeyId();
         String sk = akSkConf.getAccessKeySecret();
 
@@ -48,7 +41,7 @@ public class ListBundleTest {
 
         OSS oss = getOss();
 
-        ListObjectsV2Request req  = new ListObjectsV2Request();
+        ListObjectsV2Request req = new ListObjectsV2Request();
         req.setBucketName(bucketName);
         req.setPrefix(keyPrefix);
         ListObjectsV2Result result = oss.listObjectsV2(req);
@@ -56,33 +49,6 @@ public class ListBundleTest {
         for (OSSObjectSummary s : ossObjectSummaries) {
             System.out.println("\t" + s.getKey());
         }
-    }
-
-    @SneakyThrows
-    protected AkSkConf getAkSkConf(String fileName) {
-        String akSkConfFile = System.getProperty("user.home") + "/Documents/data/" + fileName;
-        String akSkConfJson = IOUtils.toString(new FileInputStream(akSkConfFile), StandardCharsets.UTF_8);
-        return JSON.parseObject(akSkConfJson, AkSkConf.class);
-    }
-
-    @Data
-    @Builder(toBuilder = true)
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class BundleInfo {
-        private String name;
-        private String version;
-        private String mavenProfile;
-    }
-
-    String toOssPath(BundleInfo info) {
-
-        String name = info.getName();
-        String version = info.getVersion();
-        String mavenProfile = info.getMavenProfile();
-        if (StringUtils.isBlank(mavenProfile) || Objects.equals("default", mavenProfile)) {
-            return prefix + name + "/" + version + "/" + name + "-" + version + ".bundle.jar";
-        }
-        return prefix + name + "/" + version + "/" + mavenProfile + "/" + name + "-" + version + ".bundle.jar";
+        System.out.println("Done.");
     }
 }

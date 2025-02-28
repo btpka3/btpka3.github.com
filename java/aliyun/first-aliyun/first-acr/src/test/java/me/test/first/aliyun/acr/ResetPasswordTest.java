@@ -7,8 +7,9 @@ import com.aliyuncs.http.HttpResponse;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
 import org.apache.commons.lang3.StringUtils;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * @author dangqian.zll
@@ -21,16 +22,16 @@ public class ResetPasswordTest {
     @Test
     public void test() throws ClientException {
         String ak = System.getProperty("acr.ak");
-        Assert.assertTrue(StringUtils.isNotBlank(ak));
+        assertTrue(StringUtils.isNotBlank(ak));
 
         String sk = System.getProperty("acr.sk");
-        Assert.assertTrue(StringUtils.isNotBlank(sk));
+        assertTrue(StringUtils.isNotBlank(sk));
 
         String password = System.getProperty("acr.password");
-        Assert.assertTrue(StringUtils.isNotBlank(password));
+        assertTrue(StringUtils.isNotBlank(password));
 
         String instanceId = System.getProperty("acr.instanceId");
-        Assert.assertTrue(StringUtils.isNotBlank(instanceId));
+        assertTrue(StringUtils.isNotBlank(instanceId));
 
         resetPassword(ak, sk, instanceId, password);
         System.out.println("reset password - done.");

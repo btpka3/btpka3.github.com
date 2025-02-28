@@ -12,8 +12,7 @@ import com.aliyuncs.http.MethodType;
 import com.aliyuncs.http.ProtocolType;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
@@ -27,7 +26,6 @@ import java.util.UUID;
  * @author 当千
  * @date 2019-04-23
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest(
         classes = GreenTest.Conf.class,
         webEnvironment = SpringBootTest.WebEnvironment.NONE

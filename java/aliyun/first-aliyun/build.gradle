@@ -4,3 +4,46 @@ buildscript {
         mavenCentral()
     }
 }
+plugins {
+    //id 'java'
+    id "org.springframework.boot" version "${springBootVersion}"
+    id 'io.spring.dependency-management' version '1.1.4'
+    //id 'java-platform'
+    //id 'maven-publish'
+}
+allprojects {
+
+
+    repositories {
+        maven { url "https://maven.aliyun.com/nexus/content/groups/public/" }
+        mavenCentral()
+    }
+}
+
+subprojects {
+    if ('platform'.equals(name)) {
+        apply plugin: 'java-platform'
+        apply plugin: 'maven-publish'
+    } else {
+        apply plugin: 'java'
+        apply plugin: 'org.springframework.boot'
+        apply plugin: 'io.spring.dependency-management'
+        configurations {
+            compileOnly {
+                extendsFrom annotationProcessor
+            }
+        }
+
+        java {
+            sourceCompatibility = '11'
+            targetCompatibility = '11'
+        }
+
+        dependencies {
+            implementation platform(project(':platform'))
+        }
+        tasks.named('test') {
+            useJUnitPlatform()
+        }
+    }
+}

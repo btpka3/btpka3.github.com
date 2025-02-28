@@ -1,534 +1,73 @@
 {
-  "sequenceNumber": 0,
-  "timestamp": 1712569658079,
-  "nanoseconds": 79952000,
-  "level": "INFO",
-  "threadName": "Test worker",
-  "loggerName": "my.json",
-  "context": {
-    "name": "default",
-    "birthdate": 1712569657521,
-    "properties": {}
-  },
-  "mdc": {
-    "a": "a01",
-    "NDC0": "my-ndc-a=aaa1"
-  },
-  "formattedMessage": "hello : zhang3",
-  "throwable": {
-    "className": "java.lang.RuntimeException",
-    "message": "demo err",
-    "stepArray": [
-      {
-        "className": "me.test.first.spring.boot.test.LogbackTest",
-        "methodName": "json01",
-        "fileName": "LogbackTest.java",
-        "lineNumber": 148
-      },
-      {
-        "className": "jdk.internal.reflect.NativeMethodAccessorImpl",
-        "methodName": "invoke0",
-        "fileName": "NativeMethodAccessorImpl.java",
-        "lineNumber": -2
-      },
-      {
-        "className": "jdk.internal.reflect.NativeMethodAccessorImpl",
-        "methodName": "invoke",
-        "fileName": "NativeMethodAccessorImpl.java",
-        "lineNumber": 62
-      },
-      {
-        "className": "jdk.internal.reflect.DelegatingMethodAccessorImpl",
-        "methodName": "invoke",
-        "fileName": "DelegatingMethodAccessorImpl.java",
-        "lineNumber": 43
-      },
-      {
-        "className": "java.lang.reflect.Method",
-        "methodName": "invoke",
-        "fileName": "Method.java",
-        "lineNumber": 566
-      },
-      {
-        "className": "org.junit.platform.commons.util.ReflectionUtils",
-        "methodName": "invokeMethod",
-        "fileName": "ReflectionUtils.java",
-        "lineNumber": 725
-      },
-      {
-        "className": "org.junit.jupiter.engine.execution.MethodInvocation",
-        "methodName": "proceed",
-        "fileName": "MethodInvocation.java",
-        "lineNumber": 60
-      },
-      {
-        "className": "org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation",
-        "methodName": "proceed",
-        "fileName": "InvocationInterceptorChain.java",
-        "lineNumber": 131
-      },
-      {
-        "className": "org.junit.jupiter.engine.extension.TimeoutExtension",
-        "methodName": "intercept",
-        "fileName": "TimeoutExtension.java",
-        "lineNumber": 149
-      },
-      {
-        "className": "org.junit.jupiter.engine.extension.TimeoutExtension",
-        "methodName": "interceptTestableMethod",
-        "fileName": "TimeoutExtension.java",
-        "lineNumber": 140
-      },
-      {
-        "className": "org.junit.jupiter.engine.extension.TimeoutExtension",
-        "methodName": "interceptTestMethod",
-        "fileName": "TimeoutExtension.java",
-        "lineNumber": 84
-      },
-      {
-        "className": "org.junit.jupiter.engine.execution.ExecutableInvoker$ReflectiveInterceptorCall",
-        "methodName": "lambda$ofVoidMethod$0",
-        "fileName": "ExecutableInvoker.java",
-        "lineNumber": 115
-      },
-      {
-        "className": "org.junit.jupiter.engine.execution.ExecutableInvoker",
-        "methodName": "lambda$invoke$0",
-        "fileName": "ExecutableInvoker.java",
-        "lineNumber": 105
-      },
-      {
-        "className": "org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation",
-        "methodName": "proceed",
-        "fileName": "InvocationInterceptorChain.java",
-        "lineNumber": 106
-      },
-      {
-        "className": "org.junit.jupiter.engine.execution.InvocationInterceptorChain",
-        "methodName": "proceed",
-        "fileName": "InvocationInterceptorChain.java",
-        "lineNumber": 64
-      },
-      {
-        "className": "org.junit.jupiter.engine.execution.InvocationInterceptorChain",
-        "methodName": "chainAndInvoke",
-        "fileName": "InvocationInterceptorChain.java",
-        "lineNumber": 45
-      },
-      {
-        "className": "org.junit.jupiter.engine.execution.InvocationInterceptorChain",
-        "methodName": "invoke",
-        "fileName": "InvocationInterceptorChain.java",
-        "lineNumber": 37
-      },
-      {
-        "className": "org.junit.jupiter.engine.execution.ExecutableInvoker",
-        "methodName": "invoke",
-        "fileName": "ExecutableInvoker.java",
-        "lineNumber": 104
-      },
-      {
-        "className": "org.junit.jupiter.engine.execution.ExecutableInvoker",
-        "methodName": "invoke",
-        "fileName": "ExecutableInvoker.java",
-        "lineNumber": 98
-      },
-      {
-        "className": "org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor",
-        "methodName": "lambda$invokeTestMethod$7",
-        "fileName": "TestMethodTestDescriptor.java",
-        "lineNumber": 214
-      },
-      {
-        "className": "org.junit.platform.engine.support.hierarchical.ThrowableCollector",
-        "methodName": "execute",
-        "fileName": "ThrowableCollector.java",
-        "lineNumber": 73
-      },
-      {
-        "className": "org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor",
-        "methodName": "invokeTestMethod",
-        "fileName": "TestMethodTestDescriptor.java",
-        "lineNumber": 210
-      },
-      {
-        "className": "org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor",
-        "methodName": "execute",
-        "fileName": "TestMethodTestDescriptor.java",
-        "lineNumber": 135
-      },
-      {
-        "className": "org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor",
-        "methodName": "execute",
-        "fileName": "TestMethodTestDescriptor.java",
-        "lineNumber": 66
-      },
-      {
-        "className": "org.junit.platform.engine.support.hierarchical.NodeTestTask",
-        "methodName": "lambda$executeRecursively$6",
-        "fileName": "NodeTestTask.java",
-        "lineNumber": 151
-      },
-      {
-        "className": "org.junit.platform.engine.support.hierarchical.ThrowableCollector",
-        "methodName": "execute",
-        "fileName": "ThrowableCollector.java",
-        "lineNumber": 73
-      },
-      {
-        "className": "org.junit.platform.engine.support.hierarchical.NodeTestTask",
-        "methodName": "lambda$executeRecursively$8",
-        "fileName": "NodeTestTask.java",
-        "lineNumber": 141
-      },
-      {
-        "className": "org.junit.platform.engine.support.hierarchical.Node",
-        "methodName": "around",
-        "fileName": "Node.java",
-        "lineNumber": 137
-      },
-      {
-        "className": "org.junit.platform.engine.support.hierarchical.NodeTestTask",
-        "methodName": "lambda$executeRecursively$9",
-        "fileName": "NodeTestTask.java",
-        "lineNumber": 139
-      },
-      {
-        "className": "org.junit.platform.engine.support.hierarchical.ThrowableCollector",
-        "methodName": "execute",
-        "fileName": "ThrowableCollector.java",
-        "lineNumber": 73
-      },
-      {
-        "className": "org.junit.platform.engine.support.hierarchical.NodeTestTask",
-        "methodName": "executeRecursively",
-        "fileName": "NodeTestTask.java",
-        "lineNumber": 138
-      },
-      {
-        "className": "org.junit.platform.engine.support.hierarchical.NodeTestTask",
-        "methodName": "execute",
-        "fileName": "NodeTestTask.java",
-        "lineNumber": 95
-      },
-      {
-        "className": "java.util.ArrayList",
-        "methodName": "forEach",
-        "fileName": "ArrayList.java",
-        "lineNumber": 1541
-      },
-      {
-        "className": "org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService",
-        "methodName": "invokeAll",
-        "fileName": "SameThreadHierarchicalTestExecutorService.java",
-        "lineNumber": 41
-      },
-      {
-        "className": "org.junit.platform.engine.support.hierarchical.NodeTestTask",
-        "methodName": "lambda$executeRecursively$6",
-        "fileName": "NodeTestTask.java",
-        "lineNumber": 155
-      },
-      {
-        "className": "org.junit.platform.engine.support.hierarchical.ThrowableCollector",
-        "methodName": "execute",
-        "fileName": "ThrowableCollector.java",
-        "lineNumber": 73
-      },
-      {
-        "className": "org.junit.platform.engine.support.hierarchical.NodeTestTask",
-        "methodName": "lambda$executeRecursively$8",
-        "fileName": "NodeTestTask.java",
-        "lineNumber": 141
-      },
-      {
-        "className": "org.junit.platform.engine.support.hierarchical.Node",
-        "methodName": "around",
-        "fileName": "Node.java",
-        "lineNumber": 137
-      },
-      {
-        "className": "org.junit.platform.engine.support.hierarchical.NodeTestTask",
-        "methodName": "lambda$executeRecursively$9",
-        "fileName": "NodeTestTask.java",
-        "lineNumber": 139
-      },
-      {
-        "className": "org.junit.platform.engine.support.hierarchical.ThrowableCollector",
-        "methodName": "execute",
-        "fileName": "ThrowableCollector.java",
-        "lineNumber": 73
-      },
-      {
-        "className": "org.junit.platform.engine.support.hierarchical.NodeTestTask",
-        "methodName": "executeRecursively",
-        "fileName": "NodeTestTask.java",
-        "lineNumber": 138
-      },
-      {
-        "className": "org.junit.platform.engine.support.hierarchical.NodeTestTask",
-        "methodName": "execute",
-        "fileName": "NodeTestTask.java",
-        "lineNumber": 95
-      },
-      {
-        "className": "java.util.ArrayList",
-        "methodName": "forEach",
-        "fileName": "ArrayList.java",
-        "lineNumber": 1541
-      },
-      {
-        "className": "org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService",
-        "methodName": "invokeAll",
-        "fileName": "SameThreadHierarchicalTestExecutorService.java",
-        "lineNumber": 41
-      },
-      {
-        "className": "org.junit.platform.engine.support.hierarchical.NodeTestTask",
-        "methodName": "lambda$executeRecursively$6",
-        "fileName": "NodeTestTask.java",
-        "lineNumber": 155
-      },
-      {
-        "className": "org.junit.platform.engine.support.hierarchical.ThrowableCollector",
-        "methodName": "execute",
-        "fileName": "ThrowableCollector.java",
-        "lineNumber": 73
-      },
-      {
-        "className": "org.junit.platform.engine.support.hierarchical.NodeTestTask",
-        "methodName": "lambda$executeRecursively$8",
-        "fileName": "NodeTestTask.java",
-        "lineNumber": 141
-      },
-      {
-        "className": "org.junit.platform.engine.support.hierarchical.Node",
-        "methodName": "around",
-        "fileName": "Node.java",
-        "lineNumber": 137
-      },
-      {
-        "className": "org.junit.platform.engine.support.hierarchical.NodeTestTask",
-        "methodName": "lambda$executeRecursively$9",
-        "fileName": "NodeTestTask.java",
-        "lineNumber": 139
-      },
-      {
-        "className": "org.junit.platform.engine.support.hierarchical.ThrowableCollector",
-        "methodName": "execute",
-        "fileName": "ThrowableCollector.java",
-        "lineNumber": 73
-      },
-      {
-        "className": "org.junit.platform.engine.support.hierarchical.NodeTestTask",
-        "methodName": "executeRecursively",
-        "fileName": "NodeTestTask.java",
-        "lineNumber": 138
-      },
-      {
-        "className": "org.junit.platform.engine.support.hierarchical.NodeTestTask",
-        "methodName": "execute",
-        "fileName": "NodeTestTask.java",
-        "lineNumber": 95
-      },
-      {
-        "className": "org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService",
-        "methodName": "submit",
-        "fileName": "SameThreadHierarchicalTestExecutorService.java",
-        "lineNumber": 35
-      },
-      {
-        "className": "org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor",
-        "methodName": "execute",
-        "fileName": "HierarchicalTestExecutor.java",
-        "lineNumber": 57
-      },
-      {
-        "className": "org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine",
-        "methodName": "execute",
-        "fileName": "HierarchicalTestEngine.java",
-        "lineNumber": 54
-      },
-      {
-        "className": "org.junit.platform.launcher.core.EngineExecutionOrchestrator",
-        "methodName": "execute",
-        "fileName": "EngineExecutionOrchestrator.java",
-        "lineNumber": 107
-      },
-      {
-        "className": "org.junit.platform.launcher.core.EngineExecutionOrchestrator",
-        "methodName": "execute",
-        "fileName": "EngineExecutionOrchestrator.java",
-        "lineNumber": 88
-      },
-      {
-        "className": "org.junit.platform.launcher.core.EngineExecutionOrchestrator",
-        "methodName": "lambda$execute$0",
-        "fileName": "EngineExecutionOrchestrator.java",
-        "lineNumber": 54
-      },
-      {
-        "className": "org.junit.platform.launcher.core.EngineExecutionOrchestrator",
-        "methodName": "withInterceptedStreams",
-        "fileName": "EngineExecutionOrchestrator.java",
-        "lineNumber": 67
-      },
-      {
-        "className": "org.junit.platform.launcher.core.EngineExecutionOrchestrator",
-        "methodName": "execute",
-        "fileName": "EngineExecutionOrchestrator.java",
-        "lineNumber": 52
-      },
-      {
-        "className": "org.junit.platform.launcher.core.DefaultLauncher",
-        "methodName": "execute",
-        "fileName": "DefaultLauncher.java",
-        "lineNumber": 114
-      },
-      {
-        "className": "org.junit.platform.launcher.core.DefaultLauncher",
-        "methodName": "execute",
-        "fileName": "DefaultLauncher.java",
-        "lineNumber": 86
-      },
-      {
-        "className": "org.junit.platform.launcher.core.DefaultLauncherSession$DelegatingLauncher",
-        "methodName": "execute",
-        "fileName": "DefaultLauncherSession.java",
-        "lineNumber": 86
-      },
-      {
-        "className": "org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor",
-        "methodName": "processAllTestClasses",
-        "fileName": "JUnitPlatformTestClassProcessor.java",
-        "lineNumber": 119
-      },
-      {
-        "className": "org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor",
-        "methodName": "access$000",
-        "fileName": "JUnitPlatformTestClassProcessor.java",
-        "lineNumber": 94
-      },
-      {
-        "className": "org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor",
-        "methodName": "stop",
-        "fileName": "JUnitPlatformTestClassProcessor.java",
-        "lineNumber": 89
-      },
-      {
-        "className": "org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor",
-        "methodName": "stop",
-        "fileName": "SuiteTestClassProcessor.java",
-        "lineNumber": 62
-      },
-      {
-        "className": "jdk.internal.reflect.NativeMethodAccessorImpl",
-        "methodName": "invoke0",
-        "fileName": "NativeMethodAccessorImpl.java",
-        "lineNumber": -2
-      },
-      {
-        "className": "jdk.internal.reflect.NativeMethodAccessorImpl",
-        "methodName": "invoke",
-        "fileName": "NativeMethodAccessorImpl.java",
-        "lineNumber": 62
-      },
-      {
-        "className": "jdk.internal.reflect.DelegatingMethodAccessorImpl",
-        "methodName": "invoke",
-        "fileName": "DelegatingMethodAccessorImpl.java",
-        "lineNumber": 43
-      },
-      {
-        "className": "java.lang.reflect.Method",
-        "methodName": "invoke",
-        "fileName": "Method.java",
-        "lineNumber": 566
-      },
-      {
-        "className": "org.gradle.internal.dispatch.ReflectionDispatch",
-        "methodName": "dispatch",
-        "fileName": "ReflectionDispatch.java",
-        "lineNumber": 36
-      },
-      {
-        "className": "org.gradle.internal.dispatch.ReflectionDispatch",
-        "methodName": "dispatch",
-        "fileName": "ReflectionDispatch.java",
-        "lineNumber": 24
-      },
-      {
-        "className": "org.gradle.internal.dispatch.ContextClassLoaderDispatch",
-        "methodName": "dispatch",
-        "fileName": "ContextClassLoaderDispatch.java",
-        "lineNumber": 33
-      },
-      {
-        "className": "org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler",
-        "methodName": "invoke",
-        "fileName": "ProxyDispatchAdapter.java",
-        "lineNumber": 94
-      },
-      {
-        "className": "com.sun.proxy.$Proxy2",
-        "methodName": "stop",
-        "fileName": "null",
-        "lineNumber": -1
-      },
-      {
-        "className": "org.gradle.api.internal.tasks.testing.worker.TestWorker$3",
-        "methodName": "run",
-        "fileName": "TestWorker.java",
-        "lineNumber": 193
-      },
-      {
-        "className": "org.gradle.api.internal.tasks.testing.worker.TestWorker",
-        "methodName": "executeAndMaintainThreadName",
-        "fileName": "TestWorker.java",
-        "lineNumber": 129
-      },
-      {
-        "className": "org.gradle.api.internal.tasks.testing.worker.TestWorker",
-        "methodName": "execute",
-        "fileName": "TestWorker.java",
-        "lineNumber": 100
-      },
-      {
-        "className": "org.gradle.api.internal.tasks.testing.worker.TestWorker",
-        "methodName": "execute",
-        "fileName": "TestWorker.java",
-        "lineNumber": 60
-      },
-      {
-        "className": "org.gradle.process.internal.worker.child.ActionExecutionWorker",
-        "methodName": "execute",
-        "fileName": "ActionExecutionWorker.java",
-        "lineNumber": 56
-      },
-      {
-        "className": "org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker",
-        "methodName": "call",
-        "fileName": "SystemApplicationClassLoaderWorker.java",
-        "lineNumber": 113
-      },
-      {
-        "className": "org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker",
-        "methodName": "call",
-        "fileName": "SystemApplicationClassLoaderWorker.java",
-        "lineNumber": 65
-      },
-      {
-        "className": "worker.org.gradle.process.internal.worker.GradleWorkerMain",
-        "methodName": "run",
-        "fileName": "GradleWorkerMain.java",
-        "lineNumber": 69
-      },
-      {
-        "className": "worker.org.gradle.process.internal.worker.GradleWorkerMain",
-        "methodName": "main",
-        "fileName": "GradleWorkerMain.java",
-        "lineNumber": 74
-      }
-    ]
-  }
+  "hostname": "-",
+  "path": "/home/admin/logs/gong9-log/more-app/error.log",
+  "source": "33.43.63.209",
+  "time": "2024-12-04T11:15:14.131+08:00",
+  "v": "3",
+  "SV": "-",
+  "id": "a950dc69-8f99-4512-a8b8-8b0090abe025",
+  "threadName": "HSFBizProcessor-DEFAULT-17-thread-45",
+  "msg": "moreUniruleOsApp|unirule|uniruleExecuteFail error 'void com.alibaba.security.mtee.sup.log.SpiLogUtils.printStatLogCountAndSum(java.lang.String, java.lang.String, java.lang.String, java.lang.Object, java.lang.String, java.lang.String, java.lang.String, long)'",
+  "logger": "blinkContainerLogger",
+  "level": "ERROR",
+  "errCode": "UNKNOWN",
+  "errRetryCode": "-",
+  "exception": "java.lang.NoSuchMethodError: 'void com.alibaba.security.mtee.sup.log.SpiLogUtils.printStatLogCountAndSum(java.lang.String, java.lang.String, java.lang.String, java.lang.Object, java.lang.String, java.lang.String, java.lang.String, long)'\n\tat com.alibaba.rds.utils.FilterUtils.filter(FilterUtils.java:47)\n\tat com.alibaba.rds.facade.RdsService.invoke(RdsService.java:81)\n\tat com.taobao.mbus.biz.app.api.impl.RdsApiImpl.invokeRdsService(RdsApiImpl.java:38)\n\tat com.alibaba.security.more.app.unirule.trinity.UniruleProcessor.handleRiskRouterService(UniruleProcessor.java:415)\n\tat com.alibaba.security.more.app.unirule.trinity.UniruleProcessor.runUnirule(UniruleProcessor.java:302)\n\tat com.alibaba.security.more.app.MoreAppHandler.runUnirule(MoreAppHandler.java:954)\n\tat com.alibaba.security.more.app.MoreAppHandler.doExecute(MoreAppHandler.java:422)\n\tat com.alibaba.security.more.app.MoreAppHandler.handleHsfAppBiz(MoreAppHandler.java:281)\n\tat com.alibaba.security.more.app.MoreAppHandler.handleHsfAppBiz(MoreAppHandler.java:86)\n\tat com.taobao.mbus.biz.app.DefaultAppHandlerImpl.handleAppBiz(DefaultAppHandlerImpl.java:78)\n\tat com.taobao.mbus.biz.app.AppEventServiceImpl.handleAppEvent(AppEventServiceImpl.java:117)\n\tat com.taobao.mbus.biz.message.impl.RequestServiceImpl.request(RequestServiceImpl.java:123)\n\tat jdk.internal.reflect.GeneratedMethodAccessor2350.invoke(Unknown Source)\n\tat java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.base/java.lang.reflect.Method.invoke(Method.java:566)\n\tat com.taobao.mbus.biz.message.impl.hsf.HsfMessageSourceListener.invoke(HsfMessageSourceListener.java:78)\n\tat com.sun.proxy.$Proxy598.request(Unknown Source)\n\tat com.alibaba.security.tenant.common.service.RequestServiceDubboWrap3.invokeMethod(RequestServiceDubboWrap3.java)\n\tat org.apache.dubbo.rpc.proxy.javassist.JavassistProxyFactory$1.doInvoke(JavassistProxyFactory.java:73)\n\tat org.apache.dubbo.rpc.proxy.AbstractProxyInvoker.invoke(AbstractProxyInvoker.java:100)\n\tat org.apache.dubbo.config.invoker.DelegateProviderMetaDataInvoker.invoke(DelegateProviderMetaDataInvoker.java:55)\n\tat org.apache.dubbo.rpc.protocol.InvokerWrapper.invoke(InvokerWrapper.java:56)\n\tat org.apache.dubbo.rpc.filter.ClassLoaderCallbackFilter.invoke(ClassLoaderCallbackFilter.java:38)\n\tat org.apache.dubbo.rpc.cluster.filter.FilterChainBuilder$CopyOfFilterChainNode.invoke(FilterChainBuilder.java:327)\n\tat com.taobao.hsf.common.filter.BidirectionServerResponseFilter.invoke(BidirectionServerResponseFilter.java:19)\n\tat org.apache.dubbo.rpc.cluster.filter.FilterChainBuilder$CopyOfFilterChainNode.invoke(FilterChainBuilder.java:327)\n\tat com.taobao.hsf.filter.InvocationHandlerWrapper.invoke(InvocationHandlerWrapper.java:32)\n\tat com.alibaba.global.satellite.filter.SatelliteHSFServerFilter.invoke(SatelliteHSFServerFilter.java:34)\n\tat com.taobao.hsf.filter.Dubbo2HSFFilterWrapper.invoke(Dubbo2HSFFilterWrapper.java:63)\n\tat org.apache.dubbo.rpc.cluster.filter.FilterChainBuilder$CopyOfFilterChainNode.invoke(FilterChainBuilder.java:327)\n\tat com.alibaba.csp.sentinel.adapter.apache.dubbo.SentinelDubboProviderFilter.invoke(SentinelDubboProviderFilter.java:101)\n\tat org.apache.dubbo.rpc.cluster.filter.FilterChainBuilder$CopyOfFilterChainNode.invoke(FilterChainBuilder.java:327)\n\tat com.taobao.hsf.filter.InvocationHandlerWrapper.invoke(InvocationHandlerWrapper.java:32)\n\tat com.alibaba.reactive.backpressure.hsf.ConcurrentLimitsServerFilter.invoke(ConcurrentLimitsServerFilter.java:101)\n\tat com.taobao.hsf.filter.Dubbo2HSFFilterWrapper.invoke(Dubbo2HSFFilterWrapper.java:63)\n\tat org.apache.dubbo.rpc.cluster.filter.FilterChainBuilder$CopyOfFilterChainNode.invoke(FilterChainBuilder.java:327)\n\tat com.taobao.hsf.filter.InvocationHandlerWrapper.invoke(InvocationHandlerWrapper.java:32)\n\tat com.alibaba.reactive.backpressure.hsf.ConcurrentLimitsServerFilter.invoke(ConcurrentLimitsServerFilter.java:101)\n\tat com.taobao.hsf.filter.Dubbo2HSFFilterWrapper.invoke(Dubbo2HSFFilterWrapper.java:63)\n\tat org.apache.dubbo.rpc.cluster.filter.FilterChainBuilder$CopyOfFilterChainNode.invoke(FilterChainBuilder.java:327)\n\tat com.taobao.hsf.unit.service.impl.UnitServerFilter.invoke(UnitServerFilter.java:69)\n\tat org.apache.dubbo.rpc.cluster.filter.FilterChainBuilder$CopyOfFilterChainNode.invoke(FilterChainBuilder.java:327)\n\tat com.taobao.hsf.plugins.octopus.OctopusServerFilter.invoke(OctopusServerFilter.java:66)\n\tat org.apache.dubbo.rpc.cluster.filter.FilterChainBuilder$CopyOfFilterChainNode.invoke(FilterChainBuilder.java:327)\n\tat com.taobao.hsf.region.service.impl.RegionServerFilter.invoke(RegionServerFilter.java:40)\n\tat org.apache.dubbo.rpc.cluster.filter.FilterChainBuilder$CopyOfFilterChainNode.invoke(FilterChainBuilder.java:327)\n\tat com.taobao.spas.dubbo.SpasServerFilter.invoke(SpasServerFilter.java:165)\n\tat org.apache.dubbo.rpc.cluster.filter.FilterChainBuilder$CopyOfFilterChainNode.invoke(FilterChainBuilder.java:327)\n\tat com.taobao.hsf.plugins.txc.TXCServerFilter.invoke(TXCServerFilter.java:33)\n\tat org.apache.dubbo.rpc.cluster.filter.FilterChainBuilder$CopyOfFilterChainNode.invoke(FilterChainBuilder.java:327)\n\tat com.taobao.hsf.tps.component.TPSServerFilter.invoke(TPSServerFilter.java:61)\n\tat org.apache.dubbo.rpc.cluster.filter.FilterChainBuilder$CopyOfFilterChainNode.invoke(FilterChainBuilder.java:327)\n\tat com.taobao.hsf.invocation.stats.InvocationStatsServerFilter.invoke(InvocationStatsServerFilter.java:57)\n\tat org.apache.dubbo.rpc.cluster.filter.FilterChainBuilder$CopyOfFilterChainNode.invoke(FilterChainBuilder.java:327)\n\tat com.taobao.hsf.monitor.log.filter.MonitorLogServerFilter.invoke(MonitorLogServerFilter.java:70)\n\tat org.apache.dubbo.rpc.cluster.filter.FilterChainBuilder$CopyOfFilterChainNode.invoke(FilterChainBuilder.java:327)\n\tat com.taobao.hsf.plugins.eagleeye.EagleEyeServerFilter.invoke(EagleEyeServerFilter.java:65)\n\tat org.apache.dubbo.rpc.cluster.filter.FilterChainBuilder$CopyOfFilterChainNode.invoke(FilterChainBuilder.java:327)\n\tat com.taobao.hsf.rpc.server.MethodAbsenceFilter.invoke(MethodAbsenceFilter.java:44)\n\tat org.apache.dubbo.rpc.cluster.filter.FilterChainBuilder$CopyOfFilterChainNode.invoke(FilterChainBuilder.java:327)\n\tat com.taobao.hsf.top.TopServerFilter.invoke(TopServerFilter.java:102)\n\tat org.apache.dubbo.rpc.cluster.filter.FilterChainBuilder$CopyOfFilterChainNode.invoke(FilterChainBuilder.java:327)\n\tat com.taobao.hsf.common.filter.BidirectionServerRequestFilter.invoke(BidirectionServerRequestFilter.java:20)\n\tat org.apache.dubbo.rpc.cluster.filter.FilterChainBuilder$CopyOfFilterChainNode.invoke(FilterChainBuilder.java:327)\n\tat com.taobao.hsf.common.filter.CommonServerFilter.invoke(CommonServerFilter.java:48)\n\tat org.apache.dubbo.rpc.cluster.filter.FilterChainBuilder$CopyOfFilterChainNode.invoke(FilterChainBuilder.java:327)\n\tat com.taobao.hsf.debug.DebugServerFilter.invoke(DebugServerFilter.java:60)\n\tat org.apache.dubbo.rpc.cluster.filter.FilterChainBuilder$CopyOfFilterChainNode.invoke(FilterChainBuilder.java:327)\n\tat com.taobao.hsf.invocation.HSFExceptionFilter.invoke(HSFExceptionFilter.java:23)\n\tat org.apache.dubbo.rpc.cluster.filter.FilterChainBuilder$CopyOfFilterChainNode.invoke(FilterChainBuilder.java:327)\n\tat org.apache.dubbo.monitor.support.MonitorFilter.invoke(MonitorFilter.java:100)\n\tat org.apache.dubbo.rpc.cluster.filter.FilterChainBuilder$CopyOfFilterChainNode.invoke(FilterChainBuilder.java:327)\n\tat org.apache.dubbo.rpc.filter.TimeoutFilter.invoke(TimeoutFilter.java:44)\n\tat org.apache.dubbo.rpc.cluster.filter.FilterChainBuilder$CopyOfFilterChainNode.invoke(FilterChainBuilder.java:327)\n\tat org.apache.dubbo.rpc.protocol.dubbo.filter.TraceFilter.invoke(TraceFilter.java:79)\n\tat org.apache.dubbo.rpc.cluster.filter.FilterChainBuilder$CopyOfFilterChainNode.invoke(FilterChainBuilder.java:327)\n\tat org.apache.dubbo.rpc.filter.ContextFilter.invoke(ContextFilter.java:133)\n\tat org.apache.dubbo.rpc.cluster.filter.FilterChainBuilder$CopyOfFilterChainNode.invoke(FilterChainBuilder.java:327)\n\tat com.taobao.hsf.context.RPCContextServerFilter.invoke(RPCContextServerFilter.java:43)\n\tat org.apache.dubbo.rpc.cluster.filter.FilterChainBuilder$CopyOfFilterChainNode.invoke(FilterChainBuilder.java:327)\n\tat com.taobao.hsf.context.DubboRPCContextServerFilter.invoke(DubboRPCContextServerFilter.java:32)\n\tat org.apache.dubbo.rpc.cluster.filter.FilterChainBuilder$CopyOfFilterChainNode.invoke(FilterChainBuilder.java:327)\n\tat com.taobao.hsf.invocation.ObjectAttachmentConvertServerFilter.invoke(ObjectAttachmentConvertServerFilter.java:39)\n\tat org.apache.dubbo.rpc.cluster.filter.FilterChainBuilder$CopyOfFilterChainNode.invoke(FilterChainBuilder.java:327)\n\tat com.taobao.hsf.rpc.generic.GenericInvocationServerFilter.invoke(GenericInvocationServerFilter.java:133)\n\tat org.apache.dubbo.rpc.cluster.filter.FilterChainBuilder$CopyOfFilterChainNode.invoke(FilterChainBuilder.java:327)\n\tat org.apache.dubbo.rpc.filter.ClassLoaderFilter.invoke(ClassLoaderFilter.java:54)\n\tat org.apache.dubbo.rpc.cluster.filter.FilterChainBuilder$CopyOfFilterChainNode.invoke(FilterChainBuilder.java:327)\n\tat org.apache.dubbo.rpc.filter.EchoFilter.invoke(EchoFilter.java:41)\n\tat org.apache.dubbo.rpc.cluster.filter.FilterChainBuilder$CopyOfFilterChainNode.invoke(FilterChainBuilder.java:327)\n\tat com.taobao.hsf.invocation.LocalServerFilter.invoke(LocalServerFilter.java:43)\n\tat org.apache.dubbo.rpc.cluster.filter.FilterChainBuilder$CopyOfFilterChainNode.invoke(FilterChainBuilder.java:327)\n\tat com.taobao.hsf.plugins.eagleeye.EagleEyeServerBeforeFilter.invoke(EagleEyeServerBeforeFilter.java:27)\n\tat org.apache.dubbo.rpc.cluster.filter.FilterChainBuilder$CopyOfFilterChainNode.invoke(FilterChainBuilder.java:327)\n\tat com.taobao.hsf.common.filter.ParamConvertServerFilter.invoke(ParamConvertServerFilter.java:38)\n\tat org.apache.dubbo.rpc.cluster.filter.FilterChainBuilder$CopyOfFilterChainNode.invoke(FilterChainBuilder.java:327)\n\tat org.apache.dubbo.rpc.filter.ProfilerServerFilter.invoke(ProfilerServerFilter.java:58)\n\tat org.apache.dubbo.rpc.cluster.filter.FilterChainBuilder$CopyOfFilterChainNode.invoke(FilterChainBuilder.java:327)\n\tat org.apache.dubbo.rpc.cluster.filter.FilterChainBuilder$CallbackRegistrationInvoker.invoke(FilterChainBuilder.java:194)\n\tat com.taobao.hsf.rpc.HSFRequestProcessor.handleRequest(HSFRequestProcessor.java:72)\n\tat com.taobao.hsf.message.HSFServerHandler$RequestHandler.run(HSFServerHandler.java:143)\n\tat java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)\n\tat java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)\n\tat org.apache.dubbo.common.threadlocal.InternalRunnable.run(InternalRunnable.java:41)\n\tat java.base/java.lang.Thread.run(Thread.java:991)\n\tat java.base/com.alibaba.wisp.engine.WispTask.runOutsideWisp(WispTask.java:308)\n\tat java.base/com.alibaba.wisp.engine.WispTask.runCommand(WispTask.java:297)\n\tat java.base/com.alibaba.wisp.engine.WispTask$CacheableCoroutine.run(WispTask.java:269)\n\tat java.base/java.dyn.CoroutineBase.startInternal(CoroutineBase.java:74)",
+  "traceId": "210303df17332818727602985d0d3a",
+  "env": "pre",
+  "nodeGroup": "mtee3.more.precnhost",
+  "ip": "33.43.63.209",
+  "cluster": "more_cn_pre",
+  "app": "mtee3",
+  "appStatus": "-",
+  "appUnit": "center",
+  "stage": "-",
+  "g9App": "more-app",
+  "g9AppStage": "-",
+  "requestId": "-",
+  "flowType": "-",
+  "eventCode": "gjnraqcl_ae_meta_sns_common",
+  "eventId": "33.39.197.206_32357_MTEE3_1733281872920_51472",
+  "riskType": "-",
+  "vbsFunc": "-",
+  "action": "-",
+  "canvasId": "-",
+  "ruleSetId": "-",
+  "ruleId": "-",
+  "mteeBizCode": "-",
+  "bizDomain": "-",
+  "dataSource": "-",
+  "businessName": "-",
+  "firstProductName": "-",
+  "srcId": "-",
+  "bcApp": "-",
+  "bcTaskId": "-",
+  "bcId": "-",
+  "bcInvestigateStep": "-",
+  "bcTaskStage": "-",
+  "moreJobCode": "-",
+  "moreGroupCode": "-",
+  "moreJobInstanceCode": "-",
+  "pcPunishId": "-",
+  "authId": "-",
+  "algoCode": "-",
+  "mteeRequestId": "-",
+  "yace": "0",
+  "errReason": "G9E_CLASS_ERR",
+  "eventColumn": "-",
+  "genericHsfService": "-",
+  "eventEntity": "-",
+  "eventEntityColumn": "-",
+  "bundleService": "-",
+  "operator": "-",
+  "userId": "-",
+  "clientApp": "-",
+  "more_event_id": "MORE-taskmanager-033043150009-0000205260920455168",
+  "more_event_time": "1733282115877",
+  "__pack_meta__": "7|MTcyNzQwNDYyNDU4ODY3NzM0MA==|179|158",
+  "__topic__": "",
+  "__source__": "33.43.150.9",
+  "__tag__:__pack_id__": "5e3078c36054dbe7-33d88",
+  "__tag__:__receive_time__": "1733282115",
+  "__time__": "1733282115"
 }

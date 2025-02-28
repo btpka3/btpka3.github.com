@@ -44,6 +44,8 @@ public class MyTraceService {
                 //.addLink(???)
                 .startSpan();
 
+        span.setAttribute("g9App", "GET");
+        span.setAttribute("bean", "GET");
         span.setAttribute("http.method", "GET");
         span.setAttribute("http.url", "/user/1.json");
 

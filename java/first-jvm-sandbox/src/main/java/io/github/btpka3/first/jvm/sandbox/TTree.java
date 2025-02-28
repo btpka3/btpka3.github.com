@@ -1,4 +1,4 @@
-package com.alibaba.security.gong9.sandbox.tools.sandbox;
+package io.github.btpka3.first.jvm.sandbox;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -26,14 +26,14 @@ public class TTree {
     private final boolean isPrintCost;
 
     // 根节点
-    private final TTree.Node root;
+    private final Node root;
 
     // 当前节点
-    private TTree.Node current;
+    private Node current;
 
 
     public TTree(boolean isPrintCost, String title) {
-        this.root = new TTree.Node(title).markBegin().markEnd();
+        this.root = new Node(title).markBegin().markEnd();
         this.current = root;
         this.isPrintCost = isPrintCost;
     }
@@ -85,7 +85,7 @@ public class TTree {
     /**
      * 递归遍历
      */
-    private void recursive(int deep, boolean isLast, String prefix, TTree.Node node, TTree.Callback callback) {
+    private void recursive(int deep, boolean isLast, String prefix, Node node, Callback callback) {
         callback.callback(deep, isLast, prefix, node);
         if (!node.isLeaf()) {
             final int size = node.children.size();
@@ -114,7 +114,7 @@ public class TTree {
      * @return this
      */
     public TTree begin(Object data) {
-        current = new TTree.Node(current, data);
+        current = new Node(current, data);
         current.markBegin();
         return this;
     }
@@ -161,7 +161,7 @@ public class TTree {
         /**
          * 父节点
          */
-        final TTree.Node parent;
+        final Node parent;
 
         /**
          * 节点数据
@@ -171,7 +171,7 @@ public class TTree {
         /**
          * 子节点
          */
-        final List<TTree.Node> children = new ArrayList<>();
+        final List<Node> children = new ArrayList<>();
 
         /**
          * 开始时间戳
@@ -197,7 +197,7 @@ public class TTree {
          * @param parent 父节点
          * @param data   节点数据
          */
-        private Node(TTree.Node parent, Object data) {
+        private Node(Node parent, Object data) {
             this.parent = parent;
             this.data = data;
             parent.children.add(this);
@@ -221,12 +221,12 @@ public class TTree {
             return children.isEmpty();
         }
 
-        TTree.Node markBegin() {
+        Node markBegin() {
             beginTimestamp = currentTimeMillis();
             return this;
         }
 
-        TTree.Node markEnd() {
+        Node markEnd() {
             endTimestamp = currentTimeMillis();
             return this;
         }
@@ -239,7 +239,7 @@ public class TTree {
      */
     private interface Callback {
 
-        void callback(int deep, boolean isLast, String prefix, TTree.Node node);
+        void callback(int deep, boolean isLast, String prefix, Node node);
 
     }
 

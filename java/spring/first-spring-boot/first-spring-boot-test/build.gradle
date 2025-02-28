@@ -79,19 +79,21 @@ dependencies {
 
     implementation 'com.github.vladimir-bukhtoyarov:bucket4j-core:4.10.0'
 
-    implementation "io.github.resilience4j:resilience4j-spring-boot2:1.6.1"
     implementation('org.springframework.boot:spring-boot-starter-actuator')
     implementation('org.springframework.boot:spring-boot-starter-aop')
 
-    implementation('io.github.resilience4j:resilience4j-reactor:1.6.1')
-    implementation 'io.github.resilience4j:resilience4j-all:1.6.1'
-    implementation 'io.github.resilience4j:resilience4j-consumer:1.6.1'
-    implementation 'io.github.resilience4j:resilience4j-spring-boot2:1.6.1'
-    implementation 'io.github.resilience4j:resilience4j-rxjava2:1.6.1'
-    implementation 'io.github.resilience4j:resilience4j-reactor:1.6.1'
-    implementation 'io.github.resilience4j:resilience4j-micrometer:1.6.1'
-    implementation 'io.github.resilience4j:resilience4j-metrics:1.6.1'
-    implementation 'io.github.resilience4j:resilience4j-prometheus:1.6.1'
+    implementation "io.github.resilience4j:resilience4j-spring-boot2:${resilience4jVersion}"
+    implementation("io.github.resilience4j:resilience4j-reactor:${resilience4jVersion}")
+    implementation "io.github.resilience4j:resilience4j-all:${resilience4jVersion}"
+    implementation "io.github.resilience4j:resilience4j-cache:${resilience4jVersion}"
+    implementation "io.github.resilience4j:resilience4j-consumer:${resilience4jVersion}"
+    implementation "io.github.resilience4j:resilience4j-spring-boot2:${resilience4jVersion}"
+    implementation "io.github.resilience4j:resilience4j-rxjava2:${resilience4jVersion}"
+    implementation "io.github.resilience4j:resilience4j-reactor:${resilience4jVersion}"
+    implementation "io.github.resilience4j:resilience4j-micrometer:${resilience4jVersion}"
+    implementation "io.github.resilience4j:resilience4j-metrics:${resilience4jVersion}"
+    implementation "io.github.resilience4j:resilience4j-prometheus:${resilience4jVersion}"
+
     implementation('org.ehcache:ehcache:3.7.1')
     // https://drewnoakes.com/code/exif/
     // https://github.com/drewnoakes/metadata-extractor

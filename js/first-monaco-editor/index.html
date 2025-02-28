@@ -1,0 +1,91 @@
+<html>
+<head>
+<!--    <base href="/">-->
+    <title>Hello World</title>
+    <!--https://github.com/microsoft/monaco-editor/blob/main/samples/browser-script-editor/index.html-->
+    <!--// @see github/microsoft/monaco-editor/src/basic-languages/html/html.ts-->
+    <!--    <script type="module" src="//unpkg.com/monaco-editor@0.52.0/esm/metadata.js"></script>-->
+
+    <!-- https://registry.npmmirror.com/monaco-editor/0.52.0/files/min/vs/loader.js -->
+    <!-- https:///unpkg.com/monaco-editor@0.52.0/min/vs/loader.js -->
+    <!-- ./.tmp/monaco-editor-0.52.0/min/vs/loader.js -->
+
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <link
+            rel="stylesheet"
+            data-name="vs/editor/editor.main"
+            href="https://registry.npmmirror.com/monaco-editor/0.52.0/files/min/vs/editor/editor.main.css"
+    />
+    <script>
+        var require = { paths: { vs: 'https://registry.npmmirror.com/monaco-editor/0.52.0/files/min/vs' } };
+    </script>
+    <script src="https://registry.npmmirror.com/monaco-editor/0.52.0/files/min/vs/loader.js"></script>
+    <script src="https://registry.npmmirror.com/monaco-editor/0.52.0/files/min/vs/editor/editor.main.js"></script>
+
+</head>
+<body>
+    <h1>Hello World</h1>
+    <div id="container" style="height: 100%"></div>
+    <script>
+        // Register a new language
+        monaco.languages.register({ id: "mySpecialLanguage" });
+        // Register a tokens provider for the language
+        monaco.languages.setMonarchTokensProvider("mySpecialLanguage", {
+            //defaultToken: "source",
+            tokenizer: {
+                root: [
+                    // [/\[error.*/, "custom-error"],
+                    // [/\[notice.*/, "custom-notice"],
+                    // [/\[info.*/, "custom-info"],
+                    // [/\[[a-zA-Z 0-9:]+\]/, "custom-date"],
+                    //  [/\tat /, "custom-date"],
+                    [
+                        /(at )(\w+)(\$_run_closure1)/,
+                        ["comment","custom-error","keyword"]
+                    ],
+                    [/(at com\.alibaba\.vbs\.dynamicclass.)(\w+)(\.get)(\w+)(\(com\.alibaba\.vbs\.dynamicclass\.)/,
+                        ["source","custom-error","source","custom-error","source"]
+                    ],
+                ],
+            },
+        });
+
+        // Define a new theme that contains only rules that match this language
+        monaco.editor.defineTheme("myCoolTheme", {
+            base: "vs",
+            inherit: true,
+            rules: [
+                { token: "custom-info", foreground: "808080" },
+                { token: "custom-error", foreground: "ff0000", fontStyle: "bold" },
+                { token: "custom-notice", foreground: "FFA500" },
+                { token: "custom-date", foreground: "008800" },
+                { token: "custom-txt", foreground: "000000" },
+            ],
+            colors: {
+                "editor.foreground": "#000000",
+            },
+        });
+
+        monaco.editor.create(document.getElementById("container"), {
+            theme: "myCoolTheme",
+            value: getCode(),
+            language: "mySpecialLanguage",
+        });
+        console.log("======bbbbbb=");
+        function getCode() {
+            return `2024-07-23T14:22:14.567+08:00|3|ac01a01a-9ce6-454e-9970-e429b4ee7b4e|mtee3|0|HSFBizProcessor-DEFAULT-17-thread-34|engine|ERROR|UNKNOWN|cluster=sc-access_prod,mteeBizCode=ali.china.taobao,g9App=jiugong-plugin-unirule,riskType=860227776,ruleId=R_18938008,ruleSetId=RS_12506405,eventId=33.7.90.8_574371_MTEE3_1721715733772_7940,canvasId=20518601,ip=33.7.90.8,appUnit=center,env=prod,nodeGroup=mtee3.prod.sc-accesshost,eventCode=taobao_pre_shop_transfer_applicant,stage=identify_riskIdentify|Operator[equals] eval error in rule[R_18938008 7.0] of ruleSet[RS_12506405]|java.lang.IllegalStateException: invoke sbjEnt failure
+\tat com.taobao.mbus.biz.stage.DataProviderImpl.getProperty(DataProviderImpl.java:27)
+\tat com.alibaba.engine.core.operator.Identifier.eval(Identifier.java:103)
+\tat com.alibaba.engine.core.operator.AbstractBaseOperator.doEval(AbstractBaseOperator.java:67)
+\tat org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:143)
+\tat readIndicator$_run_closure1.doCall(readIndicator:128)
+\tat jdk.internal.reflect.GeneratedMethodAccessor3004.invoke(Unknown Source)
+\tat org.codehaus.groovy.runtime.callsite.PogoMetaClassSite.callCurrent(PogoMetaClassSite.java:64)
+\tat com.alibaba.vbs.dynamicclass.hb_activity_base_entry.getSevenumidusers(com.alibaba.vbs.dynamicclass.hb_activity_base_entry:7882)
+\tat jdk.internal.reflect.GeneratedMethodAccessor3009.invoke(Unknown Source)
+`;
+        }
+
+    </script>
+</body>
+</html>
