@@ -1,0 +1,36 @@
+- spring boot : link:https://docs.spring.io/spring-boot/docs/current/reference/html/native-image.html[GraalVM Native Image Support]
+- link:https://buildpacks.io/docs/tools/pack/[pack CLI]
+- link:https://graalvm.github.io/native-build-tools/latest/graalvm-setup.html[Setting up GraalVM with Native Image Support]
+- link:https://graalvm.github.io/native-build-tools/latest/gradle-plugin.html[Gradle plugin for GraalVM Native Image building]
+- link:https://docs.spring.io/spring-boot/docs/3.0.3/gradle-plugin/reference/htmlsingle/[Spring Boot Gradle Plugin Reference Guide]
+- link:https://www.graalvm.org/latest/docs/getting-started/container-images/[GraalVM Community Images]
+- link:https://github.com/search?q=repo%3Agraalvm%2Fcontainer++&type=registrypackages[GraalVM Container]
+- link:https://blogs.oracle.com/developers/post/building-cross-platform-native-images-with-graalvm[Building Cross Platform Native Images With GraalVM]
+
+== Building a Native Image Using Buildpacks
+
+[source,shell]
+----
+sdk install java 22.3.r19-grl
+
+# 前提：需安装 docker 和 pack
+# 构建
+./gradlew bootBuildImage
+
+# 运行 (该镜像97M)
+docker run -d -p 8080:8080 --name first-boot-graalvm first-boot-graalvm:0.0.1-SNAPSHOT
+----
+
+== Building a Native Image using Native Build Tools
+
+[source,shell]
+----
+# 构建
+./gradlew processAot nativeCompile
+
+# 运行 (该文件 66M)
+./build/native/nativeCompile/first-boot-graalvm   
+
+# 验证
+curl -v 'http://localhost:8080/test/add?a=1&b=2'
+----
