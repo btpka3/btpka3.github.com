@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+        ">
+<!--
+http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+-->
+    <bean id="xmlX" class="java.lang.String">
+        <constructor-arg value="xml-xxx"/>
+    </bean>
+
+    <import resource="ProfileTest2/*/*.xml"/>
+
+    <beans profile="p1">
+        <bean id="xmlA" class="java.lang.String">
+            <constructor-arg value="xml-aaa"/>
+        </bean>
+    </beans>
+
+</beans>

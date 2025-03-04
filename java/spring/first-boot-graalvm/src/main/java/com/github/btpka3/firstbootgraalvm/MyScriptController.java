@@ -1,6 +1,7 @@
 package com.github.btpka3.firstbootgraalvm;
 
 import com.alibaba.fastjson2.JSON;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,11 +17,24 @@ import javax.script.ScriptException;
  * @date 2023/3/2
  */
 @RestController
-@RequestMapping("/groovy")
-public class MyGroovyController {
+@RequestMapping("/script")
+public class MyScriptController {
 
-    @PostMapping("/exec")
-    public Mono<String> exec(
+    @PostMapping(value = "/groovy", consumes = MediaType.TEXT_PLAIN_VALUE)
+    public Mono<String> groovy(
+
+            @RequestBody String script
+    ) throws ScriptException {
+        ScriptEngineManager manager = new ScriptEngineManager();
+        ScriptEngine engine = manager.getEngineByName("groovy");
+        Object returnObj = engine.eval(script);
+        String string = JSON.toJSONString(returnObj);
+        return Mono.just(string);
+    }
+
+    @PostMapping(value = "/js", consumes = MediaType.TEXT_PLAIN_VALUE)
+    public Mono<String> js(
+
             @RequestBody String script
     ) throws ScriptException {
         ScriptEngineManager manager = new ScriptEngineManager();
