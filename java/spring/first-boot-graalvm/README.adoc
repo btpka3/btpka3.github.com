@@ -13,7 +13,7 @@
 ----
 sdk install java 22.3.r19-grl
 
-# 前提：需安装 docker 和 pack
+# 前提：需安装 docker 和 buildPack
 # 构建
 ./gradlew bootBuildImage
 
@@ -26,11 +26,29 @@ docker run -d -p 8080:8080 --name first-boot-graalvm first-boot-graalvm:0.0.1-SN
 [source,shell]
 ----
 # 构建
-./gradlew processAot nativeCompile
+./gradlew nativeCompile
 
 # 运行 (该文件 66M)
 ./build/native/nativeCompile/first-boot-graalvm   
 
 # 验证
 curl -v 'http://localhost:8080/test/add?a=1&b=2'
+
+curl -v -X POST \
+    -H 'Content-Type: text/plain' \
+    -d "1+2" \
+    http://localhost:8080/script/groovy
+
+curl -v -X POST \
+    -H 'Content-Type: text/plain' \
+    -d "1+2" \
+    http://localhost:8080/script/js
+
+curl -v -X POST \
+    -H 'Content-Type: text/plain' \
+    -d "(1+2)+'_aaa'" \
+    http://localhost:8080/script/graalJs
+
+curl -v -X GET 'http://localhost:8080/script/perf'
+
 ----
