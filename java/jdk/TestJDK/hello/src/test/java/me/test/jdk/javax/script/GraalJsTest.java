@@ -1,5 +1,8 @@
 package me.test.jdk.javax.script;
 
+import org.graalvm.polyglot.Context;
+import org.graalvm.polyglot.HostAccess;
+import org.graalvm.polyglot.Value;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -7,6 +10,7 @@ import javax.script.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
 
 /**
@@ -51,5 +55,34 @@ public class GraalJsTest {
         System.out.println("obj:" + obj);
         System.out.println("max_num:" + engine.get("x"));
         Assertions.assertEquals(10, engine.get("x"));
+    }
+
+    protected void testJs(Map<String, String> map, int count) {
+        long start = System.nanoTime();
+
+        // language=javascript
+        String script = """
+                (function(map, count){
+                    var UUID = Java.type('java.util.UUID');
+                    for(var i = 0; i < count; i++){
+                        map.put('' + i,  'js:' + UUID.randomUUID());
+                    }
+                })
+                """;
+        try (Context context = Context.newBuilder()
+                .allowHostAccess(HostAccess.ALL)
+                .allowHostClassLookup(className -> true)
+                .build()) {
+
+            Value jsFunc = context.eval("js", script);
+            jsFunc.execute(map, count);
+        }
+        long end = System.nanoTime();
+        System.out.println("js test : " + (end - start) + ", map= : " + map);
+    }
+    @Test
+    public void testJs01() {
+        Map<String, String> map = new ConcurrentHashMap<>(256);
+        testJs(map, 1);
     }
 }
