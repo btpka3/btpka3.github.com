@@ -1,9 +1,7 @@
 package me.test.jdk.javax.script;
 
 import groovy.lang.GroovyClassLoader;
-import org.graalvm.polyglot.Context;
-import org.graalvm.polyglot.HostAccess;
-import org.graalvm.polyglot.Value;
+import org.graalvm.polyglot.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +17,9 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class Groovy2Test {
 
-//    Value jsFunc;
+    Engine jsEngine;
+    //    Value jsFunc;
+    Source jsSource;
     Class groovyClazz;
     Object groovyObject;
     Method groovyMethod;
@@ -36,6 +36,18 @@ public class Groovy2Test {
 
     protected void beforeJs() {
 
+        // language=javascript
+        String script = """
+                (function(map, count){
+                    var UUID = Java.type('java.util.UUID');
+                    for(var i = 0; i < count; i++){
+                        map.clear();
+                        map.put('' + i,  'js:' + UUID.randomUUID());
+                    }
+                })
+                """;
+        jsEngine = Engine.create();
+        jsSource = Source.create("js", script);
     }
 
     protected void beforeGroovy() throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
@@ -45,7 +57,7 @@ public class Groovy2Test {
                     public void testGroovy(Map map, int count) {
                         for (int i = 0; i < count; i++) {
                             map.clear();
-                            map.put("" + i, "groovy :" + UUID.randomUUID());
+                            map.put("" + i, "groovy:" + UUID.randomUUID());
                         }
                     }
                 }
@@ -75,21 +87,12 @@ public class Groovy2Test {
 
         long start = System.nanoTime();
 
-        // language=javascript
-        String script = """
-                (function(map, count){
-                    var UUID = Java.type('java.util.UUID');
-                    for(var i = 0; i < count; i++){
-                        map.clear();
-                        map.put('' + i,  'js:' + UUID.randomUUID());
-                    }
-                })
-                """;
         try (Context context = Context.newBuilder()
                 .allowHostAccess(HostAccess.ALL)
                 .allowHostClassLookup(className -> true)
+                .engine(jsEngine)
                 .build()) {
-            Value  jsFunc = context.eval("js", script);
+            Value jsFunc = context.eval(jsSource);
             jsFunc.execute(map, count);
         }
         long end = System.nanoTime();
@@ -110,7 +113,7 @@ public class Groovy2Test {
     @Test
     public void test01() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException {
         int loop = 3;
-        int count = 1000;
+        int count = 10000;
 
         Map<String, String> map = new ConcurrentHashMap<>(256);
         for (int i = 0; i < loop; i++) {
