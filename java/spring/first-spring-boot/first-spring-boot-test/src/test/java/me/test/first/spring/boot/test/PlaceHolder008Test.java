@@ -21,14 +21,24 @@ import java.util.stream.Collectors;
 @SpringBootTest(classes = PlaceHolder008Test.Conf.class)
 
 public class PlaceHolder008Test {
-    public static final String ENV_KEY = "my.a";
+    // OK
+    public static final String ENV_KEY_DASH_UPPER = "MY_A";
+
+    // OK
+    public static final String ENV_KEY_DASH_LOWER = "my_a";
+    // OK
+    public static final String ENV_KEY_DASH_MIX = "MY_a";
+    // OK, 但shell环境下无法 export 成功
+    public static final String ENV_KEY_DOT = "my.a";
+
+    public static final String PROP_KEY = "my.a";
 
     @Configuration
     public static class Conf {
 
     }
 
-    @Value("${" + ENV_KEY + "}")
+    @Value("${" + PROP_KEY + "}")
     String a;
 
     @Autowired
@@ -37,8 +47,16 @@ public class PlaceHolder008Test {
 
     @Test
     public void test01() {
+        // 正常情况下， 句号 无法在shell环境中被 export。
+        // spring boot 的 会
+        // - 将 dot  `.` 替换成  underscores`_`
+        // - 删除减号 dashes `-`
+        // 转换成大写
+        String ENV_KEY = ENV_KEY_DASH_MIX;
 
         String envA = System.getenv(ENV_KEY);
+        System.out.println("ENV[" + ENV_KEY + "] = " + envA);
+        System.out.println("a = " + a);
         Assertions.assertTrue(StringUtils.isNotBlank(envA),
                 () -> "environment variable `" + ENV_KEY + "` is required");
 
