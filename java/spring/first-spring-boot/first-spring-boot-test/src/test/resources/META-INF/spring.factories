@@ -19,3 +19,7 @@ me.test.first.spring.boot.test.SpringEvent2Test.MyApplicationListenerContextClos
 me.test.first.spring.boot.test.SpringEvent2Test.MyApplicationListenerContextRefreshedEvent,\
 me.test.first.spring.boot.test.SpringEvent2Test.MyApplicationListenerContextStoppedEvent,\
 me.test.first.spring.boot.test.SpringEvent2Test.MyApplicationListenerContextStartedEvent
+
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  me.test.first.spring.boot.test.autoconfigure.MyConf1,\
+  me.test.first.spring.boot.test.autoconfigure.MyConf2

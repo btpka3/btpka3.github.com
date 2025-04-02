@@ -72,7 +72,7 @@
     <logger name="io.opentelemetry.exporter.logging" level="INFO">
     </logger>
 
-    <logger name="org.springframework" level="DEBUG">
+    <logger name="org.springframework" level="TRACE">
     </logger>
     <logger name="my.OpenTelemetryLogger" level="INFO">
         <appender-ref ref="my.OpenTelemetryLogger.appender"/>
