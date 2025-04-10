@@ -1,12 +1,18 @@
 package me.test.jdk.javax.tools;
 
 import lombok.SneakyThrows;
+import org.apache.commons.collections4.IterableUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import javax.tools.*;
+import java.io.File;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * 学习 java compiler API
@@ -15,8 +21,9 @@ import java.nio.charset.StandardCharsets;
  * @date 2024/3/8
  * @see <a href="https://docs.oracle.com/javase/8/docs/api/javax/tools/JavaCompiler.html">Java Compiler API</a>
  * @see <a href="https://www.javacodegeeks.com/2015/09/java-compiler-api.html">Java Compiler API</a>
+ * @see ForwardingJavaFileManager
  */
-public class ToolProviderTest {
+public class JavaCompilerTest {
 
     @SneakyThrows
     @Test
@@ -24,7 +31,7 @@ public class ToolProviderTest {
 
         final String clazzName = "me.test.jdk.javax.tools.DemoHello";
 
-        URL url = ToolProviderTest.class.getResource("DemoHello.java");
+        URL url = JavaCompilerTest.class.getResource("DemoHello.java");
 
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
         System.out.println("current java compiler supported versions : " + compiler.getSourceVersions());
@@ -42,15 +49,44 @@ public class ToolProviderTest {
             System.out.println("compile failed");
             collector.getDiagnostics().forEach(System.out::println);
         }
-
         Assertions.assertTrue(result);
 
+        List<StandardLocation> failedLocations = new ArrayList<>();
+        for (StandardLocation location : StandardLocation.values()) {
+
+            System.out.printf("location: %-33s = ", location.name());
+            List<? extends File> list = Collections.emptyList();
+            try {
+                list = IterableUtils.toList(javaFileManager.getLocation(location));
+            } catch (Throwable e) {
+                failedLocations.add(location);
+            }
+            Collections.sort(list);
+            if (list.isEmpty()) {
+                System.out.printf("%s%n", list);
+                continue;
+            }
+            System.out.printf("[%n");
+            for (File file : list) {
+                System.out.println("    " + file.getAbsolutePath());
+            }
+            System.out.println("]");
+
+
+        }
+        if (!failedLocations.isEmpty()) {
+            System.err.println("failed to get location: " + failedLocations);
+        }
+        System.out.println("111111");
+
         // 编译完成后，文件默认保存在: ${PROJECT_ROOT}/hello/target/test-classes/me/test/jdk/javax/tools/DemoHello.class
-        Class clazz = javaFileManager.getClassLoader(null).loadClass(clazzName);
+        Class clazz = javaFileManager.getClassLoader(StandardLocation.CLASS_PATH).loadClass(clazzName);
+
         Assertions.assertNotNull(clazz);
         System.out.println("clazz = " + clazz.getName());
         System.out.println("clazz.getClassLoader() = " + clazz.getClassLoader());
-
+        Method mainMethod = clazz.getDeclaredMethod("main", String[].class);
+        mainMethod.invoke(null, new Object[]{new String[0]});
 
     }
 }
