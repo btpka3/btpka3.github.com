@@ -2,10 +2,12 @@ package me.test.jdk.java.lang;
 
 
 import org.apache.commons.lang3.StringUtils;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.util.Map;
 
 /**
  * @author dangqian.zll
@@ -36,4 +38,19 @@ public class SystemTest {
             }
         }
     }
+
+    @Test
+    public void testEnv() {
+        Map<String, String> envMap = System.getenv();
+        String v = envMap.get("A-A");
+        Assertions.assertNull(v);
+        try {
+            envMap.put("A-A", "xxx");
+            Assertions.fail();
+        } catch (Exception e) {
+            Assertions.assertTrue(e instanceof UnsupportedOperationException);
+        }
+    }
+
+
 }

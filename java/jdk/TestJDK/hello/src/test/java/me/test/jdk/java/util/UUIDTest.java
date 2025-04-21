@@ -22,7 +22,7 @@ public class UUIDTest {
      */
     @Test
     public void test01() {
-        UUID.randomUUID();
+        System.out.println(UUID.randomUUID());;
     }
 
     @SneakyThrows

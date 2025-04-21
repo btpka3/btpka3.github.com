@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.ServiceLoader;
-import java.util.stream.Collectors;
 
 /**
  * @author dangqian.zll
@@ -12,13 +11,23 @@ import java.util.stream.Collectors;
  */
 public class ServiceLoaderTest {
 
+    protected void load(ServiceLoader<MySpi> loader) {
+        String name = "zhang3";
+        List<String> resultList = loader.stream()
+                .map(provider -> {
+                    //  调用一次get方法就会触发new一个对象实例。
+                    MySpi impl = provider.get();
+                    System.out.println("=====" + impl.getClass() + "@" + System.identityHashCode(impl));
+                    return impl.sayHello(name);
+                })
+                .toList();
+        System.out.println("resultList = " + resultList);
+    }
+
     @Test
     public void test01() {
         ServiceLoader<MySpi> loader = ServiceLoader.load(MySpi.class);
-        String name = "zhang3";
-        List<String> resultList = loader.stream()
-                .map(provider -> provider.get().sayHello(name))
-                .collect(Collectors.toList());
-        System.out.println("resultList = " + resultList);
+        load(loader);
+        load(loader);
     }
 }
