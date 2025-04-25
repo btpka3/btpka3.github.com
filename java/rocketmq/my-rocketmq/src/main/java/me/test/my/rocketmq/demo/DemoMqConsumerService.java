@@ -16,7 +16,7 @@ import java.util.List;
  * @see <a href="https://rocketmq.apache.org/zh/docs/4.x/consumer/02push">4.x : Push消费</a>
  * @see <a href="https://rocketmq.apache.org/zh/docs/4.x/consumer/03pull">4.x : Pull消费</a>
  */
-@Component("demoMqConsumerService")
+//@Component("demoMqConsumerService")
 @Slf4j
 public class DemoMqConsumerService {
 

@@ -1,0 +1,7 @@
+rocketmq.name-server: xxx
+my.rocketmq.consumer:
+  topic: mtee3_dispatch
+  group: dangqian.zll
+  tag: "*"
+  consumer-group: dangqian.zll.consumer
+  bodyToBase64: true

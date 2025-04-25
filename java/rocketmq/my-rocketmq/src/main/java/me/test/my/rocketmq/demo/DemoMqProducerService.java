@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @see <a href="https://rocketmq.apache.org/zh/docs/4.x/producer/02message1">4.x : 普通消息发送</a>
  */
-@Component("demoMqProducerService")
+//@Component("demoMqProducerService")
 @Slf4j
 public class DemoMqProducerService {
 

@@ -65,4 +65,21 @@ export NAMESRV_ADDR=localhost:9876
 </dependency>
 ```
 
+# 打包
+
+```shell
+./gradlew build -x test
+# copy 到目标机器上
+cat <<EOF > ~/key
+AccessKey=xxx
+SecretKey=yyy
+EOF
+
+vi applicaiton.yaml
+
+java -jar my-rocketmq-0.0.1-SNAPSHOT.jar
+
+
+
+```
 
