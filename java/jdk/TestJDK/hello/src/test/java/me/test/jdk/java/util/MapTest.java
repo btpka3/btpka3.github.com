@@ -1,6 +1,11 @@
 package me.test.jdk.java.util;
 
+import com.alibaba.fastjson.JSON;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -27,5 +32,15 @@ public class MapTest {
         }
         System.out.println(rankedRuleMap);
 
+    }
+
+    @Test
+    public void x() {
+        Map<String,Object> m = new HashMap<>(6);
+        m.put("a", "aaa");
+        m.put("buyerIdentityNo", null);
+        String idNo = m.getOrDefault("buyerIdentityNo", "").toString();
+        Assertions.assertEquals("", idNo);
+        Assertions.assertEquals("{\"a\":\"aaa\"}", JSON.toJSONString(m));
     }
 }

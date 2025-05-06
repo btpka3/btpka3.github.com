@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ *
  * @author dangqian.zll
  * @date 2023/8/15
  */
@@ -28,7 +29,7 @@ public class MBeanTest {
     }
 
     protected void register() throws Exception {
-        /*
+        /* ⭕️：注意：需要增加JVM属性
 -Dcom.sun.management.jmxremote=true
 -Dcom.sun.management.jmxremote.port=1234
 -Dcom.sun.management.jmxremote.authenticate=false
@@ -55,6 +56,9 @@ public class MBeanTest {
         int y = 2;
         int result = (int) conn.invoke(name, "add", new Object[]{x, y}, new String[]{"int", "int"});
         System.out.println("add : x=" + x + ", y=" + y + ", result=" + result);
+
+        // 可以 jconsole 连接修改
+        // Thread.sleep(10 * 60 * 1000);
     }
 
 

@@ -27,6 +27,7 @@
         <fastjson2.version>2.0.49</fastjson2.version>
         <jackson2.vesion>2.17.1</jackson2.vesion>
         <graalvm-js.version>24.1.2</graalvm-js.version>
+        <jmh.version>1.37</jmh.version>
     </properties>
 
 
@@ -34,9 +35,21 @@
 
         <dependencies>
             <dependency>
+                <groupId>org.openjdk.jmh</groupId>
+                <artifactId>jmh-core</artifactId>
+                <version>${jmh.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.openjdk.jmh</groupId>
+                <artifactId>jmh-generator-annprocess</artifactId>
+                <version>${jmh.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
                 <groupId>org.apache.groovy</groupId>
                 <artifactId>groovy-all</artifactId>
                 <version>4.0.25</version>
+                <type>pom</type>
             </dependency>
             <dependency>
                 <groupId>org.graalvm.polyglot</groupId>

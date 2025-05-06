@@ -9,6 +9,7 @@ import java.util.Map;
  * @see <a href="https://github.com/EsotericSoftware/kryo/wiki/Migration-to-v5">kryo : Migration to v5</a>
  */
 public class MyKryoUtils {
+    public static final byte VERSION = 0x20;
 
     private static List<String> serializerNameList = Arrays.asList(
             "kryo",
@@ -50,4 +51,26 @@ public class MyKryoUtils {
             return serializer;
         }
     }
+
+    protected static byte[] serialize(String serializerName, Map<String, Object> map) {
+
+        Serializer serializer = MySerializerFactory.getSerializer(serializerName);
+        byte[] bytes = serializer.serialize(map);
+        byte[] result = new byte[bytes.length + 1];
+        result[0] = (byte) (VERSION | getSerializerNo(serializerName));
+        System.arraycopy(bytes, 0, result, 1, bytes.length);
+        return result;
+    }
+
+    private static byte getSerializerNo(String serializerName) {
+        int index = serializerNameList.indexOf(serializerName);
+        if (index < 0) {
+            throw new IllegalArgumentException("unregistered serializer name: " + serializerName);
+        } else if (index > 7) {
+            throw new IllegalArgumentException("the amount of serializers is beyond limit[8]!");
+        }
+        // 后三位保留给序列化器
+        return (byte) (index & 0x07);
+    }
+
 }
