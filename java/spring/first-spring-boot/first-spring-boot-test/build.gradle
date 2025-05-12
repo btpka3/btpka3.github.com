@@ -127,6 +127,9 @@ dependencies {
     implementation("io.opentelemetry:opentelemetry-api")
     implementation 'io.opentelemetry.instrumentation:opentelemetry-logback-mdc-1.0:1.22.0-alpha'
 
+    // 安装 Apache Fury
+    implementation "org.apache.fury:fury-core:${furyVersion}"
+
     //implementation(platform("io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom:2.2.0"))
     //implementation("io.opentelemetry.instrumentation:io.opentelemetry:opentelemetry-instrumentation-api")
 
