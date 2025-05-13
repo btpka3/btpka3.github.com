@@ -10,6 +10,9 @@ import com.aliyun.oss.model.OSSObjectSummary;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -44,6 +47,14 @@ public class ListBundleTest {
         ListObjectsV2Request req = new ListObjectsV2Request();
         req.setBucketName(bucketName);
         req.setPrefix(keyPrefix);
+
+        // 基于OSS用户自定义日志字段分析中间链路代理
+        // https://help.aliyun.com/zh/oss/use-cases/analysis-of-intermediate-link-agents-based-on-oss-logging-request-headers
+        String myHeader1 = "x-my-header1";
+        String myHeader1Value = "my-header1-value";
+        req.setAdditionalHeaderNames(new HashSet<>(Collections.singleton(myHeader1)));
+        req.addHeader(myHeader1, myHeader1Value);
+
         ListObjectsV2Result result = oss.listObjectsV2(req);
         List<OSSObjectSummary> ossObjectSummaries = result.getObjectSummaries();
         for (OSSObjectSummary s : ossObjectSummaries) {
