@@ -1,10 +1,16 @@
 package me.test.jdk.java.util;
 
 import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.util.StringUtils;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import java.util.Base64;
 
 /**
@@ -17,10 +23,19 @@ public class Base64Test {
     public void base642hex() {
         String base64Str = System.getenv("BASE64");
         Assertions.assertTrue(StringUtils.isNotBlank(base64Str), "please set env \"BASE64\"");
-
         byte[] bytes = Base64.getDecoder().decode(base64Str);
         System.out.printf("=========");
         System.out.println(Hex.encodeHex(bytes));
         System.out.printf("=========");
+    }
+
+    @Test
+    public void x1() throws IOException {
+        File file = Paths.get(System.getProperty("user.home"),"Downloads", "long_text_2025-05-19-11-07-47.txt").toFile();
+        String base64Str = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
+        //byte []bytes = Base64.getDecoder().decode(base64Str);
+        byte[] bytes = org.apache.commons.codec.binary.Base64.decodeBase64(base64Str);
+        String result = new String(bytes,StandardCharsets.UTF_8);
+        System.out.printf(result);
     }
 }

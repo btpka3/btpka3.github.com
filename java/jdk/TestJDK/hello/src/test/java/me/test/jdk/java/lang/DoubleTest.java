@@ -1,6 +1,14 @@
 package me.test.jdk.java.lang;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.collections4.MapUtils;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 该示例旨在说明使用浮点数进行计算时可能会引起的精度问题。
@@ -15,13 +23,14 @@ import java.math.BigDecimal;
 public class DoubleTest {
 
     public static void main(String[] args) {
-        
+
         showError();
         fixError();
 
         showError2();
     }
-    public static void showError2(){
+
+    public static void showError2() {
         double d = 2.55;
         System.out.println(d * 100);
     }
@@ -82,5 +91,22 @@ public class DoubleTest {
             System.out.println(val.doubleValue());
         }
         System.out.println();
+    }
+
+    @Test
+    public void testDouble() {
+
+        Long l = 1746705327990L;
+        Double d = (double)l;
+        Assertions.assertEquals("1.74670532799E12", d.toString());
+
+        Map<String, Object> map = new HashMap<>(4);
+        map.put("a", d);
+        String jsonStr = JSON.toJSONString(map);
+        Assertions.assertEquals("{\"a\":1.74670532799E12}", jsonStr);
+        JSONObject jsonObj = JSON.parseObject(jsonStr);
+        Assertions.assertEquals("1.74670532799E12", jsonObj.getString("a"));
+        Assertions.assertEquals("1.74670532799E12", MapUtils.getString(jsonObj, "a"));
+
     }
 }
