@@ -50,10 +50,15 @@ public class ListBundleTest {
 
         // 基于OSS用户自定义日志字段分析中间链路代理
         // https://help.aliyun.com/zh/oss/use-cases/analysis-of-intermediate-link-agents-based-on-oss-logging-request-headers
-        String myHeader1 = "x-my-header1";
-        String myHeader1Value = "my-header1-value";
-        req.setAdditionalHeaderNames(new HashSet<>(Collections.singleton(myHeader1)));
-        req.addHeader(myHeader1, myHeader1Value);
+        String clientHostNameKey = "x-client-hostname";
+        String clientHostNameValue = "aigc-yun-online-fhodc-2ch5b-wtxjzwtnmpqn";
+        req.addHeader(clientHostNameKey, clientHostNameValue);
+
+        String clientIpKey = "x-client-ip";
+        String clientIpValue = "172.16.8.93";
+        req.addHeader(clientIpKey, clientIpValue);
+
+        req.setAdditionalHeaderNames(new HashSet<>(Arrays.asList(clientHostNameKey,clientIpKey)));
 
         ListObjectsV2Result result = oss.listObjectsV2(req);
         List<OSSObjectSummary> ossObjectSummaries = result.getObjectSummaries();
