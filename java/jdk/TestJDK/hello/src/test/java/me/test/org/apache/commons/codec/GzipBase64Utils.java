@@ -1,18 +1,17 @@
 package me.test.org.apache.commons.codec;
 
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64InputStream;
 import org.apache.commons.codec.binary.Base64OutputStream;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.time.StopWatch;
 
 import javax.annotation.Nonnull;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
-
-import java.io.InputStream;
 
 /**
  * @author dangqian.zll
@@ -20,7 +19,7 @@ import java.io.InputStream;
  */
 @Slf4j
 public class GzipBase64Utils {
-    private static final int BUF_SIZE =  4*1024;
+    private static final int BUF_SIZE = 4 * 1024;
 
     @Nonnull
     public static String getGzipBase64FromBytes(@Nonnull byte[] bytes) {
@@ -62,5 +61,31 @@ public class GzipBase64Utils {
     public static String getStrFromGzipBase64(@Nonnull String str) {
         byte[] bytes = getBytesFromGzipBase64(str);
         return new String(bytes, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * 只使用JDK的类，简单实现
+     */
+    @SneakyThrows
+    public static String getGzipBase64FromBytes2(byte[] bytes) {
+        ByteArrayOutputStream byteArrOut = new ByteArrayOutputStream(2 * 1024);
+        GZIPOutputStream gzipOut = new GZIPOutputStream(byteArrOut);
+        gzipOut.write(bytes);
+        gzipOut.close();
+        byte[] gzipBytes = byteArrOut.toByteArray();
+        return Base64.getEncoder().encodeToString(gzipBytes);
+    }
+
+    /**
+     * 只使用JDK的类，简单实现
+     */
+    @SneakyThrows
+    public static byte[] getBytesFromGzipBase642(String str) {
+        byte[] gzipBytes = Base64.getDecoder().decode(str);
+        ByteArrayInputStream byteArrIn = new ByteArrayInputStream(gzipBytes);
+        GZIPInputStream gzipIn = new GZIPInputStream(byteArrIn);
+        byte[] plainBytes = gzipIn.readAllBytes();
+        gzipIn.close();
+        return plainBytes;
     }
 }

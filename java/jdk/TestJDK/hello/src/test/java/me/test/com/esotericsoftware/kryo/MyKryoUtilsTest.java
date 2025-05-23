@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Base64;
@@ -54,10 +55,11 @@ public class MyKryoUtilsTest {
                 .filter(StringUtils::isNotBlank)
                 .map(JSON::parseObject)
                 .map(map -> MyKryoUtils.serialize("kryo", map))
-                .map(bytes -> Base64.getEncoder().encode(bytes))
-                .forEach(base64Bytes -> {
+                .map(bytes -> Base64.getEncoder().encodeToString(bytes))
+                .forEach(str -> {
                     try {
-                        FileUtils.writeByteArrayToFile(destFile, base64Bytes);
+                        FileUtils.write(destFile, str, StandardCharsets.UTF_8, true);
+                        FileUtils.write(destFile, "\n", StandardCharsets.UTF_8, true);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
