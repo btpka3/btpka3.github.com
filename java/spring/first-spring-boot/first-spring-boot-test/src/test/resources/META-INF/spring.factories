@@ -23,3 +23,6 @@ me.test.first.spring.boot.test.SpringEvent2Test.MyApplicationListenerContextStar
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   me.test.first.spring.boot.test.autoconfigure.MyConf1,\
   me.test.first.spring.boot.test.autoconfigure.MyConf2
+
+org.springframework.boot.env.EnvironmentPostProcessor=\
+  me.test.first.spring.boot.test.SpringEvent2Test.PrintAllEventEnvironmentPostProcessor

@@ -2,7 +2,11 @@ package me.test.first.spring.boot.test;
 
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.ExtensionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.BootstrapContextClosedEvent;
 import org.springframework.boot.ConfigurableBootstrapContext;
@@ -12,6 +16,7 @@ import org.springframework.boot.autoconfigure.batch.JobExecutionEvent;
 import org.springframework.boot.availability.AvailabilityChangeEvent;
 import org.springframework.boot.builder.ParentContextApplicationContextInitializer;
 import org.springframework.boot.context.event.*;
+import org.springframework.boot.env.EnvironmentPostProcessor;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.context.WebServerInitializedEvent;
 import org.springframework.context.ApplicationListener;
@@ -21,6 +26,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.*;
 import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -32,14 +38,42 @@ import java.util.List;
  * @author dangqian.zll
  * @date 2025/1/15
  */
+@ExtendWith({SpringEvent2Test.PrintAllEventExtension.class, SpringExtension.class})
 @SpringBootTest(
         classes = SpringEvent2Test.Conf.class,
         webEnvironment = SpringBootTest.WebEnvironment.NONE
 )
 @Slf4j
 public class SpringEvent2Test {
-    static List<String> events = new ArrayList<>(64);
+    final static List<String> events = new ArrayList<>(64);
 
+
+    @Order(-1)
+    public static class PrintAllEventExtension implements AfterTestExecutionCallback {
+
+        // 虽然通过 调整 @ExtendWith 中的类顺序确保 该方法在 SpringExtension#afterTestExecution 之后执行，
+        // 但spring applicationContext 销毁还是比较靠后的。
+        @Override
+        public void afterTestExecution(ExtensionContext context) throws Exception {
+            System.out.println("==================== afterTestExecution");
+            System.out.println("events=" + JSON.toJSONString(events, true));
+        }
+    }
+
+    public static class PrintAllEventEnvironmentPostProcessor implements EnvironmentPostProcessor {
+
+        @Override
+        public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
+            if (application == null) {
+                return;
+            }
+            application.getShutdownHandlers().add(() -> {
+                System.out.println("==================== @shutdownHandlers");
+                System.out.println("events=" + JSON.toJSONString(events, true));
+            });
+
+        }
+    }
 
     @Configuration
     public static class Conf {
@@ -52,10 +86,20 @@ public class SpringEvent2Test {
     @Autowired
     MyEventListener myEventListener;
 
+    //SpringApplication springApplication;
+
     @Test
     public void test() {
         System.out.println("====================" + events.size());
+        events.add("test");
         System.out.println("events=" + JSON.toJSONString(events, true));
+
+        // shutdownhook 是线程异步并发执行，无法保障先后顺序
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+
+            System.out.println("==================== shutdownHook");
+            System.out.println("events=" + JSON.toJSONString(events, true));
+        }));
     }
 
 
