@@ -41,6 +41,7 @@ subprojects {
 
         dependencies {
             implementation platform(project(':platform'))
+            //implementation platform("aliyun-spring-boot-dependencies")
         }
         tasks.named('test') {
             useJUnitPlatform()

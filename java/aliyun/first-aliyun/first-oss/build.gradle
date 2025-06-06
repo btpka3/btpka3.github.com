@@ -37,13 +37,14 @@ dependencies {
 
     // 安装SDK : https://help.aliyun.com/zh/oss/developer-reference/java-installation
     implementation('com.aliyun.oss:aliyun-sdk-oss:3.18.2')
+    implementation('com.aliyun:alibabacloud-oss20190517:1.0.2')
 //    implementation('javax.xml.bind:jaxb-api:2.3.1')
 //    implementation('javax.activation:activation:1.1.1')
 //    implementation('org.glassfish.jaxb:jaxb-runtime:2.3.3')
 
 
-    testImplementation('com.aliyun:aliyun-java-sdk-core:4.6.4')
-    testImplementation('com.aliyun:aliyun-java-sdk-green:3.6.6')
+    testImplementation('com.aliyun:aliyun-java-sdk-core')
+    testImplementation('com.aliyun:aliyun-java-sdk-green')
     testImplementation('com.alibaba:fastjson:1.2.83_noneautotype')
 
 
