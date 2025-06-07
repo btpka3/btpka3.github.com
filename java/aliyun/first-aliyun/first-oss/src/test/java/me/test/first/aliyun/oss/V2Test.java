@@ -9,6 +9,7 @@ import com.aliyun.sdk.service.oss20190517.models.GetObjectMetaRequest;
 import com.aliyun.sdk.service.oss20190517.models.GetObjectMetaResponse;
 import darabonba.core.client.ClientOverrideConfiguration;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 
 import java.util.concurrent.CompletableFuture;
@@ -41,17 +42,22 @@ public class V2Test {
     }
 
     @Bean
-    ICredentialProvider credentialsProvider() {
+    ICredentialProvider credentialsProvider(
+            @Value("${your.spring.placeholder.access-key-id}") String accessKeyId,
+            @Value("${your.spring.placeholder.access-key-secret}") String accessKeySecret
+    ) {
         return StaticCredentialProvider.create(Credential.builder()
-                // Please ensure that the environment variables ALIBABA_CLOUD_ACCESS_KEY_ID and ALIBABA_CLOUD_ACCESS_KEY_SECRET are set.
-                .accessKeyId(System.getenv("ALIBABA_CLOUD_ACCESS_KEY_ID"))
-                .accessKeySecret(System.getenv("ALIBABA_CLOUD_ACCESS_KEY_SECRET"))
-                //.securityToken(System.getenv("ALIBABA_CLOUD_SECURITY_TOKEN")) // use STS token
+                .accessKeyId(accessKeyId)
+                .accessKeySecret(accessKeySecret)
+                //.securityToken(null)
                 .build());
     }
 
     @Bean(destroyMethod = "close")
-    AsyncClient asyncClient(ICredentialProvider credentialsProvider) {
+    AsyncClient asyncClient(
+            ICredentialProvider credentialsProvider,
+            @Value("${your.spring.placeholder.endpoint}") String endpoint
+    ) {
         return AsyncClient.builder()
                 //.httpClient(httpClient) // Use the configured HttpClient, otherwise use the default HttpClient (Apache HttpClient)
                 .credentialsProvider(credentialsProvider)
@@ -60,17 +66,21 @@ public class V2Test {
                 .overrideConfiguration(
                         ClientOverrideConfiguration.create()
                                 // Endpoint 请参考 https://api.aliyun.com/product/Oss
-                                .setEndpointOverride("oss-cn-hangzhou.aliyuncs.com")
+                                .setEndpointOverride(endpoint)
                         //.setConnectTimeout(Duration.ofSeconds(30))
                 )
                 .build();
     }
 
     @SneakyThrows
-    void getObjectMeta(AsyncClient client) {
+    void getObjectMeta(
+            AsyncClient client,
+            @Value("${your.spring.placeholder.bucket}") String bucket,
+            @Value("${your.spring.placeholder.key}") String key
+    ) {
         GetObjectMetaRequest getObjectMetaRequest = GetObjectMetaRequest.builder()
-                .bucket("your_value")
-                .key("your_value")
+                .bucket(bucket)
+                .key(key)
                 // Request-level configuration rewrite, can set Http request parameters, etc.
                 // .requestConfiguration(RequestConfiguration.create().setHttpHeaders(new HttpHeaders()))
                 .build();

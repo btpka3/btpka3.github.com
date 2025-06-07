@@ -51,8 +51,8 @@ public class V1Test {
     @SneakyThrows
     @Bean
     AlibabaCloudCredentialsProvider alibabaCloudCredentialsProvider(
-            @Value("${your.spring.placeholder.accessKeyId}") String accessKeyId,
-            @Value("${your.spring.placeholder.accessKeySecret}") String accessKeySecret
+            @Value("${your.spring.placeholder.access-key-id}") String accessKeyId,
+            @Value("${your.spring.placeholder.access-key-secret}") String accessKeySecret
     ) {
         return new StaticCredentialsProvider(new BasicCredentials(accessKeyId, accessKeySecret));
     }
@@ -60,8 +60,8 @@ public class V1Test {
     @Bean
     CredentialsProvider credentialsProvider(
             AlibabaCloudCredentialsProvider alibabaCloudCredentialsProvider,
-            @Value("${your.spring.placeholder.ramRoleArn}") String ramRoleArn,
-            @Value("${your.spring.placeholder.regionId}") String regionId
+            @Value("${your.spring.placeholder.ram-role-arn}") String ramRoleArn,
+            @Value("${your.spring.placeholder.region-id}") String regionId
     ) {
         IClientProfile profile = DefaultProfile.getProfile(regionId);
         return new com.aliyun.oss.common.auth.STSAssumeRoleSessionCredentialsProvider(alibabaCloudCredentialsProvider, ramRoleArn, profile);
