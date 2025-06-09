@@ -7,5 +7,6 @@ include 'first-sls'
 include 'first-oss'
 include 'first-ram'
 include 'first-acr'
+include 'first-kms'
 
 

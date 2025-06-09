@@ -1,0 +1,59 @@
+plugins {
+    id 'java'
+    id "org.springframework.boot" version "${springBootVersion}"
+    id 'io.spring.dependency-management' version '1.1.4'
+}
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+java {
+    sourceCompatibility = '11'
+    targetCompatibility = '11'
+}
+
+repositories {
+    maven { url "https://maven.aliyun.com/nexus/content/groups/public/" }
+    mavenCentral()
+}
+
+dependencies {
+
+    compileOnly 'org.projectlombok:lombok'
+    testCompileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+
+
+
+    implementation('org.springframework.boot:spring-boot-starter-web')
+    implementation('org.springframework.boot:spring-boot-starter-cache')
+    implementation("org.springframework.boot:spring-boot-devtools")
+    implementation('com.fasterxml.jackson.dataformat:jackson-dataformat-xml')
+    implementation('org.apache.httpcomponents:httpclient')
+
+    implementation('com.aliyun:kms20160120')
+    implementation 'com.aliyun:tea-openapi'
+    implementation 'com.aliyun:alibabacloud-secretsmanager-client'
+    implementation 'com.aliyun:aliyun-secretsmanager-jdbc'
+    implementation 'com.aliyun:aliyun-java-sdk-core'
+    implementation('com.aliyun.oss:aliyun-sdk-oss')
+
+    implementation 'com.aliyun:aliyun-java-sdk-core-managed-credentials-provider'
+    implementation 'com.aliyun:aliyun-sdk-oss-managed-credentials-provider'
+    implementation 'com.aliyun:ons-client-managed-credentials-provider'
+
+    testImplementation('com.alibaba:fastjson')
+
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+    testImplementation('org.mockito:mockito-core')
+    implementation("org.springframework.boot:spring-boot-starter-logging")
+    implementation('commons-io:commons-io:2.14.0')
+
+    implementation('org.springframework.boot:spring-boot-actuator')
+}
+
+
