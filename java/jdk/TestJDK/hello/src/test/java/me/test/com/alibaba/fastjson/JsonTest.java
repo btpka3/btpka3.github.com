@@ -75,6 +75,13 @@ public class JsonTest {
 
 
     @Test
+    public void testNullOrEmptyStr() {
+        Assertions.assertNull(JSON.parseObject(null, Student.class));
+        Assertions.assertNull(JSON.parseObject("", Student.class));
+    }
+
+
+    @Test
     public void testPojoList() {
 
         List<Student> list = new ArrayList<>(8);

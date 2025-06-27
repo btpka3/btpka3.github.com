@@ -1,13 +1,17 @@
 package me.test.jdk.java.util;
 
 import com.alibaba.fastjson.JSON;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.util.ReflectionTestUtils;
 
+import javax.annotation.Nonnull;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static java.util.Map.entry;
 
@@ -61,4 +65,55 @@ public class MapTest {
 
         );
     }
+
+
+    /**
+     * ⚠️ 需要增加JVM参数: --add-opens=java.base/java.util=ALL-UNNAMED
+     */
+    @Test
+    public void debugInner() {
+        int itemCount = 256;
+        HashMap<String, String> map = new HashMap<>(itemCount / 2);
+        for (int i = 0; i < itemCount; i++) {
+            String s = RandomStringUtils.randomAlphabetic(16);
+            map.put(s, s);
+        }
+        // HashMap.Node<K,V>[] table;
+        Object[] table = (Object[]) ReflectionTestUtils.getField(map, "table");
+
+        Assertions.assertEquals(512, table.length);
+        int nodeNonNullCount = 0;
+
+        Map<Integer, AtomicInteger> nodeLinkLengthMap = new HashMap<>();
+
+        for (Object node : table) {
+            if (node == null) {
+                continue;
+            }
+            nodeNonNullCount++;
+            int linkLength = findNodeLinkLength(node);
+            nodeLinkLengthMap.computeIfAbsent(linkLength, k -> new AtomicInteger(0))
+                    .incrementAndGet();
+        }
+
+        System.out.println("nodeNonNullCount        = " + nodeNonNullCount);
+        System.out.println("nodeLinkLengthMap       = " + nodeLinkLengthMap);
+
+        int count = nodeLinkLengthMap.entrySet().stream()
+                .mapToInt(entry -> entry.getKey() * entry.getValue().get())
+                .sum();
+        Assertions.assertEquals(itemCount, count);
+    }
+
+    protected int findNodeLinkLength(@Nonnull Object hashMapNode) {
+        int i = 0;
+        Object node = hashMapNode;
+        while (node != null) {
+            i++;
+            node = ReflectionTestUtils.getField(node, "next");
+        }
+        return i;
+    }
+
+
 }
