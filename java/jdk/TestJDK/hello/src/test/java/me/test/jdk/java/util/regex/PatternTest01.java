@@ -51,7 +51,7 @@ public class PatternTest01 {
         try {
             Pattern.compile(".*[\\u0F00-\\u0FFF]{1 ,}.*", 0);
             Assertions.fail("Expected PatternSyntaxException");
-        }catch (PatternSyntaxException e){
+        } catch (PatternSyntaxException e) {
 
         }
     }
@@ -142,6 +142,21 @@ public class PatternTest01 {
     }
 
 
+    static Pattern errCodePattern = Pattern.compile("\\[errCode:([\\w\\-.]{1,128})]");
+
+    public static String getErrCode(String msg) {
+        Matcher m = errCodePattern.matcher(msg);
+        if (m.find()) {
+            return m.group(1);
+        }
+        return null;
+    }
+
+    @Test
+    public void testErrCode() {
+        Assertions.assertEquals("a.B-c_1", getErrCode("111 [errCode:a.B-c_1] 222"));
+        Assertions.assertNull(getErrCode("111 222"));
+    }
 
 
 }
