@@ -51,6 +51,20 @@ public class ClassLoaderTest {
 
     }
 
+    /**
+     * 从 包含classes 文件的目录中加载。
+     *
+     * @throws Exception
+     */
+    @Test
+    public void test02() throws Exception {
+        URL dirUrl = ClassLoaderTest.class.getResource("/");
+        System.out.println("dirUrl = " + dirUrl);
+        URLClassLoader cl = new URLClassLoader(new URL[]{dirUrl}, null, null);
+        Class clazz = Class.forName("me.test.jdk.java.lang.MyParentClass", true, cl);
+        System.out.println("clazz.getName() = " + clazz.getName());
+    }
+
     public class MyClassLoader extends ClassLoader {
 
         public MyClassLoader(ClassLoader parent) {
@@ -95,9 +109,9 @@ public class ClassLoaderTest {
      */
     @Test
     public void testJdkClassLoader() {
-        System.out.println("java.version="+System.getProperty("java.version"));
-        System.out.println("java.specification.version="+System.getProperty("java.specification.version"));
-        System.out.println("java.runtime.version="+System.getProperty("java.runtime.version"));
+        System.out.println("java.version=" + System.getProperty("java.version"));
+        System.out.println("java.specification.version=" + System.getProperty("java.specification.version"));
+        System.out.println("java.runtime.version=" + System.getProperty("java.runtime.version"));
         ClassLoader platformClassLoader = ClassLoader.getPlatformClassLoader();
         // jdk.internal.loader.ClassLoaders$PlatformClassLoader
         System.out.println("platformClassLoader = " + platformClassLoader.getClass());

@@ -116,7 +116,7 @@ public class SpanTest {
 
         try (Scope scope = span.makeCurrent()) {
             b01(tracer);
-
+            span.addEvent("event-01");
         } catch (Throwable t) {
             span.setStatus(StatusCode.ERROR, "xxx err");
             span.recordException(t);

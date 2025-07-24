@@ -1,0 +1,15 @@
+syntax = "proto3";
+package me.test.first.spring.boot.test.grpc;
+
+service RequestService {
+  rpc request(Req) returns (Resp) {}
+}
+message Req {
+  string name = 1;
+}
+message Resp {
+  string message = 1;
+  map<string, string> headers = 2;
+  repeated string cookies = 3;
+  bytes msgBody = 4;
+}

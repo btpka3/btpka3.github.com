@@ -62,6 +62,7 @@ public class MyJmhBenchmarkTest {
         long startTime = System.currentTimeMillis();
         Options opt = new OptionsBuilder()
                 .include(MyJmhBenchmarkTest.class.getSimpleName())
+                .jvmArgs("-Xmx1g", "-Xms1g")
                 .addProfiler("gc")
                 .param("-lprof")
                 .build();
