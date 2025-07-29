@@ -38,11 +38,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.graalvm.js</groupId>-->
-<!--            <artifactId>js</artifactId>-->
-<!--            <type>pom</type>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.graalvm.js</groupId>-->
+        <!--            <artifactId>js</artifactId>-->
+        <!--            <type>pom</type>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>org.openjdk.nashorn</groupId>
             <artifactId>nashorn-core</artifactId>
@@ -230,7 +230,11 @@
             <artifactId>ognl</artifactId>
             <version>3.2.10</version>
         </dependency>
-
+        <dependency>
+            <groupId>me.test</groupId>
+            <artifactId>base-test-project</artifactId>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-test</artifactId>

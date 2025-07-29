@@ -9,6 +9,7 @@
     <version>${revision}</version>
     <packaging>pom</packaging>
     <modules>
+        <module>./base-test-project</module>
         <module>./hello</module>
         <module>./apt</module>
     </modules>
@@ -30,12 +31,21 @@
         <jmh.version>1.37</jmh.version>
         <slf4j.version>2.0.16</slf4j.version>
         <spring-boot.version>2.7.8</spring-boot.version>
+        <junit.version>4.13.2</junit.version>
+        <junit5.version>5.12.2</junit5.version>
     </properties>
 
 
     <dependencyManagement>
 
         <dependencies>
+            <dependency>
+                <groupId>org.junit</groupId>
+                <artifactId>junit-bom</artifactId>
+                <version>${junit5.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-bom</artifactId>
@@ -78,23 +88,30 @@
                 <version>${graalvm-js.version}</version>
                 <type>pom</type>
             </dependency>
-<!--            -->
-<!--            <dependency>-->
-<!--                <groupId>org.graalvm.truffle</groupId>-->
-<!--                <artifactId>truffle-api</artifactId>-->
-<!--                <version>23.1.2</version>-->
-<!--                <scope>runtime</scope>-->
-<!--            </dependency>-->
-<!--            <dependency>-->
-<!--                <groupId>org.graalvm.regex</groupId>-->
-<!--                <artifactId>regex</artifactId>-->
-<!--                <version>24.1.2</version>-->
-<!--                <scope>runtime</scope>-->
-<!--            </dependency>-->
+            <!--            -->
+            <!--            <dependency>-->
+            <!--                <groupId>org.graalvm.truffle</groupId>-->
+            <!--                <artifactId>truffle-api</artifactId>-->
+            <!--                <version>23.1.2</version>-->
+            <!--                <scope>runtime</scope>-->
+            <!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>org.graalvm.regex</groupId>-->
+            <!--                <artifactId>regex</artifactId>-->
+            <!--                <version>24.1.2</version>-->
+            <!--                <scope>runtime</scope>-->
+            <!--            </dependency>-->
             <dependency>
                 <groupId>org.openjdk.nashorn</groupId>
                 <artifactId>nashorn-core</artifactId>
                 <version>15.4</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
             </dependency>
 
             <dependency>
@@ -107,12 +124,12 @@
                 <artifactId>js-scriptengine</artifactId>
                 <version>${graalvm-js.version}</version>
             </dependency>
-<!--            <dependency>-->
-<!--                <groupId>org.graalvm.js</groupId>-->
-<!--                <artifactId>js</artifactId>-->
-<!--                <version>${graalvm-js.version}</version>-->
-<!--                <type>pom</type>-->
-<!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>org.graalvm.js</groupId>-->
+            <!--                <artifactId>js</artifactId>-->
+            <!--                <version>${graalvm-js.version}</version>-->
+            <!--                <type>pom</type>-->
+            <!--            </dependency>-->
 
             <dependency>
                 <groupId>org.slf4j</groupId>
@@ -133,7 +150,7 @@
             <dependency>
                 <groupId>com.esotericsoftware</groupId>
                 <artifactId>kryo</artifactId>
-<!--                <version>5.6.0</version>-->
+                <!--                <version>5.6.0</version>-->
                 <version>4.0.3</version>
             </dependency>
             <dependency>
@@ -187,7 +204,12 @@
                 <artifactId>logback-core</artifactId>
                 <version>${logback.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>me.test</groupId>
+                <artifactId>base-test-project</artifactId>
+                <version>${project.version}</version>
+                <scope>test</scope>
+            </dependency>
             <dependency>
                 <groupId>me.test</groupId>
                 <artifactId>apt</artifactId>
@@ -203,13 +225,6 @@
                 <groupId>org.assertj</groupId>
                 <artifactId>assertj-bom</artifactId>
                 <version>${assertj.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.junit</groupId>
-                <artifactId>junit-bom</artifactId>
-                <version>5.10.0</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -368,6 +383,29 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <testFailureIgnore>true</testFailureIgnore>
+                    <forkCount>1</forkCount>
+                    <reuseForks>true</reuseForks>
+                    <argLine>
+                        -Denforcer.skip=true
+                        -Dautoconfig.skip=true
+                        -Dfile.encoding=UTF-8
+                        -Xmx1024m
+                        @{argLine}
+                    </argLine>
+                    <environmentVariables>
+                        <MY_ENV>MY_ENV_01</MY_ENV>
+                    </environmentVariables>
+                    <systemPropertyVariables>
+                        <my_prop>my_prop_01</my_prop>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+
         </plugins>
         <pluginManagement>
             <plugins>
@@ -392,6 +430,21 @@
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>flatten-maven-plugin</artifactId>
                     <version>1.4.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.5.3</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>3.3.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>0.8.13</version>
                 </plugin>
                 <plugin>
                     <groupId>org.openjfx</groupId>
