@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE import-control PUBLIC
+    "-//Checkstyle//DTD ImportControl Configuration 1.4//EN"
+    "https://checkstyle.org/dtds/import_control_1_4.dtd">
+
+<!--
+参考:
+https://checkstyle.sourceforge.io/config_imports.html#ImportControl
+-->
+
+<import-control pkg="me.test" strategyOnMismatch="allowed">
+
+    <disallow pkg="sun"/>
+
+    <!-- 不要使用 commons-lang, 请使用 commons-lang3 -->
+    <disallow pkg="org.apache.commons.lang"/>
+
+    <!-- 不要使用 JUnit 4.x, 请使用 JUnit 5.x -->
+    <allow pkg="org.junit.jupiter"/>
+    <disallow pkg="org.junit"/>
+
+</import-control>
