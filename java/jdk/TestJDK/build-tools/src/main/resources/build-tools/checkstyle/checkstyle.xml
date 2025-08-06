@@ -15,7 +15,7 @@ https://github.com/checkstyle/checkstyle/blob/master/src/main/resources/google_c
     <module name="TreeWalker">
         <module name="IllegalImport"/>
         <module name="ImportControl">
-            <property name="file" value="${rootDir}/import-control.xml"/>
+            <property name="file" value="/build-tools/checkstyle/import-control.xml"/>
             <property name="path" value="^.*[\\/]src[\\/](main|test)[\\/]java[\\/].*$"/>
         </module>
     </module>
