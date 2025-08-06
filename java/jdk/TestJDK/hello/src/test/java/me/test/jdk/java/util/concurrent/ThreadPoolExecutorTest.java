@@ -1,6 +1,9 @@
 package me.test.jdk.java.util.concurrent;
 
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.*;
@@ -10,6 +13,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author dangqian.zll
  * @date 2024/7/4
  */
+@Slf4j
 public class ThreadPoolExecutorTest {
 
     @Test
@@ -96,5 +100,118 @@ public class ThreadPoolExecutorTest {
         long endTime = System.currentTimeMillis();
         long totalCost = endTime - startTime;
         System.out.println("ALL END, totalCost=" + totalCost);
+    }
+
+    public void logExecutorStatus(ThreadPoolExecutor executor, String tag) {
+        log.info("check executor status [{}] : isShutdown={}, isTerminating={},isTerminated={}",
+                tag,
+                executor.isShutdown(),
+                executor.isTerminating(),
+                executor.isTerminated()
+        );
+    }
+
+    /**
+     * 如果使用 CallerRunsPolicy， executor shutdown 后再submit 会触发 直接丢弃任务。
+     */
+
+    @Test
+    public void testSubmitAfterShutdownWithDefaultCallerRunsPolicy() throws InterruptedException {
+        MyJob job1 = new MyJob("1");
+        MyJob job2 = new MyJob("2");
+
+        BasicThreadFactory factory = new BasicThreadFactory.Builder()
+                .namingPattern("my-job-%d")
+                .daemon(true)
+                .priority(Thread.MAX_PRIORITY)
+                .build();
+
+        ThreadPoolExecutor executor = new ThreadPoolExecutor(
+                3, 3,
+                1000,
+                TimeUnit.MILLISECONDS,
+                new ArrayBlockingQueue<>(10),
+                factory,
+                new ThreadPoolExecutor.CallerRunsPolicy()
+        );
+        logExecutorStatus(executor, "AAA");
+        executor.submit(job1);
+        logExecutorStatus(executor, "BBB");
+
+        Thread.sleep(1000);
+        Assertions.assertTrue(job1.isRuned());
+        executor.shutdown();
+        logExecutorStatus(executor, "CCC");
+        executor.submit(job2);
+
+        logExecutorStatus(executor, "DDD");
+
+        Thread.sleep(1000);
+        Assertions.assertFalse(job2.isRuned());
+        System.out.println("====Done.");
+    }
+
+    /**
+     * 如果使用默认的 AbortPolicy， executor shutdown 后再submit 会触发 RejectedExecutionException 异常
+     *
+     * @see ThreadPoolExecutor.AbortPolicy
+     */
+    @Test
+    public void testSubmitAfterShutdownWithDefaultAbortPolicy() throws InterruptedException {
+        MyJob job1 = new MyJob("1");
+        MyJob job2 = new MyJob("2");
+
+        BasicThreadFactory factory = new BasicThreadFactory.Builder()
+                .namingPattern("my-job-%d")
+                .daemon(true)
+                .priority(Thread.MAX_PRIORITY)
+                .build();
+
+        ThreadPoolExecutor executor = new ThreadPoolExecutor(
+                3, 3,
+                1000,
+                TimeUnit.MILLISECONDS,
+                new ArrayBlockingQueue<>(10),
+                factory
+        );
+        logExecutorStatus(executor, "AAA");
+        executor.submit(job1);
+        logExecutorStatus(executor, "BBB");
+
+        Thread.sleep(1000);
+        Assertions.assertTrue(job1.isRuned());
+
+        executor.shutdown();
+        logExecutorStatus(executor, "CCC");
+        try {
+            executor.submit(job2);
+            Assertions.fail("shutdown后，应当拒绝提交新任务");
+        } catch (RejectedExecutionException e) {
+            log.error(e.getMessage(), e);
+        }
+        logExecutorStatus(executor, "DDD");
+
+        Thread.sleep(1000);
+        Assertions.assertFalse(job2.isRuned());
+        System.out.println("====Done.");
+    }
+
+    public static class MyJob implements Runnable {
+
+        String id;
+        @Getter
+        boolean runed;
+
+        public MyJob(String id) {
+            this.id = id;
+        }
+
+
+        @Override
+        public void run() {
+            log.info("===== JOB_RUNNING, id={}", id);
+            this.runed = true;
+        }
+
     }
 }
