@@ -1,6 +1,10 @@
 package me.test.jdk.java.math;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 import java.math.BigDecimal;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class BigDecimalTest {
 
@@ -35,6 +39,41 @@ public class BigDecimalTest {
         precision = num.precision();
         System.out.printf("'%s' : (%d,%d) \n", numStr, precision, scale);
 
+    }
+
+    Double d = 123456789.123456789;
+    int loop = 10000000;
+
+    public void testValueOfDouble() {
+        AtomicReference<BigDecimal> ref = new AtomicReference<>();
+        long start = System.nanoTime();
+        for (int i = 0; i < loop; i++) {
+            BigDecimal b = BigDecimal.valueOf(d);
+            ref.set(b);
+        }
+        long end = System.nanoTime();
+        long cost = end - start;
+        Assertions.assertEquals(d, ref.get().doubleValue());
+        System.out.printf("%30s : loop=%8d, cost=%12d %n", "testValueOfDouble", loop, cost);
+    }
+
+    public void testConstructorWithDouble() {
+        AtomicReference<BigDecimal> ref = new AtomicReference<>();
+        long start = System.nanoTime();
+        for (int i = 0; i < loop; i++) {
+            BigDecimal b = new BigDecimal(d);
+            ref.set(b);
+        }
+        long end = System.nanoTime();
+        long cost = end - start;
+        Assertions.assertEquals(d, ref.get().doubleValue());
+        System.out.printf("%30s : loop=%8d, cost=%12d %n", "testConstructorWithDouble", loop, cost);
+    }
+
+    @Test
+    public void testValueOfDouble_Vs_ConstructorWithDouble() {
+        testValueOfDouble();
+        testConstructorWithDouble();
     }
 
 }
