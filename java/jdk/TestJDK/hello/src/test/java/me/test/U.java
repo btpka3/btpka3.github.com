@@ -22,4 +22,11 @@ public class U {
                 data
         );
     }
+
+    public static void print(String step, Object data, Throwable e) {
+        print(step, data);
+        if (e != null) {
+            e.printStackTrace();
+        }
+    }
 }
