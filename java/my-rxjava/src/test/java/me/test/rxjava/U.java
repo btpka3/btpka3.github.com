@@ -15,7 +15,7 @@ public class U {
 
     public static String now() {
         ZonedDateTime zdt = ZonedDateTime.now();
-        return zdt.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS z"));
+        return zdt.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
     }
     public static void print(String step, Object data) {
         System.out.printf("[%s][%4d - %30s] - %10s : %s%n",
@@ -25,6 +25,13 @@ public class U {
                 step,
                 data
         );
+    }
+
+    public static void print(String step, Object data, Throwable e) {
+        print(step, data);
+        if (e != null) {
+            e.printStackTrace();
+        }
     }
 
 
