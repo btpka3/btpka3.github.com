@@ -51,7 +51,7 @@ public class CompletableFutureDemoAllOrFirstErrTest {
 
         CompletableFuture<Void> all = allOrFirstErr(f0, f1, f2);
         all.get();
-        log("allSuccess", "start", null);
+        log("allSuccess", "end", null);
 
         Assertions.assertTrue(f0.isDone());
         Assertions.assertEquals("data000", f0.get());
