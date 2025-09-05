@@ -10,7 +10,7 @@ public class U {
 
     public static String now() {
         ZonedDateTime zdt = ZonedDateTime.now();
-        return zdt.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS z"));
+        return zdt.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
     }
 
     public static void print(String step, Object data) {

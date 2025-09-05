@@ -14,6 +14,7 @@ import java.util.function.Supplier;
  *
  * @author dangqian.zll
  * @date 2025/9/4
+ * @see <a href="https://github.com/btpka3/btpka3.github.com/blob/master/java/my-rxjava/src/test/java/me/test/reactor/FluxFirstErrTest.java">FluxFirstErrTest</a>
  */
 public class CompletableFutureDemoAllOrFirstErrTest {
 
@@ -114,7 +115,7 @@ public class CompletableFutureDemoAllOrFirstErrTest {
     public static void log(String step, Object data, Throwable e) {
         ZonedDateTime zdt = ZonedDateTime.now();
         System.out.printf("[%s][%4d - %30s] - %10s : %s%n",
-                zdt.format(DateTimeFormatter.ISO_ZONED_DATE_TIME),
+                zdt.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME),
                 Thread.currentThread().getId(),
                 Thread.currentThread().getName(),
                 step,
@@ -145,6 +146,7 @@ public class CompletableFutureDemoAllOrFirstErrTest {
                     throw new RuntimeException(e);
                 }
             }
+            log("MyTask", "get():" + data, null);
             if (this.throwErr) {
                 throw new RuntimeException("DEMO_ERR:" + data);
             }
