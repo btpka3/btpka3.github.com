@@ -3,12 +3,16 @@ package me.test.first.aliyun.oss;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.common.auth.CredentialsProvider;
+import com.aliyun.oss.model.OSSObjectSummary;
+import com.aliyun.oss.model.ObjectListing;
 import com.aliyuncs.auth.*;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+
+import java.util.List;
 
 /**
  * @author dangqian.zll
@@ -74,4 +78,15 @@ public class V1Test {
     ) {
         return new OSSClientBuilder().build(endpoint, credentialsProvider);
     }
+
+    public void list(OSS oss) {
+        String bucketName = null;
+        String keyPrefix = null;
+        ObjectListing objectListing = oss.listObjects(bucketName, keyPrefix);
+        List<OSSObjectSummary> sums = objectListing.getObjectSummaries();
+        for (OSSObjectSummary s : sums) {
+            System.out.println("\t" + s.getKey());
+        }
+    }
+
 }

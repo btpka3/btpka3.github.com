@@ -1,4 +1,7 @@
 syntax = "proto3";
+import "google/protobuf/empty.proto";
+import "google/protobuf/any.proto";
+import "google/protobuf/wrappers.proto";
 
 option java_multiple_files = true;
 //option java_package = "io.grpc.examples.helloworld";
@@ -11,13 +14,14 @@ package me.test.first.spring.boot.test.grpc.idl;
 
 service RequestService {
   rpc request(Req) returns (Resp) {}
+  rpc hi(google.protobuf.Empty) returns (Resp) {}
 }
 message Req {
   string name = 1;
 }
 message Resp {
   string message = 1;
-  map<string, string> headers = 2;
+  map<string, google.protobuf.Any> headers = 2;
   repeated string cookies = 3;
   bytes msgBody = 4;
 }

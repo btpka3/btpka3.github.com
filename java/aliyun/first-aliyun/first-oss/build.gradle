@@ -36,8 +36,8 @@ dependencies {
     implementation('org.apache.httpcomponents:httpclient')
 
     // 安装SDK : https://help.aliyun.com/zh/oss/developer-reference/java-installation
-    implementation('com.aliyun.oss:aliyun-sdk-oss:3.18.2')
-    implementation('com.aliyun:alibabacloud-oss20190517:1.0.2')
+    implementation('com.aliyun.oss:aliyun-sdk-oss')
+    implementation('com.aliyun:alibabacloud-oss20190517')
 //    implementation('javax.xml.bind:jaxb-api:2.3.1')
 //    implementation('javax.activation:activation:1.1.1')
 //    implementation('org.glassfish.jaxb:jaxb-runtime:2.3.3')

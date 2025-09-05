@@ -1,14 +1,23 @@
 
 
-# 目的
+== 目的
 学习 [spring-shell](https://projects.spring.io/spring-shell/).
 spring-shell 是从 spring-boot-cli 中抽离，并直接使用 spring IOC，而非 OSGI。
 
 
-# 运行
-
-```bash
+== 运行
+[source,shell]
+----
+# 编译
 ./gradlew assemble
+# 命令行（非交互模式
+alias my='java -jar build/libs/my-spring-shell-0.1.0.jar'
+my help
+my help add
+my add 1 2
+my add 1 2
+
+
 java -jar build/libs/my-spring-shell-0.1.0.jar
 shell:>help         # 注意：可以使用 tab键来 word completion
 shell:>help add
@@ -35,15 +44,15 @@ shell:>help         # 不可用的命令前面有个 * 号。
 shell:>connect zhang3 123456
 shell:>help
 shell:>download
-```
+----
 
 
-# FIMXE
+== FIXME
 
-- 若何不进入交互模式？如何与 bash 进行 pipe 操作？
+- Q1: 若何不进入交互模式？如何与 bash 进行 pipe 操作？
 
-    `echo help  | java -jar build/libs/my-spring-shell-0.1.0.jar`
-    
-    `java -jar build/libs/my-spring-shell-0.1.0.jar  <<< $(echo add 1 2)`
+`echo help  | java -jar build/libs/my-spring-shell-0.1.0.jar`
 
-- [java.lang.IllegalStateException: Failed to execute ApplicationRunner](https://github.com/spring-projects/spring-shell/issues/167#issuecomment-335086379)
+`java -jar build/libs/my-spring-shell-0.1.0.jar  <<< $(echo add 1 2)`
+
+- link:https://github.com/spring-projects/spring-shell/issues/167#issuecomment-335086379[java.lang.IllegalStateException: Failed to execute ApplicationRunner]

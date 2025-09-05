@@ -1,120 +1,55 @@
 buildscript {
-    ext {
-        //springBootVersion = '1.5.2.RELEASE'
-    }
     repositories {
         maven { url "https://maven.aliyun.com/nexus/content/groups/public/" }
         mavenCentral()
-        maven { url "https://repo.spring.io/libs-milestone" }
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath("io.spring.gradle:dependency-management-plugin:1.0.0.RELEASE")
-        classpath("gradle.plugin.com.gorylenko.gradle-git-properties:gradle-git-properties:1.4.17")
     }
 }
 
-
-apply plugin: 'eclipse'
-apply plugin: 'idea'
-apply plugin: "io.spring.dependency-management"
-apply plugin: 'application'
-apply plugin: 'java'
-apply plugin: 'maven'
-apply plugin: "com.gorylenko.gradle-git-properties"
-apply plugin: 'project-report'
-
-apply plugin: 'org.springframework.boot'
+plugins {
+    id 'java'
+    id "org.springframework.boot" version "${springBootVersion}"
+    id 'io.spring.dependency-management' version '1.1.7'
+}
 
 repositories {
     maven { url "https://maven.aliyun.com/nexus/content/groups/public/" }
-    maven { url "https://repo.spring.io/libs-milestone" }
     mavenCentral()
 }
-
 dependencyManagement {
-    dependencies {
-        // dependency('org.apache.geode:geode-core:1.1.1')
+    imports {
+        mavenBom "org.springframework.shell:spring-shell-dependencies:${springShellVersion}"
     }
 }
-
-// gradle run -Dexec.args="arg1 arg2 arg3"
-//mainClassName = System.getProperty("mainClass")
-//run {
-//    //args System.getProperty("exec.args")?.split()
-//}
-
-// gradle -DmainClass=me.test.Example execute
-task execute(type: JavaExec) {
-    main = System.getProperty('mainClass')
-    classpath = sourceSets.main.runtimeClasspath
-}
-
-idea {
-    module {
-        downloadJavadoc = false
-        downloadSources = true
-    }
-}
-eclipse {
-    classpath {
-        downloadSources = true
-    }
-}
-
-gitProperties {
-    gitRepositoryRoot = new File("${project.rootDir}/../../..")
-}
-
-
-task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
-}
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-artifacts {
-    archives sourcesJar
-    //archives javadocJar
-}
-
-
-
 
 dependencies {
-    compile('org.springframework.boot:spring-boot-starter')
-    compile("org.springframework.shell:spring-shell-starter:2.0.0.M2")
-    compile("org.projectlombok:lombok:1.16.18")
-    compile("commons-lang:commons-lang:2.6")
 
-    //compile("org.springframework.boot:spring-boot-devtools")
-    //compile('com.fasterxml.jackson.dataformat:jackson-dataformat-xml')
-    //compile('org.apache.httpcomponents:httpclient')
-    //compile('org.springframework.shell:spring-shell:1.2.0.RELEASE')
 
-    testCompile('org.springframework.boot:spring-boot-starter-test')
+//    implementation platform("org.springframework.shell:spring-shell-dependencies:${springShellVersion}")
+
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.shell:spring-shell-starter'
+    implementation 'org.apache.commons:commons-lang3:3.18.0'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
 }
 
 
-bootRun {
-    addResources = true
+test {
+    include 'me/test/**'
+    testLogging.showStandardStreams = false
+    useJUnitPlatform()
+    maxHeapSize = '1G'
     systemProperties = System.properties
-}
-
-springBoot {
-    //mainClass = System.properties['mainClass']
-    buildInfo {
-        additionalProperties = [
-                'foo': 'bar'
-        ]
-    }
-}
-
-jar {
-    manifest {
-        attributes "Implementation-Version": project.version
-    }
 }

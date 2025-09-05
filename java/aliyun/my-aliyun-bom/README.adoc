@@ -1,0 +1,27 @@
+
+
+- link:https://api.aliyun.com/api-tools/sdk[SDK 中心]
+- link:https://help.aliyun.com/zh/sdk/product-overview/differences-between-v1-and-v2-sdks[V2.0 SDK 和 V1.0 SDK]
+
+[source,java]
+----
+@Bean
+ICredentialProvider credentialsProvider2() {
+    /*
+    1. SystemPropertiesCredentialProvider : 使用JVM属性 `alibabacloud.accessKeyId`, `alibabacloud.accessKeySecret`
+    1. EnvironmentVariableCredentialProvider : 使用环境变量: ALIBABA_CLOUD_ACCESS_KEY_ID,ALIBABA_CLOUD_ACCESS_KEY_SECRET,ALIBABA_CLOUD_SECURITY_TOKEN 取值 ak/sk/token
+    1. OIDCRoleArnCredentialProvider: 使用环境变量: ALIBABA_CLOUD_ROLE_ARN,ALIBABA_CLOUD_OIDC_PROVIDER_ARN,ALIBABA_CLOUD_OIDC_TOKEN_FILE
+    1. CLIProfileCredentialsProvider: ${user.home}/.aliyun/config.json 解析成 com.aliyun.auth.credentials.provider.CLIProfileCredentialsProvider.Config
+    1. ProfileCredentialProvider: ${user.home}/.alibabacloud/credentials.ini , 默认使用 "default", 每个 section 根据子配置 "type" 的不同，创建不同的 ICredentialProvider 实现：
+        - "ram_role_arn"    : RamRoleArnCredentialProvider
+        - "rsa_key_pair"    : RsaKeyPairCredentialProvider
+        - "ecs_ram_role"    : EcsRamRoleCredentialProvider
+        - "oidc_role_arn"   : OIDCRoleArnCredentialProvider
+        - *                 : StaticCredentialProvider
+    1. EcsRamRoleCredentialProvider: 使用环境变量 ALIBABA_CLOUD_ECS_METADATA_DISABLED,ALIBABA_CLOUD_ECS_METADATA,ALIBABA_CLOUD_IMDSV1_DISABLED
+    1. URLCredentialProvider: 使用环境变量 ALIBABA_CLOUD_CREDENTIALS_URI, 从目标URL返回值的JSON中解析出 Expiration/AccessKeyId,AccessKeySecret,SecurityToken
+    */
+    return DefaultCredentialProvider.builder()
+            .build();
+}
+----

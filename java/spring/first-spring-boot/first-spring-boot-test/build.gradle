@@ -1,5 +1,10 @@
 import org.springframework.boot.gradle.plugin.SpringBootPlugin
 
+plugins {
+    id 'application'
+    id 'com.google.protobuf' version '0.9.5'
+}
+
 
 //jar {
 //    baseName = 'demo'
@@ -8,6 +13,19 @@ import org.springframework.boot.gradle.plugin.SpringBootPlugin
 configurations {
 
 }
+
+//sourceSets {
+//  main {
+//    proto {
+//      srcDir 'src/main/proto'
+//    }
+//  }
+//  test {
+//    proto {
+//      srcDir 'src/test/proto'
+//    }
+//  }
+//}
 
 dependencies {
 
@@ -40,8 +58,10 @@ dependencies {
 
     runtimeOnly 'io.grpc:grpc-netty-shaded:1.73.0'
     implementation 'io.grpc:grpc-protobuf:1.73.0'
+    implementation "io.grpc:grpc-services:1.73.0"
     implementation 'io.grpc:grpc-stub:1.73.0'
     compileOnly 'org.apache.tomcat:annotations-api:6.0.53'
+    // implementation 'com.google.protobuf:protobuf-java:4.31.1'
 
     implementation 'io.prometheus:simpleclient_pushgateway'
     implementation 'org.hamcrest:hamcrest'
@@ -64,6 +84,7 @@ dependencies {
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.mockito:mockito-core'
+    testImplementation 'org.mockito:mockito-inline'
 
     implementation "org.springframework.boot:spring-boot-starter-logging"
 
@@ -206,4 +227,37 @@ test {
 // https://docs.spring.io/spring-boot/docs/current/reference/html/howto.html#howto.properties-and-configuration.expand-properties.gradle
 tasks.named('processResources') {
     expand(project.properties)
+}
+
+protobuf {
+  protoc {
+    artifact = "com.google.protobuf:protoc:3.25.5"
+  }
+  plugins {
+    grpc {
+      artifact = 'io.grpc:protoc-gen-grpc-java:1.73.0'
+    }
+  }
+  generateProtoTasks {
+    all()*.plugins {
+      grpc {}
+    }
+  }
+}
+startScripts.enabled = false
+
+task ReflectionServer(type: CreateStartScripts) {
+    mainClass = 'io.grpc.examples.reflection.ReflectionServer'
+    applicationName = 'reflection-server'
+    outputDir = new File(project.buildDir, 'tmp/scripts/' + name)
+    classpath = startScripts.classpath
+}
+
+application {
+    applicationDistribution.into('bin') {
+        from(ReflectionServer)
+        filePermissions {
+            unix(0755)
+        }
+    }
 }

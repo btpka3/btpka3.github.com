@@ -30,10 +30,10 @@ ext {
 }
 
 dependencies {
-	//implementation platform("org.springframework.ai:spring-ai-bom:${springAiVersion}")
+	implementation platform("org.springframework.ai:spring-ai-bom:${springAiVersion}")
 	//implementation "org.springframework.experimental.ai:spring-ai-openai-spring-boot-starter:${springAiVersion}"
 	implementation "com.alibaba.cloud.ai:spring-ai-alibaba-starter:${springAiAlibabaVersion}"
-	implementation 'org.springframework.ai:spring-ai-dashscope-spring-boot-starter'
+	//implementation 'group.springframework.ai:spring-ai-dashscope-spring-boot-starter:1.1.0'
 
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-batch'
@@ -44,12 +44,12 @@ dependencies {
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
 	implementation 'org.springframework.ai:spring-ai-openai-spring-boot-starter'
 	implementation 'org.springframework.cloud:spring-cloud-function-web'
-	implementation 'org.projectlombok:lombok'
+	implementation "org.projectlombok:lombok:${lombokVersion}"
 	implementation 'org.apache.httpcomponents.client5:httpclient5'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
-	annotationProcessor 'org.projectlombok:lombok'
+	annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'io.projectreactor:reactor-test'
 	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'

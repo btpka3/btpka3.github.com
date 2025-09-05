@@ -41,11 +41,17 @@ public class MyScriptControllerTest {
 
     @Test
     public void perf01() {
-        Map<String, String> map = new ConcurrentHashMap<>(256);
         MyScriptController c = new MyScriptController();
-        c.perf(10000);
-        c.perf(10000);
-        c.perf(10000);
+        int loop = 3;
+        int count = 1000;
+
+        Map<String, String> map = new ConcurrentHashMap<>(256);
+        for (int i = 0; i < loop; i++) {
+            c.testJava(map, count);
+        }
+        for (int i = 0; i < loop; i++) {
+            c.testJs(map, count);
+        }
     }
 
     /**

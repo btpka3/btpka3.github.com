@@ -14,6 +14,8 @@ dependencies {
         api 'com.aliyun:aliyun-java-sdk-core-managed-credentials-provider:1.3.3'
         api 'com.aliyun:aliyun-sdk-oss-managed-credentials-provider:1.3.3'
         api 'com.aliyun:ons-client-managed-credentials-provider:1.3.3'
+        api 'com.aliyun.oss:aliyun-sdk-oss:3.18.2'
+        api 'com.aliyun:alibabacloud-oss20190517:1.0.2'
     }
 }
 

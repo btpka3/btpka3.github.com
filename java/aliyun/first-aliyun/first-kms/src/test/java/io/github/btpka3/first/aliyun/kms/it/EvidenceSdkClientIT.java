@@ -24,6 +24,7 @@ public class EvidenceSdkClientIT {
 
     @SneakyThrows
     SecretCacheClient client() {
+        // 默认从 ${user.dir}/secretsmanager.properties 读取连接KMS所需的认证信息
         System.out.println("user.home=" + System.getProperty("user.home"));
         System.out.println("user.dir=" + System.getProperty("user.dir"));
         return new SecretCacheClientBuilder()
@@ -37,7 +38,9 @@ public class EvidenceSdkClientIT {
         SecretInfo secretInfo = client.getSecretInfo(secretName);
         String secretDataType = secretInfo.getSecretDataType();
         String secretValue = secretInfo.getSecretValue();
+        // secretDataType=text
         System.out.println("secretDataType=" + secretDataType);
+        // 如果是通过KMS的Web控制台上通过 key-value 输入的，值会是JSON字符串，比如：{"k1":"v1","k2":"v2"}
         System.out.println("secretValue=" + secretValue);
     }
 }

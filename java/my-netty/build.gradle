@@ -1,48 +1,63 @@
 buildscript {
     ext {
         //springBootVersion = '1.5.2.RELEASE'
+
     }
+    ext['netty.version'] = "4.2.1.Final"
     repositories {
         maven { url "https://maven.aliyun.com/nexus/content/groups/public/" }
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath("io.spring.gradle:dependency-management-plugin:1.0.0.RELEASE")
+        //classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        //classpath("io.spring.gradle:dependency-management-plugin:1.0.0.RELEASE")
         //classpath("gradle.plugin.com.gorylenko.gradle-git-properties:gradle-git-properties:1.4.17")
     }
 }
+plugins {
+    //id 'groovy'
+    //id 'eclipse'
+    //id 'idea'
+    //id 'maven'
+    id 'java'
+    //id 'project-report'
+//    id "io.spring.dependency-management" version "1.0.8.RELEASE"
+    id "org.springframework.boot" version "${springBootVersion}"
+    id 'io.spring.dependency-management' version '1.1.4'
+}
 
-
-apply plugin: 'eclipse'
-apply plugin: 'idea'
-//    apply plugin: 'org.springframework.boot'
-apply plugin: "io.spring.dependency-management"
+//apply plugin: 'eclipse'
+//apply plugin: 'idea'
+////    apply plugin: 'org.springframework.boot'
+//apply plugin: "io.spring.dependency-management"
+////apply plugin: 'application'
+//apply plugin: 'java'
+////apply plugin: 'maven'
+////apply plugin: "com.gorylenko.gradle-git-properties"
+//apply plugin: 'project-report'
 //apply plugin: 'application'
-apply plugin: 'java'
-apply plugin: 'maven'
-//apply plugin: "com.gorylenko.gradle-git-properties"
-apply plugin: 'project-report'
-apply plugin: 'application'
 
-println "-------------${System.properties.mainClassName}"
-mainClassName = System.properties.mainClassName ?: "io.netty.example.socksproxy.SocksServer"
+//println "-------------${System.properties.mainClassName}"
+//mainClassName = System.properties.mainClassName ?: "io.netty.example.socksproxy.SocksServer"
 
 repositories {
     maven { url "https://maven.aliyun.com/nexus/content/groups/public/" }
     mavenCentral()
 }
 
-dependencyManagement {
-    dependencies {
-        dependency('io.netty:netty-all:4.1.8.Final'){
-            exclude 'io.netty:netty-tcnative'
-        }
-        dependency('io.netty:netty-example:4.1.8.Final'){
-            exclude 'io.netty:netty-tcnative'
-        }
-    }
-}
+//dependencyManagement {
+//    dependencies {
+//        dependency("io.netty:netty-all:${nettyVersion}"){
+//            //exclude 'io.netty:netty-tcnative'
+//        }
+//        dependency("io.netty:netty-example:${nettyVersion}"){
+//            //exclude 'io.netty:netty-tcnative'
+//        }
+//         dependency("io.netty:netty-transport-native-epoll:${nettyVersion}"){
+//            //exclude 'io.netty:netty-tcnative'
+//        }
+//    }
+//}
 
 // gradle run -Dexec.args="arg1 arg2 arg3"
 //mainClassName = System.getProperty("mainClass")
@@ -51,92 +66,100 @@ dependencyManagement {
 //}
 
 // gradle -DmainClass=me.test.Example execute
-task execute(type: JavaExec) {
-    main = System.getProperty('mainClass')
-    classpath = sourceSets.main.runtimeClasspath
-}
-
-idea {
-    module {
-        downloadJavadoc = false
-        downloadSources = true
-    }
-}
-eclipse {
-    classpath {
-        downloadSources = true
-    }
-}
+//task execute(type: JavaExec) {
+//    main = System.getProperty('mainClass')
+//    classpath = sourceSets.main.runtimeClasspath
+//}
+//
+//idea {
+//    module {
+//        downloadJavadoc = false
+//        downloadSources = true
+//    }
+//}
+//eclipse {
+//    classpath {
+//        downloadSources = true
+//    }
+//}
 
 //gitProperties {
 //    gitRepositoryRoot = new File("${project.rootDir}/../../..")
 //}
 
-
-task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
-}
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-artifacts {
-    archives sourcesJar
-    //archives javadocJar
-}
-
-uploadArchives {
-    dependsOn assemble  // 没有这句，uploadArchives 只上传没有 bootRepackage 的 jar 包`
-    repositories {
-        mavenDeployer {
-            repository(url: "http://mvn.kingsilk.xyz/content/repositories/releases/") {
-                authentication(userName: "admin", password: "admin123")
-            }
-            snapshotRepository(url: "http://mvn.kingsilk.xyz/content/repositories/snapshots/") {
-                authentication(userName: "admin", password: "admin123")
-            }
-            //pom.version = "0.1.0-SNAPSHOT"
-            //pom.artifactId = "simple-project"
-            //pom.groupId = "com.example"
-        }
-    }
-}
-
-
-apply plugin: 'org.springframework.boot'
+//
+//task sourcesJar(type: Jar, dependsOn: classes) {
+//    classifier = 'sources'
+//    from sourceSets.main.allSource
+//}
+//task javadocJar(type: Jar, dependsOn: javadoc) {
+//    classifier = 'javadoc'
+//    from javadoc.destinationDir
+//}
+//
+//artifacts {
+//    archives sourcesJar
+//    //archives javadocJar
+//}
+//
+//uploadArchives {
+//    dependsOn assemble  // 没有这句，uploadArchives 只上传没有 bootRepackage 的 jar 包`
+//    repositories {
+//        mavenDeployer {
+//            repository(url: "http://mvn.kingsilk.xyz/content/repositories/releases/") {
+//                authentication(userName: "admin", password: "admin123")
+//            }
+//            snapshotRepository(url: "http://mvn.kingsilk.xyz/content/repositories/snapshots/") {
+//                authentication(userName: "admin", password: "admin123")
+//            }
+//            //pom.version = "0.1.0-SNAPSHOT"
+//            //pom.artifactId = "simple-project"
+//            //pom.groupId = "com.example"
+//        }
+//    }
+//}
+//
+//
+//apply plugin: 'org.springframework.boot'
 
 dependencies {
-    //compile('org.codehaus.groovy:groovy-all')
-    compile('org.springframework.boot:spring-boot-starter-web')
-    compile('org.springframework.boot:spring-boot-starter-thymeleaf')
-    compile("org.springframework.boot:spring-boot-devtools")
-    compile('com.fasterxml.jackson.dataformat:jackson-dataformat-xml')
-    compile('org.apache.httpcomponents:httpclient')
-    //compile('io.netty:netty-all')
-    compile('io.netty:netty-example')
-
-    testCompile('org.springframework.boot:spring-boot-starter-test')
-}
-
-
-bootRun {
-    addResources = true
-    systemProperties = System.properties
-}
-
-springBoot {
-    //mainClass = System.properties['mainClass']
-    buildInfo {
-        additionalProperties = [
-                'foo': 'bar'
-        ]
+    implementation('org.springframework.boot:spring-boot-starter-web')
+    //implementation('org.springframework.boot:spring-boot-starter-thymeleaf')
+    implementation("org.springframework.boot:spring-boot-devtools")
+    //implementation('com.fasterxml.jackson.dataformat:jackson-dataformat-xml')
+    //implementation('org.apache.httpcomponents:httpclient')
+    implementation("io.netty:netty-all") {
+//        exclude group: 'io.netty', module: 'netty-tcnative-boringssl-static'
+//        exclude group: 'io.netty', module: 'netty-tcnative'
     }
+//    implementation("io.netty:netty-example:${nettyVersion}")
+//    implementation("io.netty:netty-transport-native-epoll:${nettyVersion}")
+//    implementation("io.netty:netty-tcnative:2.0.71.Final:osx-aarch_64")
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
 
-jar {
-    manifest {
-        attributes "Implementation-Version": project.version
-    }
+
+//bootRun {
+//    addResources = true
+//    systemProperties = System.properties
+//}
+
+//springBoot {
+//    //mainClass = System.properties['mainClass']
+//    buildInfo {
+//        additionalProperties = [
+//                'foo': 'bar'
+//        ]
+//    }
+//}
+//
+//jar {
+//    manifest {
+//        attributes "Implementation-Version": project.version
+//    }
+//}
+
+test {
+    useJUnitPlatform()
 }
