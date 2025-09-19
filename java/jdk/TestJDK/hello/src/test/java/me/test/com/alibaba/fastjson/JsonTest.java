@@ -3,6 +3,12 @@ package me.test.com.alibaba.fastjson;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
+import com.alibaba.fastjson.parser.DefaultJSONParser;
+import com.alibaba.fastjson.parser.ParserConfig;
+import com.alibaba.fastjson.parser.deserializer.ObjectDeserializer;
+import com.alibaba.fastjson.serializer.JSONSerializer;
+import com.alibaba.fastjson.serializer.ObjectSerializer;
+import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,6 +19,9 @@ import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+import java.io.Serializable;
+import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
@@ -199,4 +208,106 @@ public class JsonTest {
         private String name;
         private List<String> hobbies;
     }
+
+
+    // ====================
+
+    @Test
+    public void testCustomWriterAndReader() {
+        MyObj obj = MyObj.builder()
+                .name("zhang3")
+                .type(MyType.AAA)
+                .build();
+        String expectedJsonStr = "{\"name\":\"zhang3\",\"type\":\"aaa\"}";
+
+        // 序列化
+        {
+            SerializeConfig config = new SerializeConfig();
+            config.put(MyType.class, new MyTypeObjectCodec());
+            Assertions.assertEquals(expectedJsonStr, JSON.toJSONString(obj, config));
+        }
+
+        // 反序列化
+        {
+            ParserConfig config = new ParserConfig();
+            config.putDeserializer(MyType.class, new MyTypeObjectCodec());
+            MyObj obj2 = JSON.parseObject(expectedJsonStr, MyObj.class, config);
+            Assertions.assertEquals("zhang3", obj2.getName());
+            Assertions.assertSame(MyType.AAA, obj2.getType());
+        }
+
+    }
+
+    @Data
+    @SuperBuilder(toBuilder = true)
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class MyObj implements Serializable {
+        private static final long serialVersionUID = 1L;
+
+        private String name;
+        private MyType type;
+    }
+
+    public static class MyType {
+        public static final MyType AAA = new MyType("aaa");
+        public static final MyType BBB = new MyType("bbb");
+        public static final MyType CCC = new MyType("ccc");
+
+        private String value;
+
+        private MyType(String value) {
+            this.value = value;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        @Override
+        public String toString() {
+            return "MyType{" +
+                    "value='" + value + '\'' +
+                    '}';
+        }
+    }
+
+    public static class MyTypeObjectCodec implements ObjectSerializer, ObjectDeserializer {
+
+        public void write(
+                JSONSerializer serializer,
+                Object object,
+                Object fieldName,
+                Type fieldType,
+                int features
+        ) throws IOException {
+            if (object == null) {
+                serializer.writeNull();
+                return;
+            }
+            serializer.write(((MyType) object).getValue());
+        }
+
+        public <T> T deserialze(DefaultJSONParser parser, Type type, Object fieldName) {
+            String str = parser.getRawReader().read(String.class);
+            if (str == null) {
+                return null;
+            }
+            if ("aaa".equals(str)) {
+                return (T) MyType.AAA;
+            } else if ("bbb".equals(str)) {
+                return (T) MyType.BBB;
+            } else if ("ccc".equals(str)) {
+                return (T) MyType.CCC;
+            }
+            throw new RuntimeException("not support MyType:" + str);
+        }
+
+        @Override
+        public long getFeatures() {
+            return 0L;
+        }
+    }
+
+
 }
