@@ -16,8 +16,8 @@ public class JassConfJsonStrHolder {
                   "loginModuleName": "org.apache.zookeeper.server.auth.DigestLoginModule",
                   "controlFlag": "required",
                   "options": {
-                    "username": "g9_sup_monitor",
-                    "password": "A-95Mf560lx_3rd-2_9WvczM"
+                    "username": "xxxUser",
+                    "password": "xxxPassword"
                   }
                 }
               ]
