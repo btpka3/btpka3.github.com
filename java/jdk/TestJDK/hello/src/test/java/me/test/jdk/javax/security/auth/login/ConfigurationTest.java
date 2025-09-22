@@ -1,6 +1,7 @@
 package me.test.jdk.javax.security.auth.login;
 
 import lombok.SneakyThrows;
+import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -10,6 +11,9 @@ import javax.security.auth.login.Configuration;
 import javax.security.auth.login.ConfigurationSpi;
 import javax.security.auth.login.LoginContext;
 import javax.security.auth.spi.LoginModule;
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.security.Provider;
 import java.security.Security;
 import java.util.Arrays;
@@ -58,6 +62,58 @@ JVM 属性： -Djava.security.auth.login.config=/tmp/my-jaas.conf
         Assertions.assertEquals(2, options.size());
         Assertions.assertEquals("li4", options.get("username"));
         Assertions.assertEquals("456789", options.get("password"));
+    }
+
+    /**
+     * JVM 属性： -Djava.security.auth.login.config=/tmp/my-jaas.conf
+     * 验证动态变更外部文件后不生效。
+     *
+     * @throws IOException
+     */
+    @Test
+    public void testLoadFromJaasFile2() throws IOException {
+        String fileStr = "/tmp/my-jaas.conf";
+        File file = new File(fileStr);
+        System.setProperty("java.security.auth.login.config", fileStr);
+        {
+            String str = "Client {org.apache.zookeeper.server.auth.DigestLoginModule required username=\"li4\" password=\"456789\";};";
+            FileUtils.writeStringToFile(file, str, StandardCharsets.UTF_8);
+
+            Configuration cfg = Configuration.getConfiguration();
+            System.out.println(cfg);
+            AppConfigurationEntry[] entries = cfg.getAppConfigurationEntry("Client");
+            System.out.println(Arrays.toString(entries));
+            Assertions.assertEquals(1, entries.length);
+            AppConfigurationEntry entry = entries[0];
+
+            Assertions.assertEquals("org.apache.zookeeper.server.auth.DigestLoginModule", entry.getLoginModuleName());
+            Assertions.assertSame(AppConfigurationEntry.LoginModuleControlFlag.REQUIRED, entry.getControlFlag());
+            Map<String, ?> options = entry.getOptions();
+            Assertions.assertEquals(2, options.size());
+            Assertions.assertEquals("li4", options.get("username"));
+            Assertions.assertEquals("456789", options.get("password"));
+        }
+
+        {
+            String str = "Client {org.apache.zookeeper.server.auth.DigestLoginModule required username=\"li4\" password=\"888888\";};";
+            FileUtils.writeStringToFile(file, str, StandardCharsets.UTF_8);
+
+            Configuration cfg = Configuration.getConfiguration();
+            System.out.println(cfg);
+            AppConfigurationEntry[] entries = cfg.getAppConfigurationEntry("Client");
+            System.out.println(Arrays.toString(entries));
+            Assertions.assertEquals(1, entries.length);
+            AppConfigurationEntry entry = entries[0];
+
+            Assertions.assertEquals("org.apache.zookeeper.server.auth.DigestLoginModule", entry.getLoginModuleName());
+            Assertions.assertSame(AppConfigurationEntry.LoginModuleControlFlag.REQUIRED, entry.getControlFlag());
+            Map<String, ?> options = entry.getOptions();
+            Assertions.assertEquals(2, options.size());
+            Assertions.assertEquals("li4", options.get("username"));
+            // ⭕️ 不能动态加载最新
+            Assertions.assertEquals("456789", options.get("password"));
+            Assertions.assertNotEquals("888888", options.get("password"));
+        }
     }
 
     /**
