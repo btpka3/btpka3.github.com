@@ -3,16 +3,21 @@ package me.test.first.spring.boot.test;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.apache.commons.io.IOUtils;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
+import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Map;
+import java.util.*;
+
 
 /**
  * @author dangqian.zll
  * @date 2023/6/21
+ * @see <a href="https://yaml.org/spec/1.1/current.html">YAML 1.1</a>
  */
 public class YamlTest {
 
@@ -29,5 +34,242 @@ public class YamlTest {
         Map map = yaml.load(document);
         ObjectMapper mapper = new ObjectMapper();
         System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(map));
+/* 输出:
+{
+  "key101" : "aa bb   \ncc dd   \n\nff  gg   ",
+  "key102" : "aa bb   \ncc dd   \n\nff  gg   \n\n\n",
+  "key103" : "aa bb   \ncc dd   \n\nff  gg   \n",
+  "key201" : "aa bb    cc dd   \nff  gg   ",
+  "key202" : "aa bb    cc dd   \nff  gg   \n\n\n",
+  "key203" : "aa bb    cc dd   \nff  gg   \n",
+  "key303" : " aa bb cc dd\nff  gg\n",
+  "demo" : "demo"
+}
+ */
+    }
+
+
+    @Test
+    public void testCollections1() {
+        LoaderOptions options = new LoaderOptions();
+        Yaml yaml = new Yaml(options);
+        Object o = yaml.load("- a\n- b # comment\n- [aaa,  bbb,ccc]");
+        Assertions.assertInstanceOf(List.class, o);
+        List list = (List) o;
+        Assertions.assertEquals(3, list.size());
+        Assertions.assertEquals("a", list.get(0));
+        Assertions.assertEquals("b", list.get(1));
+        Assertions.assertEquals(Arrays.asList("aaa", "bbb", "ccc"), list.get(2));
+    }
+
+    @Test
+    public void testMap() {
+        LoaderOptions options = new LoaderOptions();
+        Yaml yaml = new Yaml(options);
+        Object o = yaml.load("a: 111\nb1:\n  b2: bbb");
+        Assertions.assertInstanceOf(Map.class, o);
+        Assertions.assertInstanceOf(LinkedHashMap.class, o);
+        Map map = (Map) o;
+        Assertions.assertEquals(2, map.size());
+        // 注意：类型是 Integer
+        Assertions.assertEquals(111, map.get("a"));
+        Object b1Obj = map.get("b1");
+        Assertions.assertNotNull(b1Obj);
+        Assertions.assertInstanceOf(Map.class, b1Obj);
+        Map b1Map = (Map) b1Obj;
+        Assertions.assertEquals(1, b1Map.size());
+        Assertions.assertEquals("bbb", b1Map.get("b2"));
+    }
+
+    @Test
+    public void testStructures() {
+        LoaderOptions options = new LoaderOptions();
+        Yaml yaml = new Yaml(options);
+        // 通过 `---` 切分多个文档
+        // 通过 `...` 表示文档结束
+        Iterable<Object> it = yaml.loadAll("---\na: aaa\nb: bbb\n...\n---\nc: ccc\nd: ddd\n...");
+        List list = new ArrayList(2);
+        it.forEach(list::add);
+
+        Assertions.assertEquals(2, list.size());
+        {
+            Object o = list.get(0);
+            Assertions.assertNotNull(o);
+            Assertions.assertInstanceOf(Map.class, o);
+            Map m = (Map) o;
+            Assertions.assertEquals("aaa", m.get("a"));
+            Assertions.assertEquals("bbb", m.get("b"));
+        }
+        {
+            Object o = list.get(1);
+            Assertions.assertNotNull(o);
+            Assertions.assertInstanceOf(Map.class, o);
+            Map m = (Map) o;
+            Assertions.assertEquals("ccc", m.get("c"));
+            Assertions.assertEquals("ddd", m.get("d"));
+        }
+    }
+
+    @Test
+    public void testInteger() {
+        LoaderOptions options = new LoaderOptions();
+        Yaml yaml = new Yaml(options);
+        Object o = yaml.load("canonical: 12345\n" +
+                "decimal: +12345\n" +
+                "octal: 0o14\n" +
+                "hexadecimal: 0xC"
+        );
+        Assertions.assertInstanceOf(Map.class, o);
+        Map map = (Map) o;
+        Assertions.assertEquals(4, map.size());
+        // 注意：类型是 Integer
+        Assertions.assertEquals(12345, map.get("canonical"));
+        Assertions.assertEquals(12345, map.get("decimal"));
+        // FIXME 不支持 8进制
+        Assertions.assertEquals("0o14", map.get("octal"));
+        Assertions.assertEquals(12, map.get("hexadecimal"));
+    }
+
+    /**
+     * 先使用 `&xxxAnchor` 定义锚点，再使用 `*xxxAnchor` 进行引用
+     */
+    @Test
+    public void testReference() {
+        LoaderOptions options = new LoaderOptions();
+        Yaml yaml = new Yaml(options);
+        Map map = (Map) yaml.load(
+                "" +
+                        "a:\n" +
+                        "  - xxx\n" +
+                        "  - &SS aaa\n" +
+                        "b:\n" +
+                        "  - yyy\n" +
+                        "  - *SS\n"
+        );
+        Assertions.assertEquals(2, map.size());
+        Assertions.assertEquals(Arrays.asList("xxx", "aaa"), map.get("a"));
+        Assertions.assertEquals(Arrays.asList("yyy", "aaa"), map.get("b"));
+    }
+
+    /**
+     * @see YamlPropertiesFactoryBean
+     */
+    @Test
+    public void fromProperties() {
+
+        Map<String, String> map = new HashMap<>(128);
+        map.put("a", "aaa");
+        map.put("b[1]", "b1");
+        map.put("b[2]", "b2");
+
+        DumperOptions dumperOptions = new DumperOptions();
+        dumperOptions.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
+        dumperOptions.setPrettyFlow(true);
+
+        Yaml yaml = new Yaml(dumperOptions);
+        String str = yaml.dump(map);
+        System.out.println(str);
+    }
+
+    @Test
+    public void toProperties() {
+        String str = "" +
+                "a: aaa\n" +
+                "b:\n" +
+                "  - b1\n" +
+                "  - b2\n" +
+                "c: >-\n" +
+                "  c1 c2\n" +
+                "  c3 c4\n";
+        Yaml yaml = new Yaml();
+        Map map = yaml.load(str);
+        System.out.println(map.getClass());
+        System.out.println(map);
+    }
+
+    @Test
+    public void testFlatternMap1() {
+        Map map = new LinkedHashMap(8);
+        map.put("a", "aaa");
+        map.put("b", Arrays.asList("b1", "b2"));
+        Map result = flattern(map);
+        System.out.println(result);
+        Assertions.assertEquals(3, result.size());
+        Assertions.assertEquals("aaa", result.get("a"));
+        Assertions.assertEquals("b1", result.get("b[1]"));
+        Assertions.assertEquals("b2", result.get("b[2]"));
+    }
+
+    @Test
+    public void testFlatternMap2() {
+        Map m1 = new LinkedHashMap();
+        m1.put("m1_k1", "m1_v1");
+        m1.put("m1_k2", "m1_v2");
+
+        Map m2 = new LinkedHashMap();
+        m2.put("m2_k1", "m2_v1");
+        m2.put("m2_k2", "m2_v2");
+
+        Map map = new LinkedHashMap();
+        map.put("a", "aaa");
+        map.put("b", Arrays.asList(m1, m2));
+        Map result = flattern(map);
+        System.out.println(result);
+        Assertions.assertEquals(5, result.size());
+        Assertions.assertEquals("aaa", result.get("a"));
+        Assertions.assertEquals("m1_v1", result.get("b[1].m1_k1"));
+        Assertions.assertEquals("m1_v2", result.get("b[1].m1_k2"));
+        Assertions.assertEquals("m2_v1", result.get("b[2].m2_k1"));
+        Assertions.assertEquals("m2_v2", result.get("b[2].m2_k2"));
+    }
+
+    protected Map flattern(Map map) {
+        Map result = new LinkedHashMap(map.size() * 2);
+
+        map.forEach((k, v) -> {
+            handle(result, (String) k, v);
+        });
+        return result;
+    }
+
+    protected void handle(Map result, String k, Object v) {
+        if (v instanceof Map) {
+            result.putAll(genMap((String) k, (Map) v));
+        } else if (v instanceof List) {
+            result.putAll(genList((String) k, (List) v));
+        } else {
+            result.put(k, v);
+        }
+    }
+
+    protected Map genMap(String key, Map map) {
+        Map result = new LinkedHashMap(map.size() * 2);
+        map.forEach((k, v) -> {
+            String newKey = key + "." + k;
+            if (v instanceof Map) {
+                result.putAll(genMap(newKey, (Map) v));
+            } else if (v instanceof List) {
+                result.putAll(genList(newKey, (List) v));
+            } else {
+                result.put(newKey, v);
+            }
+        });
+        return result;
+    }
+
+    protected Map genList(String key, List list) {
+        Map result = new LinkedHashMap(list.size() * 2);
+        for (int i = 0; i < list.size(); i++) {
+            Object v = list.get(i);
+            String newKey = key + "[" + (i + 1) + "]";
+            if (v instanceof Map) {
+                result.putAll(genMap(newKey, (Map) v));
+            } else if (v instanceof List) {
+                result.putAll(genList(newKey, (List) v));
+            } else {
+                result.put(newKey, v);
+            }
+        }
+        return result;
     }
 }

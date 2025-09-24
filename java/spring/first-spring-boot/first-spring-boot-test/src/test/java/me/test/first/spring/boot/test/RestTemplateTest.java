@@ -15,6 +15,7 @@ import org.apache.http.protocol.HttpContext;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -24,18 +25,21 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.util.MultiValueMapAdapter;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
  * @author dangqian.zll
  * @date 2024/4/23
+ * @see <a href="https://docs.spring.io/spring-boot/reference/io/rest-client.html#io.rest-client.resttemplate">Calling REST Services</a>
  */
 @SpringBootTest
 @Import({
@@ -138,7 +142,7 @@ public class RestTemplateTest {
     @Test
     public void test01() {
 
-        Map<String,String> queryParams = new HashMap<>(8);
+        Map<String, String> queryParams = new HashMap<>(8);
         queryParams.put("k3", "v31");
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>(16);
         params.setAll(queryParams);
@@ -158,5 +162,20 @@ public class RestTemplateTest {
         System.out.println(str);
     }
 
+    /**
+     * spring 提供了一个 RestTemplateBuilder 类型的bean可以被 autowired。
+     */
+    @Test
+    public void testRestTemplateBuilder() {
+        RestTemplate restTemplate = new RestTemplateBuilder()
+                .defaultMessageConverters()
+                .requestFactory(() -> {
+                    CloseableHttpClient client = HttpClients.custom()
+                            .build();
+                    return new HttpComponentsClientHttpRequestFactory(client);
+                })
+                .additionalCustomizers(t -> {/*NOOP*/})
+                .build();
+    }
 
 }
