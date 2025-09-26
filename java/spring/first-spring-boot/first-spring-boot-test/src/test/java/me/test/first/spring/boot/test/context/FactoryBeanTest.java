@@ -10,11 +10,14 @@ import org.springframework.beans.factory.config.AbstractFactoryBean;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.stereotype.Component;
 import org.springframework.test.context.ContextConfiguration;
 
+import javax.annotation.PreDestroy;
+import java.io.Closeable;
 import java.util.Arrays;
 import java.util.List;
 
@@ -58,10 +61,15 @@ public class FactoryBeanTest implements ApplicationContextAware {
             Xxx xxx = (Xxx) list.get(1);
             assertEquals("bbb", xxx.getName());
         }
+
+//        AnnotationConfigApplicationContext ctx = (AnnotationConfigApplicationContext) applicationContext;
+//        ctx.close();
+//        System.out.println("-------------Done");
     }
 
+
     @Component("xxxList")
-    public static class XxxFactoryBean extends AbstractFactoryBean<List<Xxx>> {
+    public static class XxxFactoryBean extends AbstractFactoryBean<List<Xxx>> implements Closeable {
 
         @SuppressWarnings("rawtypes")
         @Override
@@ -76,6 +84,12 @@ public class FactoryBeanTest implements ApplicationContextAware {
                     Xxx.builder().name("bbb").build()
             );
         }
+
+        @PreDestroy
+        public void close() {
+            System.out.println("----------- closed");
+        }
+
     }
 
 

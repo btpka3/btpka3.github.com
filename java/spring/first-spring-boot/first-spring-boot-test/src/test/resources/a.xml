@@ -17,4 +17,13 @@
 
     <import resource="classpath*:/b.xml"/>
 
+    <bean class="org.springframework.core.env.MapPropertySource">
+        <constructor-arg name="name" value="myPropertySource"/>
+        <constructor-arg name="source">
+            <map>
+                <entry key="a.b.c" value="aaa"/>
+            </map>
+        </constructor-arg>
+    </bean>
+
 </beans>

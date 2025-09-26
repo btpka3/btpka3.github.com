@@ -6,6 +6,8 @@ import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
+import org.springframework.lang.Nullable;
+import org.springframework.util.StringUtils;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
@@ -187,17 +189,19 @@ public class YamlTest {
         System.out.println(map);
     }
 
+
     @Test
-    public void testFlatternMap1() {
+    public void testFlattenMap1() {
         Map map = new LinkedHashMap(8);
         map.put("a", "aaa");
         map.put("b", Arrays.asList("b1", "b2"));
-        Map result = flattern(map);
+        //Map result = flattern(map);
+        Map result = flattern2(map);
         System.out.println(result);
         Assertions.assertEquals(3, result.size());
         Assertions.assertEquals("aaa", result.get("a"));
-        Assertions.assertEquals("b1", result.get("b[1]"));
-        Assertions.assertEquals("b2", result.get("b[2]"));
+        Assertions.assertEquals("b1", result.get("b[0]"));
+        Assertions.assertEquals("b2", result.get("b[1]"));
     }
 
     @Test
@@ -213,16 +217,76 @@ public class YamlTest {
         Map map = new LinkedHashMap();
         map.put("a", "aaa");
         map.put("b", Arrays.asList(m1, m2));
-        Map result = flattern(map);
+        //Map result = flattern(map);
+        Map result = flattern2(map);
         System.out.println(result);
         Assertions.assertEquals(5, result.size());
         Assertions.assertEquals("aaa", result.get("a"));
-        Assertions.assertEquals("m1_v1", result.get("b[1].m1_k1"));
-        Assertions.assertEquals("m1_v2", result.get("b[1].m1_k2"));
-        Assertions.assertEquals("m2_v1", result.get("b[2].m2_k1"));
-        Assertions.assertEquals("m2_v2", result.get("b[2].m2_k2"));
+        Assertions.assertEquals("m1_v1", result.get("b[0].m1_k1"));
+        Assertions.assertEquals("m1_v2", result.get("b[0].m1_k2"));
+        Assertions.assertEquals("m2_v1", result.get("b[1].m2_k1"));
+        Assertions.assertEquals("m2_v2", result.get("b[1].m2_k2"));
     }
 
+    protected Map flattern2(Map source) {
+        Map<String, Object> result = new LinkedHashMap<>();
+		buildFlattenedMap(result, source, null);
+		return result;
+    }
+
+    /**
+     * @see YamlPropertiesFactoryBean#buildFlattenedMap
+     * @param result
+     * @param source
+     * @param path
+     */
+    protected void buildFlattenedMap(Map<String, Object> result, Map<String, Object> source, @Nullable String path) {
+		source.forEach((key, value) -> {
+			if (StringUtils.hasText(path)) {
+				if (key.startsWith("[")) {
+					key = path + key;
+				}
+				else {
+					key = path + '.' + key;
+				}
+			}
+			if (value instanceof String) {
+				result.put(key, value);
+			}
+			else if (value instanceof Map) {
+				// Need a compound key
+				@SuppressWarnings("unchecked")
+				Map<String, Object> map = (Map<String, Object>) value;
+				buildFlattenedMap(result, map, key);
+			}
+			else if (value instanceof Collection) {
+				// Need a compound key
+				@SuppressWarnings("unchecked")
+				Collection<Object> collection = (Collection<Object>) value;
+				if (collection.isEmpty()) {
+					result.put(key, "");
+				}
+				else {
+					int count = 0;
+					for (Object object : collection) {
+						buildFlattenedMap(result, Collections.singletonMap(
+								"[" + (count++) + "]", object), key);
+					}
+				}
+			}
+			else {
+				result.put(key, (value != null ? value : ""));
+			}
+		});
+	}
+    /**
+     * 将yaml加载的层级map转换成properties，类似于 {@link YamlPropertiesFactoryBean}
+     *
+     * @param map
+     * @return
+     * @see YamlPropertiesFactoryBean#createProperties
+     * @see YamlPropertiesFactoryBean#buildFlattenedMap
+     */
     protected Map flattern(Map map) {
         Map result = new LinkedHashMap(map.size() * 2);
 
@@ -261,7 +325,7 @@ public class YamlTest {
         Map result = new LinkedHashMap(list.size() * 2);
         for (int i = 0; i < list.size(); i++) {
             Object v = list.get(i);
-            String newKey = key + "[" + (i + 1) + "]";
+            String newKey = key + "[" + i + "]";
             if (v instanceof Map) {
                 result.putAll(genMap(newKey, (Map) v));
             } else if (v instanceof List) {
