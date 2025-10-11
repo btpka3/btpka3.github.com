@@ -10,6 +10,7 @@ import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
@@ -78,7 +79,7 @@ public class ProxyTest1 {
                 "\r\n";
 
         OutputStream out = socket.getOutputStream();
-        out.write(reqData.getBytes("UTF-8"));
+        out.write(reqData.getBytes(StandardCharsets.UTF_8));
         System.out.println("-------request finished.");
 
         // 读：接受响应
@@ -130,7 +131,7 @@ public class ProxyTest1 {
                 "\r\n";
 
         OutputStream out = socket.getOutputStream();
-        out.write(reqData.getBytes("UTF-8"));
+        out.write(reqData.getBytes(StandardCharsets.UTF_8));
         System.out.println("-------request finished.");
 
         // 读：接受响应

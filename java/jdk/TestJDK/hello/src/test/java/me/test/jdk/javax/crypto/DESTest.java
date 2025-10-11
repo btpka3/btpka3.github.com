@@ -5,6 +5,7 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import javax.crypto.*;
 import javax.xml.bind.DatatypeConverter;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -34,13 +35,13 @@ public class DESTest {
         String txt = "Hello World~";
 
         // 加密
-        byte[] encData = cipher.doFinal(txt.getBytes("UTF-8"));
+        byte[] encData = cipher.doFinal(txt.getBytes(StandardCharsets.UTF_8));
         System.out.println("ENC DATA : " + DatatypeConverter.printHexBinary(encData));
 
         // 解密
         cipher.init(Cipher.DECRYPT_MODE, desKey);
         byte[] decData = cipher.doFinal(encData);
-        System.out.println("DEC DATA : " + new String(decData, "UTF-8"));
+        System.out.println("DEC DATA : " + new String(decData, StandardCharsets.UTF_8));
     }
 
 }

@@ -1,80 +1,103 @@
 package me.test.jdk.java.nio;
 
+import lombok.extern.slf4j.Slf4j;
+import me.test.jdk.java.net.socket.BioEchoServer;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.net.ServerSocket;
 import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
-import java.nio.charset.CharsetDecoder;
-import java.nio.charset.CoderResult;
-import java.nio.charset.CodingErrorAction;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
+/**
+ * NIO: 同步非阻塞模型
+ *
+ * `nc localhost 9999` 然后 输入 "abc" 换行；如果字符串中包含 '.' 则关闭连接, '.' 之后的字符将不回显。
+ * 仅支持 ASCII 字符（单字节）。
+ *
+ * @see BioEchoServer
+ * @see AioEchoServer
+ * @see <a href="https://blog.csdn.net/qq_45076180/article/details/112698579">深入理解BIO、NIO、AIO线程模型</a>
+ */
+@Slf4j
 public class NioEchoServer {
 
     public static void main(String[] args) {
-        new Thread(new Manager()).start();
+        Manager m = new Manager();
+        m.run();
     }
 
-    /**
-     * Start server, regist Selector, loop selector and dispatch msg.
-     */
     private static class Manager implements Runnable {
-
-        private ExecutorService exec = null;
 
         @Override
         public void run() {
 
             try {
-                ServerSocketChannel channel = ServerSocketChannel.open();
-
-                channel.configureBlocking(false);
-                channel.socket().bind(new InetSocketAddress("localhost", 9999));
-
                 Selector selector = Selector.open();
-                channel.register(selector, SelectionKey.OP_ACCEPT);
+                // 演示绑定到多个IP地址、多个端口上
+                {
+                    ServerSocketChannel channel = ServerSocketChannel.open();
+                    channel.configureBlocking(false);
+                    ServerSocket serverSocket = channel.socket();
+                    serverSocket.bind(new InetSocketAddress("localhost", 9999));
+                    channel.register(selector, SelectionKey.OP_ACCEPT);
+                }
+                {
+                    ServerSocketChannel channel = ServerSocketChannel.open();
+                    channel.configureBlocking(false);
+                    ServerSocket serverSocket = channel.socket();
+                    serverSocket.bind(new InetSocketAddress("localhost", 9997));
+                    channel.register(selector, SelectionKey.OP_ACCEPT);
+                }
+                {
+                    ServerSocketChannel channel = ServerSocketChannel.open();
+                    channel.configureBlocking(false);
+                    // 增加一个 lookback 回环地址
+                    // sudo ifconfig lo0 alias 127.0.0.2 up
+                    ServerSocket serverSocket = channel.socket();
+                    serverSocket.bind(new InetSocketAddress("127.0.0.2", 9998));
+                    channel.register(selector, SelectionKey.OP_ACCEPT);
+                }
+
 
                 while (true) {
 
-                    // blocking for accept
+                    // blocking for accept： 返回有多少个 selectedKey 就绪
                     selector.select();
 
+                    // 遍历已就绪的 SelectionKey
                     Iterator<SelectionKey> it = selector.selectedKeys().iterator();
                     while (it.hasNext()) {
                         SelectionKey curKey = it.next();
                         it.remove();
 
-                        System.out.println(curKey
+                        log.info("SelectionKey_EVENT: [" + curKey + "] "
                                 + ": valid = " + curKey.isValid()
                                 + ", acceptable = " + curKey.isAcceptable()
                                 + ", connectable = " + curKey.isConnectable()
                                 + ", readable = " + curKey.isReadable()
                                 + ", writeable = " + curKey.isWritable()
-                                );
+                        );
                         if (!curKey.isValid()) {
                             continue;
                         }
-
+                        // 新连接接入
                         if (curKey.isAcceptable()) {
                             accept(curKey);
-                        } else if (curKey.isReadable()) {
+                        }
+                        if (curKey.isReadable()) {
                             read(curKey);
                         }
                     }
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                log.error("Manager_ERR", e);
             }
         }
 
@@ -83,98 +106,73 @@ public class NioEchoServer {
             SocketChannel clientChannel = serverChannel.accept();
             clientChannel.configureBlocking(false);
             clientChannel.register(key.selector(), SelectionKey.OP_READ);
-            System.out.println("accept connection : " + clientChannel.socket());
+            log.info("accept connection : " + clientChannel.socket());
         }
 
-        @SuppressWarnings({ "rawtypes", "unchecked" })
+        @SuppressWarnings({"rawtypes", "unchecked"})
         private void read(SelectionKey curKey) {
             // 当有消息时，需要直到构建一个完整的业务数据封包（这里是一个UTF-8编码的单个字符），才传递个一个新的Worker进行处理。
 
             SocketChannel clientChannel = (SocketChannel) curKey.channel();
             try {
-                // CASE1：断开连接
+                // CASE1: 断开连接(客户端主动端口，网络不稳定等）
                 if (!clientChannel.isConnected()) {
                     clientChannel.close();
-                    System.out.println("when read, closed.");
+                    log.info("when read, client site disconnected. curKey={}", curKey);
+                    // CASE2: 服务端因停机等场景主动关闭。
                 } else if (!clientChannel.isOpen()) {
-                    System.out.println("when read, closed.");
+                    log.info("when read, server side closed. curKey={}", curKey);
                 } else {
-
                     SelectionKey regKey = clientChannel.keyFor(curKey.selector());
+                    log.info("check_regKey: same={}, curKey={}, regKey = {}", curKey == regKey, curKey, regKey);
 
                     Map holders = (Map) regKey.attachment();
-                    ByteBuffer byteBuf;
-                    CharBuffer charBuf;
-                    CharsetDecoder cd;
-
+                    ByteBuffer readByteBuf;
+                    ByteBuffer writeByteBuf;
                     if (holders == null) {
                         holders = new HashMap();
-                        byteBuf = ByteBuffer.allocate(32);
-                        holders.put("byteBuf", byteBuf);
-                        charBuf = CharBuffer.allocate(2);
-                        holders.put("charBuf", charBuf);
+                        readByteBuf = ByteBuffer.allocate(32);
+                        holders.put("readByteBuf", readByteBuf);
 
-                        cd = StandardCharsets.UTF_8
-                                .newDecoder()
-                                // .onMalformedInput(CodingErrorAction.REPLACE)
-                                .onUnmappableCharacter(CodingErrorAction.REPLACE);
-                        holders.put("cd", cd);
+                        writeByteBuf = ByteBuffer.allocate(32);
+                        holders.put("writeByteBuf", writeByteBuf);
+
                         regKey.attach(holders);
                     } else {
-                        byteBuf = (ByteBuffer) holders.get("byteBuf");
-                        charBuf = (CharBuffer) holders.get("charBuf");
-                        cd = (CharsetDecoder) holders.get("cd");
+                        readByteBuf = (ByteBuffer) holders.get("readByteBuf");
+                        writeByteBuf = (ByteBuffer) holders.get("writeByteBuf");
                     }
 
-                    // 该一回合，可能只读取到部分数据。不能尝试直到读取完毕所有数据，
-                    // 否则，若client持续不断的发送数据，则会因此线程一直占有而无法为其他Client提供服务。
-                    int i = clientChannel.read(byteBuf);
+                    int i = clientChannel.read(readByteBuf);
                     if (i != 0) {
+                        log.info("read_count={}", i);
+                        readByteBuf.flip();
 
-                        byteBuf.flip();
+                        while (readByteBuf.hasRemaining()) {
 
-                        // 将 byte[] 按照UTF-8的编码解析为一个个字符
-                        while (true) {
-                            charBuf.clear();
-
-                            CoderResult cr = cd.decode(byteBuf, charBuf, i == -1 ? true : false);
-                            System.out.println("i = " + i
-                                    + ", cr " + cr
-                                    + ", byteBuf=" + byteBuf
-                                    + ", charBuf=" + charBuf);
-
-                            if (cr.isMalformed()) {
-                                byteBuf.position(byteBuf.position() + cr.length());
-                                charBuf.put(cd.replacement());
+                            byte c = readByteBuf.get();
+                            // 由于 '.' 不是最后一个字符，后面至少还换行符，故会先close，此时就不能再回显了。
+                            if (clientChannel.isOpen()) {
+                                // 回显给客户端
+                                clientChannel.write(ByteBuffer.wrap(new byte[]{c}));
+                                //clientChannel.write(ByteBuffer.wrap(String.valueOf(c).getBytes(StandardCharsets.UTF_8)));
                             }
-
-                            // CASE3：正常读取
-                            if (charBuf.position() > 0) {
-                                charBuf.flip();
-
-                                if (exec == null) {
-                                    exec = new ThreadPoolExecutor(1, 2, 1, TimeUnit.MINUTES,
-                                            new LinkedBlockingQueue<Runnable>());
-                                }
-                                for (int j = 0; j < charBuf.limit(); j++) {
-                                    exec.execute(new Worker(charBuf.get(j), clientChannel));
-                                    // new Worker(charBuf.get(j), clientChannel).run();
-                                }
-                            }
-
-                            if (!cr.isError()) {
-                                break;
+                            // 判断是否需要结束
+                            if ('.' == c) {
+                                log.info("read terminal command '.' : closing.~~ {}", regKey);
+                                clientChannel.write(ByteBuffer.wrap(new byte[]{'\n'}));
+                                clientChannel.socket().close();
+                                clientChannel.close();
                             }
                         }
-                        byteBuf.compact();
-
+                        readByteBuf.compact();
                     }
 
                     // CASE2：到达流的末尾？？？可能么？
                     if (i == -1) {
                         if (clientChannel.isConnected()) {
                             clientChannel.close();
-                            System.out.println("when read, reach end, closing.");
+                            log.info("when read, reach end, closing.");
                         }
                     }
                 }
@@ -183,48 +181,10 @@ public class NioEchoServer {
                     try {
                         clientChannel.close();
                     } catch (IOException e1) {
-                        e1.printStackTrace();
+                        log.error("clientChannel_close_ERR", e);
                     }
                 }
-                e.printStackTrace();
-            }
-        }
-    }
-
-    /**
-     * 可以当作一个Servlet、Action、Controller etc。 处理一次用户消息。
-     */
-    private static class Worker implements Runnable {
-
-        private SocketChannel channel;
-        private char c;
-
-        /**
-         * 将指定的字符返回给客户端。
-         *
-         * @param c
-         *            一个字符。真实场景下可能是一个业务数据封包。之后可能会做很多耗时、耗资源的操作。
-         * @param channel
-         */
-        public Worker(char c, SocketChannel channel) {
-            this.c = c;
-            this.channel = channel;
-        }
-
-        @Override
-        public void run() {
-            try {
-                if ('.' == c) {
-                    System.out.println("read terminal command '.' : closing.~~" + channel.socket() + "\n");
-                    // 要关闭socket，否则会Client不会会一直等下去。
-                    channel.socket().close();
-                    channel.close();
-                } else {
-                    channel.write(ByteBuffer.wrap(String.valueOf(c).getBytes("UTF-8")));
-                    System.out.println(">>> '" + c + "'");
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+                log.error("write_ERR", e);
             }
         }
     }

@@ -21,6 +21,8 @@ import java.util.Map;
 
 /**
  *
+ * 注意： jaas.conf 配置文件中name 不允许数字开头，不允许有`.`, 可以有 `-`, `_`。
+ *
  * @author dangqian.zll
  * @date 2025/9/18
  * @see sun.security.provider.ConfigFile
@@ -30,13 +32,14 @@ import java.util.Map;
  * @see javax.security.auth.Subject
  * @see CallbackHandler
  * @see javax.security.auth.login.AppConfigurationEntry
+ *
  */
 public class ConfigurationTest {
 
 
     /*
 cat <<EOF > /tmp/my-jaas.conf
-Client {
+aBc-4_56com {
   org.apache.zookeeper.server.auth.DigestLoginModule required
   username="li4"
   password="456789";
@@ -51,7 +54,7 @@ JVM 属性： -Djava.security.auth.login.config=/tmp/my-jaas.conf
 
         Configuration cfg = Configuration.getConfiguration();
         System.out.println(cfg);
-        AppConfigurationEntry[] entries = cfg.getAppConfigurationEntry("Client");
+        AppConfigurationEntry[] entries = cfg.getAppConfigurationEntry("aBc-4_56com");
         System.out.println(Arrays.toString(entries));
         Assertions.assertEquals(1, entries.length);
         AppConfigurationEntry entry = entries[0];

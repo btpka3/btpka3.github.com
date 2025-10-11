@@ -1,19 +1,25 @@
 package me.test.jdk.java.net.socket;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
-import java.io.Writer;
+import me.test.jdk.java.nio.AioEchoServer;
+import me.test.jdk.java.nio.NioEchoServer;
+
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-public class MyEchoServer {
+/**
+ * BIO: 同步阻塞模型
+ *
+ * @see NioEchoServer
+ * @see AioEchoServer
+ * @see <a href="https://blog.csdn.net/qq_45076180/article/details/112698579">深入理解BIO、NIO、AIO线程模型</a>
+ */
+public class BioEchoServer {
 
     public static void main(String[] args) throws IOException {
         new Thread(new Manager()).run();
@@ -57,8 +63,8 @@ public class MyEchoServer {
         @Override
         public void run() {
             try {
-                Reader reader = new InputStreamReader(new BufferedInputStream(socket.getInputStream()), "UTF-8");
-                Writer writer = new OutputStreamWriter(socket.getOutputStream(), "UTF-8");
+                Reader reader = new InputStreamReader(new BufferedInputStream(socket.getInputStream()), StandardCharsets.UTF_8);
+                Writer writer = new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8);
                 int i = 0;
 
                 // blocking read

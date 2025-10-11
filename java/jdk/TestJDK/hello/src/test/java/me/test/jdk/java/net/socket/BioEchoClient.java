@@ -9,7 +9,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 
-public class MyEchoClient {
+public class BioEchoClient {
 
     public static void main(String[] args) throws UnknownHostException, IOException {
 
@@ -87,7 +87,7 @@ public class MyEchoClient {
         @Override
         public void run() {
             try {
-                Reader reader = new InputStreamReader(new BufferedInputStream(socket.getInputStream()), "UTF-8");
+                Reader reader = new InputStreamReader(new BufferedInputStream(socket.getInputStream()), StandardCharsets.UTF_8);
                 int i;
                 while ((i = reader.read()) != -1) {
                     char c = (char) i;

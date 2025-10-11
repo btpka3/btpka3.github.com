@@ -6,7 +6,8 @@ import javax.security.auth.login.LoginException;
 import java.security.AuthProvider;
 
 /**
- *
+ * 默认的AuthProvider是 $JAVA_HOME/conf/security/java.security 中 属性 "login.configuration.provider" 配置的。
+ * 如果未配置，则使用默认的: sun.security.provider.ConfigFile
  * @author dangqian.zll
  * @date 2025/9/19
  */

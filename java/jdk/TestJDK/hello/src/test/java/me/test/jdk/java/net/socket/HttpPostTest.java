@@ -10,6 +10,7 @@ import java.net.SocketException;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import java.nio.charset.StandardCharsets;
 
 /**
  * 使用 Socket API 发送 http 请求
@@ -33,7 +34,7 @@ public class HttpPostTest {
 
         // 写：发送请求
         OutputStream out = socket.getOutputStream();
-        out.write(reqData.getBytes("UTF-8"));
+        out.write(reqData.getBytes(StandardCharsets.UTF_8));
         System.out.println("-------request finished.");
 
         // 读：接受响应
@@ -66,7 +67,7 @@ public class HttpPostTest {
         buf.append("Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2\r\n");
         buf.append("Connection: keep-alive\r\n");
         buf.append("Content-Type: application/x-www-form-urlencoded; charset=UTF-8\r\n");
-        buf.append("Content-Length: ").append(reqData.getBytes("UTF-8").length).append("\r\n");
+        buf.append("Content-Length: ").append(reqData.getBytes(StandardCharsets.UTF_8).length).append("\r\n");
         buf.append("\r\n");
         buf.append(reqData);
         return buf.toString();

@@ -1,6 +1,7 @@
 package me.test.jdk.java.util;
 
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
@@ -14,7 +15,7 @@ public class PropertyResourceBundleTest {
 
         //ResourceBundle rb = ResourceBundle.getBundle("me/test/jdk/java/util/messages");
         //ResourceBundle rb = ResourceBundle.getBundle("me.test.jdk.java.util.messages");
-        ResourceBundle rb = new PropertyResourceBundle(new InputStreamReader(PropertyResourceBundleTest.class.getResourceAsStream("/me/test/jdk/java/util/messages.properties"), "UTf-8"));
+        ResourceBundle rb = new PropertyResourceBundle(new InputStreamReader(PropertyResourceBundleTest.class.getResourceAsStream("/me/test/jdk/java/util/messages.properties"), StandardCharsets.UTF_8));
 
         System.out.println(rb.keySet());
         System.out.println("M01=" + rb.getString("M01"));
