@@ -18,8 +18,12 @@ import java.util.Map;
 /**
  * NIO: 同步非阻塞模型
  *
+ * `sudo ifconfig lo0 alias 127.0.0.3 up` : 苹果笔记本上可以通过该方式增加一个新 回环地址。
+ *
  * `nc localhost 9999` 然后 输入 "abc" 换行；如果字符串中包含 '.' 则关闭连接, '.' 之后的字符将不回显。
  * 仅支持 ASCII 字符（单字节）。
+ *
+ *
  *
  * @see BioEchoServer
  * @see AioEchoServer
@@ -45,25 +49,26 @@ public class NioEchoServer {
                     ServerSocketChannel channel = ServerSocketChannel.open();
                     channel.configureBlocking(false);
                     ServerSocket serverSocket = channel.socket();
-                    serverSocket.bind(new InetSocketAddress("0.0.0.0", 9999));
+                    //serverSocket.bind(new InetSocketAddress("0.0.0.0", 9999));
+                    serverSocket.bind(new InetSocketAddress("192.168.1.3", 9999));
                     channel.register(selector, SelectionKey.OP_ACCEPT);
                 }
-                {
-                    ServerSocketChannel channel = ServerSocketChannel.open();
-                    channel.configureBlocking(false);
-                    ServerSocket serverSocket = channel.socket();
-                    serverSocket.bind(new InetSocketAddress("localhost", 9997));
-                    channel.register(selector, SelectionKey.OP_ACCEPT);
-                }
-                {
-                    ServerSocketChannel channel = ServerSocketChannel.open();
-                    channel.configureBlocking(false);
-                    // 增加一个 lookback 回环地址
-                    // sudo ifconfig lo0 alias 127.0.0.2 up
-                    ServerSocket serverSocket = channel.socket();
-                    serverSocket.bind(new InetSocketAddress("127.0.0.2", 9998));
-                    channel.register(selector, SelectionKey.OP_ACCEPT);
-                }
+//                {
+//                    ServerSocketChannel channel = ServerSocketChannel.open();
+//                    channel.configureBlocking(false);
+//                    ServerSocket serverSocket = channel.socket();
+//                    serverSocket.bind(new InetSocketAddress("localhost", 9997));
+//                    channel.register(selector, SelectionKey.OP_ACCEPT);
+//                }
+//                {
+//                    ServerSocketChannel channel = ServerSocketChannel.open();
+//                    channel.configureBlocking(false);
+//                    // 增加一个 lookback 回环地址
+//                    // sudo ifconfig lo0 alias 127.0.0.2 up
+//                    ServerSocket serverSocket = channel.socket();
+//                    serverSocket.bind(new InetSocketAddress("127.0.0.2", 9998));
+//                    channel.register(selector, SelectionKey.OP_ACCEPT);
+//                }
 
 
                 while (true) {

@@ -1,86 +1,84 @@
 package me.test.jdk.java.net.socket;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.Reader;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
+
+import java.io.*;
+import java.net.Proxy;
+import java.net.ProxySelector;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 
+@Slf4j
 public class BioEchoClient {
 
-    public static void main(String[] args) throws UnknownHostException, IOException {
+    @SneakyThrows
+    public static void main(String[] args) {
 
-        byte[] userMsgs = null;
-        if (args.length == 0) {
+        // 使用SOCKS代理：方式1：配置全局JVM参数: `-DsocksProxyHost=192.168.1.2 -DsocksProxyPort=1080`， 缺点是要么全部用代理，要么全部不用代理，不够灵活。
+        log.info("============== sysProps[{}] = {}.", "socksProxyHost", System.getProperty("socksProxyHost"));
+        log.info("============== sysProps[{}] = {}.", "socksProxyPort", System.getProperty("socksProxyPort"));
+        log.info("============== sysProps[{}] = {}.", "socksNonProxyHosts", System.getProperty("socksNonProxyHosts"));
 
-            // 模拟的用户输入
-            userMsgs = new byte[] {
-                    'I',
-                    -26, -120, -111, // '我',
-                    -26, // malformed
-                    'I',
-                    'I',
-                    '.'
-            };
-        } else {
-            userMsgs = args[0].getBytes(StandardCharsets.UTF_8);
-        }
+        // 使用SOCKS代理：方式2：不配置JVM参数，通过编程式 new Socket(Proxy proxy) ，缺点是需要修改源码
 
-        if (userMsgs.length == 0) {
+        // 使用SOCKS代理：方式3：ProxySelector.setDefault(ProxySelector ps) 全局设置自定义 ProxySelector。
+        // sun.net.spi.DefaultProxySelector
+        ProxySelector proxySelector = ProxySelector.getDefault();
+        log.info("============== default proxy selector = {}.", proxySelector);
 
-        }
+        Socket socket = new Socket("192.168.1.3", 9999);
 
-        Socket socket = new Socket("localhost", 9999);
-        new Thread(new EchoRespMsgHander(socket)).start();
-        new Thread(new UserMsgHander(socket, userMsgs)).start();
+        // 使用SOCKS代理，方式1: 通过JVM参数全局使用: `-DsocksProxyHost=127.0.0.2 -DsocksProxyPort=1080`
 
+        new Thread(new MyReadHandler(socket)).start();
+        new Thread(new MyWriteHandler(socket)).start();
+        log.info("STARTED.");
+        Thread.sleep(3000);
+        log.info("FINISHED.");
     }
 
     /**
      * Read user input and sent it to echo server.
      */
-    private static class UserMsgHander implements Runnable {
+    @Slf4j
+    private static class MyWriteHandler implements Runnable {
 
-        private byte[] userMsgs;
         private Socket socket;
 
-        public UserMsgHander(Socket socket, byte[] userMsgs) {
+        public MyWriteHandler(Socket socket) {
             this.socket = socket;
-            this.userMsgs = userMsgs;
         }
 
         @Override
         public void run() {
-
-            // send message to sever
             try {
                 OutputStream out = socket.getOutputStream();
-                for (byte b : userMsgs) {
-                    out.write(b);
-                    out.flush();
-                    System.out.println(">>> '" + b + "'");
-                    Thread.sleep(1000);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                write(out, "aaabbb");
+                write(out, "111222");
+                write(out, "xxx.yyy");
+
+                Thread.sleep(200);
+            } catch (Exception e) {
+                log.error("WRITE_ERR", e);
             }
+        }
+
+        @SneakyThrows
+        protected void write(OutputStream out, String msg) {
+            out.write(msg.getBytes(StandardCharsets.UTF_8));
+            out.flush();
+            log.info(">>> '" + msg + "'");
         }
 
     }
 
-    /**
-     * Read msg from echo server, and print it to stdout.
-     */
-    private static class EchoRespMsgHander implements Runnable {
+    @Slf4j
+    private static class MyReadHandler implements Runnable {
 
         private Socket socket;
 
-        public EchoRespMsgHander(Socket socket) {
+        public MyReadHandler(Socket socket) {
             this.socket = socket;
         }
 
@@ -91,10 +89,10 @@ public class BioEchoClient {
                 int i;
                 while ((i = reader.read()) != -1) {
                     char c = (char) i;
-                    System.out.println("<<< '" + c + "'");
+                    log.info("<<< '" + c + "'");
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                log.error("READ_ERR", e);
             }
         }
     }

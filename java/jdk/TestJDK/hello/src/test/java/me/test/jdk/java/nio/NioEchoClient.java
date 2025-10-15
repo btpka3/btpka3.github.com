@@ -16,11 +16,16 @@ import java.nio.charset.StandardCharsets;
 @Slf4j
 public class NioEchoClient {
 
-
-
     @SneakyThrows
     public static void main(String[] args) {
-        InetSocketAddress hostAddress = new InetSocketAddress("127.0.0.1", 9999);
+
+        // NIO 不支持代理
+        log.info("============== sysProps[{}] = {}.", "socksProxyHost", System.getProperty("socksProxyHost"));
+        log.info("============== sysProps[{}] = {}.", "socksProxyPort", System.getProperty("socksProxyPort"));
+        log.info("============== sysProps[{}] = {}.", "socksNonProxyHosts", System.getProperty("socksNonProxyHosts"));
+
+
+        InetSocketAddress hostAddress = new InetSocketAddress("192.168.1.3", 9999);
         SocketChannel sc = SocketChannel.open(hostAddress);
         Thread readThread;
         {
@@ -43,7 +48,7 @@ public class NioEchoClient {
     /**
      * FIXME : NIO 如何使用 socks 代理？
      */
-    public static SocketChannel wrapProxy(SocketChannel sc){
+    public static SocketChannel wrapProxy(SocketChannel sc) {
         //return new MyProxiedSocketChannel(sc);
         return sc;
     }

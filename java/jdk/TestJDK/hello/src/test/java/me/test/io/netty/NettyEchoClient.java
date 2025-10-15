@@ -30,12 +30,12 @@ import java.nio.charset.StandardCharsets;
 @Slf4j
 public class NettyEchoClient {
 
-    static final String HOST = System.getProperty("host", "127.0.0.1");
+    static final String HOST = System.getProperty("host", "192.168.1.3");
     static final int PORT = Integer.parseInt(System.getProperty("port", "9999"));
     static final int SIZE = Integer.parseInt(System.getProperty("size", "256"));
 
     static final boolean USING_PROXY = Boolean.valueOf(System.getProperty("usingProxy", "true"));
-    static final String PROXY_HOST = System.getProperty("proxyHost", "127.0.0.2");
+    static final String PROXY_HOST = System.getProperty("proxyHost", "192.168.1.2");
     static final int PROXY_PORT = Integer.parseInt(System.getProperty("proxyPort", "1080"));
 
     public static void main(String[] args) throws Exception {
@@ -55,8 +55,7 @@ public class NettyEchoClient {
                             ChannelPipeline p = ch.pipeline();
                             if (USING_PROXY) {
                                 log.info("using proxy : proxyHost={}, proxyPort={}", PROXY_HOST, PROXY_PORT);
-                                // 使用socks代理服务
-                                p.addLast(new Socks5ProxyHandler(new InetSocketAddress("127.0.0.2", 1080)));
+                                p.addLast(new Socks5ProxyHandler(new InetSocketAddress(PROXY_HOST, PROXY_PORT)));
                             }
                             if (sslCtx != null) {
                                 log.info("using SSL");
