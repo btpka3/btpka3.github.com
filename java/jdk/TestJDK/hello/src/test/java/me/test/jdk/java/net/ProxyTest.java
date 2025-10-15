@@ -16,6 +16,7 @@ import java.util.List;
  * @see java.net.Authenticator
  * @see java.net.SocksSocketImpl#authenticate
  * @see java.net.Socket
+ * @see <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/net/proxies.html">Java Networking and Proxies</a>
  * @see <a href="https://www.dannyvanheumen.nl/post/proxy-support-for-java-socketchannel/">Proxy support for Java SocketChannel</a>
  * @see <a href="https://github.com/cobratbq/ProxiedSocketChannel/blob/master/src/main/java/nl/dannyvanheumen/nio/ProxiedSocketChannel.java">ProxiedSocketChannel.java</a>
  * @see <a href="https://bugs.openjdk.org/browse/JDK-8199457">JDK-8199457: add proxy support in NIO</a>
