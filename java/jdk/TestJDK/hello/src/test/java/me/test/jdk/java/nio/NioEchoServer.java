@@ -45,7 +45,7 @@ public class NioEchoServer {
                     ServerSocketChannel channel = ServerSocketChannel.open();
                     channel.configureBlocking(false);
                     ServerSocket serverSocket = channel.socket();
-                    serverSocket.bind(new InetSocketAddress("localhost", 9999));
+                    serverSocket.bind(new InetSocketAddress("0.0.0.0", 9999));
                     channel.register(selector, SelectionKey.OP_ACCEPT);
                 }
                 {
