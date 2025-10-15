@@ -128,6 +128,11 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-devtools")
     //implementation('com.fasterxml.jackson.dataformat:jackson-dataformat-xml')
     //implementation('org.apache.httpcomponents:httpclient')
+    compileOnly 'org.projectlombok:lombok'
+    testCompileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+    implementation("io.netty:netty-example")
     implementation("io.netty:netty-all") {
 //        exclude group: 'io.netty', module: 'netty-tcnative-boringssl-static'
 //        exclude group: 'io.netty', module: 'netty-tcnative'

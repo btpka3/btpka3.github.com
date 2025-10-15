@@ -1,0 +1,11 @@
+
+
+* link:https://www.npmjs.com/package/newman[newman]
+
+* link:https://learning.postman.com/docs/collections/using-newman-cli/installing-running-newman/[Install and run Newman]
+
+[source,shell]
+----
+npm init
+npm install newman
+----

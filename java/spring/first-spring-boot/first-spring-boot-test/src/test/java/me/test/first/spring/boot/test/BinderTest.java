@@ -5,11 +5,13 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.context.properties.bind.Bindable;
 import org.springframework.boot.context.properties.bind.Binder;
+import org.springframework.core.env.PropertySource;
 import org.springframework.mock.env.MockEnvironment;
 import org.springframework.mock.env.MockPropertySource;
 
 import java.util.List;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -38,6 +40,11 @@ public class BinderTest {
 
         MockEnvironment env = new MockEnvironment();
         env.getPropertySources().addFirst(mockPropertySource);
+
+        List<String> propertySourceName = env.getPropertySources().stream()
+                .map(PropertySource::getName)
+                .collect(Collectors.toList());
+        System.out.println("propertySourceName=" + propertySourceName);
         Binder binder = Binder.get(env);
 
         List<MyPerson> personList = binder.bind("aaa.bbb", Bindable.listOf(MyPerson.class)).get();
@@ -63,7 +70,6 @@ public class BinderTest {
         }
 
     }
-
 
 
     @Test
@@ -101,7 +107,6 @@ public class BinderTest {
         }
 
     }
-
 
 
     @Data

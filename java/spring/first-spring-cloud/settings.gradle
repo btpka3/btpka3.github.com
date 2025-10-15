@@ -13,3 +13,4 @@ rootProject.name = 'first-spring-cloud'
 //include "sc-sleuth"
 //include "sc-task"
 //include "sc-zuul"
+include "sc-zookeeper"

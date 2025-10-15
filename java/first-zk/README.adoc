@@ -1,0 +1,26 @@
+该工程旨在学习如何使用ZooKeeper完成分布式锁的功能。
+
+由于ZooKeeper自身提供的API比较基础，对与专注于业务开发的人来说过于低级了。这里使用Curator的API完成。
+
+Curator自身提供了一个示例用的jar包。位于 Curator-examples-2.6.0.jar 中，请参考 locking.LockingExample
+
+1. 下载、并解压ZooKeeper， 拷贝 conf/zoo_sample.cfg 为 conf/zoo.cfg
+2. 双击 bin/zkServer.cmd 启动 ZooKeeper 服务器
+3. 命令行下启动bin/zkCli.cml
+
+
+[source,shell]
+----
+CMD\>zkCli.cmd -server 127.0.0.1:2181
+# 创建节点并设置数据
+create /testPath testData1
+# 设置新数据
+set /testPath testData2
+# 查看节点
+get /testPath
+# 查看节点列表
+ls /
+
+# java程序（me.test.Excutor）启动参数：
+# 127.0.0.1:2181 /testPath \a.txt notepad \a.txt
+----

@@ -1,137 +1,216 @@
+buildscript {
+    ext {
+        //springBootVersion = '1.5.2.RELEASE'
+    }
+    repositories {
+        maven { url "https://maven.aliyun.com/nexus/content/groups/public/" }
+        mavenCentral()
+    }
+}
+
+
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '2.7.11'
-    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'org.springframework.boot' version "${springBootVersion}"
+    id 'io.spring.dependency-management' version '1.1.7'
 }
 group = 'com.github.btpka3'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
+sourceCompatibility = '17'
 
-ext {
-    set('springCloudVersion', "2021.0.6")
-}
 
-repositories {
-    mavenCentral()
-}
+subprojects {
+    if ('platform'.equals(name)) {
+        apply plugin: 'java-platform'
+    } else {
+        apply plugin: 'java'
+        apply plugin: 'org.springframework.boot'
 
-dependencies {
-    // spring boot
-    implementation 'org.springframework.boot:spring-boot-starter'
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+        repositories {
+            maven { url "https://maven.aliyun.com/nexus/content/groups/public/" }
+            mavenCentral()
+        }
+        dependencies {
+            implementation platform("org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}")
+            implementation platform("org.springframework.boot:spring-boot-starter-parent:${springBootVersion}")
+//            implementation(platform("io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom:2.2.0"))
+//            implementation(platform("io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom-alpha:2.2.0-alpha"))
+//            implementation(platform("io.opentelemetry:opentelemetry-bom:1.37.0"))
+//            implementation(platform("io.micrometer:micrometer-bom:1.12.4"))
+//            implementation(platform("io.micrometer:micrometer-tracing-bom:1.2.4"))
+            //implementation(platform("org.slf4j:slf4j-bom:2.0.12"))
 
-    // spring-cloud
+            // Forcefully downgrade the Jackson platform to 2.8.9
+            //components.all(MyAlignmentRule)
+            //implementation enforcedPlatform('com.fasterxml.jackson:jackson-platform:2.10.1')
 
-    implementation 'org.springframework.cloud:spring-cloud-starter-bus-kafka'
-    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
-    implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'
-    implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-reactor-resilience4j'
-    implementation 'org.springframework.cloud:spring-cloud-starter-config'
-//    implementation 'org.springframework.cloud:spring-cloud-starter-zookeeper-config'
-//    implementation 'org.springframework.cloud:spring-cloud-starter-zookeeper-discovery'
-
-    // consul ：服务发现+配置管理
-    implementation 'org.springframework.cloud:spring-cloud-starter-consul-discovery'
-//    implementation 'org.springframework.cloud:spring-cloud-stream-reactive'
-    implementation 'org.springframework.cloud:spring-cloud-stream'
-//    implementation 'org.springframework.cloud:spring-cloud-stream-binders'
-    implementation 'org.springframework.cloud:spring-cloud-stream-binder-kafka'
-    implementation 'org.springframework.cloud:spring-cloud-stream-binder-rabbit'
-    // https://github.com/spring-cloud/spring-cloud-stream-binder-aws-kinesis
-//    implementation 'org.springframework.cloud:spring-cloud-stream-binder-kinesis'
-//    implementation 'org.springframework.cloud:spring-cloud-stream-binder-servlet'
+//            constraints {
+////                api(project(":first-spring-boot-test"))
+//                implementation "com.kjetland:mbknor-jackson-jsonschema_2.12:1.0.34"
 //
-    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
-    //implementation 'org.springframework.cloud:spring-cloud-starter-feign'
-    // https://www.baeldung.com/spring-boot-opentelemetry-setup
-    // 应该排除掉： org.springframework.cloud:spring-cloud-sleuth-brave
-    // 替换为: org.springframework.cloud:spring-cloud-sleuth-otel-autoconfigure 使用 OpenTelemetry
-    implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
-//    implementation 'org.springframework.cloud:spring-cloud-sleuth-otel-autoconfigure'
-//    implementation 'io.opentelemetry:opentelemetry-exporter-otlp' // 1.23.1
+//                implementation 'net.logstash.logback:logstash-logback-encoder:6.3'
+//                implementation 'com.fasterxml.uuid:java-uuid-generator:3.2.0'
+//                implementation "org.infinispan:infinispan-spring-boot-starter-embedded:${infinispanStarterVersion}"
+//                implementation "org.infinispan:infinispan-spring-boot-starter:${infinispanStarterVersion}"
+//                implementation "org.mongodb:bson:4.0.2"
+//                implementation "org.jsoup:jsoup:1.16.1"
 //
-    implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-client'
-    implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-discoveryclient'
-    implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-client-config'
-    implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-client-loadbalancer'
-    implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-client-all'
-
-    // spring-cloud-alibaba
-    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
-    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel'
-    //implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-seata'
-    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
-    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-sidecar'
-//    implementation 'com.alibaba.cloud:spring-cloud-starter-alicloud-schedulerX'
-    implementation 'com.alibaba.cloud:spring-cloud-starter-stream-rocketmq'
-    //implementation 'com.alibaba.cloud:spring-cloud-stream-binder-rocketmq'
-
-    implementation 'org.apache.rocketmq:rocketmq-spring-boot-starter:2.2.3'
-    implementation 'org.apache.rocketmq:rocketmq-client-java:5.0.5'
-
-    // aliyun-spring-boot
-    implementation 'com.alibaba.cloud:aliyun-oss-spring-boot-starter'
-    implementation 'com.alibaba.cloud:aliyun-sms-spring-boot-starter'
-    implementation 'com.alibaba.cloud:aliyun-schedulerx-spring-boot-starter'
-    implementation 'com.alibaba.cloud:aliyun-redis-spring-boot-starter'
-    implementation 'com.alibaba.cloud:aliyun-rds-spring-boot-starter'
-
-    // nacos
-    //implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
-    //implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery '
-    implementation 'com.alibaba.nacos:nacos-spring-context:1.1.1'
-    implementation 'com.alibaba.boot:nacos-config-spring-boot-starter:0.2.12'
-    implementation 'com.alibaba.boot:nacos-discovery-spring-boot-starter:0.2.12'
-
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
-    testCompileOnly 'org.projectlombok:lombok'
-    testAnnotationProcessor 'org.projectlombok:lombok'
-
-    // https://cn.dubbo.apache.org/zh-cn/overview/mannual/java-sdk/reference-manual/registry/nacos/
-    implementation 'org.apache.dubbo:dubbo-spring-boot-starter:2.7.8'
-    //implementation 'com.alibaba.nacos:nacos-client:2.1.0'
-//
-//    implementation 'org.apache.dubbo:dubbo-dependencies-zookeeper-curator5:3.2.0'
-
-//    implementation 'com.alibaba.cloud:aliyun-fc-spring-boot-starter'
-
+//                implementation "org.slf4j:slf4j-api:${slf4jVersion}!!"
+////                implementation ("org.slf4j:slf4j-api"){
+////                    version {
+////                        strictly "${slf4jVersion}"
+////                    }
+////                }
+//                implementation "org.slf4j:slf4j-ext:${slf4jVersion}!!"
+//                implementation "org.slf4j:jul-to-slf4j:${slf4jVersion}!!"
+//                implementation "org.slf4j:log4j-over-slf4j:${slf4jVersion}!!"
+//                implementation "org.slf4j:jcl-over-slf4j:${slf4jVersion}!!"
+//                implementation "org.slf4j:slf4j-reload4j:${slf4jVersion}!!"
+//                implementation "org.slf4j:slf4j-log4j12:${slf4jVersion}!!"
+//                implementation "org.slf4j:slf4j-jdk14:${slf4jVersion}!!"
+//                implementation "org.slf4j:slf4j-nop:${slf4jVersion}!!"
+//                implementation "org.slf4j:slf4j-simple:${slf4jVersion}!!"
+//                implementation "org.slf4j:slf4j-jcl:${slf4jVersion}!!"
 //
 //
+//                implementation "ch.qos.logback:logback-classic:${logbackVersion}!!"
+//                implementation "ch.qos.logback:logback-core:${logbackVersion}!!"
+//            }
 //
 //
-//
-//
-//
-//    implementation 'org.apache.kafka:kafka-streams'
-//
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-//    testImplementation 'org.springframework.boot:spring-cloud-stream-test-support'
-//    testImplementation 'org.springframework.cloud:spring-cloud-stream-test-binder'
-//    testImplementation("org.springframework.cloud:spring-cloud-stream") {
-//        artifact {
-//            name = "spring-cloud-stream"
-//            extension = "jar"
-//            type ="test-jar"
-//            classifier = "test-binder"
 //        }
-//    }
 
+        configurations {
+            all*.exclude group: 'xml-apis', module: 'xmlParserAPIs'
+        }
+    }
+}
+
+//ext {
+//    set('springCloudVersion', "2025.0.0")
+//}
+
+//repositories {
+//    mavenCentral()
+//}
+
+//dependencies {
+//    // spring boot
+//    implementation 'org.springframework.boot:spring-boot-starter'
+//    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+//
+//    // spring-cloud
+//
+//    implementation 'org.springframework.cloud:spring-cloud-starter-bus-kafka'
+//    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+//    implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'
+//    implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-reactor-resilience4j'
+//    implementation 'org.springframework.cloud:spring-cloud-starter-config'
+////    implementation 'org.springframework.cloud:spring-cloud-starter-zookeeper-config'
+////    implementation 'org.springframework.cloud:spring-cloud-starter-zookeeper-discovery'
+//
+//    // consul ：服务发现+配置管理
+//    implementation 'org.springframework.cloud:spring-cloud-starter-consul-discovery'
+////    implementation 'org.springframework.cloud:spring-cloud-stream-reactive'
+//    implementation 'org.springframework.cloud:spring-cloud-stream'
+////    implementation 'org.springframework.cloud:spring-cloud-stream-binders'
+//    implementation 'org.springframework.cloud:spring-cloud-stream-binder-kafka'
+//    implementation 'org.springframework.cloud:spring-cloud-stream-binder-rabbit'
+//    // https://github.com/spring-cloud/spring-cloud-stream-binder-aws-kinesis
+////    implementation 'org.springframework.cloud:spring-cloud-stream-binder-kinesis'
+////    implementation 'org.springframework.cloud:spring-cloud-stream-binder-servlet'
+////
+//    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+//    //implementation 'org.springframework.cloud:spring-cloud-starter-feign'
+//    // https://www.baeldung.com/spring-boot-opentelemetry-setup
+//    // 应该排除掉： org.springframework.cloud:spring-cloud-sleuth-brave
+//    // 替换为: org.springframework.cloud:spring-cloud-sleuth-otel-autoconfigure 使用 OpenTelemetry
+//    implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
+////    implementation 'org.springframework.cloud:spring-cloud-sleuth-otel-autoconfigure'
+////    implementation 'io.opentelemetry:opentelemetry-exporter-otlp' // 1.23.1
+////
+//    implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-client'
+//    implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-discoveryclient'
+//    implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-client-config'
+//    implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-client-loadbalancer'
+//    implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-client-all'
+//
+//    // spring-cloud-alibaba
+//    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
+//    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel'
+//    //implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-seata'
+//    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
+//    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-sidecar'
+////    implementation 'com.alibaba.cloud:spring-cloud-starter-alicloud-schedulerX'
+//    implementation 'com.alibaba.cloud:spring-cloud-starter-stream-rocketmq'
+//    //implementation 'com.alibaba.cloud:spring-cloud-stream-binder-rocketmq'
+//
+//    implementation 'org.apache.rocketmq:rocketmq-spring-boot-starter:2.2.3'
+//    implementation 'org.apache.rocketmq:rocketmq-client-java:5.0.5'
+//
+//    // aliyun-spring-boot
+//    implementation 'com.alibaba.cloud:aliyun-oss-spring-boot-starter'
+//    implementation 'com.alibaba.cloud:aliyun-sms-spring-boot-starter'
+//    implementation 'com.alibaba.cloud:aliyun-schedulerx-spring-boot-starter'
+//    implementation 'com.alibaba.cloud:aliyun-redis-spring-boot-starter'
+//    implementation 'com.alibaba.cloud:aliyun-rds-spring-boot-starter'
+//
+//    // nacos
+//    //implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
+//    //implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery '
+//    implementation 'com.alibaba.nacos:nacos-spring-context:1.1.1'
+//    implementation 'com.alibaba.boot:nacos-config-spring-boot-starter:0.2.12'
+//    implementation 'com.alibaba.boot:nacos-discovery-spring-boot-starter:0.2.12'
+//
+//    compileOnly 'org.projectlombok:lombok'
+//    annotationProcessor 'org.projectlombok:lombok'
+//    testCompileOnly 'org.projectlombok:lombok'
+//    testAnnotationProcessor 'org.projectlombok:lombok'
+//
+//    // https://cn.dubbo.apache.org/zh-cn/overview/mannual/java-sdk/reference-manual/registry/nacos/
+//    implementation 'org.apache.dubbo:dubbo-spring-boot-starter:2.7.8'
+//    //implementation 'com.alibaba.nacos:nacos-client:2.1.0'
+////
+////    implementation 'org.apache.dubbo:dubbo-dependencies-zookeeper-curator5:3.2.0'
+//
+////    implementation 'com.alibaba.cloud:aliyun-fc-spring-boot-starter'
+//
+////
+////
+////
+////
+////
+////
+////
+////    implementation 'org.apache.kafka:kafka-streams'
+////
+//    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+////    testImplementation 'org.springframework.boot:spring-cloud-stream-test-support'
+////    testImplementation 'org.springframework.cloud:spring-cloud-stream-test-binder'
+////    testImplementation("org.springframework.cloud:spring-cloud-stream") {
+////        artifact {
+////            name = "spring-cloud-stream"
+////            extension = "jar"
+////            type ="test-jar"
+////            classifier = "test-binder"
+////        }
+////    }
+//
 }
 
 tasks.named('test') {
     useJUnitPlatform()
 }
-dependencyManagement {
-    imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-        mavenBom "com.alibaba.cloud:spring-cloud-alibaba-dependencies:2022.0.0.0-RC2"
-        mavenBom "com.alibaba.cloud:aliyun-spring-boot-dependencies:1.0.0"
-        //mavenBom "org.springframework.cloud:spring-cloud-stream"
-//        mavenBom "org.apache.dubbo:dubbo-bom:3.2.0"
-//        mavenBom "org.apache.dubbo:dubbo-dependencies-bom:3.2.0"
-    }
-}
+//dependencyManagement {
+//    imports {
+//        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+//        mavenBom "com.alibaba.cloud:spring-cloud-alibaba-dependencies:2022.0.0.0-RC2"
+//        mavenBom "com.alibaba.cloud:aliyun-spring-boot-dependencies:1.0.0"
+//        //mavenBom "org.springframework.cloud:spring-cloud-stream"
+////        mavenBom "org.apache.dubbo:dubbo-bom:3.2.0"
+////        mavenBom "org.apache.dubbo:dubbo-dependencies-bom:3.2.0"
+//    }
+//}
 
 
 //
