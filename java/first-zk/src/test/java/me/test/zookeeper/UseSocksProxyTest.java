@@ -17,6 +17,8 @@ import java.nio.charset.StandardCharsets;
  * @see org.apache.zookeeper.ClientCnxnSocket
  * @see org.apache.zookeeper.ClientCnxnSocketNIO
  * @see org.apache.zookeeper.ClientCnxnSocketNetty
+ * @see org.apache.zookeeper.retry.ZooKeeperRetry
+ * @see me.test.curator.CuratorSocksProxyTest
  */
 @Slf4j
 public class UseSocksProxyTest {
@@ -36,6 +38,9 @@ public class UseSocksProxyTest {
         System.setProperty("java.security.auth.login.config", "/tmp/jaas.conf");
         config.setProperty(ZKClientConfig.ENABLE_CLIENT_SASL_KEY, "true");
         config.setProperty(ZKClientConfig.LOGIN_CONTEXT_NAME_KEY, ZKClientConfig.LOGIN_CONTEXT_NAME_KEY_DEFAULT);
+        // 默认值: false
+        // config.setProperty(ZKClientConfig.DISABLE_AUTO_WATCH_RESET, "false");
+
         ZooKeeper zk = new ZooKeeper("mse-b08b8562-p.zk.mse.aliyuncs.com", 3000, watcher, config);
 
         // 循环读取，中间可以重启代理服务器，并验证是否能自动恢复（重新读取到相关值
