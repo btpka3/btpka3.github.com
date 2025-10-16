@@ -44,6 +44,9 @@ public class ZookeeperSocksProxyTest {
         private AtomicBoolean started = new AtomicBoolean(false);
         private ZooKeeper zk;
 
+        /**
+         * ⭕️: 首次/会话超时, 则需要重建 zookeeper 客户端，以及其上的 读取数据，cache缓存，数据监听等程序。
+         */
         @SneakyThrows
         public static void restart() {
 
@@ -60,6 +63,7 @@ public class ZookeeperSocksProxyTest {
             Watcher watcher = new MyWatcher();
             ZKClientConfig config = new ZKClientConfig();
 
+            // ⭕️ 设置自定义 ClientCnxnSocket 实现，并通过额外配置项启动用 socks 代理。
             config.setProperty(ZKClientConfig.ZOOKEEPER_CLIENT_CNXN_SOCKET, ClientCnxnSocketNettyExt.class.getName());
             config.setProperty("proxy.socks5", "192.168.1.2:1080");
 

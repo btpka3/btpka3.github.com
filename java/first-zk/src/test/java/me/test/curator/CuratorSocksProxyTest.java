@@ -53,6 +53,9 @@ public class CuratorSocksProxyTest {
         private AtomicBoolean started = new AtomicBoolean(false);
         private CuratorFramework curator;
 
+        /**
+         * ⭕️: 如果 首次、或者 ConnectionState == LOST, 则需要重建 zookeeper/CuratorFramework 客户端，以及其上的 读取数据，cache缓存，数据监听等程序。
+         */
         @SneakyThrows
         public static void restart() {
 
@@ -68,6 +71,7 @@ public class CuratorSocksProxyTest {
         public void run() {
             ZKClientConfig config = new ZKClientConfig();
 
+            // ⭕️ 设置自定义 ClientCnxnSocket 实现，并通过额外配置项启动用 socks 代理。
             config.setProperty(ZKClientConfig.ZOOKEEPER_CLIENT_CNXN_SOCKET, ClientCnxnSocketNettyExt.class.getName());
             config.setProperty("proxy.socks5", "192.168.1.2:1080");
 
@@ -78,6 +82,7 @@ public class CuratorSocksProxyTest {
             RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000, 3);
             // RetryPolicy retryPolicy = new RetryNTimes(60, 1000);
 
+            // ⭕️ 设置自定义的 ConnectionStateListener
             ConnectionStateListenerManagerFactory listenerManagerFactory = (CuratorFramework c) -> {
                 StandardListenerManager<ConnectionStateListener> m = StandardListenerManager.standard();
                 m.addListener(new MyConnectionStateListener());
@@ -153,7 +158,6 @@ public class CuratorSocksProxyTest {
             }
         }
     }
-
 
     public static class MyConnectionStateListener implements ConnectionStateListener {
 

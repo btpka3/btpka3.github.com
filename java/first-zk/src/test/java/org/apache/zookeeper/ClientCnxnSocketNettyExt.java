@@ -445,6 +445,9 @@ public class ClientCnxnSocketNettyExt extends ClientCnxnSocket {
             LOG.info("SSL handler added for channel: {}", pipeline.channel());
         }
 
+        /**
+         * ⭕️: 新增的代码，以便启用代理服务器
+         */
         protected void initProxy(ChannelPipeline pipeline) {
             String proxyString = clientConfig.getProperty("proxy.socks5");
             if (StringUtils.isBlank(proxyString)) {
