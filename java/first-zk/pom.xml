@@ -13,9 +13,14 @@
         <lombok.version>1.18.30</lombok.version>
         <zookeeper.version>3.9.1</zookeeper.version>
         <curator.version>5.9.0</curator.version>
+        <netty.version>4.2.1.Final</netty.version>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+        </dependency>
         <!--
         <dependency>
             <groupId>org.apache.zookeeper</groupId>
@@ -97,6 +102,13 @@
                 <groupId>org.junit</groupId>
                 <artifactId>junit-bom</artifactId>
                 <version>${junit5.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+             <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-bom</artifactId>
+                <version>${netty.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
