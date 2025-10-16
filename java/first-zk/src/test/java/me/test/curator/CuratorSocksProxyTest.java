@@ -2,6 +2,7 @@ package me.test.curator;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import me.test.zookeeper.ZookeeperSocksProxyTest;
 import org.apache.curator.CuratorZookeeperClient;
 import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
@@ -25,7 +26,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  *
- * @see me.test.zookeeper.UseSocksProxyTest
+ * @see ZookeeperSocksProxyTest
  * @see RetryPolicy
  * @see RetryNTimes
  * @see RetryForever
@@ -41,10 +42,8 @@ public class CuratorSocksProxyTest {
     @SneakyThrows
     @Test
     public void test() {
-
         MyZkJob.restart();
         Thread.sleep(24 * 60 * 60 * 1000);
-
     }
 
     public static class MyZkJob implements Runnable, Closeable {
@@ -149,7 +148,7 @@ public class CuratorSocksProxyTest {
         @Override
         public void close() throws IOException {
             started.set(false);
-            if (CuratorFrameworkState.STARTED == curator.getState()) {
+            if (curator != null && CuratorFrameworkState.STARTED == curator.getState()) {
                 curator.close();
             }
         }
