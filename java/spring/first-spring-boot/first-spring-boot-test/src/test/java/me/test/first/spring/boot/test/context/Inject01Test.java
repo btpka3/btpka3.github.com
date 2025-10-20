@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.test.context.ContextConfiguration;
 
 /**
- *
+ * 构造函数循环依赖
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @ContextConfiguration

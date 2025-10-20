@@ -1,14 +1,18 @@
 package me.test.first.spring.boot.test.context;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 
 /**
  * @author dangqian.zll
  * @date 2022/4/1
  */
 @Data
+@AllArgsConstructor
 public class MyPojo {
 
     public MyPojo() {
@@ -33,5 +37,10 @@ public class MyPojo {
 
     public String toString() {
         return name;
+    }
+
+    @PreDestroy
+    public void destroy() {
+        System.out.println("myPojo destroy");
     }
 }
