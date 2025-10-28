@@ -21,6 +21,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.client.ReactorClientHttpRequestFactory;
+import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.util.LinkedMultiValueMap;
@@ -39,6 +41,10 @@ import java.util.stream.Collectors;
 /**
  * @author dangqian.zll
  * @date 2024/4/23
+ * @see WebClientTest
+ * @see RestClientTest
+ * @see ReactorClientHttpConnector
+ * @see ReactorClientHttpRequestFactory
  */
 @SpringBootTest
 @Import({
@@ -142,7 +148,7 @@ public class RestTemplateTest {
     @Test
     public void test01() {
 
-        Map<String,String> queryParams = new HashMap<>(8);
+        Map<String, String> queryParams = new HashMap<>(8);
         queryParams.put("k3", "v31");
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>(16);
         params.setAll(queryParams);

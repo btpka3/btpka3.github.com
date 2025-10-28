@@ -5,6 +5,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 /**
  * @author dangqian.zll
  * @date 2024/4/23
+ * @see RestTemplateTest
+ * @see RestClientTest
  */
 public class WebClientTest {
     public void x() {

@@ -28,18 +28,23 @@ public class Aaa {
                 // etc. etc.
                 .build();
         curator.start();
+
+        System.out.println("====== CuratorFramework 启动柱状态 = " + curator.getState().name());
         // CuratorFramework => zooKeeper
         CuratorZookeeperClient curatorZookeeperClient = curator.getZookeeperClient();
+        System.out.println("====== CuratorFramework 连接字符串 = " + curatorZookeeperClient.getCurrentConnectionString());
 
         ZooKeeper zooKeeper = curatorZookeeperClient.getZooKeeper();
+        System.out.println("====== CuratorFramework 连接状态 = " + zooKeeper.getState().name());
 
 
         ZKClientConfig zkClientConfig1 = zooKeeper.getClientConfig();
+        System.out.println("====== CuratorFramework 的 ZKClientConfig = " + zkClientConfig1);
 
         curator.close();
     }
 
-    public void xx(){
+    public void xx() {
         CuratorFramework curator = null;
     }
 }

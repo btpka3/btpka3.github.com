@@ -21,6 +21,8 @@ import java.util.Map;
 /**
  * @author dangqian.zll
  * @date 2024/4/23
+ * @see RestTemplateTest
+ * @see WebClientTest
  */
 public class RestClientTest {
     public void x() {
@@ -40,7 +42,7 @@ public class RestClientTest {
 
         UriComponentsBuilder.fromUriString("https://example.com/orders/{id}")
                 .uriVariables(Map.of("id", id))
-                .queryParam("k1", "v11","v12")
+                .queryParam("k1", "v11", "v12")
                 .queryParam("k2", Arrays.asList("v21", "v22"))
                 .build()
                 .toUri()

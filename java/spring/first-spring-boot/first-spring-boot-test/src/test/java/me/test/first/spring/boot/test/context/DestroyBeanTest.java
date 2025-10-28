@@ -13,9 +13,14 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.event.ContextClosedEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.test.context.ContextConfiguration;
+
+import java.util.Arrays;
 
 /**
  * 验证重新创建bean.
@@ -58,6 +63,11 @@ public class DestroyBeanTest {
                 }
             };
         }
+
+        @Bean
+        MyEventListener myEventListener() {
+            return new MyEventListener();
+        }
     }
 
     @Autowired
@@ -67,9 +77,20 @@ public class DestroyBeanTest {
 
     @Autowired
     DefaultListableBeanFactory beanFactory;
+    @Autowired
+    ApplicationContext applicationContext;
+
 
     @Test
     public void test() {
+        log.info("====== xxxxx getDependenciesForBean beans :{}", Arrays.toString(beanFactory.getDependenciesForBean("xxxxx")));
+        log.info("====== pojo1 getDependenciesForBean beans :{}", Arrays.toString(beanFactory.getDependenciesForBean("pojo1")));
+        log.info("====== pojo2 getDependenciesForBean beans :{}", Arrays.toString(beanFactory.getDependenciesForBean("pojo2")));
+        log.info("====== xxxxx dependent beans :{}", Arrays.toString(beanFactory.getDependentBeans("xxxxx")));
+        log.info("====== pojo1 dependent beans :{}", Arrays.toString(beanFactory.getDependentBeans("pojo1")));
+        log.info("====== pojo2 dependent beans :{}", Arrays.toString(beanFactory.getDependentBeans("pojo2")));
+
+
         Assertions.assertTrue(beanFactory.containsSingleton("pojo1"));
         Assertions.assertTrue(beanFactory.containsSingleton("pojo2"));
         Assertions.assertTrue(beanFactory.containsBean("pojo1"));
@@ -80,6 +101,7 @@ public class DestroyBeanTest {
         log.info("====== pojo1:{}, hashCode={}", JSON.toJSON(pojo1), p1HashCode);
         log.info("====== pojo2:{}, hashCode={}", JSON.toJSON(pojo2), p2HashCode);
         log.info("====== beanFactory:{}", beanFactory);
+        beanFactory.destroySingleton("xxxxx");
         beanFactory.destroySingleton("pojo1");
         //beanFactory.removeBeanDefinition("pojo1");
 
@@ -107,14 +129,26 @@ public class DestroyBeanTest {
 
 
         Object o1 = beanFactory.getBean("pojo1");
-        int o1HashCode = System.identityHashCode(o2);
+        int o1HashCode = System.identityHashCode(o1);
         // FIXME: 期望报错，或者是null，实际 仍然能获取，且只不变。
         log.info("====== beanFactory.getBean(\"pojo1\"):{}, hashCode={}", JSON.toJSON(o1), o1HashCode);
 
         Assertions.assertNotEquals(p1HashCode, o1HashCode);
         Assertions.assertNotEquals(p2HashCode, o2HashCode);
 
+        log.info("====== applicationContext#id={}", applicationContext.getId());
+
     }
 
 
+    /**
+     *
+     */
+    public static class MyEventListener {
+        @EventListener
+        public void onEvent(ContextClosedEvent event) {
+            Exception e = new RuntimeException("JUST CHECK STACK TRACE");
+            log.info("@EventListener,ContextClosedEvent", e);
+        }
+    }
 }
