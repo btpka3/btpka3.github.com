@@ -1,6 +1,6 @@
 #!/bin/bash
 
-GRADLE_VERSION=${1:-8.13}
+#GRADLE_VERSION=${1:-8.13}
 dir=$(cd `dirname $0`;pwd)
 
 SRC_DIR="${dir}/.tmp/gradleWrapper"
@@ -9,7 +9,11 @@ rm -fr "${SRC_DIR}"
 mkdir -p "${SRC_DIR}"
 touch "${SRC_DIR}/settings.gradle"
 cd "${SRC_DIR}"
-gradle wrapper --gradle-version "${GRADLE_VERSION}" --distribution-type all
+#gradle wrapper --gradle-version "${GRADLE_VERSION}" --distribution-type all
+
+# 使用 阿里云的gradle镜像站
+# 参考: https://developer.aliyun.com/mirror/gradle
+gradle wrapper --gradle-distribution-url=https://mirrors.aliyun.com/gradle/distributions/v9.2.0/gradle-9.2.0-all.zip
 
 for gradlewFile in $(find "${dir}" -mindepth 2 -name settings.gradle | grep -v "${SRC_DIR}") ; do
     TARGET_DIR=$(dirname ${gradlewFile})

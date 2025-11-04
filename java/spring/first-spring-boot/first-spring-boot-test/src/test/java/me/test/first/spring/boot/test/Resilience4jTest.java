@@ -73,16 +73,17 @@ public class Resilience4jTest {
         // When I decorate my function and invoke the decorated function
         Supplier<String> checkedSupplier =
                 CircuitBreaker.decorateSupplier(circuitBreaker, () -> {
-                    throw new RuntimeException("BAM!");
+                    throw new RuntimeException("BAM! [" + getThreadName() + "]");
                 });
         Try<String> result = Try.ofSupplier(checkedSupplier)
-                .recover(throwable -> "Hello Recovery");
+                .recover(throwable -> "Hello Recovery[" + getThreadName() + "] : ERR-" + throwable.getMessage());
 
         // Then the function should be a success,
         // because the exception could be recovered
         assertTrue(result.isSuccess());
+        System.out.println("result [" + getThreadName() + "] = " + result);
         // and the result must match the result of the recovery function.
-        assertEquals("Hello Recovery", result.get());
+        assertTrue(result.get().contains("Hello Recovery"));
     }
 
     public static String getIsoTimeStr() {
@@ -107,10 +108,10 @@ public class Resilience4jTest {
                 Thread.sleep(sleepMs);
                 String endTime = getIsoTimeStr();
                 String msg = "biz: id=" + id
-                             + ", data=" + data
-                             + ", thread=" + Thread.currentThread().getName()
-                             + ", startTime=" + startTime
-                             + ", endTime=" + endTime;
+                        + ", data=" + data
+                        + ", thread=" + Thread.currentThread().getName()
+                        + ", startTime=" + startTime
+                        + ", endTime=" + endTime;
                 System.out.println(msg);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
@@ -538,7 +539,7 @@ public class Resilience4jTest {
                     e.printStackTrace();
                 }
             }
-            return "aaa-" + count;
+            return "aaa-" + count + "-" + getThreadName();
         };
 
         TimeLimiterConfig config = TimeLimiterConfig.custom()
@@ -571,8 +572,8 @@ public class Resilience4jTest {
 
             Future<String> resultFuture = Future.fromCompletableFuture(future)
                     .onSuccess(v -> System.out.println("Successfully Completed - Result: " + v))
-                    .onFailure(v -> System.out.println("Failed - Result: " + v))
-                    .recover(err -> "recover_result_from-" + err.getMessage());
+                    .onFailure(v -> System.out.println("Failed - Result: " + v + "-" + getThreadName()))
+                    .recover(err -> "recover_result_from-" + err.getMessage() + "-" + getThreadName());
 
 
             resultFuture.onComplete(t -> {
