@@ -46,6 +46,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation "org.springframework.boot:spring-boot-devtools"
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml'
+
+    implementation("org.springframework.integration:spring-integration-jdbc")
     implementation 'org.apache.httpcomponents:httpclient'
     implementation 'javax.cache:cache-api'
     implementation 'org.infinispan:infinispan-jcache'

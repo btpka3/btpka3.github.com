@@ -15,7 +15,7 @@ plugins {
     //id 'project-report'
     id "org.springframework.boot" version "${springBootVersion}" //apply false
     id 'java'
-    id 'io.spring.dependency-management' version '1.1.4'
+    id 'io.spring.dependency-management' version '1.1.7'
 }
 //
 //

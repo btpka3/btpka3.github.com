@@ -39,6 +39,7 @@ public class MyKryoUtilsTest {
     @SneakyThrows
     @Test
     public void prepareWarmUp() {
+        Thread.currentThread().setContextClassLoader(null);
 
         String event = "event";
         Path srcPath = Path.of("/tmp/preHot/" + event + ".jsonl");

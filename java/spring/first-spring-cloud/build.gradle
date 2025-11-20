@@ -233,7 +233,7 @@ tasks.named('test') {
 ////plugins{
 ////    id 'eclipse'
 ////    id 'idea'
-////    id "io.spring.dependency-management" version "1.0.0.RELEASE" //1.0.2.RELEASE
+////    id "io.spring.dependency-management" version "1.1.7" //1.0.2.RELEASE
 ////    id 'project-report'
 ////    id 'maven'
 ////    id 'org.springframework.boot' version '1.5.2.RELEASE'

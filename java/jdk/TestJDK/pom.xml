@@ -54,6 +54,13 @@
 
         <dependencies>
             <dependency>
+                <groupId>io.projectreactor</groupId>
+                <artifactId>reactor-bom</artifactId>
+                <version>2024.0.6</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
                 <groupId>org.ow2.asm</groupId>
                 <artifactId>asm-bom</artifactId>
                 <version>${asm.version}</version>
@@ -145,6 +152,11 @@
                 <version>15.4</version>
             </dependency>
 
+            <dependency>
+                <groupId>io.vavr</groupId>
+                <artifactId>vavr</artifactId>
+                <version>0.10.6</version>
+            </dependency>
 
             <dependency>
                 <groupId>junit</groupId>
