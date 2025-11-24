@@ -32,11 +32,13 @@ Person p = Person.builder().name("zhang3")
     public void code3() {
 
         Arrays.asList("aaa", "bbb", "ccc").stream()
-                .filter(StringUtils::isNotBlank)
-                .map(s -> s + "123")
-                .map(s -> handle(s, str -> {
+                .filter(StringUtils::isNotBlank) .map(s->s  + "123")
+                .map(s -> handle(s,
+                        str->{
+
                     return s + "aaa";
-                }))
+                            }
+                ))
                 .forEach(s -> {
                     if (s.length() > 100) {
                         System.out.println(s);
