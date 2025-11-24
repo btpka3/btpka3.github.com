@@ -1,0 +1,12 @@
+
+
+- link:https://github.com/diffplug/spotless/tree/main/plugin-maven[spotless-maven-plugin]
+- link:https://github.com/palantir/palantir-java-format[Palantir Java Format]
+
+
+[source,shell]
+----
+mvn spotless:check
+
+mvn spotless:apply
+----
