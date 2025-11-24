@@ -11,4 +11,13 @@ Person p = Person.builder().name("zhang3")
         .build();
         System.out.println("person = " + p);
     }
+
+    public void code2    (){
+Person p = Person.builder().name("zhang3")
+        .age(11)
+            .gender("male")
+            .job("coder")
+        .build();
+        System.out.println("person = " + p);
+    }
 }
