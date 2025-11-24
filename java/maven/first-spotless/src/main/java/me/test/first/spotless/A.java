@@ -40,11 +40,8 @@ Person p = Person.builder().name("zhang3")
                             }
                 ))
                 .forEach(s -> {
-                    if (s.length() > 100) {
-                        System.out.println(s);
-                    } else if (s.length() > 10) {
-                        System.out.println(s);
-                    } else {
+                    if (s.length() > 100) {System.out.println(s);} else if (s.length() > 10) {
+                        System.out.println(s);} else {
                         System.out.println(s);
                     }
                 });
