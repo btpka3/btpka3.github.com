@@ -510,17 +510,22 @@
               <formatJavadoc>false</formatJavadoc>
             </palantirJavaFormat>
           </java>
-          <pom>
-            <sortPom>
-              <expandEmptyElements>false</expandEmptyElements>
-              <spaceBeforeCloseEmptyElement>true</spaceBeforeCloseEmptyElement>
-            </sortPom>
-          </pom>
-            <groovy>
-                 <importOrder/>
-                 <greclipse/>
+<!--          <pom>-->
+<!--            <sortPom>-->
+<!--              <expandEmptyElements>false</expandEmptyElements>-->
+<!--              <spaceBeforeCloseEmptyElement>true</spaceBeforeCloseEmptyElement>-->
+<!--            </sortPom>-->
+<!--          </pom>-->
+<!--            <groovy>-->
+<!--                 <importOrder/>-->
+<!--                 <greclipse>-->
+<!--                     <version>5.9.0</version>-->
+<!--                 </greclipse>-->
 
-            </groovy>
+<!--            </groovy>-->
+             <shell>
+                  <shfmt />
+             </shell>
         </configuration>
 
       </plugin>
