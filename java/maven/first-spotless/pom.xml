@@ -519,7 +519,7 @@
             <groovy>
                  <importOrder/>
                  <greclipse/>
-                    <excludeJava/>
+
             </groovy>
         </configuration>
 
