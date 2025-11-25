@@ -39,6 +39,7 @@
     <junit5.version>5.12.2</junit5.version>
     <asm.version>9.8</asm.version>
     <netty.version>4.2.1.Final</netty.version>
+      <groovy.version>5.0.2</groovy.version>
   </properties>
 
   <dependencyManagement>
@@ -106,12 +107,17 @@
         <version>${jmh.version}</version>
         <scope>provided</scope>
       </dependency>
-      <dependency>
-        <groupId>org.apache.groovy</groupId>
-        <artifactId>groovy-all</artifactId>
-        <version>4.0.25</version>
-        <type>pom</type>
-      </dependency>
+<!--      <dependency>-->
+<!--        <groupId>org.apache.groovy</groupId>-->
+<!--        <artifactId>groovy-all</artifactId>-->
+<!--        <version>4.0.25</version>-->
+<!--        <type>pom</type>-->
+<!--      </dependency>-->
+        <dependency>
+            <groupId>org.apache.groovy</groupId>
+            <artifactId>groovy</artifactId>
+            <version>${groovy.version}</version>
+        </dependency>
       <dependency>
         <groupId>org.graalvm.polyglot</groupId>
         <artifactId>polyglot</artifactId>
@@ -397,6 +403,11 @@
           <artifactId>spotless-maven-plugin</artifactId>
           <version>2.44.5</version>
         </plugin>
+          <plugin>
+              <groupId>org.codehaus.gmavenplus</groupId>
+              <artifactId>gmavenplus-plugin</artifactId>
+              <version>4.2.0</version>
+          </plugin>
 
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -406,13 +417,6 @@
             <propertyExpansion>rootDir=build-tools/checkstyle</propertyExpansion>
             <!--                        rootDir=${maven.multiModuleProjectDirectory}/checkstyle-->
           </configuration>
-          <dependencies>
-            <dependency>
-              <groupId>me.test</groupId>
-              <artifactId>build-tools</artifactId>
-              <version>${project.version}</version>
-            </dependency>
-          </dependencies>
         </plugin>
 
         <plugin>
@@ -470,6 +474,26 @@
       </plugins>
     </pluginManagement>
     <plugins>
+
+          <plugin>
+              <groupId>org.codehaus.gmavenplus</groupId>
+              <artifactId>gmavenplus-plugin</artifactId>
+               <executions>
+          <execution>
+            <goals>
+              <goal>addSources</goal>
+              <goal>addTestSources</goal>
+              <goal>generateStubs</goal>
+              <goal>compile</goal>
+              <goal>generateTestStubs</goal>
+              <goal>compileTests</goal>
+              <goal>removeStubs</goal>
+              <goal>removeTestStubs</goal>
+            </goals>
+          </execution>
+        </executions>
+          </plugin>
+
       <plugin>
         <!-- https://github.com/diffplug/spotless/tree/main/plugin-maven -->
         <groupId>com.diffplug.spotless</groupId>
