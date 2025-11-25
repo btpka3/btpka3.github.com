@@ -516,6 +516,11 @@
               <spaceBeforeCloseEmptyElement>true</spaceBeforeCloseEmptyElement>
             </sortPom>
           </pom>
+            <groovy>
+                 <importOrder/>
+                 <greclipse/>
+                    <excludeJava/>
+            </groovy>
         </configuration>
 
       </plugin>
