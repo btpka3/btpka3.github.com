@@ -42,6 +42,13 @@
       <groovy.version>5.0.2</groovy.version>
   </properties>
 
+    <!--<pluginRepositories>
+  <pluginRepository>
+    <id>groovy-plugins-release</id>
+    <url>https://groovy.jfrog.io/artifactory/plugins-release</url>
+  </pluginRepository>
+</pluginRepositories>-->
+
   <dependencyManagement>
 
     <dependencies>
@@ -517,14 +524,20 @@
 <!--            </sortPom>-->
 <!--          </pom>-->
 <!--            <groovy>-->
-<!--                 <importOrder/>-->
-<!--                 <greclipse>-->
-<!--                     <version>5.9.0</version>-->
-<!--                 </greclipse>-->
-
+<!--                <importOrder/>-->
+<!--                &lt;!&ndash; https://github.com/diffplug/spotless/blob/main/lib-extra/src/main/java/com/diffplug/spotless/extra/groovy/GrEclipseFormatterStep.java#L31 &ndash;&gt;-->
+<!--                &lt;!&ndash; https://github.com/diffplug/spotless/issues/1658 &ndash;&gt;-->
+<!--                <greclipse>-->
+<!--                    <version>4.37</version>  &lt;!&ndash; optional version of Eclipse Formatter &ndash;&gt;-->
+<!--                    <file>${project.basedir}/greclipse.properties</file> &lt;!&ndash; optional &ndash;&gt;-->
+<!--                </greclipse>-->
 <!--            </groovy>-->
              <shell>
-                  <shfmt />
+                  <shfmt>
+                      <!-- 这里的版本需要能与下面的 pathToExe 的一致 -->
+                      <version>3.12.0</version>
+                      <pathToExe>/opt/homebrew/bin/shfmt</pathToExe>
+                  </shfmt>
              </shell>
         </configuration>
 

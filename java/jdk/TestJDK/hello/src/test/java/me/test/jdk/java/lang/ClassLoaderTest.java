@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -63,6 +64,12 @@ public class ClassLoaderTest {
         URLClassLoader cl = new URLClassLoader(new URL[]{dirUrl}, null, null);
         Class clazz = Class.forName("me.test.jdk.java.lang.MyParentClass", true, cl);
         System.out.println("clazz.getName() = " + clazz.getName());
+
+        // 需要增加JVM 开关: --add-opens=java.base/java.lang=ALL-UNNAMED
+        Method m = ClassLoader.class.getDeclaredMethod("findLoadedClass", String.class);
+        m.setAccessible(true);
+        Class clazz2 = (Class) m.invoke(cl, "me.test.jdk.java.lang.MyParentClass");
+        System.out.println("clazz2 = " + clazz2);
     }
 
     public class MyClassLoader extends ClassLoader {
@@ -162,6 +169,10 @@ public class ClassLoaderTest {
                 System.out.println(s);
             }
         }
+
+    }
+
+    public void testf() {
 
     }
 

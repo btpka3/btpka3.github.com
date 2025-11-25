@@ -15,6 +15,13 @@ public class Thread1Test {
     @Test
     public void test01() throws InterruptedException {
         Thread thread = new Thread(() -> {
+
+            try {
+                Class.forName("btpka3.NotExistedClass");
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
+
             throw new RuntimeException("DemoErr");
         }, "aaa");
         if (thread.getUncaughtExceptionHandler() == null) {
@@ -35,10 +42,16 @@ public class Thread1Test {
 
         Thread.sleep(3000);
     }
+
     @Test
-    public void testGetStackTrace(){
+    public void testGetStackTrace() {
         System.out.println(Thread.currentThread().getStackTrace().length);
+        System.out.println(Xxx.class.getName());
     }
 
+
+    public static class Xxx {
+
+    }
 
 }
