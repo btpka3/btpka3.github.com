@@ -51,6 +51,15 @@ public class JsonTest {
         System.out.println("======m2:\n" + m2);
     }
 
+    @Test
+    public void testArray01() {
+        Object obj = JSON.parse("{\"a\":[\"a1\",\"a2\"]}");
+        Assertions.assertEquals("com.alibaba.fastjson2.JSONObject", obj.getClass().getName());
+        Map map = (Map) obj;
+        Object a = map.get("a");
+        Assertions.assertEquals("com.alibaba.fastjson2.JSONArray", a.getClass().getName());
+    }
+
 
     @Test
     public void testCustomWriterAndReader() {

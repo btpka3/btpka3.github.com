@@ -38,7 +38,7 @@ public class DecodeMessage {
         System.out.println("================");
         String json = JSON.toJSONString(
                 ctx,
-                //SerializerFeature.WriteClassName,
+                SerializerFeature.WriteClassName,
                 SerializerFeature.WriteNonStringKeyAsString,
                 SerializerFeature.PrettyFormat,
                 SerializerFeature.WriteMapNullValue
