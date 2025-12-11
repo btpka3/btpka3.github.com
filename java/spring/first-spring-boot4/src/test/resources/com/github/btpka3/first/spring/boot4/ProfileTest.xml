@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans profile="xxx"
+       xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		https://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--
+    http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+    -->
+    <bean id="xmlX" class="java.lang.String">
+        <constructor-arg value="xml-xxx"/>
+    </bean>
+
+    <!-- 与 -->
+    <beans profile="p1">
+        <beans profile="p2">
+            <bean id="xmlA" class="java.lang.String">
+                <constructor-arg value="xml-aaa"/>
+            </bean>
+        </beans>
+    </beans>
+    <!-- not work -->
+    <!--    <beans profile="p1 &amp; p2">-->
+    <!--        <bean id="xmlA" class="java.lang.String">-->
+    <!--            <constructor-arg value="xml-aaa"/>-->
+    <!--        </bean>-->
+    <!--    </beans>-->
+
+    <!-- 或 -->
+    <beans profile="p1,p2">
+        <bean id="xmlB" class="java.lang.String">
+            <constructor-arg value="xml-bbb"/>
+        </bean>
+    </beans>
+
+    <!-- 非 -->
+    <beans profile="!p2">
+        <bean id="xmlC" class="java.lang.String">
+            <constructor-arg value="xml-ccc"/>
+        </bean>
+    </beans>
+
+    <!--  FIXME : bean 不能声明在 beans 后面
+    <bean id="xmlY" class="java.lang.String">
+        <constructor-arg value="xml-yyy"/>
+    </bean>
+    -->
+
+</beans>

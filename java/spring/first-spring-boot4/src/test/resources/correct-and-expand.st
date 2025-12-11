@@ -1,0 +1,1 @@
+Generate a more detailed version of the following text, ensuring accuracy and clarity: {input}
