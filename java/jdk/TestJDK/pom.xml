@@ -19,12 +19,12 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
 
-<!--        <checkstyle.config.location>${maven.multiModuleProjectDirectory}/checkstyle/checkstyle.xml</checkstyle.config.location>-->
+        <!--        <checkstyle.config.location>${maven.multiModuleProjectDirectory}/checkstyle/checkstyle.xml</checkstyle.config.location>-->
         <checkstyle.config.location>build-tools/checkstyle/checkstyle.xml</checkstyle.config.location>
         <checkstyle.consoleOutput>true</checkstyle.consoleOutput>
         <checkstyle.failOnViolation>false</checkstyle.failOnViolation>
         <checkstyle.console>true</checkstyle.console>
-<!--        <checkstyle.properties.location>${maven.multiModuleProjectDirectory}/checkstyle/checkstyle.properties</checkstyle.properties.location>-->
+        <!--        <checkstyle.properties.location>${maven.multiModuleProjectDirectory}/checkstyle/checkstyle.properties</checkstyle.properties.location>-->
         <checkstyle.properties.location>build-tools/checkstyle/checkstyle.properties</checkstyle.properties.location>
 
         <pmd.failOnViolation>false</pmd.failOnViolation>
@@ -47,6 +47,7 @@
         <junit5.version>5.12.2</junit5.version>
         <asm.version>9.8</asm.version>
         <netty.version>4.2.1.Final</netty.version>
+        <archunit.version>1.4.1</archunit.version>
     </properties>
 
 
@@ -165,6 +166,44 @@
             </dependency>
 
             <dependency>
+                <groupId>com.tngtech.archunit</groupId>
+                <artifactId>archunit</artifactId>
+                <version>${archunit.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.tngtech.archunit</groupId>
+                <artifactId>archunit-junit5-engine-api</artifactId>
+                <version>${archunit.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.tngtech.archunit</groupId>
+                <artifactId>archunit-junit5-engine</artifactId>
+                <version>${archunit.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.tngtech.archunit</groupId>
+                <artifactId>archunit-junit5-api</artifactId>
+                <version>${archunit.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.tngtech.archunit</groupId>
+                <artifactId>archunit-junit5</artifactId>
+                <version>${archunit.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.tngtech.archunit</groupId>
+                <artifactId>archunit-junit4</artifactId>
+                <version>${archunit.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+
+            <dependency>
                 <groupId>org.apache-extras.beanshell</groupId>
                 <artifactId>bsh</artifactId>
                 <version>2.0b6</version>
@@ -186,7 +225,6 @@
             <!--                <version>${graalvm-js.version}</version>-->
             <!--                <type>pom</type>-->
             <!--            </dependency>-->
-
 
 
             <dependency>
@@ -523,11 +561,11 @@
                         </dependency>
                     </dependencies>
                     <configuration>
-                            <propertyExpansion>
-                                rootDir=build-tools/checkstyle
-                            </propertyExpansion>
-<!--                        rootDir=${maven.multiModuleProjectDirectory}/checkstyle-->
-                        </configuration>
+                        <propertyExpansion>
+                            rootDir=build-tools/checkstyle
+                        </propertyExpansion>
+                        <!--                        rootDir=${maven.multiModuleProjectDirectory}/checkstyle-->
+                    </configuration>
                 </plugin>
 
                 <plugin>
@@ -588,34 +626,34 @@
 
     <reporting>
         <plugins>
-           <plugin>
-               <groupId>org.apache.maven.plugins</groupId>
-               <artifactId>maven-pmd-plugin</artifactId>
-               <configuration>
-                   <rulesets>
-                       <ruleset>/rulesets/java/maven-pmd-plugin-default.xml</ruleset>
-                       <ruleset>/category/java/bestpractices.xml</ruleset>
-                   </rulesets>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <configuration>
+                    <rulesets>
+                        <ruleset>/rulesets/java/maven-pmd-plugin-default.xml</ruleset>
+                        <ruleset>/category/java/bestpractices.xml</ruleset>
+                    </rulesets>
 
-               </configuration>
-               <reportSets>
-                   <reportSet><!-- by default, id = "default" -->
-                       <reports><!-- select non-aggregate reports -->
-                           <report>pmd</report>
-                           <report>cpd</report>
-                       </reports>
-                   </reportSet>
-                   <reportSet><!-- aggregate reportSet, to define in poms having modules -->
-                       <id>aggregate</id>
-                       <inherited>false</inherited> <!-- don't run aggregate in child modules -->
-                       <reports>
-                           <report>aggregate-pmd</report>
-                           <report>aggregate-cpd</report>
-                       </reports>
-                   </reportSet>
-               </reportSets>
+                </configuration>
+                <reportSets>
+                    <reportSet><!-- by default, id = "default" -->
+                        <reports><!-- select non-aggregate reports -->
+                            <report>pmd</report>
+                            <report>cpd</report>
+                        </reports>
+                    </reportSet>
+                    <reportSet><!-- aggregate reportSet, to define in poms having modules -->
+                        <id>aggregate</id>
+                        <inherited>false</inherited> <!-- don't run aggregate in child modules -->
+                        <reports>
+                            <report>aggregate-pmd</report>
+                            <report>aggregate-cpd</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
 
-           </plugin>
+            </plugin>
         </plugins>
     </reporting>
 </project>

@@ -59,6 +59,14 @@ public class JsonTest {
         Object a = map.get("a");
         Assertions.assertEquals("com.alibaba.fastjson2.JSONArray", a.getClass().getName());
     }
+     @Test
+    public void testArray02() {
+        Object obj = JSON.parseObject("{\"a\":[\"a1\",\"a2\"]}", Map.class);
+        Assertions.assertEquals("java.util.HashMap", obj.getClass().getName());
+        Map map = (Map) obj;
+        Object a = map.get("a");
+        Assertions.assertEquals("com.alibaba.fastjson2.JSONArray", a.getClass().getName());
+    }
 
 
     @Test
