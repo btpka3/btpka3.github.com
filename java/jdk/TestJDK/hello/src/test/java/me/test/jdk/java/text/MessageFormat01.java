@@ -79,7 +79,7 @@ public class MessageFormat01 {
                     Map.of(CHINESE, "12345.10", ENGLISH, "12345.10")),
 
             new Rec("Date默认格式", "{0}", new Object[]{TEST_DATE},
-                    Map.of(CHINESE, "2001/1/2 03:04", ENGLISH, "1/2/01, 3:04 AM")),
+                    Map.of(CHINESE, "2001/1/2 03:04", ENGLISH, "1/2/01, 3:04 AM")),
 
             new Rec("Date格式", "{0,date}", new Object[]{TEST_DATE},
                     Map.of(CHINESE, "2001年1月2日", ENGLISH, "Jan 2, 2001")),
@@ -97,19 +97,19 @@ public class MessageFormat01 {
                     Map.of(CHINESE, "2001年1月2日星期二", ENGLISH, "Tuesday, January 2, 2001")),
 
             new Rec("Time默认格式", "{0,time}", new Object[]{TEST_DATE},
-                    Map.of(CHINESE, "03:04:05", ENGLISH, "3:04:05 AM")),
+                    Map.of(CHINESE, "03:04:05", ENGLISH, "3:04:05\u202fAM")),
 
             new Rec("Time short格式", "{0,time,short}", new Object[]{TEST_DATE},
-                    Map.of(CHINESE, "03:04", ENGLISH, "3:04 AM")),
+                    Map.of(CHINESE, "03:04", ENGLISH, "3:04\u202fAM")),
 
             new Rec("Time medium格式", "{0,time,medium}", new Object[]{TEST_DATE},
-                    Map.of(CHINESE, "03:04:05", ENGLISH, "3:04:05 AM")),
+                    Map.of(CHINESE, "03:04:05", ENGLISH, "3:04:05\u202fAM")),
 
             new Rec("Time long格式", "{0,time,long}", new Object[]{TEST_DATE},
-                    Map.of(CHINESE, "CST 03:04:05", ENGLISH, "3:04:05 AM CST")),
+                    Map.of(CHINESE, "CST 03:04:05", ENGLISH, "3:04:05\u202fAM CST")),
 
             new Rec("Time full格式", "{0,time,full}", new Object[]{TEST_DATE},
-                    Map.of(CHINESE, "中国标准时间 03:04:05", ENGLISH, "3:04:05 AM China Standard Time")),
+                    Map.of(CHINESE, "中国标准时间 03:04:05", ENGLISH, "3:04:05\u202fAM China Standard Time")),
 
             new Rec("自定义日期格式", "{0,date,yyyy-MM-dd HH:mm:ss.S}", new Object[]{TEST_DATE},
                     Map.of(CHINESE, "2001-01-02 03:04:05.789", ENGLISH, "2001-01-02 03:04:05.789")),
