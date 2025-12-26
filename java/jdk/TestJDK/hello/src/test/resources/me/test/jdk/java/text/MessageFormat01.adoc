@@ -1,0 +1,242 @@
+= MessageFormat 测试结果文档
+
+本文档记录了 `MessageFormat01` 测试类的所有测试用例及其在不同 Locale 下的预期结果。
+
+== 测试数据说明
+
+* 测试日期：`TEST_DATE = new Date(978375845789L)` 对应 `2001-01-02 03:04:05.789`
+* 测试 Locale：`Locale.CHINESE` 和 `Locale.ENGLISH`
+* 测试用例总数：27 个
+
+== 测试结果表格
+
+NOTE: ⚠️ 部分结果中包含不可见字符（如不间断空格 `\u00A0`），在英文 Locale 的时间格式中，数字和 AM/PM 之间使用的是不间断空格而非普通空格。
+
+[#test-results,cols="1,2,2,3,3,3"]
+.MessageFormat 各种格式化测试结果
+|===
+|序号 |描述 |Value |Pattern |Locale.CHINESE 结果 |Locale.ENGLISH 结果
+
+|0
+|基本数值格式化
+|`double value=1234567890.123456`
+|`"{0}"`
+|`"1,234,567,890.123"`
+|`"1,234,567,890.123"`
+
+|1
+|百分比格式
+|`double value=1.23456`
+|`"{0,number,percent}"`
+|`"123%"`
+|`"123%"`
+
+|2
+|货币格式
+|`double value=1234567890.123`
+|`"{0,number,currency}"`
+|`"¤1,234,567,890.12"`
+|`"¤1,234,567,890.12"`
+
+|3
+|货币符号单个¤
+|`double value=1234567890.123`
+|`"{0,number,¤#.##}"`
+|`"¤1234567890.12"`
+|`"¤1234567890.12"`
+
+|4
+|货币符号双个¤¤
+|`double value=1234567890.123`
+|`"{0,number,¤¤#.##}"`
+|`"XXX1234567890.12"`
+|`"XXX1234567890.12"`
+
+|5
+|整数格式(带逗号)
+|`int value=1234567890`
+|`"{0,number,integer}"`
+|`"1,234,567,890"`
+|`"1,234,567,890"`
+
+|6
+|整数格式(不带逗号)
+|`int value=1234567890`
+|`"{0,number,#}"`
+|`"1234567890"`
+|`"1234567890"`
+
+|7
+|负数格式
+|`int value=-1234567890`
+|`"{0,number,#}"`
+|`"-1234567890"`
+|`"-1234567890"`
+
+|8
+|4位分组
+|`double value=1234567890.123456`
+|`"{0,number,#,####.##}"`
+|`"12,3456,7890.12"`
+|`"12,3456,7890.12"`
+
+|9
+|3位分组
+|`double value=1234567890.1`
+|`"{0,number,#,###.##}"`
+|`"1,234,567,890.1"`
+|`"1,234,567,890.1"`
+
+|10
+|前导零(小数)
+|`double value=123.1`
+|`"{0,number,0000.00}"`
+|`"0123.10"`
+|`"0123.10"`
+
+|11
+|前导零(大数)
+|`double value=12345.1`
+|`"{0,number,0000.00}"`
+|`"12345.10"`
+|`"12345.10"`
+
+|12
+|Date默认格式
+|`Date value=TEST_DATE` (978375845789L)
+|`"{0}"`
+|`"2001/1/2 03:04"`
+|`"1/2/01, 3:04 AM"` 注:含不间断空格
+
+|13
+|Date格式
+|`Date value=TEST_DATE`
+|`"{0,date}"`
+|`"2001年1月2日"`
+|`"Jan 2, 2001"`
+
+|14
+|Date short格式
+|`Date value=TEST_DATE`
+|`"{0,date,short}"`
+|`"2001/1/2"`
+|`"1/2/01"`
+
+|15
+|Date medium格式
+|`Date value=TEST_DATE`
+|`"{0,date,medium}"`
+|`"2001年1月2日"`
+|`"Jan 2, 2001"`
+
+|16
+|Date long格式
+|`Date value=TEST_DATE`
+|`"{0,date,long}"`
+|`"2001年1月2日"`
+|`"January 2, 2001"`
+
+|17
+|Date full格式
+|`Date value=TEST_DATE`
+|`"{0,date,full}"`
+|`"2001年1月2日星期二"`
+|`"Tuesday, January 2, 2001"`
+
+|18
+|Time默认格式
+|`Date value=TEST_DATE`
+|`"{0,time}"`
+|`"03:04:05"`
+|`"3:04:05 AM"` 注:含不间断空格
+
+|19
+|Time short格式
+|`Date value=TEST_DATE`
+|`"{0,time,short}"`
+|`"03:04"`
+|`"3:04 AM"` 注:含不间断空格
+
+|20
+|Time medium格式
+|`Date value=TEST_DATE`
+|`"{0,time,medium}"`
+|`"03:04:05"`
+|`"3:04:05 AM"` 注:含不间断空格
+
+|21
+|Time long格式
+|`Date value=TEST_DATE`
+|`"{0,time,long}"`
+|`"CST 03:04:05"`
+|`"3:04:05 AM CST"` 注:含不间断空格
+
+|22
+|Time full格式
+|`Date value=TEST_DATE`
+|`"{0,time,full}"`
+|`"中国标准时间 03:04:05"`
+|`"3:04:05 AM China Standard Time"` 注:含不间断空格
+
+|23
+|自定义日期格式
+|`Date value=TEST_DATE`
+|`"{0,date,yyyy-MM-dd HH:mm:ss.S}"`
+|`"2001-01-02 03:04:05.789"`
+|`"2001-01-02 03:04:05.789"`
+
+|24
+|单引号转义
+|`String[] values={"aaa", "bbb", "ccc"}`
+|`"'{0}',''{1}'',{2}"`
+|`"{0},'bbb',ccc"`
+|`"{0},'bbb',ccc"`
+
+|25
+|空占位符异常
+|`String[] values={"aaa", "bbb", "ccc"}`
+|`"{},{0},{1},{2}"`
+|`IllegalArgumentException`
+|`IllegalArgumentException`
+
+|===
+
+== 测试说明
+
+=== 数值格式化
+* 基本数值格式化会自动添加千位分隔符
+* 可以通过 `#` 模式去除千位分隔符
+* 支持自定义分组大小（如 4 位分组）
+* 支持前导零格式化
+
+=== 货币格式化
+* `¤` 表示货币符号占位符
+* `¤¤` 表示 ISO 4217 货币代码（如 XXX）
+
+=== 日期时间格式化
+* 支持多种预定义格式：short、medium、long、full
+* 不同 Locale 下的日期时间格式差异较大
+* 支持自定义日期时间格式（参考 SimpleDateFormat）
+
+=== 特殊字符处理
+* 单引号 `'` 是转义字符
+* 两个单引号 `''` 表示一个单引号字符
+* 空的占位符 `{}` 会抛出 IllegalArgumentException
+
+== 测试执行方式
+
+[source,bash]
+----
+# 在项目根目录执行
+mvn test -Dtest=MessageFormat01 -Dsurefire.failIfNoSpecifiedTests=false -am -pl hello
+----
+
+== 重构说明
+
+本测试类已进行重构，主要改进包括：
+
+1. **数据驱动测试**：将所有测试数据提取到 `recList` 字段中
+2. **循环执行**：使用 for 循环遍历测试数据，替代原有的独立测试方法
+3. **错误定位**：测试失败时能明确指出是哪条记录（序号）出错
+4. **日志优化**：使用 SLF4J 日志框架替代 System.out/err
+5. **代码复用**：提取 `TEST_DATE` 静态常量，避免重复创建 Date 对象

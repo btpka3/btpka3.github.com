@@ -2,6 +2,7 @@ package me.test.jdk.java.text;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
 import java.text.MessageFormat;
@@ -16,19 +17,16 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
+@Slf4j
 public class MessageFormat01 {
 
-
-//    private Map<Locale, List<Object>> map = Map.of(
-//            Locale.CHINESE, List.of(
-//                    List.of("{0}", new Object[]{1234567890.123456}, "1,234,567,890.123"),
-//
-//            )
-//    );
+    // "2001-01-02 03:04:05.789" == 978375845789
+    private static final Date TEST_DATE = new Date(978375845789L);
 
     @Data
     @AllArgsConstructor
     static class Rec {
+        String description;
         String pattern;
         Object[] args;
         /**
@@ -36,215 +34,141 @@ public class MessageFormat01 {
          * VALUE=期待的结果
          */
         Map<Locale, String> expected;
+        boolean shouldThrowException;
+
+        public Rec(String description, String pattern, Object[] args, Map<Locale, String> expected) {
+            this(description, pattern, args, expected, false);
+        }
     }
 
     List<Rec> recList = List.of(
-            new Rec("{0}", new Object[]{1234567890.123456}, Map.of(Locale.CHINESE, "1,234,567,890.123", Locale.ENGLISH, "1,234,567,890.123"))
+            new Rec("基本数值格式化", "{0}", new Object[]{1234567890.123456},
+                    Map.of(CHINESE, "1,234,567,890.123", ENGLISH, "1,234,567,890.123")),
+
+            new Rec("百分比格式", "{0,number,percent}", new Object[]{1.23456},
+                    Map.of(CHINESE, "123%", ENGLISH, "123%")),
+
+            new Rec("货币格式", "{0,number,currency}", new Object[]{1234567890.123},
+                    Map.of(CHINESE, "¤1,234,567,890.12", ENGLISH, "¤1,234,567,890.12")),
+
+            new Rec("货币符号单个¤", "{0,number,¤#.##}", new Object[]{1234567890.123},
+                    Map.of(CHINESE, "¤1234567890.12", ENGLISH, "¤1234567890.12")),
+
+            new Rec("货币符号双个¤¤", "{0,number,¤¤#.##}", new Object[]{1234567890.123},
+                    Map.of(CHINESE, "XXX1234567890.12", ENGLISH, "XXX1234567890.12")),
+
+            new Rec("整数格式(带逗号)", "{0,number,integer}", new Object[]{1234567890},
+                    Map.of(CHINESE, "1,234,567,890", ENGLISH, "1,234,567,890")),
+
+            new Rec("整数格式(不带逗号)", "{0,number,#}", new Object[]{1234567890},
+                    Map.of(CHINESE, "1234567890", ENGLISH, "1234567890")),
+
+            new Rec("负数格式", "{0,number,#}", new Object[]{-1234567890},
+                    Map.of(CHINESE, "-1234567890", ENGLISH, "-1234567890")),
+
+            new Rec("4位分组", "{0,number,#,####.##}", new Object[]{1234567890.123456},
+                    Map.of(CHINESE, "12,3456,7890.12", ENGLISH, "12,3456,7890.12")),
+
+            new Rec("3位分组", "{0,number,#,###.##}", new Object[]{1234567890.1},
+                    Map.of(CHINESE, "1,234,567,890.1", ENGLISH, "1,234,567,890.1")),
+
+            new Rec("前导零(小数)", "{0,number,0000.00}", new Object[]{123.1},
+                    Map.of(CHINESE, "0123.10", ENGLISH, "0123.10")),
+
+            new Rec("前导零(大数)", "{0,number,0000.00}", new Object[]{12345.1},
+                    Map.of(CHINESE, "12345.10", ENGLISH, "12345.10")),
+
+            new Rec("Date默认格式", "{0}", new Object[]{TEST_DATE},
+                    Map.of(CHINESE, "2001/1/2 03:04", ENGLISH, "1/2/01, 3:04 AM")),
+
+            new Rec("Date格式", "{0,date}", new Object[]{TEST_DATE},
+                    Map.of(CHINESE, "2001年1月2日", ENGLISH, "Jan 2, 2001")),
+
+            new Rec("Date short格式", "{0,date,short}", new Object[]{TEST_DATE},
+                    Map.of(CHINESE, "2001/1/2", ENGLISH, "1/2/01")),
+
+            new Rec("Date medium格式", "{0,date,medium}", new Object[]{TEST_DATE},
+                    Map.of(CHINESE, "2001年1月2日", ENGLISH, "Jan 2, 2001")),
+
+            new Rec("Date long格式", "{0,date,long}", new Object[]{TEST_DATE},
+                    Map.of(CHINESE, "2001年1月2日", ENGLISH, "January 2, 2001")),
+
+            new Rec("Date full格式", "{0,date,full}", new Object[]{TEST_DATE},
+                    Map.of(CHINESE, "2001年1月2日星期二", ENGLISH, "Tuesday, January 2, 2001")),
+
+            new Rec("Time默认格式", "{0,time}", new Object[]{TEST_DATE},
+                    Map.of(CHINESE, "03:04:05", ENGLISH, "3:04:05 AM")),
+
+            new Rec("Time short格式", "{0,time,short}", new Object[]{TEST_DATE},
+                    Map.of(CHINESE, "03:04", ENGLISH, "3:04 AM")),
+
+            new Rec("Time medium格式", "{0,time,medium}", new Object[]{TEST_DATE},
+                    Map.of(CHINESE, "03:04:05", ENGLISH, "3:04:05 AM")),
+
+            new Rec("Time long格式", "{0,time,long}", new Object[]{TEST_DATE},
+                    Map.of(CHINESE, "CST 03:04:05", ENGLISH, "3:04:05 AM CST")),
+
+            new Rec("Time full格式", "{0,time,full}", new Object[]{TEST_DATE},
+                    Map.of(CHINESE, "中国标准时间 03:04:05", ENGLISH, "3:04:05 AM China Standard Time")),
+
+            new Rec("自定义日期格式", "{0,date,yyyy-MM-dd HH:mm:ss.S}", new Object[]{TEST_DATE},
+                    Map.of(CHINESE, "2001-01-02 03:04:05.789", ENGLISH, "2001-01-02 03:04:05.789")),
+
+            new Rec("单引号转义", "'{0}',''{1}'',{2}", new Object[]{"aaa", "bbb", "ccc"},
+                    Map.of(CHINESE, "{0},'bbb',ccc", ENGLISH, "{0},'bbb',ccc")),
+
+            new Rec("空占位符异常", "{},{0},{1},{2}", new Object[]{"aaa", "bbb", "ccc"},
+                    Map.of(CHINESE, "IllegalArgumentException", ENGLISH, "IllegalArgumentException"), true)
     );
+
+
 
 
     @Test
     public void test() {
-//        Locale targetLocale = Locale.CHINESE;
-        Locale targetLocale = Locale.ENGLISH;
+        testWithLocale(CHINESE);
+        testWithLocale(ENGLISH);
+    }
+
+    private void testWithLocale(Locale targetLocale) {
         Locale.setDefault(targetLocale);
         assertSame(targetLocale, Locale.getDefault(Locale.Category.FORMAT));
         assertSame(targetLocale, Locale.getDefault());
 
-        {
-            String msg = MessageFormat.format("{0}", 1234567890.123456);
-            assertEquals("1,234,567,890.123", msg);
-        }
+        log.info("\n========== Testing with Locale: {} ==========", targetLocale);
 
-        {
-            String msg = MessageFormat.format("{0,number,percent}", 1.23456);
-            assertEquals("123%", msg);
-        }
-        // \u00A4 : `¤` 表示货币
-        {
-            String msg = MessageFormat.format("{0,number,currency}", 1234567890.123);
-            assertEquals("¤1,234,567,890.12", msg);
-        }
-        {
-            String msg = MessageFormat.format("{0,number,¤#.##}", 1234567890.123);
-            assertEquals("¤1234567890.12", msg);
-        }
-        {
-            String msg = MessageFormat.format("{0,number,¤¤#.##}", 1234567890.123);
-            assertEquals("XXX1234567890.12", msg);
-        }
+        for (int i = 0; i < recList.size(); i++) {
+            Rec rec = recList.get(i);
+            String expectedResult = rec.getExpected().get(targetLocale);
 
-
-        // 注意：默认数值还是会有逗号分隔的
-        {
-            String msg = MessageFormat.format("{0,number,integer}", 1234567890);
-            assertEquals("1,234,567,890", msg);
-        }
-        // 数值，整数（比如数据库中的自增ID）
-        {
-            String msg = MessageFormat.format("{0,number,#}", 1234567890);
-            assertEquals("1234567890", msg);
-        }
-        // 数值，负数
-        {
-            String msg = MessageFormat.format("{0,number,#}", -1234567890);
-            assertEquals("-1234567890", msg);
-        }
-        // 参考  java.text.DecimalFormat， 整数部分按照4个数字一组
-        {
-            String msg = MessageFormat.format("{0,number,#,####.##}", 1234567890.123456);
-            assertEquals("12,3456,7890.12", msg);
-        }
-        // 参考  java.text.DecimalFormat， 整数部分按照3个数字一组
-        {
-            String msg = MessageFormat.format("{0,number,#,###.##}", 1234567890.1);
-            assertEquals("1,234,567,890.1", msg);
-        }
-        // 参考  java.text.DecimalFormat， 前导零
-        {
-            String msg = MessageFormat.format("{0,number,0000.00}", 123.1);
-            assertEquals("0123.10", msg);
-        }
-
-        {
-            String msg = MessageFormat.format("{0,number,0000.00}", 12345.1);
-            assertEquals("12345.10", msg);
-        }
-
-        {
-            Date date = new Date(978375845789L);
-            String msg = MessageFormat.format("{0}", date);
-
-            if (CHINESE == targetLocale) {
-                assertEquals("2001/1/2 03:04", msg);
-            }
-            if (ENGLISH == targetLocale) {
-                assertEquals("1/2/01, 3:04 AM", msg);
-            }
-
-        }
-
-        {
-            Date date = new Date(978375845789L);
-            String msg = MessageFormat.format("{0,date}", date);
-            if (CHINESE == targetLocale) {
-                assertEquals("2001年1月2日", msg);
-            }
-            if (ENGLISH == targetLocale) {
-                assertEquals("Jan 2, 2001", msg);
-            }
-        }
-        {
-            Date date = new Date(978375845789L);
-            String msg = MessageFormat.format("{0,date,short}", date);
-            if (CHINESE == targetLocale) {
-                assertEquals("2001/1/2", msg);
-            }
-            if (ENGLISH == targetLocale) {
-                assertEquals("1/2/01", msg);
-            }
-        }
-        {
-            Date date = new Date(978375845789L);
-            String msg = MessageFormat.format("{0,date,medium}", date);
-            if (CHINESE == targetLocale) {
-                assertEquals("2001年1月2日", msg);
-            }
-            if (ENGLISH == targetLocale) {
-                assertEquals("Jan 2, 2001", msg);
-            }
-        }
-        {
-            Date date = new Date(978375845789L);
-            String msg = MessageFormat.format("{0,date,long}", date);
-            if (CHINESE == targetLocale) {
-                assertEquals("2001年1月2日", msg);
-            }
-            if (ENGLISH == targetLocale) {
-                assertEquals("January 2, 2001", msg);
-            }
-        }
-        {
-            Date date = new Date(978375845789L);
-            String msg = MessageFormat.format("{0,date,full}", date);
-            if (CHINESE == targetLocale) {
-                assertEquals("2001年1月2日星期二", msg);
-            }
-            if (ENGLISH == targetLocale) {
-                assertEquals("Tuesday, January 2, 2001", msg);
-            }
-        }
-        {
-            Date date = new Date(978375845789L);
-            String msg = MessageFormat.format("{0,time}", date);
-            if (CHINESE == targetLocale) {
-                assertEquals("03:04:05", msg);
-            }
-            if (ENGLISH == targetLocale) {
-                assertEquals("3:04:05 AM", msg);
-            }
-        }
-        {
-            Date date = new Date(978375845789L);
-            String msg = MessageFormat.format("{0,time,short}", date);
-            if (CHINESE == targetLocale) {
-                assertEquals("03:04", msg);
-            }
-            if (ENGLISH == targetLocale) {
-                assertEquals("3:04 AM", msg);
-            }
-        }
-        {
-            Date date = new Date(978375845789L);
-            String msg = MessageFormat.format("{0,time,medium}", date);
-            if (CHINESE == targetLocale) {
-                assertEquals("03:04:05", msg);
-            }
-            if (ENGLISH == targetLocale) {
-                assertEquals("3:04:05 AM", msg);
-            }
-        }
-        {
-            Date date = new Date(978375845789L);
-            String msg = MessageFormat.format("{0,time,long}", date);
-            if (CHINESE == targetLocale) {
-                assertEquals("CST 03:04:05", msg);
-            }
-            if (ENGLISH == targetLocale) {
-                assertEquals("3:04:05 AM CST", msg);
-            }
-        }
-        {
-            Date date = new Date(978375845789L);
-            String msg = MessageFormat.format("{0,time,full}", date);
-            if (CHINESE == targetLocale) {
-                assertEquals("中国标准时间 03:04:05", msg);
-            }
-            if (ENGLISH == targetLocale) {
-                assertEquals("3:04:05 AM China Standard Time", msg);
+            try {
+                if (rec.shouldThrowException) {
+                    // 期望抛出异常的测试用例
+                    assertThrows(IllegalArgumentException.class, () -> {
+                        MessageFormat.format(rec.pattern, rec.args);
+                    });
+                    log.info("[{}] ✓ {} - Pattern: {} - Expected Exception: {}",
+                            i, rec.description, rec.pattern, expectedResult);
+                } else {
+                    // 正常测试用例
+                    String actualResult = MessageFormat.format(rec.pattern, rec.args);
+                    assertEquals(String.format("Record [%d] %s failed", i, rec.description),
+                            expectedResult, actualResult);
+                    log.info("[{}] ✓ {} - Pattern: {} - Result: {}",
+                            i, rec.description, rec.pattern, actualResult);
+                }
+            } catch (AssertionError e) {
+                String actualResult = MessageFormat.format(rec.pattern, rec.args);
+                throw new AssertionError(String.format("Record [%d] %s failed. Expected: %s, Actual: %s",
+                        i, rec.description, expectedResult, actualResult), e);
+            } catch (Exception e) {
+                throw new RuntimeException(String.format("Record [%d] %s threw unexpected exception",
+                        i, rec.description), e);
             }
         }
 
-        // "2001-01-02 03:04:05.789" == 978375845789
-        // 参考 SimpleDateFormat, 注意：最后的一个大S数量多少均不影响结果
-        {
-            Date date = new Date(978375845789L);
-            String msg = MessageFormat.format("{0,date,yyyy-MM-dd HH:mm:ss.S}", date);
-            assertEquals("2001-01-02 03:04:05.789", msg);
-        }
-
-        // 不允许出现 "{}"
-        {
-            assertThrows(IllegalArgumentException.class, () -> {
-                MessageFormat.format("{},{0},{1},{2}", "aaa", "bbb", "ccc");
-            });
-        }
-
-        // 单引号是转义字符
-        {
-            String msg = MessageFormat.format("'{0}',''{1}'',{2}", "aaa", "bbb", "ccc");
-            assertEquals("{0},'bbb',ccc", msg);
-        }
+        log.info("\n========== All {} tests passed for Locale: {} ==========\n",
+                recList.size(), targetLocale);
     }
 
 }
