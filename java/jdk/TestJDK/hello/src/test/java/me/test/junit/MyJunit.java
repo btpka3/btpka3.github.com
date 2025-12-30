@@ -42,6 +42,10 @@ public class MyJunit {
                 16,
                 Theme.valueOf(ConsoleUtils.charset())
         );
+        // 请查看 ./target/open-test-report.xml
+        // java -jar ${HOME}/.m2/repository/org/opentest4j/reporting/open-test-reporting-cli/0.2.3/open-test-reporting-cli-0.2.3-standalone.jar convert target/open-test-report.xml
+        // ls -l target/hierarchy.xml
+        // java -jar ${HOME}/.m2/repository/org/opentest4j/reporting/open-test-reporting-cli/0.2.3/open-test-reporting-cli-0.2.3-standalone.jar html-report --output target/open-test-report.html target/open-test-report.xml
         OpenTestReportGeneratingListener openTestReportGeneratingListener = new OpenTestReportGeneratingListener();
 
         // 发现并选择测试用例
