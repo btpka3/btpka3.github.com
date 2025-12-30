@@ -1,0 +1,7 @@
+spring.application.name: my-dapr
+dapr:
+  pubsub:
+    name: pubsub
+  statestore:
+    name: kvstore
+    binding: kvbinding
