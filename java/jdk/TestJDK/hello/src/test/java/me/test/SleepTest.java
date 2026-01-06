@@ -14,6 +14,9 @@ public class SleepTest {
 
     public static void main(String[] args) throws InterruptedException {
         RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
+
+        long startTime = runtimeMXBean.getStartTime();
+
         StringUtils.isBlank("123");
         CollectionUtils.isEmpty(null);
         System.out.println("start to sleep, please attach java agent to test, pid=" + runtimeMXBean.getPid());

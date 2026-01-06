@@ -46,6 +46,9 @@ public class MyJunit {
         // java -jar ${HOME}/.m2/repository/org/opentest4j/reporting/open-test-reporting-cli/0.2.3/open-test-reporting-cli-0.2.3-standalone.jar convert target/open-test-report.xml
         // ls -l target/hierarchy.xml
         // java -jar ${HOME}/.m2/repository/org/opentest4j/reporting/open-test-reporting-cli/0.2.3/open-test-reporting-cli-0.2.3-standalone.jar html-report --output target/open-test-report.html target/open-test-report.xml
+        // @see org.opentest4j.reporting.cli.ReportingCli
+        // @see org.opentest4j.reporting.cli.HtmlReportCommand
+        // @see new DefaultHtmlReportWriter().writeHtmlReport(xmlFiles, targetFile);
         OpenTestReportGeneratingListener openTestReportGeneratingListener = new OpenTestReportGeneratingListener();
 
         // 发现并选择测试用例

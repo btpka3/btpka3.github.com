@@ -50,7 +50,7 @@ public class CommandLineTest {
         Assertions.assertEquals("\"123 456\"", args[0]);
     }
 
-      @Test
+    @Test
     public void commandLineParse01_2() {
         String cmd = "echo \"123 456\"";
         CommandLine cmdLine = CommandLine.parse(cmd);
