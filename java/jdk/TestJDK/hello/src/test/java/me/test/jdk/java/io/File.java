@@ -1,5 +1,7 @@
 package me.test.jdk.java.io;
 
+import org.junit.jupiter.api.Test;
+
 import java.io.*;
 import java.nio.file.*;
 import java.nio.file.attribute.*;
@@ -39,9 +41,12 @@ public class File {
     }
 
 
-    public static void walkFileTree(String dir) throws IOException {
+    @Test
+    public  void walkFileTree(  ) throws IOException {
         System.out.println("----------------------------------- walkFileTree");
 
+        String dir = "/tmp";
+        //String dir = "/tmp/createZip02/b.txt";
         Files.walkFileTree(
                 Paths.get(dir),
                 EnumSet.of(FileVisitOption.FOLLOW_LINKS),
