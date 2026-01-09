@@ -1,6 +1,7 @@
 package me.test.first.spring.boot.test;
 
 import com.alibaba.fastjson.JSON;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -70,6 +71,7 @@ public class InjectList1Test {
 
         @Bean
         MyContainer myContainer(
+                List<MyPojo> pojoList,
                 @Lazy
                 @Qualifier("myPojoList")
                 List<MyPojo> myPojoList,
@@ -79,6 +81,7 @@ public class InjectList1Test {
             MyContainer myContainer = new MyContainer();
             System.out.println("aaa");
 
+            myContainer.defaultPojoList = pojoList;
             myContainer.myPojoList = myPojoList;
             myContainer.myPojo = pojo3;
             return myContainer;
@@ -93,10 +96,26 @@ public class InjectList1Test {
     public void test() {
         System.out.println("111111111");
         System.out.println(JSON.toJSONString(myContainer));
+
+        Assertions.assertEquals("wang5", myContainer.myPojo.getName());
+
+        Assertions.assertEquals(3, myContainer.defaultPojoList.size());
+        Assertions.assertEquals("wang5", myContainer.defaultPojoList.get(0).getName());
+        Assertions.assertEquals("li4", myContainer.defaultPojoList.get(1).getName());
+        Assertions.assertEquals("zhang3", myContainer.defaultPojoList.get(2).getName());
+
+        Assertions.assertEquals(2, myContainer.myPojoList.size());
+        Assertions.assertEquals("zhang3", myContainer.myPojoList.get(0).getName());
+        Assertions.assertEquals("li4", myContainer.myPojoList.get(1).getName());
+
     }
 
     public static class MyContainer {
+        // 按照spring 默认获取所有类型的list
+        public List<MyPojo> defaultPojoList;
+        // 手动注册的List<MyPojo> 类型的 bean
         public List<MyPojo> myPojoList;
+        // 按照spring默认顺序获取的第一个优先高的bean
         public MyPojo myPojo;
     }
 

@@ -1,0 +1,8 @@
+# 测试基础功能使用， key 上的第一个数字, value 的最后一个数字:
+# 0 : 配置来自 src/main/resoruces/application.yaml
+# 1 : 配置来自 src/test/resoruces/application-test.yaml
+# 2 : 配置来自 @SpringBootTest.properties
+# KEY 的前两个数字始终和 VALUE 的前两个数字一致
+demo:
+  key01: value010
+  key02: value020
