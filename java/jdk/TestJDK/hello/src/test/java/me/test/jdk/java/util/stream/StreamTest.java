@@ -16,11 +16,15 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 /**
  * @author dangqian.zll
  * @date 2020/10/26
  */
 public class StreamTest {
+
 
     @Test
     public void testNullValues01() {
@@ -31,6 +35,51 @@ public class StreamTest {
                 .collect(Collectors.toList());
 
         System.out.println(newList);
+    }
+
+    @Test
+    public void allNoneAnyMatch() {
+
+        List<String> list = Arrays.asList("aaa", "bbb", "ccc");
+
+        {
+            boolean result = list.stream()
+                    .allMatch(s -> s.length() == 3);
+            assertTrue(result);
+        }
+        {
+            boolean result = list.stream()
+                    .anyMatch(s -> Objects.equals("aaa", s));
+            assertTrue(result);
+        }
+        {
+            boolean result = list.stream()
+                    .noneMatch(s -> Objects.equals("ddd", s));
+            assertTrue(result);
+        }
+
+
+    }
+
+    boolean isAllInBlackList(Stream<String> stream, Set<String> blackList) {
+        return stream.allMatch(s -> blackList.contains(s));
+    }
+
+    @Test
+    public void allNoneAnyMatch2() {
+
+        Set<String> blackList = new HashSet<>(Arrays.asList("aaa", "bbb", "ccc", "ddd"));
+
+        {
+            List<String> list = Arrays.asList("aaa", "bbb", "ccc");
+            assertTrue(isAllInBlackList(list.stream(), blackList));
+        }
+        {
+            List<String> list = Arrays.asList("aaa", "xxx");
+            // 因为 "xxx" 不在黑名单中
+            assertFalse(isAllInBlackList(list.stream(), blackList));
+        }
+
     }
 
 
@@ -324,7 +373,7 @@ public class StreamTest {
     @Builder(toBuilder = true)
     @NoArgsConstructor
     @AllArgsConstructor
-    public static  class JarResult implements Serializable {
+    public static class JarResult implements Serializable {
         private String app;
         private String jar;
         private Integer loadedClassCount;
@@ -352,10 +401,10 @@ public class StreamTest {
     }
 
     @Test
-    public void reduce(){
-        Stream.of("aaa","bbb","ccc")
+    public void reduce() {
+        Stream.of("aaa", "bbb", "ccc")
                 .reduce((a, b) -> {
-                    System.out.println("reduce : 1="+a +",2="+b);
+                    System.out.println("reduce : 1=" + a + ",2=" + b);
                     return b;
                 })
                 .ifPresent(System.out::println);

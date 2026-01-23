@@ -2,6 +2,7 @@ package me.test.org.apache.commons.compress.archivers.zip;
 
 import lombok.SneakyThrows;
 import me.test.jdk.java.util.zip.Zip;
+import org.apache.commons.compress.archivers.examples.Expander;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
 import org.apache.commons.compress.archivers.zip.ZipFile;
@@ -11,8 +12,12 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -28,6 +33,30 @@ public class ZipFileTest {
                 .setFile(Zip.zipFile)
                 .get();
         zipFile.getEntries("");
+    }
+
+    public  void unzip(File zipFile, File targetDirectory) throws IOException {
+        // Ensure the target directory exists
+        if (!targetDirectory.exists() && !targetDirectory.mkdirs()) {
+            throw new IOException("Failed to create target directory " + targetDirectory.getAbsolutePath());
+        }
+
+        try (ZipFile archive = new ZipFile(zipFile)) {
+            // The Expander class provides high-level "extract all" functionality
+            new Expander().expand(archive, targetDirectory);
+        }
+    }
+
+    public  void unzip(File zipFile, Path targetDirectory) throws IOException {
+        // Ensure the target directory exists
+        if (!Files.exists(targetDirectory)) {
+            Files.createDirectories(targetDirectory);
+        }
+
+        try (ZipFile archive = new ZipFile(zipFile)) {
+            // The Expander class provides high-level "extract all" functionality
+            new Expander().expand(archive, targetDirectory);
+        }
     }
 
     @SneakyThrows
@@ -74,7 +103,10 @@ public class ZipFileTest {
 
             out.closeArchiveEntry();
         }
+        unzip(zipFile, Paths.get("/tmp/createZip01_unzip"));
 
 
     }
+
+
 }

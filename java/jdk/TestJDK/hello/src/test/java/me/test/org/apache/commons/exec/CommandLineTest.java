@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import java.io.ByteArrayOutputStream;
 import java.time.Duration;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 /**
  *
  * @author dangqian.zll
@@ -21,19 +23,19 @@ public class CommandLineTest {
     public void testEcho01() {
         String result = exec("echo 123");
         System.out.println("result = " + result);
-        Assertions.assertEquals("123\n", result);
+        assertEquals("123\n", result);
     }
 
     @Test
     public void testEcho02() {
-        Assertions.assertEquals("\"123 456\"\n", exec("echo \"123 456\""));
+        assertEquals("\"123 456\"\n", exec("echo \"123 456\""));
     }
 
     @Test
     public void testEcho03() {
         CommandLine cmdLine = new CommandLine("echo");
         cmdLine.addArgument("123 456");
-        Assertions.assertEquals("\"123 456\"\n", exec(cmdLine));
+        assertEquals("\"123 456\"\n", exec(cmdLine));
     }
 
     @Test
@@ -43,22 +45,22 @@ public class CommandLineTest {
         // 则建议 手动调用 CommandLine#addArgument(String,boolean) 对象
         // 对于要调用的命令行参数的配置文档的也做好设计： ✅String[]， ❌单个String
         CommandLine cmdLine = CommandLine.parse(cmd);
-        Assertions.assertEquals("echo", cmdLine.getExecutable());
+        assertEquals("echo", cmdLine.getExecutable());
         String[] args = cmdLine.getArguments();
-        Assertions.assertEquals(1, args.length);
+        assertEquals(1, args.length);
         // FIXME 有双引号
-        Assertions.assertEquals("\"123 456\"", args[0]);
+        assertEquals("\"123 456\"", args[0]);
     }
 
     @Test
     public void commandLineParse01_2() {
         String cmd = "echo \"123 456\"";
         CommandLine cmdLine = CommandLine.parse(cmd);
-        Assertions.assertEquals("echo", cmdLine.getExecutable());
+        assertEquals("echo", cmdLine.getExecutable());
         String[] args = cmdLine.getArguments();
-        Assertions.assertEquals(1, args.length);
+        assertEquals(1, args.length);
         // FIXME 有双引号
-        Assertions.assertEquals("\"123 456\"", args[0]);
+        assertEquals("\"123 456\"", args[0]);
     }
 
     @Test
@@ -68,9 +70,21 @@ public class CommandLineTest {
         cmdLine.addArgument("123 456", false);
         String[] strs = cmdLine.toStrings();
 
-        Assertions.assertEquals("echo", strs[0]);
-        Assertions.assertEquals("123 456", strs[1]);
-        Assertions.assertEquals("123 456\n", exec(cmdLine));
+        assertEquals("echo", strs[0]);
+        assertEquals("123 456", strs[1]);
+        assertEquals("123 456\n", exec(cmdLine));
+    }
+
+    @Test
+    public void testPipe() {
+        // bash -c 'echo aaa.bbb.ccc | cut -d . -f 1'
+        CommandLine cmdLine = new CommandLine("bash");
+        // ⭕️: handleQuoting=false
+        cmdLine.addArgument("-c", false);
+        cmdLine.addArgument("echo aaa.bbb.ccc | cut -d . -f 1", false);
+        String result = exec(cmdLine);
+        System.out.println("result  - " + result);
+        assertEquals("aaa\n", result);
     }
 
 

@@ -115,7 +115,7 @@ public class DateTimeFormatterTest {
     }
 
     public void toIsoTimeStr01() {
-        long epochMilli= 1704135845789L;
+        long epochMilli = 1704135845789L;
         Instant instant = Instant.ofEpochMilli(epochMilli);
         ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(instant, ZoneId.systemDefault());
         String isoTimeStr = zonedDateTime.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
@@ -125,25 +125,30 @@ public class DateTimeFormatterTest {
         String isoTimeStr = "2024-05-07T09:58:45.139599168+08:00";
         ZonedDateTime parsedDateZdt = ZonedDateTime.parse(isoTimeStr, DateTimeFormatter.ISO_OFFSET_DATE_TIME);
     }
+
     public void isoTimeStr2OffsetDateTime01() {
         String isoTimeStr = "2024-05-07T09:58:45.139599168+08:00";
         OffsetDateTime offsetDateTime = OffsetDateTime.parse(isoTimeStr, DateTimeFormatter.ISO_OFFSET_DATE_TIME);
     }
+
     public void isoTimeStr2Instant01() {
         String isoTimeStr = "2024-05-07T09:58:45.139599168+08:00";
         ZonedDateTime parsedDateZdt = ZonedDateTime.parse(isoTimeStr, DateTimeFormatter.ISO_OFFSET_DATE_TIME);
         Instant instant = parsedDateZdt.toInstant();
     }
+
     public void isoTimeStr2LocalDateTime01() {
         String isoTimeStr = "2024-05-07T09:58:45.139599168+08:00";
         ZonedDateTime parsedDateZdt = ZonedDateTime.parse(isoTimeStr, DateTimeFormatter.ISO_OFFSET_DATE_TIME);
         LocalDateTime localDateTime = parsedDateZdt.toLocalDateTime();
     }
+
     public void isoTimeStr2Date() {
         String isoTimeStr = "2024-05-07T09:58:45.139599168+08:00";
         ZonedDateTime parsedDateZdt = ZonedDateTime.parse(isoTimeStr, DateTimeFormatter.ISO_OFFSET_DATE_TIME);
         Date date = new Date(parsedDateZdt.toInstant().toEpochMilli());
     }
+
     @SneakyThrows
     public void isoTimeStr2Date2() {
         String dateStr = "2024-01-02T03:04:05.789+08:00";
@@ -160,5 +165,19 @@ public class DateTimeFormatterTest {
         LocalDateTime localDateTime = LocalDateTime.now();
         long milliseconds = localDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
         System.out.println(milliseconds);
+    }
+
+    @Test
+    public void compareFmt() {
+        //DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
+        Date date = new Date();
+        String str1 = LocalDateTime.now(ZoneId.systemDefault()).format(dtf);
+        System.out.println("str1 = " + str1);
+
+        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+        String str2 = sdf.format(date);
+        System.out.println("str2 = " + str2);
     }
 }
