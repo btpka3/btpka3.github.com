@@ -209,6 +209,21 @@ public class JsonTest {
         private List<String> hobbies;
     }
 
+    @Test
+    public void testSortedMapKeys() {
+        Map<String, String> m = new HashMap<>(8);
+        m.put("zhang3", "333");
+        m.put("li4", "444");
+        m.put("wang5", "555");
+        m.put("zhao6", "666");
+        String jsonStr = JSON.toJSONString(m,
+                SerializerFeature.PrettyFormat,
+                SerializerFeature.MapSortField
+        );
+        System.out.println("========== jsonStr:");
+        System.out.println(jsonStr);
+    }
+
 
     // ====================
 

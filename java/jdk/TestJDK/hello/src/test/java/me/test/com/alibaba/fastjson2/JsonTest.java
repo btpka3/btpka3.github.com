@@ -59,7 +59,8 @@ public class JsonTest {
         Object a = map.get("a");
         Assertions.assertEquals("com.alibaba.fastjson2.JSONArray", a.getClass().getName());
     }
-     @Test
+
+    @Test
     public void testArray02() {
         Object obj = JSON.parseObject("{\"a\":[\"a1\",\"a2\"]}", Map.class);
         Assertions.assertEquals("java.util.HashMap", obj.getClass().getName());
@@ -159,5 +160,17 @@ public class JsonTest {
             }
             throw new RuntimeException("not support MyType:" + str);
         }
+    }
+
+    @Test
+    public void testSortedMapKeys() {
+        Map<String, String> m = new HashMap<>(8);
+        m.put("zhang3", "333");
+        m.put("li4", "444");
+        m.put("wang5", "555");
+        m.put("zhao6", "666");
+        String jsonStr = JSON.toJSONString(m, JSONWriter.Feature.PrettyFormat, JSONWriter.Feature.SortMapEntriesByKeys);
+        System.out.println("========== jsonStr:");
+        System.out.println(jsonStr);
     }
 }

@@ -1,10 +1,9 @@
 package me.test.com.fasterxml.jackson;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.fasterxml.jackson.core.util.DefaultIndenter;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -65,5 +64,21 @@ public class JacksonTest {
     public static class User {
         private String name;
         private List<String> hobbies;
+    }
+
+    @SneakyThrows
+    @Test
+    public void testSortedMapKeys() {
+        Map<String, String> m = new HashMap<>(8);
+        m.put("zhang3", "333");
+        m.put("li4", "444");
+        m.put("wang5", "555");
+        m.put("zhao6", "666");
+        ObjectMapper orderedMapper = new ObjectMapper();
+        orderedMapper.enable(SerializationFeature.INDENT_OUTPUT);
+        orderedMapper.configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, true);
+        String jsonStr = orderedMapper.writeValueAsString(m);
+        System.out.println("========== jsonStr:");
+        System.out.println(jsonStr);
     }
 }
