@@ -2,6 +2,7 @@
 <configuration debug="true">
     <variable name="my.log.path" value="${my.log.path:-/tmp/my/logs}" />
     <property name="FILE_LOG_PATTERN" value="%date{ISO8601}|%thread|%level|%logger{36}|%msg%n" />
+    <conversionRule conversionWord="threadId" converterClass="me.test.first.spring.boot.test.ThreadIdConverter"/>
 
     <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
         <resetJUL>true</resetJUL>
@@ -9,7 +10,7 @@
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%-4relative [%thread] %-5level %logger{35} - %msg %n</pattern>
+            <pattern>%date %level [%thread][%threadId] %logger: %msg%n</pattern>
         </encoder>
     </appender>
     <appender name="ROOT"

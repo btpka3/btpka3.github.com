@@ -230,7 +230,7 @@ public class Resilience4jTest {
 
         RetryConfig config = RetryConfig.<Long>custom()
                 .maxAttempts(5)
-                .waitDuration(Duration.ofMillis(1000))
+                .waitDuration(Duration.ofMillis(5000))
                 .retryOnResult(l -> l < 2)
                 //.retryOnException(e -> e instanceof WebServiceException)
                 //.retryExceptions(IOException.class, TimeoutException.class)
@@ -238,10 +238,15 @@ public class Resilience4jTest {
                 .build();
         RetryRegistry registry = RetryRegistry.of(config);
         Retry retry = registry.retry("backendName");
-        Supplier<Long> decoratedSupplier = Retry.decorateSupplier(retry, () -> c.getAndAdd(1));
+        Supplier<Long> decoratedSupplier = Retry.decorateSupplier(retry, () -> {
+            long i = c.getAndAdd(1);
+            log.info("======================== i={}", i);
+            return i;
+        });
         Long result = Try.ofSupplier(decoratedSupplier)
                 .recover(throwable -> 999L)
                 .get();
+        log.info("======================== result={}", result);
         System.out.println("result = " + result);
         assertEquals(2, result);
     }

@@ -11,6 +11,10 @@ import org.springframework.util.StringUtils;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
+import org.yaml.snakeyaml.introspector.Property;
+import org.yaml.snakeyaml.nodes.MappingNode;
+import org.yaml.snakeyaml.representer.Representer;
 
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -230,55 +234,51 @@ public class YamlTest {
 
     protected Map flattern2(Map source) {
         Map<String, Object> result = new LinkedHashMap<>();
-		buildFlattenedMap(result, source, null);
-		return result;
+        buildFlattenedMap(result, source, null);
+        return result;
     }
 
     /**
-     * @see YamlPropertiesFactoryBean#buildFlattenedMap
      * @param result
      * @param source
      * @param path
+     * @see YamlPropertiesFactoryBean#buildFlattenedMap
      */
     protected void buildFlattenedMap(Map<String, Object> result, Map<String, Object> source, @Nullable String path) {
-		source.forEach((key, value) -> {
-			if (StringUtils.hasText(path)) {
-				if (key.startsWith("[")) {
-					key = path + key;
-				}
-				else {
-					key = path + '.' + key;
-				}
-			}
-			if (value instanceof String) {
-				result.put(key, value);
-			}
-			else if (value instanceof Map) {
-				// Need a compound key
-				@SuppressWarnings("unchecked")
-				Map<String, Object> map = (Map<String, Object>) value;
-				buildFlattenedMap(result, map, key);
-			}
-			else if (value instanceof Collection) {
-				// Need a compound key
-				@SuppressWarnings("unchecked")
-				Collection<Object> collection = (Collection<Object>) value;
-				if (collection.isEmpty()) {
-					result.put(key, "");
-				}
-				else {
-					int count = 0;
-					for (Object object : collection) {
-						buildFlattenedMap(result, Collections.singletonMap(
-								"[" + (count++) + "]", object), key);
-					}
-				}
-			}
-			else {
-				result.put(key, (value != null ? value : ""));
-			}
-		});
-	}
+        source.forEach((key, value) -> {
+            if (StringUtils.hasText(path)) {
+                if (key.startsWith("[")) {
+                    key = path + key;
+                } else {
+                    key = path + '.' + key;
+                }
+            }
+            if (value instanceof String) {
+                result.put(key, value);
+            } else if (value instanceof Map) {
+                // Need a compound key
+                @SuppressWarnings("unchecked")
+                Map<String, Object> map = (Map<String, Object>) value;
+                buildFlattenedMap(result, map, key);
+            } else if (value instanceof Collection) {
+                // Need a compound key
+                @SuppressWarnings("unchecked")
+                Collection<Object> collection = (Collection<Object>) value;
+                if (collection.isEmpty()) {
+                    result.put(key, "");
+                } else {
+                    int count = 0;
+                    for (Object object : collection) {
+                        buildFlattenedMap(result, Collections.singletonMap(
+                                "[" + (count++) + "]", object), key);
+                    }
+                }
+            } else {
+                result.put(key, (value != null ? value : ""));
+            }
+        });
+    }
+
     /**
      * 将yaml加载的层级map转换成properties，类似于 {@link YamlPropertiesFactoryBean}
      *
@@ -335,5 +335,97 @@ public class YamlTest {
             }
         }
         return result;
+    }
+
+    public static Object sortMaps(Object obj) {
+        if (obj instanceof Map) {
+            if(obj instanceof TreeMap<?,?>){
+                return obj;
+            }
+            Map<?, ?> map = (Map<?, ?>) obj;
+            Map<Object, Object> sorted = new TreeMap<>();
+            for (Map.Entry<?, ?> entry : map.entrySet()) {
+                sorted.put(entry.getKey(), sortMaps(entry.getValue()));
+            }
+            return sorted;
+        } else if (obj instanceof List) {
+            List<?> list = (List<?>) obj;
+            List<Object> sorted = new ArrayList<>();
+            for (Object item : list) {
+                sorted.add(sortMaps(item));
+            }
+            return sorted;
+        }
+        return obj;
+    }
+
+    @Test
+    public void testSorted() {
+        // language=yaml
+        String str = """
+                bbb: b1 # comment1
+                ccc: c1
+                aaa: a1
+                # comment2
+                a:
+                  bbb:  # comment3
+                    - b1
+                    - b23: b2333
+                      b21: b2111
+                      b22: b2222
+                    - b3
+                  ccc:
+                    c3: c333
+                    c1: c111
+                    c2: c222
+                  aaa: a2张3
+                d: |
+                  aa bb  \s
+                  cc dd  \s
+                   
+                  ff  gg  \s
+                """;
+
+        LoaderOptions loaderOptions = new LoaderOptions();
+        loaderOptions.setProcessComments(true);
+        Constructor c = new Constructor(loaderOptions);
+
+        DumperOptions dumperOptions = new DumperOptions();
+        dumperOptions.setPrettyFlow(true);
+        dumperOptions.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
+        dumperOptions.setDefaultScalarStyle(DumperOptions.ScalarStyle.PLAIN);
+
+
+        // 对于POJO 的key排序输出，可以使用 自定义Representer
+        Representer representer = new Representer(dumperOptions) {
+            @Override
+            protected MappingNode representJavaBean(Set<Property> properties, Object javaBean) {
+                // 对属性按名称排序
+                List<Property> sortedProps = new ArrayList<>(properties);
+                sortedProps.sort(Comparator.comparing(Property::getName));
+                return super.representJavaBean(new LinkedHashSet<>(sortedProps), javaBean);
+            }
+        };
+        //Yaml yaml = new Yaml(c, representer, dumperOptions);
+        Yaml yaml = new Yaml(loaderOptions, dumperOptions);
+        Map map = yaml.load(str);
+
+        // ====================== 换行符前没有空白
+        // 最后有换行符
+        map.put("x11", "line1\nline2\n");
+        // 最后没有换行符
+        map.put("x12", "line1\nline2");
+
+        // ====================== 换行符前有空白
+        // 最后有换行符(换行符前有空白）
+        map.put("x21", "line1 \nline2 \n");
+        // 最后没有换行符(换行符前没有空白）
+        map.put("x22", "line1 \nline2 ");
+        // 对于map 的key排序输出，则可以先转换成treeMap
+        map= (Map) sortMaps(map);
+
+        String result = yaml.dump(map);
+        System.out.println("======================");
+        System.out.println(result);
     }
 }
