@@ -18,7 +18,16 @@ bin
 *.ipr
 *.iws
 *.swp
-.idea
+# .idea
+.idea/shelf/
+.idea/workspace.xml
+.idea/httpRequests/
+.idea/dataSources/
+.idea/dataSources.local.xml
+.idea/a.*
+.idea/b.*
+.idea/c.*
+
 .DS_Store
 target-eclipse
 bower_components
@@ -45,5 +54,5 @@ jspm_packages
 # 注意：一定要有 最后的 '/*'
 !**/.gitkeep
 
-.sdkmanrc
+**/.sdkmanrc
 secretsmanager.properties

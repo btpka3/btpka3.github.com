@@ -21,28 +21,11 @@
     </properties>
 
     <modules>
-        <module>bom-v1</module>
-        <module>bom-v2</module>
-        <module>deps-v1</module>
-        <module>deps-v2</module>
+        <module>aliyun-bom</module>
+        <module>aliyun-dependencies</module>
+        <module>bom-test</module>
     </modules>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>me.test.btpka3</groupId>
-                <artifactId>bom-v1</artifactId>
-                <version>${project.version}</version>
-                <type>pom</type>
-            </dependency>
-            <dependency>
-                <groupId>me.test.btpka3</groupId>
-                <artifactId>bom-v2</artifactId>
-                <version>${project.version}</version>
-                <type>pom</type>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <build>
         <plugins>

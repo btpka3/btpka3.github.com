@@ -25,3 +25,8 @@ ICredentialProvider credentialsProvider2() {
             .build();
 }
 ----
+
+== QA
+=== 如何知道哪些jar包有新版本了？
+=== 如何知道哪些传递依赖有冲突？哪些应该版本号管理起来？哪些不用？
+=== 如何定位哪些依赖可以从pom.xml中移除了？

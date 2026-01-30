@@ -1,11 +1,17 @@
 package me.test.jdk.java.nio.file;
 
-import java.io.*;
-import java.nio.file.*;
+import java.io.IOException;
+import java.nio.file.FileStore;
 import java.nio.file.FileSystem;
-import java.nio.file.attribute.*;
-import java.nio.file.spi.*;
-import java.util.*;
+import java.nio.file.Path;
+import java.nio.file.PathMatcher;
+import java.nio.file.WatchService;
+import java.nio.file.attribute.UserPrincipalLookupService;
+import java.nio.file.spi.FileSystemProvider;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Queue;
+import java.util.Set;
 
 public class MyFs extends FileSystem {
 
@@ -16,8 +22,8 @@ public class MyFs extends FileSystem {
 
     private Queue lruCache; // FIXME:
 
-    public static <K,V> Map<K,V> lruCache(final int maxSize) {
-        return new LinkedHashMap<K, V>(maxSize*4/3, 0.75f, true) {
+    public static <K, V> Map<K, V> lruCache(final int maxSize) {
+        return new LinkedHashMap<K, V>(maxSize * 4 / 3, 0.75f, true) {
 
             private static final long serialVersionUID = -3588047435434569014L;
 

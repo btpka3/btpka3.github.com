@@ -30,6 +30,7 @@ ext {
 	set('springCloudVersion', "2025.1.0")
 	set('springGrpcVersion', "1.0.0")
 	set('springModulithVersion', "2.0.0")
+	set('archunitVersion', "1.4.1")
 }
 
 dependencies {
@@ -90,6 +91,8 @@ dependencies {
 	testImplementation 'org.springframework.integration:spring-integration-test'
 	testImplementation 'org.springframework.modulith:spring-modulith-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testImplementation "com.tngtech.archunit:archunit:${archunitVersion}"
+    testImplementation "com.tngtech.archunit:archunit-junit5:${archunitVersion}"
 }
 
 dependencyManagement {

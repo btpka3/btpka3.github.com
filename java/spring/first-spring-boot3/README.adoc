@@ -1,0 +1,6 @@
+
+
+[source,shell]
+----
+./gradlew clean build -x test
+----

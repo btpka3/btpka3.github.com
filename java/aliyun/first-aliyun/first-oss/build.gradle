@@ -1,42 +1,56 @@
 plugins {
+    //id "my-demo-plugin"
+    //id 'org.springframework.boot' version '4.0.0'
     id 'java'
-    id "org.springframework.boot" version "${springBootVersion}"
+    id "org.springframework.boot" version "4.0.0"
     id 'io.spring.dependency-management' version '1.1.7'
 }
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
-}
-
-java {
-    sourceCompatibility = '11'
-    targetCompatibility = '11'
-}
+//apply plugin: 'io.spring.dependency-management'
+//dependencyManagement {
+//    imports {
+//        mavenBom "org.springframework.boot:spring-boot-dependencies:4.0.0"
+//    }
+//}
 
 repositories {
-    maven { url "https://maven.aliyun.com/nexus/content/groups/public/" }
+    maven { url = "https://maven.aliyun.com/nexus/content/groups/public/" }
     mavenCentral()
 }
 
 dependencies {
+    implementation platform(project(':platform'))
+    //implementation platform('org.springframework.boot:spring-boot-dependencies:1.5.8.RELEASE')
 
-    compileOnly 'org.projectlombok:lombok:1.18.30'
-    testCompileOnly 'org.projectlombok:lombok:1.18.30'
-    annotationProcessor 'org.projectlombok:lombok:1.18.30'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.30'
+    compileOnly 'org.projectlombok:lombok'
+    testCompileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
 
+    implementation 'org.apache.commons:commons-lang3'
 
+//    compileOnly 'org.projectlombok:lombok:1.18.30'
+//    testCompileOnly 'org.projectlombok:lombok:1.18.30'
+//    annotationProcessor 'org.projectlombok:lombok:1.18.30'
+//    testAnnotationProcessor 'org.projectlombok:lombok:1.18.30'
+//implementation platform("org.springframework.boot:spring-boot-dependencies:4.0.0")
 
-    implementation('org.springframework.boot:spring-boot-starter-web')
-    implementation('org.springframework.boot:spring-boot-starter-cache')
+    implementation('com.aliyun.oss:aliyun-sdk-oss')
+    implementation('commons-codec:commons-codec')
+    testImplementation('org.mockito:mockito-core')
+
+    implementation 'org.springframework.boot:spring-boot-starter-webmvc'
+    testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+//
+    //implementation('org.springframework.boot:spring-boot-starter-web')
+//    implementation('org.springframework.boot:spring-boot-starter-cache')
 //    implementation('org.springframework.boot:spring-boot-starter-thymeleaf')
-    implementation("org.springframework.boot:spring-boot-devtools")
-    implementation('com.fasterxml.jackson.dataformat:jackson-dataformat-xml')
-    implementation('org.apache.httpcomponents:httpclient')
+//    implementation("org.springframework.boot:spring-boot-devtools")
+//    implementation('com.fasterxml.jackson.dataformat:jackson-dataformat-xml')
+//    implementation('org.apache.httpcomponents:httpclient')
 
     // 安装SDK : https://help.aliyun.com/zh/oss/developer-reference/java-installation
-    implementation('com.aliyun.oss:aliyun-sdk-oss')
+
     implementation('com.aliyun:alibabacloud-oss20190517')
 //    implementation('javax.xml.bind:jaxb-api:2.3.1')
 //    implementation('javax.activation:activation:1.1.1')
@@ -44,18 +58,18 @@ dependencies {
 
 
     testImplementation('com.aliyun:aliyun-java-sdk-core')
-    testImplementation('com.aliyun:aliyun-java-sdk-green')
-    testImplementation('com.alibaba:fastjson:1.2.83_noneautotype')
+//    testImplementation('com.aliyun:aliyun-java-sdk-green')
+//    testImplementation('com.alibaba:fastjson:1.2.83_noneautotype')
+    testImplementation('com.alibaba:fastjson')
 
 
-    testImplementation('org.springframework.boot:spring-boot-starter-test')
-    testImplementation('org.mockito:mockito-core')
-    implementation("org.springframework.boot:spring-boot-starter-logging")
-    implementation('commons-io:commons-io:2.14.0')
+//    testImplementation('org.springframework.boot:spring-boot-starter-test')
 
-    implementation('org.springframework.boot:spring-boot-actuator')
+//    implementation("org.springframework.boot:spring-boot-starter-logging")
+    implementation('commons-io:commons-io')
+//
+//    implementation('org.springframework.boot:spring-boot-actuator')
 }
-
 
 
 //test {
@@ -72,3 +86,6 @@ dependencies {
 ////    }
 //}
 
+tasks.named('test') {
+    useJUnitPlatform()
+}

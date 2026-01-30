@@ -26,6 +26,11 @@ public class JooqTest {
     @Autowired
     private DSLContext dsl;
 
+    /**
+     * 选择全部字段
+     * @see <a href="https://github.com/jOOQ/jOOQ/issues/16426">jOOQ does not use custom converter/binding for spatial types in dynamic queries</a>
+     * @see <a href="https://blog.jooq.org/why-you-should-use-jooq-with-code-generation/">Why You Should Use jOOQ With Code Generation</a>
+     */
     @Test
     public void select01() {
 
@@ -95,10 +100,10 @@ public class JooqTest {
     @Test
     public void testUnion01() {
 
-        List<Result<Record>> list = this.dsl.selectFrom(ADDRESS)
+        List<Result<Record>> list = this.dsl.select(ADDRESS.ADDRESS_ID).from(ADDRESS)
                 .where(ADDRESS.CITY_ID.eq((short) 300))
                 .unionAll(
-                        this.dsl.selectFrom(ADDRESS)
+                        this.dsl.select(ADDRESS.ADDRESS_ID).from(ADDRESS)
                                 .where(ADDRESS.CITY_ID.eq((short) 301))
                 )
                 .fetchMany();

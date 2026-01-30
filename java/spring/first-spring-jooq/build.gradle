@@ -1,40 +1,41 @@
-import org.jooq.meta.jaxb.Logging
-import org.jooq.meta.jaxb.*;
-import static org.jooq.impl.DSL.*;
-import org.jooq.*;
-import org.jooq.impl.*;
-
-buildscript {
-    ext {
-        //springBootVersion = '1.5.2.RELEASE'
-        //jooq.version = '3.16.7'
-    }
-//    ext["jooq.version"]='3.17.3'
-    ext["jooq.version"]='3.16.7'
-    repositories {
-        maven { url "https://maven.aliyun.com/nexus/content/groups/public/" }
-        mavenCentral()
-    }
-    configurations['classpath'].resolutionStrategy.eachDependency {
-        if (requested.group == 'org.jooq') {
-            useVersion '3.16.7'
-            //useVersion '3.17.3'
-        }
-    }
-}
+//import org.jooq.meta.jaxb.Logging
+//import org.jooq.meta.jaxb.*;
+//import static org.jooq.impl.DSL.*;
+//import org.jooq.*;
+//import org.jooq.impl.*;
+//
+//buildscript {
+//    ext {
+//        //springBootVersion = '1.5.2.RELEASE'
+//        //jooq.version = '3.16.7'
+//    }
+////    ext["jooq.version"]='3.17.3'
+//    //ext["jooq.version"]='3.16.7'
+//    repositories {
+//        maven { url "https://maven.aliyun.com/nexus/content/groups/public/" }
+//        mavenCentral()
+//    }
+//    configurations['classpath'].resolutionStrategy.eachDependency {
+//        if (requested.group == 'org.jooq') {
+//            useVersion '3.16.7'
+//            //useVersion '3.17.3'
+//        }
+//    }
+//}
 
 
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '2.7.3'
+    id 'org.springframework.boot' version '4.0.1'
     id 'io.spring.dependency-management' version '1.1.7'
-    id "nu.studer.jooq" version "7.1.1"
+    //id "nu.studer.jooq" version "7.1.1"
+    id("org.jooq.jooq-codegen-gradle") version "3.20.10"
 }
 
 group = 'com.github.btpka3'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = JavaVersion.VERSION_11
-targetCompatibility = JavaVersion.VERSION_11
+//sourceCompatibility = JavaVersion.VERSION_17
+//targetCompatibility = JavaVersion.VERSION_17
 
 
 sourceSets {
@@ -48,6 +49,11 @@ sourceSets {
 //tasks.withType(JavaCompile) {
 //    options.release = 11
 //}
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of(21)
+  }
+}
 
 
 repositories {
@@ -67,109 +73,124 @@ configurations {
     }
 }
 
-jooq {
-    // version = '3.17.3'
-    version = '3.16.7'
-    edition = nu.studer.gradle.jooq.JooqEdition.OSS
-    // org.jooq.meta.jaxb.Configuration
-    configurations {
-        sakila {
-            generateSchemaSourceOnCompilation = false
-            generationTool {
-                logging = Logging.WARN
-                jdbc {
-                    //driver = 'com.mysql.jdbc.Driver'
-                    driver = 'com.mysql.cj.jdbc.Driver'
-                    url = 'jdbc:mysql://localhost:3306/sakila?useSSL=false'
-                    user = 'root'
-                    password = '123456'
-                    properties {
-                        property {
-                            key = 'ssl'
-                            value = 'false'
-                        }
-                        property {
-                            key = 'verifyServerCertificate'
-                            value = 'false'
-                        }
-                    }
-                }
-                generator {
-                    name = 'org.jooq.codegen.DefaultGenerator'
-                    strategy {
-                        name = 'org.jooq.codegen.DefaultGeneratorStrategy'
-                    }
-                    database {
-                        name = 'org.jooq.meta.mysql.MySQLDatabase'
-                        inputSchema = 'sakila'
-                        unsignedTypes = false
 
-                        //userType = 'java.time.Year'
-                        forcedTypes {
-//                            forcedType {
+//jooq {
+//    // version = '3.17.3'
+//    version = '3.16.7'
+//    edition = nu.studer.gradle.jooq.JooqEdition.OSS
+//    // org.jooq.meta.jaxb.Configuration
+//    configurations {
+//        sakila {
+//            generateSchemaSourceOnCompilation = false
+//            generationTool {
+//                logging = Logging.WARN
+//                jdbc {
+//                    //driver = 'com.mysql.jdbc.Driver'
+//                    driver = 'com.mysql.cj.jdbc.Driver'
+//                    url = 'jdbc:mysql://localhost:3306/sakila?useSSL=false'
+//                    user = 'root'
+//                    password = '123456'
+//                    properties {
+//                        property {
+//                            key = 'ssl'
+//                            value = 'false'
+//                        }
+//                        property {
+//                            key = 'verifyServerCertificate'
+//                            value = 'false'
+//                        }
+//                    }
+//                }
+//                generator {
+//                    name = 'org.jooq.codegen.DefaultGenerator'
+//                    strategy {
+//                        name = 'org.jooq.codegen.DefaultGeneratorStrategy'
+//                    }
+//                    database {
+//                        name = 'org.jooq.meta.mysql.MySQLDatabase'
+//                        inputSchema = 'sakila'
+//                        unsignedTypes = false
 //
-//                                objectType = "COLUMN"
-//                                // Specify the Java type of your custom type. This corresponds to the Converter's <U> type.
-//                                userType = 'byte[]'
+//                        //userType = 'java.time.Year'
+//                        forcedTypes {
+////                            forcedType {
+////
+////                                objectType = "COLUMN"
+////                                // Specify the Java type of your custom type. This corresponds to the Converter's <U> type.
+////                                userType = 'byte[]'
+////
+////                                // Associate that custom type with your converter.
+////                                 converter = '''org.jooq.Converters.identity(byte[].class)'''
+////                                // converter = 'org.jooq.impl.IdentityConverter'
+//////                                converter = '''org.jooq.Converter.ofNullable(
+//////                                    Object.class, byte[].class,
+//////                                    java.util.function.Function::identity, java.util.function.Function::identity
+//////                                )'''
+////
+////
+////                                // A Java regex matching fully-qualified columns, attributes, parameters. Use the pipe to separate several expressions.
+////                                includeExpression = 'ADDRESS\\.LOCATION'
+////
+////                                includeTypes = "geometry"
+////                            }
 //
-//                                // Associate that custom type with your converter.
-//                                 converter = '''org.jooq.Converters.identity(byte[].class)'''
-//                                // converter = 'org.jooq.impl.IdentityConverter'
-////                                converter = '''org.jooq.Converter.ofNullable(
-////                                    Object.class, byte[].class,
-////                                    java.util.function.Function::identity, java.util.function.Function::identity
-////                                )'''
-//
-//
-//                                // A Java regex matching fully-qualified columns, attributes, parameters. Use the pipe to separate several expressions.
-//                                includeExpression = 'ADDRESS\\.LOCATION'
-//
-//                                includeTypes = "geometry"
-//                            }
+//                        }
+//                    }
+//                    generate {
+//                        relations = true
+//                        deprecated = false
+//                        pojos = true
+//                        records = false
+//                        immutablePojos = false
+//                        fluentSetters = true
+//                        // 关闭 spatial 空间数据 的转换
+//                        spatialTypes = false
+//                    }
+//                    target {
+//                        packageName = 'com.github.btpka3.first.spring.jooq.domain'
+//                        directory = 'src/generated-src/jooq/main'
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}
 
-                        }
-                    }
-                    generate {
-                        relations = true
-                        deprecated = false
-                        pojos = true
-                        records = false
-                        immutablePojos = false
-                        fluentSetters = true
-                        // 关闭 spatial 空间数据 的转换
-                        spatialTypes = false
-                    }
-                    target {
-                        packageName = 'com.github.btpka3.first.spring.jooq.domain'
-                        directory = 'src/generated-src/jooq/main'
-                    }
-                }
-            }
-        }
-    }
+tasks.named("compileJava") {
+    dependsOn(tasks.named("jooqCodegen"))
 }
 
-repositories {
-    mavenCentral()
-}
+//
+//repositories {
+//    mavenCentral()
+//}
 
 
 dependencies {
-    implementation 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.0'
-    implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-jooq'
-    compileOnly 'org.projectlombok:lombok'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-    annotationProcessor 'org.projectlombok:lombok'
-    testImplementation('org.springframework.boot:spring-boot-starter-test') {
-        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-    }
-//    implementation 'org.jooq:jooq:3.17.3'
-    implementation 'org.jooq:jooq:3.16.7'
-    testImplementation('org.jooq:jooq-codegen:3.16.7')
-    jooqGenerator 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.0'
-    jooqGenerator 'mysql:mysql-connector-java:8.0.30'
+    testImplementation 'org.springframework.boot:spring-boot-starter-jooq-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+//    implementation 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.0'
+//    implementation 'org.springframework.boot:spring-boot-starter'
+//    implementation 'org.springframework.boot:spring-boot-starter-jooq'
+//    compileOnly 'org.projectlombok:lombok'
+//    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+//    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+//    annotationProcessor 'org.projectlombok:lombok'
+//    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+//        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+//    }
+        implementation "org.jooq:jooq:3.20.10"
+        implementation "org.jooq:jooq-checker:3.20.10"
+        implementation "org.jooq:jooq-meta:3.20.10"
+        implementation "org.jooq:jooq-codegen:3.20.10"
+////    implementation 'org.jooq:jooq:3.17.3'
+//    implementation 'org.jooq:jooq:3.16.7'
+//    testImplementation('org.jooq:jooq-codegen:3.16.7')
+//    jooqGenerator 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.0'
+//    jooqGenerator 'mysql:mysql-connector-java:8.0.30'
+    jooqCodegen 'mysql:mysql-connector-java:8.0.30'
     implementation 'mysql:mysql-connector-java:8.0.30'
 }
 
@@ -177,4 +198,84 @@ test {
     useJUnitPlatform()
 }
 
+
+jooq {
+    configuration {
+        jdbc {
+            driver = "com.mysql.cj.jdbc.Driver"
+            url = 'jdbc:mysql://localhost:3306/sakila?useSSL=false'
+            user = 'root'
+            password = '123456'
+            properties {
+                property {
+                    key = 'ssl'
+                    value = 'false'
+                }
+                property {
+                    key = 'verifyServerCertificate'
+                    value = 'false'
+                }
+            }
+        }
+        generator {
+            database {
+                name = "org.jooq.meta.mysql.MySQLDatabase"
+                includes = ".*"
+                // excludes =
+                inputSchema = 'sakila'
+                unsignedTypes = false
+
+                forcedTypes {
+                    forcedType {
+
+                        userType = "java.lang.String"
+                        binding = "com.github.btpka3.first.spring.jooq.MyBinding"
+
+                        // Optionally specify whether the binding receives <T, U> type variables
+                        // and Class<T>, Class<U> constructor arguments. Default is false.
+                        genericBinding = false
+
+                        // 通过自定义  org.jooq.Converter
+                        //converter = "com.github.btpka3.first.spring.jooq.MyConverter"
+                        //genericConverter = false
+
+                        // A Java regex matching fully-qualified columns, attributes, parameters. Use the pipe to separate several expressions.
+                        //includeExpression = ".*JSON.*"
+
+                        // A Java regex matching data types to be forced to
+                        // have this type.
+                        //
+                        // Data types may be reported by your database as:
+                        // - NUMBER              regexp suggestion: NUMBER
+                        // - NUMBER(5)           regexp suggestion: NUMBER\(5\)
+                        // - NUMBER(5, 2)        regexp suggestion: NUMBER\(5,\s*2\)
+                        // - any other form
+                        //
+                        // It is thus recommended to use defensive regexes for types.
+                        //
+                        // If provided, both "includeExpressions" and "includeTypes" must match.
+                        includeTypes = "(?i:GEOMETRY)"
+                    }
+                }
+            }
+            generate {
+                // https://www.jooq.org/doc/3.20/manual-single-page/#codegen-pojos  《5.4.3. Generated POJOs》
+                pojos = true
+                pojosIncludes = ".*"
+                // Optionally, limit POJOs generation to only tables not matching this regular expression.
+                // Excludes match before includes.
+                pojosExcludes = "SYSTEM_TABLE_.*"
+
+                generatedAnnotation = true
+                generatedAnnotationType = "DETECT_FROM_JDK" // DETECT_FROM_JDK,JAVAX_ANNOTATION_GENERATED,JAVAX_ANNOTATION_PROCESSING_GENERATED,ORG_JOOQ_GENERATED
+                generatedAnnotationDate = false
+            }
+            target {
+                packageName = 'com.github.btpka3.first.spring.jooq.domain'
+                directory = 'src/generated-src/jooq/main'
+            }
+        }
+
+    }
+}
 

@@ -1,12 +1,35 @@
+
+//pluginManagement {
+//    repositories {
+//        mavenCentral()
+//        gradlePluginPortal()
+//    }
+//    includeBuild('./buildSrc')
+//}
+
 rootProject.name = 'first-aliyun'
+//includeBuild 'lib'
 
 include 'platform'
-include 'first-green'
+//include 'first-green'
 //include 'first-mq'
-include 'first-sls'
+//include 'first-sls'
 include 'first-oss'
-include 'first-ram'
-include 'first-acr'
-include 'first-kms'
+//include 'first-ram'
+//include 'first-acr'
+//include 'first-kms'
 
 
+
+
+
+// 《Version Catalogs》
+// https://docs.gradle.org/current/userguide/version_catalogs.html
+
+//dependencyResolutionManagement {
+//    versionCatalogs {
+//        libs {
+//            //from(files("../gradle/libs.versions.toml"))
+//        }
+//    }
+//}

@@ -1,0 +1,2 @@
+* link:https://docs.gradle.org/current/userguide/organizing_gradle_projects.html[Structuring and Organizing Gradle Projects]]
+* link:https://docs.gradle.org/current/userguide/implementing_gradle_plugins_precompiled.html#sec:applying_external_plugins[Pre-compiled Script Plugins]
