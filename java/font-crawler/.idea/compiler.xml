@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="first-spring-boot-batch_main" target="1.8" />
+      <module name="first-spring-boot-batch_test" target="1.8" />
+      <module name="first-spring-boot-data-elasticsearch_main" target="1.8" />
+      <module name="first-spring-boot-data-elasticsearch_test" target="1.8" />
+      <module name="first-spring-boot-data-geode_main" target="1.8" />
+      <module name="first-spring-boot-data-geode_test" target="1.8" />
+      <module name="first-spring-boot-database_main" target="1.8" />
+      <module name="first-spring-boot-database_test" target="1.8" />
+      <module name="first-spring-boot-feign_main" target="1.8" />
+      <module name="first-spring-boot-feign_test" target="1.8" />
+      <module name="first-spring-boot-integration_main" target="1.8" />
+      <module name="first-spring-boot-integration_test" target="1.8" />
+      <module name="first-spring-boot-jersey_main" target="1.8" />
+      <module name="first-spring-boot-jersey_test" target="1.8" />
+      <module name="first-spring-boot-security-acl_main" target="1.8" />
+      <module name="first-spring-boot-security-acl_test" target="1.8" />
+      <module name="first-spring-boot-security_main" target="1.8" />
+      <module name="first-spring-boot-security_test" target="1.8" />
+      <module name="first-spring-boot-swagger_main" target="1.8" />
+      <module name="first-spring-boot-swagger_test" target="1.8" />
+      <module name="first-spring-boot-web_main" target="1.8" />
+      <module name="first-spring-boot-web_test" target="1.8" />
+      <module name="first-spring-boot-websocket_main" target="1.8" />
+      <module name="first-spring-boot-websocket_test" target="1.8" />
+      <module name="first-spring-boot_main" target="1.8" />
+      <module name="first-spring-boot_test" target="1.8" />
+      <module name="font-_main" target="1.8" />
+      <module name="font-_test" target="1.8" />
+      <module name="font-crawler_main" target="1.8" />
+      <module name="font-crawler_test" target="1.8" />
+      <module name="test01_main" target="1.8" />
+      <module name="test01_test" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

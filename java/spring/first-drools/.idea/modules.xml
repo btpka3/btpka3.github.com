@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/first-drools.iml" filepath="$PROJECT_DIR$/first-drools.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/first-drools_main.iml" filepath="$PROJECT_DIR$/.idea/modules/first-drools_main.iml" group="first-drools" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/first-drools_test.iml" filepath="$PROJECT_DIR$/.idea/modules/first-drools_test.iml" group="first-drools" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/my-app/my-app.iml" filepath="$PROJECT_DIR$/.idea/modules/my-app/my-app.iml" group="my-app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/my-app/my-app_main.iml" filepath="$PROJECT_DIR$/.idea/modules/my-app/my-app_main.iml" group="my-app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/my-app/my-app_test.iml" filepath="$PROJECT_DIR$/.idea/modules/my-app/my-app_test.iml" group="my-app" />
+    </modules>
+  </component>
+</project>

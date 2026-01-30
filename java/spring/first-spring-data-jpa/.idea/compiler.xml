@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="first-spring-data-jpa_main" target="1.8" />
+      <module name="first-spring-data-jpa_test" target="1.8" />
+      <module name="my-app_main" target="1.8" />
+      <module name="my-app_test" target="1.8" />
+      <module name="my-domain-jo_main" target="1.8" />
+      <module name="my-domain-jo_test" target="1.8" />
+      <module name="my-domain-jooq_main" target="1.8" />
+      <module name="my-domain-jooq_querydsl" target="1.8" />
+      <module name="my-domain-jooq_test" target="1.8" />
+      <module name="my-domain-querydsl_main" target="1.8" />
+      <module name="my-domain-querydsl_querydsl" target="1.8" />
+      <module name="my-domain-querydsl_test" target="1.8" />
+      <module name="my-domain_main" target="1.8" />
+      <module name="my-domain_querydsl" target="1.8" />
+      <module name="my-domain_test" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

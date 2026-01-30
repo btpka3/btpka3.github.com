@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data-core/data-core.iml" filepath="$PROJECT_DIR$/.idea/modules/data-core/data-core.iml" group="data-core" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data-core/data-core_main.iml" filepath="$PROJECT_DIR$/.idea/modules/data-core/data-core_main.iml" group="data-core" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data-core/data-core_test.iml" filepath="$PROJECT_DIR$/.idea/modules/data-core/data-core_test.iml" group="data-core" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data-domain/data-domain.iml" filepath="$PROJECT_DIR$/.idea/modules/data-domain/data-domain.iml" group="data-domain" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data-domain/data-domain_main.iml" filepath="$PROJECT_DIR$/.idea/modules/data-domain/data-domain_main.iml" group="data-domain" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data-domain/data-domain_querydsl.iml" filepath="$PROJECT_DIR$/.idea/modules/data-domain/data-domain_querydsl.iml" group="data-domain" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data-domain/data-domain_test.iml" filepath="$PROJECT_DIR$/.idea/modules/data-domain/data-domain_test.iml" group="data-domain" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data-mongo/data-mongo.iml" filepath="$PROJECT_DIR$/.idea/modules/data-mongo/data-mongo.iml" group="data-mongo" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data-mongo/data-mongo_main.iml" filepath="$PROJECT_DIR$/.idea/modules/data-mongo/data-mongo_main.iml" group="data-mongo" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data-mongo/data-mongo_test.iml" filepath="$PROJECT_DIR$/.idea/modules/data-mongo/data-mongo_test.iml" group="data-mongo" />
+      <module fileurl="file://$PROJECT_DIR$/first-spring-boot-data-mongo.iml" filepath="$PROJECT_DIR$/first-spring-boot-data-mongo.iml" />
+    </modules>
+  </component>
+</project>

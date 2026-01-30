@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/my-mqtt.iml" filepath="$PROJECT_DIR$/my-mqtt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/my-mqtt_main.iml" filepath="$PROJECT_DIR$/.idea/modules/my-mqtt_main.iml" group="my-mqtt" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/my-mqtt_test.iml" filepath="$PROJECT_DIR$/.idea/modules/my-mqtt_test.iml" group="my-mqtt" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,56 @@
+plugins {
+    id 'java'
+//    id 'java-library'
+//    id "org.springframework.boot"
+//    id 'io.spring.dependency-management'
+}
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(11)
+    }
+    sourceCompatibility = '11'
+    targetCompatibility = '11'
+}
+
+repositories {
+    maven { url = "https://maven.aliyun.com/nexus/content/groups/public/" }
+    mavenCentral()
+}
+tasks.named('test', Test) {
+    useJUnitPlatform()
+}
+
+//dependencyManagement {
+//    imports {
+//        mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
+//    }
+//}
+
+dependencies {
+//    implementation platform(project(':platform'))
+//    api enforcedPlatform(project(':platform'))
+//    implementation platform("org.springframework.boot:spring-boot-dependencies:4.0.0")
+
+    compileOnly 'org.projectlombok:lombok:1.18.38'
+    testCompileOnly 'org.projectlombok:lombok:1.18.38'
+    annotationProcessor 'org.projectlombok:lombok:1.18.38'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.38'
+
+//    compileOnly 'org.projectlombok:lombok'
+//    testCompileOnly 'org.projectlombok:lombok'
+//    annotationProcessor 'org.projectlombok:lombok'
+//    testAnnotationProcessor 'org.projectlombok:lombok'
+//    testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
+//    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+//    implementation 'org.springframework.boot:spring-boot-starter-webmvc'
+//    testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
+//    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+}

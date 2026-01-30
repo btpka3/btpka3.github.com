@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/first-spring-cloud.iml" filepath="$PROJECT_DIR$/first-spring-cloud.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/first-spring-cloud.main.iml" filepath="$PROJECT_DIR$/.idea/modules/first-spring-cloud.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sc-zookeeper/first-spring-cloud.sc-zookeeper.iml" filepath="$PROJECT_DIR$/.idea/modules/sc-zookeeper/first-spring-cloud.sc-zookeeper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sc-zookeeper/first-spring-cloud.sc-zookeeper.main.iml" filepath="$PROJECT_DIR$/.idea/modules/sc-zookeeper/first-spring-cloud.sc-zookeeper.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sc-zookeeper/first-spring-cloud.sc-zookeeper.test.iml" filepath="$PROJECT_DIR$/.idea/modules/sc-zookeeper/first-spring-cloud.sc-zookeeper.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/first-spring-cloud.test.iml" filepath="$PROJECT_DIR$/.idea/modules/first-spring-cloud.test.iml" />
+    </modules>
+  </component>
+</project>

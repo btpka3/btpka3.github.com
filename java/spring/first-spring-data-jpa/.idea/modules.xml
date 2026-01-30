@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/first-spring-data-jpa.iml" filepath="$PROJECT_DIR$/first-spring-data-jpa.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/first-spring-data-jpa_main.iml" filepath="$PROJECT_DIR$/.idea/modules/first-spring-data-jpa_main.iml" group="first-spring-data-jpa" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/first-spring-data-jpa_test.iml" filepath="$PROJECT_DIR$/.idea/modules/first-spring-data-jpa_test.iml" group="first-spring-data-jpa" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/my-app/my-app.iml" filepath="$PROJECT_DIR$/.idea/modules/my-app/my-app.iml" group="my-app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/my-app/my-app_main.iml" filepath="$PROJECT_DIR$/.idea/modules/my-app/my-app_main.iml" group="my-app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/my-app/my-app_test.iml" filepath="$PROJECT_DIR$/.idea/modules/my-app/my-app_test.iml" group="my-app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/my-domain/my-domain.iml" filepath="$PROJECT_DIR$/.idea/modules/my-domain/my-domain.iml" group="my-domain" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/my-domain-jooq/my-domain-jooq.iml" filepath="$PROJECT_DIR$/.idea/modules/my-domain-jooq/my-domain-jooq.iml" group="my-domain-jooq" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/my-domain-jooq/my-domain-jooq_main.iml" filepath="$PROJECT_DIR$/.idea/modules/my-domain-jooq/my-domain-jooq_main.iml" group="my-domain-jooq" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/my-domain-jooq/my-domain-jooq_querydsl.iml" filepath="$PROJECT_DIR$/.idea/modules/my-domain-jooq/my-domain-jooq_querydsl.iml" group="my-domain-jooq" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/my-domain-jooq/my-domain-jooq_test.iml" filepath="$PROJECT_DIR$/.idea/modules/my-domain-jooq/my-domain-jooq_test.iml" group="my-domain-jooq" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/my-domain-querydsl/my-domain-querydsl.iml" filepath="$PROJECT_DIR$/.idea/modules/my-domain-querydsl/my-domain-querydsl.iml" group="my-domain-querydsl" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/my-domain-querydsl/my-domain-querydsl_main.iml" filepath="$PROJECT_DIR$/.idea/modules/my-domain-querydsl/my-domain-querydsl_main.iml" group="my-domain-querydsl" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/my-domain-querydsl/my-domain-querydsl_querydsl.iml" filepath="$PROJECT_DIR$/.idea/modules/my-domain-querydsl/my-domain-querydsl_querydsl.iml" group="my-domain-querydsl" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/my-domain-querydsl/my-domain-querydsl_test.iml" filepath="$PROJECT_DIR$/.idea/modules/my-domain-querydsl/my-domain-querydsl_test.iml" group="my-domain-querydsl" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/my-domain/my-domain_main.iml" filepath="$PROJECT_DIR$/.idea/modules/my-domain/my-domain_main.iml" group="my-domain" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/my-domain/my-domain_querydsl.iml" filepath="$PROJECT_DIR$/.idea/modules/my-domain/my-domain_querydsl.iml" group="my-domain" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/my-domain/my-domain_test.iml" filepath="$PROJECT_DIR$/.idea/modules/my-domain/my-domain_test.iml" group="my-domain" />
+    </modules>
+  </component>
+</project>

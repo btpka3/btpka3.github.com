@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Gradle Imported" enabled="true">
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.26/8f8cf0372abf564913e9796623aac4c8ea44025a/lombok-1.18.26.jar" />
+        </processorPath>
+        <module name="first-redis.test" />
+        <module name="first-redis.main" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="1.8">
+      <module name="sc-config-client_main" target="1.8" />
+      <module name="sc-config-client_test" target="1.8" />
+      <module name="sc-config-consul_main" target="1.8" />
+      <module name="sc-config-consul_test" target="1.8" />
+      <module name="sc-config-server_main" target="1.8" />
+      <module name="sc-config-server_test" target="1.8" />
+      <module name="sc-config-zk_main" target="1.8" />
+      <module name="sc-config-zk_test" target="1.8" />
+      <module name="sc-contract-client_main" target="1.8" />
+      <module name="sc-contract-client_test" target="1.8" />
+      <module name="sc-contract-server_main" target="1.8" />
+      <module name="sc-contract-server_test" target="1.8" />
+      <module name="sc-eureka-sc_main" target="1.8" />
+      <module name="sc-eureka-sc_test" target="1.8" />
+      <module name="sc-eureka-server_main" target="1.8" />
+      <module name="sc-eureka-server_test" target="1.8" />
+      <module name="sc-eureka-sp_main" target="1.8" />
+      <module name="sc-eureka-sp_test" target="1.8" />
+      <module name="sc-hystrix_main" target="1.8" />
+      <module name="sc-hystrix_test" target="1.8" />
+      <module name="sc-sleuth_main" target="1.8" />
+      <module name="sc-sleuth_test" target="1.8" />
+      <module name="sc-task_main" target="1.8" />
+      <module name="sc-task_test" target="1.8" />
+      <module name="sc-zuul_main" target="1.8" />
+      <module name="sc-zuul_test" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

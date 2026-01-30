@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="my-module-a" />
+        <module name="my-empty" />
+        <module name="my-module-b" />
+        <module name="my-app" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="first-felix" target="1.8" />
+      <module name="my-app" target="1.8" />
+      <module name="my-empty" target="1.8" />
+      <module name="my-module-a" target="1.8" />
+      <module name="my-module-b" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

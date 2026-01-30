@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel target="17">
+      <module name="first-spring-cloud.sc-config-zk" target="21" />
+      <module name="first-spring-cloud.sc-config-zk.main" target="21" />
+      <module name="first-spring-cloud.sc-config-zk.test" target="21" />
+      <module name="first-spring-cloud.sc-zookeeper" target="21" />
+      <module name="first-spring-cloud.sc-zookeeper.main" target="21" />
+      <module name="first-spring-cloud.sc-zookeeper.test" target="21" />
+      <module name="sc-config-client_main" target="1.8" />
+      <module name="sc-config-client_test" target="1.8" />
+      <module name="sc-config-consul_main" target="1.8" />
+      <module name="sc-config-consul_test" target="1.8" />
+      <module name="sc-config-server_main" target="1.8" />
+      <module name="sc-config-server_test" target="1.8" />
+      <module name="sc-config-zk_main" target="1.8" />
+      <module name="sc-config-zk_test" target="1.8" />
+      <module name="sc-contract-client_main" target="1.8" />
+      <module name="sc-contract-client_test" target="1.8" />
+      <module name="sc-contract-server_main" target="1.8" />
+      <module name="sc-contract-server_test" target="1.8" />
+      <module name="sc-eureka-sc_main" target="1.8" />
+      <module name="sc-eureka-sc_test" target="1.8" />
+      <module name="sc-eureka-server_main" target="1.8" />
+      <module name="sc-eureka-server_test" target="1.8" />
+      <module name="sc-eureka-sp_main" target="1.8" />
+      <module name="sc-eureka-sp_test" target="1.8" />
+      <module name="sc-hystrix_main" target="1.8" />
+      <module name="sc-hystrix_test" target="1.8" />
+      <module name="sc-sleuth_main" target="1.8" />
+      <module name="sc-sleuth_test" target="1.8" />
+      <module name="sc-task_main" target="1.8" />
+      <module name="sc-task_test" target="1.8" />
+      <module name="sc-zuul_main" target="1.8" />
+      <module name="sc-zuul_test" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_STRING" value="-parameters" />
+  </component>
+</project>

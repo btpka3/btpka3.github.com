@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_21" default="true" project-jdk-name="nik-21" project-jdk-type="JavaSDK" />
+  <component name="tdkConfig">
+    <option name="projectKey" value="4f0eaaf3-f859-406d-918c-3380657dba35" />
+  </component>
+</project>

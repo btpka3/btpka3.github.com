@@ -19,14 +19,16 @@ bin
 *.iws
 *.swp
 # .idea
-.idea/shelf/
-.idea/workspace.xml
-.idea/httpRequests/
-.idea/dataSources/
-.idea/dataSources.local.xml
-.idea/a.*
-.idea/b.*
-.idea/c.*
+**/.idea/shelf/
+**/.idea/workspace.xml
+**/.idea/httpRequests/
+**/.idea/dataSources/
+**/.idea/dataSources.local.xml
+**/.idea/a.*
+**/.idea/b.*
+**/.idea/c.*
+**/.idea/sonarlint/
+**/.idea/libraries/
 
 .DS_Store
 target-eclipse

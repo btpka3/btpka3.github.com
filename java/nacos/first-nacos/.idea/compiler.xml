@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Gradle Imported" enabled="true">
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.26/8f8cf0372abf564913e9796623aac4c8ea44025a/lombok-1.18.26.jar" />
+        </processorPath>
+        <module name="first-nacos.main" />
+        <module name="first-nacos.test" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="1.8">
+      <module name="demo-api_main" target="1.8" />
+      <module name="demo-api_test" target="1.8" />
+      <module name="demo-consumer_main" target="1.8" />
+      <module name="demo-consumer_test" target="1.8" />
+      <module name="demo-provider_main" target="1.8" />
+      <module name="demo-provider_test" target="1.8" />
+      <module name="dubbo-demo_main" target="1.8" />
+      <module name="dubbo-demo_test" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

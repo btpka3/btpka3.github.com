@@ -1,0 +1,11 @@
+[versions]
+lombokVersion = "1.18.38"
+
+[libraries]
+lombok = { module = "org.projectlombok:lombok", version.ref = "lombokVersion" }
+
+[bundles]
+lombok = ["lombok"]
+
+#[plugins]
+#springBootPlugin = { id = "org.springframework.boot", version = "4.0.0" }
