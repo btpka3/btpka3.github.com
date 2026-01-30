@@ -456,7 +456,7 @@ public class MyScanner implements Closeable {
         return new BufferedInputStream(new FileInputStream(dumpFile));
     }
 
-    public final static String[] cols = new String[] {
+    public final static String[] cols = new String[]{
             "id",
             "version",
             "adjust_price",

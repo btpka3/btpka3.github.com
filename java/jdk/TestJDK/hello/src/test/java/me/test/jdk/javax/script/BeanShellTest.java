@@ -1,12 +1,11 @@
 package me.test.jdk.javax.script;
 
-import org.junit.jupiter.api.Test;
-
+import java.util.List;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
-import java.util.List;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author dangqian.zll

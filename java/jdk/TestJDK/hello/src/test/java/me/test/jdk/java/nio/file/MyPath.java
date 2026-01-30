@@ -1,10 +1,15 @@
 package me.test.jdk.java.nio.file;
 
-import java.io.*;
-import java.net.*;
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
 import java.nio.file.FileSystem;
-import java.nio.file.*;
-import java.util.*;
+import java.nio.file.LinkOption;
+import java.nio.file.Path;
+import java.nio.file.WatchEvent;
+import java.nio.file.WatchKey;
+import java.nio.file.WatchService;
+import java.util.Iterator;
 
 public class MyPath implements Path {
 

@@ -3,9 +3,8 @@ package me.test.com.esotericsoftware.kryo;
 import com.esotericsoftware.kryo.kryo5.Kryo;
 import com.esotericsoftware.kryo.kryo5.io.Input;
 import com.esotericsoftware.kryo.kryo5.io.Output;
+import com.esotericsoftware.kryo.kryo5.objenesis.strategy.StdInstantiatorStrategy;
 import com.esotericsoftware.kryo.kryo5.util.DefaultInstantiatorStrategy;
-import com.esotericsoftware.kryo.kryo5.objenesis.strategy.StdInstantiatorStrategy ;
-
 import java.util.Map;
 
 /**

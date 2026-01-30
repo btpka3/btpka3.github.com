@@ -1,10 +1,16 @@
 package me.test.jdk.java.net;
 
-import lombok.SneakyThrows;
-
 import java.io.IOException;
-import java.net.*;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.net.ProxySelector;
+import java.net.Socket;
+import java.net.SocketAddress;
+import java.net.URI;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.List;
+import lombok.SneakyThrows;
 
 /**
  *
@@ -34,7 +40,6 @@ public class ProxyTest {
         {
             Socket socket = new Socket(proxy);
         }
-
 
 
         ProxySelector.getDefault();

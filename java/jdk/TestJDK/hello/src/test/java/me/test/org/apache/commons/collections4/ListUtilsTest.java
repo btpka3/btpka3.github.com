@@ -1,11 +1,10 @@
 package me.test.org.apache.commons.collections4;
 
+import java.util.Arrays;
+import java.util.List;
 import org.apache.commons.collections4.ListUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * @author dangqian.zll

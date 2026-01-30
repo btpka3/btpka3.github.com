@@ -1,17 +1,21 @@
 package me.test.jdk.jfr;
 
 
-import jdk.jfr.*;
-import jdk.jfr.consumer.RecordedEvent;
-import jdk.jfr.consumer.RecordingFile;
-import lombok.SneakyThrows;
-import org.junit.jupiter.api.Test;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import jdk.jfr.AnnotationElement;
+import jdk.jfr.Event;
+import jdk.jfr.EventFactory;
+import jdk.jfr.FlightRecorder;
+import jdk.jfr.Recording;
+import jdk.jfr.ValueDescriptor;
+import jdk.jfr.consumer.RecordedEvent;
+import jdk.jfr.consumer.RecordingFile;
+import lombok.SneakyThrows;
+import org.junit.jupiter.api.Test;
 
 /**
  * 生成JFR事件

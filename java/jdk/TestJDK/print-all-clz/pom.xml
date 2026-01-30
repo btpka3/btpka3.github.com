@@ -201,8 +201,8 @@
                             <Agent-Class>me.test.PrintAllClz</Agent-Class>
                             <Premain-Class>me.test.PrintAllClz</Premain-Class>
                             <Permissions>all-permissions</Permissions>
-<!--                            <Can-Redefine-Classes>false</Can-Redefine-Classes>-->
-<!--                            <Can-Retransform-Classes>false</Can-Retransform-Classes>-->
+                            <!--                            <Can-Redefine-Classes>false</Can-Redefine-Classes>-->
+                            <!--                            <Can-Retransform-Classes>false</Can-Retransform-Classes>-->
                         </manifestEntries>
                     </archive>
                 </configuration>

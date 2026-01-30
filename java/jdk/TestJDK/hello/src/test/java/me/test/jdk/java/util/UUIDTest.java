@@ -1,10 +1,9 @@
 package me.test.jdk.java.util;
 
-import lombok.SneakyThrows;
-import org.junit.jupiter.api.Test;
-
 import java.security.SecureRandom;
 import java.util.UUID;
+import lombok.SneakyThrows;
+import org.junit.jupiter.api.Test;
 
 /**
  * UUID#randomUUID() 内部使用全局的 SecureRandom ， 高并发时会有性能问题。

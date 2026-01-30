@@ -6,7 +6,7 @@
     "rgstCntry": "CN",
     "authCateBrand": {
       "@type": "java.util.HashMap",
-      "a":"aaa"
+      "a": "aaa"
     },
     "knowledgeModel": {
       "@type": "java.util.LinkedHashMap",

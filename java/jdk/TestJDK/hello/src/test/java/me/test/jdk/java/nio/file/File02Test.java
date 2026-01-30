@@ -1,8 +1,7 @@
 package me.test.jdk.java.nio.file;
 
-import org.junit.jupiter.api.Test;
-
 import java.io.File;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author dangqian.zll

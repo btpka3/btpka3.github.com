@@ -1,10 +1,14 @@
 package me.test.jdk.javax.xml.bind;
 
-import javax.xml.bind.annotation.*;
 import java.util.Objects;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlValue;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name="item")
+@XmlRootElement(name = "item")
 public class Item {
 
     @XmlAttribute

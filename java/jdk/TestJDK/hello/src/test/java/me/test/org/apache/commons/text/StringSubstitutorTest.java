@@ -1,15 +1,14 @@
 package me.test.org.apache.commons.text;
 
-import lombok.SneakyThrows;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.text.StringSubstitutor;
-import org.junit.jupiter.api.Test;
-
 import java.io.FileWriter;
 import java.io.Writer;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import lombok.SneakyThrows;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.text.StringSubstitutor;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author dangqian.zll

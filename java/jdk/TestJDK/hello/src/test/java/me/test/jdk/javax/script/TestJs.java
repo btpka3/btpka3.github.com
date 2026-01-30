@@ -1,8 +1,11 @@
 package me.test.jdk.javax.script;
 
-import javax.script.*;
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileReader;
+import java.util.HashMap;
+import java.util.Map;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
 
 
 /**

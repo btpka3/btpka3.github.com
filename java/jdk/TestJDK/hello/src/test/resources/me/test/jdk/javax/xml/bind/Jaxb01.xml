@@ -34,20 +34,19 @@
     <!--&lt;!&ndash;<weight2>88.88</weight2>&ndash;&gt;-->
 
 
-
     <!--&lt;!&ndash; 测试 List &ndash;&gt;-->
     <!--<items>-->
 
-        <!--&lt;!&ndash; 测试 TEXT 节点 &ndash;&gt;-->
-        <!--<item name="apple">red</item>-->
-        <!--<item name="banana">yellow</item>-->
+    <!--&lt;!&ndash; 测试 TEXT 节点 &ndash;&gt;-->
+    <!--<item name="apple">red</item>-->
+    <!--<item name="banana">yellow</item>-->
     <!--</items>-->
 
 
     <!--&lt;!&ndash; 测试 任意元素 内容  &ndash;&gt;-->
     <!--<div>-->
-        <!--<item name="Orange">orange</item>-->
-        <!--<span>high</span>-->
+    <!--<item name="Orange">orange</item>-->
+    <!--<span>high</span>-->
     <!--</div>-->
 
     <!--&lt;!&ndash; 测试 混合(元素+文本) 内容  &ndash;&gt;-->

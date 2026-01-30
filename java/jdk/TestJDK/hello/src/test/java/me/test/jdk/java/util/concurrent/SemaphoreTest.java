@@ -1,11 +1,11 @@
 package me.test.jdk.java.util.concurrent;
 
 
-import java.util.concurrent.*;
+import java.util.concurrent.Semaphore;
 
 /**
  * 信号量。一种加锁机制。
- *
+ * <p>
  * 一个消费者可以使用多个信号量，可以多次归还。
  */
 public class SemaphoreTest {

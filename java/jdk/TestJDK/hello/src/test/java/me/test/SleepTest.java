@@ -1,10 +1,9 @@
 package me.test;
 
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
-
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author dangqian.zll

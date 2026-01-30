@@ -1,16 +1,5 @@
 package me.test.jdk.javax.security.auth.login;
 
-import lombok.SneakyThrows;
-import org.apache.commons.io.FileUtils;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
-import javax.security.auth.callback.CallbackHandler;
-import javax.security.auth.login.AppConfigurationEntry;
-import javax.security.auth.login.Configuration;
-import javax.security.auth.login.ConfigurationSpi;
-import javax.security.auth.login.LoginContext;
-import javax.security.auth.spi.LoginModule;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -18,6 +7,16 @@ import java.security.Provider;
 import java.security.Security;
 import java.util.Arrays;
 import java.util.Map;
+import javax.security.auth.callback.CallbackHandler;
+import javax.security.auth.login.AppConfigurationEntry;
+import javax.security.auth.login.Configuration;
+import javax.security.auth.login.ConfigurationSpi;
+import javax.security.auth.login.LoginContext;
+import javax.security.auth.spi.LoginModule;
+import lombok.SneakyThrows;
+import org.apache.commons.io.FileUtils;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  *

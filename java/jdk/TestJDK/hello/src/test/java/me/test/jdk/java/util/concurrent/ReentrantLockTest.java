@@ -1,10 +1,9 @@
 package me.test.jdk.java.util.concurrent;
 
-import org.apache.commons.lang3.time.DateFormatUtils;
-import org.junit.jupiter.api.Test;
-
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import org.apache.commons.lang3.time.DateFormatUtils;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author dangqian.zll

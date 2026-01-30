@@ -1,15 +1,14 @@
 package me.test.jdk.java.text;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Test;
-
 import java.text.MessageFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
 
 import static java.util.Locale.CHINESE;
 import static java.util.Locale.ENGLISH;
@@ -120,8 +119,6 @@ public class MessageFormat01 {
             new Rec("空占位符异常", "{},{0},{1},{2}", new Object[]{"aaa", "bbb", "ccc"},
                     Map.of(CHINESE, "IllegalArgumentException", ENGLISH, "IllegalArgumentException"), true)
     );
-
-
 
 
     @Test

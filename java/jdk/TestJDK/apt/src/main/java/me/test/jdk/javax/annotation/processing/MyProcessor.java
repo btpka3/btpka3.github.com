@@ -1,13 +1,13 @@
 package me.test.jdk.javax.annotation.processing;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 /**
  *

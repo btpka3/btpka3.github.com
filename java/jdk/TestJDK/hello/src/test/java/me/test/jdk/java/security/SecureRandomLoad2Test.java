@@ -3,7 +3,11 @@ package me.test.jdk.java.security;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Objects;
-import java.util.concurrent.*;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 当有设置 JDK JVM属性 ： `-Djava.security.egd=file:/dev/./urandom` 时，SecureRandom 默认使用 DRBG 算法，否则默认使用 NativePRNG
@@ -39,7 +43,7 @@ import java.util.concurrent.*;
  * DRBG 算法的 SecureRandom 多实例性能 大约是 单实例的 性能的5倍。
  * 多实例时，获取随机数耗时都比较平均，而单实例时会有大量长耗时（锁竞争）：
  * sun.security.provider.AbstractDrbg#generateAlgorithm(byte[], byte[]) 的所有实现都是 synchronized。
- *
+ * <p>
  * 想法：应该可以通过 java-agent 机制，针对使用 DRBG 算法时， 修改 java.util.UUID#randomUUID() 方法调用前，
  * 都将 java.util.UUID.Holder#numberGenerator 设置成一个新对象/或者对象池里无人使用的对对象。
  *

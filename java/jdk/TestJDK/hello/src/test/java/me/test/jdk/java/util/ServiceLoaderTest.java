@@ -1,9 +1,8 @@
 package me.test.jdk.java.util;
 
-import org.junit.jupiter.api.Test;
-
 import java.util.List;
 import java.util.ServiceLoader;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author dangqian.zll

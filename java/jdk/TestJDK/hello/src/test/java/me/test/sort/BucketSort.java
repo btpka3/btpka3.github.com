@@ -1,13 +1,15 @@
 package me.test.sort;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * 桶排序 (Bucket sort)
- *
+ * <p>
  * 非比较排序，桶排序可用于最大最小值相差较大的数据情况。
  * 适用于数据的分布均匀的情况，否则可能导致数据都集中到一个桶中
- *
+ * <p>
  * - 找出待排序数组中的最大值max、最小值min
  * - 创建 (max-min)/arr.length+1 个桶
  * - 每个元素放到桶内

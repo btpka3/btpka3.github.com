@@ -1,6 +1,6 @@
 package me.test;
 
-import java.util.concurrent.atomic.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class VolitateTest {
 

@@ -1,11 +1,10 @@
 package me.test.jdk.java.lang;
 
+import java.lang.reflect.Method;
 import me.test.jdk.java.lang.classloader4.Bbb;
 import me.test.jdk.java.lang.classloader4.Xxx;
 import me.test.jdk.java.lang.classloader4.Yyy;
 import org.junit.jupiter.api.Test;
-
-import java.lang.reflect.Method;
 
 /**
  * @author dangqian.zll

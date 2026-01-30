@@ -1,4 +1,3 @@
-
 package me.test.jdk.java.util.concurrent.atomic;
 
 import java.util.concurrent.atomic.AtomicBoolean;

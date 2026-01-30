@@ -1,11 +1,8 @@
 package me.test.jdk.java.util.stream;
 
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class SortTest {
 
@@ -23,7 +20,7 @@ public class SortTest {
                 .sorted()
                 .collect(Collectors.joining("\n"));
 
-        System.out.println(str+"___");
+        System.out.println(str + "___");
     }
 
 }

@@ -1,15 +1,14 @@
 package me.test.jdk.java.nio;
 
-import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
-import me.test.jdk.java.net.socket.BioEchoServer;
-
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.AsynchronousServerSocketChannel;
 import java.nio.channels.AsynchronousSocketChannel;
 import java.nio.channels.CompletionHandler;
 import java.nio.charset.StandardCharsets;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
+import me.test.jdk.java.net.socket.BioEchoServer;
 
 /**
  * AIO: 异步非阻塞模型

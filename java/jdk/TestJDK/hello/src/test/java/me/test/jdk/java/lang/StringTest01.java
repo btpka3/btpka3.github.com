@@ -1,9 +1,8 @@
 package me.test.jdk.java.lang;
 
-import org.junit.jupiter.api.Test;
-
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

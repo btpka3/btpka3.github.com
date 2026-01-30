@@ -1,6 +1,6 @@
 package me.test.jdk.java.net;
 
-import java.net.*;
+import java.net.URI;
 
 public class URITest {
 

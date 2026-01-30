@@ -1,8 +1,5 @@
 package me.test.jdk.java.nio;
 
-import lombok.extern.slf4j.Slf4j;
-import me.test.jdk.java.net.socket.BioEchoServer;
-
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
@@ -14,16 +11,16 @@ import java.nio.channels.SocketChannel;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
+import me.test.jdk.java.net.socket.BioEchoServer;
 
 /**
  * NIO: 同步非阻塞模型
- *
+ * <p>
  * `sudo ifconfig lo0 alias 127.0.0.3 up` : 苹果笔记本上可以通过该方式增加一个新 回环地址。
- *
+ * <p>
  * `nc localhost 9999` 然后 输入 "abc" 换行；如果字符串中包含 '.' 则关闭连接, '.' 之后的字符将不回显。
  * 仅支持 ASCII 字符（单字节）。
- *
- *
  *
  * @see BioEchoServer
  * @see AioEchoServer

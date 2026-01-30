@@ -36,7 +36,7 @@ public class JdbcSample {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
             }
-        }finally{
+        } finally {
             try {
                 conn.close();
             } catch (SQLException e) {

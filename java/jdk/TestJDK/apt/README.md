@@ -1,8 +1,7 @@
-
 # 参考
+
 * [Annotation Processing 101](http://hannesdorfmann.com/annotation-processing/annotationprocessing101)
 * [source](https://github.com/sockeqwe/annotationprocessing101)
-
 
 # run
 
@@ -14,10 +13,10 @@ mvn -Dmaven.test.skip=true --projects hello package
 
 # 总结
 
-
 1. maven-compiler-plugin 可以通过参数指定要使用哪些 annotationProcessor
 
 ```xml
+
 <plugins>
     <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -25,7 +24,8 @@ mvn -Dmaven.test.skip=true --projects hello package
         <version>3.0</version>
         <configuration>
             <annotationProcessors>
-                <annotationProcessor>org.springframework.data.mongodb.repository.support.MongoAnnotationProcessor</annotationProcessor>
+                <annotationProcessor>org.springframework.data.mongodb.repository.support.MongoAnnotationProcessor
+                </annotationProcessor>
             </annotationProcessors>
             <source>1.7</source>
             <target>1.7</target>
@@ -43,7 +43,7 @@ configurations {
 
 dependencies {
     // put dependency to your module with processor inside
-    querydslapt "com.mysema.querydsl:querydsl-apt:$querydslVersion" 
+    querydslapt "com.mysema.querydsl:querydsl-apt:$querydslVersion"
 }
 
 task generateQueryDSL(type: JavaCompile, group: 'build', description: 'Generates the QueryDSL query types') {
@@ -62,7 +62,6 @@ task generateQueryDSL(type: JavaCompile, group: 'build', description: 'Generates
 # FIXME
 
 1. `META-INF/services/javax.annotation.processing.Processor` 应该是放在哪个jar包中？
-
 
     javax.annotation.processing.Processor
     

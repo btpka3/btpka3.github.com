@@ -1,12 +1,11 @@
 package me.test.jdk.java.lang;
 
 import io.github.classgraph.ClassGraph;
+import java.net.URLClassLoader;
+import java.util.Objects;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.net.URLClassLoader;
-import java.util.Objects;
 
 /**
  * 向 {@link ClassLoader#getPlatformClassLoader()} 中增加 jar

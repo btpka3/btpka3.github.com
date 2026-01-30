@@ -13,7 +13,7 @@ define(function (require, exports, module) {
         r.systemKeybord();
         $(t).css("overflow-x", "hidden");
         var uPre = appUtils.getSStorageInfo("_prePageCode", 'deal');
-        u = appUtils.getPageParam("topage") || appUtils.getSStorageInfo("nextPage", !0) || ( uPre == "account/activePhone" ? '' : uPre) || appUtils.getSStorageInfo("prePage", !0);
+        u = appUtils.getPageParam("topage") || appUtils.getSStorageInfo("nextPage", !0) || (uPre == "account/activePhone" ? '' : uPre) || appUtils.getSStorageInfo("prePage", !0);
 //      u = "/tztweb/zt/zt_pass.html";
         console.log("u=" + u);
         if (!u && toUrl && toUrl != "") {
@@ -60,8 +60,7 @@ define(function (require, exports, module) {
                     });
 //                  getId(cardCode,'C00069','shanxi');
                 }
-            }
-            else if (appUa.indexOf('lufax') >= 0) {
+            } else if (appUa.indexOf('lufax') >= 0) {
                 //如果是陆金所进入获取身份证号
                 $('.j_login').remove();
                 $('.ljs_login').show();
@@ -79,8 +78,7 @@ define(function (require, exports, module) {
                     });
 //	                    getId(cardCode,'B15714');
                 }
-            }
-            else {
+            } else {
                 //否则获取上次保存的账号
                 $('.ljs_login').remove();
                 issaveaccount("ordSavaAcc");
@@ -339,7 +337,7 @@ define(function (require, exports, module) {
                     var x = appUtils.getSStorageInfo("_loginInPageCode"),
                         y = appUtils.getSStorageInfo("_loginInPageParam");
                     if (appUtils.clearSStorage("_loginInPageCode"), appUtils.clearSStorage("_loginInPageParam"), appUtils.setSStorageInfo("clientid", d.FUNDACCOUNT, !0),
-                        x && "" != x) {
+                    x && "" != x) {
                         var z = JSON.parse(y);
                         appUtils.pageInit("account/login", x, z);
                     } else {

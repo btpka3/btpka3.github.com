@@ -1,8 +1,10 @@
 package me.test.jdk.java.util.concurrent;
 
 
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
 
 /**
  * 可重用。

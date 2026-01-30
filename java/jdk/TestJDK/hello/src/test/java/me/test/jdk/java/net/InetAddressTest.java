@@ -1,15 +1,13 @@
 package me.test.jdk.java.net;
 
-import lombok.SneakyThrows;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Enumeration;
 import java.util.regex.Pattern;
+import lombok.SneakyThrows;
+import org.junit.jupiter.api.Test;
 
 public class InetAddressTest {
 
@@ -110,7 +108,7 @@ public class InetAddressTest {
                                 "int1=" + int1 + ", " +
                                 "int2=" + int2 + ", " +
                                 "int3=" + int3;
-                        System.out.println(msg  );
+                        System.out.println(msg);
 
 //                        Assertions.assertEquals(msg, int1, int2);
                         //Assertions.assertEquals(msg, int1, int3);

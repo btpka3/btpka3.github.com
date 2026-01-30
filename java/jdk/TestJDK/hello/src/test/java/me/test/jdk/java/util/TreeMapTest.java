@@ -1,8 +1,7 @@
 package me.test.jdk.java.util;
 
-import org.junit.jupiter.api.Test;
-
 import java.util.TreeMap;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author dangqian.zll

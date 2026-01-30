@@ -1,8 +1,7 @@
 package me.test.jdk.java.lang;
 
-import org.junit.jupiter.api.Test;
-
 import java.util.Arrays;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author dangqian.zll

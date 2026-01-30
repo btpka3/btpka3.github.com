@@ -1,14 +1,12 @@
 package me.test.jdk.java.util;
 
-import lombok.SneakyThrows;
-import org.junit.jupiter.api.Test;
-
 import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
+import lombok.SneakyThrows;
+import org.junit.jupiter.api.Test;
 
 public class PropertiesTest {
 

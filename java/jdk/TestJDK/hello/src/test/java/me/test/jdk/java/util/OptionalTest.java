@@ -1,9 +1,8 @@
 package me.test.jdk.java.util;
 
+import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.util.Optional;
 
 public class OptionalTest {
 

@@ -1,20 +1,20 @@
 package me.test.sort;
 
-import java.util.*;
+import java.util.Arrays;
 
 /**
  * 交换排序—快速排序（Quick Sort）
- *
+ * <p>
  * 将第一个元素作为中值元素，将该中值元素挪到中间位置，使一边是比他大的数，一边是比他小的数。
- *
+ * <p>
  * 时间复杂度：
  * 最坏情况: n 个元素的数组被分割为 1,  n-1。
- *          T(n) = O(n) + T(1) + T(n-1)
- *               = 0(n^2)
- *
+ * T(n) = O(n) + T(1) + T(n-1)
+ * = 0(n^2)
+ * <p>
  * 最好情况: n 个元素的数组被分割为 (n-1)/2, (n-1)/2  。
- *          T(n) = O(n) + T(n/2) + T(n/2)
- *               = O(n*log2(n))
+ * T(n) = O(n) + T(n/2) + T(n/2)
+ * = O(n*log2(n))
  */
 public class QuickSort {
 
@@ -26,7 +26,7 @@ public class QuickSort {
 
     /**
      * 将第一个元素作为中值元素，将该中值元素挪到中间位置，使一边是比他大的数，一边是比他小的数。
-     *
+     * <p>
      * 该方法的时间复杂度是 O(n).
      */
     public static int partition(Integer[] numbers, int low, int high) {
@@ -56,8 +56,8 @@ public class QuickSort {
     /**
      *
      * @param numbers 待排序数组
-     * @param low  开始位置
-     * @param high 结束位置
+     * @param low     开始位置
+     * @param high    结束位置
      */
     public static void quickSort(Integer[] numbers, int low, int high) {
         if (low >= high) {

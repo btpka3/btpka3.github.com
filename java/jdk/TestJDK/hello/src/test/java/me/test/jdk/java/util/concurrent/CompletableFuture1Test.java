@@ -1,10 +1,9 @@
 package me.test.jdk.java.util.concurrent;
 
-import lombok.SneakyThrows;
-import org.junit.jupiter.api.Test;
-
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CountDownLatch;
+import lombok.SneakyThrows;
+import org.junit.jupiter.api.Test;
 
 /**
  * 就是JavaScript 中的 Promise 嘛~
@@ -63,6 +62,6 @@ public class CompletableFuture1Test {
 
         c.await();
         System.out.println(Thread.currentThread().getName()
-                           + " : Done. " + futurePrice.get() + ", " + lastPriceFuture.get());
+                + " : Done. " + futurePrice.get() + ", " + lastPriceFuture.get());
     }
 }

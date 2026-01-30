@@ -1,10 +1,9 @@
 package me.test.org.apache.commons.lang3;
 
+import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.util.regex.Pattern;
 
 /**
  * @author dangqian.zll

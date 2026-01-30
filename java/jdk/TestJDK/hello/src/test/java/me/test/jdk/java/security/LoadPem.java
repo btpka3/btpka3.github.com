@@ -1,12 +1,24 @@
 package me.test.jdk.java.security;
 
 
-import java.io.*;
-import java.nio.charset.*;
-import java.security.*;
-import java.security.cert.*;
-import java.security.spec.*;
-import java.util.*;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
+import java.security.InvalidKeyException;
+import java.security.KeyFactory;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.Signature;
+import java.security.SignatureException;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
+import java.util.Base64;
 
 /**
  *
@@ -43,8 +55,8 @@ public class LoadPem {
             return sign;
 
         } catch (NoSuchAlgorithmException
-                | SignatureException
-                | InvalidKeyException e) {
+                 | SignatureException
+                 | InvalidKeyException e) {
             throw new RuntimeException(e);
         }
     }
@@ -85,7 +97,7 @@ public class LoadPem {
             PublicKey pubKey = keyFactory.generatePublic(keySpec);
             return pubKey;
         } catch (NoSuchAlgorithmException
-                | InvalidKeySpecException e) {
+                 | InvalidKeySpecException e) {
             throw new RuntimeException(e);
         }
     }
@@ -103,8 +115,8 @@ public class LoadPem {
             return signature.verify(Base64.getDecoder().decode(sign));
 
         } catch (NoSuchAlgorithmException
-                | SignatureException
-                | InvalidKeyException e) {
+                 | SignatureException
+                 | InvalidKeyException e) {
             throw new RuntimeException(e);
         }
     }
@@ -137,10 +149,10 @@ public class LoadPem {
             return sign;
 
         } catch (NoSuchAlgorithmException
-                | UnsupportedEncodingException
-                | SignatureException
-                | InvalidKeyException
-                | InvalidKeySpecException e) {
+                 | UnsupportedEncodingException
+                 | SignatureException
+                 | InvalidKeyException
+                 | InvalidKeySpecException e) {
             throw new RuntimeException(e);
         }
     }

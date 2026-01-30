@@ -1,9 +1,8 @@
 package me.test.jdk.java.util.concurrent;
 
-import org.junit.jupiter.api.Test;
-
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicReference;
+import org.junit.jupiter.api.Test;
 
 /**
  * 就是JavaScript 中的 Promise 嘛~

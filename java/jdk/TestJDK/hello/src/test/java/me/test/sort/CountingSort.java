@@ -1,14 +1,14 @@
 package me.test.sort;
 
-import java.util.*;
+import java.util.Arrays;
 
 /**
  * 计数排序 (Counting sort)
- *
+ * <p>
  * 非比较排序，需要大量空间。仅适用于数据比较集中的情况。
- *
+ * <p>
  * 时间复杂度：Ο(n+k)
- *     min: O(n*log(n))
+ * min: O(n*log(n))
  */
 public class CountingSort {
 

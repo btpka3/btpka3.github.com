@@ -1,11 +1,10 @@
 package me.test.jdk.java.util.concurrent;
 
-import me.test.*;
+import java.util.Iterator;
+import java.util.concurrent.CopyOnWriteArrayList;
+import me.test.U;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.util.*;
-import java.util.concurrent.*;
 
 /**
  * 写时copy，能扩大并发，但已经通过迭代器遍历的数据会是老的。
@@ -61,8 +60,8 @@ public class CopyOnWriteArrayListTest {
     }
 
     @Test
-    public void x(){
-        CopyOnWriteArrayList list =new CopyOnWriteArrayList();
+    public void x() {
+        CopyOnWriteArrayList list = new CopyOnWriteArrayList();
         list.add("aaa");
         list.add("bbb");
         list.add("ccc");

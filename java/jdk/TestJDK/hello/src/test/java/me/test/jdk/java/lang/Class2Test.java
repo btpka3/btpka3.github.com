@@ -1,10 +1,9 @@
 package me.test.jdk.java.lang;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-
 import java.util.HashMap;
 import java.util.Map;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author dangqian.zll
@@ -23,14 +22,14 @@ public class Class2Test {
 
     /**
      * 验证 A: 静态内部类， B: 方法内的内部类， C：类的non-static内部类， D：方法内的 lambda 中相关class的定义和加载情况。
-     *
+     * <p>
      * 请打开以下JVM 开关，验证不同case 的类加载情况。
      *
      * <ul>
      *     <li>JDK9 以前: `-XX:+TraceClassLoading`</li>
      *     <li>JDK9 以及之后: `-Xlog:class+load=info`</li>
      * </ul>
-     *
+     * <p>
      * 结论：类定义出现多少次，就 定义/load 多少次class。故：
      * <ul>
      *     <li>case（A）: 静态内部类只 触发类加载 一次</li>

@@ -1,9 +1,8 @@
 package me.test.jdk.java.util.regex;
 
+import java.util.regex.Pattern;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.util.regex.Pattern;
 
 /**
  * 测试 string 的 split 方法。

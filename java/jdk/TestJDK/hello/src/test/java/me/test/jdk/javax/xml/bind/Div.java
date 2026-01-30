@@ -1,11 +1,15 @@
 package me.test.jdk.javax.xml.bind;
 
-import javax.xml.bind.annotation.*;
 import java.util.List;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElementRef;
+import javax.xml.bind.annotation.XmlMixed;
+import javax.xml.bind.annotation.XmlRootElement;
 
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name="div")
+@XmlRootElement(name = "div")
 public class Div {
 
 

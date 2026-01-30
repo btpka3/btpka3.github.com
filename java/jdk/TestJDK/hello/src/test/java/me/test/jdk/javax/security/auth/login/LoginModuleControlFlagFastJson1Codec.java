@@ -4,10 +4,9 @@ import com.alibaba.fastjson.parser.DefaultJSONParser;
 import com.alibaba.fastjson.parser.deserializer.ObjectDeserializer;
 import com.alibaba.fastjson.serializer.JSONSerializer;
 import com.alibaba.fastjson.serializer.ObjectSerializer;
-
-import javax.security.auth.login.AppConfigurationEntry;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import javax.security.auth.login.AppConfigurationEntry;
 
 /**
  *

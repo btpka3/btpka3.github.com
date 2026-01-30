@@ -1,8 +1,7 @@
 package me.test.jdk.java.util.concurrent;
 
-import me.test.*;
-
-import java.util.concurrent.*;
+import java.util.concurrent.Exchanger;
+import me.test.U;
 
 public class ExchangerTest {
     public static void main(String[] args) throws InterruptedException {

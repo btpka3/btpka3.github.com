@@ -2,13 +2,12 @@ package me.test.jdk.java.lang;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import org.apache.commons.collections4.MapUtils;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
+import org.apache.commons.collections4.MapUtils;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * 该示例旨在说明使用浮点数进行计算时可能会引起的精度问题。
@@ -97,7 +96,7 @@ public class DoubleTest {
     public void testDouble() {
 
         Long l = 1746705327990L;
-        Double d = (double)l;
+        Double d = (double) l;
         Assertions.assertEquals("1.74670532799E12", d.toString());
 
         Map<String, Object> map = new HashMap<>(4);

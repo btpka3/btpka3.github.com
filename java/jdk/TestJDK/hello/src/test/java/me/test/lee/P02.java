@@ -1,9 +1,8 @@
 package me.test.lee;
 
-import org.junit.jupiter.api.Test;
-
 import java.util.Arrays;
 import java.util.stream.Collectors;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

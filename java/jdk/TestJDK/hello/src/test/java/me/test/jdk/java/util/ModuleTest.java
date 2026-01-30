@@ -20,8 +20,7 @@ public class ModuleTest {
             module.getClassLoader();
         }
 
-        ClassLoader cl ;
-
+        ClassLoader cl;
 
 
     }

@@ -1,11 +1,10 @@
 package me.test.jdk.java.lang;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
 import java.io.File;
 import java.net.URL;
 import java.net.URLClassLoader;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * 测试 ThreadLocal + 不同 classLoader。

@@ -1,5 +1,13 @@
 package me.test.org.apache.commons.compress.archivers.zip;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import lombok.SneakyThrows;
 import me.test.jdk.java.util.zip.Zip;
 import org.apache.commons.compress.archivers.examples.Expander;
@@ -9,15 +17,6 @@ import org.apache.commons.compress.archivers.zip.ZipFile;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -35,7 +34,7 @@ public class ZipFileTest {
         zipFile.getEntries("");
     }
 
-    public  void unzip(File zipFile, File targetDirectory) throws IOException {
+    public void unzip(File zipFile, File targetDirectory) throws IOException {
         // Ensure the target directory exists
         if (!targetDirectory.exists() && !targetDirectory.mkdirs()) {
             throw new IOException("Failed to create target directory " + targetDirectory.getAbsolutePath());
@@ -47,7 +46,7 @@ public class ZipFileTest {
         }
     }
 
-    public  void unzip(File zipFile, Path targetDirectory) throws IOException {
+    public void unzip(File zipFile, Path targetDirectory) throws IOException {
         // Ensure the target directory exists
         if (!Files.exists(targetDirectory)) {
             Files.createDirectories(targetDirectory);

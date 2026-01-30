@@ -1,11 +1,10 @@
 package me.test.jdk.javax.management;
 
 import com.sun.management.HotSpotDiagnosticMXBean;
-
+import java.lang.management.ManagementFactory;
 import javax.management.MBeanServer;
 import javax.management.MBeanServerInvocationHandler;
 import javax.management.ObjectName;
-import java.lang.management.ManagementFactory;
 
 /**
  *

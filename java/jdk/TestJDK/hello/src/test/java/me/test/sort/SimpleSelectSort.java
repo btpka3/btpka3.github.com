@@ -1,15 +1,15 @@
 package me.test.sort;
 
-import java.util.*;
+import java.util.Arrays;
 
 /**
  * 选择排序—简单选择排序（Simple Selection Sort）
- *
+ * <p>
  * 假设要按照升序排序。
  * - 使第0个位置上是最小值
  * - 使第1个位置上是次小值
  * - ...
- *
+ * <p>
  * 时间复杂度：T(n) = O(n) * O(n-1) = O(n^2)
  */
 public class SimpleSelectSort {

@@ -16,7 +16,7 @@ public class IntegerTest {
             Assertions.assertEquals("0x03", result);
         }
         {
-            byte b =(byte) 0xAA;
+            byte b = (byte) 0xAA;
             String result = Integer.toHexString(b);
             Assertions.assertEquals("0xAA", result);
         }

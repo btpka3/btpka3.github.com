@@ -1,10 +1,10 @@
 package me.test.sort;
 
-import java.util.*;
+import java.util.Arrays;
 
 /**
  * 插入排序—希尔排序（Shell`s Sort,渐减增量排序diminishing increment sort）
- *
+ * <p>
  * - 先将整个列表分若干段
  * - 每段中相同位置的元素进行比较，交换
  * - 步长最小为1

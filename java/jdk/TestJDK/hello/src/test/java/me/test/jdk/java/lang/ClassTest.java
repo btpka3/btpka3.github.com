@@ -1,13 +1,12 @@
 package me.test.jdk.java.lang;
 
+import java.lang.reflect.Field;
+import java.util.Deque;
+import java.util.Map;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.slf4j.MDC;
 import org.slf4j.spi.MDCAdapter;
-
-import java.lang.reflect.Field;
-import java.util.Deque;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertSame;

@@ -6,7 +6,7 @@ package me.test.jdk.java.lang;
  */
 public class TcclTest {
 
-    public void x(){
+    public void x() {
         Thread.currentThread().getContextClassLoader().toString();
     }
 }

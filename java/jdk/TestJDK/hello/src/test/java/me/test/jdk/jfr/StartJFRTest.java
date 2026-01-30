@@ -1,13 +1,12 @@
 package me.test.jdk.jfr;
 
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import jdk.jfr.Configuration;
 import jdk.jfr.Recording;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
-
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 /**
  * 创建一次飞行记录

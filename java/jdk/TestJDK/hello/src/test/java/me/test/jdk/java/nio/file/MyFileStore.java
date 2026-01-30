@@ -1,8 +1,9 @@
 package me.test.jdk.java.nio.file;
 
-import java.io.*;
-import java.nio.file.*;
-import java.nio.file.attribute.*;
+import java.io.IOException;
+import java.nio.file.FileStore;
+import java.nio.file.attribute.FileAttributeView;
+import java.nio.file.attribute.FileStoreAttributeView;
 
 public class MyFileStore extends FileStore {
 

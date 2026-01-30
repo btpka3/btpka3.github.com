@@ -1,8 +1,7 @@
 package me.test.org.jetbrains.annotations;
 
-import org.jetbrains.annotations.Contract;
-
 import javax.annotation.Nullable;
+import org.jetbrains.annotations.Contract;
 
 /**
  * @author dangqian.zll
@@ -10,7 +9,7 @@ import javax.annotation.Nullable;
  */
 public class NullableTest {
 
-    public void test(@Nullable Object o){
+    public void test(@Nullable Object o) {
 //        System.out.println(o.hashCode());
         //verify(o);
 
@@ -24,11 +23,11 @@ public class NullableTest {
     protected void verify(Object param) {
 
         if (param == null) {
-            throw new  RuntimeException("xxx");
+            throw new RuntimeException("xxx");
         }
     }
 
-    protected  void assertTrue(boolean b, String message) {
+    protected void assertTrue(boolean b, String message) {
         if (!b) {
             throw new RuntimeException(message);
         }

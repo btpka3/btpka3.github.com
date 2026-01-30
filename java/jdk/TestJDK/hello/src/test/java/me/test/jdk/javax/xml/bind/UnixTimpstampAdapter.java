@@ -1,8 +1,8 @@
 package me.test.jdk.javax.xml.bind;
 
-import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 public class UnixTimpstampAdapter extends XmlAdapter<String, Date> {
 

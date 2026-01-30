@@ -1,15 +1,21 @@
 package me.test.jdk.javax.net.ssl;
 
-import javax.net.ssl.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.*;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.net.Socket;
+import java.net.SocketAddress;
+import java.net.SocketException;
+import java.net.SocketImplFactory;
 import java.nio.channels.SocketChannel;
+import javax.net.ssl.SSLSocketFactory;
 
 /**
  * 因为使用ssl隧道不放方便，故增加此类。
- *
+ * <p>
  * 要求：获得该类之后，必须先调用connect方法，之后才能调用其他方法。
  */
 public class MySSLSocket extends Socket {

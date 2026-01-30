@@ -1,12 +1,11 @@
 package me.test.jdk.java.util.regex;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class TestRegex {
 
@@ -50,7 +49,7 @@ public class TestRegex {
     }
 
     @Test
-    public void x(){
+    public void x() {
         String REGEX_A_NUM = "^A\\d+$";
         Pattern P_ANum = Pattern.compile(REGEX_A_NUM);
         String s = "A22851";

@@ -1,18 +1,16 @@
 package me.test.org.apache.commons.compress.archivers.zip;
 
-import org.apache.commons.compress.archivers.examples.Expander;
-import org.apache.commons.compress.archivers.zip.ZipFile;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
-
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * ZipFileTest类的单元测试类
@@ -31,22 +29,22 @@ public class ZipFileTests {
         Path tempDir = Files.createTempDirectory("test_unzip_");
         Path targetDir = tempDir.resolve("target");
         Files.createDirectories(targetDir);
-        
+
         File zipFile = tempDir.resolve("test.zip").toFile();
         createTestZipFile(zipFile);
-        
+
         // 执行：调用unzip方法
         ZipFileTest zipFileTest = new ZipFileTest();
         zipFileTest.unzip(zipFile, targetDir);
-        
+
         // 验证：确认文件被成功解压
         File extractedFile = targetDir.resolve("test.txt").toFile();
         assertTrue(extractedFile.exists(), "解压后的文件应该存在");
-        
+
         // 验证：确认文件内容正确
         String content = Files.readString(extractedFile.toPath(), StandardCharsets.UTF_8);
         assertEquals("Hello World", content, "解压后的文件内容应该正确");
-        
+
         // 清理
         deleteDirectory(tempDir.toFile());
     }
@@ -61,24 +59,24 @@ public class ZipFileTests {
         // 准备：创建临时目录和zip文件，但不创建目标目录
         Path tempDir = Files.createTempDirectory("test_unzip_");
         Path targetDir = tempDir.resolve("target");
-        
+
         File zipFile = tempDir.resolve("test.zip").toFile();
         createTestZipFile(zipFile);
-        
+
         // 验证：目标目录不存在
         assertFalse(Files.exists(targetDir), "目标目录在测试前不应该存在");
-        
+
         // 执行：调用unzip方法
         ZipFileTest zipFileTest = new ZipFileTest();
         zipFileTest.unzip(zipFile, targetDir);
-        
+
         // 验证：确认目录被创建
         assertTrue(Files.exists(targetDir), "目标目录应该被创建");
-        
+
         // 验证：确认文件被成功解压
         File extractedFile = targetDir.resolve("test.txt").toFile();
         assertTrue(extractedFile.exists(), "解压后的文件应该存在");
-        
+
         // 清理
         deleteDirectory(tempDir.toFile());
     }
@@ -93,18 +91,18 @@ public class ZipFileTests {
         // 准备：创建临时目录和zip文件
         Path tempDir = Files.createTempDirectory("test_unzip_");
         Path targetDir = tempDir.resolve("target");
-        
+
         File zipFile = tempDir.resolve("test.zip").toFile();
         createTestZipFile(zipFile);
-        
+
         // 创建一个文件而不是目录，模拟创建目录失败的情况
         Files.createFile(targetDir);
-        
+
         // 执行和验证：调用unzip方法应该抛出IOException
         ZipFileTest zipFileTest = new ZipFileTest();
         assertThrows(IOException.class, () -> zipFileTest.unzip(zipFile, targetDir),
                 "当目标路径是文件时应该抛出IOException");
-        
+
         // 清理
         deleteDirectory(tempDir.toFile());
     }
@@ -120,15 +118,15 @@ public class ZipFileTests {
         Path tempDir = Files.createTempDirectory("test_unzip_");
         Path targetDir = tempDir.resolve("target");
         Files.createDirectories(targetDir);
-        
+
         File zipFile = tempDir.resolve("invalid.zip").toFile();
         Files.write(zipFile.toPath(), "Not a valid zip file".getBytes());
-        
+
         // 执行和验证：调用unzip方法应该抛出IOException
         ZipFileTest zipFileTest = new ZipFileTest();
         assertThrows(IOException.class, () -> zipFileTest.unzip(zipFile, targetDir),
                 "当zip文件无效时应该抛出IOException");
-        
+
         // 清理
         deleteDirectory(tempDir.toFile());
     }
@@ -143,24 +141,24 @@ public class ZipFileTests {
         // 准备：创建临时目录和深层嵌套的目标路径
         Path tempDir = Files.createTempDirectory("test_unzip_");
         Path targetDir = tempDir.resolve("level1/level2/level3/target");
-        
+
         File zipFile = tempDir.resolve("test.zip").toFile();
         createTestZipFile(zipFile);
-        
+
         // 验证：深层嵌套目录不存在
         assertFalse(Files.exists(targetDir), "深层嵌套目录在测试前不应该存在");
-        
+
         // 执行：调用unzip方法
         ZipFileTest zipFileTest = new ZipFileTest();
         zipFileTest.unzip(zipFile, targetDir);
-        
+
         // 验证：确认所有父目录都被创建
         assertTrue(Files.exists(targetDir), "深层嵌套目录应该被创建");
-        
+
         // 验证：确认文件被成功解压
         File extractedFile = targetDir.resolve("test.txt").toFile();
         assertTrue(extractedFile.exists(), "解压后的文件应该存在");
-        
+
         // 清理
         deleteDirectory(tempDir.toFile());
     }
@@ -179,17 +177,17 @@ public class ZipFileTests {
 
         File zipFile = tempDir.resolve("empty.zip").toFile();
         createEmptyZipFile(zipFile);
-        
+
         // 执行：调用unzip方法
         ZipFileTest zipFileTest = new ZipFileTest();
         zipFileTest.unzip(zipFile, targetDir);
-        
+
         // 验证：目标目录仍然存在
         assertTrue(Files.exists(targetDir), "目标目录应该仍然存在");
-        
+
         // 验证：没有文件被解压（因为zip是空的）
         assertEquals(0, targetDir.toFile().listFiles().length, "不应该有文件被解压");
-        
+
         // 清理
         deleteDirectory(tempDir.toFile());
     }
@@ -205,26 +203,26 @@ public class ZipFileTests {
         Path tempDir = Files.createTempDirectory("test_unzip_");
         Path targetDir = tempDir.resolve("target");
         Files.createDirectories(targetDir);
-        
+
         File zipFile = tempDir.resolve("test.zip").toFile();
         createZipFileWithSubdirectories(zipFile);
-        
+
         // 执行：调用unzip方法
         ZipFileTest zipFileTest = new ZipFileTest();
         zipFileTest.unzip(zipFile, targetDir);
-        
+
         // 验证：根目录文件被解压
         File rootFile = targetDir.resolve("root.txt").toFile();
         assertTrue(rootFile.exists(), "根目录文件应该被解压");
-        
+
         // 验证：子目录文件被解压
         File subFile = targetDir.resolve("subdir/sub.txt").toFile();
         assertTrue(subFile.exists(), "子目录文件应该被解压");
-        
+
         // 验证：深层子目录文件被解压
         File deepFile = targetDir.resolve("subdir/deep/deep.txt").toFile();
         assertTrue(deepFile.exists(), "深层子目录文件应该被解压");
-        
+
         // 清理
         deleteDirectory(tempDir.toFile());
     }
@@ -240,19 +238,19 @@ public class ZipFileTests {
         Path tempDir = Files.createTempDirectory("test_unzip_");
         Path targetDir = tempDir.resolve("target");
         Files.createDirectories(targetDir);
-        
+
         File zipFile = tempDir.resolve("test.zip").toFile();
         createTestZipFile(zipFile);
-        
+
         // 执行：调用unzip方法
         ZipFileTest zipFileTest = new ZipFileTest();
         zipFileTest.unzip(zipFile, targetDir);
-        
+
         // 验证：尝试删除zip文件，如果资源没有正确关闭，删除可能会失败
         // 在Windows上，如果文件被占用，删除会失败
         boolean deleted = zipFile.delete();
         assertTrue(deleted, "Zip文件应该可以被删除，说明资源已被正确关闭");
-        
+
         // 清理
         deleteDirectory(tempDir.toFile());
     }
@@ -264,8 +262,8 @@ public class ZipFileTests {
         org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream zos = null;
         try {
             zos = new org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream(zipFile);
-            org.apache.commons.compress.archivers.zip.ZipArchiveEntry entry = 
-                new org.apache.commons.compress.archivers.zip.ZipArchiveEntry("test.txt");
+            org.apache.commons.compress.archivers.zip.ZipArchiveEntry entry =
+                    new org.apache.commons.compress.archivers.zip.ZipArchiveEntry("test.txt");
             entry.setSize("Hello World".getBytes().length);
             zos.putArchiveEntry(entry);
             zos.write("Hello World".getBytes());
@@ -284,31 +282,31 @@ public class ZipFileTests {
         org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream zos = null;
         try {
             zos = new org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream(zipFile);
-            
+
             // 根目录文件
             {
-                org.apache.commons.compress.archivers.zip.ZipArchiveEntry entry = 
-                    new org.apache.commons.compress.archivers.zip.ZipArchiveEntry("root.txt");
+                org.apache.commons.compress.archivers.zip.ZipArchiveEntry entry =
+                        new org.apache.commons.compress.archivers.zip.ZipArchiveEntry("root.txt");
                 entry.setSize("Root content".getBytes().length);
                 zos.putArchiveEntry(entry);
                 zos.write("Root content".getBytes());
                 zos.closeArchiveEntry();
             }
-            
+
             // 子目录文件
             {
-                org.apache.commons.compress.archivers.zip.ZipArchiveEntry entry = 
-                    new org.apache.commons.compress.archivers.zip.ZipArchiveEntry("subdir/sub.txt");
+                org.apache.commons.compress.archivers.zip.ZipArchiveEntry entry =
+                        new org.apache.commons.compress.archivers.zip.ZipArchiveEntry("subdir/sub.txt");
                 entry.setSize("Sub content".getBytes().length);
                 zos.putArchiveEntry(entry);
                 zos.write("Sub content".getBytes());
                 zos.closeArchiveEntry();
             }
-            
+
             // 深层子目录文件
             {
-                org.apache.commons.compress.archivers.zip.ZipArchiveEntry entry = 
-                    new org.apache.commons.compress.archivers.zip.ZipArchiveEntry("subdir/deep/deep.txt");
+                org.apache.commons.compress.archivers.zip.ZipArchiveEntry entry =
+                        new org.apache.commons.compress.archivers.zip.ZipArchiveEntry("subdir/deep/deep.txt");
                 entry.setSize("Deep content".getBytes().length);
                 zos.putArchiveEntry(entry);
                 zos.write("Deep content".getBytes());

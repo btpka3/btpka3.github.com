@@ -2,11 +2,6 @@ package me.test.jdk.java.lang.foreign;
 
 import org.junit.jupiter.api.Test;
 
-//import java.lang.foreign.Arena;
-//import java.lang.foreign.MemorySegment;
-//import java.lang.foreign.ValueLayout;
-import java.nio.ByteBuffer;
-
 /**
  * @author dangqian.zll
  * @date 2025/5/7

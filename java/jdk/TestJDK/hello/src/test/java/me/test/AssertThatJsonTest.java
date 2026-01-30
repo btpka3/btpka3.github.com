@@ -1,8 +1,6 @@
 package me.test;
 
-import net.javacrumbs.jsonunit.JsonMatchers;
 import net.javacrumbs.jsonunit.core.Option;
-import net.javacrumbs.jsonunit.core.internal.DefaultNumberComparator;
 import org.junit.jupiter.api.Test;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;

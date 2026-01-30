@@ -1,19 +1,22 @@
 package me.test.jdk.java.util.zip;
 
-import org.apache.commons.codec.binary.Base64OutputStream;
-import org.apache.commons.io.IOUtils;
-
-import javax.annotation.Nonnull;
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.zip.GZIPOutputStream;
+import javax.annotation.Nonnull;
+import org.apache.commons.codec.binary.Base64OutputStream;
+import org.apache.commons.io.IOUtils;
 
 /**
  * @author dangqian.zll
  * @date 2025/7/8
  */
 public class GzipBase64Utils2 {
-      @Nonnull
+    @Nonnull
     public static String getGzipBase64FromBytes2(@Nonnull byte[] bytes) {
         try {
             InputStream strIn = new ByteArrayInputStream(bytes);
@@ -30,7 +33,7 @@ public class GzipBase64Utils2 {
             //}
 
             // 注意：该语句不能放在 try 里面
-            String s =  new String(byteArrOut.toByteArray(), StandardCharsets.UTF_8);
+            String s = new String(byteArrOut.toByteArray(), StandardCharsets.UTF_8);
             //byteArrOut.reset();
             return s;
         } catch (IOException e) {

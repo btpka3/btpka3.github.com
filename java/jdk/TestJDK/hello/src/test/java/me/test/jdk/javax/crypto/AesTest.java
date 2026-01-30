@@ -1,14 +1,18 @@
 package me.test.jdk.javax.crypto;
 
-import javax.crypto.*;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
 import java.nio.ByteBuffer;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 
 /**
  * Created by zll on 26/05/2017.
@@ -22,21 +26,19 @@ public class AesTest {
         byte[] encdData = Base64.getDecoder().decode(txt);
 
 
-
-
         byte[] decdData = aesDec(encdData);
         System.out.println(new String(decdData));
 
 
-        ByteBuffer wrapped = ByteBuffer.wrap(decdData,16,4);
+        ByteBuffer wrapped = ByteBuffer.wrap(decdData, 16, 4);
         int msgLength = wrapped.getInt();
-        System.out.println("msgLength : "+msgLength);
+        System.out.println("msgLength : " + msgLength);
 
-        String msg = new String(decdData,16+4,msgLength);
-        System.out.println("msg       : "+msg);
+        String msg = new String(decdData, 16 + 4, msgLength);
+        System.out.println("msg       : " + msg);
 
-        String corpId = new String(decdData, 16+4+msgLength, decdData.length-(16+4+msgLength));
-        System.out.println("corpId    : "+corpId);
+        String corpId = new String(decdData, 16 + 4 + msgLength, decdData.length - (16 + 4 + msgLength));
+        System.out.println("corpId    : " + corpId);
 
     }
 

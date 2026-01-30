@@ -1,9 +1,9 @@
 package me.test.jdk.javax.security.auth.login;
 
-import javax.security.auth.login.AppConfigurationEntry;
-import javax.security.auth.login.ConfigurationSpi;
 import java.util.List;
 import java.util.Map;
+import javax.security.auth.login.AppConfigurationEntry;
+import javax.security.auth.login.ConfigurationSpi;
 
 /**
  *

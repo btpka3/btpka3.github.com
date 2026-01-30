@@ -3,16 +3,16 @@ package me.test.jdk.java.lang;
 /**
  *
  * The Advantages and Traps of Autoboxing
- *
+ * <p>
  * 优点：
- *  1. 代码更简洁
- *  2. 自动使用最优的转换代码（比如使用Integer.valueOf(int)，而不是使用new Integer(int)）
- *
+ * 1. 代码更简洁
+ * 2. 自动使用最优的转换代码（比如使用Integer.valueOf(int)，而不是使用new Integer(int)）
+ * <p>
  * 缺点:
- *  1. 如果不注意，可能会导致错误
- *  2. 如果不注意，可能会导致效率低下
- *  3. 有时需要强制类型转换。
- *
+ * 1. 如果不注意，可能会导致错误
+ * 2. 如果不注意，可能会导致效率低下
+ * 3. 有时需要强制类型转换。
+ * <p>
  * 参考：http://javaeffective.wordpress.com/2010/05/21/the-advantages-and-traps-of-autoboxing/
  *
  */

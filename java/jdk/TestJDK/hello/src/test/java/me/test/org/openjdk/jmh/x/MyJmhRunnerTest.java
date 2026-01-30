@@ -1,6 +1,5 @@
 package me.test.org.openjdk.jmh.x;
 
-import me.test.org.openjdk.jmh.MyJmhBenchmarkTest;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.CommandLineOptionException;

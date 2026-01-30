@@ -11,17 +11,17 @@
       "classLoaderHash": "",
       "classes": [
         {
-          "class" : "java.lang.String",
+          "class": "java.lang.String",
           "jarPathMd5": "aabbccddeeff"
         }
       ]
     }
   ],
-  "jars" : [
+  "jars": [
     {
       "pathMd5": "aabbccddeeff",
       "path": "/path/to/xxx.jar",
-      "md5" : "aabbccddeeff",
+      "md5": "aabbccddeeff",
       "size": 1024
     }
   ]

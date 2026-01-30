@@ -1,14 +1,13 @@
 package me.test.jdk.java.lang;
 
-import lombok.SneakyThrows;
-import org.junit.jupiter.api.Test;
-
 import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
+import lombok.SneakyThrows;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author dangqian.zll

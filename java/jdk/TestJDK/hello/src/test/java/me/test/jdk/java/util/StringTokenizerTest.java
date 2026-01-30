@@ -1,8 +1,7 @@
 package me.test.jdk.java.util;
 
-import org.junit.jupiter.api.Test;
-
 import java.util.StringTokenizer;
+import org.junit.jupiter.api.Test;
 
 /**
  * 注意: StringTokenizer 是历史遗留类，不建议使用。

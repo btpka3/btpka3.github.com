@@ -1,9 +1,8 @@
 package me.test.jdk.java.lang;
 
+import java.util.HashSet;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.util.HashSet;
 
 /**
  * @author dangqian.zll

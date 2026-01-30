@@ -1,9 +1,7 @@
 package me.test.jdk.javax.naming;
 
-import lombok.SneakyThrows;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
+import java.util.Enumeration;
+import java.util.Hashtable;
 import javax.naming.CompositeName;
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -11,8 +9,9 @@ import javax.naming.Name;
 import javax.naming.directory.Attributes;
 import javax.naming.directory.DirContext;
 import javax.naming.directory.InitialDirContext;
-import java.util.Enumeration;
-import java.util.Hashtable;
+import lombok.SneakyThrows;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author dangqian.zll
@@ -35,7 +34,6 @@ org.apache.naming.java.javaURLContextFactory    : Tomcat（通过 JNDI 绑定、
 com.sun.jndi.url.http.HttpCtxFactory            : HTTP 命名服务（实验性）：
 
  */
-
 
 
     /**

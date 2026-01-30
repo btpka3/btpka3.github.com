@@ -1,12 +1,11 @@
 package me.test.jdk.javax.security.auth.login;
 
+import java.util.List;
+import java.util.Map;
+import javax.security.auth.login.AppConfigurationEntry;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import javax.security.auth.login.AppConfigurationEntry;
-import java.util.List;
-import java.util.Map;
 
 /**
  *

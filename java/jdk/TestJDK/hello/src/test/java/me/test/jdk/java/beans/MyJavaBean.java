@@ -5,13 +5,13 @@ import java.io.Serializable;
 /**
  * - 必须实现 Serializable 接口
  * - 必须有一个 public 的无参构造函数。
+ *
  * @author dangqian.zll
  * @date 2025/4/30
  */
 
 public class MyJavaBean implements Serializable {
     private static final long serialVersionUID = 1L;
-
 
 
     private String name;

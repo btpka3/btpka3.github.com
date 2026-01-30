@@ -1,13 +1,12 @@
 package me.test.jdk.java.util.stream;
 
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.junit.jupiter.api.Test;
-
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  *

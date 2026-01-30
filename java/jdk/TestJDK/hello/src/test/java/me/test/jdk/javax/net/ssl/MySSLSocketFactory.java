@@ -1,9 +1,12 @@
 package me.test.jdk.javax.net.ssl;
 
-import javax.net.ssl.SSLSocketFactory;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.*;
+import java.net.InetAddress;
+import java.net.Proxy;
+import java.net.Socket;
+import java.net.UnknownHostException;
+import javax.net.ssl.SSLSocketFactory;
 
 /**
  * 额外提供代理服务器的设置

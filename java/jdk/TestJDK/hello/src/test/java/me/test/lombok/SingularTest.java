@@ -1,12 +1,11 @@
 package me.test.lombok;
 
+import java.util.List;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Singular;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
-
-import java.util.List;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author dangqian.zll

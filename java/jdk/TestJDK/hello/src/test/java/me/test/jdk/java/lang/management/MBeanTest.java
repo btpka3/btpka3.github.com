@@ -1,16 +1,15 @@
 package me.test.jdk.java.lang.management;
 
-import org.junit.jupiter.api.Test;
-
+import java.lang.management.ManagementFactory;
+import java.util.HashMap;
+import java.util.Map;
 import javax.management.MBeanServer;
 import javax.management.MBeanServerConnection;
 import javax.management.ObjectName;
 import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
-import java.lang.management.ManagementFactory;
-import java.util.HashMap;
-import java.util.Map;
+import org.junit.jupiter.api.Test;
 
 /**
  *

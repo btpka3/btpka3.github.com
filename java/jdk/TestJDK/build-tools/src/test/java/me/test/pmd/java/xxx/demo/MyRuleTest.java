@@ -1,10 +1,9 @@
 package me.test.pmd.java.xxx.demo;
 
-import net.sourceforge.pmd.lang.rule.Rule;
-import net.sourceforge.pmd.test.PmdRuleTst;
-
 import java.util.Collections;
 import java.util.List;
+import net.sourceforge.pmd.lang.rule.Rule;
+import net.sourceforge.pmd.test.PmdRuleTst;
 
 /**
  *

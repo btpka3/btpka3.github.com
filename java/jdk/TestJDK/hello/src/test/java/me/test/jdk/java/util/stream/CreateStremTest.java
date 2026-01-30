@@ -40,7 +40,7 @@ public class CreateStremTest {
                     } else if (i % 11 == 0) {
                         stream11.accept(i);
                     }
-                    if(i==999){
+                    if (i == 999) {
                         System.out.println("=======");
                     }
                 });

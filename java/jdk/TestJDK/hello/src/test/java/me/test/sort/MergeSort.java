@@ -1,10 +1,10 @@
 package me.test.sort;
 
-import java.util.*;
+import java.util.Arrays;
 
 /**
  * 归并排序（Merge Sort）
- *
+ * <p>
  * 将两个以上的有序序列合并为一个新的有序序列。
  *
  */

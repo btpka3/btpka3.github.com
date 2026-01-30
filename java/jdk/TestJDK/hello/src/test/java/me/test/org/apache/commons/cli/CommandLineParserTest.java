@@ -1,11 +1,15 @@
 package me.test.org.apache.commons.cli;
 
-import org.apache.commons.cli.*;
+import java.io.IOException;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.help.HelpFormatter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.io.IOException;
 
 /**
  *
@@ -77,7 +81,7 @@ public class CommandLineParserTest {
     public void commandLineParse03() throws IOException, ParseException {
         Options options = newOptions();
         CommandLineParser parser = new DefaultParser();
-        String[] args = new String[]{"-i=aaa","-i=bbb","-i=ccc"};
+        String[] args = new String[]{"-i=aaa", "-i=bbb", "-i=ccc"};
         CommandLine line = parser.parse(options, args);
         Assertions.assertTrue(line.hasOption("i"));
         String[] values = line.getOptionValues("i");

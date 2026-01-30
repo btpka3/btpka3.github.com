@@ -1,9 +1,12 @@
 package me.test.jdk.java.util;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 import org.junit.jupiter.api.Test;
-
-import java.util.*;
 
 /**
  * @author dangqian.zll

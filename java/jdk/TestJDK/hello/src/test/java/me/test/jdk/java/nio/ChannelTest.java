@@ -7,7 +7,7 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
 /**
- *  测试 Channel
+ * 测试 Channel
  */
 public class ChannelTest {
 
@@ -20,7 +20,7 @@ public class ChannelTest {
 
         ByteBuffer buf = ByteBuffer.allocate(48);
 
-        while ( inChannel.read(buf) != -1) {
+        while (inChannel.read(buf) != -1) {
             buf.flip();
             while (buf.hasRemaining()) {
                 System.out.print((char) buf.get());

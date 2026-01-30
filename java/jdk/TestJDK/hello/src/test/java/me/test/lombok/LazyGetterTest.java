@@ -1,9 +1,8 @@
 package me.test.lombok;
 
+import java.util.Arrays;
 import lombok.Getter;
 import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
 
 /**
  * @author dangqian.zll

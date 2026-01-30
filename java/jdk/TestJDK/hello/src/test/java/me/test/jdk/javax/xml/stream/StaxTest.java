@@ -1,11 +1,10 @@
 package me.test.jdk.javax.xml.stream;
 
-import org.junit.jupiter.api.Test;
-
+import java.io.StringReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamReader;
-import java.io.StringReader;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author dangqian.zll

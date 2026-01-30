@@ -1,6 +1,3 @@
-
-
-
 var o = {
     "success": true,
     "data": {

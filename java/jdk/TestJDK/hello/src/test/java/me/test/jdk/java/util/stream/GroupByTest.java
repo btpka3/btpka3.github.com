@@ -34,8 +34,8 @@ public class GroupByTest {
     public static void test2() {
         // 无序的一组数列
         List<Integer> list = Stream.of(
-                8, 4, 3, 5, 2, 1, 7, 0, 6
-        )
+                        8, 4, 3, 5, 2, 1, 7, 0, 6
+                )
                 .collect(Collectors.groupingBy((Integer i) -> i % 3))
 
                 .entrySet().stream()
@@ -59,8 +59,8 @@ public class GroupByTest {
 
         // 无序的一组数列
         List<Integer> list = Stream.of(
-                8, 4, 3, 5, 2, 1, 7, 0, 6
-        )
+                        8, 4, 3, 5, 2, 1, 7, 0, 6
+                )
                 .sorted(Comparator.comparingInt((Integer i) -> i % 3)
                         .thenComparingInt(i -> i)
                 )

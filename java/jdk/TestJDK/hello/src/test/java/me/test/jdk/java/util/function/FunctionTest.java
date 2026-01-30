@@ -1,7 +1,9 @@
 package me.test.jdk.java.util.function;
 
-import java.util.*;
-import java.util.function.*;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * @FunctionalInterface

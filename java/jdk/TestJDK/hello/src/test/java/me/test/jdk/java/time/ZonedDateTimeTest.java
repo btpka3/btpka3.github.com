@@ -1,13 +1,16 @@
 package me.test.jdk.java.time;
 
-import org.junit.jupiter.api.Test;
-
 import java.text.SimpleDateFormat;
-import java.time.*;
+import java.time.Clock;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+import org.junit.jupiter.api.Test;
 
 /**
  *
@@ -112,27 +115,27 @@ public class ZonedDateTimeTest {
         return Date.from(gmt0.toInstant());
     }
 
-@Test
-public void test() {
+    @Test
+    public void test() {
 
-    ZonedDateTime now = ZonedDateTime.now();
-    Date dateAtSystemZone = Date.from(now.toInstant());
-    Date dateAtGmt0 = toGmt0(now);
+        ZonedDateTime now = ZonedDateTime.now();
+        Date dateAtSystemZone = Date.from(now.toInstant());
+        Date dateAtGmt0 = toGmt0(now);
 
-    SimpleDateFormat sdfWithoutZone = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-    SimpleDateFormat sdfWithZoneGmt0 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.ITALIAN);
-    sdfWithZoneGmt0.setTimeZone(TimeZone.getTimeZone("GMT"));
+        SimpleDateFormat sdfWithoutZone = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        SimpleDateFormat sdfWithZoneGmt0 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.ITALIAN);
+        sdfWithZoneGmt0.setTimeZone(TimeZone.getTimeZone("GMT"));
 
-    System.out.println(""
-            + "\ndateAtSystemZone          = " + dateAtSystemZone
-            + "\ndateAtGmt0                = " + dateAtGmt0
-            + "\ndiffInMillis              = " + (dateAtSystemZone.getTime() - dateAtGmt0.getTime())
-            + "\n"
-            + "\ndateWithSystemZone.format = " + sdfWithoutZone.format(dateAtSystemZone)
-            + "\ndateAtGmt0.format         = " + sdfWithoutZone.format(dateAtGmt0)
-            + "\n"
-            + "\ndateFormatWithGmt0        = " + sdfWithZoneGmt0.format(dateAtSystemZone)
-    );
+        System.out.println(""
+                + "\ndateAtSystemZone          = " + dateAtSystemZone
+                + "\ndateAtGmt0                = " + dateAtGmt0
+                + "\ndiffInMillis              = " + (dateAtSystemZone.getTime() - dateAtGmt0.getTime())
+                + "\n"
+                + "\ndateWithSystemZone.format = " + sdfWithoutZone.format(dateAtSystemZone)
+                + "\ndateAtGmt0.format         = " + sdfWithoutZone.format(dateAtGmt0)
+                + "\n"
+                + "\ndateFormatWithGmt0        = " + sdfWithZoneGmt0.format(dateAtSystemZone)
+        );
     }
 
 

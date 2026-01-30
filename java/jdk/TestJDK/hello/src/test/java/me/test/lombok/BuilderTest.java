@@ -2,8 +2,8 @@ package me.test.lombok;
 
 import lombok.Builder;
 import lombok.Data;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author dangqian.zll

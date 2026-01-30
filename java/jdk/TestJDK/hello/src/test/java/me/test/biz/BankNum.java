@@ -2,9 +2,9 @@ package me.test.biz;
 
 /**
  * 发行者标识代码 （Issuer identification number - IIN）。
- *
+ * <p>
  * 其中，银行卡卡号一般是16位或19位。。
- *
+ * <p>
  * # 第一部分
  * 前六位是主要产业标识符（Major Industry Identifier(MII)）
  * 当前已经用 IIN 代替了之前的 BIN （Bank identification number）
@@ -20,17 +20,17 @@ package me.test.biz;
  * |7        | 石油和其他未来行业使用 |
  * |8        | 医疗、电信和其他未来行业使用 |
  * |9        | 由本国标准机构分配 |
- *
+ * <p>
  * # 中间部分
  * 第七位到倒数第二位（含），是个人账户标识。由发卡行自定义。
- *
+ * <p>
  * # 校验位
  * 最后一位。
- *
- *
+ * <p>
+ * <p>
  * 参考：
- *   [ISO/IEC 7812](https://en.wikipedia.org/wiki/ISO/IEC_7812)
- *   《2016年5月7日全国各银行最新卡BIN表.xls》
+ * [ISO/IEC 7812](https://en.wikipedia.org/wiki/ISO/IEC_7812)
+ * 《2016年5月7日全国各银行最新卡BIN表.xls》
  *
  */
 public class BankNum {

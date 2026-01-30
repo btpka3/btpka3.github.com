@@ -1,12 +1,11 @@
 package me.test.jdk.javax.security.auth.login;
 
 import com.sun.security.auth.callback.TextCallbackHandler;
-import lombok.SneakyThrows;
-import org.junit.jupiter.api.Test;
-
 import javax.security.auth.Subject;
 import javax.security.auth.login.Configuration;
 import javax.security.auth.login.LoginContext;
+import lombok.SneakyThrows;
+import org.junit.jupiter.api.Test;
 
 /**
  *
@@ -29,7 +28,7 @@ public class LoginContextTest {
 //                new TextCallbackHandler(),
 //                config
 //        );
-         LoginContext lc = new LoginContext(
+        LoginContext lc = new LoginContext(
                 "Client",
                 new TextCallbackHandler()
         );

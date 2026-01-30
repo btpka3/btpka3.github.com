@@ -1,8 +1,7 @@
 package me.test.jdk.java.nio;
 
-import org.junit.jupiter.api.Test;
-
 import java.nio.ByteBuffer;
+import org.junit.jupiter.api.Test;
 
 /**
  * -XX:MaxDirectMemorySize 如果不设置，则等于 -Xmx 的值。

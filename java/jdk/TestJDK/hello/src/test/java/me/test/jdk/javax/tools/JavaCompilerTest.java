@@ -1,11 +1,5 @@
 package me.test.jdk.javax.tools;
 
-import lombok.SneakyThrows;
-import org.apache.commons.collections4.IterableUtils;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
-import javax.tools.*;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.net.URL;
@@ -13,6 +7,17 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import javax.tools.DiagnosticCollector;
+import javax.tools.ForwardingJavaFileManager;
+import javax.tools.JavaCompiler;
+import javax.tools.JavaFileObject;
+import javax.tools.StandardJavaFileManager;
+import javax.tools.StandardLocation;
+import javax.tools.ToolProvider;
+import lombok.SneakyThrows;
+import org.apache.commons.collections4.IterableUtils;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * 学习 java compiler API

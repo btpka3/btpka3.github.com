@@ -1,7 +1,7 @@
 package me.test.jdk.java.util.concurrent;
 
-import java.util.concurrent.*;
-import java.util.function.*;
+import java.util.concurrent.CountedCompleter;
+import java.util.function.Consumer;
 
 public class CountedCompleterTest {
 

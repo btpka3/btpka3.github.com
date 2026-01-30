@@ -1,10 +1,9 @@
 package me.test.jdk.java.util.stream;
 
-import org.junit.jupiter.api.Test;
-
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.stream.IntStream;
+import org.junit.jupiter.api.Test;
 
 /**
  * @see <a href="https://dzone.com/articles/think-twice-using-java-8">Think Twice Before Using Java 8 Parallel Streams</a>

@@ -1,10 +1,10 @@
 package me.test.biz;
 
 /**
- * 
+ *
  * 验证身份证号码格式是否合法。
  * 参考国标 GB 11643-1999 公民身份号码.pdf
- * 
+ *
  * @author zll
  */
 public class IdNum {
@@ -16,10 +16,10 @@ public class IdNum {
 
     }
 
-    private static final int[] WEIGHTS = new int[] {
+    private static final int[] WEIGHTS = new int[]{
             7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2, 1
     };
-    private static final char[] VERIFY_CODES = new char[] {
+    private static final char[] VERIFY_CODES = new char[]{
             '1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2'
     };
 

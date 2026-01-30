@@ -19,7 +19,7 @@ public class StringUtilsTest {
     }
 
     @Test
-    public void isBlank(){
+    public void isBlank() {
         assertTrue(StringUtils.isBlank(" "));
         assertTrue(StringUtils.isBlank("\n"));
         assertTrue(StringUtils.isBlank("\t"));

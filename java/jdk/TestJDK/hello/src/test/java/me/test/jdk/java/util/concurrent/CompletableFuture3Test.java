@@ -1,9 +1,8 @@
 package me.test.jdk.java.util.concurrent;
 
+import java.util.concurrent.CompletableFuture;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
-
-import java.util.concurrent.CompletableFuture;
 
 /**
  * 就是JavaScript 中的 Promise 嘛~

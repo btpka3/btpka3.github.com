@@ -11,10 +11,10 @@ public class ToMapTest {
     public static void main(String[] args) {
 
         Map<String, Person> map = Stream.of(
-                new Person("zhang3", 33),
-                new Person("li4", 44),
-                new Person("wang5", 55)
-        )
+                        new Person("zhang3", 33),
+                        new Person("li4", 44),
+                        new Person("wang5", 55)
+                )
                 .collect(Collectors.toMap(Person::getName, Function.identity()));
 
 

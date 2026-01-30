@@ -1,15 +1,15 @@
 package me.test.sort;
 
-import java.util.*;
+import java.util.Arrays;
 
 /**
  * 插入排序—直接插入排序(Straight Insertion Sort)
- *
+ * <p>
  * 将一个记录插入到已排序好的有序表中，从而得到一个新，记录数增1的有序表
- *
+ * <p>
  * 时间复杂度：
- *
- *  T(n) = O(n-1) * O(n-2)
+ * <p>
+ * T(n) = O(n-1) * O(n-2)
  *
  */
 public class StraightInsertionSort {

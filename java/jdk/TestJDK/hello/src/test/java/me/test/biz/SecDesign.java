@@ -2,7 +2,6 @@ package me.test.biz;
 
 import io.vavr.Function0;
 import io.vavr.Function1;
-
 import java.util.List;
 import java.util.Map;
 
@@ -88,7 +87,7 @@ public class SecDesign {
         Map getCtx();
 
         default Object getProperty(String prop) {
-            return getDef().getPropertyDef("prop").getValue(  this);
+            return getDef().getPropertyDef("prop").getValue(this);
         }
 
         default Object getCachedProperty(String prop) {

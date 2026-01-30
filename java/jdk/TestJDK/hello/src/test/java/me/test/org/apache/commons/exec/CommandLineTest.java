@@ -1,15 +1,13 @@
 package me.test.org.apache.commons.exec;
 
 
+import java.io.ByteArrayOutputStream;
+import java.time.Duration;
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
 import org.apache.commons.exec.ExecuteWatchdog;
 import org.apache.commons.exec.PumpStreamHandler;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.io.ByteArrayOutputStream;
-import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

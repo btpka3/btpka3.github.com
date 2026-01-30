@@ -5,11 +5,10 @@ import com.alibaba.fastjson.parser.ParserConfig;
 import com.alibaba.fastjson2.JSONReader;
 import com.alibaba.fastjson2.reader.ObjectReader;
 import com.alibaba.fastjson2.reader.ObjectReaderProvider;
-
-import javax.security.auth.login.AppConfigurationEntry;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
+import javax.security.auth.login.AppConfigurationEntry;
 
 /**
  *

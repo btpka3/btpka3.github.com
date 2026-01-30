@@ -1,5 +1,7 @@
 package me.test.org.apache.commons.collections4.bloomfilter;
 
+import java.io.Serializable;
+import java.util.List;
 import org.apache.commons.codec.digest.MurmurHash3;
 import org.apache.commons.collections4.bloomfilter.BloomFilter;
 import org.apache.commons.collections4.bloomfilter.EnhancedDoubleHasher;
@@ -7,9 +9,6 @@ import org.apache.commons.collections4.bloomfilter.Shape;
 import org.apache.commons.collections4.bloomfilter.SimpleBloomFilter;
 import org.apache.commons.lang3.SerializationUtils;
 import org.junit.jupiter.api.Test;
-
-import java.io.Serializable;
-import java.util.List;
 
 /**
  * @author dangqian.zll

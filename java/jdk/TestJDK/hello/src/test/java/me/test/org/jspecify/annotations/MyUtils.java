@@ -1,8 +1,7 @@
 package me.test.org.jspecify.annotations;
 
-import org.jspecify.annotations.NullMarked;
-
 import java.util.Properties;
+import org.jspecify.annotations.NullMarked;
 
 /**
  *

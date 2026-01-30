@@ -1,13 +1,12 @@
 package me.test.jdk.java.util;
 
-import lombok.SneakyThrows;
-import org.apache.commons.lang3.StringUtils;
-
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.Properties;
 import java.util.stream.Collectors;
+import lombok.SneakyThrows;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
