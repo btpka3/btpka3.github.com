@@ -575,7 +575,35 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
             </plugin>
-
+            <plugin>
+                <groupId>com.diffplug.spotless</groupId>
+                <artifactId>spotless-maven-plugin</artifactId>
+                <version>2.46.1</version>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <java>
+                        <toggleOffOn>
+                            <off>@formatter:off</off>
+                <on>@formatter:on</on>
+                        </toggleOffOn>
+                        <cleanthat/>
+                        <removeUnusedImports/>
+                        <palantirJavaFormat>
+                            <!-- https://search.maven.org/artifact/com.palantir.javaformat/palantir-java-format -->
+                            <version>2.68.0</version>
+                            <style>PALANTIR</style>
+                            <formatJavadoc>false</formatJavadoc>
+                        </palantirJavaFormat>
+                    </java>
+                </configuration>
+            </plugin>
         </plugins>
         <pluginManagement>
             <plugins>
@@ -649,25 +677,6 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-pmd-plugin</artifactId>
                     <version>3.27.0</version>
-                </plugin>
-                <plugin>
-                    <groupId>com.diffplug.spotless</groupId>
-                    <artifactId>spotless-maven-plugin</artifactId>
-                    <version>2.43.0</version>
-                    <configuration>
-                        <java>
-                            <toggleOffOn>
-                                <off>@formatter:off</off>
-                                <on>@formatter:on</on>
-                            </toggleOffOn>
-                            <cleanthat/>
-                            <removeUnusedImports/>
-                            <eclipse>
-                                <version>4.32.0</version>
-                                <file>${maven.multiModuleProjectDirectory}/build-tools/eclipse/java-formatter.xml</file>
-                            </eclipse>
-                        </java>
-                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
