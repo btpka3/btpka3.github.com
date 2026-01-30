@@ -7,4 +7,12 @@
 mvn -Dmaven.test.skip=true clean package
 mvn -Dmaven.test.skip=true clean verify 
 mvn clean javafx:run -pl hello
+
+
+# 代码格式化:检查, 可通过 -Dspotless.check.skip=true 跳过
+mvn spotless:check
+# 代码格式化:启用
+mvn spotless:apply
+# 本地启用 git hook, git push 前，会先check,再apply,并中断git push,给出错误提示，你只需git diff 确认后再 commit,push.
+mvn spotless:install-git-pre-push-hook
 ```
