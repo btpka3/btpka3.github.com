@@ -4,8 +4,10 @@
 - [Making JSR 305 Work On Java 9](https://blog.codefx.org/java/jsr-305-java-9/)
 
 ```bash
-mvn -Dmaven.test.skip=true clean package
-mvn -Dmaven.test.skip=true clean verify 
+# -Dmaven.test.skip=true
+# -DskipTests=true
+mvn -Dspotless.check.skip=true -DskipTests=true clean package
+mvn -Dspotless.check.skip=true -DskipTests=true clean verify 
 mvn clean javafx:run -pl hello
 
 
