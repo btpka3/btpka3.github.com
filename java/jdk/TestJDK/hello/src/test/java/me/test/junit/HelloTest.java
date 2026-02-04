@@ -22,14 +22,10 @@ public class HelloTest {
     }
 
     @Test
-    public void test01() {
-
-
-    }
+    public void test01() {}
 
     @Test
     public void test02() {
         throw new RuntimeException("Demo Error");
-
     }
 }

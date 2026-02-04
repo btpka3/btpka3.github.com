@@ -34,12 +34,7 @@ public class MyFs extends FileSystem {
         };
     }
 
-    public MyFs(
-            MyFsProvider provider,
-            String httpBaseUrl,
-            String username,
-            String password
-    ) {
+    public MyFs(MyFsProvider provider, String httpBaseUrl, String username, String password) {
         this.provider = provider;
         this.httpBaseUrl = httpBaseUrl;
         this.username = username;
@@ -52,9 +47,7 @@ public class MyFs extends FileSystem {
     }
 
     @Override
-    public void close() throws IOException {
-
-    }
+    public void close() throws IOException {}
 
     @Override
     public boolean isOpen() {

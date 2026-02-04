@@ -19,7 +19,7 @@ import java.util.Arrays;
 public class QuickSort {
 
     public static void main(String[] args) throws Exception {
-        Integer[] numbers = new Integer[]{49, 38, 65, 97, 76, 13, 27, 49};
+        Integer[] numbers = new Integer[] {49, 38, 65, 97, 76, 13, 27, 49};
         quickSort(numbers, 0, numbers.length - 1);
         System.out.println(Arrays.asList(numbers));
     }
@@ -33,14 +33,13 @@ public class QuickSort {
         // 数组的第一个作为中轴
         int middleNum = numbers[low];
 
-
         while (low < high) {
 
             // 从后半部分向前扫描
             while (low < high && numbers[high] >= middleNum) {
                 high--;
             }
-            numbers[low] = numbers[high];// 比中轴小的记录移到低端
+            numbers[low] = numbers[high]; // 比中轴小的记录移到低端
 
             // 从前半部分向后扫描
             while (low < high && numbers[low] <= middleNum) {
@@ -51,7 +50,6 @@ public class QuickSort {
         numbers[low] = middleNum; // 中轴记录到尾
         return low; // 返回中轴的位置
     }
-
 
     /**
      *
@@ -72,6 +70,5 @@ public class QuickSort {
 
         // 对高字段表进行递归排序
         quickSort(numbers, middle + 1, high);
-
     }
 }

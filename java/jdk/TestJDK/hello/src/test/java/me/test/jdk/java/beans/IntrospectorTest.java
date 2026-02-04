@@ -29,9 +29,8 @@ public class IntrospectorTest {
     public void test01() {
         BeanInfo beanInfo = Introspector.getBeanInfo(MyPerson.class);
         PropertyDescriptor[] pdArr = beanInfo.getPropertyDescriptors();
-        Set<String> propNames = Arrays.stream(pdArr)
-                .map(PropertyDescriptor::getName)
-                .collect(Collectors.toSet());
+        Set<String> propNames =
+                Arrays.stream(pdArr).map(PropertyDescriptor::getName).collect(Collectors.toSet());
         Assertions.assertEquals(3, propNames.size());
         Assertions.assertTrue(propNames.contains("name"));
         Assertions.assertTrue(propNames.contains("age"));
@@ -51,14 +50,11 @@ public class IntrospectorTest {
         Method nameSetterMethod = namePd.getWriteMethod();
         nameSetterMethod.invoke(p, "li4");
         Assertions.assertEquals("li4", p.getName());
-
     }
-
 
     @Data
     public static class MyPerson {
         private String name;
         private int age;
-
     }
 }

@@ -109,12 +109,14 @@ public class AioEchoClient {
             writeDone.countDown();
         }
 
-        private void write(final AsynchronousSocketChannel socket, final String message, CompletionHandler<Integer, AsynchronousSocketChannel> writeHandler) {
+        private void write(
+                final AsynchronousSocketChannel socket,
+                final String message,
+                CompletionHandler<Integer, AsynchronousSocketChannel> writeHandler) {
             ByteBuffer buf = ByteBuffer.allocate(2048);
             buf.put(message.getBytes(StandardCharsets.UTF_8));
             buf.flip();
             socket.write(buf, socket, writeHandler);
         }
-
     }
 }

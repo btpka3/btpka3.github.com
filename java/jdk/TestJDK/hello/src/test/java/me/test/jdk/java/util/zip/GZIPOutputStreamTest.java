@@ -48,12 +48,12 @@ public class GZIPOutputStreamTest {
     public void test01() {
 
         String str = "hello world1234567890AliAliAlibaba111222333444555";
-        String expectedBase64 = "H4sIAAAAAAAA/8tIzcnJVyjPL8pJMTQyNjE1M7ewNHDMyYSgpMSkRENDQyMjI2NjYxMTE1NTUwDoEDY/MQAAAA==";
+        String expectedBase64 =
+                "H4sIAAAAAAAA/8tIzcnJVyjPL8pJMTQyNjE1M7ewNHDMyYSgpMSkRENDQyMjI2NjYxMTE1NTUwDoEDY/MQAAAA==";
         String resultBase64 = GzipBase64Utils.getGzipBase64FromStr(str);
         System.out.println(resultBase64);
         Assertions.assertEquals(expectedBase64, resultBase64);
         String resultStr = GzipBase64Utils.getStrFromGzipBase64(resultBase64);
         Assertions.assertEquals(str, resultStr);
     }
-
 }

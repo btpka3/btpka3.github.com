@@ -29,8 +29,7 @@ public class ArchiveStreamFactoryTest {
     public void x() {
         String jar = "";
         InputStream inputStream = new FileInputStream(new File(jar));
-        ArchiveInputStream input = new ArchiveStreamFactory()
-                .createArchiveInputStream(inputStream);
+        ArchiveInputStream input = new ArchiveStreamFactory().createArchiveInputStream(inputStream);
     }
 
     @Test
@@ -45,8 +44,8 @@ public class ArchiveStreamFactoryTest {
         ArchiveStreamFactory archiveStreamFactory = new ArchiveStreamFactory();
 
         try (InputStream inputStream = Files.newInputStream(zipFilePath);
-             ArchiveInputStream archiveInputStream = archiveStreamFactory
-                     .createArchiveInputStream(ArchiveStreamFactory.ZIP, inputStream)) {
+                ArchiveInputStream archiveInputStream =
+                        archiveStreamFactory.createArchiveInputStream(ArchiveStreamFactory.ZIP, inputStream)) {
 
             ArchiveEntry archiveEntry = null;
             while ((archiveEntry = archiveInputStream.getNextEntry()) != null) {

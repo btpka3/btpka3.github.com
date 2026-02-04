@@ -15,8 +15,7 @@ import javax.lang.model.element.TypeElement;
 public class MyProcessor extends AbstractProcessor {
 
     @Override
-    public boolean process(Set<? extends TypeElement> annoations,
-                           RoundEnvironment env) {
+    public boolean process(Set<? extends TypeElement> annoations, RoundEnvironment env) {
 
         for (Element annotatedElement : env.getElementsAnnotatedWith(MyAnnotation.class)) {
             System.out.println("------ XXXXXX : " + annotatedElement);

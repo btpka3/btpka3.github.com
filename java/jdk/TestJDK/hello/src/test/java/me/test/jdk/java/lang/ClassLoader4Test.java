@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
  */
 public class ClassLoader4Test {
 
-
     /**
      * 增加 jvm 参数 `-verbose:class` 确认 类加载情况
      */
@@ -30,10 +29,6 @@ public class ClassLoader4Test {
         bbb.myMethod();
         System.out.println("==== : bbb.myMethod()");
 
-
         System.out.println("==== : " + Yyy.class);
-
     }
-
-
 }

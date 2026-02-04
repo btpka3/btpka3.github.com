@@ -37,8 +37,8 @@ public class BioEchoServer {
         @Override
         public void run() {
 
-            ExecutorService exec = new ThreadPoolExecutor(3, 20, 1, TimeUnit.MINUTES,
-                    new LinkedBlockingQueue<Runnable>());
+            ExecutorService exec =
+                    new ThreadPoolExecutor(3, 20, 1, TimeUnit.MINUTES, new LinkedBlockingQueue<Runnable>());
             ServerSocket serverSocket;
             try {
                 serverSocket = new ServerSocket(9999);
@@ -67,7 +67,8 @@ public class BioEchoServer {
         @Override
         public void run() {
             try {
-                Reader reader = new InputStreamReader(new BufferedInputStream(socket.getInputStream()), StandardCharsets.UTF_8);
+                Reader reader =
+                        new InputStreamReader(new BufferedInputStream(socket.getInputStream()), StandardCharsets.UTF_8);
                 Writer writer = new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8);
                 int i = 0;
 

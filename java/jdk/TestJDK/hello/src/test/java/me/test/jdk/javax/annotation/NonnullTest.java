@@ -35,7 +35,7 @@ public class NonnullTest {
     public static class MyPerson {
         @Nonnull
         private String name;
+
         private Integer age;
     }
-
 }

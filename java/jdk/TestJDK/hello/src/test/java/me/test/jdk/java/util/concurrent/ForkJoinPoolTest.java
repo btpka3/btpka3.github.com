@@ -9,11 +9,9 @@ import me.test.U;
 
 public class ForkJoinPoolTest {
 
-
     public static void main(String[] args) throws Exception {
         test01();
     }
-
 
     /**
      * 计算 从1加到40，每个任务 sleep 1秒.
@@ -68,10 +66,7 @@ public class ForkJoinPoolTest {
                     }
                     sum += i;
                 }
-                U.print("exec", "start = " + start
-                        + ", end = " + end
-                        + ", sum = " + sum
-                );
+                U.print("exec", "start = " + start + ", end = " + end + ", sum = " + sum);
                 return sum;
 
                 // 否则，执行切分逻辑
@@ -85,7 +80,6 @@ public class ForkJoinPoolTest {
 
                 U.print("split", "mid = " + mid);
 
-
                 long sum = right.join() + left.join();
 
                 U.print("split", "mid = " + mid + ", sum = " + sum);
@@ -94,5 +88,4 @@ public class ForkJoinPoolTest {
             }
         }
     }
-
 }

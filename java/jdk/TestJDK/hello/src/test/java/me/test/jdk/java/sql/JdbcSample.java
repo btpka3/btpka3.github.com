@@ -12,11 +12,9 @@ public class JdbcSample {
         Connection conn = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/dbName",
-                    "jack", "password");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/dbName", "jack", "password");
             conn.setAutoCommit(false);
-            PreparedStatement preStmt = conn
-                    .prepareStatement("select * from person where key = ?");
+            PreparedStatement preStmt = conn.prepareStatement("select * from person where key = ?");
             preStmt.setString(1, "aaa");
             ResultSet rs = preStmt.executeQuery();
             while (rs.next()) {

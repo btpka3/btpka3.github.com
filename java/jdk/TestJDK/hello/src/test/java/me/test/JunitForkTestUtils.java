@@ -22,9 +22,7 @@ public class JunitForkTestUtils {
                 + ", THREAD_ID:" + Thread.currentThread().threadId()
                 + ", THREAD_ID=" + Thread.currentThread().getName()
                 + ", ENV[\"" + ENV_KEY + "\"]=" + envValue
-                + ", props[\"" + PROP_KEY + "\"]=" + propValue
-        );
+                + ", props[\"" + PROP_KEY + "\"]=" + propValue);
         Thread.sleep(1000);
     }
-
 }

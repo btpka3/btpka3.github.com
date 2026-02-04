@@ -31,5 +31,4 @@ public class PropertiesUtils {
                 .sorted()
                 .collect(Collectors.joining(System.lineSeparator()));
     }
-
 }

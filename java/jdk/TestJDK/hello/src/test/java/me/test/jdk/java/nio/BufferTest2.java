@@ -7,7 +7,6 @@ import java.nio.CharBuffer;
  */
 public class BufferTest2 {
 
-
     static int count = 0;
 
     private String recv() {
@@ -59,7 +58,6 @@ public class BufferTest2 {
         return line;
     }
 
-
     /**
      * 是否 buf 读完了。
      *
@@ -86,5 +84,4 @@ public class BufferTest2 {
         buf.compact();
         return false;
     }
-
 }

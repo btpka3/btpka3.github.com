@@ -7,7 +7,6 @@ import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlMixed;
 import javax.xml.bind.annotation.XmlRootElement;
 
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "span")
 public class Span {
@@ -23,5 +22,4 @@ public class Span {
     public void setItems(List<Object> mixed) {
         this.items = items;
     }
-
 }

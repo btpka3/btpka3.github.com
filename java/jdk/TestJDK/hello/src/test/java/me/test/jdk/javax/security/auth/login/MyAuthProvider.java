@@ -21,19 +21,11 @@ public class MyAuthProvider extends AuthProvider {
     }
 
     @Override
-    public void login(Subject subject, CallbackHandler handler) throws LoginException {
-
-    }
+    public void login(Subject subject, CallbackHandler handler) throws LoginException {}
 
     @Override
-    public void logout() throws LoginException {
-
-    }
+    public void logout() throws LoginException {}
 
     @Override
-    public void setCallbackHandler(CallbackHandler handler) {
-
-    }
+    public void setCallbackHandler(CallbackHandler handler) {}
 }
-
-

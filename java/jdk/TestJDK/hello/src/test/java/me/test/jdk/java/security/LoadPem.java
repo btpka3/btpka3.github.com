@@ -1,6 +1,5 @@
 package me.test.jdk.java.security;
 
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -25,7 +24,6 @@ import java.util.Base64;
  */
 public class LoadPem {
 
-
     public static void main(String[] args) throws IOException {
 
         // pem 文件的格式为 "-----BEGIN PRIVATE KEY-----\n...\n...\n-----END PRIVATE KEY-----"
@@ -35,7 +33,7 @@ public class LoadPem {
         String pubKeyStr = "-----BEGIN CERTIFICATE-----\n...\n...\n-----END CERTIFICATE-----";
 
         PrivateKey privateKey = toRsaPriKey(priKeyStr);
-        //PublicKey publicKey = toRsaPubKey(pubKeyStr);
+        // PublicKey publicKey = toRsaPubKey(pubKeyStr);
         PublicKey publicKey = toRsaPubKey111111(pubKeyStr.getBytes(StandardCharsets.UTF_8));
 
         String data = "helloworld";
@@ -54,9 +52,7 @@ public class LoadPem {
             String sign = Base64.getEncoder().encodeToString(result);
             return sign;
 
-        } catch (NoSuchAlgorithmException
-                 | SignatureException
-                 | InvalidKeyException e) {
+        } catch (NoSuchAlgorithmException | SignatureException | InvalidKeyException e) {
             throw new RuntimeException(e);
         }
     }
@@ -78,7 +74,6 @@ public class LoadPem {
         return toRsaPubKey(priKeyBytes);
     }
 
-
     public static PublicKey toRsaPubKey111111(byte[] pubKeyBytes) {
         try {
             CertificateFactory fact = CertificateFactory.getInstance("X.509");
@@ -96,17 +91,12 @@ public class LoadPem {
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
             PublicKey pubKey = keyFactory.generatePublic(keySpec);
             return pubKey;
-        } catch (NoSuchAlgorithmException
-                 | InvalidKeySpecException e) {
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static boolean rsaSignVerify(
-            byte[] bytes,
-            String sign,
-            PublicKey pubKey
-    ) {
+    public static boolean rsaSignVerify(byte[] bytes, String sign, PublicKey pubKey) {
         try {
             Signature signature = Signature.getInstance("SHA1withRSA");
             signature.initVerify(pubKey);
@@ -114,20 +104,12 @@ public class LoadPem {
             signature.update(bytes);
             return signature.verify(Base64.getDecoder().decode(sign));
 
-        } catch (NoSuchAlgorithmException
-                 | SignatureException
-                 | InvalidKeyException e) {
+        } catch (NoSuchAlgorithmException | SignatureException | InvalidKeyException e) {
             throw new RuntimeException(e);
         }
     }
 
-
-    public static String signWithRsa(
-            String strToSign,
-            String charset,
-            String privateKeyInBase64
-    ) {
-
+    public static String signWithRsa(String strToSign, String charset, String privateKeyInBase64) {
 
         byte[] priKeyBytes = Base64.getDecoder().decode(privateKeyInBase64);
         PKCS8EncodedKeySpec priKeySpec = new PKCS8EncodedKeySpec(priKeyBytes);
@@ -139,9 +121,7 @@ public class LoadPem {
             Signature signature = Signature.getInstance("SHA1withRSA");
             signature.initSign(priKey);
 
-            byte[] bytes = charset == null || charset.length() == 0
-                    ? strToSign.getBytes()
-                    : strToSign.getBytes(charset);
+            byte[] bytes = charset == null || charset.isEmpty() ? strToSign.getBytes() : strToSign.getBytes(charset);
 
             signature.update(bytes);
             byte[] result = signature.sign();
@@ -149,10 +129,10 @@ public class LoadPem {
             return sign;
 
         } catch (NoSuchAlgorithmException
-                 | UnsupportedEncodingException
-                 | SignatureException
-                 | InvalidKeyException
-                 | InvalidKeySpecException e) {
+                | UnsupportedEncodingException
+                | SignatureException
+                | InvalidKeyException
+                | InvalidKeySpecException e) {
             throw new RuntimeException(e);
         }
     }

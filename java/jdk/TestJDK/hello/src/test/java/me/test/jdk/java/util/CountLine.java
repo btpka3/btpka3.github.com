@@ -43,7 +43,6 @@ public class CountLine {
                     + ", endBufSize = " + endBufSize);
             sc.close();
         }
-
     }
 
     private static int getBufSize(Scanner sc) {
@@ -64,5 +63,4 @@ public class CountLine {
 
         return 0;
     }
-
 }

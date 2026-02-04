@@ -1,16 +1,16 @@
 package me.test.org.apache.commons.compress.archivers.zip;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * ZipFileTest类的单元测试类
@@ -100,8 +100,7 @@ public class ZipFileTests {
 
         // 执行和验证：调用unzip方法应该抛出IOException
         ZipFileTest zipFileTest = new ZipFileTest();
-        assertThrows(IOException.class, () -> zipFileTest.unzip(zipFile, targetDir),
-                "当目标路径是文件时应该抛出IOException");
+        assertThrows(IOException.class, () -> zipFileTest.unzip(zipFile, targetDir), "当目标路径是文件时应该抛出IOException");
 
         // 清理
         deleteDirectory(tempDir.toFile());
@@ -124,8 +123,7 @@ public class ZipFileTests {
 
         // 执行和验证：调用unzip方法应该抛出IOException
         ZipFileTest zipFileTest = new ZipFileTest();
-        assertThrows(IOException.class, () -> zipFileTest.unzip(zipFile, targetDir),
-                "当zip文件无效时应该抛出IOException");
+        assertThrows(IOException.class, () -> zipFileTest.unzip(zipFile, targetDir), "当zip文件无效时应该抛出IOException");
 
         // 清理
         deleteDirectory(tempDir.toFile());

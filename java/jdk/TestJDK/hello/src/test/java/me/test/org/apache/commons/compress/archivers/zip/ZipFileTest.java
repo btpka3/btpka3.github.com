@@ -1,5 +1,7 @@
 package me.test.org.apache.commons.compress.archivers.zip;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -18,8 +20,6 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 /**
  * @author dangqian.zll
  * @date 2024/10/30
@@ -28,9 +28,7 @@ public class ZipFileTest {
 
     @SneakyThrows
     public void x() {
-        ZipFile zipFile = new ZipFile.Builder()
-                .setFile(Zip.zipFile)
-                .get();
+        ZipFile zipFile = new ZipFile.Builder().setFile(Zip.zipFile).get();
         zipFile.getEntries("");
     }
 
@@ -62,7 +60,6 @@ public class ZipFileTest {
     @Test
     public void createZip01() {
 
-
         File dir = new File("/tmp/createZip01");
 
         // 已存在，则删除并新建
@@ -74,7 +71,6 @@ public class ZipFileTest {
         FileUtils.write(srcFile1, "Hello World : " + System.currentTimeMillis(), StandardCharsets.UTF_8);
         File srcFile2 = new File(dir, "b.txt");
         FileUtils.write(srcFile2, "Nice to mtee you~ " + System.currentTimeMillis(), StandardCharsets.UTF_8);
-
 
         File zipFile = new File(dir, "demo.zip");
         try (ZipArchiveOutputStream out = new ZipArchiveOutputStream(zipFile)) {
@@ -103,9 +99,5 @@ public class ZipFileTest {
             out.closeArchiveEntry();
         }
         unzip(zipFile, Paths.get("/tmp/createZip01_unzip"));
-
-
     }
-
-
 }

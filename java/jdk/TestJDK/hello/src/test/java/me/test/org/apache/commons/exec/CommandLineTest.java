@@ -1,5 +1,6 @@
 package me.test.org.apache.commons.exec;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.ByteArrayOutputStream;
 import java.time.Duration;
@@ -8,8 +9,6 @@ import org.apache.commons.exec.DefaultExecutor;
 import org.apache.commons.exec.ExecuteWatchdog;
 import org.apache.commons.exec.PumpStreamHandler;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  *
@@ -85,7 +84,6 @@ public class CommandLineTest {
         assertEquals("aaa\n", result);
     }
 
-
     protected String exec(String cmd) {
         return exec(cmd, 0);
     }
@@ -120,5 +118,4 @@ public class CommandLineTest {
             throw new RuntimeException("failed to exec cmd =`" + cmdLine.toString() + "`", e);
         }
     }
-
 }

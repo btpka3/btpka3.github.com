@@ -33,5 +33,4 @@ public class UUIDTest {
         byte[] bytes = new byte[16];
         secureRandom.nextBytes(bytes);
     }
-
 }

@@ -20,8 +20,10 @@ public class ClassLoader5Runnable implements Runnable {
         // ClassLoader preTccl = Thread.currentThread().getContextClassLoader();
         try {
             System.out.println("======== o is not null");
-            System.out.println("======== o.getClass() = " + o.getClass().getProtectionDomain().getCodeSource().getLocation());
-            System.out.println("======== o.getClass().getClassLoader() = " + o.getClass().getClassLoader().hashCode());
+            System.out.println("======== o.getClass() = "
+                    + o.getClass().getProtectionDomain().getCodeSource().getLocation());
+            System.out.println("======== o.getClass().getClassLoader() = "
+                    + o.getClass().getClassLoader().hashCode());
 
             // 设置TCCL 不管用，仍然是从当前类：ClassLoader5Test 的classloader 加载，并 ClassCastException
             // Thread.currentThread().setContextClassLoader(o.getClass().getClassLoader());
@@ -32,7 +34,7 @@ public class ClassLoader5Runnable implements Runnable {
             System.out.println("======== err : " + e.getMessage());
             throw e;
         } finally {
-            //Thread.currentThread().setContextClassLoader(preTccl);
+            // Thread.currentThread().setContextClassLoader(preTccl);
         }
     }
 }

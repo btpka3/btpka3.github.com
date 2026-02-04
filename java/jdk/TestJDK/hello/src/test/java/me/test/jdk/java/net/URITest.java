@@ -7,8 +7,6 @@ public class URITest {
     public static void main(String[] args) throws Exception {
 
         test01();
-
-
     }
 
     public static void test01() throws Exception {
@@ -20,6 +18,4 @@ public class URITest {
         System.out.println("path        : " + uri.getPath());
         System.out.println("fragment    : " + uri.getFragment());
     }
-
-
 }

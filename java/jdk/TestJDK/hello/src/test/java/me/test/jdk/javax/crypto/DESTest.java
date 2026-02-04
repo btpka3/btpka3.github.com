@@ -20,9 +20,10 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 // http://docs.oracle.com/javase/7/docs/technotes/guides/security/StandardNames.html
 public class DESTest {
 
-    public static void main(String[] args) throws InterruptedException, UnsupportedEncodingException,
-            NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException,
-            InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+    public static void main(String[] args)
+            throws InterruptedException, UnsupportedEncodingException, NoSuchPaddingException, NoSuchAlgorithmException,
+                    InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException,
+                    IllegalBlockSizeException {
 
         // 请注意避免重复加入
         Security.addProvider(new BouncyCastleProvider());
@@ -47,5 +48,4 @@ public class DESTest {
         byte[] decData = cipher.doFinal(encData);
         System.out.println("DEC DATA : " + new String(decData, StandardCharsets.UTF_8));
     }
-
 }

@@ -35,18 +35,17 @@ import org.junit.jupiter.api.Test;
  */
 public class ConfigurationTest {
 
-
     /*
-cat <<EOF > /tmp/my-jaas.conf
-aBc-4_56com {
-  org.apache.zookeeper.server.auth.DigestLoginModule required
-  username="li4"
-  password="456789";
-};
-EOF
+    cat <<EOF > /tmp/my-jaas.conf
+    aBc-4_56com {
+      org.apache.zookeeper.server.auth.DigestLoginModule required
+      username="li4"
+      password="456789";
+    };
+    EOF
 
-JVM 属性： -Djava.security.auth.login.config=/tmp/my-jaas.conf
-     */
+    JVM 属性： -Djava.security.auth.login.config=/tmp/my-jaas.conf
+         */
     @Test
     public void testLoadFromJaasFile() {
         System.setProperty("java.security.auth.login.config", "/tmp/my-jaas.conf");
@@ -78,7 +77,8 @@ JVM 属性： -Djava.security.auth.login.config=/tmp/my-jaas.conf
         File file = new File(fileStr);
         System.setProperty("java.security.auth.login.config", fileStr);
         {
-            String str = "Client {org.apache.zookeeper.server.auth.DigestLoginModule required username=\"li4\" password=\"456789\";};";
+            String str =
+                    "Client {org.apache.zookeeper.server.auth.DigestLoginModule required username=\"li4\" password=\"456789\";};";
             FileUtils.writeStringToFile(file, str, StandardCharsets.UTF_8);
 
             Configuration cfg = Configuration.getConfiguration();
@@ -97,7 +97,8 @@ JVM 属性： -Djava.security.auth.login.config=/tmp/my-jaas.conf
         }
 
         {
-            String str = "Client {org.apache.zookeeper.server.auth.DigestLoginModule required username=\"li4\" password=\"888888\";};";
+            String str =
+                    "Client {org.apache.zookeeper.server.auth.DigestLoginModule required username=\"li4\" password=\"888888\";};";
             FileUtils.writeStringToFile(file, str, StandardCharsets.UTF_8);
 
             Configuration cfg = Configuration.getConfiguration();
@@ -141,7 +142,6 @@ JVM 属性： -Djava.security.auth.login.config=/tmp/my-jaas.conf
         Assertions.assertEquals(1, entries.length);
         AppConfigurationEntry entry = entries[0];
 
-
         Assertions.assertEquals("org.apache.zookeeper.server.auth.DigestLoginModule", entry.getLoginModuleName());
         Assertions.assertSame(AppConfigurationEntry.LoginModuleControlFlag.REQUIRED, entry.getControlFlag());
         Map<String, ?> options = entry.getOptions();
@@ -149,6 +149,4 @@ JVM 属性： -Djava.security.auth.login.config=/tmp/my-jaas.conf
         Assertions.assertEquals("zhang3", options.get("username"));
         Assertions.assertEquals("123456", options.get("password"));
     }
-
-
 }

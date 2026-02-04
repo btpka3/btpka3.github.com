@@ -20,8 +20,8 @@ public class LoggerTest {
     @Test
     public void testJul() {
         LogManager.getLogManager().readConfiguration(LoggerTest.class.getResourceAsStream("/logging.properties"));
-//        SLF4JBridgeHandler.removeHandlersForRootLogger();
-//        SLF4JBridgeHandler.install();
+        //        SLF4JBridgeHandler.removeHandlersForRootLogger();
+        //        SLF4JBridgeHandler.install();
 
         System.out.println("start.");
         {

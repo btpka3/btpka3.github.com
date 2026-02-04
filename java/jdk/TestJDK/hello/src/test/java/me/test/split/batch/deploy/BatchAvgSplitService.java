@@ -32,11 +32,7 @@ public class BatchAvgSplitService {
         // 平均数（下边界），结果批次中的机器数量是该值，或者该值+1.
         int batchAvgSize = list.size() / batchSize;
 
-        List<List<Machine>> mostDetailList = groupToDetailList(
-                list,
-                mostDetailGroupMapper,
-                machineComparator
-        );
+        List<List<Machine>> mostDetailList = groupToDetailList(list, mostDetailGroupMapper, machineComparator);
         List<Machine> orderList = toOrderList(mostDetailList);
         int modCount = orderList.size() % batchSize;
         List<Machine> list1 = new LinkedList<>(orderList.subList(0, orderList.size() - modCount));
@@ -51,29 +47,23 @@ public class BatchAvgSplitService {
             if (!list2.isEmpty()) {
                 batchList.add(list2.remove(0));
             }
-
         }
         return resultList;
     }
 
-
     public static <T, K extends Comparable<K>> List<List<T>> groupToDetailList(
-            List<T> list,
-            Function<T, K> mostDetailGroupMapper,
-            Comparator<T> valueComparator
-    ) {
+            List<T> list, Function<T, K> mostDetailGroupMapper, Comparator<T> valueComparator) {
         return list.stream()
                 .collect(Collectors.groupingBy(mostDetailGroupMapper, TreeMap::new, Collectors.toList()))
-                .entrySet().stream()
+                .entrySet()
+                .stream()
                 .map(Map.Entry::getValue)
                 .peek(l -> Collections.sort(l, valueComparator))
                 .collect(Collectors.toList());
     }
 
     public static <T> List<T> toOrderList(List<List<T>> list) {
-        List<List<T>> clonedList = list.stream()
-                .map(LinkedList::new)
-                .collect(Collectors.toList());
+        List<List<T>> clonedList = list.stream().map(LinkedList::new).collect(Collectors.toList());
 
         int totalSize = clonedList.stream().mapToInt(List::size).sum();
         List<T> resultList = new ArrayList<>(totalSize);
@@ -93,5 +83,4 @@ public class BatchAvgSplitService {
         }
         return resultList;
     }
-
 }

@@ -18,8 +18,6 @@ public class SecDesign {
         EventDef eventDef = eventRegistry.getEventDef("xxxEvent");
         Event event = eventDef.newInstance(Map.of("a", "b"));
         Object propValue = event.getCachedProperty("xxxProp");
-
-
     }
 
     interface P {
@@ -29,7 +27,6 @@ public class SecDesign {
         }
 
         <T> T getService(String prop);
-
 
         default FuncRegistry funcRegistry() {
             return getService("funcRegistry");

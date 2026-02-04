@@ -26,15 +26,13 @@ public class ZipUtils {
         }
 
         try (OutputStream fos = Files.newOutputStream(zipFile);
-             ZipOutputStream zos = new ZipOutputStream(fos)
-        ) {
+                ZipOutputStream zos = new ZipOutputStream(fos)) {
             Files.walkFileTree(
                     src,
                     Collections.emptySet(),
-                    //EnumSet.of(FileVisitOption.FOLLOW_LINKS),
+                    // EnumSet.of(FileVisitOption.FOLLOW_LINKS),
                     Integer.MAX_VALUE,
-                    new PathSimpleFileVisitor(src, zos)
-            );
+                    new PathSimpleFileVisitor(src, zos));
         }
     }
 
@@ -63,13 +61,10 @@ public class ZipUtils {
         }
 
         @Override
-        public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
-                throws IOException {
+        public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
             String relative = src.relativize(file).toString();
 
-            String entryName = relative.isEmpty()
-                    ? file.getFileName().toString()
-                    : relative;
+            String entryName = relative.isEmpty() ? file.getFileName().toString() : relative;
             ZipEntry zipEntry = toZipEntry(entryName, attrs);
             zos.putNextEntry(zipEntry);
             try (InputStream in = Files.newInputStream(file)) {

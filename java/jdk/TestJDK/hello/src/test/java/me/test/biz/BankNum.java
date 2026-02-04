@@ -35,13 +35,11 @@ package me.test.biz;
  */
 public class BankNum {
 
-    public static void main(String[] args) {
-
-    }
+    public static void main(String[] args) {}
 
     static boolean isValid(String iin) {
 
-        if (iin == null || iin.length() == 0) {
+        if (iin == null || iin.isEmpty()) {
             return false;
         }
         int sum = 0;

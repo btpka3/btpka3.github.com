@@ -19,7 +19,6 @@ public class MyRmiClientSocketFactory implements RMIClientSocketFactory {
         socket.setSoLinger(false, 0);
         socket.connect(new InetSocketAddress(host, port), connectTimeout);
         return socket;
-
     }
 
     public int getSocketTimeout() {

@@ -35,12 +35,10 @@ public class RecursiveActionTest {
                 sortSequentially(lo, hi);
             } else {
                 int mid = (lo + hi) >>> 1;
-                invokeAll(new MergeSortTask(array, lo, mid),
-                        new MergeSortTask(array, mid, hi));
+                invokeAll(new MergeSortTask(array, lo, mid), new MergeSortTask(array, mid, hi));
                 merge(lo, mid, hi);
             }
         }
-
 
         void sortSequentially(int lo, int hi) {
             Arrays.sort(array, lo, hi);
@@ -49,8 +47,7 @@ public class RecursiveActionTest {
         void merge(int lo, int mid, int hi) {
             long[] buf = Arrays.copyOfRange(array, lo, mid);
             for (int i = 0, j = lo, k = mid; i < buf.length; j++) {
-                array[j] = (k == hi || buf[i] < array[k]) ?
-                        buf[i++] : array[k++];
+                array[j] = (k == hi || buf[i] < array[k]) ? buf[i++] : array[k++];
             }
         }
     }
@@ -76,11 +73,9 @@ public class RecursiveActionTest {
         System.out.println("执行完毕");
 
         do {
-            System.out.printf("Thread Count/Steal/Parallelism = %d/%d/%d %n",
-                    pool.getActiveThreadCount(),
-                    pool.getStealCount(),
-                    pool.getParallelism()
-            );
+            System.out.printf(
+                    "Thread Count/Steal/Parallelism = %d/%d/%d %n",
+                    pool.getActiveThreadCount(), pool.getStealCount(), pool.getParallelism());
 
             try {
                 TimeUnit.MILLISECONDS.sleep(200);
@@ -90,6 +85,4 @@ public class RecursiveActionTest {
         } while (!task.isDone());
         pool.shutdown();
     }
-
-
 }

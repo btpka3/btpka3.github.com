@@ -52,7 +52,6 @@ public class MySSLSocket extends Socket {
 
         underlyingSocket.connect(endpoint);
         checkProxy();
-
     }
 
     @Override

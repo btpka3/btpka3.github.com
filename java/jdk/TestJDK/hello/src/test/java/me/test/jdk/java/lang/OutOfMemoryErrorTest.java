@@ -18,6 +18,5 @@ public class OutOfMemoryErrorTest {
         } finally {
             System.out.println("=======3333");
         }
-
     }
 }

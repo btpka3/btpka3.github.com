@@ -16,15 +16,13 @@ import org.junit.jupiter.api.Test;
 
 public class File {
 
-
     public static void main(String[] args) throws IOException {
 
-        //listFiles("/tmp");
-        //walkFileTree("/tmp");
-        //walk("/tmp");
+        // listFiles("/tmp");
+        // walkFileTree("/tmp");
+        // walk("/tmp");
         fileIteratable("/data0");
     }
-
 
     public static void listFiles(String dir) {
         System.out.println("----------------------------------- listFiles");
@@ -46,13 +44,12 @@ public class File {
         System.out.println("done.");
     }
 
-
     @Test
     public void walkFileTree() throws IOException {
         System.out.println("----------------------------------- walkFileTree");
 
         String dir = "/tmp";
-        //String dir = "/tmp/createZip02/b.txt";
+        // String dir = "/tmp/createZip02/b.txt";
         Files.walkFileTree(
                 Paths.get(dir),
                 EnumSet.of(FileVisitOption.FOLLOW_LINKS),
@@ -66,8 +63,7 @@ public class File {
                     }
 
                     @Override
-                    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
-                            throws IOException {
+                    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
                         System.out.println(file.toFile().getAbsolutePath());
                         return FileVisitResult.CONTINUE;
                     }
@@ -80,26 +76,23 @@ public class File {
         System.out.println("----------------------------------- walk");
 
         Files.walk(Paths.get(dir), FileVisitOption.FOLLOW_LINKS)
-                //.peek(System.out::println)
+                // .peek(System.out::println)
                 .forEach(System.out::println);
 
         System.out.println("done.");
     }
 
-
     public static void fileIteratable(String dir) throws IOException {
-
 
         System.out.println("----------------------------------- fileIteratable : " + dir);
 
         System.out.println(Paths.get("/aa/bb", "cc", "dd"));
 
-
         String p = "/aa/bb/cc";
-        Paths.get(p).forEach(a ->
-                // 分别打印 "aa", "bb", "cc"
-                System.out.println("@@@@@@@@@ : " + a)
-        );
+        Paths.get(p)
+                .forEach(a ->
+                        // 分别打印 "aa", "bb", "cc"
+                        System.out.println("@@@@@@@@@ : " + a));
         for (Path path : Paths.get(p)) {
             System.out.println("========= : " + path);
         }

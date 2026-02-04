@@ -30,15 +30,11 @@ public class CallSiteTest {
         // callerClass = class me.test.jdk.java.lang.invoke.CallSiteTest
         System.out.println("callerClass = " + callerClass);
 
-        MethodHandle printArgsMethod = lookup.findStatic(
-                callerClass,
-                "printArgs",
-                MethodType.methodType(String.class, Object[].class));
+        MethodHandle printArgsMethod =
+                lookup.findStatic(callerClass, "printArgs", MethodType.methodType(String.class, Object[].class));
 
         CallSite callSite1 = new ConstantCallSite(printArgsMethod);
         callSite1.dynamicInvoker().invoke("xxx", "yyy");
         callSite1.dynamicInvoker().invoke("xxx", "yyy", 111);
-
     }
-
 }

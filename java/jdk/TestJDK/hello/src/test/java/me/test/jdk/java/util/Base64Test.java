@@ -29,9 +29,10 @@ public class Base64Test {
 
     @Test
     public void x1() throws IOException {
-        File file = Paths.get(System.getProperty("user.home"), "Downloads", "long_text_2025-05-19-11-07-47.txt").toFile();
+        File file = Paths.get(System.getProperty("user.home"), "Downloads", "long_text_2025-05-19-11-07-47.txt")
+                .toFile();
         String base64Str = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
-        //byte []bytes = Base64.getDecoder().decode(base64Str);
+        // byte []bytes = Base64.getDecoder().decode(base64Str);
         byte[] bytes = org.apache.commons.codec.binary.Base64.decodeBase64(base64Str);
         String result = new String(bytes, StandardCharsets.UTF_8);
         System.out.printf(result);

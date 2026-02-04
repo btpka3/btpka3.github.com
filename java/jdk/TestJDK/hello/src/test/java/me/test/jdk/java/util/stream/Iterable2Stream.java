@@ -19,7 +19,7 @@ public class Iterable2Stream {
 
     public static <T> List<T> getPagedData(Iterable<T> it, int pageNum, int pageSize) {
         return StreamSupport.stream(it.spliterator(), false)
-                //.filter(...) // TODO acl 过滤
+                // .filter(...) // TODO acl 过滤
                 .skip(pageSize * pageNum)
                 .limit(pageSize)
                 .collect(Collectors.toList());

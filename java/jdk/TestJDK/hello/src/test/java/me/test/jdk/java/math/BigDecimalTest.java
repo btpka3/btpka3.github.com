@@ -40,7 +40,6 @@ public class BigDecimalTest {
         scale = num.scale();
         precision = num.precision();
         System.out.printf("'%s' : (%d,%d) \n", numStr, precision, scale);
-
     }
 
     Double d = 123456789.123456789;
@@ -97,9 +96,9 @@ public class BigDecimalTest {
         System.out.println("new BigDecimal(0.1D)     = " + new BigDecimal(0.1D));
         System.out.println("new BigDecimal(0.1F)     = " + new BigDecimal(0.1F));
 
-
         Assertions.assertNotEquals(BigDecimal.valueOf(0.1D), BigDecimal.valueOf(0.1F));
-        Assertions.assertNotEquals(BigDecimal.valueOf(0.1D).doubleValue(), BigDecimal.valueOf(0.1F).doubleValue());
+        Assertions.assertNotEquals(
+                BigDecimal.valueOf(0.1D).doubleValue(), BigDecimal.valueOf(0.1F).doubleValue());
         Assertions.assertNotEquals(new BigDecimal(0.1D), new BigDecimal(0.1F));
         Assertions.assertNotEquals(new BigDecimal(0.1D).doubleValue(), new BigDecimal(0.1F).doubleValue());
         Assertions.assertEquals(0.1D, new BigDecimal(0.1D).doubleValue());
@@ -140,7 +139,8 @@ public class BigDecimalTest {
         Assertions.assertThrows(NumberFormatException.class, () -> new BigDecimal("0xCAFE_BABE"));
         Assertions.assertThrows(NumberFormatException.class, () -> new BigDecimal("0x7fff_ffff_ffff_ffffL"));
         Assertions.assertThrows(NumberFormatException.class, () -> new BigDecimal("0b0010_0101"));
-        Assertions.assertThrows(NumberFormatException.class, () -> new BigDecimal("0b11010010_01101001_10010100_10010010"));
+        Assertions.assertThrows(
+                NumberFormatException.class, () -> new BigDecimal("0b11010010_01101001_10010100_10010010"));
     }
 
     @Test
@@ -173,7 +173,6 @@ public class BigDecimalTest {
         return new BigDecimal(n.toString());
     }
 
-
     /**
      * 不推荐，枚举不完，且 double,float 直接转成 BigDecimal 会因精度问题不可预测。
      *
@@ -191,10 +190,7 @@ public class BigDecimalTest {
         if (n instanceof BigInteger) {
             return new BigDecimal((BigInteger) n);
         }
-        if (n instanceof Integer
-                || n instanceof Short
-                || n instanceof Byte
-        ) {
+        if (n instanceof Integer || n instanceof Short || n instanceof Byte) {
             return new BigDecimal((int) n);
         }
         if (n instanceof Long) {
@@ -208,5 +204,4 @@ public class BigDecimalTest {
         }
         return null;
     }
-
 }

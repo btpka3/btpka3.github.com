@@ -5,8 +5,7 @@ package me.test.jdk.java.rmi;
  * @date 2025/6/19
  */
 public class MyRmiServiceImpl implements MyRmiService {
-    public MyRmiServiceImpl() {
-    }
+    public MyRmiServiceImpl() {}
 
     @Override
     public String sayHello(String name) {

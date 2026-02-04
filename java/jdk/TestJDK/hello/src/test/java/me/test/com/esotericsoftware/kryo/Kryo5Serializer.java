@@ -20,9 +20,10 @@ public class Kryo5Serializer implements Serializer {
         Kryo kryo = new Kryo();
         kryo.register(Object.class);
         kryo.register(java.util.HashMap.class);
-        //kryo.setDefaultSerializer(new com.esotericsoftware.kryo.SerializerFactory.ReflectionSerializerFactory(FieldSerializer.class));
+        // kryo.setDefaultSerializer(new
+        // com.esotericsoftware.kryo.SerializerFactory.ReflectionSerializerFactory(FieldSerializer.class));
         kryo.setRegistrationRequired(false);
-        //kryo.setAutoReset(false);
+        // kryo.setAutoReset(false);
         kryo.setInstantiatorStrategy(new DefaultInstantiatorStrategy(new StdInstantiatorStrategy()));
         return kryo;
     });
@@ -52,5 +53,4 @@ public class Kryo5Serializer implements Serializer {
         output.close();
         return result;
     }
-
 }

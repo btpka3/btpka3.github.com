@@ -25,23 +25,13 @@ import java.util.Set;
 
 public class MyFsProvider extends FileSystemProvider {
 
-
     public static void main(String[] args) throws IOException {
 
-        List<String> entries = Arrays.asList(
-                "/a/",
-                "/a/a1",
-                "/a/a2",
-                "/b/b1",
-                "/b/b2/",
-                "/b/b2/b3"
-        );
-
+        List<String> entries = Arrays.asList("/a/", "/a/a1", "/a/a2", "/b/b1", "/b/b2/", "/b/b2/b3");
 
         Files.walk(Paths.get("my://zll/"))
-                //.peek(System.out::println)
+                // .peek(System.out::println)
                 .forEach(System.out::println);
-
     }
 
     public static final String SCHEMA = "my";
@@ -63,7 +53,6 @@ public class MyFsProvider extends FileSystemProvider {
     public FileSystem newFileSystem(URI uri, Map<String, ?> env) throws IOException {
 
         checkUri(uri);
-
 
         if (registry.containsKey(uri.getHost())) {
             throw new IllegalArgumentException("名称 : '" + uri.getHost() + "' 已经注册了");
@@ -89,12 +78,14 @@ public class MyFsProvider extends FileSystemProvider {
     }
 
     @Override
-    public SeekableByteChannel newByteChannel(Path path, Set<? extends OpenOption> options, FileAttribute<?>... attrs) throws IOException {
+    public SeekableByteChannel newByteChannel(Path path, Set<? extends OpenOption> options, FileAttribute<?>... attrs)
+            throws IOException {
         throw new IllegalArgumentException("Not Supported");
     }
 
     @Override
-    public DirectoryStream<Path> newDirectoryStream(Path dir, DirectoryStream.Filter<? super Path> filter) throws IOException {
+    public DirectoryStream<Path> newDirectoryStream(Path dir, DirectoryStream.Filter<? super Path> filter)
+            throws IOException {
         throw new IllegalArgumentException("Not Supported");
     }
 
@@ -104,9 +95,7 @@ public class MyFsProvider extends FileSystemProvider {
     }
 
     @Override
-    public void delete(Path path) throws IOException {
-
-    }
+    public void delete(Path path) throws IOException {}
 
     @Override
     public void copy(Path source, Path target, CopyOption... options) throws IOException {
@@ -130,7 +119,7 @@ public class MyFsProvider extends FileSystemProvider {
 
     @Override
     public FileStore getFileStore(Path path) throws IOException {
-        //return path.getFileStore(); // TODO
+        // return path.getFileStore(); // TODO
         return null;
     }
 
@@ -145,7 +134,8 @@ public class MyFsProvider extends FileSystemProvider {
     }
 
     @Override
-    public <A extends BasicFileAttributes> A readAttributes(Path path, Class<A> type, LinkOption... options) throws IOException {
+    public <A extends BasicFileAttributes> A readAttributes(Path path, Class<A> type, LinkOption... options)
+            throws IOException {
         return null;
     }
 
@@ -155,7 +145,5 @@ public class MyFsProvider extends FileSystemProvider {
     }
 
     @Override
-    public void setAttribute(Path path, String attribute, Object value, LinkOption... options) throws IOException {
-
-    }
+    public void setAttribute(Path path, String attribute, Object value, LinkOption... options) throws IOException {}
 }

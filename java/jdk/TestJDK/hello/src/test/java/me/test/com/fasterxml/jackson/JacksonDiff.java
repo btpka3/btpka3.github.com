@@ -1,5 +1,9 @@
 package me.test.com.fasterxml.jackson;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import com.alibaba.fastjson2.JSON;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,10 +26,6 @@ import org.apache.commons.collections4.SetUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 /**
  * @author dangqian.zll
  * @date 2024/7/18
@@ -37,13 +37,15 @@ public class JacksonDiff {
     public void diff01() {
         ObjectMapper mapper = new ObjectMapper();
         // language=JSON
-        String jsonStr1 = """
+        String jsonStr1 =
+                """
                 {
                     "a":"{\\\"x\\\":\\\"xx\\\",\\\"y\\\":\\\"yy\\\"}"
                 }
                 """;
         // language=JSON
-        String jsonStr2 = """
+        String jsonStr2 =
+                """
                 {
                     "a":"{\\\"y\\\":\\\"yy\\\",\\\"x\\\":\\\"xx\\\"}"
                 }
@@ -65,21 +67,20 @@ public class JacksonDiff {
         assertTrue(actualObj1.equals(cmp, actualObj2));
     }
 
-
     @SneakyThrows
     @Test
     public void test() {
         String publishInfoJson = null;
         {
             String fileName = "_uf_app_publish_item_publish_info_1721291516088.txt";
-//            String fileName = "_uf_app_publish_item_publish_info_1721293094431.txt";
+            //            String fileName = "_uf_app_publish_item_publish_info_1721293094431.txt";
             File file = new File(System.getProperty("user.home") + "/Downloads/" + fileName);
             publishInfoJson = IOUtils.toString(new FileInputStream(file), StandardCharsets.UTF_8);
         }
         String draftInfoFJson = null;
         {
             String fileName = "_uf_app_publish_item_draft_info_1721291667117.txt";
-//            String fileName = "_uf_app_publish_item_draft_info_1721293123771.txt";
+            //            String fileName = "_uf_app_publish_item_draft_info_1721293123771.txt";
             File file = new File(System.getProperty("user.home") + "/Downloads/" + fileName);
             draftInfoFJson = IOUtils.toString(new FileInputStream(file), StandardCharsets.UTF_8);
         }
@@ -89,7 +90,6 @@ public class JacksonDiff {
 
         Map appPublishInfoMap1 = MapUtils.getMap(publishMap, "appPublishInfoMap");
         Map appPublishInfoMap2 = MapUtils.getMap(draftMap, "appPublishInfoMap");
-
 
         Set<String> clusterNames = appPublishInfoMap1.keySet();
         for (String clusterName : clusterNames) {
@@ -148,11 +148,8 @@ public class JacksonDiff {
             if (Objects.equals(v1, v2)) {
                 continue;
             }
-            MapDiffValue diffValue = MapDiffValue.builder()
-                    .key(key)
-                    .value1(v1)
-                    .value2(v2)
-                    .build();
+            MapDiffValue diffValue =
+                    MapDiffValue.builder().key(key).value1(v1).value2(v2).build();
             diffValues.add(diffValue);
         }
         return MapDiff.builder()
@@ -181,6 +178,4 @@ public class JacksonDiff {
             return !keyOnlyIn1.isEmpty() || !keyOnlyIn2.isEmpty() || !diffValues.isEmpty();
         }
     }
-
-
 }

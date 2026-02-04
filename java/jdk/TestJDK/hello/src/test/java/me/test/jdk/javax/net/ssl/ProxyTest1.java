@@ -25,9 +25,8 @@ import javax.net.ssl.TrustManagerFactory;
  */
 public class ProxyTest1 {
 
-
-    static final String TLS_ROOT_PATH = "/Users/zll/work/git-repo/github/btpka3" +
-            "/btpka3.github.com/java/jdk/TestJDK/src/main/resources/me/test/jdk/javax/net/ssl/ProxyTest1";
+    static final String TLS_ROOT_PATH = "/Users/zll/work/git-repo/github/btpka3"
+            + "/btpka3.github.com/java/jdk/TestJDK/src/main/resources/me/test/jdk/javax/net/ssl/ProxyTest1";
 
     // 自签名证书 需要将 $JDK_HOME/jre/lib/security/cacerts 合并才行，否则 ： ValidatorException: No trusted certificate found
     static final String TLS_CA_STORE_PATH = TLS_ROOT_PATH + "/cacerts.added";
@@ -38,21 +37,20 @@ public class ProxyTest1 {
     // ssh root@192.168.0.12 -C -f -N -g -D 9999
     static final Proxy proxy = new Proxy(Proxy.Type.SOCKS, new InetSocketAddress("localhost", 9999));
 
-
     // 3.
     // 4.
     // 5. 有代理访问自签名证书网址 https
-    public static void main(String[] args) throws IOException, CertificateException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
-        //System.setProperty("javax.net.debug", "ssl,handshake");
-//        test1_4(4);
+    public static void main(String[] args)
+            throws IOException, CertificateException, NoSuchAlgorithmException, KeyStoreException,
+                    KeyManagementException {
+        // System.setProperty("javax.net.debug", "ssl,handshake");
+        //        test1_4(4);
         test5_8(8);
-
     }
 
-
-    static void test1_4(int i) throws CertificateException,
-            NoSuchAlgorithmException, KeyStoreException,
-            KeyManagementException, IOException {
+    static void test1_4(int i)
+            throws CertificateException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException,
+                    IOException {
 
         Socket socket = null;
 
@@ -72,14 +70,13 @@ public class ProxyTest1 {
         }
 
         // 写：发送请求
-        String reqData = "" +
-                "GET /service/um.json HTTP/1.1\r\n" +
-                "Host: ynuf.alipay.com\r\n" +
-                "Cache-Control: no-cache\r\n" +
-                "User-Agent: ProxyTest1\r\n" +
-                "Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2\r\n" +
-                "Connection: keep-alive\r\n" +
-                "\r\n";
+        String reqData = "" + "GET /service/um.json HTTP/1.1\r\n"
+                + "Host: ynuf.alipay.com\r\n"
+                + "Cache-Control: no-cache\r\n"
+                + "User-Agent: ProxyTest1\r\n"
+                + "Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2\r\n"
+                + "Connection: keep-alive\r\n"
+                + "\r\n";
 
         OutputStream out = socket.getOutputStream();
         out.write(reqData.getBytes(StandardCharsets.UTF_8));
@@ -99,12 +96,11 @@ public class ProxyTest1 {
             buf.clear();
         }
         System.out.println("\n-------response finished.");
-
     }
 
-    static void test5_8(int i) throws CertificateException,
-            NoSuchAlgorithmException, KeyStoreException,
-            KeyManagementException, IOException {
+    static void test5_8(int i)
+            throws CertificateException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException,
+                    IOException {
 
         Socket socket = null;
 
@@ -124,14 +120,13 @@ public class ProxyTest1 {
         }
 
         // 写：发送请求
-        String reqData = "" +
-                "GET / HTTP/1.1\r\n" +
-                "Host: test.me\r\n" +
-                "Cache-Control: no-cache\r\n" +
-                "User-Agent: ProxyTest1\r\n" +
-                "Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2\r\n" +
-                "Connection: keep-alive\r\n" +
-                "\r\n";
+        String reqData = "" + "GET / HTTP/1.1\r\n"
+                + "Host: test.me\r\n"
+                + "Cache-Control: no-cache\r\n"
+                + "User-Agent: ProxyTest1\r\n"
+                + "Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2\r\n"
+                + "Connection: keep-alive\r\n"
+                + "\r\n";
 
         OutputStream out = socket.getOutputStream();
         out.write(reqData.getBytes(StandardCharsets.UTF_8));
@@ -151,13 +146,11 @@ public class ProxyTest1 {
             buf.clear();
         }
         System.out.println("\n-------response finished.");
-
     }
 
-
-    static Socket getSocket1() throws CertificateException,
-            NoSuchAlgorithmException, KeyStoreException,
-            KeyManagementException, IOException {
+    static Socket getSocket1()
+            throws CertificateException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException,
+                    IOException {
 
         System.out.println("========================================= test 1 : 直接(无代理)访问外网 http");
 
@@ -165,8 +158,8 @@ public class ProxyTest1 {
         // HTTP 协议，不能使用 SSLSocket ，否则：SSLException: Unrecognized SSL message, plaintext connection?
         InetSocketAddress dest = new InetSocketAddress("ynuf.alipay.com", 80);
 
-//        SSLSocketFactory sslSocketFactory = getClientSslContext(false).getSocketFactory();
-//        Socket socket  = sslSocketFactory.createSocket();
+        //        SSLSocketFactory sslSocketFactory = getClientSslContext(false).getSocketFactory();
+        //        Socket socket  = sslSocketFactory.createSocket();
         Socket socket = new Socket();
 
         socket.connect(dest);
@@ -174,9 +167,9 @@ public class ProxyTest1 {
         return socket;
     }
 
-    static Socket getSocket2() throws CertificateException,
-            NoSuchAlgorithmException, KeyStoreException,
-            KeyManagementException, IOException {
+    static Socket getSocket2()
+            throws CertificateException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException,
+                    IOException {
 
         System.out.println("========================================= test 2 : 直接(无代理)访问外网 https");
 
@@ -191,11 +184,10 @@ public class ProxyTest1 {
         return socket;
     }
 
-
     // http://stackoverflow.com/questions/5783832/socks5-proxy-using-sslsocket
-    static Socket getSocket3() throws CertificateException,
-            NoSuchAlgorithmException, KeyStoreException,
-            KeyManagementException, IOException {
+    static Socket getSocket3()
+            throws CertificateException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException,
+                    IOException {
 
         System.out.println("========================================= test 3 : 有代理访问外网网址 http");
 
@@ -208,10 +200,9 @@ public class ProxyTest1 {
         return socket;
     }
 
-
-    static Socket getSocket4() throws CertificateException,
-            NoSuchAlgorithmException, KeyStoreException,
-            KeyManagementException, IOException {
+    static Socket getSocket4()
+            throws CertificateException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException,
+                    IOException {
 
         System.out.println("========================================= test 4 : 有代理访问外网 https");
 
@@ -232,9 +223,9 @@ public class ProxyTest1 {
         return socket;
     }
 
-    static Socket getSocket5() throws CertificateException,
-            NoSuchAlgorithmException, KeyStoreException,
-            KeyManagementException, IOException {
+    static Socket getSocket5()
+            throws CertificateException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException,
+                    IOException {
 
         System.out.println("========================================= test 5 : 无代理访问自签名 https");
 
@@ -249,9 +240,9 @@ public class ProxyTest1 {
         return socket;
     }
 
-    static Socket getSocket6() throws CertificateException,
-            NoSuchAlgorithmException, KeyStoreException,
-            KeyManagementException, IOException {
+    static Socket getSocket6()
+            throws CertificateException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException,
+                    IOException {
 
         System.out.println("========================================= test 6 : 有代理访问自签名 https");
 
@@ -272,9 +263,9 @@ public class ProxyTest1 {
         return socket;
     }
 
-    static Socket getSocket7() throws CertificateException,
-            NoSuchAlgorithmException, KeyStoreException,
-            KeyManagementException, IOException {
+    static Socket getSocket7()
+            throws CertificateException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException,
+                    IOException {
 
         System.out.println("========================================= test 7 : 无代理访问自签名 https (MySSLSocketFactory)");
 
@@ -289,9 +280,9 @@ public class ProxyTest1 {
         return socket;
     }
 
-    static Socket getSocket8() throws CertificateException,
-            NoSuchAlgorithmException, KeyStoreException,
-            KeyManagementException, IOException {
+    static Socket getSocket8()
+            throws CertificateException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException,
+                    IOException {
 
         System.out.println("========================================= test 8 : 有代理访问自签名 https (MySSLSocketFactory)");
 
@@ -306,8 +297,9 @@ public class ProxyTest1 {
         return socket;
     }
 
-
-    static SSLContext getClientSslContext(boolean useClientCert) throws IOException, KeyStoreException, CertificateException, NoSuchAlgorithmException, KeyManagementException {
+    static SSLContext getClientSslContext(boolean useClientCert)
+            throws IOException, KeyStoreException, CertificateException, NoSuchAlgorithmException,
+                    KeyManagementException {
 
         // 配置 TrustManager (只需要CA的证书，故不需要CA私钥的密码）
         char[] caStorePass = TLS_CA_STORE_PASS.toCharArray();
@@ -317,27 +309,26 @@ public class ProxyTest1 {
         TrustManagerFactory caTmf = TrustManagerFactory.getInstance("SunX509");
         caTmf.init(caKs);
 
-//        // 加载 client 的 KeyManager
-//        char[] clientStorePass = TLS_CLIENT_STORE_PASS.toCharArray();
-//        KeyStore clientKeyStore = KeyStore.getInstance(TLS_CLIENT_STORE_TYPE);
-//        clientKeyStore.load(new FileInputStream(TLS_CLIENT_STORE_PATH), clientStorePass);
-//
-//        char[] clientKeyPass = TLS_CLIENT_KEY_PASS.toCharArray()
-//        KeyManagerFactory clientKmf = KeyManagerFactory.getInstance("SunX509");
-//        clientKmf.init(clientKeyStore, clientKeyPass);
+        //        // 加载 client 的 KeyManager
+        //        char[] clientStorePass = TLS_CLIENT_STORE_PASS.toCharArray();
+        //        KeyStore clientKeyStore = KeyStore.getInstance(TLS_CLIENT_STORE_TYPE);
+        //        clientKeyStore.load(new FileInputStream(TLS_CLIENT_STORE_PATH), clientStorePass);
+        //
+        //        char[] clientKeyPass = TLS_CLIENT_KEY_PASS.toCharArray()
+        //        KeyManagerFactory clientKmf = KeyManagerFactory.getInstance("SunX509");
+        //        clientKmf.init(clientKeyStore, clientKeyPass);
 
         SSLContext sslContext = SSLContext.getInstance("TLSv1.2");
 
-//        if (useClientCert) {
-//            sslContext.init(clientKmf.getKeyManagers(), caTmf.getTrustManagers(), null); // 使用 client 端证书
-//        } else {
-//            sslContext.init(null, caTmf.getTrustManagers(), null); // 不使用 client 端证书
-//        }
+        //        if (useClientCert) {
+        //            sslContext.init(clientKmf.getKeyManagers(), caTmf.getTrustManagers(), null); // 使用 client 端证书
+        //        } else {
+        //            sslContext.init(null, caTmf.getTrustManagers(), null); // 不使用 client 端证书
+        //        }
         sslContext.init(null, caTmf.getTrustManagers(), null); // 不使用 client 端证书
-//        sslContext.init(null, null, null); // 不使用 client 端证书
+        //        sslContext.init(null, null, null); // 不使用 client 端证书
         return sslContext;
     }
-
 
     // proxy 可以为 null
     static MySSLSocketFactory getSSLSocketFactory(SSLContext sslContext, Proxy proxy) {
@@ -346,10 +337,7 @@ public class ProxyTest1 {
         fac.setProxy(proxy);
         return fac;
     }
-
-
 }
-
 
 /* ------------------------------------ 生成证书
 

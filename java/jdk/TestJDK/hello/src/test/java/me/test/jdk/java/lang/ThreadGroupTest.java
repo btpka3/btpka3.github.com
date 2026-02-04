@@ -1,6 +1,6 @@
 package me.test.jdk.java.lang;
 
-// Test ThreadGroup and UncaughtExceptionHandler 
+// Test ThreadGroup and UncaughtExceptionHandler
 public class ThreadGroupTest {
 
     @SuppressWarnings("deprecation")
@@ -24,58 +24,67 @@ public class ThreadGroupTest {
             };
         }
 
-        Thread t0 = new Thread(tg, new Runnable() {
-            public void run() {
-                for (int i = 0; i < loopCount; i++) {
-                    Thread t = Thread.currentThread();
-                    String threadName = t.getName();
-                    System.out.println(threadName + " 000 ");
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                        break;
+        Thread t0 = new Thread(
+                tg,
+                new Runnable() {
+                    public void run() {
+                        for (int i = 0; i < loopCount; i++) {
+                            Thread t = Thread.currentThread();
+                            String threadName = t.getName();
+                            System.out.println(threadName + " 000 ");
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                                break;
+                            }
+                        }
                     }
-                }
-            }
-        }, "worker-0");
+                },
+                "worker-0");
         t0.start();
 
-        Thread t1 = new Thread(tg, new Runnable() {
-            public void run() {
-                for (int i = 0; i < loopCount * 2; i++) {
-                    Thread t = Thread.currentThread();
-                    String threadName = t.getName();
-                    System.out.println(threadName + " 111 ");
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                        break;
+        Thread t1 = new Thread(
+                tg,
+                new Runnable() {
+                    public void run() {
+                        for (int i = 0; i < loopCount * 2; i++) {
+                            Thread t = Thread.currentThread();
+                            String threadName = t.getName();
+                            System.out.println(threadName + " 111 ");
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                                break;
+                            }
+                        }
                     }
-                }
-            }
-        }, "worker-1");
+                },
+                "worker-1");
         t1.start();
 
-        Thread t2 = new Thread(tg, new Runnable() {
-            public void run() {
-                while (true) {
-                    Thread t = Thread.currentThread();
-                    String threadName = t.getName();
-                    System.out.println(threadName + " 222 ");
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                        break;
-                    } catch (ThreadDeath e) {
-                        System.out.println("AAAAAAAAAAAAA");
-                        throw e;
+        Thread t2 = new Thread(
+                tg,
+                new Runnable() {
+                    public void run() {
+                        while (true) {
+                            Thread t = Thread.currentThread();
+                            String threadName = t.getName();
+                            System.out.println(threadName + " 222 ");
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                                break;
+                            } catch (ThreadDeath e) {
+                                System.out.println("AAAAAAAAAAAAA");
+                                throw e;
+                            }
+                        }
                     }
-                }
-            }
-        }, "worker-2");
+                },
+                "worker-2");
         t2.start();
 
         tg.list();

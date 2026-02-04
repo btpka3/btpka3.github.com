@@ -9,17 +9,14 @@ import java.io.Serializable;
  * @author dangqian.zll
  * @date 2025/4/30
  */
-
 public class MyJavaBean implements Serializable {
     private static final long serialVersionUID = 1L;
-
 
     private String name;
     private boolean dead;
     private Integer age;
 
-    public MyJavaBean() {
-    }
+    public MyJavaBean() {}
 
     public String getName() {
         return name;

@@ -35,7 +35,6 @@ public class NullableTest {
         System.out.println(str1.length());
     }
 
-
     public void test22() {
         String str1 = Utils2.getName1(null);
         // ✅ 应该警告, 因为明确 @Nullable 声明
@@ -47,5 +46,4 @@ public class NullableTest {
         String str1 = Utils2.getName2(null);
         System.out.println(str1.length());
     }
-
 }

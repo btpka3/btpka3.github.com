@@ -20,12 +20,7 @@ public class CallSite02 {
     public static void main(String[] args) throws Throwable {
         String a = "abcdefg";
         MethodType mt = MethodType.methodType(String.class, int.class, int.class);
-        MethodHandle handle = MethodHandles.lookup().findVirtual(
-                String.class,
-                "substring",
-                mt);
+        MethodHandle handle = MethodHandles.lookup().findVirtual(String.class, "substring", mt);
         System.out.println(handle.invoke(a, 1, 2)); // 输出b
-
     }
-
 }

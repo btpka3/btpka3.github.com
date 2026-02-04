@@ -16,9 +16,7 @@ public class PropertiesTest {
         // UTF8 读取
         Properties props1 = new Properties();
         props1.load(new InputStreamReader(
-                PropertiesTest.class.getResourceAsStream("a.properties"),
-                StandardCharsets.UTF_8
-        ));
+                PropertiesTest.class.getResourceAsStream("a.properties"), StandardCharsets.UTF_8));
         System.out.println(props1);
         System.out.println("=======");
         StringWriter stringWriter = new StringWriter();
@@ -40,14 +38,11 @@ public class PropertiesTest {
         props1.put("li4", "李4");
         props1.put("wang5", "王5");
 
-        //FileOutputStream outputStream = new FileOutputStream("/tmp/c.properteies");
+        // FileOutputStream outputStream = new FileOutputStream("/tmp/c.properteies");
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         props1.store(outputStream, null);
         String str = outputStream.toString(StandardCharsets.UTF_8);
 
         System.out.println(outputStream.toString(StandardCharsets.UTF_8));
-
     }
-
-
 }

@@ -1,6 +1,5 @@
 package me.test.jdk.jfr;
 
-
 import jdk.jfr.Category;
 import jdk.jfr.Description;
 import jdk.jfr.Enabled;
@@ -27,5 +26,4 @@ public class MyDurattionEvent extends Event {
 
     @Label("info")
     public String info;
-
 }

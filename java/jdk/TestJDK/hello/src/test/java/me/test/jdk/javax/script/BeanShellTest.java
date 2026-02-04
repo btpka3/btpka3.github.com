@@ -36,6 +36,5 @@ public class BeanShellTest {
         engine.put("b", 6);
         Object maxNum = engine.eval("a+b");
         System.out.println("max_num:" + maxNum + ", (class = " + maxNum.getClass() + ")");
-
     }
 }

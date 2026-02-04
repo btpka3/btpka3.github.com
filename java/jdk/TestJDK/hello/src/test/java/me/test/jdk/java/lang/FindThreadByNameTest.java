@@ -8,7 +8,6 @@ import java.util.Objects;
  */
 public class FindThreadByNameTest {
 
-
     public Thread getThreadByName(String threadName) {
         for (Thread t : Thread.getAllStackTraces().keySet()) {
             if (t.getName().equals(threadName)) {
@@ -17,7 +16,6 @@ public class FindThreadByNameTest {
         }
         return null;
     }
-
 
     public Thread getThreadByName2(String threadName) {
         ThreadGroup threadGroup = Thread.currentThread().getThreadGroup();
@@ -42,6 +40,4 @@ public class FindThreadByNameTest {
         }
         return null;
     }
-
-
 }

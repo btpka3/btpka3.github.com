@@ -17,13 +17,12 @@ import org.openjdk.jmh.runner.options.OptionsBuilder;
 @State(Scope.Benchmark)
 public class GzipBase64UtilsBenchmark {
 
-
     public static void main(String[] args) throws RunnerException {
         Options opt = new OptionsBuilder()
                 .include(GzipBase64UtilsBenchmark.class.getSimpleName())
                 .jvmArgs("-Xmx128m", "-Xms128m")
                 .forks(1)
-                //.param("-lprof")
+                // .param("-lprof")
                 // 启用 GC 分析
                 .addProfiler("gc")
                 .build();

@@ -29,7 +29,10 @@ import org.junit.jupiter.api.Test;
 public class JmxTest {
 
     @Test
-    public void test() throws MalformedObjectNameException, IntrospectionException, InstanceNotFoundException, ReflectionException, NotCompliantMBeanException, InstanceAlreadyExistsException, MBeanException, AttributeNotFoundException, InvalidAttributeValueException, InterruptedException {
+    public void test()
+            throws MalformedObjectNameException, IntrospectionException, InstanceNotFoundException, ReflectionException,
+                    NotCompliantMBeanException, InstanceAlreadyExistsException, MBeanException,
+                    AttributeNotFoundException, InvalidAttributeValueException, InterruptedException {
         MBeanServer server = ManagementFactory.getPlatformMBeanServer();
         ObjectName objectName = new ObjectName("aaa:type=" + PersonMBean.class.getSimpleName() + ",tag=bbb,name=p1");
 
@@ -52,7 +55,6 @@ public class JmxTest {
 
             Assertions.assertNotNull(ageInfo);
 
-
             Assertions.assertEquals(11, server.getAttribute(objectName, "Age"));
 
             MBeanOperationInfo sayHiInfo = Stream.of(mBeanInfo.getOperations())
@@ -61,28 +63,20 @@ public class JmxTest {
                     .orElse(null);
             Assertions.assertNotNull(sayHiInfo);
 
-
-            Object result = server.invoke(
-                    objectName,
-                    "sayHi",
-                    new Object[]{},
-                    new String[]{});
+            Object result = server.invoke(objectName, "sayHi", new Object[] {}, new String[] {});
 
             Assertions.assertEquals("hi, zhang3", result);
 
-
             server.setAttribute(objectName, new Attribute("Age", 12));
-
 
             Assertions.assertEquals(12, (Object) p1.getAge());
         }
 
-//        Thread.sleep(60 * 60 * 1000);
-
+        //        Thread.sleep(60 * 60 * 1000);
 
     }
 
-    public static interface PersonMBean {
+    public interface PersonMBean {
         Integer getAge();
 
         void setAge(Integer age);
@@ -92,7 +86,6 @@ public class JmxTest {
         void setName(String name);
 
         String sayHi();
-
     }
 
     public static class Person implements PersonMBean {
@@ -119,7 +112,5 @@ public class JmxTest {
         public String sayHi() {
             return "hi, " + name;
         }
-
-
     }
 }

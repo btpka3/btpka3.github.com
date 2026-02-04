@@ -1,6 +1,5 @@
 package me.test;
 
-
 public class Ddd {
     public static void main(String[] args) {
         int a = 1 + 3;

@@ -1,10 +1,10 @@
 package me.test.lee;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Arrays;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * maximum subarray
@@ -13,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @date 2024/5/22
  */
 public class P02 {
-
 
     public int maxSubArray(int[] nums) {
 
@@ -40,7 +39,6 @@ public class P02 {
                 .collect(Collectors.joining(",", "[", "]"));
         System.out.println(str);
         return maxSum;
-
     }
 
     int sum(int[] nums, int startIndex, int count) {
@@ -60,10 +58,10 @@ public class P02 {
 
     @Test
     public void sum01() {
-        assertEquals(0, sum(new int[]{1, 2, 3, 4, 5}, 0, 0));
-        assertEquals(1, sum(new int[]{1, 2, 3, 4, 5}, 0, 1));
-        assertEquals(3, sum(new int[]{1, 2, 3, 4, 5}, 0, 2));
-        assertEquals(6, sum(new int[]{1, 2, 3, 4, 5}, 0, 3));
-        assertEquals(15, sum(new int[]{1, 2, 3, 4, 5}, 0, 5));
+        assertEquals(0, sum(new int[] {1, 2, 3, 4, 5}, 0, 0));
+        assertEquals(1, sum(new int[] {1, 2, 3, 4, 5}, 0, 1));
+        assertEquals(3, sum(new int[] {1, 2, 3, 4, 5}, 0, 2));
+        assertEquals(6, sum(new int[] {1, 2, 3, 4, 5}, 0, 3));
+        assertEquals(15, sum(new int[] {1, 2, 3, 4, 5}, 0, 5));
     }
 }

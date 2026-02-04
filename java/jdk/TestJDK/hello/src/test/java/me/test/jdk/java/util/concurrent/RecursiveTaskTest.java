@@ -9,8 +9,8 @@ import java.util.concurrent.TimeUnit;
 public class RecursiveTaskTest {
 
     public static void main(String[] args) throws Exception {
-//        test00();
-//        test01();
+        //        test00();
+        //        test01();
         test02();
     }
 
@@ -33,13 +33,12 @@ public class RecursiveTaskTest {
             // return f1.compute() + f2.compute();
 
             // 方式一：半同步半异步递归
-            //return f1.fork().join() + f2.compute();
+            // return f1.fork().join() + f2.compute();
 
             // 方式二：全异步递归
             return f1.fork().join() + f2.fork().join();
         }
     }
-
 
     public static int fi(int n) {
         if (n <= 1) {
@@ -70,13 +69,10 @@ public class RecursiveTaskTest {
         // 只有当你调用join()或get()方法来等待任务的完成时, ForkJoinPool才能使用work-stealing算法
         System.out.println(result.get());
 
-
         do {
-            System.out.printf("Thread Count/Steal/Parallelism = %d/%d/%d %n",
-                    pool.getActiveThreadCount(),
-                    pool.getStealCount(),
-                    pool.getParallelism()
-            );
+            System.out.printf(
+                    "Thread Count/Steal/Parallelism = %d/%d/%d %n",
+                    pool.getActiveThreadCount(), pool.getStealCount(), pool.getParallelism());
 
             try {
                 TimeUnit.MILLISECONDS.sleep(200);
@@ -85,10 +81,8 @@ public class RecursiveTaskTest {
             }
         } while (!task.isDone());
 
-
         pool.shutdown();
     }
-
 
     public static class A extends RecursiveTask<Long> {
 
@@ -123,11 +117,9 @@ public class RecursiveTaskTest {
         }
         A a = new A(arr, 0, COUNT - 1);
 
-//        ForkJoinPool pool = new ForkJoinPool();
-//        Future<Long> result = pool.submit(a);
-//        System.out.println(result.get());
+        //        ForkJoinPool pool = new ForkJoinPool();
+        //        Future<Long> result = pool.submit(a);
+        //        System.out.println(result.get());
         System.out.println(a.fork().join());
     }
-
-
 }

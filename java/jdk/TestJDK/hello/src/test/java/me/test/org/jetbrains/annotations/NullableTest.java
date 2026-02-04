@@ -10,13 +10,11 @@ import org.jetbrains.annotations.Contract;
 public class NullableTest {
 
     public void test(@Nullable Object o) {
-//        System.out.println(o.hashCode());
-        //verify(o);
-
+        //        System.out.println(o.hashCode());
+        // verify(o);
 
         assertTrue(o != null, "xxx");
         System.out.println(o.hashCode());
-
     }
 
     @Contract("null -> fail")

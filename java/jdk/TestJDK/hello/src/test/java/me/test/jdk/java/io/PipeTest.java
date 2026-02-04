@@ -22,13 +22,10 @@ public class PipeTest {
 
         r.start();
         w.start();
-
     }
-
 
     static class R extends Thread {
         PipedInputStream in = null;
-
 
         public void run() {
             byte[] buf = new byte[1024];
@@ -38,7 +35,6 @@ public class PipeTest {
                 while ((len = in.read(buf)) != -1) {
 
                     System.out.println(new String(buf, 0, len));
-
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -55,7 +51,6 @@ public class PipeTest {
 
     static class W extends Thread {
         PipedOutputStream out = new PipedOutputStream();
-
 
         public void run() {
             long l = 0;

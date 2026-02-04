@@ -28,7 +28,6 @@ public class StackTraceElementTest {
         System.out.println(Arrays.equals(s0, s1));
         System.out.println(Arrays.hashCode(s0));
         System.out.println(Arrays.hashCode(s1));
-
     }
 
     protected StackTraceElement[] getStack() {

@@ -9,6 +9,5 @@ import org.junit.jupiter.api.Test;
 public class TimerTest {
 
     @Test
-    public void test01() {
-    }
+    public void test01() {}
 }

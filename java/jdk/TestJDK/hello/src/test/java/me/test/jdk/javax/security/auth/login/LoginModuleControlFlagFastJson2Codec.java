@@ -14,7 +14,6 @@ import javax.security.auth.login.AppConfigurationEntry;
  */
 public class LoginModuleControlFlagFastJson2Codec {
 
-
     public static class Writer implements ObjectWriter<AppConfigurationEntry.LoginModuleControlFlag> {
 
         @Override
@@ -38,13 +37,12 @@ public class LoginModuleControlFlagFastJson2Codec {
             }
             jsonWriter.writeString(str);
         }
-
-
     }
 
     public static class Reader implements ObjectReader<AppConfigurationEntry.LoginModuleControlFlag> {
         @Override
-        public AppConfigurationEntry.LoginModuleControlFlag readObject(JSONReader jsonReader, Type fieldType, Object fieldName, long features) {
+        public AppConfigurationEntry.LoginModuleControlFlag readObject(
+                JSONReader jsonReader, Type fieldType, Object fieldName, long features) {
             String str = jsonReader.readString();
             if (str == null) {
                 return null;

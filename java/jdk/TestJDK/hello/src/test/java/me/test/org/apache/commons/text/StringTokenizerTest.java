@@ -16,9 +16,7 @@ public class StringTokenizerTest {
 
     public void x() {
         StringTokenizer st = StringTokenizer.getCSVInstance();
-        while (st.hasNext()) {
-
-        }
+        while (st.hasNext()) {}
     }
 
     @Test
@@ -28,7 +26,7 @@ public class StringTokenizerTest {
 
         StringTokenizer kvPairSt = new StringTokenizer();
         kvPairSt.setDelimiterMatcher(StringMatcherFactory.INSTANCE.charSetMatcher(',', '='));
-//        kvPairSt.setDelimiterMatcher(StringMatcherFactory.INSTANCE.commaMatcher());
+        //        kvPairSt.setDelimiterMatcher(StringMatcherFactory.INSTANCE.commaMatcher());
         kvPairSt.setQuoteMatcher(StringMatcherFactory.INSTANCE.charMatcher('`'));
         kvPairSt.setIgnoredMatcher(StringMatcherFactory.INSTANCE.noneMatcher());
         kvPairSt.setTrimmerMatcher(StringMatcherFactory.INSTANCE.noneMatcher());
@@ -51,9 +49,9 @@ public class StringTokenizerTest {
             count.addAndGet(1);
             int tokenPos = kvPairSt.nextIndex();
             String token = kvPairSt.next();
-            System.out.println(" " + count + " :" + token + "     : tokenPos =" + tokenPos + ", charAtTokenPos=" + str.charAt(tokenPos));
+            System.out.println(" " + count + " :" + token + "     : tokenPos =" + tokenPos + ", charAtTokenPos="
+                    + str.charAt(tokenPos));
         }
-
 
         List<String> kvPairList = kvPairSt.getTokenList();
 
@@ -69,30 +67,29 @@ public class StringTokenizerTest {
         }
         System.out.println("kvMap = " + kvMap);
 
-
-//
-//        StringTokenizer kvSt = new StringTokenizer();
-//        kvSt.setDelimiterMatcher(StringMatcherFactory.INSTANCE.charMatcher('='));
-//        kvSt.setQuoteMatcher(StringMatcherFactory.INSTANCE.charMatcher('`'));
-//        kvSt.setIgnoredMatcher(StringMatcherFactory.INSTANCE.noneMatcher());
-//        kvSt.setTrimmerMatcher(StringMatcherFactory.INSTANCE.trimMatcher());
-//        kvSt.setEmptyTokenAsNull(false);
-//        kvSt.setIgnoreEmptyTokens(false);
-//
-//        Map<String, String> kvMap = new LinkedHashMap<>(16);
-//        for (String kvPair : kvPairList) {
-//            kvSt.reset(kvPair);
-//            List<String> kvList = kvSt.getTokenList();
-//            String k = kvList.size() >= 1 ? kvList.get(0) : null;
-//            String v = kvList.size() >= 2 ? kvList.get(1) : null;
-//            kvMap.put(k, v);
-//        }
-//        System.out.println(kvMap);
-//        Assertions.assertEquals("aaaa", kvMap.get("aa"));
-//        Assertions.assertEquals("bbbb", kvMap.get("bb"));
-//        Assertions.assertEquals("cc=cc", kvMap.get("c=c"));
-//        Assertions.assertEquals("dd,dd", kvMap.get("d,d"));
-//        Assertions.assertEquals("ff`ff", kvMap.get("f`f"));
-//        Assertions.assertEquals("gg``gg", kvMap.get("g``g"));
+        //
+        //        StringTokenizer kvSt = new StringTokenizer();
+        //        kvSt.setDelimiterMatcher(StringMatcherFactory.INSTANCE.charMatcher('='));
+        //        kvSt.setQuoteMatcher(StringMatcherFactory.INSTANCE.charMatcher('`'));
+        //        kvSt.setIgnoredMatcher(StringMatcherFactory.INSTANCE.noneMatcher());
+        //        kvSt.setTrimmerMatcher(StringMatcherFactory.INSTANCE.trimMatcher());
+        //        kvSt.setEmptyTokenAsNull(false);
+        //        kvSt.setIgnoreEmptyTokens(false);
+        //
+        //        Map<String, String> kvMap = new LinkedHashMap<>(16);
+        //        for (String kvPair : kvPairList) {
+        //            kvSt.reset(kvPair);
+        //            List<String> kvList = kvSt.getTokenList();
+        //            String k = kvList.size() >= 1 ? kvList.get(0) : null;
+        //            String v = kvList.size() >= 2 ? kvList.get(1) : null;
+        //            kvMap.put(k, v);
+        //        }
+        //        System.out.println(kvMap);
+        //        Assertions.assertEquals("aaaa", kvMap.get("aa"));
+        //        Assertions.assertEquals("bbbb", kvMap.get("bb"));
+        //        Assertions.assertEquals("cc=cc", kvMap.get("c=c"));
+        //        Assertions.assertEquals("dd,dd", kvMap.get("d,d"));
+        //        Assertions.assertEquals("ff`ff", kvMap.get("f`f"));
+        //        Assertions.assertEquals("gg``gg", kvMap.get("g``g"));
     }
 }

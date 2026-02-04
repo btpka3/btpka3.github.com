@@ -20,7 +20,6 @@ public class ReentrantLockTest {
         Thread.sleep(15000);
     }
 
-
     public void run() {
         System.out.println(now() + " " + Thread.currentThread().getName() + " : start");
         boolean locked = false;
@@ -42,5 +41,3 @@ public class ReentrantLockTest {
         return DateFormatUtils.format(System.currentTimeMillis(), "yyyy-MM-dd HH:mm:ss");
     }
 }
-
-

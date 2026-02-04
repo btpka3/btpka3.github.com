@@ -29,10 +29,8 @@ public class GzipBase64Utils {
         try {
             InputStream strIn = new ByteArrayInputStream(bytes);
             ByteArrayOutputStream byteArrOut = new ByteArrayOutputStream(2 * 1024);
-            try (
-                    OutputStream base64Out = new Base64OutputStream(byteArrOut);
-                    GZIPOutputStream gzipOut = new GZIPOutputStream(base64Out);
-            ) {
+            try (OutputStream base64Out = new Base64OutputStream(byteArrOut);
+                    GZIPOutputStream gzipOut = new GZIPOutputStream(base64Out); ) {
                 IOUtils.copy(strIn, gzipOut);
             }
             // 注意：该语句不能放在 try 里面
@@ -49,11 +47,9 @@ public class GzipBase64Utils {
 
     @Nonnull
     public static byte[] getBytesFromGzipBase64(@Nonnull String str) {
-        try (
-                InputStream strIn = IOUtils.toInputStream(str, StandardCharsets.UTF_8);
+        try (InputStream strIn = IOUtils.toInputStream(str, StandardCharsets.UTF_8);
                 Base64InputStream base64In = new Base64InputStream(strIn);
-                GZIPInputStream gzipIn = new GZIPInputStream(base64In);
-        ) {
+                GZIPInputStream gzipIn = new GZIPInputStream(base64In); ) {
             return IOUtils.toByteArray(gzipIn);
         } catch (IOException e) {
             throw new RuntimeException("failed to decode data from gzipBase64 str", e);

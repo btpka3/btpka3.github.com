@@ -1,6 +1,5 @@
 package me.test.jdk.java.util;
 
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
@@ -28,6 +27,5 @@ public class LinkedHashSetTest {
         List<String> list = list2.size() < 10 ? list2 : list2.subList(0, 6);
 
         System.out.println(list);
-
     }
 }

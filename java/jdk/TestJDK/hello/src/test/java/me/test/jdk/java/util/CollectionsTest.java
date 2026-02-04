@@ -1,5 +1,8 @@
 package me.test.jdk.java.util;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -11,15 +14,10 @@ import java.util.Set;
 import java.util.Vector;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-
 /**
  *
  */
 public class CollectionsTest {
-
 
     @Test
     public void test01() {
@@ -65,7 +63,6 @@ public class CollectionsTest {
         assertEquals(set1, set2);
         assertTrue(Objects.equals(set1, set2));
     }
-
 
     @Test
     public void test05() {

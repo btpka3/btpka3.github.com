@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
  */
 public class CompletableFuture3Test {
 
-
     /**
      * 这里的 "订单打8折" 并未输出。正确的代码请参考 test02.
      * <p>
@@ -36,7 +35,6 @@ public class CompletableFuture3Test {
 
         System.out.println(Thread.currentThread().getName() + " : Done.");
     }
-
 
     @SneakyThrows
     @Test

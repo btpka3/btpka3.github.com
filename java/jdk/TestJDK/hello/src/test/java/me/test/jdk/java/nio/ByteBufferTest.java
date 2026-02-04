@@ -28,7 +28,6 @@ public class ByteBufferTest {
     @Test
     public void allocateDirect01() {
 
-
         ByteBuffer byteBuffer = ByteBuffer.allocateDirect(1024);
     }
 

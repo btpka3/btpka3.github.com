@@ -5,11 +5,9 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-
 public class Jaxb01 {
 
     public static void main(String[] args) throws JAXBException {
-
 
         JAXBContext jc = JAXBContext.newInstance(User.class);
 
@@ -26,5 +24,4 @@ public class Jaxb01 {
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
         marshaller.marshal(user, System.out);
     }
-
 }

@@ -32,10 +32,8 @@ import org.junit.jupiter.api.Test;
  */
 public class Zip {
 
-
     public static String zipFile = "/tmp/big.zip";
     public static String zipDir = "/tmp/big";
-
 
     @Test
     public void generateZipFile() throws IOException {
@@ -70,9 +68,7 @@ public class Zip {
 
         channel.close();
 
-
         System.out.printf("Done. see : " + zipFile);
-
     }
 
     static void fillBuf(ByteBuffer buf, int count) {
@@ -81,7 +77,6 @@ public class Zip {
         for (int i = 0; i < count; i++) {
             buf.put((byte) 'A');
         }
-
     }
 
     @SneakyThrows
@@ -93,32 +88,31 @@ public class Zip {
         String fileName = zipFilePath.toFile().getName();
         Path targetDir = parentDir.resolve(FilenameUtils.removeExtension(fileName));
 
-        //Open the file
+        // Open the file
         try (ZipFile zip = new ZipFile(zipFilePath.toFile())) {
 
             FileSystem fileSystem = FileSystems.getDefault();
             Enumeration<? extends ZipEntry> entries = zip.entries();
 
-            //We will unzip files in this folder
-            if (!targetDir.toFile().isDirectory()
-                    && !targetDir.toFile().mkdirs()) {
+            // We will unzip files in this folder
+            if (!targetDir.toFile().isDirectory() && !targetDir.toFile().mkdirs()) {
                 throw new IOException("failed to create directory " + targetDir);
             }
 
-            //Iterate over entries
+            // Iterate over entries
             while (entries.hasMoreElements()) {
                 ZipEntry entry = entries.nextElement();
 
                 File f = new File(targetDir.resolve(Path.of(entry.getName())).toString());
 
-                //If directory then create a new directory in uncompressed folder
+                // If directory then create a new directory in uncompressed folder
                 if (entry.isDirectory()) {
                     if (!f.isDirectory() && !f.mkdirs()) {
                         throw new IOException("failed to create directory " + f);
                     }
                 }
 
-                //Else create the file
+                // Else create the file
                 else {
                     File parent = f.getParentFile();
                     if (!parent.isDirectory() && !parent.mkdirs()) {
@@ -128,14 +122,12 @@ public class Zip {
                     try (InputStream in = zip.getInputStream(entry)) {
                         Files.copy(in, f.toPath());
                     }
-
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 
     @SneakyThrows
     @Test
@@ -152,7 +144,8 @@ public class Zip {
                 .filter(entry -> entry.getName().startsWith("META-INF"))
                 .filter(entry -> !entry.isDirectory())
                 .forEach(entry -> {
-                    File f = new File(targetDir.resolve(Path.of(entry.getName())).toString());
+                    File f =
+                            new File(targetDir.resolve(Path.of(entry.getName())).toString());
                     if (!f.getParentFile().exists()) {
                         f.getParentFile().mkdirs();
                     }

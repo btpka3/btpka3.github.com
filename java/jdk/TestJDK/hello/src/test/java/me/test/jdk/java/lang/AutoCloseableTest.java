@@ -15,7 +15,6 @@ import org.junit.jupiter.api.Test;
  */
 public class AutoCloseableTest {
 
-
     /**
      * 测试 AutoCloseable 的执行顺序。
      * <p>
@@ -60,12 +59,10 @@ public class AutoCloseableTest {
     public void test02() {
         log("test02: start");
 
-        try (
-                MyAutoCloseable c3 = new MyAutoCloseable(3);
+        try (MyAutoCloseable c3 = new MyAutoCloseable(3);
                 MyAutoCloseable c0 = new MyAutoCloseable(0);
                 MyAutoCloseable c1 = new MyAutoCloseable(1);
-                MyAutoCloseable c2 = new MyAutoCloseable(2);
-        ) {
+                MyAutoCloseable c2 = new MyAutoCloseable(2); ) {
             Thread.sleep(100);
         } catch (Exception e) {
             Thread.sleep(100);
@@ -73,7 +70,6 @@ public class AutoCloseableTest {
         }
         log("test02: end");
     }
-
 
     /**
      * 尝试自定义 集合类 来定制多个 AutoCloseable#close 的执行
@@ -85,14 +81,8 @@ public class AutoCloseableTest {
     public void test03() {
         log("test03: start");
 
-        try (
-                MyAutoCloseableList<MyAutoCloseable> myAutoCloseableList = toAutoCloseableList(List.of(
-                        new MyAutoCloseable(0),
-                        new MyAutoCloseable(1),
-                        new MyAutoCloseable(2),
-                        new MyAutoCloseable(3)
-                ))
-        ) {
+        try (MyAutoCloseableList<MyAutoCloseable> myAutoCloseableList = toAutoCloseableList(List.of(
+                new MyAutoCloseable(0), new MyAutoCloseable(1), new MyAutoCloseable(2), new MyAutoCloseable(3)))) {
             Thread.sleep(100);
         } catch (Exception e) {
             Thread.sleep(100);
@@ -117,7 +107,6 @@ public class AutoCloseableTest {
             this.flag = flag;
         }
 
-
         @Override
         public void close() {
             try {
@@ -136,14 +125,13 @@ public class AutoCloseableTest {
         System.out.println(System.currentTimeMillis() + " : " + msg);
     }
 
-    public interface MyAutoCloseableList<E> extends List<E>, AutoCloseable {
-    }
+    public interface MyAutoCloseableList<E> extends List<E>, AutoCloseable {}
 
     @SuppressWarnings("unchecked")
     public static <E extends AutoCloseable> MyAutoCloseableList<E> toAutoCloseableList(List<E> list) {
         return (MyAutoCloseableList<E>) Proxy.newProxyInstance(
                 MyAutoCloseableList.class.getClassLoader(),
-                new Class[]{MyAutoCloseableList.class},
+                new Class[] {MyAutoCloseableList.class},
                 (proxy, method, args) -> {
                     if (Objects.equals("close", method.getName()) && (args == null || args.length == 0)) {
                         List<Exception> allExceptions = new ArrayList<>();
@@ -157,7 +145,6 @@ public class AutoCloseableTest {
                         if (!allExceptions.isEmpty()) {
                             String mergedErrMsg = allExceptions.stream()
                                     .map(Exception::getMessage)
-
                                     .collect(Collectors.joining(",", "【", "】"));
                             throw new RuntimeException("failed to autoclose : " + mergedErrMsg);
                         }
@@ -165,8 +152,6 @@ public class AutoCloseableTest {
                     } else {
                         return method.invoke(list, args);
                     }
-                }
-        );
+                });
     }
-
 }

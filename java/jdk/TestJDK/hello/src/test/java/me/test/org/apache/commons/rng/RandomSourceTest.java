@@ -25,8 +25,8 @@ public class RandomSourceTest {
         boolean isOn = rng.nextBoolean();
         int min = 0;
         int max = 100;
-        int n = rng.nextInt();         // Integer.MIN_VALUE <= n <= Integer.MAX_VALUE.
-        int m = rng.nextInt(max);      // 0 <= m < max.
+        int n = rng.nextInt(); // Integer.MIN_VALUE <= n <= Integer.MAX_VALUE.
+        int m = rng.nextInt(max); // 0 <= m < max.
         int l = rng.nextInt(min, max); // min <= l < max.
         RandomSource.createInt();
     }
@@ -36,22 +36,15 @@ public class RandomSourceTest {
      */
     @Test
     public void test02() {
-        ContinuousSampler sampler = GaussianSampler.of(
-                ZigguratSampler.NormalizedGaussian.of(RandomSource.ISAAC.create()),
-                45.6,
-                2.3
-        );
+        ContinuousSampler sampler =
+                GaussianSampler.of(ZigguratSampler.NormalizedGaussian.of(RandomSource.ISAAC.create()), 45.6, 2.3);
         double random = sampler.sample();
         System.out.println(random);
     }
 
     @Test
     public void test03() {
-        DiscreteSampler sampler = RejectionInversionZipfSampler.of(
-                RandomSource.ISAAC.create(),
-                5,
-                1.2
-        );
+        DiscreteSampler sampler = RejectionInversionZipfSampler.of(RandomSource.ISAAC.create(), 5, 1.2);
         int random = sampler.sample();
         System.out.println(random);
     }

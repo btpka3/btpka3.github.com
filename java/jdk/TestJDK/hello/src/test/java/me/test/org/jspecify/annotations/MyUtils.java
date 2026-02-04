@@ -23,5 +23,4 @@ public class MyUtils {
         }
         return value.startsWith("xxx");
     }
-
 }

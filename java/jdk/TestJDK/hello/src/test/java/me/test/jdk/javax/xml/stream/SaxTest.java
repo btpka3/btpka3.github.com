@@ -18,16 +18,15 @@ public class SaxTest {
     @Test
     public void testRead() throws Exception {
 
-        String xmlStr = "" +
-                "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n" +
-                "<project>\n" +
-                "   <deps>\n" +
-                "       <dep>\n" +
-                "           <groupId>groupId001</groupId>\n" +
-                "           <artifactId>artifactId001</artifactId>\n" +
-                "       </dep>\n" +
-                "   </deps>\n" +
-                "</project>\n";
+        String xmlStr = "" + "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n"
+                + "<project>\n"
+                + "   <deps>\n"
+                + "       <dep>\n"
+                + "           <groupId>groupId001</groupId>\n"
+                + "           <artifactId>artifactId001</artifactId>\n"
+                + "       </dep>\n"
+                + "   </deps>\n"
+                + "</project>\n";
         InputSource inputSource = new InputSource(new StringReader(xmlStr));
 
         SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
@@ -38,7 +37,8 @@ public class SaxTest {
 
     public static class MyHandler extends DefaultHandler {
         @Override
-        public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+        public void startElement(String uri, String localName, String qName, Attributes attributes)
+                throws SAXException {
             System.out.println("======== " + qName);
         }
     }

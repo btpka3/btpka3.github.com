@@ -12,7 +12,6 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
-
 // java.net.JarURLConnection
 // https://docs.oracle.com/javase/8/docs/technotes/guides/io/fsp/zipfilesystemprovider.html
 // https://stackoverflow.com/questions/25032716/getting-filesystemnotfoundexception-from-zipfilesystemprovider-when-creating-a-p
@@ -23,9 +22,8 @@ public class Files01 {
         test02();
     }
 
-
     public static void test01() throws IOException, URISyntaxException {
-//System.out.println(Days.class.getClassLoader().getResource("/").toURI());
+        // System.out.println(Days.class.getClassLoader().getResource("/").toURI());
 
         String str = "jar:file:///Users/zll/.m2/repository/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar!/";
         URI uri = URI.create(str);
@@ -38,18 +36,14 @@ public class Files01 {
             FileSystems.newFileSystem(uri, env);
         }
 
-
         Path rootPath = Paths.get(uri);
 
+        // FileSystem fs = FileSystems.getFileSystem(jarUri);
 
-        //FileSystem fs = FileSystems.getFileSystem(jarUri);
-
-//        Path rootPath = fs.getPath("/");
-        Files.walk(rootPath)
-                .forEach(path -> {
-                    System.out.println(path);
-                })
-        ;
+        //        Path rootPath = fs.getPath("/");
+        Files.walk(rootPath).forEach(path -> {
+            System.out.println(path);
+        });
     }
 
     public static void test02() throws IOException {
@@ -61,10 +55,9 @@ public class Files01 {
         try (FileSystem zipfs = FileSystems.newFileSystem(uri, env)) {
             Path rootPath = zipfs.getPath("/");
             System.out.println("---");
-            Files.walk(rootPath)
-                    .forEach(path -> {
-                        System.out.println("::" + path);
-                    });
+            Files.walk(rootPath).forEach(path -> {
+                System.out.println("::" + path);
+            });
         }
     }
 }

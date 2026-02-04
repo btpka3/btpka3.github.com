@@ -11,19 +11,19 @@ import org.junit.jupiter.api.Test;
  */
 public class Thread1Test {
 
-
     @Test
     public void test01() throws InterruptedException {
-        Thread thread = new Thread(() -> {
+        Thread thread = new Thread(
+                () -> {
+                    try {
+                        Class.forName("btpka3.NotExistedClass");
+                    } catch (Throwable e) {
+                        e.printStackTrace();
+                    }
 
-            try {
-                Class.forName("btpka3.NotExistedClass");
-            } catch (Throwable e) {
-                e.printStackTrace();
-            }
-
-            throw new RuntimeException("DemoErr");
-        }, "aaa");
+                    throw new RuntimeException("DemoErr");
+                },
+                "aaa");
         if (thread.getUncaughtExceptionHandler() == null) {
             thread.setUncaughtExceptionHandler((tread, throwable) -> {
                 System.out.println("DemoErr" + tread.getName() + ": " + ExceptionUtils.getStackTrace(throwable));
@@ -32,13 +32,14 @@ public class Thread1Test {
 
         if (Thread.getDefaultUncaughtExceptionHandler() == null) {
             Thread.setDefaultUncaughtExceptionHandler((tread, throwable) -> {
-                System.out.println("DemoErrDefault: " + tread.getName() + ": " + ExceptionUtils.getStackTrace(throwable));
+                System.out.println(
+                        "DemoErrDefault: " + tread.getName() + ": " + ExceptionUtils.getStackTrace(throwable));
             });
         }
 
-        System.out.println("Thread.getDefaultUncaughtExceptionHandler() = " + Thread.getDefaultUncaughtExceptionHandler());
+        System.out.println(
+                "Thread.getDefaultUncaughtExceptionHandler() = " + Thread.getDefaultUncaughtExceptionHandler());
         thread.start();
-
 
         Thread.sleep(3000);
     }
@@ -49,9 +50,5 @@ public class Thread1Test {
         System.out.println(Xxx.class.getName());
     }
 
-
-    public static class Xxx {
-
-    }
-
+    public static class Xxx {}
 }

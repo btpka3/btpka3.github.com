@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class ShellSort {
 
     public static void main(String[] args) throws Exception {
-        Integer[] numbers = new Integer[]{49, 38, 65, 97, 76, 13, 27, 49};
+        Integer[] numbers = new Integer[] {49, 38, 65, 97, 76, 13, 27, 49};
         shellSort(numbers);
     }
 
@@ -37,10 +37,8 @@ public class ShellSort {
             }
 
             System.out.println("" + increment + " ： " + Arrays.asList(numbers));
-
         }
     }
-
 
     public static void subInertSort(Integer[] numbers, int start, int len) {
         for (int i = 1; i < numbers.length; i++) {

@@ -34,9 +34,5 @@ public class FormatterTest1 {
         System.out.println("------------------------ date");
         Date now = new Date();
         System.out.println(" d : |" + String.format("%1$tY-%1$tm-%1$td %1$TH:%1$TM:%1$TS.%1$TL %1$tz", now) + "|");
-
-
     }
-
-
 }

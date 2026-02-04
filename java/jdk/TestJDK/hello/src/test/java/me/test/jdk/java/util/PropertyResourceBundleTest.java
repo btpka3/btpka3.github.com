@@ -13,9 +13,11 @@ public class PropertyResourceBundleTest {
 
     public static void main(String[] args) throws Exception {
 
-        //ResourceBundle rb = ResourceBundle.getBundle("me/test/jdk/java/util/messages");
-        //ResourceBundle rb = ResourceBundle.getBundle("me.test.jdk.java.util.messages");
-        ResourceBundle rb = new PropertyResourceBundle(new InputStreamReader(PropertyResourceBundleTest.class.getResourceAsStream("/me/test/jdk/java/util/messages.properties"), StandardCharsets.UTF_8));
+        // ResourceBundle rb = ResourceBundle.getBundle("me/test/jdk/java/util/messages");
+        // ResourceBundle rb = ResourceBundle.getBundle("me.test.jdk.java.util.messages");
+        ResourceBundle rb = new PropertyResourceBundle(new InputStreamReader(
+                PropertyResourceBundleTest.class.getResourceAsStream("/me/test/jdk/java/util/messages.properties"),
+                StandardCharsets.UTF_8));
 
         System.out.println(rb.keySet());
         System.out.println("M01=" + rb.getString("M01"));

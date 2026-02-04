@@ -16,9 +16,7 @@ public class Bbb {
 
     public MyReturnObj myMethod2() throws MyException {
         Ddd ddd = new Ddd();
-        String s = Optional.of("zhang3")
-                .map(ddd::myMethod)
-                .orElse(null);
+        String s = Optional.of("zhang3").map(ddd::myMethod).orElse(null);
         System.out.println(s);
         return null;
     }

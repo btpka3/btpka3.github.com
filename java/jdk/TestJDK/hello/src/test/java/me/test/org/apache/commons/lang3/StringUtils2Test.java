@@ -34,7 +34,6 @@ public class StringUtils2Test {
         Assertions.assertEquals("C", arr[2]);
         Assertions.assertEquals("D1\\|D2\\|D3", arr[3]);
         Assertions.assertEquals("E", arr[4]);
-
     }
 
     /**

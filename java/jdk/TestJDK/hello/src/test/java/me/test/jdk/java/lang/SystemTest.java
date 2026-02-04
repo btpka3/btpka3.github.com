@@ -1,6 +1,5 @@
 package me.test.jdk.java.lang;
 
-
 import java.io.File;
 import java.net.MalformedURLException;
 import java.util.Map;
@@ -13,7 +12,6 @@ import org.junit.jupiter.api.Test;
  * @date 2024/1/30
  */
 public class SystemTest {
-
 
     @Test
     public void testJavaHome() throws MalformedURLException {
@@ -50,6 +48,4 @@ public class SystemTest {
             Assertions.assertTrue(e instanceof UnsupportedOperationException);
         }
     }
-
-
 }

@@ -1,6 +1,5 @@
 package me.test.jdk.java.util.concurrent;
 
-
 import java.util.concurrent.Semaphore;
 
 /**
@@ -13,49 +12,36 @@ public class SemaphoreTest {
     public static void main(String[] args) {
 
         test01();
-
     }
 
     public static void test01() {
 
-
-        String[] machines = new String[]{
-                "machine-1",
-                "machine-2",
-                "machine-3"
-        };
-        String[] users = new String[]{
-                "User-1",
-                "User-2",
-                "User-3",
-                "User-4",
-                "User-5",
-                "User-6",
+        String[] machines = new String[] {"machine-1", "machine-2", "machine-3"};
+        String[] users = new String[] {
+            "User-1", "User-2", "User-3", "User-4", "User-5", "User-6",
         };
 
         Pool pool = new Pool(machines);
 
         for (String user : users) {
             new Thread(() -> {
-                System.out.println("" + Thread.currentThread().getName() + " : " + user + " : 准备租借设备");
-                Object machine = pool.borrowItem();
-                System.out.println("" + Thread.currentThread().getName() + " : " + user + " : 借到设备[" + machine + "]， 开始工作");
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    System.out.println("" + Thread.currentThread().getName() + " : " + user + " : 停电了，中止工作");
-                    throw new RuntimeException(e);
-                } finally {
-                    System.out.println("" + Thread.currentThread().getName() + " : " + user + " : 工作完成，开始归还设备");
-                    pool.returnItem(machine);
-                }
-
-
-            }).start();
+                        System.out.println("" + Thread.currentThread().getName() + " : " + user + " : 准备租借设备");
+                        Object machine = pool.borrowItem();
+                        System.out.println("" + Thread.currentThread().getName() + " : " + user + " : 借到设备[" + machine
+                                + "]， 开始工作");
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            System.out.println("" + Thread.currentThread().getName() + " : " + user + " : 停电了，中止工作");
+                            throw new RuntimeException(e);
+                        } finally {
+                            System.out.println("" + Thread.currentThread().getName() + " : " + user + " : 工作完成，开始归还设备");
+                            pool.returnItem(machine);
+                        }
+                    })
+                    .start();
         }
-
     }
-
 
     public static class Pool {
         private int maxAvailable = 100;
@@ -64,7 +50,6 @@ public class SemaphoreTest {
         // Not a particularly efficient data structure; just for demo
         protected Object[] items = null;
         protected boolean[] used = new boolean[maxAvailable];
-
 
         public Pool(Object[] items) {
             this.maxAvailable = items.length;
@@ -87,7 +72,6 @@ public class SemaphoreTest {
                 available.release();
             }
         }
-
 
         protected synchronized Object getNextAvailableItem() {
             for (int i = 0; i < maxAvailable; ++i) {

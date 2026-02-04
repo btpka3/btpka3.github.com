@@ -1,6 +1,5 @@
 package me.test.jdk.java.util.concurrent;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BrokenBarrierException;
@@ -50,7 +49,6 @@ public class CyclicBarrierTest {
             myRow = row;
             this.barrier = barrier;
         }
-
 
         @Override
         public void run() {

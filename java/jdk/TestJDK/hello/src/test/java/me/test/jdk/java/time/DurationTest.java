@@ -10,7 +10,6 @@ import java.time.ZoneId;
  */
 public class DurationTest {
 
-
     public static void main(String[] args) throws InterruptedException {
 
         test01();
@@ -30,7 +29,6 @@ public class DurationTest {
         System.out.println("millis          : " + duration.toMillis());
     }
 
-
     static void test02() {
 
         System.out.println("============================= test02");
@@ -41,7 +39,6 @@ public class DurationTest {
         System.out.println("duration        : " + duration);
         System.out.println("minutes         : " + duration.toMinutes());
     }
-
 
     static void test03() {
 
@@ -65,5 +62,4 @@ public class DurationTest {
         Instant endInstant = startInstant.plus(duration);
         System.out.println("endInstant      : " + endInstant);
     }
-
 }

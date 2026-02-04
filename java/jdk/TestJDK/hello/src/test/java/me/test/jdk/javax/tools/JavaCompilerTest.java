@@ -44,10 +44,12 @@ public class JavaCompilerTest {
         javaFileManager.setLocation(StandardLocation.CLASS_PATH, null);
 
         // 实际的实现类: com.sun.tools.javac.file.JavacFileManager
-        System.out.println("javaFileManager's class = " + javaFileManager.getClass().getName());
+        System.out.println(
+                "javaFileManager's class = " + javaFileManager.getClass().getName());
         Iterable<? extends JavaFileObject> javaFileObjects = javaFileManager.getJavaFileObjects(url.getFile());
         DiagnosticCollector<JavaFileObject> collector = new DiagnosticCollector<>();
-        JavaCompiler.CompilationTask task = compiler.getTask(null, javaFileManager, collector, null, null, javaFileObjects);
+        JavaCompiler.CompilationTask task =
+                compiler.getTask(null, javaFileManager, collector, null, null, javaFileObjects);
         Boolean result = task.call();
 
         if (result == null || !result) {
@@ -76,8 +78,6 @@ public class JavaCompilerTest {
                 System.out.println("    " + file.getAbsolutePath());
             }
             System.out.println("]");
-
-
         }
         if (!failedLocations.isEmpty()) {
             System.err.println("failed to get location: " + failedLocations);
@@ -85,13 +85,13 @@ public class JavaCompilerTest {
         System.out.println("111111");
 
         // 编译完成后，文件默认保存在: ${PROJECT_ROOT}/hello/target/test-classes/me/test/jdk/javax/tools/DemoHello.class
-        Class clazz = javaFileManager.getClassLoader(StandardLocation.CLASS_PATH).loadClass(clazzName);
+        Class clazz =
+                javaFileManager.getClassLoader(StandardLocation.CLASS_PATH).loadClass(clazzName);
 
         Assertions.assertNotNull(clazz);
         System.out.println("clazz = " + clazz.getName());
         System.out.println("clazz.getClassLoader() = " + clazz.getClassLoader());
         Method mainMethod = clazz.getDeclaredMethod("main", String[].class);
-        mainMethod.invoke(null, new Object[]{new String[0]});
-
+        mainMethod.invoke(null, new Object[] {new String[0]});
     }
 }

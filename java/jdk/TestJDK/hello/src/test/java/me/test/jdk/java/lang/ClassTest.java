@@ -1,5 +1,8 @@
 package me.test.jdk.java.lang;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertSame;
+
 import java.lang.reflect.Field;
 import java.util.Deque;
 import java.util.Map;
@@ -7,9 +10,6 @@ import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.slf4j.MDC;
 import org.slf4j.spi.MDCAdapter;
-
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertSame;
 
 /**
  * @author dangqian.zll
@@ -27,7 +27,6 @@ public class ClassTest {
         assertSame(value2, value3);
     }
 
-
     @SneakyThrows
     Object setStaticFiled(Class clazz, String filedName, Object newValue) {
         Field field = clazz.getDeclaredField(filedName);
@@ -40,9 +39,7 @@ public class ClassTest {
     static class NoopMDCAdapter implements MDCAdapter {
 
         @Override
-        public void put(String key, String val) {
-
-        }
+        public void put(String key, String val) {}
 
         @Override
         public String get(String key) {
@@ -50,14 +47,10 @@ public class ClassTest {
         }
 
         @Override
-        public void remove(String key) {
-
-        }
+        public void remove(String key) {}
 
         @Override
-        public void clear() {
-
-        }
+        public void clear() {}
 
         @Override
         public Map<String, String> getCopyOfContextMap() {
@@ -65,28 +58,22 @@ public class ClassTest {
         }
 
         @Override
-        public void setContextMap(Map<String, String> contextMap) {
+        public void setContextMap(Map<String, String> contextMap) {}
 
-        }
+        // @Override
+        public void pushByKey(String key, String value) {}
 
-        //@Override
-        public void pushByKey(String key, String value) {
-
-        }
-
-        //@Override
+        // @Override
         public String popByKey(String key) {
             return "";
         }
 
-        //@Override
+        // @Override
         public Deque<String> getCopyOfDequeByKey(String key) {
             return null;
         }
 
-        //@Override
-        public void clearDequeByKey(String key) {
-
-        }
+        // @Override
+        public void clearDequeByKey(String key) {}
     }
 }

@@ -8,7 +8,6 @@ import java.util.Locale;
 
 public class CurrencyTest {
 
-
     public static void main(String[] args) throws IOException {
 
         List<Currency> currencyList = Arrays.asList(
@@ -21,22 +20,18 @@ public class CurrencyTest {
                 // 日元
                 Currency.getInstance("JPY"),
                 // 加拿大所用的货币
-                Currency.getInstance(Locale.CANADA)
-        );
+                Currency.getInstance(Locale.CANADA));
 
         System.out.println("| currencyCode | symbol | displayName      | numericCode | FractionDigits |");
         System.out.println("|--------------|--------|------------------|-------------|----------------|");
         currencyList.forEach(currency -> {
-
-            System.out.printf("| %12s | %6s | %16s | %11d | %14d |%n",
+            System.out.printf(
+                    "| %12s | %6s | %16s | %11d | %14d |%n",
                     currency.getCurrencyCode(),
                     currency.getSymbol(Locale.US),
                     currency.getDisplayName(),
                     currency.getNumericCode(),
-                    currency.getDefaultFractionDigits()
-            );
-
+                    currency.getDefaultFractionDigits());
         });
-
     }
 }

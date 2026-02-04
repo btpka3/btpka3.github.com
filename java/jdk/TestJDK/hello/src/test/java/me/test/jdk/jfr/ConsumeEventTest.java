@@ -1,6 +1,5 @@
 package me.test.jdk.jfr;
 
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import java.io.File;
@@ -39,7 +38,6 @@ import org.junit.jupiter.api.Test;
  */
 public class ConsumeEventTest {
 
-
     /**
      * 解析JFR文件并处理其中的事件。
      */
@@ -66,20 +64,17 @@ public class ConsumeEventTest {
                 .toInstant();
         Instant endTime = ZonedDateTime.of(2024, 04, 12, 14, 59, 52, 0, ZoneId.systemDefault())
                 .toInstant();
-        events.stream()
-                .limit(1)
-                .forEach(event -> {
-                    System.out.println("event=" + JSON.toJSONString(event) + ",  " + event.getStartTime() + "," + event.getStartTime().isAfter(startTime));
-                });
-
+        events.stream().limit(1).forEach(event -> {
+            System.out.println("event=" + JSON.toJSONString(event) + ",  " + event.getStartTime() + ","
+                    + event.getStartTime().isAfter(startTime));
+        });
 
         try (FileWriter w = new FileWriter(new File("/tmp/tryToFindCpu.json"), StandardCharsets.UTF_8)) {
 
             Map<String, AtomicInteger> count = new HashMap<>(32);
             events.stream()
                     .filter(event -> event.getStartTime().isAfter(startTime)
-                            && event.getStartTime().isBefore(endTime)
-                    )
+                            && event.getStartTime().isBefore(endTime))
                     .map(MyJfrUtils::toJsonEvent)
                     .peek(event -> count.computeIfAbsent(event.getName(), k -> new AtomicInteger(0))
                             .incrementAndGet())
@@ -96,7 +91,6 @@ public class ConsumeEventTest {
         }
     }
 
-
     @SneakyThrows
     @Test
     public void testScrub() {
@@ -109,44 +103,44 @@ public class ConsumeEventTest {
         MyJfrUtils.scrub(inputFile, outputFile, startTime, endTime);
         System.out.println("-----done.");
         /*
-        jfr summary /tmp/myScrub.jfr
- Event Type                              Count  Size (bytes)
-=============================================================
- jdk.ThreadPark                           2289        104932
- jdk.ThreadSleep                          1459         35164
- jdk.ObjectAllocationInNewTLAB            1400         34983
- jdk.Checkpoint                           1075        799781
- jdk.JavaMonitorWait                       312         11195
- jdk.ThreadCPULoad                         291          6988
- jdk.ObjectAllocationOutsideTLAB           245          5677
- jdk.NativeMethodSample                    145          2899
- jdk.ExecutionSample                       129          2690
- jdk.SafepointBegin                         11           286
- jdk.ExecuteVMOperation                     11           298
- jdk.Metadata                                5        439255
- jdk.ExceptionStatistics                     3            69
- jdk.BiasedLockRevocation                    3            94
- jdk.BiasedLockSelfRevocation                3            74
- jdk.CPULoad                                 3            78
- jdk.JavaThreadStatistics                    3            69
- jdk.ClassLoadingStatistics                  3            60
- jdk.CompilerStatistics                      3           123
- jdk.ThreadStart                             2            44
- jdk.NetworkUtilization                      2            44
- jdk.BiasedLockClassRevocation               1            31
- jdk.Compilation                             1            38
- jdk.Deoptimization                          1            38
- jdk.ThreadContextSwitchRate                 1            18
- jdk.SocketWrite                             1            41
- jdk.SocketRead                              1            53
+                jfr summary /tmp/myScrub.jfr
+         Event Type                              Count  Size (bytes)
+        =============================================================
+         jdk.ThreadPark                           2289        104932
+         jdk.ThreadSleep                          1459         35164
+         jdk.ObjectAllocationInNewTLAB            1400         34983
+         jdk.Checkpoint                           1075        799781
+         jdk.JavaMonitorWait                       312         11195
+         jdk.ThreadCPULoad                         291          6988
+         jdk.ObjectAllocationOutsideTLAB           245          5677
+         jdk.NativeMethodSample                    145          2899
+         jdk.ExecutionSample                       129          2690
+         jdk.SafepointBegin                         11           286
+         jdk.ExecuteVMOperation                     11           298
+         jdk.Metadata                                5        439255
+         jdk.ExceptionStatistics                     3            69
+         jdk.BiasedLockRevocation                    3            94
+         jdk.BiasedLockSelfRevocation                3            74
+         jdk.CPULoad                                 3            78
+         jdk.JavaThreadStatistics                    3            69
+         jdk.ClassLoadingStatistics                  3            60
+         jdk.CompilerStatistics                      3           123
+         jdk.ThreadStart                             2            44
+         jdk.NetworkUtilization                      2            44
+         jdk.BiasedLockClassRevocation               1            31
+         jdk.Compilation                             1            38
+         jdk.Deoptimization                          1            38
+         jdk.ThreadContextSwitchRate                 1            18
+         jdk.SocketWrite                             1            41
+         jdk.SocketRead                              1            53
 
-        # 查看哪个线程 cpu user 利用率高(top 10)
-        jfr print --json --events jdk.ThreadCPULoad  /tmp/myScrub.jfr | jq '.recording.events|sort_by(.values.user)|reverse|[limit(10;.[])]'
-        # 查看哪个线程 cpu system 利用率高(top 10)
-        jfr print --json --events jdk.ThreadCPULoad  /tmp/myScrub.jfr | jq '.recording.events|sort_by(.values.system)|reverse|[limit(10;.[])]'
-        jfr print --events jdk.CompilerStatistics /tmp/myScrub.jfr
-        jfr print --events jdk.Compilation /tmp/myScrub.jfr
-        */
+                # 查看哪个线程 cpu user 利用率高(top 10)
+                jfr print --json --events jdk.ThreadCPULoad  /tmp/myScrub.jfr | jq '.recording.events|sort_by(.values.user)|reverse|[limit(10;.[])]'
+                # 查看哪个线程 cpu system 利用率高(top 10)
+                jfr print --json --events jdk.ThreadCPULoad  /tmp/myScrub.jfr | jq '.recording.events|sort_by(.values.system)|reverse|[limit(10;.[])]'
+                jfr print --events jdk.CompilerStatistics /tmp/myScrub.jfr
+                jfr print --events jdk.Compilation /tmp/myScrub.jfr
+                */
     }
 
     @SneakyThrows
@@ -163,21 +157,20 @@ public class ConsumeEventTest {
                 .filter(event -> Objects.equals("jdk.CPULoad", MyJfrUtils.getName(event)))
                 .filter(event -> event.getStartTime().isAfter(startTime)
                         && event.getStartTime().isBefore(endTime))
-                //.map(MyJfrUtils::toJsonEvent)
+                // .map(MyJfrUtils::toJsonEvent)
                 .forEach(event -> {
                     System.out.println("=================== event:" + MyJfrUtils.getName(event));
                     System.out.println("startTime=" + MyJfrUtils.getStartTime(event));
                     System.out.println("duration=" + MyJfrUtils.getDuration(event));
                     System.out.println("endTime=" + MyJfrUtils.getEndTime(event));
                     System.out.println("stackTrace=" + MyJfrUtils.getStackTrace(event));
-                    System.out.println("json=" + JSON.toJSONString(event,
-                            SerializerFeature.WriteNonStringKeyAsString,
-                            SerializerFeature.DisableCircularReferenceDetect
-                    ));
-
+                    System.out.println("json="
+                            + JSON.toJSONString(
+                                    event,
+                                    SerializerFeature.WriteNonStringKeyAsString,
+                                    SerializerFeature.DisableCircularReferenceDetect));
                 });
     }
-
 
     @Data
     @Builder(toBuilder = true)
@@ -190,12 +183,12 @@ public class ConsumeEventTest {
          * 纳秒
          */
         Integer duration;
+
         String endTime;
 
         String stackTrace;
         String threadName;
     }
-
 
     public static class MyJfrUtils {
 
@@ -269,22 +262,20 @@ public class ConsumeEventTest {
                     .orElse(null);
         }
 
-//        public static String getThreadName1(RecordedEvent e) {
-//            return Optional.ofNullable(e)
-//                    .map(RecordedEvent::getFields)
-//                    .map(RecordedThread::getJavaName)
-//                    .orElse(null);
-//        }
+        //        public static String getThreadName1(RecordedEvent e) {
+        //            return Optional.ofNullable(e)
+        //                    .map(RecordedEvent::getFields)
+        //                    .map(RecordedThread::getJavaName)
+        //                    .orElse(null);
+        //        }
 
-//        public static String getThreadName1(ValueDescriptor vd) {
-//            vd.getFields().get(0).get
-//            return Optional.ofNullable(vd)
-//                    .map(RecordedEvent::getFields)
-//                    .map(RecordedThread::getJavaName)
-//                    .orElse(null);
-//        }
-
+        //        public static String getThreadName1(ValueDescriptor vd) {
+        //            vd.getFields().get(0).get
+        //            return Optional.ofNullable(vd)
+        //                    .map(RecordedEvent::getFields)
+        //                    .map(RecordedThread::getJavaName)
+        //                    .orElse(null);
+        //        }
 
     }
-
 }

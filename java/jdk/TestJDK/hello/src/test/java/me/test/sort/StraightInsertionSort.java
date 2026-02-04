@@ -15,7 +15,7 @@ import java.util.Arrays;
 public class StraightInsertionSort {
 
     public static void main(String[] args) throws Exception {
-        Integer[] numbers = new Integer[]{49, 38, 65, 97, 76, 13, 27, 49};
+        Integer[] numbers = new Integer[] {49, 38, 65, 97, 76, 13, 27, 49};
         insertSort(numbers);
         System.out.println(Arrays.asList(numbers));
     }

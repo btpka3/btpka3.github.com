@@ -18,8 +18,7 @@ public class StopTask implements Runnable {
         Thread.sleep(1000);
         if (t.isAlive()) {
             t.stop();
-            System.out
-                    .println("Task is not self stoped, try to force stopping it.");
+            System.out.println("Task is not self stoped, try to force stopping it.");
 
             Thread.sleep(1000);
             if (t.isAlive()) {

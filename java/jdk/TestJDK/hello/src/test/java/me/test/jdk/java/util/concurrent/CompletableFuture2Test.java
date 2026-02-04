@@ -13,10 +13,8 @@ public class CompletableFuture2Test {
      * 同线程执行+报错
      */
     @Test
-
     public void test01() {
         CompletableFuture<Double> futurePrice = new CompletableFuture<>();
-
 
         AtomicReference<RuntimeException> exceptRef = new AtomicReference<>();
         // 模拟打8折，这里忽略精度问题
@@ -27,7 +25,6 @@ public class CompletableFuture2Test {
                     return newPrice;
                 })
                 .thenApply(d -> {
-
                     double newPrice = d * .8;
                     System.out.println(Thread.currentThread().getName() + " : 订单打8折 = " + newPrice);
                     return newPrice;
@@ -38,9 +35,7 @@ public class CompletableFuture2Test {
                     }
                     System.out.println(Thread.currentThread().getName() + " : 最终价格 = " + d);
                 })
-                .thenRun(() ->
-                        System.out.println(Thread.currentThread().getName() + " : 执行其他异步通知")
-                )
+                .thenRun(() -> System.out.println(Thread.currentThread().getName() + " : 执行其他异步通知"))
                 .whenComplete((d, err) -> {
                     System.out.println(Thread.currentThread().getName() + " : 价格计算完毕 ");
                 })
@@ -49,7 +44,6 @@ public class CompletableFuture2Test {
                     exceptRef.set(e instanceof RuntimeException ? (RuntimeException) e : new RuntimeException(e));
                     throw new RuntimeException(e);
                 });
-
 
         double price = 100.0;
 

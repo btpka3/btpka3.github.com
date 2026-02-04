@@ -27,5 +27,4 @@ public class GenericTest<E> {
     public void print(E e) {
         System.out.println("print(E) : " + e);
     }
-
 }

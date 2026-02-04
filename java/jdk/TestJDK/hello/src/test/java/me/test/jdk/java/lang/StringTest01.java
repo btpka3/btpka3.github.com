@@ -1,22 +1,20 @@
 package me.test.jdk.java.lang;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  *
  */
 public class StringTest01 {
 
-
     @Test
     public void testEmoji() {
         System.out.println("============================= testEmoji");
         System.out.println(String.format("%03d", 8));
-
 
         // 😂😍🎉👍💩
         String text = "💩";
@@ -36,7 +34,7 @@ public class StringTest01 {
     @Test
     public void threeDoubleQuoteMarks01() {
         String str = """
-                aaa   
+                aaa
                 """;
         // 删除了头部空白，行尾空白，但保留了换行符
         assertEquals("aaa\n", str);
@@ -45,7 +43,7 @@ public class StringTest01 {
     @Test
     public void threeDoubleQuoteMarks02() {
         String str = """
-                aaa   
+                aaa
                 bbb   """;
         assertEquals("aaa\nbbb", str);
     }
@@ -84,10 +82,8 @@ public class StringTest01 {
     @Test
     public void streamChars() {
         String str = " \t\n\ra b c ";
-        int firstChar = str.chars()
-                .filter(c -> !Character.isWhitespace(c))
-                .findFirst()
-                .orElse(0);
+        int firstChar =
+                str.chars().filter(c -> !Character.isWhitespace(c)).findFirst().orElse(0);
         assertEquals('a', firstChar);
     }
 
@@ -106,9 +102,3 @@ public class StringTest01 {
         assertEquals('a', firstChar);
     }
 }
-
-
-
-
-
-

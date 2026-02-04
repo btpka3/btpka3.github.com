@@ -39,7 +39,7 @@ public class GraalJsTest {
         }
         System.out.println("-----------------------------------------------Done");
 
-        //ScriptEngine engine = manager.getEngineByName("graal-js");
+        // ScriptEngine engine = manager.getEngineByName("graal-js");
         ScriptEngine engine = manager.getEngineByName("js");
         Bindings bindings = engine.getBindings(ScriptContext.ENGINE_SCOPE);
         bindings.put("polyglot.js.allowHostAccess", true);
@@ -65,7 +65,8 @@ public class GraalJsTest {
         long start = System.nanoTime();
 
         // language=javascript
-        String script = """
+        String script =
+                """
                 (function(map, count){
                     var UUID = Java.type('java.util.UUID');
                     for(var i = 0; i < count; i++){

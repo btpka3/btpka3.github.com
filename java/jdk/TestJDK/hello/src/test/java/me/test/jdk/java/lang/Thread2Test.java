@@ -19,9 +19,9 @@ public class Thread2Test {
         // NEW
         printThread("aaa", thread);
 
-//        thread.getState();
-//        thread.getId();
-//        thread.getStackTrace();
+        //        thread.getState();
+        //        thread.getId();
+        //        thread.getStackTrace();
 
         thread.start();
 
@@ -29,11 +29,10 @@ public class Thread2Test {
 
         // TERMINATED
         printThread("ccc", thread);
-
-
     }
 
     public void printThread(String prefix, Thread thread) {
-        System.out.println(prefix + ": thread: id=" + thread.getId() + ", name=" + thread.getName() + ",state=" + thread.getState());
+        System.out.println(prefix + ": thread: id=" + thread.getId() + ", name=" + thread.getName() + ",state="
+                + thread.getState());
     }
 }

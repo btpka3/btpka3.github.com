@@ -27,7 +27,6 @@ public class MyPath implements Path {
         this.path = path;
     }
 
-
     @Override
     public FileSystem getFileSystem() {
         return this.fs;
@@ -139,7 +138,8 @@ public class MyPath implements Path {
     }
 
     @Override
-    public WatchKey register(WatchService watcher, WatchEvent.Kind<?>[] events, WatchEvent.Modifier... modifiers) throws IOException {
+    public WatchKey register(WatchService watcher, WatchEvent.Kind<?>[] events, WatchEvent.Modifier... modifiers)
+            throws IOException {
         return null;
     }
 

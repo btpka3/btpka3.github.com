@@ -27,7 +27,6 @@ public class BioEchoClient {
     static final String SERVER_HOST = "192.168.1.3";
     static final int SERVER_PORT = 9999;
 
-
     @SneakyThrows
     protected void startEchoClient(Socket socket) {
         new Thread(new MyReadHandler(socket)).start();
@@ -48,7 +47,9 @@ public class BioEchoClient {
         System.setProperty("socksProxyHost", PROXY_HOST);
         System.setProperty("socksProxyPort", Integer.toString(PROXY_PORT));
 
-        Assertions.assertTrue(StringUtils.isNotBlank(System.getProperty("socksProxyHost")), "JVM system properties -DsocksProxyHost=xxx is required");
+        Assertions.assertTrue(
+                StringUtils.isNotBlank(System.getProperty("socksProxyHost")),
+                "JVM system properties -DsocksProxyHost=xxx is required");
         log.info("============== sysProps[{}] = {}.", "socksProxyHost", System.getProperty("socksProxyHost"));
         log.info("============== sysProps[{}] = {}.", "socksProxyPort", System.getProperty("socksProxyPort"));
         log.info("============== sysProps[{}] = {}.", "socksNonProxyHosts", System.getProperty("socksNonProxyHosts"));
@@ -74,7 +75,6 @@ public class BioEchoClient {
         }
     }
 
-
     /**
      * 使用SOCKS代理：方式3：ProxySelector.setDefault(ProxySelector ps) 全局设置自定义 ProxySelector。
      */
@@ -84,12 +84,14 @@ public class BioEchoClient {
         ProxySelector proxySelector = ProxySelector.getDefault();
         MyProxySelector myProxySelector = new MyProxySelector();
         ProxySelector.setDefault(myProxySelector);
-        log.info("============== default proxy selector = {}, and has been change to {}", proxySelector, myProxySelector);
+        log.info(
+                "============== default proxy selector = {}, and has been change to {}",
+                proxySelector,
+                myProxySelector);
         try (Socket socket = new Socket(SERVER_HOST, SERVER_PORT)) {
             startEchoClient(socket);
         }
     }
-
 
     /**
      * Read user input and sent it to echo server.
@@ -123,7 +125,6 @@ public class BioEchoClient {
             out.flush();
             log.info(">>> '" + msg + "'");
         }
-
     }
 
     @Slf4j
@@ -138,7 +139,8 @@ public class BioEchoClient {
         @Override
         public void run() {
             try {
-                Reader reader = new InputStreamReader(new BufferedInputStream(socket.getInputStream()), StandardCharsets.UTF_8);
+                Reader reader =
+                        new InputStreamReader(new BufferedInputStream(socket.getInputStream()), StandardCharsets.UTF_8);
                 int i;
                 while ((i = reader.read()) != -1) {
                     char c = (char) i;
@@ -152,7 +154,8 @@ public class BioEchoClient {
 
     private static class MyProxySelector extends ProxySelector {
         private static final List<Proxy> NO_PROXY_LIST = List.of(Proxy.NO_PROXY);
-        private static final List<Proxy> list = List.of(new Proxy(Proxy.Type.SOCKS, new InetSocketAddress(PROXY_HOST, PROXY_PORT)));
+        private static final List<Proxy> list =
+                List.of(new Proxy(Proxy.Type.SOCKS, new InetSocketAddress(PROXY_HOST, PROXY_PORT)));
 
         @Override
         public List<Proxy> select(URI uri) {

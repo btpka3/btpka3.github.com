@@ -24,7 +24,7 @@ public class VarArgTest {
 
     @Test
     public void x2() {
-        Object[] arr = myVarArgsMethod(new String[]{"a", "b"});
+        Object[] arr = myVarArgsMethod(new String[] {"a", "b"});
         Assertions.assertEquals(2, arr.length);
         Assertions.assertEquals("a", arr[0]);
         Assertions.assertEquals("b", arr[1]);

@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
  */
 public class GroovyTest {
 
-
     @Test
     @SuppressWarnings("unchecked")
     public void test01() throws ScriptException {

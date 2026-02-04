@@ -1,6 +1,5 @@
 package me.test.jdk.java.security;
 
-
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -15,11 +14,9 @@ import org.bouncycastle.util.encoders.Hex;
 
 public class RsaTest03 {
 
-    public static void main(String[] args)
-            throws Exception {
+    public static void main(String[] args) throws Exception {
         test01();
     }
-
 
     // 加密
     public static void test01() throws Exception {
@@ -39,7 +36,6 @@ public class RsaTest03 {
         System.out.println("pri.Exponent : " + priKey.getPrivateExponent());
         System.out.println("pri          : " + Base64.toBase64String(priKey.getEncoded()));
 
-
         String msg = "Hello World!";
         System.out.println("msg          : " + msg);
 
@@ -52,15 +48,13 @@ public class RsaTest03 {
         encMsg = Hex.toHexString(encCipher.doFinal(msg.getBytes()));
         System.out.println("encMsg       : " + encMsg);
 
-
         Cipher decCipher = Cipher.getInstance("RSA");
         decCipher.init(Cipher.DECRYPT_MODE, keyPair.getPrivate());
         String decMsg = new String(decCipher.doFinal(Hex.decode(encMsg)));
         System.out.println("decMsg       : " + decMsg);
     }
 
-    public static RSAPublicKey loadPublicKeyByStr(String publicKeyStr)
-            throws Exception {
+    public static RSAPublicKey loadPublicKeyByStr(String publicKeyStr) throws Exception {
 
         byte[] buffer = Base64.decode(publicKeyStr);
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
@@ -68,13 +62,11 @@ public class RsaTest03 {
         return (RSAPublicKey) keyFactory.generatePublic(keySpec);
     }
 
-    public static RSAPrivateKey loadPrivateKeyByStr(String privateKeyStr)
-            throws Exception {
+    public static RSAPrivateKey loadPrivateKeyByStr(String privateKeyStr) throws Exception {
 
         byte[] buffer = Base64.decode(privateKeyStr);
         PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(buffer);
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         return (RSAPrivateKey) keyFactory.generatePrivate(keySpec);
-
     }
 }

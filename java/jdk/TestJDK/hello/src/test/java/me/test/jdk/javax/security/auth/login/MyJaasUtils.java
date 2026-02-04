@@ -17,29 +17,27 @@ import javax.security.auth.login.AppConfigurationEntry;
  */
 public class MyJaasUtils {
 
-
     public static Map<String, List<AppConfigurationEntry>> loadFromJsonByFastjson1(String jsonStr) {
 
-        Type type = new TypeReference<Map<String, List<AppConfigurationEntry>>>() {
-        }.getType();
+        Type type = new TypeReference<Map<String, List<AppConfigurationEntry>>>() {}.getType();
 
         ParserConfig config = new ParserConfig();
-        config.putDeserializer(AppConfigurationEntry.LoginModuleControlFlag.class, new LoginModuleControlFlagFastJson1Codec());
+        config.putDeserializer(
+                AppConfigurationEntry.LoginModuleControlFlag.class, new LoginModuleControlFlagFastJson1Codec());
 
         return com.alibaba.fastjson.JSON.parseObject(jsonStr, type, config);
     }
 
     public static Map<String, List<AppConfigurationEntry>> loadFromJsonByFastjson2(String jsonStr) {
         ObjectReaderProvider provider = new ObjectReaderProvider();
-        provider.register(AppConfigurationEntry.LoginModuleControlFlag.class, new LoginModuleControlFlagFastJson2Codec.Reader());
+        provider.register(
+                AppConfigurationEntry.LoginModuleControlFlag.class, new LoginModuleControlFlagFastJson2Codec.Reader());
         JSONReader.Context context = new JSONReader.Context(provider);
-        Type type = new TypeReference<Map<String, List<AppConfigurationEntry>>>() {
-        }.getType();
+        Type type = new TypeReference<Map<String, List<AppConfigurationEntry>>>() {}.getType();
 
         try (JSONReader reader = JSONReader.of(jsonStr, context)) {
             final ObjectReader<Map<String, List<AppConfigurationEntry>>> objectReader = provider.getObjectReader(type);
             return objectReader.readObject(reader, type, null, 0);
         }
     }
-
 }

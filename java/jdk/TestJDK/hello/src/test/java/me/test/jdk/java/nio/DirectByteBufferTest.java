@@ -1,6 +1,5 @@
 package me.test.jdk.java.nio;
 
-
 /**
  * -XX:MaxDirectMemorySize=1g
  *
@@ -13,6 +12,6 @@ package me.test.jdk.java.nio;
 public class DirectByteBufferTest {
 
     public void x() {
-        //DirectByteBuffer byteBuffer = new DirectByteBuffer(1024);
+        // DirectByteBuffer byteBuffer = new DirectByteBuffer(1024);
     }
 }

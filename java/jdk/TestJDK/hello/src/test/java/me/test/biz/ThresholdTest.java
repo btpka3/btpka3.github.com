@@ -63,23 +63,23 @@ public class ThresholdTest {
         int theInt = (int) nanoTime;
         System.out.println("nanoTime=" + nanoTime + ", theInt=" + theInt);
 
-        Object[][] arr = new Object[][]{
-                // percent, src, expectResult
-                new Object[]{0, -1, false},
-                new Object[]{0, 0, false},
-                new Object[]{0, 1, false},
-                new Object[]{500, -1, true},
-                new Object[]{500, 0, true},
-                new Object[]{500, 1, true},
-                new Object[]{500, 499, true},
-                new Object[]{500, 500, false},
-                new Object[]{500, 501, false},
-                new Object[]{10000, -1, true},
-                new Object[]{10000, 0, true},
-                new Object[]{10000, 1, true},
-                new Object[]{10000, 9999, true},
-                new Object[]{10000, 10000, true},
-                new Object[]{10000, 10001, true},
+        Object[][] arr = new Object[][] {
+            // percent, src, expectResult
+            new Object[] {0, -1, false},
+            new Object[] {0, 0, false},
+            new Object[] {0, 1, false},
+            new Object[] {500, -1, true},
+            new Object[] {500, 0, true},
+            new Object[] {500, 1, true},
+            new Object[] {500, 499, true},
+            new Object[] {500, 500, false},
+            new Object[] {500, 501, false},
+            new Object[] {10000, -1, true},
+            new Object[] {10000, 0, true},
+            new Object[] {10000, 1, true},
+            new Object[] {10000, 9999, true},
+            new Object[] {10000, 10000, true},
+            new Object[] {10000, 10001, true},
         };
 
         for (Object[] subArr : arr) {
@@ -89,8 +89,7 @@ public class ThresholdTest {
             Assertions.assertEquals(
                     expectedResult,
                     isInThreshold(MAX_THRESHOLD, curConfig, curSrc),
-                    "curConfig: " + curConfig + ", curSrc: " + curSrc + ", expectedResult: " + expectedResult
-            );
+                    "curConfig: " + curConfig + ", curSrc: " + curSrc + ", expectedResult: " + expectedResult);
         }
     }
 }

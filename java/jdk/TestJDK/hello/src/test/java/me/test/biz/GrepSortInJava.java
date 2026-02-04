@@ -14,7 +14,6 @@ import java.nio.file.Paths;
  */
 public class GrepSortInJava {
 
-
     public static void main(String[] args) throws IOException {
 
         String searchPath = args[0];
@@ -23,17 +22,9 @@ public class GrepSortInJava {
                 .filter(path -> path.toFile().isDirectory())
                 .filter(path -> path.toString().endsWith(".log"))
 
-                //.flatMap(path->Files.lines(path, StandardCharsets.UTF_8))
+                // .flatMap(path->Files.lines(path, StandardCharsets.UTF_8))
                 .forEach(System.out::println);
-
-
     }
 
-
-    static void findInFile(InputStream in) {
-
-
-    }
-
-
+    static void findInFile(InputStream in) {}
 }

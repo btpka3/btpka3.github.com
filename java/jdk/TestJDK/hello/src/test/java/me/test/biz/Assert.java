@@ -9,10 +9,7 @@ import java.util.Map;
  */
 public class Assert<T extends RuntimeException> {
 
-
-    private static final Map<Class<RuntimeException>, Assert<RuntimeException>> instances
-            = new LinkedHashMap<>();
-
+    private static final Map<Class<RuntimeException>, Assert<RuntimeException>> instances = new LinkedHashMap<>();
 
     public static Assert<RuntimeException> getInstance() {
         return getInstance(RuntimeException.class);
@@ -29,12 +26,10 @@ public class Assert<T extends RuntimeException> {
             }
         }
         return (Assert<E>) instances.get(clazz);
-
     }
 
     private Class<T> exceptionClazz;
     private Constructor<T> exceptionConstructor;
-
 
     public Assert(Class<T> clazz) {
         this.exceptionClazz = clazz;
@@ -54,7 +49,6 @@ public class Assert<T extends RuntimeException> {
         }
     }
 
-
     public void isTrue(boolean expr, String msg) {
         if (expr) {
             return;
@@ -63,7 +57,6 @@ public class Assert<T extends RuntimeException> {
     }
 
     public static void main(String[] args) {
-
 
         try {
             Assert a = Assert.getInstance(IllegalArgumentException.class);
@@ -78,6 +71,5 @@ public class Assert<T extends RuntimeException> {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 }

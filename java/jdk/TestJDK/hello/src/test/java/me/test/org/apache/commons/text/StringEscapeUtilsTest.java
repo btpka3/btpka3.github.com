@@ -1,6 +1,5 @@
 package me.test.org.apache.commons.text;
 
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,9 +29,8 @@ public class StringEscapeUtilsTest {
 
         final Map<CharSequence, CharSequence> escapeJsonMap = new HashMap<>();
         escapeJsonMap.put("|", "\\|");
-        AggregateTranslator a = new AggregateTranslator(
-                new LookupTranslator(Collections.unmodifiableMap(escapeJsonMap))
-        );
+        AggregateTranslator a =
+                new AggregateTranslator(new LookupTranslator(Collections.unmodifiableMap(escapeJsonMap)));
 
         {
             String input = "ab";
@@ -48,16 +46,14 @@ public class StringEscapeUtilsTest {
         }
     }
 
-
     @Test
     public void translate02() {
         // 自定义格式: `field1|field2|k1=v1,k2=v2,k3=v3|filed4`
 
         final Map<CharSequence, CharSequence> escapeJsonMap = new HashMap<>();
         escapeJsonMap.put("|", "\\|");
-        AggregateTranslator a = new AggregateTranslator(
-                new LookupTranslator(Collections.unmodifiableMap(escapeJsonMap))
-        );
+        AggregateTranslator a =
+                new AggregateTranslator(new LookupTranslator(Collections.unmodifiableMap(escapeJsonMap)));
 
         {
             String input = "ab";

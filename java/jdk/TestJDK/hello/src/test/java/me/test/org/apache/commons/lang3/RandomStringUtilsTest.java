@@ -33,7 +33,6 @@ public class RandomStringUtilsTest {
     static final String UUID_CREATOR_V7 = "UUID_CREATOR_V7";
     static final String JUG_V7_PLUS = "JUG_V7_PLUS";
 
-
     @Test
     public void test() {
         for (int i = 0; i < 10; i++) {
@@ -43,7 +42,6 @@ public class RandomStringUtilsTest {
             System.out.println(UUID.randomUUID());
         }
     }
-
 
     @Test
     public void vsUuid() {
@@ -70,7 +68,6 @@ public class RandomStringUtilsTest {
         }
     }
 
-
     @Test
     public void testConcurrence() {
         int cores = Runtime.getRuntime().availableProcessors();
@@ -84,8 +81,7 @@ public class RandomStringUtilsTest {
         run(JUG_V7_PLUS);
     }
 
-    protected void noop() {
-    }
+    protected void noop() {}
 
     protected void randomUUID() {
         UUID.randomUUID().toString();
@@ -94,7 +90,6 @@ public class RandomStringUtilsTest {
     protected void randomAlphanumeric() {
         RandomStringUtils.randomAlphanumeric(16);
     }
-
 
     protected void randomULID() {
         ULID.random(ThreadLocalRandom.current());
@@ -118,8 +113,7 @@ public class RandomStringUtilsTest {
             RANDOM_ULID, this::randomULID,
             UUID_CREATOR_FAST, this::uuidCreatorFast,
             UUID_CREATOR_V7, this::uuidCreatorV7,
-            JUG_V7_PLUS, this::jugV7Plus
-    );
+            JUG_V7_PLUS, this::jugV7Plus);
 
     @SneakyThrows
     public void run(String mode) {
@@ -127,13 +121,11 @@ public class RandomStringUtilsTest {
         int count = 10000;
         int loop = 10000;
 
-
         BlockingQueue<Runnable> workQueue = new LinkedBlockingQueue<>(loop);
         ThreadPoolExecutor executor = new ThreadPoolExecutor(cores, cores, Long.MAX_VALUE, TimeUnit.SECONDS, workQueue);
         long begin = System.nanoTime();
         CountDownLatch startSignal = new CountDownLatch(1);
         CountDownLatch doneSignal = new CountDownLatch(loop);
-
 
         Runnable runnable = RUNABLES.get(mode);
         Assertions.assertNotNull(runnable, "mode=" + mode + " not found");
@@ -149,7 +141,6 @@ public class RandomStringUtilsTest {
 
                 } finally {
                     doneSignal.countDown();
-
                 }
             });
         }
@@ -158,13 +149,7 @@ public class RandomStringUtilsTest {
         long end = System.nanoTime();
         long total = end - begin;
         long avg = total / (count * loop);
-        System.out.printf("mode : %-24s , total: %18d ns, avg : %6d ns %n",
-                mode,
-                total,
-                avg
-        );
+        System.out.printf("mode : %-24s , total: %18d ns, avg : %6d ns %n", mode, total, avg);
         executor.shutdown();
     }
-
-
 }

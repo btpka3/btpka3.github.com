@@ -25,9 +25,8 @@ public class P01 {
         List<List<Integer>> result = new ArrayList<>(8);
         List<TreeNode> nextLevelNodes = Collections.singletonList(root);
         while (!nextLevelNodes.isEmpty()) {
-            List<Integer> nexLevelValues = nextLevelNodes.stream()
-                    .map(node -> node.val)
-                    .collect(Collectors.toList());
+            List<Integer> nexLevelValues =
+                    nextLevelNodes.stream().map(node -> node.val).collect(Collectors.toList());
 
             result.add(nexLevelValues);
 
@@ -41,27 +40,16 @@ public class P01 {
         if (someLevelNodes == null || someLevelNodes.isEmpty()) {
             return Collections.emptyList();
         }
-        return someLevelNodes.stream().flatMap(node -> Stream.of(node.left, node.right)
-                        .filter(Objects::nonNull)
-                )
+        return someLevelNodes.stream()
+                .flatMap(node -> Stream.of(node.left, node.right).filter(Objects::nonNull))
                 .collect(Collectors.toList());
     }
 
-
     @Test
     public void test01() {
-        TreeNode root = new TreeNode(
-                3,
-                new TreeNode(9),
-                new TreeNode(
-                        20,
-                        new TreeNode(15),
-                        new TreeNode(17)
-                )
-        );
+        TreeNode root = new TreeNode(3, new TreeNode(9), new TreeNode(20, new TreeNode(15), new TreeNode(17)));
         List<List<Integer>> result = levelOrder(root);
         System.out.println(result);
-
     }
 
     static class TreeNode {
@@ -69,8 +57,7 @@ public class P01 {
         TreeNode left;
         TreeNode right;
 
-        TreeNode() {
-        }
+        TreeNode() {}
 
         TreeNode(int val) {
             this.val = val;

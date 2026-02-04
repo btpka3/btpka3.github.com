@@ -8,9 +8,8 @@ public class LoopTest {
 
         long start = System.currentTimeMillis();
         long i = 0;
-        for (; i < Integer.MAX_VALUE; i++) {
+        for (; i < Integer.MAX_VALUE; i++) {}
 
-        }
         System.out.println(i);
         long end = System.currentTimeMillis();
         Period period = new Period((end - start) * ((long) (Math.pow(2, 33))));
@@ -19,5 +18,4 @@ public class LoopTest {
         // 大约 170 年
         System.out.println("从Long的最小值空循环到Long的最大值，大约需要的时间为：" + time);
     }
-
 }

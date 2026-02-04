@@ -52,7 +52,6 @@ public class HttpPostTest {
             buf.clear();
         }
         System.out.println("-------response finished.");
-
     }
 
     static String getReqData() throws UnsupportedEncodingException {
@@ -67,12 +66,13 @@ public class HttpPostTest {
         buf.append("Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2\r\n");
         buf.append("Connection: keep-alive\r\n");
         buf.append("Content-Type: application/x-www-form-urlencoded; charset=UTF-8\r\n");
-        buf.append("Content-Length: ").append(reqData.getBytes(StandardCharsets.UTF_8).length).append("\r\n");
+        buf.append("Content-Length: ")
+                .append(reqData.getBytes(StandardCharsets.UTF_8).length)
+                .append("\r\n");
         buf.append("\r\n");
         buf.append(reqData);
         return buf.toString();
     }
-
 
     static Socket getSocket() throws SocketException {
 

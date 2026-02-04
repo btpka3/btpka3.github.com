@@ -8,6 +8,6 @@ package me.test.jdk.java.util.concurrent;
 public class CompletionServiceTest {
 
     public void x() {
-        //CompletionService s = new ExecutorCompletionService();
+        // CompletionService s = new ExecutorCompletionService();
     }
 }

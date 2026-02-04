@@ -1,6 +1,5 @@
 package me.test.jdk.jfr;
 
-
 import jdk.jfr.Category;
 import jdk.jfr.Description;
 import jdk.jfr.Enabled;
@@ -31,8 +30,8 @@ public class MyEvent extends Event {
 
     // 对应方法需要加上该注解, 参数为RegExpControl
     // 返回类型必须为boolean, 参数数目只能为1个, 必须为集成SettingControl类
-//    @SettingDefinition
-//    protected boolean infoFilter(RegExpControl control) {
-//        return control.matches(uri);
-//    }
+    //    @SettingDefinition
+    //    protected boolean infoFilter(RegExpControl control) {
+    //        return control.matches(uri);
+    //    }
 }

@@ -29,8 +29,8 @@ public class LazyGetterTest {
         }
 
         // 这个方法将报错。
-//        protected int length() {
-//            return cached.length;
-//        }
+        //        protected int length() {
+        //            return cached.length;
+        //        }
     }
 }

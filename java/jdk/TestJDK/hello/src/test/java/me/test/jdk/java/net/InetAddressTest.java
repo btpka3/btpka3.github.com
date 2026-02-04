@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 
 public class InetAddressTest {
 
-
     @Test
     public void test1() throws Exception {
         System.out.println(InetAddress.getLocalHost().getHostAddress());
@@ -33,26 +32,25 @@ public class InetAddressTest {
                 while (InetAddress.hasMoreElements()) {
                     InetAddress ipAddr = InetAddress.nextElement();
                     System.out.println(
-
                             "getAddress=" + ipAddr.getAddress()
-//                                    + ", hostname=" + ipAddr.getCanonicalHostName()
-//                                    + ", getHostName=" + ipAddr.getHostName()
+                                    //                                    + ", hostname=" +
+                                    // ipAddr.getCanonicalHostName()
+                                    //                                    + ", getHostName=" + ipAddr.getHostName()
                                     + ", getHostAddress=" + ipAddr.getHostAddress()
-//                            + ", isAnyLocalAddress=" + ipAddr.isAnyLocalAddress()
-//                            + ", isLinkLocalAddress=" + ipAddr.isLinkLocalAddress()
-//                            + ", isSiteLocalAddress=" + ipAddr.isSiteLocalAddress()
-//                            + ", isMCGlobal=" + ipAddr.isMCGlobal()
-//                            + ", isMCNodeLocal=" + ipAddr.isMCNodeLocal()
-//                            + ", isMCSiteLocal=" + ipAddr.isMCSiteLocal()
-//                            + ", isMCOrgLocal=" + ipAddr.isMCOrgLocal()
+                            //                            + ", isAnyLocalAddress=" + ipAddr.isAnyLocalAddress()
+                            //                            + ", isLinkLocalAddress=" + ipAddr.isLinkLocalAddress()
+                            //                            + ", isSiteLocalAddress=" + ipAddr.isSiteLocalAddress()
+                            //                            + ", isMCGlobal=" + ipAddr.isMCGlobal()
+                            //                            + ", isMCNodeLocal=" + ipAddr.isMCNodeLocal()
+                            //                            + ", isMCSiteLocal=" + ipAddr.isMCSiteLocal()
+                            //                            + ", isMCOrgLocal=" + ipAddr.isMCOrgLocal()
 
-                    );
+                            );
                 }
             }
         } catch (SocketException e) {
         }
     }
-
 
     static String getPublicIPv4() throws UnknownHostException, SocketException {
         Enumeration<NetworkInterface> e = NetworkInterface.getNetworkInterfaces();
@@ -64,7 +62,7 @@ public class InetAddressTest {
                 InetAddress i = (InetAddress) ee.nextElement();
                 String currentAddress = i.getHostAddress();
                 if (!i.isSiteLocalAddress() && !i.isLoopbackAddress()
-                    //&& validate(currentAddress)
+                // && validate(currentAddress)
                 ) {
                     ipToReturn = currentAddress;
                 } else {
@@ -76,8 +74,8 @@ public class InetAddressTest {
         return ipToReturn;
     }
 
-    private static final Pattern IPv4RegexPattern = Pattern.compile(
-            "^(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
+    private static final Pattern IPv4RegexPattern =
+            Pattern.compile("^(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
 
     public static boolean validate(final String ip) {
         return IPv4RegexPattern.matcher(ip).matches();
@@ -85,7 +83,7 @@ public class InetAddressTest {
 
     @Test
     public void test4() throws UnknownHostException {
-        //String ip = "192.168.1.1";
+        // String ip = "192.168.1.1";
         byte[] bytes = new byte[4];
         for (byte b0 = 0; b0 <= 255; b0++) {
             for (byte b1 = 0; b1 <= 255; b1++) {
@@ -100,31 +98,29 @@ public class InetAddressTest {
                         int int2 = ipV4ToInt2(bytes);
                         int int3 = ipV4ToInt3(bytes);
 
-                        String msg = "not equal : " +
-                                "b0=" + b0 + ", " +
-                                "b1=" + b1 + ", " +
-                                "b2=" + b2 + ", " +
-                                "b2=" + b2 + ", " +
-                                "int1=" + int1 + ", " +
-                                "int2=" + int2 + ", " +
-                                "int3=" + int3;
+                        String msg = "not equal : " + "b0="
+                                + b0 + ", " + "b1="
+                                + b1 + ", " + "b2="
+                                + b2 + ", " + "b2="
+                                + b2 + ", " + "int1="
+                                + int1 + ", " + "int2="
+                                + int2 + ", " + "int3="
+                                + int3;
                         System.out.println(msg);
 
-//                        Assertions.assertEquals(msg, int1, int2);
-                        //Assertions.assertEquals(msg, int1, int3);
+                        //                        Assertions.assertEquals(msg, int1, int2);
+                        // Assertions.assertEquals(msg, int1, int3);
                     }
                 }
             }
         }
     }
 
-
     @SneakyThrows
     public static byte[] ip2bytes(String ip) {
         InetAddress addr = InetAddress.getByName(ip);
         return addr.getAddress();
     }
-
 
     public static int ipV4ToInt1(byte[] bytes) {
         if (bytes.length != 4) {
@@ -148,7 +144,6 @@ public class InetAddressTest {
         }
         return result;
     }
-
 
     public static int ipV4ToInt3(byte[] bytes) {
         if (bytes.length != 4) {

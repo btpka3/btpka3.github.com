@@ -24,7 +24,6 @@ import org.junit.jupiter.api.Test;
  */
 public class KeyStoreTest {
 
-
     /*
     keytool -genkeypair \
         -alias btpka3 \
@@ -51,7 +50,6 @@ public class KeyStoreTest {
             System.out.println(toStr(key));
         }
     }
-
 
     @Test
     public void x2() throws Exception {
@@ -92,7 +90,6 @@ public class KeyStoreTest {
         PEMParser p = new PEMParser(new StringReader(str));
         return p.readObject();
     }
-
 
     public String toPEM(PublicKey pubKey) throws Exception {
         StringWriter sw = new StringWriter();

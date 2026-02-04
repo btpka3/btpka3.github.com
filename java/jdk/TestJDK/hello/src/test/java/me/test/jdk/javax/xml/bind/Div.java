@@ -7,11 +7,9 @@ import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlMixed;
 import javax.xml.bind.annotation.XmlRootElement;
 
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "div")
 public class Div {
-
 
     @XmlElementRef(name = "span", type = Span.class)
     @XmlMixed

@@ -34,18 +34,9 @@ public class TestOrder {
     public static void main(String[] args) {
 
         // 模拟按照录入时间或者修改时间排好序的记录
-        String[] inputList = new String[]{ // 命名规则： "{num}{name}", 其中num为userId，name为商品名称
-                "1f",
-                "101a",
-                "102b",
-                "1a", "1b", "1c", "1d", "1e",
-                "2a", "2b", "2c", "2d",
-                "3a", "3b", "3c",
-                "4a", "4b",
-                "5a",
-                "6a",
-                "7a",
-                "8a"
+        String[] inputList = new String[] { // 命名规则： "{num}{name}", 其中num为userId，name为商品名称
+            "1f", "101a", "102b", "1a", "1b", "1c", "1d", "1e", "2a", "2b", "2c", "2d", "3a", "3b", "3c", "4a", "4b",
+            "5a", "6a", "7a", "8a"
         };
 
         List<Item> itemList = toItemList(inputList);
@@ -80,7 +71,6 @@ public class TestOrder {
         return itemList;
     }
 
-
     private static List<Queue<Item>> groupByUser(List<Item> itemList) {
 
         List<Queue<Item>> groupedList = new LinkedList<Queue<Item>>();
@@ -106,13 +96,12 @@ public class TestOrder {
     private static List<Item> sort(List<Queue<Item>> groupedList) {
         List<Item> sortedItemList = new LinkedList<Item>();
 
-
         ListIterator<Queue<Item>> it = groupedList.listIterator();
         while (it.hasNext()) {
 
             Queue<Item> lastQueue = it.next();
-            //int lastQueueIndex = it.nextIndex();
-            //System.out.println("lastQueue = [" + lastQueueIndex + "] " + lastQueue);
+            // int lastQueueIndex = it.nextIndex();
+            // System.out.println("lastQueue = [" + lastQueueIndex + "] " + lastQueue);
 
             Item item = lastQueue.poll();
             if (item == null) {
@@ -146,5 +135,4 @@ public class TestOrder {
 
         return sortedItemList;
     }
-
 }

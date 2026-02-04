@@ -1,5 +1,8 @@
 package me.test.jdk.java.util;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
 import com.alibaba.fastjson.JSON;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,9 +17,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-
 /**
  * @author dangqian.zll
  * @date 2024/6/4
@@ -25,7 +25,6 @@ public class Comparator2Test {
 
     @Test
     public void testGroupSort01() {
-
 
         List<String> files = Arrays.asList(
                 "/lib/bundle-sdk-1.0.91-shaded.jar",
@@ -40,8 +39,7 @@ public class Comparator2Test {
                 "/lib/B03.jar",
                 "/D01.jar",
                 "/D02.jar",
-                "/D03.jar"
-        );
+                "/D03.jar");
 
         List<String> expected = new ArrayList<>(files);
 
@@ -56,17 +54,13 @@ public class Comparator2Test {
         assertEquals(expected, files);
     }
 
-
     @Test
     public void testCustom01() {
 
-
         List<String> files = Arrays.asList(
                 "/lib/bundle-sdk-1.0.91-shaded.jar",
-
                 "/D02.jar",
                 "/antx/A02.jar",
-
                 "/classes/C01.class",
                 "/classes/C02.class",
                 "/classes/C03.class",
@@ -76,19 +70,14 @@ public class Comparator2Test {
                 "/lib/B02.jar",
                 "/lib/B03.jar",
                 "/D01.jar",
-                "/D03.jar"
-        );
+                "/D03.jar");
         List<String> expected = new ArrayList<>(files);
 
-        List<String> customFileOrder = Arrays.asList(
-                "/D02.jar",
-                "/antx/A02.jar"
-        );
+        List<String> customFileOrder = Arrays.asList("/D02.jar", "/antx/A02.jar");
         Map<String, Integer> customFileOrderMap = new HashMap<>(8);
         for (int i = 0; i < customFileOrder.size(); i++) {
             customFileOrderMap.put(customFileOrder.get(i), i);
         }
-
 
         // 先打乱顺序。
         Collections.shuffle(files);
@@ -120,16 +109,14 @@ public class Comparator2Test {
      * @return
      */
     void sort(List<String> files, Map<String, Integer> customFileOrderMap) {
-        files.sort(Comparator.nullsLast(
-                Comparator.comparing(file -> toJarInfo(file, customFileOrderMap),
-                        Comparator.comparing(JarInfo::getCategory)
-                                .thenComparing(JarInfo::getOrder)
-                                .thenComparing(JarInfo::getFile)
-                )
-        ));
+        files.sort(Comparator.nullsLast(Comparator.comparing(
+                file -> toJarInfo(file, customFileOrderMap),
+                Comparator.comparing(JarInfo::getCategory)
+                        .thenComparing(JarInfo::getOrder)
+                        .thenComparing(JarInfo::getFile))));
     }
 
-    static enum Category {
+    enum Category {
         sdk,
         custom,
         classes,
@@ -137,7 +124,6 @@ public class Comparator2Test {
         lib,
         other
     }
-
 
     @Data
     @Builder(toBuilder = true)
@@ -147,17 +133,12 @@ public class Comparator2Test {
         private Category category;
         private String file;
         private int order;
-
     }
-
 
     JarInfo toJarInfo(String file, Map<String, Integer> customFileOrderMap) {
 
         if (file.startsWith("/lib/") && file.matches(".*bundle-sdk.*\\.jar")) {
-            return JarInfo.builder()
-                    .category(Category.sdk)
-                    .file(file)
-                    .build();
+            return JarInfo.builder().category(Category.sdk).file(file).build();
         }
         Integer customOrder = customFileOrderMap.get(file);
         if (customOrder != null) {
@@ -168,25 +149,14 @@ public class Comparator2Test {
                     .build();
         }
         if (file.startsWith("/lib/")) {
-            return JarInfo.builder()
-                    .category(Category.lib)
-                    .file(file)
-                    .build();
+            return JarInfo.builder().category(Category.lib).file(file).build();
         }
         if (file.startsWith("/classes/")) {
-            return JarInfo.builder()
-                    .category(Category.classes)
-                    .file(file).build();
+            return JarInfo.builder().category(Category.classes).file(file).build();
         }
         if (file.startsWith("/antx/")) {
-            return JarInfo.builder()
-                    .category(Category.antx)
-                    .file(file)
-                    .build();
+            return JarInfo.builder().category(Category.antx).file(file).build();
         }
-        return JarInfo.builder()
-                .category(Category.other)
-                .file(file)
-                .build();
+        return JarInfo.builder().category(Category.other).file(file).build();
     }
 }

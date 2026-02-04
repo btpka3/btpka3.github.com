@@ -66,6 +66,4 @@ public class MyKryoUtilsTest {
                 });
         System.out.println("Done.");
     }
-
-
 }

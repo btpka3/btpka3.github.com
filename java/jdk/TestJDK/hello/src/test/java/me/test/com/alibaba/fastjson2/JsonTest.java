@@ -28,8 +28,7 @@ public class JsonTest {
     @Test
     public void testJGeneric01() {
         String jsonStr = "{\"111\":222}";
-        Map map = JSON.parseObject(jsonStr, new TypeReference<Map<Long, Long>>() {
-        });
+        Map map = JSON.parseObject(jsonStr, new TypeReference<Map<Long, Long>>() {});
         Assertions.assertEquals(222L, map.get(111L));
         Map.Entry entry = (Map.Entry) map.entrySet().toArray()[0];
         Assertions.assertEquals(Long.class, entry.getKey().getClass());
@@ -53,7 +52,8 @@ public class JsonTest {
     @Test
     public void testArray01() {
         Object obj = JSON.parse("{\"a\":[\"a1\",\"a2\"]}");
-        Assertions.assertEquals("com.alibaba.fastjson2.JSONObject", obj.getClass().getName());
+        Assertions.assertEquals(
+                "com.alibaba.fastjson2.JSONObject", obj.getClass().getName());
         Map map = (Map) obj;
         Object a = map.get("a");
         Assertions.assertEquals("com.alibaba.fastjson2.JSONArray", a.getClass().getName());
@@ -68,13 +68,9 @@ public class JsonTest {
         Assertions.assertEquals("com.alibaba.fastjson2.JSONArray", a.getClass().getName());
     }
 
-
     @Test
     public void testCustomWriterAndReader() {
-        MyObj obj = MyObj.builder()
-                .name("zhang3")
-                .type(MyType.AAA)
-                .build();
+        MyObj obj = MyObj.builder().name("zhang3").type(MyType.AAA).build();
         String expectedJsonStr = "{\"name\":\"zhang3\",\"type\":\"aaa\"}";
 
         // 序列化
@@ -94,7 +90,6 @@ public class JsonTest {
             Assertions.assertEquals("zhang3", obj2.getName());
             Assertions.assertSame(MyType.AAA, obj2.getType());
         }
-
     }
 
     @Data
@@ -125,9 +120,7 @@ public class JsonTest {
 
         @Override
         public String toString() {
-            return "MyType{" +
-                    "value='" + value + '\'' +
-                    '}';
+            return "MyType{" + "value='" + value + '\'' + '}';
         }
     }
 

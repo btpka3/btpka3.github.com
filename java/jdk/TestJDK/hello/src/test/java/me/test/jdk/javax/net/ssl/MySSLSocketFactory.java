@@ -19,7 +19,6 @@ public class MySSLSocketFactory extends SSLSocketFactory {
 
     SSLSocketFactory sslSocketFactory;
 
-
     @Override
     public Socket createSocket() throws IOException {
 
@@ -34,7 +33,6 @@ public class MySSLSocketFactory extends SSLSocketFactory {
         return sslSocketFactory.createSocket();
     }
 
-
     // -------------- 以下为未做修改的代理方法
     public void setSSLSocketFacotry(SSLSocketFactory sslSocketFactory) {
         this.sslSocketFactory = sslSocketFactory;
@@ -43,7 +41,6 @@ public class MySSLSocketFactory extends SSLSocketFactory {
     public void setProxy(Proxy proxy) {
         this.proxy = proxy;
     }
-
 
     @Override
     public String[] getDefaultCipherSuites() {
@@ -65,14 +62,14 @@ public class MySSLSocketFactory extends SSLSocketFactory {
         return sslSocketFactory.createSocket(socket, inputStream, b);
     }
 
-
     @Override
     public Socket createSocket(String s, int i) throws IOException, UnknownHostException {
         return sslSocketFactory.createSocket(s, i);
     }
 
     @Override
-    public Socket createSocket(String s, int i, InetAddress inetAddress, int i1) throws IOException, UnknownHostException {
+    public Socket createSocket(String s, int i, InetAddress inetAddress, int i1)
+            throws IOException, UnknownHostException {
         return sslSocketFactory.createSocket(s, i, inetAddress, i1);
     }
 
@@ -85,5 +82,4 @@ public class MySSLSocketFactory extends SSLSocketFactory {
     public Socket createSocket(InetAddress inetAddress, int i, InetAddress inetAddress1, int i1) throws IOException {
         return sslSocketFactory.createSocket(inetAddress, i, inetAddress1, i1);
     }
-
 }

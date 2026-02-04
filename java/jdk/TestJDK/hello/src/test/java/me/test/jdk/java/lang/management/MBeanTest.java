@@ -20,7 +20,6 @@ public class MBeanTest {
 
     static final String OBJECT_NAME = "com.example:type=Hello";
 
-
     @Test
     public void test01() throws Exception {
         register();
@@ -29,11 +28,11 @@ public class MBeanTest {
 
     protected void register() throws Exception {
         /* ⭕️：注意：需要增加JVM属性
--Dcom.sun.management.jmxremote=true
--Dcom.sun.management.jmxremote.port=1234
--Dcom.sun.management.jmxremote.authenticate=false
--Dcom.sun.management.jmxremote.ssl=false
-        */
+        -Dcom.sun.management.jmxremote=true
+        -Dcom.sun.management.jmxremote.port=1234
+        -Dcom.sun.management.jmxremote.authenticate=false
+        -Dcom.sun.management.jmxremote.ssl=false
+                */
         MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
         ObjectName name = new ObjectName(OBJECT_NAME);
         HelloMXBean mbean = new HellMXBeanImpl();
@@ -50,18 +49,17 @@ public class MBeanTest {
         MBeanServerConnection conn = jmxc.getMBeanServerConnection();
         ObjectName name = new ObjectName(OBJECT_NAME);
         // FIXME getAttribute 报错: "javax.management.AttributeNotFoundException: No such attribute: age"
-//         System.out.println("age=" + conn.getAttribute(name, "age"));
+        //         System.out.println("age=" + conn.getAttribute(name, "age"));
         int x = 1;
         int y = 2;
-        int result = (int) conn.invoke(name, "add", new Object[]{x, y}, new String[]{"int", "int"});
+        int result = (int) conn.invoke(name, "add", new Object[] {x, y}, new String[] {"int", "int"});
         System.out.println("add : x=" + x + ", y=" + y + ", result=" + result);
 
         // 可以 jconsole 连接修改
         // Thread.sleep(10 * 60 * 1000);
     }
 
-
-    public static interface HelloMXBean {
+    public interface HelloMXBean {
         int add(int x, int y);
 
         int getAge();

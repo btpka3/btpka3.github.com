@@ -9,7 +9,6 @@ public class M {
 
     public static void main(String[] args) throws UnsupportedEncodingException {
 
-        System.out.println("xx" + new String(new byte[]{0x03, 0x01}, "GBK") + "~~");
+        System.out.println("xx" + new String(new byte[] {0x03, 0x01}, "GBK") + "~~");
     }
-
 }

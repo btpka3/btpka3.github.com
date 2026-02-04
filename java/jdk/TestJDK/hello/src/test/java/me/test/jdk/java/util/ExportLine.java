@@ -11,12 +11,12 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /*
- 导出指定的一行。
- */
+导出指定的一行。
+*/
 public class ExportLine {
 
-    final static String prefix = "INSERT INTO `trade` VALUES ";
-    final static int bufSize = 1024 * 4;
+    static final String prefix = "INSERT INTO `trade` VALUES ";
+    static final int bufSize = 1024 * 4;
 
     private static InputStream fromLargeFile() throws FileNotFoundException {
         final String dumpFile = "/home/zll/tmp/mysql_dump_140928.sql";

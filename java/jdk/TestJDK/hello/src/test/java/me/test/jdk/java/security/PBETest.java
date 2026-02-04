@@ -21,15 +21,16 @@ public class PBETest {
 
     @Test
     public void test01() throws Exception {
-        SecureRandom random = new SecureRandom(Long.toString(System.currentTimeMillis()).getBytes());
+        SecureRandom random =
+                new SecureRandom(Long.toString(System.currentTimeMillis()).getBytes());
 
         String masterPassword = "myMasterPassword";
 
         int iterationCount = 1000;
         int keyLength = 56;
 
-        //String algo = "PBEWithMD5AndTripeDES";
-        //String algo = "PBEWITHMD5andDES";
+        // String algo = "PBEWithMD5AndTripeDES";
+        // String algo = "PBEWITHMD5andDES";
         String algo = "PBEWITHHMACSHA512ANDAES_256";
         SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(algo);
 
@@ -39,13 +40,7 @@ public class PBETest {
         byte[] iv = new byte[16];
         random.nextBytes(iv);
 
-
-        PBEKeySpec pbeKeySpec = new PBEKeySpec(
-                masterPassword.toCharArray(),
-                salt,
-                iterationCount,
-                keyLength
-        );
+        PBEKeySpec pbeKeySpec = new PBEKeySpec(masterPassword.toCharArray(), salt, iterationCount, keyLength);
         SecretKey secretKey = keyFactory.generateSecret(pbeKeySpec);
 
         String encryptedStr = null;

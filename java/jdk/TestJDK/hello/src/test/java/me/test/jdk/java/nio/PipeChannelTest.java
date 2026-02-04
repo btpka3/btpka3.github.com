@@ -11,7 +11,6 @@ import java.nio.channels.Pipe;
  */
 public class PipeChannelTest {
 
-
     interface In {
 
         void setSource(Pipe.SourceChannel src);
@@ -21,7 +20,6 @@ public class PipeChannelTest {
 
         void setSink(Pipe.SinkChannel sink);
     }
-
 
     static class R implements Runnable, Out {
 
@@ -51,7 +49,6 @@ public class PipeChannelTest {
             }
         }
 
-
         @Override
         public void setSink(Pipe.SinkChannel sink) {
             this.sink = sink;
@@ -60,7 +57,6 @@ public class PipeChannelTest {
 
     static class W implements Runnable, In {
         Pipe.SourceChannel src;
-
 
         @Override
         public void run() {
@@ -84,10 +80,7 @@ public class PipeChannelTest {
         public void setSource(Pipe.SourceChannel src) {
             this.src = src;
         }
-
-
     }
-
 
     static class ToUpper implements Runnable, In, Out {
         Pipe.SourceChannel src;
@@ -118,8 +111,6 @@ public class PipeChannelTest {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-
         }
 
         @Override
@@ -133,13 +124,10 @@ public class PipeChannelTest {
         }
     }
 
-
     public static void main(String[] args) throws IOException {
 
-
-//        test1();
+        //        test1();
         test2();
-
     }
 
     public static void test1() throws IOException {
@@ -152,7 +140,6 @@ public class PipeChannelTest {
         new Thread(r).start();
         new Thread(w).start();
     }
-
 
     public static void test2() throws IOException {
 
@@ -172,5 +159,4 @@ public class PipeChannelTest {
         new Thread(t).start();
         new Thread(w).start();
     }
-
 }

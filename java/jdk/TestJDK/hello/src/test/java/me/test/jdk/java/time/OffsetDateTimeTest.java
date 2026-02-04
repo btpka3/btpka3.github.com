@@ -11,7 +11,6 @@ public class OffsetDateTimeTest {
     public static void main(String[] args) {
 
         test01();
-
     }
 
     static void test01() {
@@ -21,5 +20,4 @@ public class OffsetDateTimeTest {
 
         System.out.println("zonedDateTime.toInstant().toEpochMilli()    : ");
     }
-
 }

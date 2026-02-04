@@ -10,7 +10,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "user")
 public class User {
@@ -28,8 +27,7 @@ public class User {
         F
     }
 
-    public static enum Gender2 {
-
+    public enum Gender2 {
         M("male"),
         F("female");
 
@@ -43,7 +41,6 @@ public class User {
             return code;
         }
     }
-
 
     @XmlAttribute
     private String name;
@@ -84,9 +81,6 @@ public class User {
     @XmlElementWrapper
     private List<Item> items;
 
-
     private Div div;
     private Div div2;
-
-
 }

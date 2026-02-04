@@ -31,7 +31,6 @@ public class ProxyTest {
 
     public void x() {
 
-
         // 设置代理服务器地址和端口
         InetSocketAddress proxyAddress = new InetSocketAddress("proxy.example.com", 8080);
         Proxy proxy = new Proxy(Proxy.Type.HTTP, proxyAddress);
@@ -40,7 +39,6 @@ public class ProxyTest {
         {
             Socket socket = new Socket(proxy);
         }
-
 
         ProxySelector.getDefault();
         // 设置代理选择器
@@ -51,12 +49,9 @@ public class ProxyTest {
             }
 
             @Override
-            public void connectFailed(URI uri, SocketAddress sa, IOException ioe) {
-
-            }
+            public void connectFailed(URI uri, SocketAddress sa, IOException ioe) {}
         });
     }
-
 
     @SneakyThrows
     public void useSocksProxy1() {
@@ -70,7 +65,6 @@ public class ProxyTest {
         // TODO
     }
 
-
     /**
      * Apache HttpComponents 关于代理的相关文档
      *
@@ -79,9 +73,5 @@ public class ProxyTest {
      * @see <a href="https://github.com/apache/httpcomponents-client/blob/master/httpclient5/src/test/java/org/apache/hc/client5/http/examples/ClientExecuteProxy.java">Examples : Request via a proxy</a>
      * @see <a href="https://github.com/apache/httpcomponents-client/blob/master/httpclient5/src/test/java/org/apache/hc/client5/http/examples/ClientProxyAuthentication.java">Examples : Proxy authentication</a>
      */
-    void xss() {
-
-    }
+    void xss() {}
 }
-
-

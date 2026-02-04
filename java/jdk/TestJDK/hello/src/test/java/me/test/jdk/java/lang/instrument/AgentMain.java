@@ -31,7 +31,9 @@ import javax.management.ObjectName;
  */
 public class AgentMain {
 
-    public static void agentmain(String agentArgs, Instrumentation inst) throws MalformedObjectNameException, NotCompliantMBeanException, InstanceAlreadyExistsException, MBeanRegistrationException {
+    public static void agentmain(String agentArgs, Instrumentation inst)
+            throws MalformedObjectNameException, NotCompliantMBeanException, InstanceAlreadyExistsException,
+                    MBeanRegistrationException {
         TransformerService ts = new TransformerService(inst);
         ObjectName on = new ObjectName("transformer:service=DemoTransformer");
         MBeanServer server = ManagementFactory.getPlatformMBeanServer();
@@ -61,7 +63,8 @@ public class AgentMain {
                 vm.loadAgent(fileName);
                 System.out.println("Agent Loaded");
                 ObjectName on = new ObjectName("transformer:service=DemoTransformer");
-                System.out.println("Instrumentation Deployed:" + ManagementFactory.getPlatformMBeanServer().isRegistered(on));
+                System.out.println("Instrumentation Deployed:"
+                        + ManagementFactory.getPlatformMBeanServer().isRegistered(on));
                 // Run sayHello in a loop
                 Person person = new Person();
                 for (int i = 0; i < 1000; i++) {
@@ -74,7 +77,6 @@ public class AgentMain {
                 ex.printStackTrace(System.err);
             }
         }
-
 
         /**
          * Creates the temporary agent jar file if it has not been created
@@ -96,11 +98,17 @@ public class AgentMain {
                             manifest.append("Can-Redefine-Classes: true\n");
                             manifest.append("Can-Retransform-Classes: true\n");
                             manifest.append("Premain-Class: " + AgentMain.class.getName() + "\n");
-                            ByteArrayInputStream bais = new ByteArrayInputStream(manifest.toString().getBytes());
+                            ByteArrayInputStream bais =
+                                    new ByteArrayInputStream(manifest.toString().getBytes());
                             Manifest mf = new Manifest(bais);
                             fos = new FileOutputStream(tmpFile, false);
                             jos = new JarOutputStream(fos, mf);
-                            addClassesToJar(jos, AgentMain.class, DemoTransformer.class, TransformerService.class, TransformerServiceMBean.class);
+                            addClassesToJar(
+                                    jos,
+                                    AgentMain.class,
+                                    DemoTransformer.class,
+                                    TransformerService.class,
+                                    TransformerServiceMBean.class);
                             jos.flush();
                             jos.close();
                             fos.flush();
@@ -109,12 +117,12 @@ public class AgentMain {
                         } catch (Exception e) {
                             throw new RuntimeException("Failed to write Agent installer Jar", e);
                         } finally {
-                            if (fos != null) try {
-                                fos.close();
-                            } catch (Exception e) {
-                            }
+                            if (fos != null)
+                                try {
+                                    fos.close();
+                                } catch (Exception e) {
+                                }
                         }
-
                     }
                 }
             }
@@ -176,12 +184,10 @@ public class AgentMain {
         public void sayHello(int x) {
             System.out.println("Hello [" + x + "]");
         }
-
     }
 
-
-    public static interface TransformerServiceMBean {
-        public void transformClass(String className, String methodName, String methodSignature);
+    public interface TransformerServiceMBean {
+        void transformClass(String className, String methodName, String methodSignature);
     }
 
     public static class TransformerService implements TransformerServiceMBean {
@@ -207,7 +213,9 @@ public class AgentMain {
                 targetClassLoader = targetClazz.getClassLoader();
                 transform(targetClazz, targetClassLoader, methodName, methodSignature);
                 return;
-            } catch (Exception ex) { /* Nope */ }
+            } catch (Exception ex) {
+                /* Nope */
+            }
             // now try the hard/slow way
             for (Class<?> clazz : instrumentation.getAllLoadedClasses()) {
                 if (clazz.getName().equals(className)) {
@@ -239,13 +247,18 @@ public class AgentMain {
                 instrumentation.removeTransformer(dt);
             }
         }
-
     }
 
     public static class DemoTransformer implements ClassFileTransformer {
 
         @Override
-        public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined, ProtectionDomain protectionDomain, byte[] classfileBuffer) throws IllegalClassFormatException {
+        public byte[] transform(
+                ClassLoader loader,
+                String className,
+                Class<?> classBeingRedefined,
+                ProtectionDomain protectionDomain,
+                byte[] classfileBuffer)
+                throws IllegalClassFormatException {
             return classfileBuffer;
         }
     }

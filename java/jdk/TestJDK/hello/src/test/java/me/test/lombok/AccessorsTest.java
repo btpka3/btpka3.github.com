@@ -18,14 +18,9 @@ public class AccessorsTest {
 
     @Test
     public void test01() {
-        Bbb bbb = (Bbb) new Bbb()
-                .age(18)
-                .hobbies("swimming")
-                .name("zhang3")
-                .address("beijing");
+        Bbb bbb = (Bbb) new Bbb().age(18).hobbies("swimming").name("zhang3").address("beijing");
         System.out.println(bbb);
     }
-
 
     @Data
     @Accessors(fluent = true)
@@ -40,6 +35,4 @@ public class AccessorsTest {
         private Integer age;
         private String hobbies;
     }
-
-
 }

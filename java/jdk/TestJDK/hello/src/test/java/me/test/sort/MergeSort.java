@@ -11,11 +11,10 @@ import java.util.Arrays;
 public class MergeSort {
 
     public static void main(String[] args) throws Exception {
-        Integer[] numbers = new Integer[]{49, 38, 65, 97, 76, 13, 27, 49};
+        Integer[] numbers = new Integer[] {49, 38, 65, 97, 76, 13, 27, 49};
         mergeSort(numbers, 0, numbers.length - 1);
         System.out.println(Arrays.asList(numbers));
     }
-
 
     public static void mergeSort(Integer[] numbers, int low, int high) {
         int mid = (low + high) / 2;
@@ -34,7 +33,7 @@ public class MergeSort {
         // 临时序列，长度为两个序列长度之和。
         int[] temp = new int[high - low + 1];
         int leftIndex = low; // 左指针
-        int rightIndex = mid + 1;// 右指针
+        int rightIndex = mid + 1; // 右指针
         int k = 0;
 
         // 从两组数列中依次取出一个最小值，并将其放到临时序列 中
@@ -63,5 +62,4 @@ public class MergeSort {
             numbers[k2 + low] = temp[k2];
         }
     }
-
 }

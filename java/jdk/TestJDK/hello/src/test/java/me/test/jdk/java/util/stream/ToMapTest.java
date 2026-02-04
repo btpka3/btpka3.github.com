@@ -7,20 +7,13 @@ import java.util.stream.Stream;
 
 public class ToMapTest {
 
-
     public static void main(String[] args) {
 
-        Map<String, Person> map = Stream.of(
-                        new Person("zhang3", 33),
-                        new Person("li4", 44),
-                        new Person("wang5", 55)
-                )
+        Map<String, Person> map = Stream.of(new Person("zhang3", 33), new Person("li4", 44), new Person("wang5", 55))
                 .collect(Collectors.toMap(Person::getName, Function.identity()));
-
 
         System.out.println(map);
     }
-
 
     public static class Person {
         private String name;
@@ -49,10 +42,7 @@ public class ToMapTest {
 
         @Override
         public String toString() {
-            return "Person{" +
-                    "name='" + name + '\'' +
-                    ", age=" + age +
-                    '}';
+            return "Person{" + "name='" + name + '\'' + ", age=" + age + '}';
         }
     }
 }

@@ -1,6 +1,5 @@
 package me.test.checkstyle;
 
-
 /**
  * 测试禁止 使用全限定名（org.apache.commons.lang.StringUtils）。
  */

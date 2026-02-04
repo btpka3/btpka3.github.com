@@ -35,8 +35,12 @@ public class ThreadPoolExecutorTest {
             }
         };
 
-        ThreadPoolExecutor executor = new ThreadPoolExecutor(2, 2,
-                1000, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(2),
+        ThreadPoolExecutor executor = new ThreadPoolExecutor(
+                2,
+                2,
+                1000,
+                TimeUnit.MILLISECONDS,
+                new ArrayBlockingQueue<>(2),
                 threadFactory,
                 // 使用CallerRunsPolicy作为拒绝策略，当线程池队列满时，主线程将负责实际的任务执行，确保任务不会被丢弃；
                 // 理论上，在线程池队列满的情况下，实际的执行性能最差也能退化成原来非异步时的执行性能
@@ -46,15 +50,13 @@ public class ThreadPoolExecutorTest {
                         System.out.println(Thread.currentThread().getName() + " : ===rejectedExecution");
                         super.rejectedExecution(r, executor);
                     }
-                }
-        );
-
+                });
 
         for (int i = 0; i < 10; i++) {
 
             int jobId = i;
             executor.submit(() -> {
-                //System.out.println(Thread.currentThread().getName() + ": i=" + jobId + " : start");
+                // System.out.println(Thread.currentThread().getName() + ": i=" + jobId + " : start");
                 try {
                     Thread.sleep(3000);
                 } catch (InterruptedException e) {
@@ -68,7 +70,6 @@ public class ThreadPoolExecutorTest {
         System.out.println("ALL END");
     }
 
-
     @Test
     public void testWithCountDownLatch01() throws InterruptedException {
 
@@ -78,13 +79,8 @@ public class ThreadPoolExecutorTest {
                 .priority(Thread.MAX_PRIORITY)
                 .build();
 
-        ThreadPoolExecutor executor = new ThreadPoolExecutor(
-                3, 3,
-                1000,
-                TimeUnit.MILLISECONDS,
-                new ArrayBlockingQueue<>(10),
-                factory
-        );
+        ThreadPoolExecutor executor =
+                new ThreadPoolExecutor(3, 3, 1000, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(10), factory);
 
         long startTime = System.currentTimeMillis();
         int count = 10;
@@ -108,18 +104,17 @@ public class ThreadPoolExecutorTest {
     }
 
     public void logExecutorStatus(ThreadPoolExecutor executor, String tag) {
-        log.info("check executor status [{}] : isShutdown={}, isTerminating={},isTerminated={}",
+        log.info(
+                "check executor status [{}] : isShutdown={}, isTerminating={},isTerminated={}",
                 tag,
                 executor.isShutdown(),
                 executor.isTerminating(),
-                executor.isTerminated()
-        );
+                executor.isTerminated());
     }
 
     /**
      * 如果使用 CallerRunsPolicy， executor shutdown 后再submit 会触发 直接丢弃任务。
      */
-
     @Test
     public void testSubmitAfterShutdownWithDefaultCallerRunsPolicy() throws InterruptedException {
         MyJob job1 = new MyJob("1");
@@ -132,13 +127,13 @@ public class ThreadPoolExecutorTest {
                 .build();
 
         ThreadPoolExecutor executor = new ThreadPoolExecutor(
-                3, 3,
+                3,
+                3,
                 1000,
                 TimeUnit.MILLISECONDS,
                 new ArrayBlockingQueue<>(10),
                 factory,
-                new ThreadPoolExecutor.CallerRunsPolicy()
-        );
+                new ThreadPoolExecutor.CallerRunsPolicy());
         logExecutorStatus(executor, "AAA");
         executor.submit(job1);
         logExecutorStatus(executor, "BBB");
@@ -172,13 +167,8 @@ public class ThreadPoolExecutorTest {
                 .priority(Thread.MAX_PRIORITY)
                 .build();
 
-        ThreadPoolExecutor executor = new ThreadPoolExecutor(
-                3, 3,
-                1000,
-                TimeUnit.MILLISECONDS,
-                new ArrayBlockingQueue<>(10),
-                factory
-        );
+        ThreadPoolExecutor executor =
+                new ThreadPoolExecutor(3, 3, 1000, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(10), factory);
         logExecutorStatus(executor, "AAA");
         executor.submit(job1);
         logExecutorStatus(executor, "BBB");
@@ -204,6 +194,7 @@ public class ThreadPoolExecutorTest {
     public static class MyJob implements Runnable {
 
         String id;
+
         @Getter
         boolean runed;
 
@@ -211,12 +202,10 @@ public class ThreadPoolExecutorTest {
             this.id = id;
         }
 
-
         @Override
         public void run() {
             log.info("===== JOB_RUNNING, id={}", id);
             this.runed = true;
         }
-
     }
 }

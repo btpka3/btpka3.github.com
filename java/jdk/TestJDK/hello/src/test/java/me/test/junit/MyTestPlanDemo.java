@@ -1,12 +1,12 @@
 package me.test.junit;
 
-import org.junit.jupiter.engine.descriptor.JupiterEngineDescriptor;
-import org.junit.platform.testkit.engine.EngineDiscoveryResults;
-import org.junit.platform.testkit.engine.EngineTestKit;
-
 import static java.util.Collections.emptyList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.platform.engine.discovery.DiscoverySelectors.selectClass;
+
+import org.junit.jupiter.engine.descriptor.JupiterEngineDescriptor;
+import org.junit.platform.testkit.engine.EngineDiscoveryResults;
+import org.junit.platform.testkit.engine.EngineTestKit;
 
 /**
  *
@@ -16,10 +16,8 @@ import static org.junit.platform.engine.discovery.DiscoverySelectors.selectClass
 public class MyTestPlanDemo {
     public static void main(String[] args) {
 
-        EngineTestKit
-                .engine(JupiterEngineDescriptor.ENGINE_ID)
+        EngineTestKit.engine(JupiterEngineDescriptor.ENGINE_ID)
                 .selectors(selectClass(HelloTest.class))
-
                 .configurationParameter("junit.platform.reporting.open.xml.enabled", "true")
                 .configurationParameter("junit.platform.reporting.open.xml.git.enabled", "true")
                 .execute()

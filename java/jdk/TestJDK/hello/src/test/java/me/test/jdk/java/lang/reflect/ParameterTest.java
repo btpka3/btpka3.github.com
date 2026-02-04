@@ -12,25 +12,17 @@ import org.junit.jupiter.api.Test;
  */
 public class ParameterTest {
 
-    public static void m1(String str) {
+    public static void m1(String str) {}
 
-    }
+    public static void m2(int str) {}
 
-    public static void m2(int str) {
+    public static void m3(String... strVarArg) {}
 
-    }
+    public static void m4(String[] strArr) {}
 
-    public static void m3(String... strVarArg) {
-    }
+    public static void m5(Map map) {}
 
-    public static void m4(String[] strArr) {
-    }
-
-    public static void m5(Map map) {
-    }
-
-    public static void m6(Map<String, String> map) {
-    }
+    public static void m6(Map<String, String> map) {}
 
     @Test
     public void test() {

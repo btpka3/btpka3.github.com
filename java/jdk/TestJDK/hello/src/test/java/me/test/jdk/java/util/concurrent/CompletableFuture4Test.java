@@ -44,9 +44,8 @@ public class CompletableFuture4Test {
     @Test
     public void ok01() throws ExecutionException, InterruptedException {
         U.print("ok01", "start");
-        String result = CompletableFuture
-                .supplyAsync(new MyTask("aaa", false, 3000))
-                .get();
+        String result =
+                CompletableFuture.supplyAsync(new MyTask("aaa", false, 3000)).get();
         U.print("ok01", "end");
         Assertions.assertEquals("aaa", result);
     }
@@ -108,8 +107,7 @@ public class CompletableFuture4Test {
     public void err01() throws ExecutionException, InterruptedException {
         U.print("err01", "start");
         try {
-            String result = CompletableFuture
-                    .supplyAsync(new MyTask("err001", true, 3000))
+            String result = CompletableFuture.supplyAsync(new MyTask("err001", true, 3000))
                     .get();
             Assertions.fail();
         } catch (Throwable e) {
@@ -127,8 +125,7 @@ public class CompletableFuture4Test {
         CompletableFuture<Void> all = CompletableFuture.allOf(
                 CompletableFuture.supplyAsync(new MyTask("data001", false, 3000)),
                 CompletableFuture.supplyAsync(new MyTask("data002", false, 2000)),
-                CompletableFuture.supplyAsync(new MyTask("data003", false, 1000))
-        );
+                CompletableFuture.supplyAsync(new MyTask("data003", false, 1000)));
         Object result = all.get();
         U.print("ok02", "end : " + result);
     }
@@ -143,8 +140,7 @@ public class CompletableFuture4Test {
             CompletableFuture<Void> all = CompletableFuture.allOf(
                     CompletableFuture.supplyAsync(new MyTask("data001", false, 3000)),
                     CompletableFuture.supplyAsync(new MyTask("data002", true, 2000)),
-                    CompletableFuture.supplyAsync(new MyTask("data003", false, 1000))
-            );
+                    CompletableFuture.supplyAsync(new MyTask("data003", false, 1000)));
             all.get();
 
             Assertions.fail();
@@ -155,17 +151,16 @@ public class CompletableFuture4Test {
         }
     }
 
-
     /**
      * 多个：ALL: 正常+异常，总耗时=最长的，有任何一个异常就异常。
      */
     @Test
     public void allMixErrAndOk1() throws ExecutionException, InterruptedException {
         U.print("allMixErrAndOk", "start");
-        CompletableFuture<String>[] tasks = new CompletableFuture[]{
-                CompletableFuture.supplyAsync(new MyTask("data001", false, 3000)),
-                CompletableFuture.supplyAsync(new MyTask("data002", true, 2000)),
-                CompletableFuture.supplyAsync(new MyTask("data003", false, 1000))
+        CompletableFuture<String>[] tasks = new CompletableFuture[] {
+            CompletableFuture.supplyAsync(new MyTask("data001", false, 3000)),
+            CompletableFuture.supplyAsync(new MyTask("data002", true, 2000)),
+            CompletableFuture.supplyAsync(new MyTask("data003", false, 1000))
         };
         try {
             CompletableFuture<Void> all = CompletableFuture.allOf(tasks);
@@ -188,7 +183,6 @@ public class CompletableFuture4Test {
             Assertions.assertTrue(tasks[2].isDone());
         }
     }
-
 
     public static class MyTask implements Supplier<String> {
         private String data;
@@ -216,6 +210,4 @@ public class CompletableFuture4Test {
             return data;
         }
     }
-
-
 }

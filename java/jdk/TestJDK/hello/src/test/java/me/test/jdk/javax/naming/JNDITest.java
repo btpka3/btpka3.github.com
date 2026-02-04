@@ -21,20 +21,19 @@ import org.junit.jupiter.api.Test;
  */
 public class JNDITest {
 
-/* Context.INITIAL_CONTEXT_FACTORY :
+    /* Context.INITIAL_CONTEXT_FACTORY :
 
-com.sun.jndi.ldap.LdapCtxFactory                : LDAP（轻量级目录访问协议）,用于与 LDAP 服务器（如 OpenLDAP、Active Directory）交互：
-com.sun.jndi.rmi.registry.RegistryFactory       : RMI
-com.sun.jndi.fscontext.RefFSContextFactory      : 文件系统,将本地文件系统作为命名服务（用于测试或简单场景）：
-com.sun.jndi.cosnaming.CNCtxFactory             : CORBA（通用对象请求代理结构）
-com.ibm.websphere.naming.WsnNameServiceFactory  : WebSphere
-weblogic.jndi.WLInitialContextFactory           : WebLogic
-org.jboss.as.naming.InitialContextFactory       : JBoss/WildFly：
-org.apache.naming.java.javaURLContextFactory    : Tomcat（通过 JNDI 绑定、查找资源）：
-com.sun.jndi.url.http.HttpCtxFactory            : HTTP 命名服务（实验性）：
+    com.sun.jndi.ldap.LdapCtxFactory                : LDAP（轻量级目录访问协议）,用于与 LDAP 服务器（如 OpenLDAP、Active Directory）交互：
+    com.sun.jndi.rmi.registry.RegistryFactory       : RMI
+    com.sun.jndi.fscontext.RefFSContextFactory      : 文件系统,将本地文件系统作为命名服务（用于测试或简单场景）：
+    com.sun.jndi.cosnaming.CNCtxFactory             : CORBA（通用对象请求代理结构）
+    com.ibm.websphere.naming.WsnNameServiceFactory  : WebSphere
+    weblogic.jndi.WLInitialContextFactory           : WebLogic
+    org.jboss.as.naming.InitialContextFactory       : JBoss/WildFly：
+    org.apache.naming.java.javaURLContextFactory    : Tomcat（通过 JNDI 绑定、查找资源）：
+    com.sun.jndi.url.http.HttpCtxFactory            : HTTP 命名服务（实验性）：
 
- */
-
+     */
 
     /**
      * 查询 DNS 服务
@@ -49,7 +48,7 @@ com.sun.jndi.url.http.HttpCtxFactory            : HTTP 命名服务（实验性�
         env.put(Context.PROVIDER_URL, "dns://114.114.114.114");
 
         DirContext ctx = new InitialDirContext(env);
-        Attributes res = ctx.getAttributes("example.com", new String[]{"A"});
+        Attributes res = ctx.getAttributes("example.com", new String[] {"A"});
         System.out.println(res);
     }
 
@@ -70,7 +69,6 @@ com.sun.jndi.url.http.HttpCtxFactory            : HTTP 命名服务（实验性�
         System.out.println(res);
     }
 
-
     /**
      * 查询 LDAP
      */
@@ -90,9 +88,9 @@ com.sun.jndi.url.http.HttpCtxFactory            : HTTP 命名服务（实验性�
             System.out.println(elements.nextElement());
         }
         Hashtable<String, String> env = new Hashtable<>();
-        //env.put(Context.PROVIDER_URL, null);
-        //env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.rmi.registry.RegistryContextFactory");
-        //env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
+        // env.put(Context.PROVIDER_URL, null);
+        // env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.rmi.registry.RegistryContextFactory");
+        // env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
         Context ctx = new InitialContext(env);
         // 注册服务
         {

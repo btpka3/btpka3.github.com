@@ -37,7 +37,8 @@ public class DomainSocketChannelTest {
                     .sync()
                     .channel();
 
-            final FullHttpRequest request = new DefaultFullHttpRequest(HttpVersion.HTTP_1_1, HttpMethod.GET, "/services", Unpooled.EMPTY_BUFFER);
+            final FullHttpRequest request = new DefaultFullHttpRequest(
+                    HttpVersion.HTTP_1_1, HttpMethod.GET, "/services", Unpooled.EMPTY_BUFFER);
             request.headers().set(HttpHeaderNames.HOST, "daemon");
 
             channel.writeAndFlush(request);
@@ -46,6 +47,5 @@ public class DomainSocketChannelTest {
         } finally {
             group.shutdownGracefully();
         }
-
     }
 }

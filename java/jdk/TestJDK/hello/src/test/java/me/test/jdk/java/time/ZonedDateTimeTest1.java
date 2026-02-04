@@ -8,11 +8,9 @@ import java.time.format.DateTimeFormatter;
  */
 public class ZonedDateTimeTest1 {
 
-
     public static void main(String[] args) throws InterruptedException {
         test1();
     }
-
 
     static void test1() {
 
@@ -21,8 +19,5 @@ public class ZonedDateTimeTest1 {
         System.out.println("ZonedDateTime : " + zdt);
         String str = zdt.format(DateTimeFormatter.ISO_DATE_TIME);
         System.out.println("formated str  : " + str);
-
     }
-
-
 }

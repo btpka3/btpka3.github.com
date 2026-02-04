@@ -36,5 +36,4 @@ public class AtomicBooleanTest {
         b.set(!b.get());
         System.out.println("param new value: " + b);
     }
-
 }

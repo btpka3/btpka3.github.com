@@ -6,9 +6,7 @@ import java.util.stream.Collectors;
 
 public class SortTest {
 
-
     public static void main(String[] args) {
-
 
         Set<String> s = new HashSet<>(8);
         s.add("bb");
@@ -16,11 +14,8 @@ public class SortTest {
         s.add("aa");
         s.add("zz");
         s.add("a1");
-        String str = s.stream()
-                .sorted()
-                .collect(Collectors.joining("\n"));
+        String str = s.stream().sorted().collect(Collectors.joining("\n"));
 
         System.out.println(str + "___");
     }
-
 }

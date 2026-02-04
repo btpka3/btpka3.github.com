@@ -8,7 +8,6 @@ import java.util.TreeSet;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.junit.jupiter.api.Test;
 
-
 /* shell:
 [source,shell]
 ----

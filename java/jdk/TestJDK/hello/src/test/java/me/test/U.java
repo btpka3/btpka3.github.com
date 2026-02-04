@@ -14,13 +14,9 @@ public class U {
     }
 
     public static void print(String step, Object data) {
-        System.out.printf("[%s][%4d - %30s] - %10s : %s%n",
-                now(),
-                Thread.currentThread().getId(),
-                Thread.currentThread().getName(),
-                step,
-                data
-        );
+        System.out.printf(
+                "[%s][%4d - %30s] - %10s : %s%n",
+                now(), Thread.currentThread().getId(), Thread.currentThread().getName(), step, data);
     }
 
     public static void print(String step, Object data, Throwable e) {

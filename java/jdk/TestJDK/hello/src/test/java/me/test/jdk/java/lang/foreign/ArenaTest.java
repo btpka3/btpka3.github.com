@@ -7,5 +7,4 @@ package me.test.jdk.java.lang.foreign;
  * @see java.lang.foreign.MemorySegment
  * @see java.lang.foreign.ValueLayout
  */
-public class ArenaTest {
-}
+public class ArenaTest {}

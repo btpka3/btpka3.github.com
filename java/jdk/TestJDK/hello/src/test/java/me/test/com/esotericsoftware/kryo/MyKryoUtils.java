@@ -11,10 +11,7 @@ import java.util.Map;
 public class MyKryoUtils {
     public static final byte VERSION = 0x20;
 
-    private static List<String> serializerNameList = Arrays.asList(
-            "kryo",
-            "slimming"
-    );
+    private static List<String> serializerNameList = Arrays.asList("kryo", "slimming");
 
     public static Map<String, Object> deserialize(byte[] data) {
         if (data == null || data.length == 0) {
@@ -31,7 +28,7 @@ public class MyKryoUtils {
         byte[] body = new byte[data.length - 1];
         System.arraycopy(data, 1, body, 0, data.length - 1);
         Map<String, Object> ctx = serializer.deserialize(body);
-        //Mtee3DispatchMsgUtil.afterDeserialize(ctx);
+        // Mtee3DispatchMsgUtil.afterDeserialize(ctx);
         return ctx;
     }
 
@@ -72,5 +69,4 @@ public class MyKryoUtils {
         // 后三位保留给序列化器
         return (byte) (index & 0x07);
     }
-
 }

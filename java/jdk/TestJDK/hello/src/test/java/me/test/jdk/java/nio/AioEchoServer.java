@@ -28,19 +28,19 @@ import me.test.jdk.java.net.socket.BioEchoServer;
 public class AioEchoServer {
 
     public static void main(String[] args) throws Exception {
-        //创建服务端
-        final AsynchronousServerSocketChannel serverSocket = AsynchronousServerSocketChannel.open()
-                .bind(new InetSocketAddress(9999));
+        // 创建服务端
+        final AsynchronousServerSocketChannel serverSocket =
+                AsynchronousServerSocketChannel.open().bind(new InetSocketAddress(9999));
 
-
-        //使用CompletionHandler异步处理客户端连接
+        // 使用CompletionHandler异步处理客户端连接
         serverSocket.accept(serverSocket, new MyServerCompletionHandler());
 
         log.info("==== start");
         Thread.sleep(Integer.MAX_VALUE);
     }
 
-    public static class MyServerCompletionHandler implements CompletionHandler<AsynchronousSocketChannel, AsynchronousServerSocketChannel> {
+    public static class MyServerCompletionHandler
+            implements CompletionHandler<AsynchronousSocketChannel, AsynchronousServerSocketChannel> {
         @Override
         public void completed(AsynchronousSocketChannel socket, AsynchronousServerSocketChannel serverSocket) {
             try {
@@ -49,10 +49,9 @@ public class AioEchoServer {
                 serverSocket.accept(serverSocket, this);
                 log.info("==== serverChannel:accepted");
 
-
                 ByteBuffer buffer = ByteBuffer.allocate(1024);
                 CompletionHandler<Integer, ByteBuffer> socketHandler = new MySocketCompletionHandler(socket);
-                //使用CompletionHandler异步读取数据
+                // 使用CompletionHandler异步读取数据
                 socket.read(buffer, buffer, socketHandler);
             } catch (Exception e) {
                 log.error("completed_ERR", e);

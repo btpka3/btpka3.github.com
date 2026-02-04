@@ -33,20 +33,17 @@ public class ZipUtilsTest {
             IOUtils.copy(
                     new StringReader("Hello World : " + System.currentTimeMillis()),
                     Files.newOutputStream(dir.resolve("a.txt")),
-                    StandardCharsets.UTF_8
-            );
+                    StandardCharsets.UTF_8);
             Path subDir = dir.resolve("bbb");
             Files.createDirectories(subDir);
             IOUtils.copy(
                     new StringReader("Nice to mtee you~ " + System.currentTimeMillis()),
                     Files.newOutputStream(subDir.resolve("b.txt")),
-                    StandardCharsets.UTF_8
-            );
+                    StandardCharsets.UTF_8);
         }
 
         // 创建zip文件
         ZipUtils.createZipFile(dir, base.resolve("demo.zip"));
-
     }
 
     /**
@@ -68,12 +65,10 @@ public class ZipUtilsTest {
             IOUtils.copy(
                     new StringReader("Hello World : " + System.currentTimeMillis()),
                     Files.newOutputStream(src),
-                    StandardCharsets.UTF_8
-            );
+                    StandardCharsets.UTF_8);
         }
 
         // 创建zip文件
         ZipUtils.createZipFile(src, base.resolve("demo.zip"));
-
     }
 }

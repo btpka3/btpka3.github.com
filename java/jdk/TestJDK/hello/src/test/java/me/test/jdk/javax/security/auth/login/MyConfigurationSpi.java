@@ -20,7 +20,6 @@ public class MyConfigurationSpi extends ConfigurationSpi {
 
         // TODO : 需要运行态提供动态值
         this.map = MyJaasUtils.loadFromJsonByFastjson1(JassConfJsonStrHolder.jassConfJsonStr);
-
     }
 
     @Override

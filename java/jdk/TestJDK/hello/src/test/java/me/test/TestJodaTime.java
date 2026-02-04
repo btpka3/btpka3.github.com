@@ -55,7 +55,7 @@ public class TestJodaTime {
         // duration
         // in prod env, consider using StopWatch (from commons-lang3, guava, spring-core etc)
         long start = System.currentTimeMillis();
-        //Thread.sleep(3456);
+        // Thread.sleep(3456);
         long end = System.currentTimeMillis();
         Period period = new Period(start, end + 1000 * 1000 + 3456);
         System.out.println("~~~~~~~~~~~~~~~~~");
@@ -72,5 +72,4 @@ public class TestJodaTime {
                 .toFormatter();
         System.out.println(periodFormatter.print(period));
     }
-
 }

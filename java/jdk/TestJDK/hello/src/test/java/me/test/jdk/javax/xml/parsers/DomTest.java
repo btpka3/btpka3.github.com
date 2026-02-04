@@ -1,5 +1,7 @@
 package me.test.jdk.javax.xml.parsers;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.io.StringReader;
 import java.io.StringWriter;
 import javax.xml.parsers.DocumentBuilder;
@@ -18,8 +20,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 /**
  * @author dangqian.zll
  * @date 2023/9/27
@@ -28,23 +28,21 @@ public class DomTest {
     @Test
     public void x() throws Throwable {
 
-        String xmlStr = "" +
-                "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n" +
-                "<project>\n" +
-                "   <deps>\n" +
-                "       <dep>\n" +
-                "           <groupId>groupId001</groupId>\n" +
-                "           <groupId>groupId002</groupId>\n" +
-                "           <artifactId>artifactId001</artifactId>\n" +
-                "       </dep>\n" +
-                "   </deps>\n" +
-                "</project>\n";
+        String xmlStr = "" + "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n"
+                + "<project>\n"
+                + "   <deps>\n"
+                + "       <dep>\n"
+                + "           <groupId>groupId001</groupId>\n"
+                + "           <groupId>groupId002</groupId>\n"
+                + "           <artifactId>artifactId001</artifactId>\n"
+                + "       </dep>\n"
+                + "   </deps>\n"
+                + "</project>\n";
         InputSource inputSource = new InputSource(new StringReader(xmlStr));
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = factory.newDocumentBuilder();
         Document doc = dBuilder.parse(inputSource);
-
 
         XPath xPath = XPathFactory.newInstance().newXPath();
 
@@ -77,12 +75,10 @@ public class DomTest {
         Node cloneNode = depEle.cloneNode(true);
         depsEle.appendChild(cloneNode);
 
-
         TransformerFactory tf = TransformerFactory.newInstance();
         Transformer trans = tf.newTransformer();
         StringWriter sw = new StringWriter();
         trans.transform(new DOMSource(doc), new StreamResult(sw));
-
 
         System.out.println("========= ");
         System.out.println(sw);

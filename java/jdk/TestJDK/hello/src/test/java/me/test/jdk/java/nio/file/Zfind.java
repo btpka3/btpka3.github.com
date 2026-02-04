@@ -34,25 +34,22 @@ public class Zfind {
                 .forEach(System.out::println);
 
         System.out.println("Done.");
-
     }
 
     public static boolean pathMatchInZip(Path path) {
-//        return true;
+        //        return true;
         return path.toString().endsWith(".class");
-//        return path.toString().contains("com.alibaba.engine.core.operator.Operator");
+        //        return path.toString().contains("com.alibaba.engine.core.operator.Operator");
     }
 
     public static boolean contentMatchInZip(String content) {
 
-//        return content.contains("jmenv.tbsite.net");
+        //        return content.contains("jmenv.tbsite.net");
         return content.contains("WEB-INF/logback.xml");
-        //return true;
+        // return true;
     }
 
-
     public static Stream<URI> findInzip(Path zipFilePath) {
-
 
         Map<String, String> env = new HashMap<>();
         env.put("create", "true");

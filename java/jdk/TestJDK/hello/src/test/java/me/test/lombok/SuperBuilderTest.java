@@ -13,10 +13,7 @@ public class SuperBuilderTest {
 
     @Test
     public void test01() {
-        Aaa aaa = Aaa.builder()
-                .name("zhang3")
-                .address("hangzhou")
-                .build();
+        Aaa aaa = Aaa.builder().name("zhang3").address("hangzhou").build();
         System.out.println(aaa);
 
         Bbb bbb = Bbb.builder()

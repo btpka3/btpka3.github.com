@@ -50,7 +50,6 @@ public class CountDownLatchTest {
         // wait for all to finish
         doneSignal.await(10, TimeUnit.SECONDS);
 
-
         System.out.println("所有任务已经执行完毕");
 
         boolean allSuccess = taskList.stream().allMatch(task -> Objects.equals("handle_success", task.getStatus()));
@@ -59,7 +58,6 @@ public class CountDownLatchTest {
 
         // 通知所有子子任务都已经执行完毕，但不知道该提交还是该回滚。
         commitSignal.countDown();
-
     }
 
     public static class Worker implements Runnable {
@@ -70,8 +68,11 @@ public class CountDownLatchTest {
 
         private String status;
 
-
-        Worker(CountDownLatch startSignal, CountDownLatch doneSignal, CountDownLatch commitSignal, AtomicBoolean shouldCommit) {
+        Worker(
+                CountDownLatch startSignal,
+                CountDownLatch doneSignal,
+                CountDownLatch commitSignal,
+                AtomicBoolean shouldCommit) {
             this.startSignal = startSignal;
             this.doneSignal = doneSignal;
             this.commitSignal = commitSignal;
@@ -100,7 +101,6 @@ public class CountDownLatchTest {
                 doneSignal.countDown();
             }
 
-
             // 最多等待1分钟，等其他所有子任务完成
             try {
                 commitSignal.await();
@@ -116,7 +116,6 @@ public class CountDownLatchTest {
                 status = "handle_rollback";
             }
         }
-
 
         void doWork() {
             if (runError) {

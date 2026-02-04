@@ -67,7 +67,7 @@ public class NettyEchoClient {
                                 log.info("using SSL");
                                 p.addLast(sslCtx.newHandler(ch.alloc(), HOST, PORT));
                             }
-                            //p.addLast(new LoggingHandler(LogLevel.INFO));
+                            // p.addLast(new LoggingHandler(LogLevel.INFO));
                             p.addLast(new MyEchoClientHandler());
                         }
                     });
@@ -89,9 +89,9 @@ public class NettyEchoClient {
 
         public MyEchoClientHandler() {
             firstMessage = Unpooled.buffer(NettyEchoClient.SIZE);
-//            for (int i = 0; i < firstMessage.capacity(); i++) {
-//                firstMessage.writeByte((byte) i);
-//            }
+            //            for (int i = 0; i < firstMessage.capacity(); i++) {
+            //                firstMessage.writeByte((byte) i);
+            //            }
 
             firstMessage.writeBytes(ByteBuffer.wrap("aaabbb".getBytes(StandardCharsets.UTF_8)));
             firstMessage.writeBytes(ByteBuffer.wrap("111222".getBytes(StandardCharsets.UTF_8)));

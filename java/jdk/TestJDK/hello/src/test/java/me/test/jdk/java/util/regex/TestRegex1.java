@@ -14,15 +14,12 @@ public class TestRegex1 {
      */
     public static void testEscape() {
 
-        String str = "file:/Users/zll/work/git-repo/github/btpka3/btpka3.github.com/java/spring/first-spring-boot-data-mongo/data-domain/build/libs/data-domain-0.1.0.jar\n";
+        String str =
+                "file:/Users/zll/work/git-repo/github/btpka3/btpka3.github.com/java/spring/first-spring-boot-data-mongo/data-domain/build/libs/data-domain-0.1.0.jar\n";
 
         String reg1 = "/data-domain-.*\\.jar";
         Pattern p1 = Pattern.compile(reg1);
 
-
         System.out.println(p1.matcher(str).find());
-
-
     }
-
 }

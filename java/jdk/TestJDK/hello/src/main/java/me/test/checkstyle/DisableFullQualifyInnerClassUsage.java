@@ -1,6 +1,5 @@
 package me.test.checkstyle;
 
-
 /**
  * 测试禁止使用 inner class : org.apache.commons.lang3.ObjectUtils.Nul;
  */

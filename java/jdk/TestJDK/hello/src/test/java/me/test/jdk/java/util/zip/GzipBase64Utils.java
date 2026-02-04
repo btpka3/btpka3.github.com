@@ -24,9 +24,7 @@ public class GzipBase64Utils {
     public static String getGzipBase64FromBytes(@Nonnull byte[] bytes) {
         try {
             ByteArrayOutputStream byteArrOut = new ByteArrayOutputStream(2 * 1024);
-            try (
-                    GZIPOutputStream gzipOut = new GZIPOutputStream(byteArrOut);
-            ) {
+            try (GZIPOutputStream gzipOut = new GZIPOutputStream(byteArrOut); ) {
                 gzipOut.write(bytes);
             }
             byte[] gzipBytes = byteArrOut.toByteArray();
@@ -35,7 +33,6 @@ public class GzipBase64Utils {
             throw new RuntimeException("failed to encode data to gzipBase64 str", e);
         }
     }
-
 
     @Nonnull
     public static String getStrFromGzipBase64(@Nonnull String str) {
@@ -46,10 +43,8 @@ public class GzipBase64Utils {
     public static byte[] getBytesFromGzipBase64(@Nonnull String str) {
         byte[] base64Bytes = str.getBytes(StandardCharsets.UTF_8);
         byte[] gzipBytes = Base64.getDecoder().decode(base64Bytes);
-        try (
-                InputStream gipIn = new ByteArrayInputStream(gzipBytes);
-                GZIPInputStream gzipIn = new GZIPInputStream(gipIn);
-        ) {
+        try (InputStream gipIn = new ByteArrayInputStream(gzipBytes);
+                GZIPInputStream gzipIn = new GZIPInputStream(gipIn); ) {
             return gzipIn.readAllBytes();
         } catch (IOException e) {
             throw new RuntimeException("failed to decode data from gzipBase64 str", e);

@@ -13,7 +13,6 @@ public class ChannelTest {
 
     public static void main(String[] args) throws IOException {
 
-
         InputStream in = ChannelTest.class.getResourceAsStream("ChannelTest.txt");
 
         ReadableByteChannel inChannel = Channels.newChannel(in);
@@ -27,6 +26,5 @@ public class ChannelTest {
             }
             buf.clear();
         }
-
     }
 }

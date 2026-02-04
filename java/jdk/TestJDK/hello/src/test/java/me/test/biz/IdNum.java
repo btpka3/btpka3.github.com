@@ -13,15 +13,10 @@ public class IdNum {
 
         System.out.println(isValid18("11010519491231002X"));
         System.out.println(isValid18("440524188001010014"));
-
     }
 
-    private static final int[] WEIGHTS = new int[]{
-            7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2, 1
-    };
-    private static final char[] VERIFY_CODES = new char[]{
-            '1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2'
-    };
+    private static final int[] WEIGHTS = new int[] {7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2, 1};
+    private static final char[] VERIFY_CODES = new char[] {'1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2'};
 
     public static boolean isValid18(String idNo) {
 

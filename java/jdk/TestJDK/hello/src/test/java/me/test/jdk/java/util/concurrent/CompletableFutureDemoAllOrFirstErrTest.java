@@ -23,9 +23,7 @@ public class CompletableFutureDemoAllOrFirstErrTest {
      * 遇到第一个报错就立即返回，或者等待所有的任务都成功完成。
      */
     @SafeVarargs
-    public static CompletableFuture<Void> allOrFirstErr(
-            CompletableFuture<String>... futures
-    ) {
+    public static CompletableFuture<Void> allOrFirstErr(CompletableFuture<String>... futures) {
         CompletableFuture<Void> all = CompletableFuture.allOf(futures);
         for (CompletableFuture<String> f : futures) {
             f.whenComplete((result, e) -> {
@@ -108,18 +106,17 @@ public class CompletableFutureDemoAllOrFirstErrTest {
         }
     }
 
-
     // -------------------------- 测试用
 
     public static void log(String step, Object data, Throwable e) {
         ZonedDateTime zdt = ZonedDateTime.now();
-        System.out.printf("[%s][%4d - %30s] - %10s : %s%n",
+        System.out.printf(
+                "[%s][%4d - %30s] - %10s : %s%n",
                 zdt.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME),
                 Thread.currentThread().getId(),
                 Thread.currentThread().getName(),
                 step,
-                data
-        );
+                data);
         if (e != null) {
             e.printStackTrace();
         }

@@ -16,9 +16,8 @@ public class OptionalTest {
     @Test
     public void testFlatMap01() {
 
-        String newValue = Optional.of("a")
-                .flatMap(v -> Optional.<String>ofNullable(null))
-                .orElse("bbb");
+        String newValue =
+                Optional.of("a").flatMap(v -> Optional.<String>ofNullable(null)).orElse("bbb");
 
         Assertions.assertEquals("bbb", newValue);
     }

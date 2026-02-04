@@ -25,7 +25,6 @@ public class ComparatorTest {
         }
 
         {
-
             list.add(null);
         }
 
@@ -58,7 +57,6 @@ public class ComparatorTest {
         }
         return list;
     }
-
 
     List<M> newList2() {
 
@@ -94,15 +92,9 @@ public class ComparatorTest {
         return list;
     }
 
-
     @Test
     public void testNullFirstAndReverse01() {
-        List<String> list = Arrays.asList(
-                "bb",
-                "aa",
-                null,
-                "cc"
-        );
+        List<String> list = Arrays.asList("bb", "aa", null, "cc");
         list.sort(Comparator.nullsLast(Comparator.<String>naturalOrder()).reversed());
 
         Assertions.assertNull(null, list.get(0));
@@ -111,21 +103,15 @@ public class ComparatorTest {
         Assertions.assertEquals("aa", list.get(3));
     }
 
-
     @Test
     public void testNullFirstAndReverse02() {
-
 
         List<M> list = newList1();
 
         // 先比较整个对象，再比较keyz
         list.sort(Comparator.nullsLast(
-                Comparator.comparing(
-                        M::getAge,
-                        Comparator.nullsLast(Comparator.<Integer>naturalOrder())
-                )
-        ).reversed());
-
+                        Comparator.comparing(M::getAge, Comparator.nullsLast(Comparator.<Integer>naturalOrder())))
+                .reversed());
 
         Assertions.assertNull(list.get(0));
         Assertions.assertEquals("sun7", list.get(1).getName());
@@ -133,28 +119,21 @@ public class ComparatorTest {
         Assertions.assertEquals("zhou8", list.get(3).getName());
         Assertions.assertEquals("zhang3", list.get(4).getName());
         Assertions.assertEquals("wang5", list.get(5).getName());
-
     }
-
 
     @Test
     public void testNullFirstAndReverse03() {
 
-
         List<M> list = newList2();
-
 
         list.sort(Comparator.comparing(
                 M::getAge,
-                Comparator.nullsLast(Comparator.<Integer>naturalOrder()).reversed()
-        ));
-
+                Comparator.nullsLast(Comparator.<Integer>naturalOrder()).reversed()));
 
         Assertions.assertEquals("li4", list.get(0).getName());
         Assertions.assertEquals("zhao6", list.get(1).getName());
         Assertions.assertEquals("zhang3", list.get(2).getName());
         Assertions.assertEquals("wang5", list.get(3).getName());
-
     }
 
     public static class M {
@@ -179,10 +158,7 @@ public class ComparatorTest {
 
         @Override
         public String toString() {
-            return "M{" +
-                    "name='" + name + '\'' +
-                    ", age=" + age +
-                    '}';
+            return "M{" + "name='" + name + '\'' + ", age=" + age + '}';
         }
     }
 }

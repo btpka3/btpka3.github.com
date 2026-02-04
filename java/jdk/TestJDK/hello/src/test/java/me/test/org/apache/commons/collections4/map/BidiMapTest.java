@@ -22,7 +22,6 @@ public class BidiMapTest {
         map.put("1", "2");
         map.put("3", "2");
 
-
         Assertions.assertEquals(2, map.size());
         Assertions.assertEquals("C", map.get("A"));
         Assertions.assertEquals("3", map.get("2"));
@@ -30,7 +29,5 @@ public class BidiMapTest {
         BidiMap map2 = map.inverseBidiMap();
         Assertions.assertEquals("A", map2.get("C"));
         Assertions.assertEquals("2", map2.get("3"));
-
     }
-
 }

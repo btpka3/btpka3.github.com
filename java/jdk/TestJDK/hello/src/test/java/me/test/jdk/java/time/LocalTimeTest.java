@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test;
  */
 public class LocalTimeTest {
 
-
     public static void main(String[] args) throws InterruptedException {
 
         fromDate();
@@ -25,7 +24,6 @@ public class LocalTimeTest {
         minus();
     }
 
-
     // LocalDateTime <- Instant <- Date
     static void fromDate() {
         System.out.println("============================= fromDate");
@@ -33,7 +31,7 @@ public class LocalTimeTest {
         System.out.println("Date          : " + date);
         Instant instant = date.toInstant();
         System.out.println("Instant       : " + instant);
-        //LocalDateTime ldt = LocalDateTime.ofInstant(instant, ZoneOffset.UTC);
+        // LocalDateTime ldt = LocalDateTime.ofInstant(instant, ZoneOffset.UTC);
         LocalDateTime ldt = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
         System.out.println("LocalDateTime : " + ldt);
     }
@@ -45,9 +43,9 @@ public class LocalTimeTest {
         System.out.println("LocalDateTime : " + ldt);
         // Instant instant = ldt.toInstant(ZoneOffset.UTC);
         Instant instant = ldt.atZone(
-                // ZoneId.systemDefault()
-                ZoneOffset.ofHours(8)
-        ).toInstant();
+                        // ZoneId.systemDefault()
+                        ZoneOffset.ofHours(8))
+                .toInstant();
         System.out.println("Instant       : " + instant);
         Date date = Date.from(instant);
         System.out.println("Date          : " + date);
@@ -61,7 +59,8 @@ public class LocalTimeTest {
         System.out.println("formated str  : " + text);
         LocalDateTime parsedDateLdt = LocalDateTime.parse(text, DateTimeFormatter.ISO_DATE_TIME);
         System.out.println("parsed        : " + parsedDateLdt);
-        System.out.println("parsed1        : " + LocalDateTime.parse("2018-10-22 17-11-48", DateTimeFormatter.ofPattern("yyyy-MM-dd HH-mm-ss")));
+        System.out.println("parsed1        : "
+                + LocalDateTime.parse("2018-10-22 17-11-48", DateTimeFormatter.ofPattern("yyyy-MM-dd HH-mm-ss")));
     }
 
     static void settingLocalDateTime() {
@@ -79,8 +78,7 @@ public class LocalTimeTest {
 
         LocalDateTime ldt = LocalDateTime.of(2000, 1, 2, 11, 22, 33, 444 * 1000 * 1000);
 
-        LocalDateTime newLdt = ldt
-                .minusYears(1)
+        LocalDateTime newLdt = ldt.minusYears(1)
                 .plusMonths(1)
                 .plusDays(1)
                 .plusHours(1)
@@ -97,13 +95,11 @@ public class LocalTimeTest {
 
         LocalDateTime ldt = LocalDateTime.of(2019, 6, 21, 02, 24, 58, 444 * 1000 * 1000);
 
-        LocalDateTime newLdt = ldt
-                .minusDays(6 * 30);
+        LocalDateTime newLdt = ldt.minusDays(6 * 30);
 
         System.out.println("LocalDateTime     : " + ldt);
         System.out.println("new LocalDateTime : " + newLdt);
     }
-
 
     /**
      * String -> LocalDateTime -> millis
@@ -119,13 +115,11 @@ public class LocalTimeTest {
 
         System.out.println("localDateTime = " + localDateTime);
 
-        long millis = localDateTime.atZone(ZoneOffset.systemDefault())
-                .toInstant()
-                .toEpochMilli();
+        long millis =
+                localDateTime.atZone(ZoneOffset.systemDefault()).toInstant().toEpochMilli();
         System.out.println("dateTimeInMillis = " + millis);
 
         String fmtStr = formatter.format(LocalDateTime.ofInstant(Instant.ofEpochMilli(millis), ZoneId.systemDefault()));
         System.out.println("fmtStr = " + fmtStr);
-
     }
 }

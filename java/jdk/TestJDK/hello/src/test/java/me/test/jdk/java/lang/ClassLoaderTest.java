@@ -38,7 +38,7 @@ public class ClassLoaderTest {
         System.out.println("object1.getName() = " + object1.getName());
         System.out.println("object2.get() = " + object2.get());
 
-        //create new class loader so classes can be reloaded.
+        // create new class loader so classes can be reloaded.
 
         classLoader = new MyClassLoader(parentClassLoader);
         myObjectClass = classLoader.loadClass(className);
@@ -48,7 +48,6 @@ public class ClassLoaderTest {
 
         System.out.println("object1.getName() = " + object1.getName());
         System.out.println("object2.get() = " + object2.get());
-
     }
 
     /**
@@ -60,7 +59,7 @@ public class ClassLoaderTest {
     public void test02() throws Exception {
         URL dirUrl = ClassLoaderTest.class.getResource("/");
         System.out.println("dirUrl = " + dirUrl);
-        URLClassLoader cl = new URLClassLoader(new URL[]{dirUrl}, null, null);
+        URLClassLoader cl = new URLClassLoader(new URL[] {dirUrl}, null, null);
         Class clazz = Class.forName("me.test.jdk.java.lang.MyParentClass", true, cl);
         System.out.println("clazz.getName() = " + clazz.getName());
 
@@ -78,8 +77,7 @@ public class ClassLoaderTest {
         }
 
         public Class loadClass(String name) throws ClassNotFoundException {
-            if (!className.equals(name))
-                return super.loadClass(name);
+            if (!className.equals(name)) return super.loadClass(name);
 
             try {
                 URL myUrl = ClassLoaderTest.class.getClassLoader().getResource("MyChildClass.class");
@@ -107,7 +105,6 @@ public class ClassLoaderTest {
 
             return null;
         }
-
     }
 
     /**
@@ -152,7 +149,7 @@ public class ClassLoaderTest {
         System.out.println();
 
         classPath = new ClassGraph()
-                //.addClassLoader(xxxClassLoader)
+                // .addClassLoader(xxxClassLoader)
                 .getClasspath();
         System.out.println("=========== classPath : " + classPath);
         System.out.println("===========");
@@ -168,11 +165,7 @@ public class ClassLoaderTest {
                 System.out.println(s);
             }
         }
-
     }
 
-    public void testf() {
-
-    }
-
+    public void testf() {}
 }

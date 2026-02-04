@@ -15,7 +15,7 @@ import java.util.Arrays;
 public class SimpleSelectSort {
 
     public static void main(String[] args) throws Exception {
-        Integer[] numbers = new Integer[]{49, 38, 65, 97, 76, 13, 27, 49};
+        Integer[] numbers = new Integer[] {49, 38, 65, 97, 76, 13, 27, 49};
         selectionSort(numbers);
     }
 
@@ -41,5 +41,4 @@ public class SimpleSelectSort {
             System.out.println("loop [" + i + "] : " + Arrays.asList(numbers));
         }
     }
-
 }

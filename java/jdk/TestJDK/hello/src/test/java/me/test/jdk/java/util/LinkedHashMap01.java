@@ -18,6 +18,5 @@ public class LinkedHashMap01 {
         System.out.println(m);
         m.get("e");
         System.out.println(m);
-
     }
 }

@@ -42,8 +42,7 @@ public class Item {
             return false;
         }
         Item item = (Item) o;
-        return Objects.equals(name, item.name) &&
-                Objects.equals(value, item.value);
+        return Objects.equals(name, item.name) && Objects.equals(value, item.value);
     }
 
     @Override
@@ -54,9 +53,6 @@ public class Item {
 
     @Override
     public String toString() {
-        return "Item{" +
-                "name='" + name + '\'' +
-                ", value='" + value + '\'' +
-                '}';
+        return "Item{" + "name='" + name + '\'' + ", value='" + value + '\'' + '}';
     }
 }

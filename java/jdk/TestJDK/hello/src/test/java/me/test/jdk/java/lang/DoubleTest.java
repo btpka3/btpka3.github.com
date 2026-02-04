@@ -81,9 +81,9 @@ public class DoubleTest {
         System.out.println("================ This is an error fixed sample.");
         // Do NOT use this constructor, See the javadoc.
         // ERROR example : System.out.println(new BigDecimal(2.55));
-        //BigDecimal b = new BigDecimal(0.1); 
+        // BigDecimal b = new BigDecimal(0.1);
         BigDecimal b = new BigDecimal("0.1");
-        //b = b.setScale(1, RoundingMode.HALF_UP);
+        // b = b.setScale(1, RoundingMode.HALF_UP);
         BigDecimal val = BigDecimal.ZERO;
         for (int i = 0; i < 10; i++) {
             val = val.add(b);
@@ -106,6 +106,5 @@ public class DoubleTest {
         JSONObject jsonObj = JSON.parseObject(jsonStr);
         Assertions.assertEquals("1.74670532799E12", jsonObj.getString("a"));
         Assertions.assertEquals("1.74670532799E12", MapUtils.getString(jsonObj, "a"));
-
     }
 }

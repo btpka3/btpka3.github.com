@@ -1,5 +1,7 @@
 package me.test.com.alibaba.fastjson;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
@@ -28,8 +30,6 @@ import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 /**
  * @author dangqian.zll
  * @date 2024/3/20
@@ -39,8 +39,7 @@ public class JsonTest {
     @Test
     public void testJGeneric01() {
         String jsonStr = "{\"111\":222}";
-        Map map = JSON.parseObject(jsonStr, new TypeReference<Map<Long, Long>>() {
-        });
+        Map map = JSON.parseObject(jsonStr, new TypeReference<Map<Long, Long>>() {});
         assertEquals(222L, map.get(111L));
         Map.Entry entry = (Map.Entry) map.entrySet().toArray()[0];
         assertEquals(Long.class, entry.getKey().getClass());
@@ -56,7 +55,8 @@ public class JsonTest {
         map.put("a", "aaa");
         map.put("b", "HelloWorld".getBytes(StandardCharsets.UTF_8));
 
-        String jsonStr = JSON.toJSONString(map, SerializerFeature.WriteNonStringKeyAsString, SerializerFeature.PrettyFormat);
+        String jsonStr =
+                JSON.toJSONString(map, SerializerFeature.WriteNonStringKeyAsString, SerializerFeature.PrettyFormat);
         System.out.println(jsonStr);
     }
 
@@ -77,21 +77,19 @@ public class JsonTest {
         s.setClassRoom("classRoom1");
         Map m = new HashMap(4);
         m.put("p", s);
-        String str = JSON.toJSONString(m,
+        String str = JSON.toJSONString(
+                m,
                 SerializerFeature.WriteMapNullValue,
                 SerializerFeature.WriteClassName,
-                SerializerFeature.PrettyFormat
-        );
+                SerializerFeature.PrettyFormat);
         System.out.println(str);
     }
-
 
     @Test
     public void testNullOrEmptyStr() {
         Assertions.assertNull(JSON.parseObject(null, Student.class));
         Assertions.assertNull(JSON.parseObject("", Student.class));
     }
-
 
     @Test
     public void testPojoList() {
@@ -115,14 +113,12 @@ public class JsonTest {
                 list,
                 SerializerFeature.WriteMapNullValue,
                 SerializerFeature.WriteClassName,
-                SerializerFeature.PrettyFormat
-        );
-//        Object obj = JSON.parseObject(jsonStr);
-//        List list2 = JSON.parseArray(jsonStr);
+                SerializerFeature.PrettyFormat);
+        //        Object obj = JSON.parseObject(jsonStr);
+        //        List list2 = JSON.parseArray(jsonStr);
         List list2 = JSON.parseArray(jsonStr, Student.class);
         System.out.println(list2);
     }
-
 
     @SneakyThrows
     @Test
@@ -143,10 +139,7 @@ public class JsonTest {
         s.put("father", f);
         // WORKS
         {
-            String str = JSON.toJSONString(
-                    s,
-                    SerializerFeature.PrettyFormat
-            );
+            String str = JSON.toJSONString(s, SerializerFeature.PrettyFormat);
             System.out.println("=========str:\n" + str);
             JSONObject newSon = JSON.parseObject(str);
 
@@ -161,11 +154,7 @@ public class JsonTest {
             // 如果有循环依赖，且使用了 SerializerFeature.DisableCircularReferenceDetect 属性，则会
             // 抛出异常
             try {
-                JSON.toJSONString(
-                        s,
-                        SerializerFeature.DisableCircularReferenceDetect,
-                        SerializerFeature.PrettyFormat
-                );
+                JSON.toJSONString(s, SerializerFeature.DisableCircularReferenceDetect, SerializerFeature.PrettyFormat);
                 Assertions.fail("should throw exception");
             } catch (Exception e) {
                 e.printStackTrace();
@@ -219,23 +208,16 @@ public class JsonTest {
         m.put("li4", "444");
         m.put("wang5", "555");
         m.put("zhao6", "666");
-        String jsonStr = JSON.toJSONString(m,
-                SerializerFeature.PrettyFormat,
-                SerializerFeature.MapSortField
-        );
+        String jsonStr = JSON.toJSONString(m, SerializerFeature.PrettyFormat, SerializerFeature.MapSortField);
         System.out.println("========== jsonStr:");
         System.out.println(jsonStr);
     }
-
 
     // ====================
 
     @Test
     public void testCustomWriterAndReader() {
-        MyObj obj = MyObj.builder()
-                .name("zhang3")
-                .type(MyType.AAA)
-                .build();
+        MyObj obj = MyObj.builder().name("zhang3").type(MyType.AAA).build();
         String expectedJsonStr = "{\"name\":\"zhang3\",\"type\":\"aaa\"}";
 
         // 序列化
@@ -253,7 +235,6 @@ public class JsonTest {
             Assertions.assertEquals("zhang3", obj2.getName());
             Assertions.assertSame(MyType.AAA, obj2.getType());
         }
-
     }
 
     @Data
@@ -284,21 +265,14 @@ public class JsonTest {
 
         @Override
         public String toString() {
-            return "MyType{" +
-                    "value='" + value + '\'' +
-                    '}';
+            return "MyType{" + "value='" + value + '\'' + '}';
         }
     }
 
     public static class MyTypeObjectCodec implements ObjectSerializer, ObjectDeserializer {
 
-        public void write(
-                JSONSerializer serializer,
-                Object object,
-                Object fieldName,
-                Type fieldType,
-                int features
-        ) throws IOException {
+        public void write(JSONSerializer serializer, Object object, Object fieldName, Type fieldType, int features)
+                throws IOException {
             if (object == null) {
                 serializer.writeNull();
                 return;
@@ -326,6 +300,4 @@ public class JsonTest {
             return 0L;
         }
     }
-
-
 }

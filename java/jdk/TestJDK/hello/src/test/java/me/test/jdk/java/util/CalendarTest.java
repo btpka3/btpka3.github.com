@@ -13,7 +13,6 @@ public class CalendarTest {
         test01();
     }
 
-
     public static void test01() {
 
         System.out.println("============================= test01");
@@ -28,6 +27,5 @@ public class CalendarTest {
         Date date2 = c.getTime();
         System.out.println("date2           : " + date2);
         System.out.println("date2.getTime() : " + date2.getTime());
-
     }
 }

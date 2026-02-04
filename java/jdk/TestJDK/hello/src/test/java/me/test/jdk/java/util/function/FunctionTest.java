@@ -10,23 +10,19 @@ import java.util.function.Supplier;
  */
 public class FunctionTest {
 
-
-    public static interface Aaa {
+    public interface Aaa {
         String sayHello(String s1, String s2);
     }
 
-    public static interface Bbb {
+    public interface Bbb {
         String bbb();
     }
-
 
     static class Person {
         String name = "N/A";
         Integer age = 0;
 
-        Person() {
-
-        }
+        Person() {}
 
         Person(String name, int age) {
             this.name = name;
@@ -35,10 +31,7 @@ public class FunctionTest {
 
         @Override
         public String toString() {
-            return "Person{" +
-                    "name='" + name + '\'' +
-                    ", age=" + age +
-                    '}';
+            return "Person{" + "name='" + name + '\'' + ", age=" + age + '}';
         }
     }
 
@@ -52,12 +45,11 @@ public class FunctionTest {
         }
     }
 
-
     public static void main(String[] args) {
-//        test00();
-//        test01();
-//        test02();
-//        test03();
+        //        test00();
+        //        test01();
+        //        test02();
+        //        test03();
         test04();
     }
 
@@ -121,7 +113,6 @@ public class FunctionTest {
         System.out.println(f.apply("zhang3"));
     }
 
-
     public static void test02() {
         System.out.println("===================== test02 : Reference to a static method (2 param)");
 
@@ -149,11 +140,8 @@ public class FunctionTest {
         ComparisonProvider myComparisonProvider = new ComparisonProvider();
         Comparator<Person> c = myComparisonProvider::compareByName;
         Person[] personArr = {
-                new Person("zhang3", 23),
-                new Person("li4", 13),
-                new Person("wang5", 33),
+            new Person("zhang3", 23), new Person("li4", 13), new Person("wang5", 33),
         };
-
 
         Arrays.sort(personArr, c);
 

@@ -1,6 +1,5 @@
 package me.test.jdk.jfr;
 
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
@@ -61,9 +60,8 @@ public class RecordEventTest {
         }
     }
 
-
     public void producer01() {
-        //Producer myProducer = new Producer("Demo Producer", "A demo event producer.", http://www.example.com/demo/);
+        // Producer myProducer = new Producer("Demo Producer", "A demo event producer.", http://www.example.com/demo/);
     }
 
     /**
@@ -112,6 +110,4 @@ public class RecordEventTest {
             System.out.println(event.getStackTrace());
         });
     }
-
-
 }

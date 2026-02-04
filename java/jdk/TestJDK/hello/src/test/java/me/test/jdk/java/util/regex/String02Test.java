@@ -12,11 +12,9 @@ import org.junit.jupiter.api.Test;
  */
 public class String02Test {
 
-
     /**
      * split 的值中有转义字符。
      */
-
     @Test
     public void test01() {
         // 分隔符
@@ -40,7 +38,6 @@ public class String02Test {
         Assertions.assertEquals("C", arr[2]);
         Assertions.assertEquals("D1\\|D2\\|D3", arr[3]);
         Assertions.assertEquals("E", arr[4]);
-
     }
 
     /**

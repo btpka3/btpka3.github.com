@@ -38,9 +38,7 @@ public class AnonymousClassTest {
 
         // 不同 Anonymous 类实例 是 equals 的
         Assertions.assertEquals(pojo1.prop1, pojo2.prop1);
-
     }
-
 
     public static class MyPojo {
         static HashSet<String> staticProp1 = new HashSet<String>() {
@@ -60,7 +58,5 @@ public class AnonymousClassTest {
                 add("parent");
             }
         };
-
-
     }
 }

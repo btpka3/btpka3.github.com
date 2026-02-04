@@ -43,19 +43,17 @@ import java.util.Arrays;
 public class HeapSort {
 
     public static void main(String[] args) throws Exception {
-        Integer[] numbers = new Integer[]{49, 38, 65, 97, 76, 13, 27, 49};
+        Integer[] numbers = new Integer[] {49, 38, 65, 97, 76, 13, 27, 49};
         heapSort(numbers);
 
         System.out.println(Arrays.asList(numbers));
     }
-
 
     public static void swap(Integer[] numbers, int i, int j) {
         Integer tmp = numbers[i];
         numbers[i] = numbers[j];
         numbers[j] = tmp;
     }
-
 
     public static void heapSort(Integer[] numbers) {
         if (numbers == null || numbers.length <= 1) {

@@ -21,7 +21,7 @@ public class InheritStaticFieldTest {
         Assertions.assertEquals(new HashSet<>(Arrays.asList("B", "C")), A.set);
     }
 
-    public static abstract class A {
+    public abstract static class A {
         public static final Set<String> set = new HashSet<>();
     }
 
@@ -36,6 +36,4 @@ public class InheritStaticFieldTest {
             set.add("C");
         }
     }
-
-
 }

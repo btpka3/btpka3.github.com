@@ -11,7 +11,6 @@ public class TestRegex {
 
     public static void main(String[] args) {
         testEscape();
-
     }
 
     /**
@@ -56,5 +55,4 @@ public class TestRegex {
         boolean result = P_ANum.matcher(s).matches();
         Assertions.assertTrue(result);
     }
-
 }

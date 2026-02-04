@@ -11,5 +11,4 @@ public class Autoboxing1 {
             System.out.println("i=" + i + " : b=" + b);
         }
     }
-
 }

@@ -1,5 +1,7 @@
 package me.test;
 
+import static org.xmlunit.assertj3.XmlAssert.assertThat;
+
 import java.io.StringReader;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -7,8 +9,6 @@ import javax.xml.transform.dom.DOMSource;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
-
-import static org.xmlunit.assertj3.XmlAssert.assertThat;
 
 /**
  * @author dangqian.zll
@@ -20,18 +20,13 @@ public class XmlUnitTest {
     final String xmlStr = "<a><b attr=\"abc\"></b></a>";
 
     protected void assert01(Object obj) {
-        assertThat(obj)
-                .nodesByXPath("//a/b/@attr")
-                .exist();
+        assertThat(obj).nodesByXPath("//a/b/@attr").exist();
         assertThat(obj).hasXPath("//a/b/@attr");
 
-        assertThat(obj).nodesByXPath("//a/b/c")
-                .doNotExist();
+        assertThat(obj).nodesByXPath("//a/b/c").doNotExist();
         assertThat(obj).doesNotHaveXPath("//a/b/c");
-        assertThat(obj).nodesByXPath("//a/b")
-                .exist();
+        assertThat(obj).nodesByXPath("//a/b").exist();
     }
-
 
     /**
      * input=String
@@ -60,8 +55,6 @@ public class XmlUnitTest {
      */
     @Test
     public void testError01() {
-        assertThat(xmlStr)
-                .nodesByXPath("//a/b/@attr")
-                .doNotExist();
+        assertThat(xmlStr).nodesByXPath("//a/b/@attr").doNotExist();
     }
 }

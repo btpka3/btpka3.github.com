@@ -50,24 +50,19 @@ public class MyJmhBenchmarkTest {
      * Level.Invocation : 运行方法调用的时候执行。慎用
      */
     @Setup(Level.Trial)
-    public void jmhSetUp() {
-
-    }
+    public void jmhSetUp() {}
 
     @TearDown(Level.Trial)
-    public void jmhTearDown() {
-
-    }
-
+    public void jmhTearDown() {}
 
     @Benchmark
     public void testStringKey(SharedParam sharedParam) {
-        //优化前的代码
+        // 优化前的代码
     }
 
     @Benchmark
     public void testObjectKey(SharedParam sharedParam) {
-        //要测试的优化后代码
+        // 要测试的优化后代码
     }
 
     public static void main(String[] args) throws RunnerException {

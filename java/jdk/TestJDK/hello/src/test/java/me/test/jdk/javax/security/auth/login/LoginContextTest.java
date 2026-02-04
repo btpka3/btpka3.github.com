@@ -14,34 +14,30 @@ import org.junit.jupiter.api.Test;
  */
 public class LoginContextTest {
 
-
     @SneakyThrows
     @Test
     public void x() {
         Configuration config = Configuration.getConfiguration();
 
-        //Subject subject = new Subject(true,);
+        // Subject subject = new Subject(true,);
 
-//        LoginContext lc = new LoginContext(
-//                "CountFiles",
-//                subject,
-//                new TextCallbackHandler(),
-//                config
-//        );
-        LoginContext lc = new LoginContext(
-                "Client",
-                new TextCallbackHandler()
-        );
+        //        LoginContext lc = new LoginContext(
+        //                "CountFiles",
+        //                subject,
+        //                new TextCallbackHandler(),
+        //                config
+        //        );
+        LoginContext lc = new LoginContext("Client", new TextCallbackHandler());
 
         try {
             lc.login();
-            //如果没有异常抛出，则表示认证成功
+            // 如果没有异常抛出，则表示认证成功
         } catch (Exception e) {
             System.out.println("Login failed: " + e);
             System.exit(-1);
         }
 
-        //以认证用户的身份执行代码
+        // 以认证用户的身份执行代码
         Object o = Subject.callAs(lc.getSubject(), () -> {
             return "private data with " + lc.getSubject();
         });

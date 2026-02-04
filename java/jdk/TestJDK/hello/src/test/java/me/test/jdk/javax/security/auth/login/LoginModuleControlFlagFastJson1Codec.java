@@ -15,13 +15,8 @@ import javax.security.auth.login.AppConfigurationEntry;
  */
 public class LoginModuleControlFlagFastJson1Codec implements ObjectSerializer, ObjectDeserializer {
 
-    public void write(
-            JSONSerializer serializer,
-            Object object,
-            Object fieldName,
-            Type fieldType,
-            int features
-    ) throws IOException {
+    public void write(JSONSerializer serializer, Object object, Object fieldName, Type fieldType, int features)
+            throws IOException {
         AppConfigurationEntry.LoginModuleControlFlag flat = (AppConfigurationEntry.LoginModuleControlFlag) object;
         String str = null;
         if (flat == AppConfigurationEntry.LoginModuleControlFlag.REQUIRED) {

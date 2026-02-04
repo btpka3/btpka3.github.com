@@ -1,5 +1,7 @@
 package me.test.jdk.java.util;
 
+import static java.util.Map.entry;
+
 import com.alibaba.fastjson.JSON;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -11,8 +13,6 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;
-
-import static java.util.Map.entry;
 
 /**
  * @author dangqian.zll
@@ -36,7 +36,6 @@ public class MapTest {
             System.out.println("key=" + entry.getKey() + ", value=" + entry.getValue());
         }
         System.out.println(rankedRuleMap);
-
     }
 
     @Test
@@ -54,17 +53,10 @@ public class MapTest {
         Map<String, Object> map1 = Map.of(
                 "k1", "v1",
                 "k2", "v2",
-                "k3", "v3"
+                "k3", "v3");
 
-        );
-        Map<String, Object> map2 = Map.ofEntries(
-                entry("k1", "v1"),
-                entry("k2", "v2"),
-                entry("k3", "v3")
-
-        );
+        Map<String, Object> map2 = Map.ofEntries(entry("k1", "v1"), entry("k2", "v2"), entry("k3", "v3"));
     }
-
 
     /**
      * ⚠️ 需要增加JVM参数: --add-opens=java.base/java.util=ALL-UNNAMED
@@ -91,7 +83,8 @@ public class MapTest {
             }
             nodeNonNullCount++;
             int linkLength = findNodeLinkLength(node);
-            nodeLinkLengthMap.computeIfAbsent(linkLength, k -> new AtomicInteger(0))
+            nodeLinkLengthMap
+                    .computeIfAbsent(linkLength, k -> new AtomicInteger(0))
                     .incrementAndGet();
         }
 
@@ -113,6 +106,4 @@ public class MapTest {
         }
         return i;
     }
-
-
 }

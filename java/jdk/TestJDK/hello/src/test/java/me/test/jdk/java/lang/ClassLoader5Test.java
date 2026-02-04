@@ -15,7 +15,6 @@ import org.junit.jupiter.api.Test;
  */
 public class ClassLoader5Test {
 
-
     /**
      * ERROR: 直接使用当前类的 classloader 运行 会报错。
      *
@@ -30,7 +29,7 @@ public class ClassLoader5Test {
 
         for (int i = 0; i < 2; i++) {
             System.out.println("============== i = " + i);
-            URLClassLoader cl = new URLClassLoader(new URL[]{jarFile.toURI().toURL()}, null, null);
+            URLClassLoader cl = new URLClassLoader(new URL[] {jarFile.toURI().toURL()}, null, null);
             Class clazz = Class.forName("org.apache.commons.lang3.tuple.MutablePair", true, cl);
             Object o = clazz.getConstructor().newInstance();
             ClassLoader5TcHolder.HOLDER.set(o);
@@ -45,15 +44,12 @@ public class ClassLoader5Test {
         File jarFile = new File(System.getProperty("user.home")
                 + "/.m2/repository/org/apache/commons/commons-lang3/3.9/commons-lang3-3.9.jar");
 
-        //URL classLoader5RunnableUrl = ClassLoader5Test.class.getResource("ClassLoader5Runnable.class");
+        // URL classLoader5RunnableUrl = ClassLoader5Test.class.getResource("ClassLoader5Runnable.class");
         URL testClassesUrl = ClassLoader5Test.class.getResource("/");
         Assertions.assertNotNull(testClassesUrl);
         System.out.println("===== testClassesUrl= " + testClassesUrl);
 
-        URL[] urls = new URL[]{
-                jarFile.toURI().toURL(),
-                testClassesUrl
-        };
+        URL[] urls = new URL[] {jarFile.toURI().toURL(), testClassesUrl};
 
         for (int i = 0; i < 2; i++) {
             System.out.println("============== i = " + i);
@@ -75,5 +71,4 @@ public class ClassLoader5Test {
             ((Runnable) runnableClazz.getConstructor().newInstance()).run();
         }
     }
-
 }

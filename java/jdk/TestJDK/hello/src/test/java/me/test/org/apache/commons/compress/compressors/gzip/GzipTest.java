@@ -33,18 +33,18 @@ public class GzipTest {
 
         String newStr = fromGzipBase64(base64Str);
         System.out.println("newStr = " + newStr);
-
     }
 
     @Test
     public void testCompressionRatio() throws IOException {
-//        String f= "/Users/zll/data0/work/git-repo/github/btpka3/btpka3.github.com/java/jdk/TestJDK/hello/src/test/java/me/test/org/apache/commons/compress/compressors/gzip/GzipTest.java";
+        //        String f=
+        // "/Users/zll/data0/work/git-repo/github/btpka3/btpka3.github.com/java/jdk/TestJDK/hello/src/test/java/me/test/org/apache/commons/compress/compressors/gzip/GzipTest.java";
         String f = "/Users/zll/Downloads/b.txt";
         String txt = IOUtils.toString(new FileInputStream(f), StandardCharsets.UTF_8);
         System.out.println("raw text size : " + txt.length());
         String base64Str = toGzipBase64(txt);
-        System.out.println("new text size : " + base64Str.length() + ", percent=" + (1.0 * base64Str.length() / txt.length()));
-
+        System.out.println(
+                "new text size : " + base64Str.length() + ", percent=" + (1.0 * base64Str.length() / txt.length()));
     }
 
     @Test
@@ -55,12 +55,10 @@ public class GzipTest {
         System.out.println(new String(baos.toByteArray(), StandardCharsets.UTF_8));
     }
 
-
     public static String encodeBase64ZippedString(String in) throws IOException {
         ByteArrayOutputStream byteArrOut = new ByteArrayOutputStream(1024);
         try (OutputStream base64Out = new Base64OutputStream(byteArrOut);
-             OutputStream gzipOut = new GZIPOutputStream(base64Out)
-        ) {
+                OutputStream gzipOut = new GZIPOutputStream(base64Out)) {
             gzipOut.write(in.getBytes(StandardCharsets.UTF_8));
         }
         return byteArrOut.toString();
@@ -70,10 +68,8 @@ public class GzipTest {
         InputStream strIn = IOUtils.toInputStream(str, StandardCharsets.UTF_8);
 
         ByteArrayOutputStream byteArrOut = new ByteArrayOutputStream(2 * 1024);
-        try (
-                OutputStream base64Out = new Base64OutputStream(byteArrOut);
-                GZIPOutputStream gzipOut = new GZIPOutputStream(base64Out);
-        ) {
+        try (OutputStream base64Out = new Base64OutputStream(byteArrOut);
+                GZIPOutputStream gzipOut = new GZIPOutputStream(base64Out); ) {
             IOUtils.copy(strIn, gzipOut);
         }
 
@@ -82,11 +78,9 @@ public class GzipTest {
     }
 
     protected String fromGzipBase64(String str) throws IOException {
-        try (
-                InputStream strIn = IOUtils.toInputStream(str, StandardCharsets.UTF_8);
+        try (InputStream strIn = IOUtils.toInputStream(str, StandardCharsets.UTF_8);
                 Base64InputStream base64In = new Base64InputStream(strIn);
-                GZIPInputStream gzipIn = new GZIPInputStream(base64In);
-        ) {
+                GZIPInputStream gzipIn = new GZIPInputStream(base64In); ) {
             return IOUtils.toString(gzipIn, StandardCharsets.UTF_8);
         }
     }

@@ -20,11 +20,11 @@ import org.junit.jupiter.api.Test;
 @Slf4j
 public class ListeningExecutorServiceTest {
     public void logExecutorStatus(ListeningExecutorService executor, String tag) {
-        log.info("check executor status [{}] : isShutdown={}, isTerminated={}",
+        log.info(
+                "check executor status [{}] : isShutdown={}, isTerminated={}",
                 tag,
                 executor.isShutdown(),
-                executor.isTerminated()
-        );
+                executor.isTerminated());
     }
 
     /**
@@ -35,7 +35,6 @@ public class ListeningExecutorServiceTest {
     public void testSubmitAfterShutdown() {
         MyJob job1 = new MyJob("1");
         MyJob job2 = new MyJob("2");
-
 
         ThreadFactory threadFactory = new BasicThreadFactory.Builder()
                 .namingPattern("my-job-%d")
@@ -49,8 +48,7 @@ public class ListeningExecutorServiceTest {
                 TimeUnit.MILLISECONDS,
                 new ArrayBlockingQueue<>(100),
                 threadFactory,
-                new ThreadPoolExecutor.CallerRunsPolicy()
-        ));
+                new ThreadPoolExecutor.CallerRunsPolicy()));
         logExecutorStatus(executor, "AAA");
 
         executor.submit(job1);
@@ -70,10 +68,10 @@ public class ListeningExecutorServiceTest {
         System.out.println("====Done.");
     }
 
-
     public static class MyJob implements Runnable {
 
         String id;
+
         @Getter
         boolean runed;
 
@@ -81,12 +79,10 @@ public class ListeningExecutorServiceTest {
             this.id = id;
         }
 
-
         @Override
         public void run() {
             log.info("===== JOB_RUNNING, id={}", id);
             this.runed = true;
         }
-
     }
 }

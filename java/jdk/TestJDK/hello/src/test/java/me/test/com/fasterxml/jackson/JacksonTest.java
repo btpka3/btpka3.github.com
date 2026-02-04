@@ -50,11 +50,9 @@ public class JacksonTest {
         prettyPrinter.indentArraysWith(DefaultIndenter.SYSTEM_LINEFEED_INSTANCE);
         mapper.setDefaultPrettyPrinter(prettyPrinter);
 
-        String jsonStr = mapper.writerWithDefaultPrettyPrinter()
-                .writeValueAsString(user);
+        String jsonStr = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(user);
         System.out.println("======jsonStr:\n" + jsonStr);
     }
-
 
     @Data
     @SuperBuilder(toBuilder = true)

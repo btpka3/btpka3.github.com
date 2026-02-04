@@ -21,18 +21,20 @@ public class CommandLineParserTest {
         Options options = new Options();
         options.addOption("a", "all", false, "do not hide entries starting with .");
         options.addOption("A", "almost-all", false, "do not list implied . and ..");
-        options.addOption("b", "escape", false, "print octal escapes for non-graphic "
-                + "characters");
-        options.addOption(Option.builder("SIZE").longOpt("block-size")
+        options.addOption("b", "escape", false, "print octal escapes for non-graphic " + "characters");
+        options.addOption(Option.builder("SIZE")
+                .longOpt("block-size")
                 .desc("use SIZE-byte blocks")
                 .hasArg()
                 .get());
-        options.addOption("B", "ignore-backups", false, "do not list implied entries "
-                + "ending with ~");
-        options.addOption("c", false, "with -lt: sort by, and show, ctime (time of last "
-                + "modification of file status information) with "
-                + "-l:show ctime and sort by name otherwise: sort "
-                + "by ctime");
+        options.addOption("B", "ignore-backups", false, "do not list implied entries " + "ending with ~");
+        options.addOption(
+                "c",
+                false,
+                "with -lt: sort by, and show, ctime (time of last "
+                        + "modification of file status information) with "
+                        + "-l:show ctime and sort by name otherwise: sort "
+                        + "by ctime");
         options.addOption("C", false, "list entries by columns");
 
         options.addOption(Option.builder("i")
@@ -49,10 +51,10 @@ public class CommandLineParserTest {
         Options options = newOptions();
         HelpFormatter formatter = HelpFormatter.builder()
                 .setShowSince(false)
-//                .setOptionFormatBuilder(
-//                        OptionFormatter.builder()
-//                                .build()
-//                )
+                //                .setOptionFormatBuilder(
+                //                        OptionFormatter.builder()
+                //                                .build()
+                //                )
                 .get();
         formatter.printOptions(options);
     }
@@ -62,7 +64,7 @@ public class CommandLineParserTest {
         Options options = newOptions();
 
         CommandLineParser parser = new DefaultParser();
-        String[] args = new String[]{"-a", "--block-size", "111"};
+        String[] args = new String[] {"-a", "--block-size", "111"};
         CommandLine line = parser.parse(options, args);
         Assertions.assertTrue(line.hasOption("a"));
         Assertions.assertEquals("111", line.getOptionValue("SIZE"));
@@ -72,7 +74,7 @@ public class CommandLineParserTest {
     public void commandLineParse02() throws IOException, ParseException {
         Options options = newOptions();
         CommandLineParser parser = new DefaultParser();
-        String[] args = new String[]{"--block-size=111"};
+        String[] args = new String[] {"--block-size=111"};
         CommandLine line = parser.parse(options, args);
         Assertions.assertEquals("111", line.getOptionValue("SIZE"));
     }
@@ -81,7 +83,7 @@ public class CommandLineParserTest {
     public void commandLineParse03() throws IOException, ParseException {
         Options options = newOptions();
         CommandLineParser parser = new DefaultParser();
-        String[] args = new String[]{"-i=aaa", "-i=bbb", "-i=ccc"};
+        String[] args = new String[] {"-i=aaa", "-i=bbb", "-i=ccc"};
         CommandLine line = parser.parse(options, args);
         Assertions.assertTrue(line.hasOption("i"));
         String[] values = line.getOptionValues("i");
@@ -95,7 +97,7 @@ public class CommandLineParserTest {
     public void commandLineParse04() throws IOException, ParseException {
         Options options = newOptions();
         CommandLineParser parser = new DefaultParser();
-        String[] args = new String[]{"-i=aaa,bbb,ccc"};
+        String[] args = new String[] {"-i=aaa,bbb,ccc"};
         CommandLine line = parser.parse(options, args);
         Assertions.assertTrue(line.hasOption("i"));
         String[] values = line.getOptionValues("i");
@@ -104,5 +106,4 @@ public class CommandLineParserTest {
         Assertions.assertEquals("bbb", values[1]);
         Assertions.assertEquals("ccc", values[2]);
     }
-
 }

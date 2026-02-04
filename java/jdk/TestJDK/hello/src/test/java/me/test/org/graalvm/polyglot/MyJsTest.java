@@ -30,28 +30,27 @@ public class MyJsTest {
         try (Context context = Context.newBuilder()
                 .allowHostAccess(HostAccess.ALL)
                 .allowHostClassLookup(className -> true)
-                .build()
-        ) {
-            Value value = context.eval("js", "(function myFun(user){" +
-                    // ✅ public 字段直接修改
-                    "user.hobby='bbb';" +
-                    // ✅ 通过setter修改
-                    "user.setName(user.getName()+'_'+user.getAge());" +
-                    // ❌ 私有字段不可修改
-                    "user.age=22;" +
-
-                    "var MyUserClass = Java.type('me.test.js.MyJsTest$MyUser');" +
-                    "var father = new MyUserClass();" +
-                    "father.setName('li4');" +
-                    "user.setFather(father);" +
-
-                    "var mother = new (Java.type('me.test.js.MyJsTest$MyUser'))();" +
-                    "mother.setName('wang5');" +
-                    "user.setMother(mother);" +
-
-                    "return 33;" +
-                    "})");
-
+                .build()) {
+            Value value = context.eval(
+                    "js",
+                    "(function myFun(user){" +
+                            // ✅ public 字段直接修改
+                            "user.hobby='bbb';"
+                            +
+                            // ✅ 通过setter修改
+                            "user.setName(user.getName()+'_'+user.getAge());"
+                            +
+                            // ❌ 私有字段不可修改
+                            "user.age=22;"
+                            + "var MyUserClass = Java.type('me.test.js.MyJsTest$MyUser');"
+                            + "var father = new MyUserClass();"
+                            + "father.setName('li4');"
+                            + "user.setFather(father);"
+                            + "var mother = new (Java.type('me.test.js.MyJsTest$MyUser'))();"
+                            + "mother.setName('wang5');"
+                            + "user.setMother(mother);"
+                            + "return 33;"
+                            + "})");
 
             Value returnValue = value.execute(user);
             System.out.println("user2 = " + user);
@@ -113,13 +112,12 @@ public class MyJsTest {
 
         @Override
         public String toString() {
-            return "MyUser{" +
-                    "name='" + name + '\'' +
-                    ", age=" + age +
-                    ", hobby='" + hobby + '\'' +
-                    ", father=" + father +
-                    ", mother=" + mother +
-                    '}';
+            return "MyUser{" + "name='"
+                    + name + '\'' + ", age="
+                    + age + ", hobby='"
+                    + hobby + '\'' + ", father="
+                    + father + ", mother="
+                    + mother + '}';
         }
     }
 }

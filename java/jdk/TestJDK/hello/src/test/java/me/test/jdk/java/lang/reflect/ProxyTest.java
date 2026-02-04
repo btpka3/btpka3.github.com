@@ -1,5 +1,10 @@
 package me.test.jdk.java.lang.reflect;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
@@ -10,12 +15,6 @@ import java.util.Map;
 import java.util.Objects;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * @author dangqian.zll
@@ -29,9 +28,8 @@ public class ProxyTest {
         Map<String, String> map = new HashMap<>(32);
         Object proxyObj = Proxy.newProxyInstance(
                 ProxyTest.class.getClassLoader(),
-                new Class[]{Map.class, MyInterface.class},
-                new MyInvocationHandler(map)
-        );
+                new Class[] {Map.class, MyInterface.class},
+                new MyInvocationHandler(map));
 
         assertSame(proxyObj, proxyObj);
         assertEquals(proxyObj, proxyObj);
@@ -45,7 +43,6 @@ public class ProxyTest {
         assertEquals("my-aaa", proxyMap.get("a"));
         assertEquals("aaa", map.get("a"));
     }
-
 
     @SneakyThrows
     <T, V> V getFiled(Class<T> clazz, T obj, String filedName) {
@@ -81,9 +78,8 @@ public class ProxyTest {
 
         Object proxyObj = Proxy.newProxyInstance(
                 ProxyTest.class.getClassLoader(),
-                new Class[]{Map.class, MyInterface.class},
-                new MyInvocationHandler(map)
-        );
+                new Class[] {Map.class, MyInterface.class},
+                new MyInvocationHandler(map));
         assertInstanceOf(MyInterface.class, proxyObj);
         assertInstanceOf(Map.class, proxyObj);
         assertFalse(proxyObj instanceof HashMap);
@@ -97,10 +93,7 @@ public class ProxyTest {
         // assertEquals(0.75f, (float) getFiled(proxyObj.class, map, "loadFactor"));
     }
 
-
-    public interface MyInterface {
-
-    }
+    public interface MyInterface {}
 
     public static class MyInvocationHandler implements InvocationHandler {
 
@@ -124,5 +117,4 @@ public class ProxyTest {
             return method.invoke(target, args);
         }
     }
-
 }

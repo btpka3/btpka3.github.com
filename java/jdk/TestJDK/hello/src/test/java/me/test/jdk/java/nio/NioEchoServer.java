@@ -46,27 +46,26 @@ public class NioEchoServer {
                     ServerSocketChannel channel = ServerSocketChannel.open();
                     channel.configureBlocking(false);
                     ServerSocket serverSocket = channel.socket();
-                    //serverSocket.bind(new InetSocketAddress("0.0.0.0", 9999));
+                    // serverSocket.bind(new InetSocketAddress("0.0.0.0", 9999));
                     serverSocket.bind(new InetSocketAddress("192.168.1.3", 9999));
                     channel.register(selector, SelectionKey.OP_ACCEPT);
                 }
-//                {
-//                    ServerSocketChannel channel = ServerSocketChannel.open();
-//                    channel.configureBlocking(false);
-//                    ServerSocket serverSocket = channel.socket();
-//                    serverSocket.bind(new InetSocketAddress("localhost", 9997));
-//                    channel.register(selector, SelectionKey.OP_ACCEPT);
-//                }
-//                {
-//                    ServerSocketChannel channel = ServerSocketChannel.open();
-//                    channel.configureBlocking(false);
-//                    // 增加一个 lookback 回环地址
-//                    // sudo ifconfig lo0 alias 127.0.0.2 up
-//                    ServerSocket serverSocket = channel.socket();
-//                    serverSocket.bind(new InetSocketAddress("127.0.0.2", 9998));
-//                    channel.register(selector, SelectionKey.OP_ACCEPT);
-//                }
-
+                //                {
+                //                    ServerSocketChannel channel = ServerSocketChannel.open();
+                //                    channel.configureBlocking(false);
+                //                    ServerSocket serverSocket = channel.socket();
+                //                    serverSocket.bind(new InetSocketAddress("localhost", 9997));
+                //                    channel.register(selector, SelectionKey.OP_ACCEPT);
+                //                }
+                //                {
+                //                    ServerSocketChannel channel = ServerSocketChannel.open();
+                //                    channel.configureBlocking(false);
+                //                    // 增加一个 lookback 回环地址
+                //                    // sudo ifconfig lo0 alias 127.0.0.2 up
+                //                    ServerSocket serverSocket = channel.socket();
+                //                    serverSocket.bind(new InetSocketAddress("127.0.0.2", 9998));
+                //                    channel.register(selector, SelectionKey.OP_ACCEPT);
+                //                }
 
                 while (true) {
 
@@ -84,8 +83,7 @@ public class NioEchoServer {
                                 + ", acceptable = " + curKey.isAcceptable()
                                 + ", connectable = " + curKey.isConnectable()
                                 + ", readable = " + curKey.isReadable()
-                                + ", writeable = " + curKey.isWritable()
-                        );
+                                + ", writeable = " + curKey.isWritable());
                         if (!curKey.isValid()) {
                             continue;
                         }
@@ -156,13 +154,13 @@ public class NioEchoServer {
                             // 由于 '.' 不是最后一个字符，后面至少还换行符，故会先close，此时就不能再回显了。
                             if (clientChannel.isOpen()) {
                                 // 回显给客户端
-                                clientChannel.write(ByteBuffer.wrap(new byte[]{c}));
-                                //clientChannel.write(ByteBuffer.wrap(String.valueOf(c).getBytes(StandardCharsets.UTF_8)));
+                                clientChannel.write(ByteBuffer.wrap(new byte[] {c}));
+                                // clientChannel.write(ByteBuffer.wrap(String.valueOf(c).getBytes(StandardCharsets.UTF_8)));
                             }
                             // 判断是否需要结束
                             if ('.' == c) {
                                 log.info("read terminal command '.' : closing.~~ {}", regKey);
-                                clientChannel.write(ByteBuffer.wrap(new byte[]{'\n'}));
+                                clientChannel.write(ByteBuffer.wrap(new byte[] {'\n'}));
                                 clientChannel.socket().close();
                                 clientChannel.close();
                             }

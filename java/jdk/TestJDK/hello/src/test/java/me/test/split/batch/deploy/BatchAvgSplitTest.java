@@ -16,9 +16,7 @@ public class BatchAvgSplitTest {
 
     protected static List<List<String>> toIpList(List<List<Machine>> result) {
         return result.stream()
-                .map(l -> l.stream()
-                        .map(Machine::getIp)
-                        .collect(Collectors.toList()))
+                .map(l -> l.stream().map(Machine::getIp).collect(Collectors.toList()))
                 .collect(Collectors.toList());
     }
 
@@ -32,18 +30,44 @@ public class BatchAvgSplitTest {
     @Test
     public void groupToDetailList01() {
         List<Machine> list = Arrays.asList(
-                Machine.builder().cluster("C1").unit("U1").group("G1").room("R2").ip("I3").build(),
-                Machine.builder().cluster("C1").unit("U1").group("G1").room("R1").ip("I2").build(),
-                Machine.builder().cluster("C1").unit("U1").group("G1").room("R1").ip("I1").build(),
-                Machine.builder().cluster("C1").unit("U1").group("G1").room("R2").ip("I4").build(),
-                Machine.builder().cluster("C1").unit("U1").group("G1").room("R2").ip("I5").build()
-        );
+                Machine.builder()
+                        .cluster("C1")
+                        .unit("U1")
+                        .group("G1")
+                        .room("R2")
+                        .ip("I3")
+                        .build(),
+                Machine.builder()
+                        .cluster("C1")
+                        .unit("U1")
+                        .group("G1")
+                        .room("R1")
+                        .ip("I2")
+                        .build(),
+                Machine.builder()
+                        .cluster("C1")
+                        .unit("U1")
+                        .group("G1")
+                        .room("R1")
+                        .ip("I1")
+                        .build(),
+                Machine.builder()
+                        .cluster("C1")
+                        .unit("U1")
+                        .group("G1")
+                        .room("R2")
+                        .ip("I4")
+                        .build(),
+                Machine.builder()
+                        .cluster("C1")
+                        .unit("U1")
+                        .group("G1")
+                        .room("R2")
+                        .ip("I5")
+                        .build());
 
-        List<List<Machine>> result = BatchAvgSplitService.groupToDetailList(
-                list,
-                service.mostDetailGroupMapper,
-                service.machineComparator
-        );
+        List<List<Machine>> result =
+                BatchAvgSplitService.groupToDetailList(list, service.mostDetailGroupMapper, service.machineComparator);
         Assertions.assertEquals(2, result.size());
 
         List<List<String>> newResult = toIpList(result);
@@ -54,15 +78,9 @@ public class BatchAvgSplitTest {
     @Test
     public void toOrderList01() {
         List<List<String>> list = Arrays.asList(
-                Arrays.asList("I1", "I2"),
-                Arrays.asList("I3", "I4", "I5"),
-                Collections.singletonList("I6")
-        );
+                Arrays.asList("I1", "I2"), Arrays.asList("I3", "I4", "I5"), Collections.singletonList("I6"));
         List<String> result = BatchAvgSplitService.toOrderList(list);
-        Assertions.assertEquals(
-                Arrays.asList("I1", "I3", "I6", "I2", "I4", "I5"),
-                result
-        );
+        Assertions.assertEquals(Arrays.asList("I1", "I3", "I6", "I2", "I4", "I5"), result);
     }
 
     /**
@@ -71,12 +89,41 @@ public class BatchAvgSplitTest {
     @Test
     public void split01() {
         List<Machine> list = Arrays.asList(
-                Machine.builder().cluster("C1").unit("U1").group("G1").room("R1").ip("I1").build(),
-                Machine.builder().cluster("C1").unit("U2").group("G2").room("R2").ip("I2").build(),
-                Machine.builder().cluster("C1").unit("U3").group("G3").room("R3").ip("I3").build(),
-                Machine.builder().cluster("C1").unit("U4").group("G4").room("R4").ip("I4").build(),
-                Machine.builder().cluster("C1").unit("U5").group("G5").room("R5").ip("I5").build()
-        );
+                Machine.builder()
+                        .cluster("C1")
+                        .unit("U1")
+                        .group("G1")
+                        .room("R1")
+                        .ip("I1")
+                        .build(),
+                Machine.builder()
+                        .cluster("C1")
+                        .unit("U2")
+                        .group("G2")
+                        .room("R2")
+                        .ip("I2")
+                        .build(),
+                Machine.builder()
+                        .cluster("C1")
+                        .unit("U3")
+                        .group("G3")
+                        .room("R3")
+                        .ip("I3")
+                        .build(),
+                Machine.builder()
+                        .cluster("C1")
+                        .unit("U4")
+                        .group("G4")
+                        .room("R4")
+                        .ip("I4")
+                        .build(),
+                Machine.builder()
+                        .cluster("C1")
+                        .unit("U5")
+                        .group("G5")
+                        .room("R5")
+                        .ip("I5")
+                        .build());
 
         List<List<Machine>> result = service.split(list, 7);
         List<List<String>> newResult = toIpList(result);
@@ -97,12 +144,41 @@ public class BatchAvgSplitTest {
     @Test
     public void split02() {
         List<Machine> list = Arrays.asList(
-                Machine.builder().cluster("C1").unit("U1").group("G1").room("R1").ip("I1").build(),
-                Machine.builder().cluster("C1").unit("U2").group("G2").room("R2").ip("I2").build(),
-                Machine.builder().cluster("C1").unit("U3").group("G3").room("R3").ip("I3").build(),
-                Machine.builder().cluster("C1").unit("U4").group("G4").room("R4").ip("I4").build(),
-                Machine.builder().cluster("C1").unit("U5").group("G5").room("R5").ip("I5").build()
-        );
+                Machine.builder()
+                        .cluster("C1")
+                        .unit("U1")
+                        .group("G1")
+                        .room("R1")
+                        .ip("I1")
+                        .build(),
+                Machine.builder()
+                        .cluster("C1")
+                        .unit("U2")
+                        .group("G2")
+                        .room("R2")
+                        .ip("I2")
+                        .build(),
+                Machine.builder()
+                        .cluster("C1")
+                        .unit("U3")
+                        .group("G3")
+                        .room("R3")
+                        .ip("I3")
+                        .build(),
+                Machine.builder()
+                        .cluster("C1")
+                        .unit("U4")
+                        .group("G4")
+                        .room("R4")
+                        .ip("I4")
+                        .build(),
+                Machine.builder()
+                        .cluster("C1")
+                        .unit("U5")
+                        .group("G5")
+                        .room("R5")
+                        .ip("I5")
+                        .build());
 
         List<List<Machine>> result = service.split(list, 3);
         List<List<String>> newResult = toIpList(result);
@@ -116,15 +192,48 @@ public class BatchAvgSplitTest {
     @Test
     public void split102() {
         List<Machine> list = Arrays.asList(
-                Machine.builder().cluster("C1").unit("U1").group("G1").room("R1").ip("I1").build(),
-                Machine.builder().cluster("C1").unit("U1").group("G1").room("R1").ip("I2").build(),
-
-                Machine.builder().cluster("C1").unit("U1").group("G1").room("R2").ip("I3").build(),
-                Machine.builder().cluster("C1").unit("U1").group("G1").room("R2").ip("I4").build(),
-                Machine.builder().cluster("C1").unit("U1").group("G1").room("R2").ip("I5").build(),
-
-                Machine.builder().cluster("C1").unit("U1").group("G1").room("R3").ip("I6").build()
-        );
+                Machine.builder()
+                        .cluster("C1")
+                        .unit("U1")
+                        .group("G1")
+                        .room("R1")
+                        .ip("I1")
+                        .build(),
+                Machine.builder()
+                        .cluster("C1")
+                        .unit("U1")
+                        .group("G1")
+                        .room("R1")
+                        .ip("I2")
+                        .build(),
+                Machine.builder()
+                        .cluster("C1")
+                        .unit("U1")
+                        .group("G1")
+                        .room("R2")
+                        .ip("I3")
+                        .build(),
+                Machine.builder()
+                        .cluster("C1")
+                        .unit("U1")
+                        .group("G1")
+                        .room("R2")
+                        .ip("I4")
+                        .build(),
+                Machine.builder()
+                        .cluster("C1")
+                        .unit("U1")
+                        .group("G1")
+                        .room("R2")
+                        .ip("I5")
+                        .build(),
+                Machine.builder()
+                        .cluster("C1")
+                        .unit("U1")
+                        .group("G1")
+                        .room("R3")
+                        .ip("I6")
+                        .build());
 
         // I1, I3,I6,I2
         List<List<Machine>> result = service.split(list, 3);
@@ -136,19 +245,58 @@ public class BatchAvgSplitTest {
         Assertions.assertEquals(Arrays.asList("I4", "I5"), newResult.get(2));
     }
 
-
     @Test
     public void split201() {
         List<Machine> list = Arrays.asList(
-                Machine.builder().cluster("C1").unit("U1").group("G1").room("R1").ip("I1").build(),
-                Machine.builder().cluster("C1").unit("U1").group("G1").room("R1").ip("I2").build(),
-                Machine.builder().cluster("C1").unit("U1").group("G1").room("R1").ip("I3").build(),
-                Machine.builder().cluster("C1").unit("U1").group("G1").room("R1").ip("I4").build(),
-                Machine.builder().cluster("C1").unit("U1").group("G1").room("R1").ip("I5").build(),
-
-                Machine.builder().cluster("C1").unit("U1").group("G1").room("R2").ip("I6").build(),
-                Machine.builder().cluster("C1").unit("U1").group("G1").room("R2").ip("I7").build()
-        );
+                Machine.builder()
+                        .cluster("C1")
+                        .unit("U1")
+                        .group("G1")
+                        .room("R1")
+                        .ip("I1")
+                        .build(),
+                Machine.builder()
+                        .cluster("C1")
+                        .unit("U1")
+                        .group("G1")
+                        .room("R1")
+                        .ip("I2")
+                        .build(),
+                Machine.builder()
+                        .cluster("C1")
+                        .unit("U1")
+                        .group("G1")
+                        .room("R1")
+                        .ip("I3")
+                        .build(),
+                Machine.builder()
+                        .cluster("C1")
+                        .unit("U1")
+                        .group("G1")
+                        .room("R1")
+                        .ip("I4")
+                        .build(),
+                Machine.builder()
+                        .cluster("C1")
+                        .unit("U1")
+                        .group("G1")
+                        .room("R1")
+                        .ip("I5")
+                        .build(),
+                Machine.builder()
+                        .cluster("C1")
+                        .unit("U1")
+                        .group("G1")
+                        .room("R2")
+                        .ip("I6")
+                        .build(),
+                Machine.builder()
+                        .cluster("C1")
+                        .unit("U1")
+                        .group("G1")
+                        .room("R2")
+                        .ip("I7")
+                        .build());
 
         List<List<Machine>> result = service.split(list, 6);
         List<List<String>> newResult = toIpList(result);
@@ -161,6 +309,4 @@ public class BatchAvgSplitTest {
         Assertions.assertEquals(Arrays.asList("I3"), newResult.get(4));
         Assertions.assertEquals(Arrays.asList("I4"), newResult.get(5));
     }
-
-
 }

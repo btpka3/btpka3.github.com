@@ -16,25 +16,17 @@ public class PatternTest01 {
 
     @Test
     public void testGetFileExtension() {
-        List<String> inputs = Arrays.asList(
-                "中国.人民",
-                "中国.人民.txt",
-                "中国.人民.tar.GZ"
-        );
-        List<String> expectedResults = Arrays.asList(
-                null,
-                "txt",
-                "tar.gz"
-        );
+        List<String> inputs = Arrays.asList("中国.人民", "中国.人民.txt", "中国.人民.tar.GZ");
+        List<String> expectedResults = Arrays.asList(null, "txt", "tar.gz");
         for (int i = 0; i < inputs.size(); i++) {
             String input = inputs.get(i);
             String result = getExt(input);
             String expectedResult = expectedResults.get(i);
             Assertions.assertEquals(
-                    "Expected file extension is `" + expectedResult + "` for input string `" + input + "`, but found `" + result + "`",
+                    "Expected file extension is `" + expectedResult + "` for input string `" + input + "`, but found `"
+                            + result + "`",
                     expectedResult,
-                    result
-            );
+                    result);
         }
     }
 
@@ -43,7 +35,6 @@ public class PatternTest01 {
         Matcher m = p.matcher(s);
         return m.find() ? m.group(1).toLowerCase().substring(1) : null;
     }
-
 
     @Test
     public void x() {
@@ -80,7 +71,6 @@ public class PatternTest01 {
         Assertions.assertEquals("b", g2);
     }
 
-
     @Test
     public void match302() {
 
@@ -90,7 +80,7 @@ public class PatternTest01 {
 
         Assertions.assertTrue(m.matches());
         String g1 = m.group(1);
-        String g2 = null;//m.group(2);
+        String g2 = null; // m.group(2);
         System.out.printf("%-30s -> g1=%s, g2=%s %n", s, g1, g2);
         Assertions.assertEquals("aaaabbb", g1);
         Assertions.assertEquals("b", g2);
@@ -114,7 +104,6 @@ public class PatternTest01 {
         }
     }
 
-
     @Test
     public void match01() {
 
@@ -127,7 +116,6 @@ public class PatternTest01 {
         System.out.printf("%-30s -> %s, start=%d, end=%d%n", s, g, m.start(), m.end());
     }
 
-
     @Test
     public void match02() {
         Pattern p = Pattern.compile("(b+)");
@@ -139,7 +127,6 @@ public class PatternTest01 {
         String g = m.group(1);
         System.out.printf("%-30s -> %s, start=%d, end=%d%n", s, g, m.start(), m.end());
     }
-
 
     static Pattern errCodePattern = Pattern.compile("\\[errCode:([\\w\\-.]{1,128})]");
 
@@ -156,6 +143,4 @@ public class PatternTest01 {
         Assertions.assertEquals("a.B-c_1", getErrCode("111 [errCode:a.B-c_1] 222"));
         Assertions.assertNull(getErrCode("111 222"));
     }
-
-
 }

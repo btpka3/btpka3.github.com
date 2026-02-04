@@ -33,6 +33,4 @@ public class RmiTest {
         String result = service.sayHello("zhang3");
         Assertions.assertEquals("hi zhang3", result);
     }
-
-
 }

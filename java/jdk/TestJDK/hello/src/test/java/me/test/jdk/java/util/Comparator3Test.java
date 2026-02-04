@@ -25,53 +25,25 @@ public class Comparator3Test {
                 Info.builder()
                         .id("ccc")
                         .keys(Arrays.asList(
-                                Key.builder()
-                                        .name("k1")
-                                        .value("v11")
-                                        .build(),
-
-                                Key.builder()
-                                        .name("k2")
-                                        .value("v21")
-                                        .build())
-                        )
+                                Key.builder().name("k1").value("v11").build(),
+                                Key.builder().name("k2").value("v21").build()))
                         .build(),
-
                 Info.builder()
                         .id("aaa")
                         .keys(Arrays.asList(
-                                Key.builder()
-                                        .name("k1")
-                                        .value("v10")
-                                        .build(),
-
-                                Key.builder()
-                                        .name("k2")
-                                        .value("v20")
-                                        .build())
-                        )
+                                Key.builder().name("k1").value("v10").build(),
+                                Key.builder().name("k2").value("v20").build()))
                         .build(),
                 Info.builder()
                         .id("bbb")
                         .keys(Arrays.asList(
-                                Key.builder()
-                                        .name("k1")
-                                        .value("v11")
-                                        .build(),
-
-                                Key.builder()
-                                        .name("k2")
-                                        .value("v20")
-                                        .build())
-                        )
-                        .build()
-        );
+                                Key.builder().name("k1").value("v11").build(),
+                                Key.builder().name("k2").value("v20").build()))
+                        .build());
 
         Comparator.comparing(Key::getName).thenComparing(Key::getValue);
-        Comparator<Key> keyComparator = Comparator.nullsLast(
-                Comparator.comparing(Key::getName)
-                        .thenComparing(Key::getValue)
-        );
+        Comparator<Key> keyComparator =
+                Comparator.nullsLast(Comparator.comparing(Key::getName).thenComparing(Key::getValue));
         Comparator<List<Key>> keyListComparator = (l1, l2) -> {
             int maxSize = Math.max(l1.size(), l2.size());
             for (int i = 0; i < maxSize; i++) {
@@ -85,16 +57,9 @@ public class Comparator3Test {
             return 0;
         };
         Comparator.comparing(Key::getName).thenComparing(Key::getValue);
-        Collections.sort(list, Comparator.comparing(
-                Info::getKeys,
-                keyListComparator
-        ));
-        String ids = list.stream()
-                .map(Info::getId)
-                .collect(Collectors.joining(","));
+        Collections.sort(list, Comparator.comparing(Info::getKeys, keyListComparator));
+        String ids = list.stream().map(Info::getId).collect(Collectors.joining(","));
         Assertions.assertEquals("aaa,bbb,ccc", ids);
-
-
     }
 
     @Data
@@ -114,6 +79,5 @@ public class Comparator3Test {
 
         private String name;
         private String value;
-
     }
 }

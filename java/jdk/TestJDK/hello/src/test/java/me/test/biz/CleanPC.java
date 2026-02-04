@@ -49,16 +49,14 @@ public class CleanPC {
         ;
         System.out.println("deleteFileSize : " + (1.0 * deleteFileSize.get() / 1024 / 1024 / 1024) + "G");
 
-
         if (doDelete) {
-            versionDirs.stream().filter(this::shouldDeleteVersionDir)
-                    .forEach(path -> {
-                        try {
-                            PathUtils.deleteDirectory(path);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    });
+            versionDirs.stream().filter(this::shouldDeleteVersionDir).forEach(path -> {
+                try {
+                    PathUtils.deleteDirectory(path);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
             System.out.println("deleted");
         }
     }
@@ -83,11 +81,7 @@ public class CleanPC {
     protected boolean shouldDeleteVersionDir(Path versionDir) {
         PathFilter pathFilter = FileFilterUtils.and(
                 FileFilterUtils.fileFileFilter(),
-                FileFilterUtils.or(
-                        FileFilterUtils.suffixFileFilter(".jar"),
-                        FileFilterUtils.suffixFileFilter(".pom")
-                )
-        );
+                FileFilterUtils.or(FileFilterUtils.suffixFileFilter(".jar"), FileFilterUtils.suffixFileFilter(".pom")));
         try {
             return PathUtils.walk(versionDir, pathFilter, 1, false)
                     // 全部 最后访问时间都在在给定的时间之前，就可以删除
@@ -105,10 +99,8 @@ public class CleanPC {
     }
 
     protected Set<Path> findVersionDir(Path mavenLocalRepo) throws IOException {
-        PathFilter pathFilter = FileFilterUtils.and(
-                FileFilterUtils.fileFileFilter(),
-                FileFilterUtils.suffixFileFilter(".jar")
-        );
+        PathFilter pathFilter =
+                FileFilterUtils.and(FileFilterUtils.fileFileFilter(), FileFilterUtils.suffixFileFilter(".jar"));
         return PathUtils.walk(mavenLocalRepo, pathFilter, 30, false)
                 .map(Path::getParent)
                 .collect(Collectors.toSet());
@@ -133,8 +125,7 @@ public class CleanPC {
                 Path.of(userHome, "app/logs"),
                 Path.of(userHome, "diamond/logs"),
                 Path.of(userHome, "green-console/logs"),
-                Path.of(userHome, "gong9-mw-demo-boot/logs")
-        );
+                Path.of(userHome, "gong9-mw-demo-boot/logs"));
 
         dirsToBeDelete.forEach(path -> {
             try {
@@ -147,6 +138,4 @@ public class CleanPC {
             }
         });
     }
-
-
 }

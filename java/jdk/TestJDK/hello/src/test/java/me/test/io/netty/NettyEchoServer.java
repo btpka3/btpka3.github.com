@@ -29,7 +29,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class NettyEchoServer {
 
-
     static final int PORT = Integer.parseInt(System.getProperty("port", "9999"));
 
     public static void main(String[] args) throws Exception {
@@ -41,7 +40,6 @@ public class NettyEchoServer {
         EventLoopGroup bossGroup = new MultiThreadIoEventLoopGroup(1, NioIoHandler.newFactory());
         EventLoopGroup workerGroup = new MultiThreadIoEventLoopGroup(NioIoHandler.newFactory());
         final MyEchoServerHandler serverHandler = new MyEchoServerHandler();
-
 
         try {
             ServerBootstrap b = new ServerBootstrap();
@@ -56,7 +54,7 @@ public class NettyEchoServer {
                             if (sslCtx != null) {
                                 p.addLast(sslCtx.newHandler(ch.alloc()));
                             }
-                            //p.addLast(new LoggingHandler(LogLevel.INFO));
+                            // p.addLast(new LoggingHandler(LogLevel.INFO));
                             p.addLast(serverHandler);
                         }
                     });
@@ -86,7 +84,6 @@ public class NettyEchoServer {
             if (msg instanceof ByteBuf) {
                 // TODO: 判断 msg 中包含 '.' 就终止连接。
             }
-
         }
 
         @Override
@@ -115,8 +112,6 @@ public class NettyEchoServer {
                 replyMsg = msg.substring(0, dotIdx);
             }
             ctx.write(replyMsg);
-
-
         }
 
         @Override
@@ -131,5 +126,4 @@ public class NettyEchoServer {
             ctx.close();
         }
     }
-
 }

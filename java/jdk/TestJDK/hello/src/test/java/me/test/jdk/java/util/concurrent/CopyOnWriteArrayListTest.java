@@ -56,7 +56,6 @@ public class CopyOnWriteArrayListTest {
         Thread t2 = new Thread(run);
         t2.setName("BBBBBBBBBBBBB");
         t2.start();
-
     }
 
     @Test

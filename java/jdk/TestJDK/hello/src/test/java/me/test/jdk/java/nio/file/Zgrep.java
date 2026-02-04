@@ -32,12 +32,9 @@ public class Zgrep {
                 .forEach(System.out::println);
 
         System.out.println("Done.");
-
     }
 
-
     public static Stream<URI> findInzip(Path zipFilePath, String searchKey) {
-
 
         Map<String, String> env = new HashMap<>();
         env.put("create", "true");

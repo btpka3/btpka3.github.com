@@ -16,31 +16,23 @@ public class TestRegex2 {
      */
     public static void testEscape() {
 
-/*
-# brew install grep --with-default-names
-cat <<EOF | grep -E -e "^(.*,)?+(abc).*$"
-abcdefg
-aabcde
-aacabc
-ab,ba,abc
-ab,ba,bc
-ab,ba,abcd,bc
-EOF
- */
+        /*
+        # brew install grep --with-default-names
+        cat <<EOF | grep -E -e "^(.*,)?+(abc).*$"
+        abcdefg
+        aabcde
+        aacabc
+        ab,ba,abc
+        ab,ba,bc
+        ab,ba,abcd,bc
+        EOF
+         */
         String target = "abc";
-        List<String> srcList = Arrays.asList(
-                "abcdefg",
-                "aabcde",
-                "aacabc",
-                "ab,ba,abc",
-                "ab,ba,bc",
-                "ab,ba,abcd,bc"
-        );
+        List<String> srcList = Arrays.asList("abcdefg", "aabcde", "aacabc", "ab,ba,abc", "ab,ba,bc", "ab,ba,abcd,bc");
 
-
-        //String reg = "^(abc).*";
-        //String reg = ".*(,abc).*";
-        //String reg = "(^(abc)|(.*(,abc))).*";
+        // String reg = "^(abc).*";
+        // String reg = ".*(,abc).*";
+        // String reg = "(^(abc)|(.*(,abc))).*";
         String reg = "^(.*,)?+(abc).*$";
         Pattern pattern = Pattern.compile(reg);
         srcList.forEach(src -> {
@@ -50,5 +42,4 @@ EOF
             }
         });
     }
-
 }

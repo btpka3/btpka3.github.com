@@ -1,10 +1,10 @@
 package me.test.jdk.java.time;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
-
-import static java.time.temporal.ChronoUnit.DAYS;
 
 /**
  * @author 当千
@@ -17,10 +17,7 @@ public class LocalDateTest {
         LocalDate ld0 = LocalDate.of(2018, 12, 12);
 
         // date -> locateDate
-        LocalDate ld1 = new Date()
-                .toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate();
+        LocalDate ld1 = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
         System.out.println(ld0);
         System.out.println(ld1);

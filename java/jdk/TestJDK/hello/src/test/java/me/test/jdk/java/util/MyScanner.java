@@ -146,8 +146,7 @@ public class MyScanner implements Closeable {
     }
 
     public void close() throws IOException {
-        if (closed)
-            return;
+        if (closed) return;
         if (source instanceof Closeable) {
             try {
                 ((Closeable) source).close();
@@ -187,7 +186,6 @@ public class MyScanner implements Closeable {
         }
 
         return null;
-
     }
 
     // // 最后一次匹配结果在buffer中的开始位置。
@@ -425,7 +423,6 @@ public class MyScanner implements Closeable {
                                 e.printStackTrace();
                             }
                         }
-
                     }
                 }
                 if ((p = x.findWithinHorizon(LINE_PATTERN)) != null) {
@@ -456,60 +453,59 @@ public class MyScanner implements Closeable {
         return new BufferedInputStream(new FileInputStream(dumpFile));
     }
 
-    public final static String[] cols = new String[]{
-            "id",
-            "version",
-            "adjust_price",
-            "area",
-            "buyer_id",
-            "buyer_memo",
-            "cart_id",
-            "channel",
-            "city",
-            "date_created",
-            "expect_send_date",
-            "last_updated",
-            "pay_time",
-            "postage",
-            "province",
-            "receive_date",
-            "receiver",
-            "seller_memo",
-            "send_date",
-            "status",
-            "telphone",
-            "total_price",
-            "urge_count",
-            "weight",
-            "zip_code",
-            "coupon_id",
-            "pindan_id",
-            "gift_id",
-            "invoice_content",
-            "invoice_name",
-            "logistics_id",
-            "logistics_type",
-            "postage_fee",
-            "street",
-            "man_song_detail_id",
-            "man_song_sended",
-            "is_virtual",
-            "adjust_custom_price",
-            "pay_price",
-            "pay_type",
-            "integral",
-            "iphone_code",
-            "grade",
-            "is_free_postage",
-            "parent_id",
-            "source",
-            "full_re_activity",
-            "actual_price",
-            "box_memo",
-            "neibu_channel",
-            "integral_change",
-            "is_delete",
-            "used_balance"
+    public static final String[] cols = new String[] {
+        "id",
+        "version",
+        "adjust_price",
+        "area",
+        "buyer_id",
+        "buyer_memo",
+        "cart_id",
+        "channel",
+        "city",
+        "date_created",
+        "expect_send_date",
+        "last_updated",
+        "pay_time",
+        "postage",
+        "province",
+        "receive_date",
+        "receiver",
+        "seller_memo",
+        "send_date",
+        "status",
+        "telphone",
+        "total_price",
+        "urge_count",
+        "weight",
+        "zip_code",
+        "coupon_id",
+        "pindan_id",
+        "gift_id",
+        "invoice_content",
+        "invoice_name",
+        "logistics_id",
+        "logistics_type",
+        "postage_fee",
+        "street",
+        "man_song_detail_id",
+        "man_song_sended",
+        "is_virtual",
+        "adjust_custom_price",
+        "pay_price",
+        "pay_type",
+        "integral",
+        "iphone_code",
+        "grade",
+        "is_free_postage",
+        "parent_id",
+        "source",
+        "full_re_activity",
+        "actual_price",
+        "box_memo",
+        "neibu_channel",
+        "integral_change",
+        "is_delete",
+        "used_balance"
     };
-
 }

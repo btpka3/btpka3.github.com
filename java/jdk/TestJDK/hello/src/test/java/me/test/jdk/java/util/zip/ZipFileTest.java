@@ -1,5 +1,7 @@
 package me.test.jdk.java.util.zip;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -15,8 +17,6 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 /**
  *
  * @author dangqian.zll
@@ -29,13 +29,11 @@ public class ZipFileTest {
         File f = new File("a.zip");
         ZipFile zipFile = new ZipFile(f);
         String comment = zipFile.getComment();
-        zipFile.entries().asIterator()
-                .forEachRemaining(zipEntry -> {
-                    String entryComment = zipEntry.getComment();
-                    System.out.println(zipEntry.getName());
-                });
+        zipFile.entries().asIterator().forEachRemaining(zipEntry -> {
+            String entryComment = zipEntry.getComment();
+            System.out.println(zipEntry.getName());
+        });
     }
-
 
     @SneakyThrows
     @Test
@@ -53,12 +51,9 @@ public class ZipFileTest {
         File srcFile2 = new File(dir, "b.txt");
         FileUtils.write(srcFile2, "Nice to mtee you~ " + System.currentTimeMillis(), StandardCharsets.UTF_8);
 
-
         File zipFile = new File(dir, "demo.zip");
-        try (
-                FileOutputStream fileOut = new FileOutputStream(zipFile);
-                ZipOutputStream out = new ZipOutputStream(fileOut)
-        ) {
+        try (FileOutputStream fileOut = new FileOutputStream(zipFile);
+                ZipOutputStream out = new ZipOutputStream(fileOut)) {
             out.setComment("Demo comment01");
             // 演示: 顶层文件
             {

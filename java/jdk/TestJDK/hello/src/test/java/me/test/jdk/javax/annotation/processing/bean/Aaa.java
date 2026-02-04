@@ -20,9 +20,7 @@ public class Aaa {
 
     @Override
     public String toString() {
-        return "Aaa{" +
-                "name='" + name + '\'' +
-                '}';
+        return "Aaa{" + "name='" + name + '\'' + '}';
     }
 
     public static void main(String[] args) {

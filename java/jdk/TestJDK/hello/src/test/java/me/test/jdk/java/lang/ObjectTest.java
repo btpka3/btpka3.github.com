@@ -2,7 +2,6 @@ package me.test.jdk.java.lang;
 
 public class ObjectTest {
 
-
     public static void main(String[] args) {
         testClone1();
     }
@@ -30,9 +29,7 @@ public class ObjectTest {
 
         @Override
         public String toString() {
-            return "Aaa{" +
-                    "name='" + name + '\'' +
-                    '}';
+            return "Aaa{" + "name='" + name + '\'' + '}';
         }
 
         @Override

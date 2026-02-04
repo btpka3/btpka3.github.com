@@ -17,12 +17,8 @@ public class Jmx2Test {
         MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
         // 2. 获取 HotSpotDiagnosticMXBean
         ObjectName name = new ObjectName("com.sun.management:type=HotSpotDiagnostic");
-        HotSpotDiagnosticMXBean mxBean = MBeanServerInvocationHandler.newProxyInstance(
-                mbs,
-                name,
-                HotSpotDiagnosticMXBean.class,
-                true
-        );
+        HotSpotDiagnosticMXBean mxBean =
+                MBeanServerInvocationHandler.newProxyInstance(mbs, name, HotSpotDiagnosticMXBean.class, true);
 
         // 3. 执行命令（例如生成堆转储）
         mxBean.dumpHeap("heapdump.hprof", true); // 生成堆转储文件

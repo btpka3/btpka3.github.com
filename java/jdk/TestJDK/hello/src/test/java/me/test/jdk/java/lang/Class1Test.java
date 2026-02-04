@@ -41,7 +41,6 @@ public class Class1Test {
             System.out.println("33333333333");
             System.out.println("clazz `" + clazz + "` not loaded.");
         }
-
     }
 
     public static boolean isClassLoaded(String className) {

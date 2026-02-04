@@ -19,16 +19,15 @@ import javax.crypto.spec.SecretKeySpec;
  */
 public class AesTest {
 
-
-    public static void main(String[] args) throws IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException {
+    public static void main(String[] args)
+            throws IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchAlgorithmException,
+                    NoSuchPaddingException, InvalidAlgorithmParameterException {
 
         String txt = "iBBU7lr2ewT8jAGfaXtefHG82XQjRLKuZDmJp3UxlT8fdz+gKhyt2sNRwTeXcXecjMlVxqb1XxNizUulDLsPOQ==";
         byte[] encdData = Base64.getDecoder().decode(txt);
 
-
         byte[] decdData = aesDec(encdData);
         System.out.println(new String(decdData));
-
 
         ByteBuffer wrapped = ByteBuffer.wrap(decdData, 16, 4);
         int msgLength = wrapped.getInt();
@@ -39,7 +38,6 @@ public class AesTest {
 
         String corpId = new String(decdData, 16 + 4 + msgLength, decdData.length - (16 + 4 + msgLength));
         System.out.println("corpId    : " + corpId);
-
     }
 
     public static final String KEY_ALGORITHM = "AES";
@@ -49,8 +47,9 @@ public class AesTest {
     static final byte[] aesKey = Base64.getDecoder().decode(aesKeyInBase64);
     static final IvParameterSpec iv = new IvParameterSpec(aesKey, 0, 16);
 
-    private static byte[] aesEnc(byte[] msg) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, InvalidAlgorithmParameterException {
-
+    private static byte[] aesEnc(byte[] msg)
+            throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException,
+                    IllegalBlockSizeException, InvalidAlgorithmParameterException {
 
         Key key = new SecretKeySpec(aesKey, KEY_ALGORITHM);
         Cipher c = Cipher.getInstance(ALGORITHM);
@@ -60,7 +59,9 @@ public class AesTest {
         return result;
     }
 
-    private static byte[] aesDec(byte[] msg) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, InvalidAlgorithmParameterException {
+    private static byte[] aesDec(byte[] msg)
+            throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException,
+                    IllegalBlockSizeException, InvalidAlgorithmParameterException {
 
         SecretKey key = new SecretKeySpec(aesKey, KEY_ALGORITHM);
         Cipher c = Cipher.getInstance(ALGORITHM);
@@ -68,5 +69,4 @@ public class AesTest {
         byte[] result = c.doFinal(msg);
         return result;
     }
-
 }

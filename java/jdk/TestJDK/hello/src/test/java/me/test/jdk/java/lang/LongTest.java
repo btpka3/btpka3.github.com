@@ -70,7 +70,6 @@ public class LongTest {
         DecimalFormat df = new DecimalFormat("0.00E0");
         System.out.println("DecimalFormat:" + df.format(l));
 
-
         System.out.println("n.toString()            =" + new BigDecimal(l).toString());
         System.out.println("n.toEngineeringString() =" + new BigDecimal(l).toEngineeringString());
     }

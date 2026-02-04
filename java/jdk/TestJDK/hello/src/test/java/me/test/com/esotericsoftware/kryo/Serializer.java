@@ -10,5 +10,5 @@ public interface Serializer {
     Map<String, Object> deserialize(byte[] data);
 
     byte[] serialize(Map<String, Object> ctx);
-    //byte[] serialize(byte[] bytes,int start,Map<String, Object> ctx)  ;
+    // byte[] serialize(byte[] bytes,int start,Map<String, Object> ctx)  ;
 }

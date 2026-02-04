@@ -21,14 +21,9 @@ public class ParallelTest {
     }
 
     public static void log(String step, Object data) {
-        System.out.printf("[%s][%4d - %40s] - %10s : %s%n",
-                now(),
-                Thread.currentThread().getId(),
-                Thread.currentThread().getName(),
-                step,
-                data
-        );
-
+        System.out.printf(
+                "[%s][%4d - %40s] - %10s : %s%n",
+                now(), Thread.currentThread().getId(), Thread.currentThread().getName(), step, data);
     }
 
     @Test
@@ -36,11 +31,9 @@ public class ParallelTest {
         log("start", "start");
 
         // 直接使用 java.util.concurrent.ForkJoinPool.common 字段。
-        IntStream.range(0, 10)
-                .parallel()
-                .forEach(i -> {
-                    log("data", i);
-                });
+        IntStream.range(0, 10).parallel().forEach(i -> {
+            log("data", i);
+        });
 
         /*
         最后的 forEach 操作，内部会 调用 ForkJoinTask#invoke()

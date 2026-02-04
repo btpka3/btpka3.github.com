@@ -23,7 +23,6 @@ public class NioEchoClient {
         log.info("============== sysProps[{}] = {}.", "socksProxyPort", System.getProperty("socksProxyPort"));
         log.info("============== sysProps[{}] = {}.", "socksNonProxyHosts", System.getProperty("socksNonProxyHosts"));
 
-
         InetSocketAddress hostAddress = new InetSocketAddress("192.168.1.3", 9999);
         SocketChannel sc = SocketChannel.open(hostAddress);
         Thread readThread;
@@ -48,7 +47,7 @@ public class NioEchoClient {
      * FIXME : NIO 如何使用 socks 代理？
      */
     public static SocketChannel wrapProxy(SocketChannel sc) {
-        //return new MyProxiedSocketChannel(sc);
+        // return new MyProxiedSocketChannel(sc);
         return sc;
     }
 
@@ -86,5 +85,4 @@ public class NioEchoClient {
             }
         }
     }
-
 }

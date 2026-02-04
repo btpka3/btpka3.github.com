@@ -10,7 +10,6 @@ public class CallSetterInConstructor {
         System.out.println("------------------------------");
         System.out.println(a.toString());
     }
-
 }
 
 class A {

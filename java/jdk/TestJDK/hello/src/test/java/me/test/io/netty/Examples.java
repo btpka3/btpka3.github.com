@@ -9,5 +9,4 @@ package me.test.io.netty;
  * @see io.netty.example.proxy.HexDumpProxy
  * @see io.netty.example.socksproxy.SocksServer
  */
-public class Examples {
-}
+public class Examples {}

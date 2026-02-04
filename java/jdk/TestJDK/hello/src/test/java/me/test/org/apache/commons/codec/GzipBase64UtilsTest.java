@@ -30,5 +30,4 @@ public class GzipBase64UtilsTest {
         Assertions.assertEquals(str, result);
         Paths.get("/tmp/data.txt");
     }
-
 }

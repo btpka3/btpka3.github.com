@@ -17,7 +17,8 @@ public class Class2Test {
     }
 
     static String getClassInfo(Object obj) {
-        return obj.getClass().getName() + "@" + Integer.toHexString(obj.getClass().hashCode());
+        return obj.getClass().getName() + "@"
+                + Integer.toHexString(obj.getClass().hashCode());
     }
 
     /**
@@ -55,14 +56,11 @@ public class Class2Test {
         System.out.println("========================== A. test inner static class");
         // 类的内部类（static）
         for (int i = 0; i < count; i++) {
-            Map obj = new StaticFluentHashMap<>()
-                    .with("a", "aaa");
+            Map obj = new StaticFluentHashMap<>().with("a", "aaa");
             System.out.println("[" + i + "] class = " + getClassInfo(obj));
         }
-        Map objA1 = new StaticFluentHashMap<>()
-                .with("a", "aaa");
-        Map objA2 = new StaticFluentHashMap<>()
-                .with("a", "aaa");
+        Map objA1 = new StaticFluentHashMap<>().with("a", "aaa");
+        Map objA2 = new StaticFluentHashMap<>().with("a", "aaa");
         System.out.println("objA1.class = " + getClassInfo(objA1));
         System.out.println("objA2.class = " + getClassInfo(objA2));
     }
@@ -97,14 +95,11 @@ public class Class2Test {
         System.out.println("========================== C. test inner non-static class2");
         // 类的内部类（非static）
         for (int i = 0; i < count; i++) {
-            Map obj = new InstantFluentHashMap<>()
-                    .with("b", "bbb");
+            Map obj = new InstantFluentHashMap<>().with("b", "bbb");
             System.out.println("[" + i + "] class = " + getClassInfo(obj));
         }
-        Map objC1 = new InstantFluentHashMap<>()
-                .with("b", "bbb");
-        Map objC2 = new InstantFluentHashMap<>()
-                .with("b", "bbb");
+        Map objC1 = new InstantFluentHashMap<>().with("b", "bbb");
+        Map objC2 = new InstantFluentHashMap<>().with("b", "bbb");
         System.out.println("objC1.class = " + getClassInfo(objC1));
         System.out.println("objC2.class = " + getClassInfo(objC2));
     }
@@ -138,8 +133,7 @@ public class Class2Test {
             super(initialCapacity);
         }
 
-        public StaticFluentHashMap() {
-        }
+        public StaticFluentHashMap() {}
 
         public StaticFluentHashMap(Map<? extends K, ? extends V> m) {
             super(m);
@@ -167,8 +161,7 @@ public class Class2Test {
             super(initialCapacity);
         }
 
-        public InstantFluentHashMap() {
-        }
+        public InstantFluentHashMap() {}
 
         public InstantFluentHashMap(Map<? extends K, ? extends V> m) {
             super(m);

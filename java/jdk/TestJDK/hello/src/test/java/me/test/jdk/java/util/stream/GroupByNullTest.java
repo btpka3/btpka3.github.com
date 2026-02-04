@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
  */
 public class GroupByNullTest {
 
-
     /**
      * 按单个POJO的某个字段分组
      */
@@ -21,13 +20,8 @@ public class GroupByNullTest {
     public void test1() {
 
         Object m = Stream.of(
-                        new Person("zhang3", 33),
-                        new Person("li4", 44),
-                        new Person("wang5", 55),
-                        new Person(null, 66)
-                )
+                        new Person("zhang3", 33), new Person("li4", 44), new Person("wang5", 55), new Person(null, 66))
                 .collect(Collectors.groupingBy(Person::getName));
-
 
         System.out.println(m);
     }
@@ -39,15 +33,10 @@ public class GroupByNullTest {
     public void test2() {
 
         Object m = Stream.of(
-                        new Person("zhang3", 33),
-                        new Person("li4", 44),
-                        new Person("wang5", 55),
-                        new Person(null, 66)
-                )
+                        new Person("zhang3", 33), new Person("li4", 44), new Person("wang5", 55), new Person(null, 66))
                 .collect(Collectors.groupingBy(
                         p -> p.getName() != null ? p.getName() : "-",
-                        Collectors.mapping((Person p) -> p.getName() + "_" + p.getAge(), Collectors.toList())
-                ));
+                        Collectors.mapping((Person p) -> p.getName() + "_" + p.getAge(), Collectors.toList())));
         System.out.println("=========");
         System.out.println(m);
     }

@@ -15,21 +15,17 @@ import org.junit.jupiter.api.Test;
 
 public class DecodeMessage {
 
-
     @SneakyThrows
     @Test
     public void decode() {
 
-
         String fileName = "20250217161315_212BF815190A0F34D2E552723F7B0FA0_158230";
 
-
-        File filePath = Path.of(System.getProperty("user.home"), "Downloads", fileName).toFile();
+        File filePath =
+                Path.of(System.getProperty("user.home"), "Downloads", fileName).toFile();
         byte[] data = IOUtils.toByteArray(new FileInputStream(filePath));
 
         Map ctx = MyKryoUtils.deserialize(data);
-
-
     }
 
     private void printJson(Map ctx) {
@@ -39,8 +35,7 @@ public class DecodeMessage {
                 SerializerFeature.WriteClassName,
                 SerializerFeature.WriteNonStringKeyAsString,
                 SerializerFeature.PrettyFormat,
-                SerializerFeature.WriteMapNullValue
-        );
+                SerializerFeature.WriteMapNullValue);
         System.out.println(json);
         System.out.print("================");
     }
@@ -48,11 +43,12 @@ public class DecodeMessage {
     @Test
     public void decodeSls() throws IOException {
 
-        String slsJsonStr = IOUtils.toString(DecodeMessage.class.getResourceAsStream("target/dispatch-sls.json"), StandardCharsets.UTF_8);
+        String slsJsonStr = IOUtils.toString(
+                DecodeMessage.class.getResourceAsStream("target/dispatch-sls.json"), StandardCharsets.UTF_8);
         Map map = JSON.parseObject(slsJsonStr);
         String body = (String) map.get("body");
         byte[] bytes = GzipBase64Utils.getBytesFromGzipBase64(body);
-        //byte[] bytes = Base64.getDecoder().decode(body);
+        // byte[] bytes = Base64.getDecoder().decode(body);
         Map ctx = MyKryoUtils.deserialize(bytes);
         printJson(ctx);
     }

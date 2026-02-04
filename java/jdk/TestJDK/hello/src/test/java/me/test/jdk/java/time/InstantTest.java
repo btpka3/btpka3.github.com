@@ -1,5 +1,7 @@
 package me.test.jdk.java.time;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+
 import java.time.Clock;
 import java.time.Instant;
 import java.time.OffsetDateTime;
@@ -8,8 +10,6 @@ import java.util.Date;
 import java.util.TimeZone;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.junit.jupiter.api.Test;
-
-import static java.time.temporal.ChronoUnit.DAYS;
 
 /**
  * @author dangqian.zll
@@ -42,17 +42,15 @@ public class InstantTest {
         System.out.println("nowDate                                     : " + nowDate);
         System.out.println("nowDate.getTime()                           : " + nowDate.getTime());
 
-
         System.out.println("nowInstant                                  : " + nowInstant);
         System.out.println("nowInstant.toEpochMilli()                   : " + nowInstant.toEpochMilli());
         System.out.println("nowInstantDefault                           : " + nowInstantDefault);
         System.out.println("nowInstantDefault.toEpochMilli()            : " + nowInstantDefault.toEpochMilli());
 
-
         ZonedDateTime zonedDateTime = nowInstant.atZone(defaultZone.toZoneId());
 
-
-        System.out.println("zonedDateTime.toInstant().toEpochMilli()    : " + zonedDateTime.toInstant().toEpochMilli());
+        System.out.println("zonedDateTime.toInstant().toEpochMilli()    : "
+                + zonedDateTime.toInstant().toEpochMilli());
     }
 
     /**
@@ -65,15 +63,13 @@ public class InstantTest {
         Date date = Date.from(gmt0Odt.toInstant());
         System.out.println(date);
         System.out.println(date.getTime());
-
     }
 
     @Test
     public void testAdd() {
         // UTC 时间
         Instant nowInstant = Instant.now();
-        Instant yesterdayInstant = nowInstant.minus(1, DAYS)
-                .truncatedTo(DAYS);
+        Instant yesterdayInstant = nowInstant.minus(1, DAYS).truncatedTo(DAYS);
         System.out.println(yesterdayInstant);
         Date date = Date.from(yesterdayInstant);
         System.out.println(DateFormatUtils.format(date, "yyyy-MM-dd HH:mm:ss"));

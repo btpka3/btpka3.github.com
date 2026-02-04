@@ -1,5 +1,8 @@
 package me.test.jdk.javax.management;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
@@ -13,9 +16,6 @@ import javax.management.remote.JMXServiceURL;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  *
@@ -51,7 +51,6 @@ public class JmxTargetPidServerTest {
         Thread.sleep(60 * 60 * 1000L);
     }
 
-
     @Test
     public void getJvmProps01() {
 
@@ -82,10 +81,7 @@ public class JmxTargetPidServerTest {
             if (connector != null) {
                 MBeanServerConnection connection = connector.getMBeanServerConnection();
                 RuntimeMXBean runtimeBean = ManagementFactory.newPlatformMXBeanProxy(
-                        connection,
-                        ManagementFactory.RUNTIME_MXBEAN_NAME,
-                        RuntimeMXBean.class
-                );
+                        connection, ManagementFactory.RUNTIME_MXBEAN_NAME, RuntimeMXBean.class);
                 props.putAll(runtimeBean.getSystemProperties());
             }
         } catch (IOException e) {
@@ -102,10 +98,7 @@ public class JmxTargetPidServerTest {
             if (connector != null) {
                 MBeanServerConnection connection = connector.getMBeanServerConnection();
                 RuntimeMXBean runtimeBean = ManagementFactory.newPlatformMXBeanProxy(
-                        connection,
-                        ManagementFactory.RUNTIME_MXBEAN_NAME,
-                        RuntimeMXBean.class
-                );
+                        connection, ManagementFactory.RUNTIME_MXBEAN_NAME, RuntimeMXBean.class);
                 return runtimeBean.getInputArguments();
             }
         } catch (IOException e) {
@@ -113,5 +106,4 @@ public class JmxTargetPidServerTest {
         }
         return Collections.emptyList();
     }
-
 }

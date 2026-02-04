@@ -1,10 +1,10 @@
 package me.test.org.apache.commons.text.diff;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.apache.commons.text.diff.EditScript;
 import org.apache.commons.text.diff.StringsComparator;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author dangqian.zll

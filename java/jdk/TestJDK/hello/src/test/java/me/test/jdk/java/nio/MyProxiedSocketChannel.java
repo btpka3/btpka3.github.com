@@ -53,7 +53,6 @@ public class MyProxiedSocketChannel extends SocketChannel {
      */
     private final Socket socket;
 
-
     @SneakyThrows
     public MyProxiedSocketChannel(final Proxy proxy, SelectorProvider provider) {
         super(provider);
@@ -121,8 +120,7 @@ public class MyProxiedSocketChannel extends SocketChannel {
     }
 
     @Override
-    public <T> SocketChannel setOption(final SocketOption<T> option, final T value)
-            throws IOException {
+    public <T> SocketChannel setOption(final SocketOption<T> option, final T value) throws IOException {
         if (StandardSocketOptions.SO_KEEPALIVE.equals(option)) {
             final Class<Boolean> keepaliveType = StandardSocketOptions.SO_KEEPALIVE.type();
             this.socket.setKeepAlive(keepaliveType.cast(value));
@@ -221,8 +219,7 @@ public class MyProxiedSocketChannel extends SocketChannel {
     }
 
     @Override
-    public long read(final ByteBuffer[] dsts, final int offset, final int length)
-            throws IOException {
+    public long read(final ByteBuffer[] dsts, final int offset, final int length) throws IOException {
         final InputStream input = this.socket.getInputStream();
         synchronized (input) {
             return readBlocking(input, dsts, offset, length);
@@ -242,7 +239,8 @@ public class MyProxiedSocketChannel extends SocketChannel {
      * @return returns number of bytes read
      * @throws IOException
      */
-    private long readBlocking(final InputStream input, final ByteBuffer[] dsts, final int offset, final int length) throws IOException {
+    private long readBlocking(final InputStream input, final ByteBuffer[] dsts, final int offset, final int length)
+            throws IOException {
         int total = 0;
         for (int i = offset; i < offset + length; i++) {
             final int size = readBlocking(input, dsts[i]);
@@ -288,8 +286,7 @@ public class MyProxiedSocketChannel extends SocketChannel {
     }
 
     @Override
-    public long write(final ByteBuffer[] srcs, final int offset, final int length)
-            throws IOException {
+    public long write(final ByteBuffer[] srcs, final int offset, final int length) throws IOException {
         final OutputStream output = this.socket.getOutputStream();
         synchronized (output) {
             return writeBlocking(output, srcs, offset, length);
@@ -309,7 +306,8 @@ public class MyProxiedSocketChannel extends SocketChannel {
      * @return returns number of bytes written
      * @throws IOException in case of exceptions
      */
-    private long writeBlocking(final OutputStream output, final ByteBuffer[] srcs, final int offset, final int length) throws IOException {
+    private long writeBlocking(final OutputStream output, final ByteBuffer[] srcs, final int offset, final int length)
+            throws IOException {
         int total = 0;
         for (int i = offset; i < offset + length; i++) {
             total += writeBlocking(output, srcs[i]);

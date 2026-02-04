@@ -28,19 +28,20 @@ public class Groovy2Test {
     Method groovyMethod;
 
     @BeforeEach
-    public void before() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    public void before()
+            throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         beforeJava();
         beforeJs();
         beforeGroovy();
     }
 
-    protected void beforeJava() {
-    }
+    protected void beforeJava() {}
 
     protected void beforeJs() {
 
         // language=javascript
-        String script = """
+        String script =
+                """
                 (function(map, count){
                     var UUID = Java.type('java.util.UUID');
                     for(var i = 0; i < count; i++){
@@ -53,9 +54,11 @@ public class Groovy2Test {
         jsSource = Source.create("js", script);
     }
 
-    protected void beforeGroovy() throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    protected void beforeGroovy()
+            throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         // language=groovy
-        String groovyStr = """
+        String groovyStr =
+                """
                 public class MyGrovvy001 {
                     public void testGroovy(Map map, int count) {
                         for (int i = 0; i < count; i++) {
@@ -72,7 +75,6 @@ public class Groovy2Test {
         System.out.println("clazz.getName() = " + groovyClazz.getName());
         groovyObject = groovyClazz.getConstructor().newInstance();
     }
-
 
     protected void testJava(Map<String, String> map, int count) {
         long start = System.nanoTime();
@@ -104,7 +106,8 @@ public class Groovy2Test {
         System.out.printf("js     test : %10d, avg=%10d, map= %s: %n", cost, avg, map);
     }
 
-    protected void testGroovy(Map<String, String> map, int count) throws InvocationTargetException, IllegalAccessException {
+    protected void testGroovy(Map<String, String> map, int count)
+            throws InvocationTargetException, IllegalAccessException {
         long start = System.nanoTime();
         groovyMethod.invoke(groovyObject, map, count);
         long end = System.nanoTime();
@@ -114,7 +117,8 @@ public class Groovy2Test {
     }
 
     @Test
-    public void test01() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException {
+    public void test01()
+            throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException {
         int loop = 3;
         int count = 10000;
 

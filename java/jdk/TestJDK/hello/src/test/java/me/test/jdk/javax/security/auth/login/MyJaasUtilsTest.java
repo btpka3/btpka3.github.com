@@ -16,7 +16,8 @@ public class MyJaasUtilsTest {
     @SneakyThrows
     @Test
     public void loadFromJsonByFastjson1Test() {
-        Map<String, List<AppConfigurationEntry>> map = MyJaasUtils.loadFromJsonByFastjson1(JassConfJsonStrHolder.jassConfJsonStr);
+        Map<String, List<AppConfigurationEntry>> map =
+                MyJaasUtils.loadFromJsonByFastjson1(JassConfJsonStrHolder.jassConfJsonStr);
         Assertions.assertEquals(1, map.size());
         List<AppConfigurationEntry> list = map.get("Client");
         Assertions.assertEquals(1, list.size());
@@ -33,7 +34,8 @@ public class MyJaasUtilsTest {
     @SneakyThrows
     @Test
     public void loadFromJsonByFastjson2Test() {
-        Map<String, List<AppConfigurationEntry>> map = MyJaasUtils.loadFromJsonByFastjson2(JassConfJsonStrHolder.jassConfJsonStr);
+        Map<String, List<AppConfigurationEntry>> map =
+                MyJaasUtils.loadFromJsonByFastjson2(JassConfJsonStrHolder.jassConfJsonStr);
         Assertions.assertEquals(1, map.size());
         List<AppConfigurationEntry> list = map.get("Client");
         Assertions.assertEquals(1, list.size());
@@ -46,5 +48,4 @@ public class MyJaasUtilsTest {
         Assertions.assertEquals("zhang3", options.get("username"));
         Assertions.assertEquals("123456", options.get("password"));
     }
-
 }

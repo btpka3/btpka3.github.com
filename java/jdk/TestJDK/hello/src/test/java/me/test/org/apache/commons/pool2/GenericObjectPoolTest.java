@@ -36,7 +36,6 @@ public class GenericObjectPoolTest {
             p.invalidateObject(obj);
             p.returnObject(obj);
         }
-
     }
 
     public static class MyPooledObjectFactory implements PooledObjectFactory<Object> {
@@ -47,9 +46,7 @@ public class GenericObjectPoolTest {
         }
 
         @Override
-        public void destroyObject(PooledObject<Object> p) throws Exception {
-
-        }
+        public void destroyObject(PooledObject<Object> p) throws Exception {}
 
         @Override
         public PooledObject<Object> makeObject() throws Exception {
@@ -57,14 +54,11 @@ public class GenericObjectPoolTest {
         }
 
         @Override
-        public void passivateObject(PooledObject<Object> p) throws Exception {
-
-        }
+        public void passivateObject(PooledObject<Object> p) throws Exception {}
 
         @Override
         public boolean validateObject(PooledObject<Object> p) {
             return false;
         }
     }
-
 }

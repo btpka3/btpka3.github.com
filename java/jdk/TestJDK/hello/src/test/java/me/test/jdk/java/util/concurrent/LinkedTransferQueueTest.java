@@ -25,40 +25,38 @@ public class LinkedTransferQueueTest {
         test01();
     }
 
-
     public static void test01() throws InterruptedException {
-
 
         LinkedTransferQueue<String> q = new LinkedTransferQueue<>();
 
-
         // 生产者
         new Thread(() -> {
-            U.print("生产者", "transfer 开始");
-            try {
-                q.transfer("AAA");
-                //q.transfer("BBB");
-                U.print("生产者", "transfer 完成");
-            } catch (InterruptedException e) {
-                U.print("生产者", "transfer 异常");
-                e.printStackTrace();
-            }
-        }).start();
+                    U.print("生产者", "transfer 开始");
+                    try {
+                        q.transfer("AAA");
+                        // q.transfer("BBB");
+                        U.print("生产者", "transfer 完成");
+                    } catch (InterruptedException e) {
+                        U.print("生产者", "transfer 异常");
+                        e.printStackTrace();
+                    }
+                })
+                .start();
 
         new Thread(() -> {
-            try {
-                Thread.sleep(2000);
-                U.print("消费者", "take 开始");
-                String msg = q.take();
-                if ("BBB".equalsIgnoreCase(msg)) {
-                    throw new RuntimeException("异常测试");
-                }
-                U.print("消费者", "take 完成。msg = " + msg);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-        }).start();
+                    try {
+                        Thread.sleep(2000);
+                        U.print("消费者", "take 开始");
+                        String msg = q.take();
+                        if ("BBB".equalsIgnoreCase(msg)) {
+                            throw new RuntimeException("异常测试");
+                        }
+                        U.print("消费者", "take 完成。msg = " + msg);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                })
+                .start();
 
         U.print("主程序", "好戏登场喽~");
     }

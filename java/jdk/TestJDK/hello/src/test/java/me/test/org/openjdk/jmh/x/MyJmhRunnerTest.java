@@ -16,8 +16,7 @@ public class MyJmhRunnerTest {
     public static void main(String[] args) throws RunnerException, CommandLineOptionException {
         System.setProperty("jmh.blackhole.autoDetect", "false");
 
-        Options opt = new OptionsBuilder()
-                .build();
+        Options opt = new OptionsBuilder().build();
         CommandLineOptions commandLineOptions = new CommandLineOptions("-lprof");
         new Runner(opt).listWithParams(commandLineOptions);
     }

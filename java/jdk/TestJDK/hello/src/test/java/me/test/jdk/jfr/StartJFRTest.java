@@ -1,6 +1,5 @@
 package me.test.jdk.jfr;
 
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 import jdk.jfr.Configuration;

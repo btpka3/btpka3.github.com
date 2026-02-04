@@ -19,7 +19,6 @@ import org.junit.jupiter.api.Test;
  */
 public class LargeMessageTest {
 
-
     protected boolean isJsonObjStr(byte[] data) {
         return data.length > 2 && data[0] == '{' && data[1] == '"';
     }
@@ -31,32 +30,27 @@ public class LargeMessageTest {
         // 从SLS下载的单行日志（完整JSON）
         String fileName = "test2.json";
 
-        File filePath = Path.of(System.getProperty("user.home"), "Downloads", fileName).toFile();
+        File filePath =
+                Path.of(System.getProperty("user.home"), "Downloads", fileName).toFile();
         String slsRecJsonStr = IOUtils.toString(new FileInputStream(filePath), StandardCharsets.UTF_8);
         JSONObject jsonObj = (JSONObject) JSON.parse(slsRecJsonStr);
         String base64MsgStr = (String) jsonObj.get("message");
         byte[] data = Base64.decodeBase64(base64MsgStr);
 
-
         System.out.println("================ " + filePath);
         if (isJsonObjStr(data)) {
             System.out.println(JSON.toJSONString(
-                    JSON.parse(new String(data, StandardCharsets.UTF_8)),
-                    SerializerFeature.PrettyFormat
-            ));
+                    JSON.parse(new String(data, StandardCharsets.UTF_8)), SerializerFeature.PrettyFormat));
         } else {
             Map ctx = MyKryoUtils.deserialize(data);
             String json = JSON.toJSONString(
                     ctx,
-                    //SerializerFeature.WriteClassName,
+                    // SerializerFeature.WriteClassName,
                     SerializerFeature.WriteNonStringKeyAsString,
-                    SerializerFeature.PrettyFormat
-            );
+                    SerializerFeature.PrettyFormat);
             System.out.println(json);
         }
 
-
         System.out.print("================");
-
     }
 }

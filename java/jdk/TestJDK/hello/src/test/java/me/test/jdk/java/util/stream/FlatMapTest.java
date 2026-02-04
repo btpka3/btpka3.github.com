@@ -16,8 +16,5 @@ public class FlatMapTest {
                 .collect(Collectors.toList());
 
         System.out.println(intList);
-
-
     }
-
 }

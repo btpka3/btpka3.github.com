@@ -73,9 +73,8 @@ public class SecureRandomLoad2Test {
             int idx = i;
             executor.submit(() -> {
                 try {
-                    SecureRandom secureRandom = Objects.equals("multiple", mode)
-                            ? SecureRandom.getInstance(argo)
-                            : secureRandomGlobal;
+                    SecureRandom secureRandom =
+                            Objects.equals("multiple", mode) ? SecureRandom.getInstance(argo) : secureRandomGlobal;
                     long start = System.nanoTime();
                     secureRandom.nextBytes(randomBytes);
                     long end = System.nanoTime();
@@ -85,7 +84,6 @@ public class SecureRandomLoad2Test {
 
                 } finally {
                     doneSignal.countDown();
-
                 }
             });
         }

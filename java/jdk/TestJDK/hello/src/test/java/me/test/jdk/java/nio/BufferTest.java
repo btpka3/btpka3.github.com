@@ -59,13 +59,10 @@ public class BufferTest {
         buf.put("xyz");
         print("10", buf);
 
-
         // 清空缓存, 进入待写入模式。
         buf.clear();
         print("10", buf);
-
     }
-
 
     static void print(String tag, CharBuffer buf) throws NoSuchFieldException, IllegalAccessException {
 
@@ -87,9 +84,9 @@ public class BufferTest {
             content[i] = buf.get(buf.position() + i);
         }
 
-
-        System.out.printf("[%s] : mark/position/limit/capacity : (remaining) = %2d/%2d/%2d/%2d : (%2d) " +
-                        ": %s, toString()=%10s, content=%10s%n",
+        System.out.printf(
+                "[%s] : mark/position/limit/capacity : (remaining) = %2d/%2d/%2d/%2d : (%2d) "
+                        + ": %s, toString()=%10s, content=%10s%n",
                 tag,
                 m,
                 buf.position(),

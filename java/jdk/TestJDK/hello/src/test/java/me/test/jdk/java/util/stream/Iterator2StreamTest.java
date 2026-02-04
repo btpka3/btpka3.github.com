@@ -20,29 +20,15 @@ public class Iterator2StreamTest {
 
     @Test
     public void test01() {
-        LinkedList<String> list = new LinkedList<>(Arrays.asList(
-                "A001",
-                "A002",
-                "A003",
-                "A004",
-                "A005",
-                "A006",
-                "A007",
-                "A008",
-                "A009"
-        ));
+        LinkedList<String> list =
+                new LinkedList<>(Arrays.asList("A001", "A002", "A003", "A004", "A005", "A006", "A007", "A008", "A009"));
 
         Iterator<String> iterator = list.descendingIterator();
-        Stream<String> targetStream = StreamSupport.stream(
-                Spliterators.spliteratorUnknownSize(iterator, Spliterator.ORDERED),
-                false
-        );
+        Stream<String> targetStream =
+                StreamSupport.stream(Spliterators.spliteratorUnknownSize(iterator, Spliterator.ORDERED), false);
 
-        List<String> result = targetStream
-                .limit(3)
-                .collect(Collectors.toList());
+        List<String> result = targetStream.limit(3).collect(Collectors.toList());
 
         Assertions.assertEquals(Arrays.asList("A009", "A008", "A007"), result);
-
     }
 }

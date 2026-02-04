@@ -50,39 +50,36 @@ public class StringSubstitutorTest {
             IOUtils.write("a=aaa\nb=bbb\nmykey=myValue\n", writer);
         }
         try (Writer writer = new FileWriter("/tmp/document.xml")) {
-            IOUtils.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+            IOUtils.write(
+                    "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                             + "<root>\n"
                             + "  <path>\n"
                             + "    <to>\n"
                             + "    <node>node001</node>\n"
                             + "    </to>\n"
                             + "  </path>\n"
-                            + "</root>\n"
-                    , writer);
+                            + "</root>\n",
+                    writer);
         }
 
         final StringSubstitutor interpolator = StringSubstitutor.createInterpolator();
 
-
-        final String result = interpolator.replace(
-                "Base64 Decoder:        ${base64Decoder:SGVsbG9Xb3JsZCE=}\n"
-                        + "Base64 Encoder:        ${base64Encoder:HelloWorld!}\n"
-                        + "Java Constant:         ${const:java.awt.event.KeyEvent.VK_ESCAPE}\n"
-                        + "Date:                  ${date:yyyy-MM-dd}\n"
-                        + "Environment Variable:  ${env:USER}\n"
-                        + "File Content:          ${file:UTF-8:/tmp/document.properties}\n"
-                        + "Java:                  ${java:version}\n"
-                        + "Localhost:             ${localhost:canonical-name}\n"
-                        + "Properties File:       ${properties:/tmp/document.properties::mykey}\n"
-                        + "Resource Bundle:       ${resourceBundle:me.demoResourceBundle:mykey}\n"
-                        + "System Property:       ${sys:user.dir}\n"
-                        + "URL Decoder:           ${urlDecoder:Hello%20World%21}\n"
-                        + "URL Encoder:           ${urlEncoder:Hello World!}\n"
-                        + "XML XPath:             ${xml:/tmp/document.xml:/root/path/to/node}\n");
+        final String result = interpolator.replace("Base64 Decoder:        ${base64Decoder:SGVsbG9Xb3JsZCE=}\n"
+                + "Base64 Encoder:        ${base64Encoder:HelloWorld!}\n"
+                + "Java Constant:         ${const:java.awt.event.KeyEvent.VK_ESCAPE}\n"
+                + "Date:                  ${date:yyyy-MM-dd}\n"
+                + "Environment Variable:  ${env:USER}\n"
+                + "File Content:          ${file:UTF-8:/tmp/document.properties}\n"
+                + "Java:                  ${java:version}\n"
+                + "Localhost:             ${localhost:canonical-name}\n"
+                + "Properties File:       ${properties:/tmp/document.properties::mykey}\n"
+                + "Resource Bundle:       ${resourceBundle:me.demoResourceBundle:mykey}\n"
+                + "System Property:       ${sys:user.dir}\n"
+                + "URL Decoder:           ${urlDecoder:Hello%20World%21}\n"
+                + "URL Encoder:           ${urlEncoder:Hello World!}\n"
+                + "XML XPath:             ${xml:/tmp/document.xml:/root/path/to/node}\n");
         System.out.println("============");
         System.out.println(result);
         System.out.println("============");
     }
-
 }
-

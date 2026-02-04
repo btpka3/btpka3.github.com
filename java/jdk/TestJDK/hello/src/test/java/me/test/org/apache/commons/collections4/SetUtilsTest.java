@@ -33,6 +33,5 @@ public class SetUtilsTest {
         Assertions.assertEquals(2, set3.size());
         Assertions.assertTrue(set3.contains("aa"));
         Assertions.assertTrue(set3.contains("bb"));
-
     }
 }

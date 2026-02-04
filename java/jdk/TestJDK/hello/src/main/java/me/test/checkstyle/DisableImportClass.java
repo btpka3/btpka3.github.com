@@ -1,6 +1,5 @@
 package me.test.checkstyle;
 
-
 import org.apache.commons.lang.StringUtils;
 
 /**
