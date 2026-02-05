@@ -138,11 +138,71 @@ public class IterableTest {
         return Iterables.concat(its);
     }
 
-    static <T> Iterable<T> mergeIterablesByStreamConcat(Iterable<T>... its) {
+    /**
+     *
+     * @deprecated stream.iterator() 会先把所有元素都先收集好。
+     */
+    @Deprecated
+    static <T> Iterable<T> mergeIterablesByStreamConcat0(Iterable<T>... its) {
         Iterator<T> iterator = Arrays.stream(its)
                 .flatMap(it -> StreamSupport.stream(it.spliterator(), false))
                 .iterator();
         return () -> iterator;
+    }
+
+    /**
+     * 大模型帮改造的
+     *
+     * @param its
+     * @param <T>
+     * @return
+     */
+    static <T> Iterable<T> mergeIterablesByStreamConcat(Iterable<T>... its) {
+        return () -> StreamSupport.stream(new LazyConcatSpliterator<>(its), false).iterator();
+    }
+
+    private static class LazyConcatSpliterator<T> implements Spliterator<T> {
+        private final Iterable<T>[] iterables;
+        private int currentIndex = 0;
+        private Spliterator<T> currentSpliterator;
+
+        @SafeVarargs
+        public LazyConcatSpliterator(Iterable<T>... iterables) {
+            this.iterables = iterables;
+            if (iterables.length > 0) {
+                this.currentSpliterator = iterables[0].spliterator();
+            }
+        }
+
+        @Override
+        public boolean tryAdvance(Consumer<? super T> action) {
+            while (true) {
+                if (currentSpliterator != null && currentSpliterator.tryAdvance(action)) {
+                    return true;
+                }
+                if (currentIndex < iterables.length - 1) {
+                    currentIndex++;
+                    currentSpliterator = iterables[currentIndex].spliterator();
+                } else {
+                    return false;
+                }
+            }
+        }
+
+        @Override
+        public Spliterator<T> trySplit() {
+            return null; // 不支持分割
+        }
+
+        @Override
+        public long estimateSize() {
+            return Long.MAX_VALUE;
+        }
+
+        @Override
+        public int characteristics() {
+            return ORDERED;
+        }
     }
 
     static <T> Iterable<T> mergeIterablesByCustomIterable(Iterable<T>... its) {
@@ -153,13 +213,44 @@ public class IterableTest {
     public void testExtIterable() {
         final List<String> result = new ArrayList<>();
         AtomicInteger counter = new AtomicInteger(0);
-        log.info("====================== ExtIterable");
         Iterable<String> it = new ExtIterable<>(Arrays.asList("a1", "a2", "a3"), result::add);
-        for (String s : it) {
-            log.info("-------- i={}, s={}", counter.getAndAdd(1), s);
+        {
+            log.info("====================== ExtIterable");
+            for (String s : it) {
+                log.info("-------- i={}, s={}", counter.getAndAdd(1), s);
+            }
+            Assertions.assertEquals(Arrays.asList("a1", "a2", "a3"), result);
+            result.clear();
+            counter.set(0);
         }
-        Assertions.assertEquals(Arrays.asList("a1", "a2", "a3"), result);
-        result.clear();
+        {
+            Spliterator<String> spliterator = it.spliterator();
+            spliterator.forEachRemaining(s -> {
+                log.info("-------- i={}, s={}", counter.getAndAdd(1), s);
+            });
+            Assertions.assertEquals(Arrays.asList("a1", "a2", "a3"), result);
+            result.clear();
+            counter.set(0);
+        }
+        {
+            Spliterator<String> spliterator1 = it.spliterator();
+            Spliterator<String> spliterator2 = spliterator1.trySplit();
+
+            log.info("\n分割后第一部分:");
+            spliterator1.forEachRemaining(s -> {
+                log.info("-------- i={}, s={}", counter.getAndAdd(1), s);
+            });
+
+            log.info("\n分割后第二部分:");
+            spliterator2.forEachRemaining(
+                    s -> {
+                        log.info("-------- i={}, s={}", counter.getAndAdd(1), s);
+                    }
+            );
+            Assertions.assertEquals(Arrays.asList("a1", "a2", "a3"), result);
+            result.clear();
+            counter.set(0);
+        }
     }
 
     @Test
@@ -181,6 +272,11 @@ public class IterableTest {
                 "b1", "xx", "b2", "xx", "b3", "xx",
                 "c1", "xx", "c2", "xx", "c3", "xx"
         );
+        List<String> expected2 = Arrays.asList(
+                "a1", "a2", "a3", "xx", "xx", "xx",
+                "b1", "b2", "b3", "xx", "xx", "xx",
+                "c1", "c2", "c3", "xx", "xx", "xx"
+        );
 
         {
             AtomicInteger counter = new AtomicInteger(0);
@@ -191,6 +287,19 @@ public class IterableTest {
                 log.info("-------- i={}, s={}", counter.getAndAdd(1), s);
             }
             Assertions.assertEquals(expected, result);
+            result.clear();
+        }
+
+        {
+            AtomicInteger counter = new AtomicInteger(0);
+            log.info("====================== mergeIterablesByStreamConcat0");
+            Iterable<String> it = mergeIterablesByStreamConcat0(its);
+            it = new ExtIterable<>(it, action);
+            for (String s : it) {
+                log.info("-------- i={}, s={}", counter.getAndAdd(1), s);
+            }
+            // ⚠️ 这里注意：由于 stream.iterator() 提前采集了相关结果，这里的顺序并不是交错的。
+            Assertions.assertEquals(expected2, result);
             result.clear();
         }
 
@@ -297,9 +406,9 @@ public class IterableTest {
             return new ExtIterator<>(it.iterator(), action);
         }
 
-        public Spliterator<T> spliterator() {
-            return Spliterators.spliteratorUnknownSize(iterator(), 0);
-        }
+//        public Spliterator<T> spliterator() {
+//            return Spliterators.spliteratorUnknownSize(iterator(), 0);
+//        }
     }
 
     public static class ExtIterator<T> implements Iterator<T> {
@@ -333,10 +442,11 @@ public class IterableTest {
             iterator.remove();
         }
 
-        @Override
-        public void forEachRemaining(Consumer<? super T> action) {
-            iterator.forEachRemaining(action);
-        }
+        // 不要这样实现，否则 action未执行，保持父类的默认实现就好
+//        @Override
+//        public void forEachRemaining(Consumer<? super T> action) {
+//            iterator.forEachRemaining(action);
+//        }
 
     }
 
