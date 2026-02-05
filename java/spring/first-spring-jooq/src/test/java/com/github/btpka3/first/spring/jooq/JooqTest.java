@@ -28,6 +28,7 @@ public class JooqTest {
 
     /**
      * 选择全部字段
+     *
      * @see <a href="https://github.com/jOOQ/jOOQ/issues/16426">jOOQ does not use custom converter/binding for spatial types in dynamic queries</a>
      * @see <a href="https://blog.jooq.org/why-you-should-use-jooq-with-code-generation/">Why You Should Use jOOQ With Code Generation</a>
      */
@@ -107,6 +108,43 @@ public class JooqTest {
                                 .where(ADDRESS.CITY_ID.eq((short) 301))
                 )
                 .fetchMany();
+        System.out.println(list);
+    }
+
+    static class MyRec1 {
+        private Short cityId;
+        private int count;
+
+        public Short getCityId() {
+            return cityId;
+        }
+
+        public void setCityId(Short cityId) {
+            this.cityId = cityId;
+        }
+
+        public int getCount() {
+            return count;
+        }
+
+        public void setCount(int count) {
+            this.count = count;
+        }
+    }
+
+    @Test
+    public void testGroup() {
+        List<MyRec1> list = this.dsl.select(
+                        ADDRESS.ADDRESS_ID,
+                        count()
+                )
+                .from(ADDRESS)
+                .where(ADDRESS.CITY_ID.gt((short) 300))
+                .groupBy(
+                        ADDRESS.CITY_ID
+                )
+                .orderBy(ADDRESS.CITY_ID)
+                .fetchInto(MyRec1.class);
         System.out.println(list);
     }
 
