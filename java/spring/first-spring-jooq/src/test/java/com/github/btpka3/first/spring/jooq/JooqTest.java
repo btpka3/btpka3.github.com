@@ -1,9 +1,9 @@
 package com.github.btpka3.first.spring.jooq;
 
 import com.github.btpka3.first.spring.jooq.domain.tables.pojos.Address;
-import org.jooq.DSLContext;
+import org.jooq.*;
 import org.jooq.Record;
-import org.jooq.Result;
+import org.jooq.impl.SQLDataType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -145,6 +145,26 @@ public class JooqTest {
                 )
                 .orderBy(ADDRESS.CITY_ID)
                 .fetchInto(MyRec1.class);
+        System.out.println(list);
+    }
+
+    @Test
+    public void testFunc() {
+        Result<Record3<Short, String, JSON>> list = this.dsl.select(
+                        ADDRESS.ADDRESS_ID,
+                        // jooq 支持函数( 但有限支持，不支持任意顺序，任意多个混合类型
+                        concat("aaa", ADDRESS.POSTAL_CODE),
+                        // jooq 不直接支持的函数
+                        field("JSON_CONTAINS(?, ?)",
+                                SQLDataType.JSON,
+                                ADDRESS.LOCATION,
+                                val("{\"key\": \"value\"}")
+                        ).as("contains_result")
+                )
+                .from(ADDRESS)
+                .where(ADDRESS.CITY_ID.gt((short) 300))
+                .orderBy(ADDRESS.CITY_ID)
+                .fetch();
         System.out.println(list);
     }
 
