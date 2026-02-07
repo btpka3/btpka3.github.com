@@ -50,6 +50,7 @@
         <netty.version>4.2.1.Final</netty.version>
         <archunit.version>1.4.1</archunit.version>
         <error-prone.version>2.46.0</error-prone.version>
+        <mapstruct.version>1.5.0.Final</mapstruct.version>
     </properties>
 
 
@@ -265,6 +266,11 @@
                 <groupId>org.jspecify</groupId>
                 <artifactId>jspecify</artifactId>
                 <version>1.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${mapstruct.version}</version>
             </dependency>
             <!--            <dependency>-->
             <!--                <groupId>org.graalvm.js</groupId>-->
@@ -789,6 +795,11 @@
                                 <groupId>org.projectlombok</groupId>
                                 <artifactId>lombok</artifactId>
                                 <version>${lombok.version}</version>
+                            </path>
+                            <path>
+                                <groupId>org.mapstruct</groupId>
+                                <artifactId>mapstruct</artifactId>
+                                <version>${mapstruct.version}</version>
                             </path>
                         </annotationProcessorPaths>
                         <enablePreview>true</enablePreview>
