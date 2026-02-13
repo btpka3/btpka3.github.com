@@ -25,7 +25,7 @@
         <checkstyle.failOnViolation>false</checkstyle.failOnViolation>
         <checkstyle.console>true</checkstyle.console>
         <!--        <checkstyle.properties.location>${maven.multiModuleProjectDirectory}/checkstyle/checkstyle.properties</checkstyle.properties.location>-->
-        <checkstyle.properties.location>build-tools/checkstyle/checkstyle.properties</checkstyle.properties.location>
+        <!--<checkstyle.properties.location>build-tools/checkstyle/checkstyle.properties</checkstyle.properties.location>-->
 
         <pmd.failOnViolation>false</pmd.failOnViolation>
         <pmd.failurePriority>5</pmd.failurePriority>
@@ -802,7 +802,7 @@
                                 <version>${mapstruct.version}</version>
                             </path>
                         </annotationProcessorPaths>
-                        <enablePreview>true</enablePreview>
+                        <enablePreview>false</enablePreview>
 <!--                        <compilerArgs>-->
 <!--                            <arg>&#45;&#45;enable-preview</arg>-->
 <!--                        </compilerArgs>-->
