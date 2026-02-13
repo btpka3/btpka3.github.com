@@ -20,7 +20,7 @@
         <maven.compiler.target>25</maven.compiler.target>
 
         <!--        <checkstyle.config.location>${maven.multiModuleProjectDirectory}/checkstyle/checkstyle.xml</checkstyle.config.location>-->
-        <checkstyle.config.location>build-tools/checkstyle/checkstyle.xml</checkstyle.config.location>
+<!--        <checkstyle.config.location>build-tools/checkstyle/checkstyle.xml</checkstyle.config.location>-->
         <checkstyle.consoleOutput>true</checkstyle.consoleOutput>
         <checkstyle.failOnViolation>false</checkstyle.failOnViolation>
         <checkstyle.console>true</checkstyle.console>
@@ -729,11 +729,11 @@
                     <artifactId>maven-checkstyle-plugin</artifactId>
                     <version>3.6.0</version>
                     <dependencies>
-                        <dependency>
-                            <groupId>me.test</groupId>
-                            <artifactId>build-tools</artifactId>
-                            <version>${project.version}</version>
-                        </dependency>
+<!--                        <dependency>-->
+<!--                            <groupId>me.test</groupId>-->
+<!--                            <artifactId>build-tools</artifactId>-->
+<!--                            <version>${project.version}</version>-->
+<!--                        </dependency>-->
                     </dependencies>
                     <configuration>
                         <propertyExpansion>
