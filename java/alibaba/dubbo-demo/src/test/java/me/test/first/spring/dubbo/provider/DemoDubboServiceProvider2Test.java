@@ -19,7 +19,8 @@ import org.junit.jupiter.api.Test;
 public class DemoDubboServiceProvider2Test {
 
 //    String REGISTRY_ADDR = "zookeeper://127.0.0.1:2181";
-    String REGISTRY_ADDR = "nacos://nacos.default.svc.cluster.local:8848";
+//    String REGISTRY_ADDR = "nacos://nacos.default.svc.cluster.local:8848";
+    String REGISTRY_ADDR = "nacos://nacos:nacos@127.0.0.1:8848";
 
 
     @SneakyThrows
@@ -27,7 +28,7 @@ public class DemoDubboServiceProvider2Test {
     public void test() {
         startDubbo();
 
-        int minute = 10;
+        int minute = 60;
         System.out.println("Dubbo Service is up, Please run DemoDubboServiceConsumerTest in " + minute + " minute");
         Thread.sleep(minute * 60 * 1000);
     }
@@ -36,6 +37,8 @@ public class DemoDubboServiceProvider2Test {
 
         ApplicationConfig application = new ApplicationConfig();
         application.setName("demo-provider");
+        application.setQosEnable(false);
+
 
         // connect registry configuration
         RegistryConfig registry = new RegistryConfig();

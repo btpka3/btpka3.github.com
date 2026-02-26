@@ -2,6 +2,7 @@ package me.test.first.spring.dubbo.consumer;
 
 import lombok.SneakyThrows;
 import me.test.first.spring.dubbo.DemoDubboService;
+import org.apache.dubbo.config.ApplicationConfig;
 import org.apache.dubbo.config.ReferenceConfig;
 import org.apache.dubbo.config.RegistryConfig;
 import org.apache.dubbo.config.bootstrap.DubboBootstrap;
@@ -17,8 +18,8 @@ import org.junit.jupiter.api.Test;
 public class DemoDubboServiceConsumer2Test {
 
     //    String REGISTRY_ADDR = "zookeeper://127.0.0.1:2181";
-    String REGISTRY_ADDR = "nacos://nacos.default.svc.cluster.local:8848";
-
+//    String REGISTRY_ADDR = "nacos://nacos.default.svc.cluster.local:8848";
+    String REGISTRY_ADDR = "nacos://nacos:nacos@127.0.0.1:8848";
 
     @SneakyThrows
     @Test
@@ -37,10 +38,17 @@ public class DemoDubboServiceConsumer2Test {
         reference.setGroup("group001");
         reference.setVersion("version001");
         reference.setCheck(false);
+        //reference.setRetries(0);
         reference.setTimeout(5000);
 
+        ApplicationConfig applicationConfig = new ApplicationConfig();
+        applicationConfig.setName("first-dubbo-consumer");
+        
+        // 不禁用的话，单机启动会端口冲突。
+        applicationConfig.setQosEnable(false);
+
         DubboBootstrap.getInstance()
-                .application("first-dubbo-consumer")
+                .application(applicationConfig)
                 //.registry(new RegistryConfig("zookeeper://127.0.0.1:2181"))
                 .registry(new RegistryConfig(REGISTRY_ADDR))
                 //.reference(reference)

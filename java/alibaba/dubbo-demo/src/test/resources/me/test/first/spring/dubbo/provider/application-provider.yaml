@@ -6,7 +6,8 @@ dubbo:
     name: dubbo
     port: -1
   registry:
-    address: nacos://nacos.default.svc.cluster.local:8848
+    #address: nacos://nacos.default.svc.cluster.local:8848
+    address: nacos://nacos:nacos@127.0.0.1:8848
 #  network:
 #    interface:
 #      preferred: ppp0
