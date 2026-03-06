@@ -10,9 +10,9 @@ import org.junit.jupiter.api.Test;
 public class StableValueTest {
     @Test
     public void x() {
-//        StableValue<String> greeting = StableValue.of();
-//
-//        String message = greeting.orElseSet(() -> "Hello from StableValue!");
-//        System.out.println(message);
+        //        StableValue<String> greeting = StableValue.of();
+        //
+        //        String message = greeting.orElseSet(() -> "Hello from StableValue!");
+        //        System.out.println(message);
     }
 }

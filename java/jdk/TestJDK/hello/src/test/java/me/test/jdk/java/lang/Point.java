@@ -14,8 +14,13 @@ public /*value*/ class Point {
         this.y = y;
     }
 
-    public int x() { return x; }
-    public int y() { return y; }
+    public int x() {
+        return x;
+    }
+
+    public int y() {
+        return y;
+    }
 
     @Override
     public String toString() {

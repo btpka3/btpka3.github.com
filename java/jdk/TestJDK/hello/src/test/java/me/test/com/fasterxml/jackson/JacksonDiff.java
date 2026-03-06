@@ -37,15 +37,13 @@ public class JacksonDiff {
     public void diff01() {
         ObjectMapper mapper = new ObjectMapper();
         // language=JSON
-        String jsonStr1 =
-                """
+        String jsonStr1 = """
                 {
                     "a":"{\\\"x\\\":\\\"xx\\\",\\\"y\\\":\\\"yy\\\"}"
                 }
                 """;
         // language=JSON
-        String jsonStr2 =
-                """
+        String jsonStr2 = """
                 {
                     "a":"{\\\"y\\\":\\\"yy\\\",\\\"x\\\":\\\"xx\\\"}"
                 }

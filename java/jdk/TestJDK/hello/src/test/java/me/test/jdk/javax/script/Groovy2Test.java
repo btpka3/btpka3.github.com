@@ -40,8 +40,7 @@ public class Groovy2Test {
     protected void beforeJs() {
 
         // language=javascript
-        String script =
-                """
+        String script = """
                 (function(map, count){
                     var UUID = Java.type('java.util.UUID');
                     for(var i = 0; i < count; i++){
@@ -57,8 +56,7 @@ public class Groovy2Test {
     protected void beforeGroovy()
             throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         // language=groovy
-        String groovyStr =
-                """
+        String groovyStr = """
                 public class MyGrovvy001 {
                     public void testGroovy(Map map, int count) {
                         for (int i = 0; i < count; i++) {

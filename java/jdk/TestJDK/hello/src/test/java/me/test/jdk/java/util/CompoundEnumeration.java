@@ -24,10 +24,7 @@ public class CompoundEnumeration<T> implements Enumeration<T> {
     }
 
     public CompoundEnumeration(Enumeration<T>... enumerations) {
-        this(enumerations == null || enumerations.length == 0
-                ? Collections.emptyList()
-                : Arrays.asList(enumerations)
-        );
+        this(enumerations == null || enumerations.length == 0 ? Collections.emptyList() : Arrays.asList(enumerations));
     }
 
     public boolean hasMoreElements() {

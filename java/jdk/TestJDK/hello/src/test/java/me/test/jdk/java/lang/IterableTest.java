@@ -25,7 +25,6 @@ import org.junit.jupiter.api.Test;
 @Slf4j
 public class IterableTest {
 
-
     /**
      * 演示
      */
@@ -61,7 +60,6 @@ public class IterableTest {
         }
     }
 
-
     @Test
     public void iterableTest01() {
         Iterable<String> it = Arrays.asList("aaa", "bbb", "ccc");
@@ -73,7 +71,6 @@ public class IterableTest {
     /**
      * Iterable 是传统的顺序迭代接口，设计用于单线程按顺序遍历。
      */
-
     @Test
     public void iterator01() {
         AtomicInteger counter = new AtomicInteger(0);
@@ -99,8 +96,6 @@ public class IterableTest {
 
         log.info("\n使用 tryAdvance 遍历:");
         spliterator.forEachRemaining(log::info);
-
-
     }
 
     /**
@@ -130,7 +125,6 @@ public class IterableTest {
             log.info("第一部分大小: {}", firstPart.estimateSize());
             log.info("第二部分大小: {}", secondPart.estimateSize());
             log.info("剩余部分大小: {}", spliterator1.estimateSize());
-
         }
     }
 
@@ -158,7 +152,8 @@ public class IterableTest {
      * @return
      */
     static <T> Iterable<T> mergeIterablesByStreamConcat(Iterable<T>... its) {
-        return () -> StreamSupport.stream(new LazyConcatSpliterator<>(its), false).iterator();
+        return () ->
+                StreamSupport.stream(new LazyConcatSpliterator<>(its), false).iterator();
     }
 
     private static class LazyConcatSpliterator<T> implements Spliterator<T> {
@@ -242,11 +237,9 @@ public class IterableTest {
             });
 
             log.info("\n分割后第二部分:");
-            spliterator2.forEachRemaining(
-                    s -> {
-                        log.info("-------- i={}, s={}", counter.getAndAdd(1), s);
-                    }
-            );
+            spliterator2.forEachRemaining(s -> {
+                log.info("-------- i={}, s={}", counter.getAndAdd(1), s);
+            });
             Assertions.assertEquals(Arrays.asList("a1", "a2", "a3"), result);
             result.clear();
             counter.set(0);
@@ -256,27 +249,22 @@ public class IterableTest {
     @Test
     public void mergeIterables() {
 
-
         final List<String> result = new ArrayList<>();
         Consumer<String> action = s -> result.add("xx");
 
         //noinspection unchecked
-        Iterable<String>[] its = new Iterable[]{
-                new ExtIterable<>(Arrays.asList("a1", "a2", "a3"), result::add),
-                new ExtIterable<>(Arrays.asList("b1", "b2", "b3"), result::add),
-                new ExtIterable<>(Arrays.asList("c1", "c2", "c3"), result::add),
+        Iterable<String>[] its = new Iterable[] {
+            new ExtIterable<>(Arrays.asList("a1", "a2", "a3"), result::add),
+            new ExtIterable<>(Arrays.asList("b1", "b2", "b3"), result::add),
+            new ExtIterable<>(Arrays.asList("c1", "c2", "c3"), result::add),
         };
 
         List<String> expected = Arrays.asList(
-                "a1", "xx", "a2", "xx", "a3", "xx",
-                "b1", "xx", "b2", "xx", "b3", "xx",
-                "c1", "xx", "c2", "xx", "c3", "xx"
-        );
+                "a1", "xx", "a2", "xx", "a3", "xx", "b1", "xx", "b2", "xx", "b3", "xx", "c1", "xx", "c2", "xx", "c3",
+                "xx");
         List<String> expected2 = Arrays.asList(
-                "a1", "a2", "a3", "xx", "xx", "xx",
-                "b1", "b2", "b3", "xx", "xx", "xx",
-                "c1", "c2", "c3", "xx", "xx", "xx"
-        );
+                "a1", "a2", "a3", "xx", "xx", "xx", "b1", "b2", "b3", "xx", "xx", "xx", "c1", "c2", "c3", "xx", "xx",
+                "xx");
 
         {
             AtomicInteger counter = new AtomicInteger(0);
@@ -368,7 +356,6 @@ public class IterableTest {
         }
     }
 
-
     public static class MyIterator<T> implements Iterator<T> {
 
         private final List<T> list;
@@ -406,9 +393,9 @@ public class IterableTest {
             return new ExtIterator<>(it.iterator(), action);
         }
 
-//        public Spliterator<T> spliterator() {
-//            return Spliterators.spliteratorUnknownSize(iterator(), 0);
-//        }
+        //        public Spliterator<T> spliterator() {
+        //            return Spliterators.spliteratorUnknownSize(iterator(), 0);
+        //        }
     }
 
     public static class ExtIterator<T> implements Iterator<T> {
@@ -443,13 +430,12 @@ public class IterableTest {
         }
 
         // 不要这样实现，否则 action未执行，保持父类的默认实现就好
-//        @Override
-//        public void forEachRemaining(Consumer<? super T> action) {
-//            iterator.forEachRemaining(action);
-//        }
+        //        @Override
+        //        public void forEachRemaining(Consumer<? super T> action) {
+        //            iterator.forEachRemaining(action);
+        //        }
 
     }
-
 
     public static class EnumerationIterator<T> implements Iterator<T> {
         private final Enumeration<T> enumeration;
@@ -491,5 +477,4 @@ public class IterableTest {
             return iterator.next();
         }
     }
-
 }

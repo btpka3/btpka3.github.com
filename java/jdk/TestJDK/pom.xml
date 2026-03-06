@@ -31,7 +31,7 @@
 
         <pmd.failOnViolation>false</pmd.failOnViolation>
         <pmd.failurePriority>5</pmd.failurePriority>
-        <pmd.version>7.16.0</pmd.version>
+        <pmd.version>7.22.0</pmd.version>
 
         <assertj.version>3.24.2</assertj.version>
         <xmlunit.version>2.9.1</xmlunit.version>
@@ -706,7 +706,7 @@
             <plugin>
                 <groupId>com.diffplug.spotless</groupId>
                 <artifactId>spotless-maven-plugin</artifactId>
-                <version>2.46.1</version>
+                <version>3.3.0</version>
                 <executions>
                     <execution>
                         <phase>compile</phase>
@@ -719,13 +719,13 @@
                     <java>
                         <toggleOffOn>
                             <off>@formatter:off</off>
-                <on>@formatter:on</on>
+                            <on>@formatter:on</on>
                         </toggleOffOn>
                         <cleanthat/>
                         <removeUnusedImports/>
                         <palantirJavaFormat>
-                            <!-- https://search.maven.org/artifact/com.palantir.javaformat/palantir-java-format -->
-                            <version>2.68.0</version>
+                            <!-- https://central.sonatype.com/artifact/com.palantir.javaformat/palantir-java-format/versions -->
+                            <version>2.89.0</version>
                             <style>PALANTIR</style>
                             <formatJavadoc>false</formatJavadoc>
                         </palantirJavaFormat>
@@ -845,7 +845,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-pmd-plugin</artifactId>
-                    <version>3.27.0</version>
+                    <version>3.28.0</version>
                 </plugin>
             </plugins>
         </pluginManagement>

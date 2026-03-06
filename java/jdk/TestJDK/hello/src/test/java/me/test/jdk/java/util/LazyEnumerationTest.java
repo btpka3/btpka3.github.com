@@ -13,9 +13,7 @@ import org.junit.jupiter.api.Test;
 public class LazyEnumerationTest {
 
     @Test
-    public void test() {
-
-    }
+    public void test() {}
 
     protected Enumeration<String> getEnumeration() {
         return null;
@@ -32,5 +30,4 @@ public class LazyEnumerationTest {
     protected Enumeration<String> getEnumeration3() {
         return null;
     }
-
 }

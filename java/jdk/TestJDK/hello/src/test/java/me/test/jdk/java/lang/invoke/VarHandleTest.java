@@ -19,7 +19,7 @@ import org.junit.jupiter.api.Test;
 @Slf4j
 public class VarHandleTest {
     private int x = 1;
-    public int[] arrayData = new int[]{1, 2, 3};
+    public int[] arrayData = new int[] {1, 2, 3};
 
     private int add(int a, int b) {
         return a + b;
@@ -63,15 +63,11 @@ public class VarHandleTest {
     @SneakyThrows
     @Test
     public void test03() {
-        MethodHandle handle = MethodHandles.lookup().findVirtual(
-                VarHandleTest.class,
-                "add",
-                MethodType.methodType(int.class, int.class, int.class)
-        );
+        MethodHandle handle = MethodHandles.lookup()
+                .findVirtual(VarHandleTest.class, "add", MethodType.methodType(int.class, int.class, int.class));
         VarHandleTest obj = new VarHandleTest();
 
         int result = (int) handle.invoke(obj, 1, 2);
         Assertions.assertEquals(3, result);
-
     }
 }

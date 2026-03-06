@@ -65,8 +65,7 @@ public class GraalJsTest {
         long start = System.nanoTime();
 
         // language=javascript
-        String script =
-                """
+        String script = """
                 (function(map, count){
                     var UUID = Java.type('java.util.UUID');
                     for(var i = 0; i < count; i++){

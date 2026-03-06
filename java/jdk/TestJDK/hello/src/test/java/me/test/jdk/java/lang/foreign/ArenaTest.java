@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test;
  */
 public class ArenaTest {
 
-
     /**
      * • Arena.ofConfined()：推荐，线程局部、高性能，配合 try-with-resources. 有线程检查：跨线程访问抛 WrongThreadException
      * • Arena.ofShared()：跨线程安全，需手动 close()
@@ -50,6 +49,5 @@ public class ArenaTest {
             }
         }
         System.out.println("✓ Arena 已自动关闭，外部内存已安全释放");
-
     }
 }

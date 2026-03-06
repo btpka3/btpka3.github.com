@@ -9,8 +9,7 @@ public class JassConfJsonStrHolder {
 
     // @see javax.security.auth.login.AppConfigurationEntry
     // language=JSON
-    public static String jassConfJsonStr =
-            """
+    public static String jassConfJsonStr = """
             {
               "Client": [
                 {

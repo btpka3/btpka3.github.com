@@ -16,8 +16,7 @@ public class PropertiesUtilsTest {
     @Test
     public void test01() {
         // language=properties
-        String str =
-                """
+        String str = """
                 b=b1
                 a=aa
                 zhang3=\\u5F203

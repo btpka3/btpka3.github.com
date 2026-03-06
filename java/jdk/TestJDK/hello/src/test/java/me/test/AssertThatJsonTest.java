@@ -46,8 +46,7 @@ public class AssertThatJsonTest {
     public void test03() {
 
         // language=JSON
-        String jsonStr1 =
-                """
+        String jsonStr1 = """
                 {
                     "test":[1,2,3],
                     "a":{
@@ -57,8 +56,7 @@ public class AssertThatJsonTest {
                 }
                 """;
         // language=JSON
-        String jsonStr2 =
-                """
+        String jsonStr2 = """
                 {
                     "test":[1,2,3],
                     "a":{
@@ -78,15 +76,13 @@ public class AssertThatJsonTest {
     public void test04() {
 
         // language=JSON
-        String jsonStr1 =
-                """
+        String jsonStr1 = """
                 {
                     "a":"{\\\"x\\\":\\\"xx\\\",\\\"y\\\":\\\"yy\\\"}"
                 }
                 """;
         // language=JSON
-        String jsonStr2 =
-                """
+        String jsonStr2 = """
                 {
                     "a":"{\\\"y\\\":\\\"yy\\\",\\\"x\\\":\\\"xx\\\"}"
                 }
