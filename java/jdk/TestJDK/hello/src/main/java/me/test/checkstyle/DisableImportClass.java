@@ -1,6 +1,6 @@
 package me.test.checkstyle;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 测试禁止 import org.apache.commons.lang.StringUtils;

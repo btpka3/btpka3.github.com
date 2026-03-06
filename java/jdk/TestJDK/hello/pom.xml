@@ -14,7 +14,7 @@
     <artifactId>hello</artifactId>
 
     <properties>
-
+        <javafx.skip>false</javafx.skip>
     </properties>
 
     <dependencies>
@@ -30,19 +30,7 @@
         <dependency>
             <groupId>com.alibaba.security</groupId>
             <artifactId>risk-protocol</artifactId>
-            <version>0.1.2</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-reload4j</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
-        <!--        <dependency>-->
-        <!--            <groupId>org.graalvm.js</groupId>-->
-        <!--            <artifactId>js</artifactId>-->
-        <!--            <type>pom</type>-->
-        <!--        </dependency>-->
         <dependency>
             <groupId>org.openjdk.nashorn</groupId>
             <artifactId>nashorn-core</artifactId>
@@ -137,6 +125,10 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
         </dependency>
         <dependency>
             <groupId>com.google.code.findbugs</groupId>
@@ -276,7 +268,6 @@
         <dependency>
             <groupId>org.opentest4j.reporting</groupId>
             <artifactId>open-test-reporting-cli</artifactId>
-            <!--            <classifier>standalone</classifier>-->
         </dependency>
 
         <dependency>
@@ -405,23 +396,13 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-
-                    <!--                    <annotationProcessors>-->
-                    <!--                        <annotationProcessor>me.test.jdk.javax.annotation.processing.MyProcessor</annotationProcessor>-->
-                    <!--                    </annotationProcessors>-->
-                    <source>25</source>
-                    <target>25</target>
-                    <compilerArgs>--enable-preview</compilerArgs>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>me.test.jdk.javafx.JavafxTest01</mainClass>
+                    <mainClass>hello/me.test.jdk.javafx.JavafxTest01</mainClass>
+                    <options>
+                        <option>--enable-native-access=javafx.graphics</option>
+                    </options>
                 </configuration>
             </plugin>
         </plugins>

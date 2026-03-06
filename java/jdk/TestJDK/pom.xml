@@ -18,9 +18,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>25</maven.compiler.source>
         <maven.compiler.target>25</maven.compiler.target>
+        <maven.compiler.enablePreview>true</maven.compiler.enablePreview>
+        <surefire.useModulePath>false</surefire.useModulePath>
 
         <!--        <checkstyle.config.location>${maven.multiModuleProjectDirectory}/checkstyle/checkstyle.xml</checkstyle.config.location>-->
-<!--        <checkstyle.config.location>build-tools/checkstyle/checkstyle.xml</checkstyle.config.location>-->
+        <!--        <checkstyle.config.location>build-tools/checkstyle/checkstyle.xml</checkstyle.config.location>-->
         <checkstyle.consoleOutput>true</checkstyle.consoleOutput>
         <checkstyle.failOnViolation>false</checkstyle.failOnViolation>
         <checkstyle.console>true</checkstyle.console>
@@ -30,7 +32,6 @@
         <pmd.failOnViolation>false</pmd.failOnViolation>
         <pmd.failurePriority>5</pmd.failurePriority>
         <pmd.version>7.16.0</pmd.version>
-        <!--        <junit.version>4.9</junit.version>-->
 
         <assertj.version>3.24.2</assertj.version>
         <xmlunit.version>2.9.1</xmlunit.version>
@@ -51,27 +52,13 @@
         <archunit.version>1.4.1</archunit.version>
         <error-prone.version>2.46.0</error-prone.version>
         <mapstruct.version>1.5.0.Final</mapstruct.version>
+        <javafx.skip>true</javafx.skip>
     </properties>
 
 
     <dependencyManagement>
 
         <dependencies>
-            <!--            <dependency>-->
-            <!--                <groupId>org.junit</groupId>-->
-            <!--                <artifactId>junit-bom</artifactId>-->
-            <!--                <version>${junit5.version}</version>-->
-            <!--                <type>pom</type>-->
-            <!--                <scope>import</scope>-->
-            <!--            </dependency>-->
-            <!--            <dependency>-->
-            <!--                <groupId>net.sourceforge.pmd</groupId>-->
-            <!--                <artifactId>pmd-languages-deps</artifactId>-->
-            <!--                <version>${pmd.version}</version>-->
-            <!--                <type>pom</type>-->
-            <!--                <scope>import</scope>-->
-            <!--            </dependency>-->
-
             <dependency>
                 <groupId>net.sourceforge.pmd</groupId>
                 <artifactId>pmd-java</artifactId>
@@ -289,9 +276,28 @@
             </dependency>
 
             <dependency>
+                <groupId>com.alibaba.security</groupId>
+                <artifactId>risk-protocol</artifactId>
+                <version>0.1.2</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-reload4j</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>log4j</groupId>
+                        <artifactId>log4j</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>apache-log4j</groupId>
+                        <artifactId>log4j</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
                 <groupId>com.esotericsoftware</groupId>
                 <artifactId>kryo</artifactId>
-                <!--                <version>5.6.0</version>-->
                 <version>4.0.3</version>
             </dependency>
             <dependency>
@@ -469,7 +475,7 @@
             <dependency>
                 <groupId>commons-codec</groupId>
                 <artifactId>commons-codec</artifactId>
-                <version>1.15</version>
+                <version>1.21.0</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
@@ -561,7 +567,12 @@
             <dependency>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-controls</artifactId>
-                <version>21.0.1</version>
+                <version>25.0.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-fxml</artifactId>
+                <version>25.0.1</version>
             </dependency>
             <dependency>
                 <groupId>com.google.code.findbugs</groupId>
@@ -729,17 +740,11 @@
                     <artifactId>maven-checkstyle-plugin</artifactId>
                     <version>3.6.0</version>
                     <dependencies>
-<!--                        <dependency>-->
-<!--                            <groupId>me.test</groupId>-->
-<!--                            <artifactId>build-tools</artifactId>-->
-<!--                            <version>${project.version}</version>-->
-<!--                        </dependency>-->
                     </dependencies>
                     <configuration>
                         <propertyExpansion>
                             rootDir=build-tools/checkstyle
                         </propertyExpansion>
-                        <!--                        rootDir=${maven.multiModuleProjectDirectory}/checkstyle-->
                     </configuration>
                 </plugin>
 
@@ -779,6 +784,25 @@
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
                     <version>0.8.13</version>
+                    <configuration>
+                        <propertyName>argLine</propertyName>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>default-prepare-agent</id>
+                            <goals>
+                                <goal>prepare-agent</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>default-report</id>
+                            <phase>test</phase>
+                            <goals>
+                                <goal>report</goal>
+                                <goal>report-aggregate</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
                 <plugin>
                     <groupId>org.openjfx</groupId>
@@ -802,11 +826,21 @@
                                 <version>${mapstruct.version}</version>
                             </path>
                         </annotationProcessorPaths>
-                        <enablePreview>false</enablePreview>
-<!--                        <compilerArgs>-->
-<!--                            <arg>&#45;&#45;enable-preview</arg>-->
-<!--                        </compilerArgs>-->
                     </configuration>
+                    <executions>
+                        <execution>
+                            <id>default-testCompile</id>
+                            <phase>test-compile</phase>
+                            <goals>
+                                <goal>testCompile</goal>
+                            </goals>
+                            <configuration>
+                                <useModulePath>false</useModulePath>
+                            </configuration>
+                        </execution>
+                    </executions>
+
+
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -830,15 +864,15 @@
 
                 </configuration>
                 <reportSets>
-                    <reportSet><!-- by default, id = "default" -->
-                        <reports><!-- select non-aggregate reports -->
+                    <reportSet>
+                        <reports>
                             <report>pmd</report>
                             <report>cpd</report>
                         </reports>
                     </reportSet>
-                    <reportSet><!-- aggregate reportSet, to define in poms having modules -->
+                    <reportSet>
                         <id>aggregate</id>
-                        <inherited>false</inherited> <!-- don't run aggregate in child modules -->
+                        <inherited>false</inherited>
                         <reports>
                             <report>aggregate-pmd</report>
                             <report>aggregate-cpd</report>
