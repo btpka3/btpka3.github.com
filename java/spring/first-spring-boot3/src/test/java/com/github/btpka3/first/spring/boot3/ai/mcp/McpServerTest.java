@@ -1,11 +1,15 @@
 package com.github.btpka3.first.spring.boot3.ai.mcp;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.modelcontextprotocol.client.transport.StdioClientTransport;
 import io.modelcontextprotocol.server.McpServerFeatures;
 import io.modelcontextprotocol.server.McpSyncServerExchange;
+import io.modelcontextprotocol.server.transport.WebFluxSseServerTransportProvider;
+import io.modelcontextprotocol.server.transport.WebMvcSseServerTransportProvider;
 import io.modelcontextprotocol.spec.McpSchema;
 import org.springframework.ai.chat.model.ToolContext;
 import org.springframework.ai.mcp.McpToolUtils;
+import org.springframework.ai.mcp.server.autoconfigure.*;
 import org.springframework.ai.tool.ToolCallback;
 import org.springframework.ai.tool.ToolCallbackProvider;
 import org.springframework.ai.tool.annotation.Tool;
@@ -22,7 +26,17 @@ import java.util.Optional;
  *
  * @author dangqian.zll
  * @date 2025/12/26
+ * @see WebMvcSseServerTransportProvider  提供 /sse 端点
+ * @see McpServerSseWebMvcAutoConfiguration
+ * @see McpServerStatelessWebMvcAutoConfiguration
+ * @see McpServerStreamableHttpWebMvcAutoConfiguration
+ * @see WebFluxSseServerTransportProvider
+ * @see McpServerSseWebFluxAutoConfiguration
+ * @see McpServerStatelessWebFluxAutoConfiguration
+ * @see McpServerStreamableHttpWebFluxAutoConfiguration
+ * @see StdioClientTransport
  */
+
 public class McpServerTest {
 
     @Bean
@@ -79,7 +93,7 @@ public class McpServerTest {
 
     @Bean
     public List<McpServerFeatures.SyncResourceSpecification> myResources() {
-        var systemInfoResource = new McpSchema.Resource("", "", "", "", "", null, null);
+        var systemInfoResource = new McpSchema.Resource("", "", "", "", "", null, null,null);
         var resourceSpecification = new McpServerFeatures.SyncResourceSpecification(systemInfoResource, (exchange, request) -> {
             try {
                 var systemInfo = Map.of("os", "Linux", "java.version", "17");

@@ -1,92 +1,133 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version "${springBootVersion}"
-	id 'io.spring.dependency-management' version '1.1.7'
+    id 'java'
+    id 'org.springframework.boot' version "${springBootVersion}"
+    id 'io.spring.dependency-management' version '1.1.7'
 }
 
 group = 'com.github.btpka3'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	sourceCompatibility = '21'
+    sourceCompatibility = '21'
 }
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
-	maven { url "https://maven.aliyun.com/nexus/content/groups/public/" }
-	mavenCentral()
-	maven { url 'https://repo.spring.io/milestone' }
-	//maven { url 'https://repo.spring.io/snapshot' }
+    maven { url "https://maven.aliyun.com/nexus/content/groups/public/" }
+    mavenCentral()
+    maven { url 'https://repo.spring.io/milestone' }
+    //maven { url 'https://repo.spring.io/snapshot' }
 }
 
 ext {
-	//set('springAiVersion', "0.8.1")
-	//set('springCloudVersion', "2023.0.1")
+    //set('springAiVersion', "0.8.1")
+    //set('springCloudVersion', "2023.0.1")
 }
 
 dependencies {
-	implementation platform("org.springframework.ai:spring-ai-bom:${springAiVersion}")
-	//implementation "org.springframework.experimental.ai:spring-ai-openai-spring-boot-starter:${springAiVersion}"
-	implementation "com.alibaba.cloud.ai:spring-ai-alibaba-starter:${springAiAlibabaVersion}"
-	//implementation 'group.springframework.ai:spring-ai-dashscope-spring-boot-starter:1.1.0'
+
+    implementation platform("org.springframework.ai:spring-ai-bom:${springAiVersion}")
+    implementation platform("org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}")
+    implementation platform("org.springframework.shell:spring-shell-dependencies:${springShellVersion}")
+    implementation platform("org.a2aproject.sdk:a2a-java-sdk-bom:1.0.0.Beta1")
+    implementation platform('com.github.docker-java:docker-java-bom:3.7.1')
+
+    //implementation "org.springframework.experimental.ai:spring-ai-openai-spring-boot-starter:${springAiVersion}"
+    //implementation "com.alibaba.cloud.ai:spring-ai-alibaba-starter:${springAiAlibabaVersion}"
+    //implementation 'group.springframework.ai:spring-ai-dashscope-spring-boot-starter:1.1.0'
+    implementation 'org.a2aproject.sdk:a2a-java-sdk-client'
+    implementation 'org.a2aproject.sdk:a2a-java-sdk-client-transport-grpc'
+    implementation 'org.a2aproject.sdk:a2a-java-sdk-client-transport-rest'
+    implementation 'org.a2aproject.sdk:a2a-java-sdk-reference-jsonrpc'
+    implementation 'org.a2aproject.sdk:a2a-java-sdk-reference-grpc'
+    implementation 'org.a2aproject.sdk:a2a-java-sdk-reference-rest'
+
+    implementation 'io.modelcontextprotocol.sdk:mcp:1.1.2'
+
+    // https://github.com/agentscope-ai/agentscope-java
+    implementation 'io.agentscope:agentscope:1.0.11'
+
+
+
+    implementation 'com.alibaba.cloud.ai:spring-ai-alibaba-agent-framework:1.1.2.2'
+    implementation 'com.alibaba.cloud.ai:spring-ai-alibaba-starter-dashscope:1.1.2.2'
+    implementation 'org.springframework.ai:spring-ai-starter-model-openai'
 
     //implementation platform("org.springframework.ai:spring-ai-starter-mcp-server")
     implementation "org.springframework.ai:spring-ai-starter-mcp-server"
     implementation "org.springframework.ai:spring-ai-starter-mcp-server-webflux"
+    implementation "org.springframework.ai:spring-ai-starter-mcp-server-webmvc"
     implementation 'org.springframework.ai:spring-ai-openai'
     implementation "org.springframework.ai:spring-ai-starter-mcp-client"
     implementation "org.springframework.ai:spring-ai-starter-mcp-client-webflux"
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'org.springframework.boot:spring-boot-starter-batch'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
-	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-	implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
-	implementation 'org.springframework.boot:spring-boot-starter-webflux'
-	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
-	//implementation 'org.springframework.ai:spring-ai-openai-spring-boot-starter'
-	//implementation 'org.springframework.ai:spring-ai-openai'
-	implementation 'org.springframework.cloud:spring-cloud-function-web'
+    implementation 'org.springframework.ai:spring-ai-starter-vector-store-chroma'
 
-	implementation 'org.apache.httpcomponents.client5:httpclient5'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	runtimeOnly 'com.mysql:mysql-connector-j'
-	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-batch'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+    //implementation 'org.springframework.ai:spring-ai-openai-spring-boot-starter'
+    //implementation 'org.springframework.ai:spring-ai-openai'
+    implementation 'org.springframework.cloud:spring-cloud-function-web'
 
-	implementation "org.projectlombok:lombok:${lombokVersion}"
-	annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    implementation 'org.apache.httpcomponents.client5:httpclient5'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'com.mysql:mysql-connector-j'
+    runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
+
+    implementation "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
     testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 //    compileOnly 'org.projectlombok:lombok'
 //    testCompileOnly 'org.projectlombok:lombok'
 
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'io.projectreactor:reactor-test'
-	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
-	testImplementation 'org.springframework.batch:spring-batch-test'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
 
-	implementation 'org.springframework.boot:spring-boot-starter'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'io.projectreactor:reactor-test'
+    testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
+    testImplementation 'org.springframework.batch:spring-batch-test'
+
+    implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.shell:spring-shell-starter'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-	implementation 'org.springframework.boot:spring-boot-starter-integration'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.integration:spring-integration-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    implementation 'org.springframework.boot:spring-boot-starter-integration'
+    testImplementation 'org.springframework.integration:spring-integration-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
+    //implementation("org.springframework.statemachine:spring-statemachine-core:4.0.1")
+    implementation('org.springframework.statemachine:spring-statemachine-starter:4.0.1')
+
+    implementation "dev.langchain4j:langchain4j-open-ai:${langchain4jVersion}"
+    implementation "dev.langchain4j:langchain4j:${langchain4jVersion}"
+
+
+    implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-client'
+    implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-client-config'
+    implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-client-all'
+
+    implementation 'com.github.docker-java:docker-java-core'
+    implementation 'com.github.docker-java:docker-java-transport-httpclient5'
 }
 
-dependencyManagement {
-	imports {
-		mavenBom "org.springframework.ai:spring-ai-bom:${springAiVersion}"
-		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-		 mavenBom "org.springframework.shell:spring-shell-dependencies:${springShellVersion}"
-	}
-}
+//dependencyManagement {
+//    imports {
+//        mavenBom "org.springframework.ai:spring-ai-bom:${springAiVersion}"
+//        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+//        mavenBom "org.springframework.shell:spring-shell-dependencies:${springShellVersion}"
+//        mavenBom "org.springframework.statemachine:spring-statemachine-bom:${springStatemachineVersion}"
+//    }
+//}
 
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
