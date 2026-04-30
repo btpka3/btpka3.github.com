@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
@@ -24,7 +26,6 @@ public class ProducerTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(ProducerTest.class);
 
     private static final ExecutorService threadPool = Executors.newFixedThreadPool(10);
-
 
 
     @Test
@@ -55,6 +56,17 @@ public class ProducerTest {
             threadPool.submit(() -> {
                 //The maximum size of a LogItem (key) is 128 bytes.  The maximum size of a LogItem (value) is 1 MB.
                 LogItem logItem = new LogItem();
+
+                // ⭕️ : 使用指定的时间。
+                // 指定时间：昨天 10:30:00 (北京时间)
+                LocalDateTime yesterday = LocalDateTime.now(ZoneId.of("Asia/Shanghai"))
+                        .minusDays(1)
+                        .withHour(10)
+                        .withMinute(30)
+                        .withSecond(0);
+                long timestamp = yesterday.atZone(ZoneId.of("Asia/Shanghai")).toEpochSecond();
+                logItem.SetTime((int) timestamp);
+
                 msgMap.forEach((k, v) -> logItem.PushBack(k, v));
                 logItem.PushBack("__tag__:__hostname__", "hostName001");
                 logItem.PushBack("__tag__:__path__", "/path/aaa/bbb/ccc.log");
