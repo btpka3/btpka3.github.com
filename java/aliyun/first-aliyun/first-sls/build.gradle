@@ -10,8 +10,8 @@ configurations {
 }
 
 java {
-    sourceCompatibility = '11'
-    targetCompatibility = '11'
+//    sourceCompatibility = '11'
+//    targetCompatibility = '11'
 }
 
 repositories {
@@ -20,6 +20,8 @@ repositories {
 }
 
 dependencies {
+    implementation platform(project(':platform'))
+
     compileOnly 'org.projectlombok:lombok:1.18.30'
     testCompileOnly 'org.projectlombok:lombok:1.18.30'
 
@@ -44,3 +46,6 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
+springBoot {
+	mainClass = 'me.test.Aaa'
+}

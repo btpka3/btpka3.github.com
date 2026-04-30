@@ -2,7 +2,7 @@ plugins {
     //id "my-demo-plugin"
     //id 'org.springframework.boot' version '4.0.0'
     id 'java'
-    id "org.springframework.boot" version "4.0.0"
+    id "org.springframework.boot" version "${springBootVersion}"
     id 'io.spring.dependency-management' version '1.1.7'
 }
 //apply plugin: 'io.spring.dependency-management'
@@ -88,4 +88,8 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+springBoot {
+	mainClass = 'me.test.Aaa'
 }

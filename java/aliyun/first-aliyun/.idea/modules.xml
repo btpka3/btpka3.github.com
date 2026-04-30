@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/first-oss/first-aliyun.first-oss.main.iml" filepath="$PROJECT_DIR$/.idea/modules/first-oss/first-aliyun.first-oss.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/first-oss/first-aliyun.first-oss.test.iml" filepath="$PROJECT_DIR$/.idea/modules/first-oss/first-aliyun.first-oss.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/first-sls/first-aliyun.first-sls.main.iml" filepath="$PROJECT_DIR$/.idea/modules/first-sls/first-aliyun.first-sls.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/first-sls/first-aliyun.first-sls.test.iml" filepath="$PROJECT_DIR$/.idea/modules/first-sls/first-aliyun.first-sls.test.iml" />
     </modules>
   </component>
 </project>
