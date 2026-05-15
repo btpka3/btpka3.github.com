@@ -143,4 +143,24 @@ public class PatternTest01 {
         Assertions.assertEquals("a.B-c_1", getErrCode("111 [errCode:a.B-c_1] 222"));
         Assertions.assertNull(getErrCode("111 222"));
     }
+
+    @Test
+    public void testReplaceNumbers() {
+        String input = "A123-456-789";
+        // 正则解释：
+        // (?<![A-Za-z]) : 负向后顾，确保匹配位置的前一个字符不是 A-Z 或 a-z
+        // \d+           : 匹配一个或多个连续数字
+        //        String regex = "(?<![A-Za-z])\\d+";
+
+        // (?<![\dA-Za-z])：负向后顾，要求前面不能是数字，也不能是字母。
+        // 如果是 A123：1 前面是 A，匹配失败。整个 123 都不会被选中（因为 2 前面是 1 也是数字，也失败）。
+        // 如果是 -456：4 前面是 -（非数字非字母），匹配成功。选中 456。
+        // 如果是 ^789 (开头)：前面没字符，匹配成功。
+        String regex = "(?<![\\dA-Za-z])\\d+";
+        String result = input.replaceAll(regex, "N");
+        System.out.println("原始字符串: " + input);
+        System.out.println("替换结果: " + result);
+
+        Assertions.assertEquals("A123-N-N", result);
+    }
 }

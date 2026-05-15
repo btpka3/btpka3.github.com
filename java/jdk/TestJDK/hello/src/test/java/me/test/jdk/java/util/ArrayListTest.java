@@ -1,6 +1,7 @@
 package me.test.jdk.java.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -33,4 +34,13 @@ public class ArrayListTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void containsAll01() {
+        List<String> list = Arrays.asList("aaa", "bbb", "ccc");
+        Assertions.assertTrue(list.containsAll(Arrays.asList("aaa", "bbb")));
+        Assertions.assertTrue(list.containsAll(new ArrayList<>(0)));
+    }
+
+
 }

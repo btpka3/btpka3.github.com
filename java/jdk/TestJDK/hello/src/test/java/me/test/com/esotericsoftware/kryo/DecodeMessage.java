@@ -26,6 +26,7 @@ public class DecodeMessage {
         byte[] data = IOUtils.toByteArray(new FileInputStream(filePath));
 
         Map ctx = MyKryoUtils.deserialize(data);
+        printJson(ctx);
     }
 
     private void printJson(Map ctx) {
