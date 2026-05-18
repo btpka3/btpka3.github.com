@@ -1,0 +1,114 @@
+<script src="{{{uiRootPath}}}/js/vendor/import.js"></script>
+<script src="{{{uiRootPath}}}/js/site.js"></script>
+<script async src="{{{uiRootPath}}}/js/vendor/highlight.js"></script>
+<script async src="{{{uiRootPath}}}/js/vendor/spring-tabs.js" data-sync-storage-key="docs:preferred-tab"></script>
+{{> search-scripts}}
+<script>
+(function() {
+  var searchInput = document.getElementById('search-input');
+  if (!searchInput) return;
+
+  var overlay = document.createElement('div');
+  overlay.id = 'search-overlay';
+  document.body.appendChild(overlay);
+
+  var dropdown = null;
+  var moved = false;
+
+  function getDropdown() {
+    if (!dropdown) {
+      dropdown = document.querySelector('.search-result-dropdown-menu');
+    }
+    return dropdown;
+  }
+
+  function moveDropdownToBody() {
+    var el = getDropdown();
+    if (el && !moved) {
+      document.body.appendChild(el);
+      moved = true;
+    }
+  }
+
+  function hasResults() {
+    var el = getDropdown();
+    return el && el.childElementCount > 0;
+  }
+
+  function showOverlay() {
+    overlay.classList.add('active');
+  }
+
+  function hideOverlay() {
+    overlay.classList.remove('active');
+  }
+
+  function closeSearch() {
+    hideOverlay();
+    searchInput.value = '';
+    searchInput.blur();
+    var el = getDropdown();
+    if (el) el.innerHTML = '';
+  }
+
+  function initDropdown(el) {
+    dropdown = el;
+    document.body.appendChild(el);
+    moved = true;
+    startWatching();
+  }
+
+  // search-ui.js runs before us and creates the container synchronously
+  var existingEl = document.querySelector('.search-result-dropdown-menu');
+  if (existingEl) {
+    initDropdown(existingEl);
+  } else {
+    var initObserver = new MutationObserver(function() {
+      var el = document.querySelector('.search-result-dropdown-menu');
+      if (el) {
+        initObserver.disconnect();
+        initDropdown(el);
+      }
+    });
+    initObserver.observe(document.body, { childList: true, subtree: true });
+  }
+
+  function startWatching() {
+    var el = getDropdown();
+    if (!el) return;
+    var resultObserver = new MutationObserver(function() {
+      if (hasResults()) {
+        showOverlay();
+      } else {
+        hideOverlay();
+      }
+    });
+    resultObserver.observe(el, { childList: true });
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if ((e.ctrlKey || e.metaKey) && e.key === '/') {
+      e.preventDefault();
+      searchInput.focus();
+      searchInput.select();
+      return;
+    }
+    if (e.key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey) {
+      var tag = document.activeElement.tagName;
+      if (tag !== 'INPUT' && tag !== 'TEXTAREA' && tag !== 'SELECT') {
+        e.preventDefault();
+        searchInput.focus();
+        searchInput.select();
+      }
+      return;
+    }
+    if (e.key === 'Escape') {
+      closeSearch();
+    }
+  });
+
+  overlay.addEventListener('click', function() {
+    closeSearch();
+  });
+})();
+</script>

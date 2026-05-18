@@ -11,6 +11,20 @@
 * 丰富的 AsciiDoc 语法示例
 * 宽屏显示优化
 
+== 本地启动
+
+[source,bash]
+----
+# 安装依赖
+npm install
+
+# 构建站点
+npx antora antora-playbook.yml --to-dir=build/site
+
+# 启动本地服务（访问 http://localhost:8888）
+npx http-server build/site -p 8888
+----
+
 == 快速开始
 
 请参阅 xref:setup-guide.adoc[构建指南] 了解如何从零开始搭建此站点。

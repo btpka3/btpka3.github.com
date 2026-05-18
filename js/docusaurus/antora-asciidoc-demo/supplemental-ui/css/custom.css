@@ -1,3 +1,139 @@
+/* Code block font: prefer Sarasa Mono SC */
+:root {
+  --monospace-font-family: "Sarasa Mono SC", "SFMono-Regular", "Consolas", "Liberation Mono", "Menlo", monospace;
+}
+
+/* Search input styling */
+.nav-menu .search {
+  display: block !important;
+  margin: 0.5rem 0.75rem;
+  padding: 0;
+  height: auto;
+  border: 0;
+}
+
+.nav-menu .search #search-input {
+  width: 100%;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.875rem;
+  border: 1px solid var(--nav-border-color, #c1c1c1);
+  border-radius: 4px;
+  background: var(--body-background-color, #fff);
+  color: var(--body-font-color, #333);
+  outline: none;
+  box-sizing: border-box;
+}
+
+.nav-menu .search #search-input:focus {
+  border-color: var(--color-accent-3, #6db33f);
+  box-shadow: 0 0 0 2px rgba(109, 179, 63, 0.2);
+}
+
+/* Search results as centered modal overlay */
+.search-result-dropdown-menu {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  right: auto !important;
+  transform: translate(-50%, -50%);
+  z-index: 9999 !important;
+  max-width: 700px;
+  min-width: min(600px, 90vw);
+  width: 90vw;
+  max-height: 80vh;
+  margin: 0 !important;
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+  border: 1px solid var(--panel-border-color, #eaedf0) !important;
+}
+
+.search-result-dataset {
+  background: var(--body-background-color, #fff) !important;
+  border: none !important;
+  border-radius: 8px;
+  max-height: 70vh;
+  padding: 12px;
+}
+
+.search-result-component-header {
+  color: var(--body-font-dark-color, #1e1e1e);
+  border-bottom-color: var(--panel-border-color, #ddd);
+  font-size: 0.9rem;
+  padding: 0.5em;
+}
+
+.search-result-document-title {
+  color: var(--body-font-dark-color, #02060c);
+  border-right-color: var(--panel-border-color, #ddd);
+}
+
+.search-result-document-hit {
+  color: var(--body-font-light-color, #63676d);
+}
+
+.search-result-document-hit > a:hover {
+  background-color: var(--color-accent-1, rgba(69, 142, 225, 0.05));
+}
+
+.search-result-document-hit .search-result-highlight {
+  color: var(--link-font-color, #174d8c);
+  background: var(--color-accent-1, rgba(143, 187, 237, 0.1));
+}
+
+.search-result-document-hit .search-result-section-title {
+  color: var(--body-font-dark-color, #303030);
+}
+
+/* Search modal backdrop (separate element, not pseudo) */
+#search-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9998;
+}
+
+#search-overlay.active {
+  display: block;
+}
+
+/* Dark mode specific overrides for search */
+html.dark-theme .search-result-dataset {
+  background: var(--body-background-color) !important;
+  border-color: var(--panel-border-color) !important;
+}
+
+html.dark-theme .search-result-dropdown-menu {
+  border-color: var(--panel-border-color);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+}
+
+html.dark-theme .search-result-component-header {
+  color: var(--body-font-color);
+  border-bottom-color: var(--panel-border-color);
+}
+
+html.dark-theme .search-result-document-title {
+  color: var(--body-font-color);
+  border-right-color: var(--panel-border-color);
+}
+
+html.dark-theme .search-result-document-hit {
+  color: var(--body-font-light-color);
+}
+
+html.dark-theme .search-result-document-hit .search-result-section-title {
+  color: var(--body-font-dark-color);
+}
+
+html.dark-theme .search-result-document-hit .search-result-highlight {
+  color: var(--color-accent-3);
+  background: rgba(109, 179, 63, 0.15);
+}
+
 /* Widescreen optimization for antora-ui-spring */
 /* Reduces whitespace on displays >= 1920px */
 
