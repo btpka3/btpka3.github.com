@@ -14,11 +14,11 @@ const config = {
   favicon: 'img/favicon.ico',
 
   url: 'https://btpka3.github.io',
-  baseUrl: '/js/docusaurus/docusaurus-asciidos-demo/',
+  baseUrl: '/js/docusaurus/docusaurus-asciidoc-demo/',
   trailingSlash: false,
 
   organizationName: 'btpka3',
-  projectName: 'docusaurus-asciidos-demo',
+  projectName: 'docusaurus-asciidoc-demo',
   deploymentBranch: 'gh-pages',
 
   onBrokenLinks: 'throw',
@@ -43,7 +43,7 @@ const config = {
       ({
         docs: {
           sidebarPath: './sidebars.mjs',
-          editUrl: 'https://github.com/btpka3/btpka3.github.com/tree/main/js/docusaurus/docusaurus-asciidos-demo/',
+          editUrl: 'https://github.com/btpka3/btpka3.github.com/tree/main/js/docusaurus/docusaurus-asciidoc-demo/',
           include: ['**/*.{md,mdx,adoc}'],
           remarkPlugins: [remarkPlantuml],
         },

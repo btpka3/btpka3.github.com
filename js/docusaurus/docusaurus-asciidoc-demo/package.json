@@ -1,5 +1,5 @@
 {
-  "name": "docusaurus-asciidos-demo",
+  "name": "docusaurus-asciidoc-demo",
   "version": "1.0.0",
   "description": "Docusaurus + AsciiDoc 静态站点示例",
   "main": "index.js",
