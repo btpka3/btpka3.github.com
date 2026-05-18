@@ -430,16 +430,155 @@ docs/modules/ROOT/
 
 == 配置本地搜索
 
-=== 安装 @antora/lunr-extension
+=== 方案一：Pagefind（推荐）
 
-该依赖已在 <<安装依赖>> 步骤中安装。如果是在已有项目中添加搜索功能：
+https://pagefind.app[Pagefind] 是一个高性能的静态站点搜索工具，相比 Lunr 有显著优势：
+
+* **按需加载**：初始仅加载 ~5KB 入口文件，索引分片按需获取，而非一次性加载全部索引
+* **内置 CJK 支持**：自动处理中文/日文/韩文分词，无需额外依赖
+* **构建无侵入**：作为后处理步骤运行，不需要 Antora 扩展
+* **Component UI**：内置模态框搜索界面，支持键盘快捷键（`/` 打开，`Escape` 关闭）
+
+==== 安装
+
+[source,bash]
+----
+npm install -D pagefind
+----
+
+==== 构建流程
+
+Pagefind 在 Antora 构建完成后运行，对生成的 HTML 建立索引：
+
+[source,bash]
+----
+# 第一步：Antora 构建站点
+npx antora antora-playbook.yml --to-dir=build/site
+
+# 第二步：Pagefind 索引（仅索引文章正文）
+npx pagefind --site build/site --root-selector "article.doc"
+----
+
+`--root-selector "article.doc"` 确保只索引文档正文内容，排除导航栏、页头、页脚等。
+
+==== package.json 配置
+
+[source,json]
+----
+{
+  "scripts": {
+    "build": "antora antora-playbook.yml --to-dir=build/site && npx pagefind --site build/site --root-selector article.doc",
+    "serve": "npx http-server build/site -p 8888"
+  },
+  "devDependencies": {
+    "pagefind": "^1.3.0"
+  }
+}
+----
+
+==== UI 集成（Component UI 模态框）
+
+在 Handlebars 模板中引入 Pagefind Component UI：
+
+.supplemental-ui/partials/footer-scripts.hbs
+[source,html]
+----
+<link rel="stylesheet" href="{{{siteRootPath}}}/pagefind/pagefind-component-ui.css">
+<script src="{{{siteRootPath}}}/pagefind/pagefind-component-ui.js"></script>
+<pagefind-config pagefind-path="{{{siteRootPath}}}/pagefind/"></pagefind-config>
+<pagefind-modal>
+  <pagefind-modal-header>
+    <pagefind-input></pagefind-input>
+  </pagefind-modal-header>
+  <pagefind-modal-body>
+    <pagefind-results></pagefind-results>
+  </pagefind-modal-body>
+  <pagefind-modal-footer>
+    <pagefind-keyboard-hints></pagefind-keyboard-hints>
+  </pagefind-modal-footer>
+</pagefind-modal>
+----
+
+在导航栏中添加搜索触发按钮：
+
+.supplemental-ui/partials/nav-search.hbs
+[source,html]
+----
+<pagefind-modal-trigger>搜索</pagefind-modal-trigger>
+----
+
+==== 快捷键
+
+Component UI 内置以下键盘快捷键：
+
+[cols="1,2"]
+|===
+|快捷键 |功能
+
+|`/`
+|打开搜索弹框
+
+|`Escape`
+|关闭搜索弹框
+
+|`↑` / `↓`
+|导航搜索结果
+
+|`Enter`
+|打开选中结果
+|===
+
+==== 暗色模式适配
+
+通过 CSS 变量覆盖 Pagefind 主题色：
+
+[source,css]
+----
+html.dark-theme pagefind-modal-trigger,
+html.dark-theme pagefind-modal {
+  --pf-background: var(--body-background-color, #1e1e1e);
+  --pf-text: var(--body-font-color, #ddd);
+  --pf-border: var(--panel-border-color, #444);
+  --pf-border-focus: var(--color-accent-3, #6db33f);
+  --pf-hover: rgba(255, 255, 255, 0.06);
+  --pf-highlight: rgba(109, 179, 63, 0.15);
+  --pf-highlight-text: var(--color-accent-3, #6db33f);
+  --pf-modal-backdrop: rgba(0, 0, 0, 0.6);
+}
+----
+
+==== 构建产物
+
+运行 `npx pagefind` 后会在站点目录下生成 `pagefind/` 目录：
+
+[source]
+----
+build/site/pagefind/
+├── pagefind.js                 # 搜索引擎核心
+├── pagefind-component-ui.js    # Component UI（模态框）
+├── pagefind-component-ui.css   # Component UI 样式
+├── pagefind-entry.json         # 索引入口清单
+├── fragment/                   # 结果片段（按需加载）
+├── index/                      # 搜索索引分片（按需加载）
+└── wasm.en.pagefind            # 语言分析 WASM 模块
+----
+
+=== 方案二：@antora/lunr-extension
+
+Lunr 是 Antora 官方提供的搜索扩展，构建时生成完整索引文件并在浏览器端加载。
+
+NOTE: Lunr 会一次性加载全部索引（大型站点可达数百 KB），且中文支持需要额外安装 `@node-rs/jieba` 原生依赖。推荐优先使用 <<方案一：Pagefind（推荐）,Pagefind>>。
+
+==== 安装
 
 [source,bash]
 ----
 npm install @antora/lunr-extension@^1.0
+# 中文分词支持（可选）
+npm install @node-rs/jieba
 ----
 
-=== Playbook 中配置
+==== Playbook 中配置
 
 在 `antora-playbook.yml` 的 `antora.extensions` 部分添加：
 
@@ -453,7 +592,7 @@ antora:
         - zh
 ----
 
-=== 中文搜索支持
+==== 中文搜索支持
 
 Lunr.js 默认仅支持英文分词。添加 `zh` 语言后，扩展会使用 `lunr-languages` 包中的中文分词器（基于 nodejieba）。
 
@@ -462,7 +601,7 @@ Lunr.js 默认仅支持英文分词。添加 `zh` 语言后，扩展会使用 `l
 中文搜索分词质量依赖于 `lunr-languages` 中的中文支持实现。对于大型中文文档站点，如果搜索效果不理想，可考虑：
 
 * 在文档中为关键术语添加英文别名
-* 使用更专业的搜索方案（如 Algolia DocSearch）
+* 使用 Pagefind 替代（内置更好的 CJK 分词）
 ====
 
 搜索功能的工作原理：
@@ -472,7 +611,7 @@ Lunr.js 默认仅支持英文分词。添加 `zh` 语言后，扩展会使用 `l
 3. 浏览器端加载索引文件，用户输入关键词即可搜索
 4. 无需服务端支持，纯前端实现
 
-=== 搜索配置选项
+==== 搜索配置选项
 
 [source,yaml]
 ----
@@ -1372,7 +1511,27 @@ image::../images/architecture.png[]  // 这样不行！
 
 **问题：** 搜索框无反应或搜索结果为空。
 
-**排查步骤：**
+==== 使用 Pagefind 时
+
+1. 确认构建后执行了 Pagefind 索引步骤：
++
+[source,bash]
+----
+npx pagefind --site build/site --root-selector "article.doc"
+----
+
+2. 确认构建产物中存在 `pagefind/` 目录：
++
+[source,bash]
+----
+ls build/site/pagefind/pagefind-entry.json
+----
+
+3. 确认 HTML 中 `pagefind-path` 属性指向正确路径。
+
+4. 搜索仅在 HTTP 服务器中工作，直接用浏览器打开 `file://` 协议的 HTML 文件时搜索无法正常运行。
+
+==== 使用 Lunr 时
 
 1. 确认 `@antora/lunr-extension` 已正确安装：
 +
@@ -1405,7 +1564,7 @@ ls build/site/search-index.js
 npm run clean && npm run build:local
 ----
 
-5. 注意：搜索仅在 HTTP 服务器中工作，直接用浏览器打开 `file://` 协议的 HTML 文件时搜索无法正常运行。
+5. 搜索仅在 HTTP 服务器中工作，直接用浏览器打开 `file://` 协议的 HTML 文件时搜索无法正常运行。
 
 === 样式覆盖方法
 
@@ -1516,6 +1675,7 @@ npx antora --log-level=debug antora-playbook.yml --to-dir=build/site 2>&1 | grep
 * https://docs.antora.org[Antora 官方文档]
 * https://docs.asciidoctor.org/asciidoc/latest/[AsciiDoc 语法参考]
 * https://github.com/spring-io/antora-ui-spring[antora-ui-spring GitHub 仓库]
+* https://pagefind.app[Pagefind 静态搜索]
 * https://kroki.io[Kroki 图表服务]
 * https://lunrjs.com[Lunr.js 搜索引擎]
 * https://github.com/Mogztter/asciidoctor-kroki[asciidoctor-kroki 文档]

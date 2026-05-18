@@ -4,7 +4,7 @@
 
 == 功能特性
 
-* 浏览器前端本地搜索（Lunr）
+* 浏览器前端本地搜索（Pagefind）
 * 国际化支持：中文（默认）、英文
 * 多版本文档管理
 * 代码高亮 + 行号
@@ -18,8 +18,9 @@
 # 安装依赖
 npm install
 
-# 构建站点
+# 构建站点 + 生成搜索索引
 npx antora antora-playbook.yml --to-dir=build/site
+npx pagefind --site build/site
 
 # 启动本地服务（访问 http://localhost:8888）
 npx http-server build/site -p 8888
