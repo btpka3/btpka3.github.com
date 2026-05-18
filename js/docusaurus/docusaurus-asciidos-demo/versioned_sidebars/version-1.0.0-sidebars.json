@@ -1,0 +1,15 @@
+{
+  "tutorialSidebar": [
+    {
+      "type": "category",
+      "label": "AsciiDoc 示例",
+      "items": [
+        "intro",
+        "getting-started",
+        "features",
+        "asciidoc-showcase",
+        "setup-guide"
+      ]
+    }
+  ]
+}

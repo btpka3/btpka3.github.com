@@ -1,0 +1,127 @@
+= 功能特性
+:doctype: article
+:toc: left
+
+== AsciiDoc 支持
+
+本示例工程完整支持 AsciiDoc 语法，包括：
+
+=== 文本格式化
+
+*粗体*、_斜体_、`等宽字体`、*_*粗斜体*_
+
+=== 列表
+
+==== 无序列表
+* 第一项
+* 第二项
+** 子项 2.1
+** 子项 2.2
+* 第三项
+
+==== 有序列表
+. 第一步
+. 第二步
+. 第三步
+
+==== 描述列表
+术语一:: 术语一的解释
+术语二:: 术语二的解释
+
+=== 代码块
+
+[source,javascript]
+----
+function greet(name) {
+  console.log(`Hello, ${name}!`);
+}
+
+greet('AsciiDoc');
+----
+
+[source,java]
+----
+public class Hello {
+    public static void main(String[] args) {
+        System.out.println("Hello, Docusaurus!");
+    }
+}
+----
+
+=== 表格
+
+.常用命令对比
+|===
+|命令 |说明 |参数
+
+|`npm start`
+|启动开发服务器
+|`--port`, `--host`
+
+|`npm run build`
+|构建生产版本
+|`--out-dir`
+
+|`npm run serve`
+|本地预览
+|`--port`
+|===
+
+=== 链接
+
+* 外部链接：https://docusaurus.io[Docusaurus 官网]
+* 内部链接：link:intro[简介]、link:getting-started[快速开始]
+
+=== 备注和警告
+
+[NOTE]
+====
+这是一个提示信息，用于提供额外的说明。
+====
+
+[TIP]
+====
+建议查阅官方文档获取更详细的 AsciiDoc 语法。
+====
+
+[WARNING]
+====
+构建前请确保所有 AsciiDoc 文件语法正确。
+====
+
+[IMPORTANT]
+====
+生产环境部署前请测试所有链接是否有效。
+====
+
+[CAUTION]
+====
+修改配置文件后需要重启开发服务器才能生效。
+====
+
+=== 图片
+
+图片可以放在 `static/img/` 目录下，然后通过相对路径引用：
+
+[source,asciidoc]
+----
+image::logo.svg[Logo, alt="AsciiDoc Logo"]
+----
+
+== Docusaurus 特性
+
+=== 版本管理
+
+Docusaurus 支持文档版本管理，适合 API 文档或多版本文档场景。
+
+=== 国际化
+
+支持多语言配置，可以为不同语言提供独立的文档内容。
+
+=== 搜索
+
+内置 Algolia DocSearch 集成，提供全文搜索能力。
+
+=== 自定义主题
+
+可以通过 React 组件自定义页面布局和样式。

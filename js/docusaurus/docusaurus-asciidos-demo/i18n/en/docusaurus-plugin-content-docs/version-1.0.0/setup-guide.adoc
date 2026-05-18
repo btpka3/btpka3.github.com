@@ -1,0 +1,12 @@
+= Setup Guide
+
+See the Chinese version for the full step-by-step guide.
+
+== Quick Start
+
+[source,bash]
+----
+npm install
+npm run build
+npx docusaurus serve --port 4000
+----

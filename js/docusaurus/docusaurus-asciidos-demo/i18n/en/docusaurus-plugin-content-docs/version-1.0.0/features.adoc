@@ -1,0 +1,21 @@
+= Features
+
+== AsciiDoc Support
+
+This site fully supports AsciiDoc syntax including:
+
+* Text formatting (bold, italic, monospace)
+* Lists (ordered, unordered, description)
+* Code blocks with syntax highlighting
+* Tables
+* Admonitions (NOTE, TIP, WARNING)
+* Cross-references
+
+== Docusaurus Features
+
+* Dark/Light theme toggle
+* Full-text search (client-side)
+* Internationalization (i18n)
+* Document versioning
+* Mermaid diagrams
+* PlantUML diagrams (via kroki.io)

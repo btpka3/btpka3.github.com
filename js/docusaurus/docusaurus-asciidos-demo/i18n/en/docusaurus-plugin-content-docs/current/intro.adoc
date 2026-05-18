@@ -1,0 +1,16 @@
+= Introduction
+
+Hello World! This is a demo site built with Docusaurus + AsciiDoc.
+
+== What is this?
+
+A static documentation site using:
+
+* **Docusaurus** — modern static site generator
+* **AsciiDoc** — lightweight markup language
+
+== Quick Links
+
+* link:getting-started[Getting Started]
+* link:features[Features]
+* link:asciidoc-showcase[AsciiDoc Showcase]

@@ -11,6 +11,7 @@ const sidebars = {
         'getting-started',
         'features',
         'asciidoc-showcase',
+        'setup-guide',
       ],
     },
   ],

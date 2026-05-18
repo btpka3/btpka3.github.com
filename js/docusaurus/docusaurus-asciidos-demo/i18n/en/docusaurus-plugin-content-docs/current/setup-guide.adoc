@@ -1,0 +1,39 @@
+= Setup Guide
+
+A complete guide for building this Docusaurus + AsciiDoc site from scratch.
+
+== Features Covered
+
+* AsciiDoc document support
+* PlantUML / Mermaid diagram rendering
+* Light / Dark theme toggle
+* Client-side full-text search
+* i18n (Chinese / English)
+* Multi-version doc switching
+* Widescreen layout optimization
+
+== Quick Start
+
+[source,bash]
+----
+npm install
+npm run build
+npx docusaurus serve --port 4000
+----
+
+== Key Dependencies
+
+* `@asciidoc-js/docusaurus-asciidoc` — AsciiDoc support
+* `@docusaurus/theme-mermaid` — Mermaid diagrams
+* `@easyops-cn/docusaurus-search-local` — Client-side search
+* `patch-package` — Fix for AsciiDoc plugin double-compile bug
+* `unist-util-visit` — Used by custom PlantUML remark plugin
+
+== Important Notes
+
+* webpack must be pinned to 5.97.1 (5.106+ breaks ProgressPlugin)
+* Do NOT set `"type": "module"` in package.json
+* Search index only generates during `npm run build`
+* PlantUML renders via kroki.io (requires internet access)
+
+See the Chinese version for the full step-by-step guide.

@@ -1,0 +1,46 @@
+= AsciiDoc Showcase
+
+A simple showcase of AsciiDoc features in English.
+
+== Text Formatting
+
+*Bold*, _italic_, `monospace`, *_bold italic_*.
+
+== Code Block
+
+[source,javascript]
+----
+function hello() {
+  console.log('Hello, World!');
+}
+----
+
+== Table
+
+|===
+| Feature | Status
+
+| AsciiDoc
+| Supported
+
+| Mermaid
+| Supported
+
+| PlantUML
+| Supported
+|===
+
+== Admonition
+
+[NOTE]
+====
+This is a note admonition in English.
+====
+
+== Mermaid Diagram
+
+[source,mermaid]
+----
+graph LR
+    A[Start] --> B[End]
+----

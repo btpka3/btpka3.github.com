@@ -33,7 +33,12 @@ bin
 .DS_Store
 target-eclipse
 bower_components
+
+# 
+.docusaurus
 node_modules
+.next
+dist
 build
 .gradle
 _site
@@ -58,3 +63,5 @@ jspm_packages
 
 **/.sdkmanrc
 secretsmanager.properties
+
+

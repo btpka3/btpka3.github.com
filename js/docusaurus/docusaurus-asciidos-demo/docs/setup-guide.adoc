@@ -1,0 +1,422 @@
+= 从零搭建指南
+:toc: macro
+
+本文档记录了从零搭建 Docusaurus + AsciiDoc 静态文档站点的完整流程，涵盖以下功能：
+
+* AsciiDoc 文档支持
+* PlantUML / Mermaid 图表渲染
+* Light / Dark 主题切换
+* 浏览器端全文搜索
+* i18n 国际化（中文 / English）
+* 多版本文档切换
+* 宽屏显示优化
+
+toc::[]
+
+== 环境要求
+
+* Node.js >= 20（Node 22/24 与 Docusaurus 3.x 存在兼容问题）
+* npm >= 9
+
+== 第一步：初始化项目
+
+[source,bash]
+----
+mkdir docusaurus-asciidoc-demo && cd docusaurus-asciidoc-demo
+npm init -y
+npm install @docusaurus/core@3.7.0 @docusaurus/preset-classic@3.7.0 react react-dom
+npm install @asciidoc-js/docusaurus-asciidoc
+----
+
+=== 关键：webpack 版本锁定
+
+Docusaurus 3.7.0 依赖的 webpackbar 与 webpack 5.106+ 不兼容（ProgressPlugin 参数校验报错），需要在 `package.json` 中锁定：
+
+[source,json]
+----
+{
+  "overrides": {
+    "webpack": "5.97.1"
+  }
+}
+----
+
+=== 关键：不使用 `"type": "module"`
+
+`package.json` 中 **不要** 设置 `"type": "module"`，否则 Docusaurus SSR 构建会报 `require.resolveWeak is not a function` 错误。需要 ESM 语法的配置文件使用 `.mjs` 扩展名。
+
+== 第二步：项目配置
+
+=== docusaurus.config.mjs
+
+[source,javascript]
+----
+import { createRequire } from 'module';
+import remarkPlantuml from './remark-plantuml.mjs';
+
+const require = createRequire(import.meta.url);
+const lightCodeTheme = require('prism-react-renderer').themes.github;
+const darkCodeTheme = require('prism-react-renderer').themes.dracula;
+
+const config = {
+  title: 'Docusaurus AsciiDoc Demo',
+  tagline: '使用 AsciiDoc 编写文档的 Docusaurus 示例',
+  favicon: 'img/favicon.ico',
+  url: 'https://your-domain.github.io',
+  baseUrl: '/your-base-path/',
+  trailingSlash: false,
+
+  markdown: {
+    mermaid: true,  // 启用 Mermaid 支持
+  },
+
+  // i18n 配置
+  i18n: {
+    defaultLocale: 'zh-CN',
+    locales: ['zh-CN', 'en'],
+    localeConfigs: {
+      'zh-CN': { label: '中文' },
+      en: { label: 'English' },
+    },
+  },
+
+  presets: [
+    ['classic', {
+      docs: {
+        sidebarPath: './sidebars.mjs',
+        include: ['**/*.{md,mdx,adoc}'],  // 支持 .adoc 文件
+        remarkPlugins: [remarkPlantuml],   // PlantUML 插件
+      },
+      blog: false,
+      theme: { customCss: './src/css/custom.css' },
+    }],
+  ],
+
+  themes: [
+    '@docusaurus/theme-mermaid',
+    ['@easyops-cn/docusaurus-search-local', {
+      hashed: true,
+      language: ['en', 'zh'],
+      highlightSearchTermsOnTargetPage: true,
+      explicitSearchResultPath: true,
+    }],
+  ],
+
+  plugins: ['@asciidoc-js/docusaurus-asciidoc'],
+
+  themeConfig: {
+    navbar: {
+      title: 'AsciiDoc Demo',
+      items: [
+        { type: 'docSidebar', sidebarId: 'tutorialSidebar', position: 'left', label: '文档' },
+        { type: 'docsVersionDropdown', position: 'right' },
+        { type: 'localeDropdown', position: 'right' },
+      ],
+    },
+    colorMode: {
+      defaultMode: 'light',
+      disableSwitch: false,
+      respectPrefersColorScheme: true,
+    },
+    docs: {
+      sidebar: {
+        hideable: true,           // 左侧边栏可折叠隐藏
+        autoCollapseCategories: true,
+      },
+    },
+    tableOfContents: {
+      minHeadingLevel: 2,
+      maxHeadingLevel: 4,
+    },
+    mermaid: {
+      theme: { light: 'neutral', dark: 'dark' },
+    },
+  },
+};
+
+export default config;
+----
+
+=== sidebars.mjs
+
+[source,javascript]
+----
+export default {
+  tutorialSidebar: [
+    'intro',
+    'getting-started',
+    'features',
+    'asciidoc-showcase',
+    'setup-guide',
+  ],
+};
+----
+
+== 第三步：PlantUML 支持（Kroki）
+
+Docusaurus 本身不支持 PlantUML。通过自定义 remark 插件将 PlantUML 代码块转为 kroki.io 的 SVG 图片 URL。
+
+=== remark-plantuml.mjs
+
+[source,javascript]
+----
+import { visit } from 'unist-util-visit';
+import { deflateSync } from 'node:zlib';
+
+function encodeKroki(source, language) {
+  const compressed = deflateSync(Buffer.from(source, 'utf-8'));
+  return `https://kroki.io/${language}/svg/${compressed.toString('base64url')}`;
+}
+
+export default function remarkPlantuml() {
+  return (tree) => {
+    visit(tree, 'code', (node, index, parent) => {
+      if (!parent || index == null || node.lang !== 'plantuml') return;
+      const url = encodeKroki(node.value, 'plantuml');
+      parent.children[index] = {
+        type: 'paragraph',
+        children: [{ type: 'image', url, alt: 'PlantUML Diagram' }],
+      };
+    });
+  };
+}
+----
+
+安装依赖：
+
+[source,bash]
+----
+npm install unist-util-visit
+----
+
+=== Mermaid 支持
+
+Mermaid 由 `@docusaurus/theme-mermaid` 提供客户端渲染，无需额外配置。在 AsciiDoc 中使用：
+
+[source,asciidoc]
+----
+ [source,mermaid]
+ ----
+ graph LR
+     A[Start] --> B[End]
+ ----
+----
+
+== 第四步：修复 AsciiDoc 插件的二次编译问题
+
+`@asciidoc-js/docusaurus-asciidoc@0.2.0` 有一个 bug：remark 插件在第一次编译后会删除注册表条目，导致第二次编译（Docusaurus 会分别构建 Server 和 Client）时内容为空。
+
+=== 使用 patch-package 修复
+
+[source,bash]
+----
+npm install patch-package
+----
+
+在 `package.json` 中添加 postinstall：
+
+[source,json]
+----
+{
+  "scripts": {
+    "postinstall": "patch-package"
+  }
+}
+----
+
+创建 `patches/@asciidoc-js+docusaurus-asciidoc+0.2.0.patch`：
+
+[source,diff]
+----
+--- a/node_modules/@asciidoc-js/docusaurus-asciidoc/lib/remark-plugin.js
++++ b/node_modules/@asciidoc-js/docusaurus-asciidoc/lib/remark-plugin.js
+@@ -xx,xx +xx,xx @@
+-    tree.children = mdastTree.children;
+-    mdastRegistry.delete(filePath);
++    tree.children = JSON.parse(JSON.stringify(mdastTree.children));
+----
+
+核心原因：用深拷贝代替直接引用赋值，且不再删除注册表，确保多次编译都能读取到内容。
+
+== 第五步：Light / Dark 主题
+
+`docusaurus.config.mjs` 中 `themeConfig.colorMode` 配置即可启用主题切换按钮（导航栏自动出现）：
+
+[source,javascript]
+----
+colorMode: {
+  defaultMode: 'light',
+  disableSwitch: false,          // false = 显示切换按钮
+  respectPrefersColorScheme: true, // 跟随系统偏好
+}
+----
+
+在 `src/css/custom.css` 中通过 `[data-theme='dark']` 选择器为暗色模式提供样式覆盖。
+
+== 第六步：浏览器端全文搜索
+
+使用 `@easyops-cn/docusaurus-search-local` 插件：
+
+[source,bash]
+----
+npm install @easyops-cn/docusaurus-search-local
+----
+
+在 `themes` 数组中配置（见第二步配置示例）。
+
+[NOTE]
+====
+该插件的搜索索引 **仅在 `npm run build` 时生成**。开发模式（`npm start`）下搜索不可用。验证搜索需要：
+
+[source,bash]
+----
+npm run build
+npx docusaurus serve --port 4000
+----
+====
+
+== 第七步：i18n 国际化
+
+=== 目录结构
+
+----
+i18n/
+└── en/
+    └── docusaurus-plugin-content-docs/
+        ├── current/          # 英文 current 版本文档
+        │   ├── intro.adoc
+        │   ├── getting-started.adoc
+        │   ├── features.adoc
+        │   └── asciidoc-showcase.adoc
+        └── version-1.0.0/    # 英文 1.0.0 版本文档
+            ├── intro.adoc
+            └── ...
+----
+
+=== 工作原理
+
+* 默认 locale（`zh-CN`）直接使用 `docs/` 目录的文件
+* 其他 locale 的文档放在 `i18n/<locale>/docusaurus-plugin-content-docs/<version>/` 下
+* 如果某个 locale 没有对应翻译文件，会 fallback 到默认 locale 的内容
+
+=== 导航栏语言切换
+
+在 `themeConfig.navbar.items` 中添加：
+
+[source,javascript]
+----
+{ type: 'localeDropdown', position: 'right' }
+----
+
+== 第八步：多版本文档
+
+=== 创建版本快照
+
+[source,bash]
+----
+npx docusaurus docs:version 1.0.0
+----
+
+该命令自动执行：
+
+* 复制 `docs/` -> `versioned_docs/version-1.0.0/`
+* 复制 sidebars -> `versioned_sidebars/version-1.0.0-sidebars.json`
+* 创建/更新 `versions.json`
+
+之后 `docs/` 目录为 "Next"（开发中）版本。
+
+=== 版本路由规则
+
+|===
+| 版本 | URL 路径
+
+| 最新发布版（1.0.0）
+| `/docs/intro`
+
+| 开发版（Next）
+| `/docs/next/intro`
+|===
+
+=== 导航栏版本切换
+
+[source,javascript]
+----
+{ type: 'docsVersionDropdown', position: 'right' }
+----
+
+== 第九步：宽屏显示优化
+
+默认 Docusaurus 的内容区域被 `max-width: 1140px` 限制，在 2560px 等宽屏显示器上两侧会有大量空白。
+
+=== CSS 优化
+
+[source,css]
+----
+/* 文档页面内容区撑满 */
+[class*='docMainContainer'] .container {
+  max-width: 100%;
+}
+
+/* 右侧 TOC 宽度限制 */
+[class*='tableOfContents'] {
+  max-width: 240px;
+  font-size: 0.85rem;
+}
+----
+
+=== 左侧边栏可隐藏
+
+配置 `themeConfig.docs.sidebar.hideable: true`，左侧边栏底部出现折叠按钮（`<<`），点击可完全收起。
+
+=== 右侧大纲（TOC）
+
+右侧 TOC 不支持内置隐藏，但可通过以下方式控制：
+
+* `themeConfig.tableOfContents.minHeadingLevel` / `maxHeadingLevel` — 控制显示的标题层级
+* 单页面 frontmatter `hide_table_of_contents: true` — 隐藏该页面的 TOC
+* 自定义 CSS 限制宽度（如上）
+
+== 完整依赖清单
+
+[source,json]
+----
+{
+  "dependencies": {
+    "@asciidoc-js/docusaurus-asciidoc": "^0.2.0",
+    "@docusaurus/core": "3.7.0",
+    "@docusaurus/preset-classic": "3.7.0",
+    "@docusaurus/theme-mermaid": "3.7.0",
+    "@easyops-cn/docusaurus-search-local": "^0.45.0",
+    "patch-package": "^8.0.0",
+    "prism-react-renderer": "^2.3.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "unist-util-visit": "^5.0.0"
+  },
+  "overrides": {
+    "webpack": "5.97.1"
+  }
+}
+----
+
+== 常见问题
+
+=== `require.resolveWeak is not a function`
+
+原因：`package.json` 中设置了 `"type": "module"`。删除该字段，配置文件改用 `.mjs` 扩展名。
+
+=== webpack ProgressPlugin 报错
+
+原因：webpack 5.106+ 对 ProgressPlugin 参数做了严格校验。解决：在 `overrides` 中锁定 `"webpack": "5.97.1"`。
+
+=== AsciiDoc 页面内容为空
+
+原因：`@asciidoc-js/docusaurus-asciidoc` 的 remark 插件在第一次编译后删除了注册表条目。解决：使用 patch-package 修复（见第四步）。
+
+=== 搜索提示 "search index is only available when you run build"
+
+正常现象。`@easyops-cn/docusaurus-search-local` 只在 `npm run build` 时生成索引。使用 `npm run build && npx docusaurus serve` 验证搜索功能。
+
+=== PlantUML 图片不显示
+
+检查网络是否能访问 `kroki.io`。该服务为公网免费 API，内网环境可能需要配置代理或自建 Kroki 服务。

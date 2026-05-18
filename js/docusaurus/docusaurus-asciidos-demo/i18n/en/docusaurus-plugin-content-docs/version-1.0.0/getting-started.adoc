@@ -1,0 +1,29 @@
+= Getting Started
+
+== Prerequisites
+
+* Node.js >= 20
+* npm >= 9
+
+== Install
+
+[source,bash]
+----
+npm install
+----
+
+== Development
+
+[source,bash]
+----
+npm start
+----
+
+Visit http://localhost:3000 to view the site.
+
+== Build
+
+[source,bash]
+----
+npm run build
+----

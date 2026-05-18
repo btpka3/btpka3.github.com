@@ -1,8 +1,25 @@
-/**
- * 自定义 CSS 样式
- */
+:root {
+  --ifm-color-primary: #1890ff;
+  --ifm-color-primary-dark: #0f7ae5;
+  --ifm-color-primary-darker: #0e73d9;
+  --ifm-color-primary-darkest: #0b5fb3;
+  --ifm-color-primary-light: #3a9eff;
+  --ifm-color-primary-lighter: #46a3ff;
+  --ifm-color-primary-lightest: #72b9ff;
+  --ifm-code-font-size: 95%;
+}
 
-/* AsciiDoc 特有样式增强 */
+[data-theme='dark'] {
+  --ifm-color-primary: #4dabf7;
+  --ifm-color-primary-dark: #2b9bf5;
+  --ifm-color-primary-darker: #1a92f4;
+  --ifm-color-primary-darkest: #0978d9;
+  --ifm-color-primary-light: #6fbcf9;
+  --ifm-color-primary-lighter: #80c4fa;
+  --ifm-color-primary-lightest: #b3dcfc;
+}
+
+/* AsciiDoc admonition 样式 - Light 模式 */
 .admonitionblock {
   margin: 1.5rem 0;
   padding: 1rem;
@@ -35,6 +52,32 @@
   border-color: #f5222d;
 }
 
+/* AsciiDoc admonition 样式 - Dark 模式 */
+[data-theme='dark'] .admonitionblock.note {
+  background-color: #111d2c;
+  border-color: #177ddc;
+}
+
+[data-theme='dark'] .admonitionblock.tip {
+  background-color: #162312;
+  border-color: #49aa19;
+}
+
+[data-theme='dark'] .admonitionblock.warning {
+  background-color: #2b2111;
+  border-color: #d89614;
+}
+
+[data-theme='dark'] .admonitionblock.important {
+  background-color: #2b1611;
+  border-color: #d84a1b;
+}
+
+[data-theme='dark'] .admonitionblock.caution {
+  background-color: #2a1215;
+  border-color: #d32029;
+}
+
 /* 表格样式 */
 table.tableblock {
   width: 100%;
@@ -45,24 +88,24 @@ table.tableblock {
 table.tableblock th,
 table.tableblock td {
   padding: 0.75rem;
-  border: 1px solid #e8e8e8;
+  border: 1px solid var(--ifm-table-border-color);
   text-align: left;
 }
 
 table.tableblock th {
-  background-color: #fafafa;
+  background-color: var(--ifm-table-stripe-background);
   font-weight: 600;
 }
 
 /* 代码块 */
 pre.highlight {
-  background-color: #f6f8fa;
+  background-color: var(--ifm-pre-background);
   padding: 1rem;
   border-radius: 4px;
   overflow-x: auto;
 }
 
-/* 列表 */
+/* 描述列表 */
 .dlist dl {
   margin: 1rem 0;
 }
@@ -74,4 +117,31 @@ pre.highlight {
 .dlist dd {
   margin-left: 1.5rem;
   margin-bottom: 0.5rem;
+}
+
+/* 引用块 */
+blockquote {
+  border-left: 3px solid var(--ifm-color-primary);
+  padding-left: 1rem;
+  color: var(--ifm-color-emphasis-700);
+}
+
+[data-theme='dark'] blockquote {
+  color: var(--ifm-color-emphasis-500);
+}
+
+/* 宽屏优化：doc 页面内容区撑满 */
+[class*='docMainContainer'] .container {
+  max-width: 100%;
+}
+
+/* 右侧 TOC 固定宽度，避免过宽 */
+[class*='tableOfContents'] {
+  max-width: 240px;
+  font-size: 0.85rem;
+}
+
+/* 左侧边栏折叠按钮样式增强 */
+[class*='collapseSidebarButton'] {
+  background-color: var(--ifm-background-surface-color);
 }
