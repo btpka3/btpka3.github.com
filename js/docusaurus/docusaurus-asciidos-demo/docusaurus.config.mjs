@@ -107,6 +107,7 @@ const config = {
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
+        additionalLanguages: ['java', 'shell-session'],
       },
       docs: {
         sidebar: {

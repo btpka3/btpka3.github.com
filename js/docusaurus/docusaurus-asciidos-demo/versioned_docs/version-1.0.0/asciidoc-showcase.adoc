@@ -277,7 +277,7 @@ fn main() {
 
 === 命令行会话
 
-[source,console]
+[source,shell-session]
 ----
 $ npm install
 added 1326 packages in 45s

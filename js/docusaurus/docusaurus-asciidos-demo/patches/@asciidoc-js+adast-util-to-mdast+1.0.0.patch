@@ -1,0 +1,63 @@
+diff --git a/node_modules/@asciidoc-js/adast-util-to-mdast/dist/index.js b/node_modules/@asciidoc-js/adast-util-to-mdast/dist/index.js
+index 44d38be..f84ddfe 100644
+--- a/node_modules/@asciidoc-js/adast-util-to-mdast/dist/index.js
++++ b/node_modules/@asciidoc-js/adast-util-to-mdast/dist/index.js
+@@ -236,6 +236,10 @@ function handleListing(state, node) {
+         value: listing.value,
+         lang: listing.language ?? null,
+     };
++    const attrs = listing.attributes ?? {};
++    if (attrs.linenums != null || attrs['linenums-option'] != null) {
++        result.meta = 'showLineNumbers';
++    }
+     state.patch(node, result);
+     return result;
+ }
+@@ -358,7 +362,7 @@ function isInlineNode(node) {
+ function handleTable(state, node) {
+     const table = node;
+     // Detect whether any cell has block content (style=asciidoc or non-inline children)
+-    if (tableHasBlockCells(table)) {
++    if (tableHasBlockCells(table) || tableHasMergedCells(table)) {
+         return buildRichTable(state, table);
+     }
+     const align = (table.columns ?? []).map(c => {
+@@ -385,6 +389,22 @@ function handleTable(state, node) {
+     state.patch(node, result);
+     return result;
+ }
++/** Check whether any cell in the table has colspan or rowspan. */
++function tableHasMergedCells(table) {
++    for (const section of table.children) {
++        if (!('children' in section))
++            continue;
++        for (const row of section.children) {
++            if (!row.children)
++                continue;
++            for (const cell of row.children) {
++                if ((cell.colspan && cell.colspan > 1) || (cell.rowspan && cell.rowspan > 1))
++                    return true;
++            }
++        }
++    }
++    return false;
++}
+ /** Check whether any cell in the table contains block-level content. */
+ function tableHasBlockCells(table) {
+     for (const section of table.children) {
+@@ -422,9 +442,14 @@ function buildRichTable(state, table) {
+             const cells = [];
+             for (const cell of row.children) {
+                 const cellChildren = buildRichCellChildren(state, cell);
++                const hProperties = {};
++                if (cell.colspan && cell.colspan > 1)
++                    hProperties.colSpan = cell.colspan;
++                if (cell.rowspan && cell.rowspan > 1)
++                    hProperties.rowSpan = cell.rowspan;
+                 cells.push({
+                     type: 'richTableCell',
+-                    data: { hName: cellTag },
++                    data: { hName: cellTag, hProperties: Object.keys(hProperties).length > 0 ? hProperties : undefined },
+                     children: cellChildren,
+                 });
+             }

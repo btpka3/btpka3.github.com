@@ -118,6 +118,11 @@ const config = {
       disableSwitch: false,
       respectPrefersColorScheme: true,
     },
+    prism: {
+      theme: lightCodeTheme,
+      darkTheme: darkCodeTheme,
+      additionalLanguages: ['java', 'shell-session'],  // 按需添加非默认语言
+    },
     docs: {
       sidebar: {
         hideable: true,           // 左侧边栏可折叠隐藏
@@ -237,6 +242,68 @@ npm install patch-package
 ----
 
 核心原因：用深拷贝代替直接引用赋值，且不再删除注册表，确保多次编译都能读取到内容。
+
+=== 修复代码块行号与表格合并
+
+`@asciidoc-js/adast-util-to-mdast@1.0.0` 的 mdast 转换存在两个缺陷：
+
+1. **代码块行号丢失**：AsciiDoc 的 `[source,java,linenums]` 中的 `linenums` 属性未传递给 Docusaurus（需要 `meta: "showLineNumbers"`）
+2. **表格 colspan/rowspan 丢失**：`3+|` 等合并单元格语法被展开为多个空单元格，未生成 HTML `colspan` 属性
+
+创建 `patches/@asciidoc-js+adast-util-to-mdast+1.0.0.patch` 修复：
+
+[source,diff]
+----
+--- a/node_modules/@asciidoc-js/adast-util-to-mdast/dist/index.js
++++ b/node_modules/@asciidoc-js/adast-util-to-mdast/dist/index.js
+
+ // handleListing: 添加行号支持
+     const result = {
+         type: 'code',
+         value: listing.value,
+         lang: listing.language ?? null,
+     };
++    const attrs = listing.attributes ?? {};
++    if (attrs.linenums != null || attrs['linenums-option'] != null) {
++        result.meta = 'showLineNumbers';
++    }
+     state.patch(node, result);
+
+ // handleTable: 检测合并单元格
+-    if (tableHasBlockCells(table)) {
++    if (tableHasBlockCells(table) || tableHasMergedCells(table)) {
+         return buildRichTable(state, table);
+     }
+
++// 新增函数：检测 colspan/rowspan
++function tableHasMergedCells(table) {
++    for (const section of table.children) {
++        for (const row of section.children) {
++            for (const cell of row.children) {
++                if ((cell.colspan && cell.colspan > 1) ||
++                    (cell.rowspan && cell.rowspan > 1))
++                    return true;
++            }
++        }
++    }
++    return false;
++}
+
+ // buildRichTable: 输出 colspan/rowspan 属性
+             for (const cell of row.children) {
+                 const cellChildren = buildRichCellChildren(state, cell);
++                const hProperties = {};
++                if (cell.colspan && cell.colspan > 1)
++                    hProperties.colSpan = cell.colspan;
++                if (cell.rowspan && cell.rowspan > 1)
++                    hProperties.rowSpan = cell.rowspan;
+                 cells.push({
+                     type: 'richTableCell',
+-                    data: { hName: cellTag },
++                    data: { hName: cellTag, hProperties },
+                     children: cellChildren,
+                 });
+----
 
 == 第五步：Light / Dark 主题
 
@@ -416,6 +483,31 @@ npx docusaurus docs:version 1.0.0
 === 搜索提示 "search index is only available when you run build"
 
 正常现象。`@easyops-cn/docusaurus-search-local` 只在 `npm run build` 时生成索引。使用 `npm run build && npx docusaurus serve` 验证搜索功能。
+
+=== 代码块无语法高亮（如 Java）
+
+原因：Docusaurus 使用的 `prism-react-renderer` 默认只包含部分语言（bash, go, python, rust, javascript, typescript 等），`java` 不在默认列表中。
+
+解决：在 `docusaurus.config.mjs` 的 `themeConfig.prism.additionalLanguages` 中添加需要的语言：
+
+[source,javascript]
+----
+prism: {
+  additionalLanguages: ['java', 'shell-session'],
+}
+----
+
+=== 代码块不显示行号
+
+原因：AsciiDoc 的 `[source,java,linenums]` 中的 `linenums` 属性需要转为 Docusaurus 识别的 `meta: "showLineNumbers"` 才能触发行号显示。需要 patch `@asciidoc-js/adast-util-to-mdast`（见第四步）。
+
+=== 命令行会话代码块无高亮
+
+AsciiDoc 中 `[source,console]` 的 `console` 不是 Prism 支持的语言名。对于 `$ command` 格式的终端会话，应使用 `[source,shell-session]` 并在 `additionalLanguages` 中添加 `'shell-session'`。
+
+=== 表格单元格合并（colspan）不生效
+
+原因：标准 mdast 的 `table` 节点不支持 `colspan`/`rowspan`。需要 patch `@asciidoc-js/adast-util-to-mdast`，使有合并单元格的表格走 `buildRichTable` 路径并输出 HTML `colspan`/`rowspan` 属性（见第四步）。
 
 === PlantUML 图片不显示
 
