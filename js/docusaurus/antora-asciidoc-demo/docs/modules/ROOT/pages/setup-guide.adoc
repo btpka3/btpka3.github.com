@@ -1,0 +1,1521 @@
+= 从零搭建 Antora + AsciiDoc + antora-ui-spring 文档站点
+:toc: left
+:toc-title: 目录
+:toclevels: 3
+:sectnums:
+:icons: font
+:source-highlighter: highlight.js
+:source-linenums-option:
+
+本指南详细介绍如何从零开始搭建一个完整的 Antora 文档站点，使用 AsciiDoc 编写内容，搭配 antora-ui-spring 主题，并集成本地搜索、代码高亮、图表渲染等功能。
+
+== 前置条件
+
+=== Node.js 18+
+
+Antora 3.x 要求 Node.js 18 或更高版本。推荐使用 https://github.com/nvm-sh/nvm[nvm] 管理 Node.js 版本：
+
+[source,bash]
+----
+# 安装 nvm（如果尚未安装）
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+
+# 重新加载 shell 配置
+source ~/.bashrc   # 或 source ~/.zshrc
+
+# 安装并使用 Node.js 18 LTS
+nvm install 18
+nvm use 18
+
+# 验证版本
+node --version   # 应输出 v18.x.x 或更高
+npm --version    # 应输出 9.x.x 或更高
+----
+
+TIP: 也可以使用 https://github.com/Schniz/fnm[fnm] 作为 nvm 的替代方案，速度更快。
+
+=== Git
+
+确保已安装 Git 并完成基本配置：
+
+[source,bash]
+----
+git --version    # 应输出 git version 2.x.x
+
+# 基本配置（如尚未配置）
+git config --global user.name "Your Name"
+git config --global user.email "your@email.com"
+----
+
+=== npm
+
+npm 随 Node.js 一起安装。确保版本 >= 9：
+
+[source,bash]
+----
+npm --version
+----
+
+== 初始化项目
+
+=== 创建目录结构
+
+[source,bash]
+----
+# 创建项目根目录
+mkdir antora-asciidoc-demo
+cd antora-asciidoc-demo
+
+# 创建文档目录结构
+mkdir -p docs/modules/ROOT/pages
+mkdir -p docs/modules/ROOT/images
+mkdir -p docs/modules/ROOT/examples
+mkdir -p docs/modules/ROOT/partials
+mkdir -p supplemental-ui/css
+
+# 创建 .gitignore
+cat > .gitignore << 'EOF'
+node_modules/
+build/
+.cache/
+EOF
+----
+
+最终目录结构如下：
+
+[source]
+----
+antora-asciidoc-demo/
+├── .gitignore
+├── antora-playbook.yml        # Antora 主配置文件（Playbook）
+├── package.json               # Node.js 项目配置
+├── docs/                      # 文档组件根目录
+│   ├── antora.yml             # 组件描述符
+│   └── modules/
+│       └── ROOT/              # 默认模块
+│           ├── nav.adoc       # 导航文件
+│           ├── pages/         # 文档页面
+│           ├── images/        # 图片资源
+│           ├── examples/      # 代码示例文件
+│           └── partials/      # 可复用片段
+├── supplemental-ui/           # UI 补充文件
+│   └── css/
+│       └── site.css           # 自定义样式覆盖
+└── build/                     # 构建产物（git 忽略）
+    └── site/
+----
+
+=== 初始化 npm 项目
+
+[source,bash]
+----
+npm init -y
+----
+
+=== 安装依赖
+
+[source,bash]
+----
+npm install @antora/cli@^3.1 \
+            @antora/site-generator@^3.1 \
+            @antora/lunr-extension@^1.0 \
+            asciidoctor-kroki@^0.18
+----
+
+各依赖说明：
+
+[cols="1,2"]
+|===
+|包名 |用途
+
+|`@antora/cli`
+|Antora 命令行工具，提供 `antora` 命令
+
+|`@antora/site-generator`
+|Antora 站点生成器核心引擎
+
+|`@antora/lunr-extension`
+|基于 Lunr.js 的客户端全文搜索扩展
+
+|`asciidoctor-kroki`
+|集成 Kroki 图表服务，支持 PlantUML、Mermaid 等
+|===
+
+=== 配置 package.json scripts
+
+编辑 `package.json`，添加构建脚本：
+
+[source,json]
+----
+{
+  "name": "antora-asciidoc-demo",
+  "version": "1.0.0",
+  "description": "Antora + AsciiDoc + antora-ui-spring 示例站点",
+  "private": true,
+  "scripts": {
+    "build": "antora antora-playbook.yml",
+    "build:local": "antora antora-playbook.yml --to-dir=build/site",
+    "preview": "npx http-server build/site -p 8080 -o",
+    "clean": "rm -rf build .cache"
+  },
+  "dependencies": {
+    "@antora/cli": "^3.1",
+    "@antora/site-generator": "^3.1",
+    "@antora/lunr-extension": "^1.0",
+    "asciidoctor-kroki": "^0.18"
+  }
+}
+----
+
+脚本说明：
+
+* `npm run build` -- 默认构建，输出到 Antora 默认目录
+* `npm run build:local` -- 构建到 `build/site` 目录
+* `npm run preview` -- 启动本地 HTTP 服务器预览站点
+* `npm run clean` -- 清理构建产物和缓存
+
+== 创建 Antora Playbook (antora-playbook.yml)
+
+Playbook 是 Antora 的核心配置文件，定义了站点的所有行为。在项目根目录创建 `antora-playbook.yml`：
+
+[source,yaml]
+----
+# antora-playbook.yml - Antora 站点主配置
+site:
+  title: Antora AsciiDoc 示例站点       # <1>
+  url: https://example.com/docs          # <2>
+  start_page: docs::index.adoc           # <3>
+
+content:
+  sources:
+    - url: .                              # <4>
+      branches: HEAD                      # <5>
+      start_path: docs                    # <6>
+
+ui:
+  bundle:
+    url: https://github.com/spring-io/antora-ui-spring/releases/download/latest/ui-bundle.zip  # <7>
+    snapshot: true                        # <8>
+  supplemental_files: ./supplemental-ui   # <9>
+
+asciidoc:
+  attributes:
+    source-highlighter: highlight.js      # <10>
+    source-linenums-option: ''            # <11>
+  extensions:
+    - asciidoctor-kroki                   # <12>
+
+antora:
+  extensions:
+    - require: '@antora/lunr-extension'   # <13>
+      languages:
+        - en
+        - zh                              # <14>
+----
+<1> 站点标题，显示在页面顶部导航栏
+<2> 站点部署后的基础 URL，用于生成绝对链接和 sitemap
+<3> 站点默认起始页，格式为 `组件名::页面ID`
+<4> 内容源 URL，`.` 表示当前本地仓库
+<5> 要使用的分支，`HEAD` 表示当前工作目录的内容（适合本地开发）
+<6> 文档组件在仓库中的起始路径
+<7> UI bundle 下载地址，这里使用 Spring 官方的 Antora UI 主题
+<8> `snapshot: true` 表示每次构建都重新下载 UI bundle（适合使用 `latest` 标签）
+<9> 补充 UI 文件目录，用于覆盖默认样式
+<10> 代码块使用 highlight.js 进行语法高亮
+<11> 全局启用代码块行号（值为空字符串表示布尔型属性设为 true）
+<12> 注册 asciidoctor-kroki 扩展以支持图表渲染
+<13> 注册 Lunr 搜索扩展
+<14> 搜索支持的语言列表，`zh` 为中文分词支持
+
+=== site 配置详解
+
+[source,yaml]
+----
+site:
+  title: 我的文档站点
+  url: https://docs.example.com
+  start_page: docs::index.adoc
+  # 可选：站点 robots.txt 配置
+  # robots: allow
+  # 可选：生成 sitemap
+  # keys:
+  #   google_analytics: UA-XXXXXXXX-X
+----
+
+IMPORTANT: `url` 字段在生产部署时必须设置为实际部署地址，否则搜索索引和站点地图中的链接会不正确。
+
+=== content sources 配置
+
+内容源支持本地目录和远程 Git 仓库：
+
+[source,yaml]
+----
+content:
+  sources:
+    # 本地仓库（开发时使用）
+    - url: .
+      branches: HEAD
+      start_path: docs
+
+    # 远程 Git 仓库
+    # - url: https://github.com/your-org/your-repo.git
+    #   branches: [main, v1.x, v2.x]
+    #   start_path: docs
+
+    # 多组件场景：同一仓库不同路径
+    # - url: .
+    #   branches: HEAD
+    #   start_path: docs-en
+----
+
+=== UI bundle 配置
+
+antora-ui-spring 是 Spring 官方维护的 Antora UI 主题，特点包括：
+
+* 清爽的设计风格
+* 响应式布局
+* 内置搜索框位置
+* 版本切换器
+* 面包屑导航
+
+[source,yaml]
+----
+ui:
+  bundle:
+    url: https://github.com/spring-io/antora-ui-spring/releases/download/latest/ui-bundle.zip
+    snapshot: true
+  supplemental_files: ./supplemental-ui
+  # 可选：输出目录
+  # output_dir: _
+----
+
+NOTE: 如果网络环境无法直接访问 GitHub Releases，可以将 UI bundle 下载到本地，使用本地路径：`url: ./ui-bundle.zip`
+
+== 创建文档组件 (docs/antora.yml)
+
+组件描述符 `antora.yml` 定义了一个文档组件的元数据：
+
+[source,yaml]
+----
+name: docs                  # <1>
+title: 文档示例              # <2>
+version: '2.0'              # <3>
+nav:                        # <4>
+  - modules/ROOT/nav.adoc
+----
+<1> 组件名称，用于跨组件引用（如 `docs::page.adoc`）
+<2> 组件显示标题，出现在 UI 的组件选择器中
+<3> 版本号，必须用引号包裹数字（避免 YAML 解析为浮点数）
+<4> 导航文件列表，按顺序显示在侧边栏
+
+=== 组件描述符完整选项
+
+[source,yaml]
+----
+name: docs
+title: 文档示例
+version: '2.0'
+# 版本显示名称（可选，默认使用 version 值）
+display_version: '2.0 稳定版'
+# 预发布标记（可选）
+# prerelease: Beta
+# 组件起始页（可选，默认为 ROOT:index.adoc）
+start_page: index.adoc
+# AsciiDoc 属性（组件级别）
+asciidoc:
+  attributes:
+    # 这里定义的属性仅在本组件中生效
+    project-name: 示例项目
+    project-version: '2.0.0'
+nav:
+  - modules/ROOT/nav.adoc
+----
+
+=== 关于 version 字段
+
+* 版本号支持语义化版本：`'1.0'`、`'2.1.3'`
+* 特殊值 `~` (tilde) 表示无版本（versionless），URL 中不包含版本段
+* 特殊值 `true` 使用分支名作为版本号
+
+== 编写文档页面
+
+=== 目录结构约定
+
+[source]
+----
+docs/modules/ROOT/
+├── nav.adoc           # 侧边栏导航定义
+├── pages/             # 文档页面（.adoc 文件）
+│   ├── index.adoc     # 组件首页
+│   ├── setup-guide.adoc
+│   └── api-reference.adoc
+├── images/            # 图片资源
+│   └── architecture.png
+├── examples/          # 示例代码文件（可通过 include 引入）
+│   └── HelloWorld.java
+├── partials/          # 可复用的文档片段
+│   └── common-note.adoc
+└── attachments/       # 可下载的附件
+    └── sample.zip
+----
+
+=== nav.adoc 导航文件格式
+
+导航文件使用 AsciiDoc 无序列表语法，支持多级嵌套：
+
+[source,asciidoc]
+----
+* xref:index.adoc[首页]
+* xref:setup-guide.adoc[构建指南]
+* 高级主题
+** xref:i18n.adoc[国际化]
+** xref:multi-version.adoc[多版本管理]
+** xref:deployment.adoc[部署]
+* 参考
+** xref:api-reference.adoc[API 参考]
+** https://docs.antora.org[Antora 官方文档^]
+----
+
+说明：
+
+* `+xref:page.adoc[显示文本]+` -- 引用同模块内的页面
+* `+xref:module:page.adoc[显示文本]+` -- 引用同组件其他模块的页面
+* `+xref:component:module:page.adoc[显示文本]+` -- 跨组件引用
+* 纯文本（不带 xref）作为分组标题
+* 缩进层级使用 `**` 表示子项
+
+=== 页面基本结构
+
+每个 `.adoc` 文件的基本结构：
+
+[source,asciidoc]
+----
+= 页面标题
+:description: 页面描述，用于 SEO
+:keywords: antora, asciidoc, 文档
+:page-layout: default
+
+正文内容从这里开始。
+
+== 二级标题
+
+段落文本...
+
+=== 三级标题
+
+更多内容...
+----
+
+常用页面属性：
+
+[cols="1,2"]
+|===
+|属性 |说明
+
+|`:description:`
+|页面描述，用于 HTML meta 标签
+
+|`:keywords:`
+|关键词，用于 SEO
+
+|`:page-layout:`
+|页面布局模板（如 `home`、`default`）
+
+|`:toc:`
+|是否显示页内目录（`left`、`right`、`auto`）
+
+|`:sectnums:`
+|是否显示章节编号
+|===
+
+== 配置本地搜索
+
+=== 安装 @antora/lunr-extension
+
+该依赖已在 <<安装依赖>> 步骤中安装。如果是在已有项目中添加搜索功能：
+
+[source,bash]
+----
+npm install @antora/lunr-extension@^1.0
+----
+
+=== Playbook 中配置
+
+在 `antora-playbook.yml` 的 `antora.extensions` 部分添加：
+
+[source,yaml]
+----
+antora:
+  extensions:
+    - require: '@antora/lunr-extension'
+      languages:
+        - en
+        - zh
+----
+
+=== 中文搜索支持
+
+Lunr.js 默认仅支持英文分词。添加 `zh` 语言后，扩展会使用 `lunr-languages` 包中的中文分词器（基于 nodejieba）。
+
+[IMPORTANT]
+====
+中文搜索分词质量依赖于 `lunr-languages` 中的中文支持实现。对于大型中文文档站点，如果搜索效果不理想，可考虑：
+
+* 在文档中为关键术语添加英文别名
+* 使用更专业的搜索方案（如 Algolia DocSearch）
+====
+
+搜索功能的工作原理：
+
+1. 构建时，Lunr 扩展扫描所有页面内容
+2. 生成搜索索引文件（`search-index.js`）
+3. 浏览器端加载索引文件，用户输入关键词即可搜索
+4. 无需服务端支持，纯前端实现
+
+=== 搜索配置选项
+
+[source,yaml]
+----
+antora:
+  extensions:
+    - require: '@antora/lunr-extension'
+      languages:
+        - en
+        - zh
+      # 可选：自定义索引字段权重
+      # index_latest_only: true   # 仅索引最新版本
+      # snippet_length: 200       # 搜索结果摘要长度
+----
+
+== 配置国际化 (i18n)
+
+=== 多组件方案
+
+Antora 的国际化推荐使用多组件方案：每种语言作为一个独立的文档组件。
+
+[source]
+----
+project-root/
+├── docs/                # 中文文档（默认语言）
+│   ├── antora.yml       # name: docs
+│   └── modules/ROOT/pages/
+├── docs-en/             # 英文文档
+│   ├── antora.yml       # name: docs-en
+│   └── modules/ROOT/pages/
+└── antora-playbook.yml
+----
+
+=== 创建英文组件
+
+创建 `docs-en/antora.yml`：
+
+[source,yaml]
+----
+name: docs-en
+title: Documentation (English)
+version: '2.0'
+nav:
+  - modules/ROOT/nav.adoc
+----
+
+创建对应的目录结构：
+
+[source,bash]
+----
+mkdir -p docs-en/modules/ROOT/pages
+----
+
+创建 `docs-en/modules/ROOT/nav.adoc`：
+
+[source,asciidoc]
+----
+* xref:index.adoc[Home]
+* xref:getting-started.adoc[Getting Started]
+----
+
+=== Playbook 中添加多个 content sources
+
+[source,yaml]
+----
+content:
+  sources:
+    # 中文文档
+    - url: .
+      branches: HEAD
+      start_path: docs
+    # 英文文档
+    - url: .
+      branches: HEAD
+      start_path: docs-en
+----
+
+=== 在页面间添加语言切换链接
+
+在中文页面顶部：
+
+[source,asciidoc]
+----
+TIP: English version: xref:docs-en::index.adoc[English]
+----
+
+在英文页面顶部：
+
+[source,asciidoc]
+----
+TIP: 中文版本: xref:docs::index.adoc[中文]
+----
+
+== 配置多版本
+
+=== 多 start_path 方案
+
+对于同一仓库中维护多个版本的场景：
+
+[source]
+----
+project-root/
+├── docs/                # 当前版本 (2.0)
+│   └── antora.yml       # version: '2.0'
+├── docs-v1/             # 旧版本 (1.0)
+│   └── antora.yml       # version: '1.0'
+└── antora-playbook.yml
+----
+
+Playbook 配置：
+
+[source,yaml]
+----
+content:
+  sources:
+    - url: .
+      branches: HEAD
+      start_path: docs
+    - url: .
+      branches: HEAD
+      start_path: docs-v1
+----
+
+=== 基于分支的多版本（推荐用于远程仓库）
+
+更常见的做法是通过 Git 分支管理版本：
+
+[source,yaml]
+----
+content:
+  sources:
+    - url: https://github.com/your-org/your-repo.git
+      branches: [main, v1.x, v2.x]
+      start_path: docs
+----
+
+每个分支的 `docs/antora.yml` 中设置对应的版本号：
+
+* `main` 分支: `version: '3.0'`
+* `v2.x` 分支: `version: '2.0'`
+* `v1.x` 分支: `version: '1.0'`
+
+=== antora.yml 中的 version 字段
+
+[source,yaml]
+----
+name: docs
+title: 文档
+version: '2.0'
+# 可选：自定义显示版本名
+display_version: 'v2.0 (当前)'
+# 可选：标记为预发布版本
+# prerelease: -rc.1
+# prerelease: Beta
+----
+
+=== 版本切换器
+
+antora-ui-spring 主题内置了版本切换器组件。当同一组件存在多个版本时，页面顶部会自动显示版本下拉菜单，用户可以在不同版本间切换。
+
+版本排序规则：
+
+* 语义化版本号自动降序排列
+* 带有 `prerelease` 标记的版本排在正式版之后
+* 可通过 `display_version` 自定义显示名称
+
+== 代码高亮配置
+
+=== highlight.js 配置
+
+在 Playbook 中设置代码高亮器：
+
+[source,yaml]
+----
+asciidoc:
+  attributes:
+    source-highlighter: highlight.js
+----
+
+antora-ui-spring 已内置 highlight.js，支持的常用语言包括：
+
+[cols="3*"]
+|===
+|java |javascript |typescript
+|python |ruby |go
+|bash/shell |yaml |json
+|xml |html |css
+|sql |kotlin |groovy
+|dockerfile |properties |toml
+|===
+
+=== 行号开启
+
+全局开启代码块行号：
+
+[source,yaml]
+----
+asciidoc:
+  attributes:
+    source-linenums-option: ''
+----
+
+也可以在单个代码块中控制：
+
+[source,asciidoc]
+------
+// 显示行号
+[source,java,linenums]
+----
+public class Hello {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+}
+----
+
+// 不显示行号（即使全局开启）
+[source,java%nolinenums]
+----
+System.out.println("No line numbers");
+----
+------
+
+=== Callout 标注用法
+
+Callout 标注可以对代码行进行详细说明：
+
+[source,asciidoc]
+------
+[source,java]
+----
+@Configuration
+public class AppConfig {
+    @Bean // <1>
+    public DataSource dataSource() {
+        HikariDataSource ds = new HikariDataSource(); // <2>
+        ds.setJdbcUrl("jdbc:mysql://localhost:3306/mydb"); // <3>
+        return ds;
+    }
+}
+----
+<1> 使用 @Bean 注解声明 Spring Bean
+<2> 使用 HikariCP 连接池
+<3> 配置数据库连接 URL
+------
+
+渲染效果：
+
+[source,java]
+----
+@Configuration
+public class AppConfig {
+    @Bean // <1>
+    public DataSource dataSource() {
+        HikariDataSource ds = new HikariDataSource(); // <2>
+        ds.setJdbcUrl("jdbc:mysql://localhost:3306/mydb"); // <3>
+        return ds;
+    }
+}
+----
+<1> 使用 @Bean 注解声明 Spring Bean
+<2> 使用 HikariCP 连接池
+<3> 配置数据库连接 URL
+
+=== 引入外部代码文件
+
+推荐将代码示例放在 `examples/` 目录中，通过 `include` 指令引入：
+
+[source,asciidoc]
+------
+[source,java]
+----
+\include::example$HelloWorld.java[tags=main]
+----
+------
+
+在代码文件中使用 tag 标记区域：
+
+[source,java]
+----
+public class HelloWorld {
+    // tag::main[]
+    public static void main(String[] args) {
+        System.out.println("Hello!");
+    }
+    // end::main[]
+}
+----
+
+== 图表支持 (PlantUML / Mermaid)
+
+=== asciidoctor-kroki 安装和配置
+
+asciidoctor-kroki 将 AsciiDoc 中的图表代码块发送到 Kroki 服务进行渲染，返回 SVG/PNG 图片。
+
+安装（已在依赖中包含）：
+
+[source,bash]
+----
+npm install asciidoctor-kroki@^0.18
+----
+
+Playbook 配置：
+
+[source,yaml]
+----
+asciidoc:
+  extensions:
+    - asciidoctor-kroki
+  attributes:
+    # 可选：使用自建 Kroki 服务器
+    # kroki-server-url: https://your-kroki-server.example.com
+    # 默认使用公共服务：https://kroki.io
+----
+
+=== kroki-server-url 配置
+
+默认情况下，asciidoctor-kroki 使用公共 Kroki 服务 (https://kroki.io)。对于以下场景建议自建 Kroki 服务器：
+
+* 内网环境无法访问外网
+* 文档包含敏感信息
+* 需要更高的可用性和性能
+
+自建 Kroki 服务器（Docker 方式）：
+
+[source,bash]
+----
+docker run -d --name kroki -p 8000:8000 yuzutech/kroki
+----
+
+然后在 Playbook 中配置：
+
+[source,yaml]
+----
+asciidoc:
+  attributes:
+    kroki-server-url: http://localhost:8000
+----
+
+=== PlantUML 语法示例
+
+[source,asciidoc]
+------
+[plantuml,format=svg]
+----
+@startuml
+actor 用户
+participant "前端应用" as Frontend
+participant "API 网关" as Gateway
+participant "后端服务" as Backend
+database "数据库" as DB
+
+用户 -> Frontend : 发起请求
+Frontend -> Gateway : HTTP Request
+Gateway -> Backend : 转发请求
+Backend -> DB : 查询数据
+DB --> Backend : 返回结果
+Backend --> Gateway : 响应
+Gateway --> Frontend : HTTP Response
+Frontend --> 用户 : 展示结果
+@enduml
+----
+------
+
+渲染效果：
+
+[plantuml,format=svg]
+----
+@startuml
+actor 用户
+participant "前端应用" as Frontend
+participant "API 网关" as Gateway
+participant "后端服务" as Backend
+database "数据库" as DB
+
+用户 -> Frontend : 发起请求
+Frontend -> Gateway : HTTP Request
+Gateway -> Backend : 转发请求
+Backend -> DB : 查询数据
+DB --> Backend : 返回结果
+Backend --> Gateway : 响应
+Gateway --> Frontend : HTTP Response
+Frontend --> 用户 : 展示结果
+@enduml
+----
+
+=== Mermaid 语法示例
+
+[source,asciidoc]
+------
+[mermaid,format=svg]
+----
+graph TD
+    A[开始] --> B{是否安装 Node.js?}
+    B -->|是| C[初始化项目]
+    B -->|否| D[安装 Node.js]
+    D --> C
+    C --> E[安装依赖]
+    E --> F[创建 Playbook]
+    F --> G[编写文档]
+    G --> H[构建站点]
+    H --> I[部署]
+----
+------
+
+渲染效果：
+
+[mermaid,format=svg]
+----
+graph TD
+    A[开始] --> B{是否安装 Node.js?}
+    B -->|是| C[初始化项目]
+    B -->|否| D[安装 Node.js]
+    D --> C
+    C --> E[安装依赖]
+    E --> F[创建 Playbook]
+    F --> G[编写文档]
+    G --> H[构建站点]
+    H --> I[部署]
+----
+
+=== 其他支持的图表类型
+
+Kroki 支持多种图表语言：
+
+[cols="1,2"]
+|===
+|图表类型 |用途
+
+|`plantuml`
+|UML 图（类图、时序图、用例图等）
+
+|`mermaid`
+|流程图、甘特图、时序图
+
+|`ditaa`
+|ASCII Art 风格图表
+
+|`graphviz` / `dot`
+|有向图、网络拓扑图
+
+|`c4plantuml`
+|C4 架构模型图
+
+|`structurizr`
+|软件架构图
+
+|`erd`
+|实体关系图
+
+|`vega` / `vegalite`
+|数据可视化图表
+
+|`svgbob`
+|ASCII 转 SVG
+|===
+
+C4 架构图示例：
+
+[source,asciidoc]
+------
+[c4plantuml,format=svg]
+----
+@startuml
+!include <C4/C4_Container>
+
+Person(user, "用户", "使用文档站点")
+System_Boundary(docs_system, "文档系统") {
+    Container(antora, "Antora", "Node.js", "静态站点生成器")
+    Container(site, "文档站点", "HTML/CSS/JS", "静态文件")
+}
+System_Ext(git, "Git 仓库", "存储文档源文件")
+System_Ext(kroki, "Kroki 服务", "图表渲染")
+
+Rel(user, site, "浏览文档")
+Rel(antora, git, "拉取文档源文件")
+Rel(antora, kroki, "渲染图表")
+Rel(antora, site, "生成静态文件")
+@enduml
+----
+------
+
+== 宽屏优化
+
+antora-ui-spring 默认的内容区域宽度可能不适合宽屏显示器。可以通过 `supplemental-ui/css/site.css` 进行覆盖。
+
+=== supplemental-ui/css/site.css
+
+创建 `supplemental-ui/css/site.css`：
+
+[source,css]
+----
+/* 宽屏优化 - 扩展内容区域最大宽度 */
+
+/* 针对大屏幕（>= 1400px） */
+@media (min-width: 1400px) {
+  /* 扩展主内容区域 */
+  .body {
+    max-width: none;
+  }
+
+  /* 调整文章内容最大宽度 */
+  .doc {
+    max-width: 960px;
+  }
+
+  /* 导航栏宽度 */
+  .nav-container {
+    width: 280px;
+  }
+
+  /* TOC 侧边栏宽度 */
+  .toc.sidebar {
+    width: 240px;
+  }
+}
+
+/* 超宽屏（>= 1920px） */
+@media (min-width: 1920px) {
+  .doc {
+    max-width: 1100px;
+  }
+
+  .nav-container {
+    width: 320px;
+  }
+
+  .toc.sidebar {
+    width: 280px;
+  }
+}
+
+/* 可选：代码块不换行，显示横向滚动条 */
+.doc pre {
+  white-space: pre;
+  overflow-x: auto;
+}
+
+/* 可选：表格响应式 */
+.doc table {
+  display: block;
+  overflow-x: auto;
+  max-width: 100%;
+}
+----
+
+=== media query 策略
+
+[cols="1,2"]
+|===
+|断点 |适用场景
+
+|`min-width: 768px`
+|平板横屏
+
+|`min-width: 1024px`
+|小屏笔记本
+
+|`min-width: 1400px`
+|标准桌面显示器
+
+|`min-width: 1920px`
+|全高清及以上
+|===
+
+=== antora-ui-spring 关键 CSS 选择器
+
+覆盖主题样式时常用的选择器：
+
+[source,css]
+----
+/* 页面整体布局 */
+.body { }                    /* 主内容包裹容器 */
+.nav-container { }           /* 左侧导航栏 */
+.toolbar { }                 /* 顶部工具栏 */
+.toc.sidebar { }             /* 右侧目录栏 */
+
+/* 文档内容区域 */
+.doc { }                     /* 文章主体 */
+.doc h1, .doc h2 { }         /* 文章标题 */
+.doc .paragraph { }          /* 段落 */
+.doc .listingblock { }       /* 代码块容器 */
+.doc .admonitionblock { }    /* 提示/警告块 */
+.doc table.tableblock { }    /* 表格 */
+
+/* 导航相关 */
+.nav .nav-list { }           /* 导航列表 */
+.nav .nav-item { }           /* 导航项 */
+.nav .nav-item.is-active { } /* 当前激活导航项 */
+
+/* 搜索框 */
+#search-input { }            /* 搜索输入框 */
+.search-result-dropdown { }  /* 搜索结果下拉 */
+
+/* 版本选择器 */
+.version-menu { }            /* 版本下拉菜单 */
+
+/* 面包屑 */
+.breadcrumbs { }             /* 面包屑容器 */
+----
+
+=== 引入自定义 CSS 文件
+
+确保 `supplemental-ui` 目录结构正确：
+
+[source]
+----
+supplemental-ui/
+└── css/
+    └── site.css
+----
+
+Antora 在构建时会自动将 `supplemental-ui` 中的文件合并到 UI bundle 中。`css/site.css` 会被追加到页面的样式中，从而覆盖默认样式。
+
+NOTE: 文件路径必须与 UI bundle 中的目录结构对应。`css/site.css` 是 antora-ui-spring 约定的自定义样式入口。
+
+== 构建和预览
+
+=== npm run build:local
+
+执行本地构建：
+
+[source,bash]
+----
+npm run build:local
+----
+
+等价于：
+
+[source,bash]
+----
+npx antora antora-playbook.yml --to-dir=build/site
+----
+
+构建过程：
+
+1. 解析 `antora-playbook.yml`
+2. 从 content sources 收集文档文件
+3. 下载 UI bundle（首次构建或 `snapshot: true` 时）
+4. 将 AsciiDoc 转换为 HTML
+5. 调用 Kroki API 渲染图表
+6. 生成搜索索引
+7. 将所有文件组装到输出目录
+
+=== 使用 http-server 预览
+
+[source,bash]
+----
+# 方法 1：使用 npx（无需全局安装）
+npx http-server build/site -p 8080
+
+# 方法 2：使用 package.json 中配置的 script
+npm run preview
+
+# 方法 3：使用 Python 内置 HTTP 服务器
+cd build/site && python3 -m http.server 8080
+----
+
+然后在浏览器中访问 http://localhost:8080 。
+
+=== 构建产物说明
+
+构建完成后，`build/site/` 目录包含：
+
+[source]
+----
+build/site/
+├── index.html                    # 重定向到 start_page
+├── docs/                         # 文档组件输出
+│   └── 2.0/                      # 版本目录
+│       ├── index.html            # 组件首页
+│       ├── setup-guide.html      # 各文档页面
+│       └── _images/              # 图片资源
+├── _/                            # UI 资源文件
+│   ├── css/
+│   ├── js/
+│   ├── font/
+│   └── img/
+├── search-index.js               # Lunr 搜索索引
+└── sitemap.xml                   # 站点地图
+----
+
+所有文件都是静态文件，可以部署到任何 Web 服务器。
+
+=== 常用构建选项
+
+[source,bash]
+----
+# 清理缓存后构建（解决缓存导致的问题）
+npx antora --clean antora-playbook.yml --to-dir=build/site
+
+# 仅构建特定组件（调试时有用）
+npx antora --log-level=debug antora-playbook.yml --to-dir=build/site
+
+# 指定缓存目录
+npx antora --cache-dir=.cache antora-playbook.yml --to-dir=build/site
+----
+
+== 部署建议
+
+=== GitHub Pages
+
+GitHub Pages 适合开源项目文档托管，免费且集成方便。
+
+==== 方案 1：使用 GitHub Actions 自动部署
+
+参见本文档末尾的 <<GitHub Actions 工作流示例>>。
+
+==== 方案 2：使用 gh-pages 分支
+
+[source,bash]
+----
+# 安装 gh-pages 工具
+npm install --save-dev gh-pages
+
+# 在 package.json 中添加部署脚本
+# "scripts": {
+#   "deploy": "gh-pages -d build/site"
+# }
+
+# 执行部署
+npm run build:local && npm run deploy
+----
+
+=== Netlify
+
+Netlify 提供自动构建和部署，支持 PR 预览。
+
+创建 `netlify.toml`：
+
+[source,toml]
+----
+[build]
+  command = "npm run build:local"
+  publish = "build/site"
+
+[build.environment]
+  NODE_VERSION = "18"
+----
+
+=== 自定义服务器
+
+构建产物是纯静态文件，可部署到任何 Web 服务器：
+
+Nginx 配置示例：
+
+[source,nginx]
+----
+server {
+    listen 80;
+    server_name docs.example.com;
+    root /var/www/docs;
+    index index.html;
+
+    # 启用 gzip 压缩
+    gzip on;
+    gzip_types text/html text/css application/javascript application/json image/svg+xml;
+
+    # 缓存静态资源
+    location /_/ {
+        expires 7d;
+        add_header Cache-Control "public, immutable";
+    }
+
+    # SPA 路由回退
+    location / {
+        try_files $uri $uri/ $uri.html =404;
+    }
+}
+----
+
+=== CI/CD 集成
+
+==== GitHub Actions 工作流示例
+
+创建 `.github/workflows/docs.yml`：
+
+[source,yaml]
+----
+name: Build and Deploy Docs
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**'
+      - 'antora-playbook.yml'
+      - 'package.json'
+      - 'supplemental-ui/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'docs/**'
+
+# 设置 GITHUB_TOKEN 权限
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 只允许一个并发部署
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0    # 需要完整历史记录以支持多分支版本
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build site
+        run: npm run build:local
+
+      - name: Upload artifact
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/site
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+----
+
+==== 工作流说明
+
+[cols="1,2"]
+|===
+|配置项 |说明
+
+|`on.push.paths`
+|仅在文档相关文件变更时触发构建
+
+|`fetch-depth: 0`
+|获取完整 Git 历史，支持多分支版本构建
+
+|`npm ci`
+|使用 `package-lock.json` 确保依赖版本一致
+
+|`upload-pages-artifact`
+|上传构建产物到 GitHub Pages
+
+|`deploy-pages`
+|将产物部署到 GitHub Pages 环境
+|===
+
+NOTE: 使用此工作流前，需要在仓库 Settings -> Pages 中将 Source 设置为 "GitHub Actions"。
+
+== 常见问题
+
+=== 图片路径问题
+
+**问题：** 图片无法显示，控制台报 404 错误。
+
+**原因：** Antora 有严格的资源目录约定。
+
+**解决方案：**
+
+1. 图片必须放在 `modules/ROOT/images/` 目录下
+2. 在文档中使用 `image::filename.png[]` 引用（不需要路径前缀）
+3. 跨模块引用使用 `image::module:filename.png[]`
+
+[source,asciidoc]
+----
+// 正确 - 引用同模块 images 目录下的图片
+image::architecture.png[架构图,width=600]
+
+// 正确 - 指定图片标题
+.系统架构图
+image::architecture.png[架构图]
+
+// 错误 - 不要使用相对路径
+image::../images/architecture.png[]  // 这样不行！
+----
+
+=== 搜索不生效
+
+**问题：** 搜索框无反应或搜索结果为空。
+
+**排查步骤：**
+
+1. 确认 `@antora/lunr-extension` 已正确安装：
++
+[source,bash]
+----
+npm ls @antora/lunr-extension
+----
+
+2. 确认 Playbook 中的扩展配置正确（注意 YAML 缩进）：
++
+[source,yaml]
+----
+antora:
+  extensions:
+    - require: '@antora/lunr-extension'
+      languages: [en, zh]
+----
+
+3. 确认构建产物中存在搜索索引：
++
+[source,bash]
+----
+ls build/site/search-index.js
+----
+
+4. 清理缓存重新构建：
++
+[source,bash]
+----
+npm run clean && npm run build:local
+----
+
+5. 注意：搜索仅在 HTTP 服务器中工作，直接用浏览器打开 `file://` 协议的 HTML 文件时搜索无法正常运行。
+
+=== 样式覆盖方法
+
+**问题：** 想修改主题的默认样式，但直接改 UI bundle 不现实。
+
+**解决方案：** 使用 `supplemental-ui` 机制：
+
+1. 在 `supplemental-ui/css/site.css` 中编写覆盖样式
+2. 使用浏览器开发者工具找到目标元素的选择器
+3. 通过更高优先级的选择器覆盖
+
+[source,css]
+----
+/* 示例：修改顶部导航栏背景色 */
+.navbar {
+  background-color: #1a1a2e !important;
+}
+
+/* 示例：修改链接颜色 */
+.doc a {
+  color: #0066cc;
+}
+
+/* 示例：隐藏版本选择器 */
+.version-menu {
+  display: none;
+}
+----
+
+TIP: 尽量避免使用 `!important`，优先通过增加选择器特异性来覆盖。
+
+=== 版本不显示
+
+**问题：** 页面上不显示版本切换器。
+
+**原因：** 版本切换器仅在同一组件存在多个版本时才会显示。
+
+**解决方案：**
+
+1. 确认至少有两个版本的组件被正确加载
+2. 确认不同版本的 `antora.yml` 中 `name` 相同但 `version` 不同
+3. 检查 content sources 是否正确包含了多个版本
+
+[source,yaml]
+----
+# 确保两个版本的 name 相同
+# docs/antora.yml
+name: docs          # <-- 相同
+version: '2.0'
+
+# docs-v1/antora.yml
+name: docs          # <-- 相同
+version: '1.0'
+----
+
+=== 构建报错：找不到 start_page
+
+**问题：** 构建时报错 `Start page specified for site not found`。
+
+**解决方案：**
+
+1. 确认 `start_page` 格式正确：`组件名::页面ID`
+2. 确认目标页面文件确实存在
+3. 组件名必须与 `antora.yml` 中的 `name` 一致
+
+[source,yaml]
+----
+# antora-playbook.yml
+site:
+  start_page: docs::index.adoc  # 组件名为 "docs"，页面为 "index.adoc"
+
+# docs/antora.yml 中必须有
+name: docs   # 与 start_page 中的组件名对应
+----
+
+=== Kroki 图表渲染失败
+
+**问题：** 图表显示为空白或报错。
+
+**排查步骤：**
+
+1. 确认网络可访问 https://kroki.io
+2. 检查图表语法是否正确（先在 https://kroki.io 在线编辑器中验证）
+3. 如果使用自建 Kroki 服务器，确认服务正常运行
+4. 检查构建日志中是否有错误信息：
++
+[source,bash]
+----
+npx antora --log-level=debug antora-playbook.yml --to-dir=build/site 2>&1 | grep -i kroki
+----
+
+=== 中文文件名问题
+
+**问题：** 使用中文命名的 `.adoc` 文件导致链接异常。
+
+**解决方案：** 始终使用英文 + 连字符命名文件，在文件内部设置中文标题：
+
+[source,asciidoc]
+----
+// 文件名: getting-started.adoc
+= 快速开始
+
+内容...
+----
+
+== 参考资源
+
+* https://docs.antora.org[Antora 官方文档]
+* https://docs.asciidoctor.org/asciidoc/latest/[AsciiDoc 语法参考]
+* https://github.com/spring-io/antora-ui-spring[antora-ui-spring GitHub 仓库]
+* https://kroki.io[Kroki 图表服务]
+* https://lunrjs.com[Lunr.js 搜索引擎]
+* https://github.com/Mogztter/asciidoctor-kroki[asciidoctor-kroki 文档]

@@ -1,0 +1,20 @@
+{
+  "name": "antora-asciidoc-demo",
+  "version": "1.0.0",
+  "description": "Antora + AsciiDoc + antora-ui-spring 示例站点",
+  "private": true,
+  "scripts": {
+    "build": "antora antora-playbook.yml",
+    "build:local": "antora antora-playbook.yml --to-dir=build/site"
+  },
+  "dependencies": {
+    "@antora/cli": "3.1.14",
+    "@antora/lunr-extension": "1.0.0-alpha.13",
+    "@antora/site-generator": "3.1.14",
+    "@node-rs/jieba": "^2.0.1",
+    "asciidoctor-kroki": "0.18.1"
+  },
+  "overrides": {
+    "asciidoctor-opal-runtime": "0.3.3"
+  }
+}

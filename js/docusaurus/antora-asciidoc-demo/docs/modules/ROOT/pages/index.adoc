@@ -1,0 +1,16 @@
+= Antora AsciiDoc 示例站点
+
+欢迎来到 Antora + AsciiDoc + antora-ui-spring 示例站点。
+
+== 功能特性
+
+* 浏览器前端本地搜索（Lunr）
+* 国际化支持：中文（默认）、英文
+* 多版本文档管理
+* 代码高亮 + 行号
+* 丰富的 AsciiDoc 语法示例
+* 宽屏显示优化
+
+== 快速开始
+
+请参阅 xref:setup-guide.adoc[构建指南] 了解如何从零开始搭建此站点。

@@ -1,0 +1,8 @@
+    {{!-- Add additional meta tags here --}}
+    <meta name="antora-ui-version" content="00618195cca8f5e6cae541163dc011650b1973c3">
+    <meta name="version" content="{{{page.version}}}">
+    <meta name="generation" content="{{{page.componentVersion.versionSegment}}}">
+    <meta name="versioned-url" content="{{{versioned_url site.url page.componentVersion.versionSegment page.url}}}">
+    <meta name="component" content="{{{page.component.name}}}">
+    <meta name="latest-version" content="{{~#if (and page.latest (eq page.url page.latest.url))}}true{{~else}}false{{~/if}}">
+    <link rel="stylesheet" href="{{{uiRootPath}}}/css/custom.css">

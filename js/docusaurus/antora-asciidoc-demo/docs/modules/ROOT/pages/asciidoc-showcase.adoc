@@ -1,0 +1,947 @@
+= AsciiDoc 语法全面展示
+:toc: left
+:toclevels: 3
+:icons: font
+:experimental:
+:source-highlighter: highlight.js
+:author: btpka3
+:revdate: 2026-05-18
+:description: AsciiDoc 语法功能全面展示页面，涵盖文本格式、列表、表格、代码块、图表等所有常用特性。
+:my-custom-attr: 自定义属性值
+
+本页面作为 AsciiDoc 语法的全面参考和渲染引擎测试页面，涵盖所有常用特性。
+
+== 文本格式
+
+=== 基本格式
+
+以下展示 AsciiDoc 支持的各种行内文本格式：
+
+* *粗体文本* — 使用单个星号包裹
+* **粗体短语**内嵌在词中 — 使用双星号
+* _斜体文本_ — 使用单个下划线包裹
+* __斜体短语__内嵌在词中 — 使用双下划线
+* `等宽文本` — 使用反引号包裹
+* ``等宽短语``内嵌在词中 — 使用双反引号
+* #高亮文本# — 使用井号包裹
+* ##高亮短语##内嵌在词中 — 使用双井号
+* ^上标文本^ — 例如：E=mc^2^
+* ~下标文本~ — 例如：H~2~O
+* [.line-through]#删除线文本# — 使用角色标记
+* [.underline]#下划线文本# — 使用角色标记
+
+=== 组合格式
+
+可以将多种格式组合使用：
+
+* *_粗斜体_* — 粗体加斜体
+* `*等宽粗体*` — 等宽加粗体
+* `_等宽斜体_` — 等宽加斜体
+* *#粗体高亮#* — 粗体加高亮
+
+== 列表
+
+=== 无序列表
+
+* 苹果
+* 橘子
+* 香蕉
+** 大香蕉
+** 小香蕉
+*** 芭蕉
+* 葡萄
+
+=== 有序列表
+
+. 准备开发环境
+. 克隆代码仓库
+. 安装依赖
+.. 安装 Node.js
+.. 安装 npm 包
+... 运行 `npm install`
+... 检查安装结果
+. 启动开发服务器
+. 验证运行结果
+
+=== 描述/定义列表
+
+CPU:: 中央处理器，负责执行计算任务。
+RAM:: 随机存取存储器，提供临时数据存储。
+SSD:: 固态硬盘，用于持久化数据存储。
+GPU:: 图形处理器，擅长并行计算和图形渲染。
+
+=== 混合嵌套列表
+
+操作系统::
+* Linux
+** Ubuntu
+** CentOS
+* macOS
+* Windows
+
+编程语言::
+. Java
+. Python
+. JavaScript
+
+=== 待办事项列表
+
+* [x] 完成需求评审
+* [x] 编写技术方案
+* [ ] 实现核心功能
+* [ ] 编写单元测试
+* [ ] 代码评审
+* [ ] 部署上线
+
+== 表格
+
+=== 简单表格
+
+|===
+| 姓名 | 年龄 | 城市
+
+| 张三
+| 28
+| 北京
+
+| 李四
+| 32
+| 上海
+
+| 王五
+| 25
+| 杭州
+|===
+
+=== 带标题和对齐的表格
+
+.团队成员信息
+[cols="2,1,1,3",options="header"]
+|===
+| 姓名 | 工号 | 级别 | 负责领域
+
+| 张三
+| 100001
+| P7
+| 后端服务架构
+
+| 李四
+| 100002
+| P6
+| 前端工程化
+
+| 王五
+| 100003
+| P8
+| 数据平台
+|===
+
+=== 复杂表格（合并行列）
+
+[cols="1,2,2,2",options="header"]
+|===
+| 类别 | 周一 | 周三 | 周五
+
+.2+| 上午
+| Java 基础
+| Spring Boot
+| 微服务架构
+
+| 数据结构
+| 设计模式
+| 性能优化
+
+.2+| 下午
+| 实战练习
+2+| 项目实践
+
+| 代码评审
+| 技术分享
+| 总结复盘
+|===
+
+=== CSV 格式表格
+
+[%header,format=csv]
+|===
+服务名,端口,状态,最后更新
+user-service,8080,运行中,2026-05-18
+order-service,8081,运行中,2026-05-17
+payment-service,8082,维护中,2026-05-16
+notification-service,8083,运行中,2026-05-18
+|===
+
+=== 带宽度控制的表格
+
+[cols="15%,25%,60%",options="header",width="100%"]
+|===
+| 状态码 | 名称 | 说明
+
+| 200
+| OK
+| 请求成功，服务器已成功处理请求
+
+| 404
+| Not Found
+| 请求的资源不存在
+
+| 500
+| Internal Server Error
+| 服务器内部错误，无法完成请求
+|===
+
+== 代码块
+
+=== Java 代码（带行号和 callout）
+
+[source,java,linenums]
+----
+package com.example.service;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service // <1>
+public class OrderService {
+
+    private final OrderRepository orderRepository;
+    private final PaymentClient paymentClient;
+
+    public OrderService(OrderRepository orderRepository,
+                        PaymentClient paymentClient) { // <2>
+        this.orderRepository = orderRepository;
+        this.paymentClient = paymentClient;
+    }
+
+    @Transactional // <3>
+    public Order createOrder(CreateOrderRequest request) {
+        Order order = Order.builder()
+                .userId(request.getUserId())
+                .items(request.getItems())
+                .totalAmount(calculateTotal(request.getItems()))
+                .status(OrderStatus.PENDING)
+                .build();
+
+        order = orderRepository.save(order); // <4>
+
+        paymentClient.initiatePayment(order.getId(), order.getTotalAmount()); // <5>
+
+        return order;
+    }
+}
+----
+<1> 使用 `@Service` 注解标记为 Spring Bean
+<2> 通过构造函数注入依赖，推荐方式
+<3> `@Transactional` 确保数据一致性
+<4> 持久化订单到数据库
+<5> 异步调用支付服务发起支付
+
+=== Shell/Bash 脚本
+
+[source,bash]
+----
+#!/bin/bash
+# 自动部署脚本
+
+set -euo pipefail
+
+APP_NAME="my-service"
+DEPLOY_DIR="/opt/apps/${APP_NAME}"
+BACKUP_DIR="/opt/backup/${APP_NAME}"
+
+echo ">>> 开始部署 ${APP_NAME}..."
+
+# 备份当前版本
+if [ -d "${DEPLOY_DIR}" ]; then
+    TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+    cp -r "${DEPLOY_DIR}" "${BACKUP_DIR}/${TIMESTAMP}"
+    echo ">>> 已备份到 ${BACKUP_DIR}/${TIMESTAMP}"
+fi
+
+# 拉取最新代码并构建
+cd /opt/src/${APP_NAME}
+git pull origin main
+./gradlew clean build -x test
+
+# 停止旧服务
+systemctl stop ${APP_NAME} || true
+
+# 部署新版本
+cp build/libs/${APP_NAME}-*.jar "${DEPLOY_DIR}/${APP_NAME}.jar"
+
+# 启动服务
+systemctl start ${APP_NAME}
+
+echo ">>> 部署完成！"
+----
+
+=== JavaScript/TypeScript
+
+[source,javascript]
+----
+import { createApp } from 'vue'
+import { createRouter, createWebHistory } from 'vue-router'
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes: [
+    {
+      path: '/',
+      name: 'Home',
+      component: () => import('./views/Home.vue')
+    },
+    {
+      path: '/dashboard',
+      name: 'Dashboard',
+      component: () => import('./views/Dashboard.vue'),
+      meta: { requiresAuth: true }
+    }
+  ]
+})
+
+// 路由守卫
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = localStorage.getItem('token')
+  if (to.meta.requiresAuth && !isAuthenticated) {
+    next({ name: 'Login' })
+  } else {
+    next()
+  }
+})
+
+const app = createApp(App)
+app.use(router)
+app.mount('#app')
+----
+
+=== Python
+
+[source,python]
+----
+from dataclasses import dataclass
+from typing import List, Optional
+import asyncio
+import httpx
+
+@dataclass
+class TaskResult:
+    task_id: str
+    status: str
+    data: Optional[dict] = None
+
+async def fetch_tasks(base_url: str, task_ids: List[str]) -> List[TaskResult]:
+    """并发获取多个任务的结果"""
+    async with httpx.AsyncClient(timeout=30.0) as client:
+        tasks = [
+            client.get(f"{base_url}/api/tasks/{task_id}")
+            for task_id in task_ids
+        ]
+        responses = await asyncio.gather(*tasks, return_exceptions=True)
+
+    results = []
+    for task_id, response in zip(task_ids, responses):
+        if isinstance(response, Exception):
+            results.append(TaskResult(task_id=task_id, status="error"))
+        else:
+            data = response.json()
+            results.append(TaskResult(
+                task_id=task_id,
+                status=data["status"],
+                data=data.get("result")
+            ))
+    return results
+
+if __name__ == "__main__":
+    results = asyncio.run(fetch_tasks(
+        "https://api.example.com",
+        ["task-001", "task-002", "task-003"]
+    ))
+    for r in results:
+        print(f"[{r.status}] {r.task_id}: {r.data}")
+----
+
+=== YAML 配置
+
+[source,yaml]
+----
+# application.yml - Spring Boot 配置示例
+spring:
+  application:
+    name: order-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/orders?useSSL=false
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:123456}
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      idle-timeout: 300000
+
+  redis:
+    host: ${REDIS_HOST:localhost}
+    port: 6379
+    lettuce:
+      pool:
+        max-active: 16
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+logging:
+  level:
+    root: INFO
+    com.example: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+----
+
+=== SQL
+
+[source,sql]
+----
+-- 创建订单表
+CREATE TABLE IF NOT EXISTS t_order (
+    id          BIGINT PRIMARY KEY AUTO_INCREMENT,
+    order_no    VARCHAR(64)  NOT NULL COMMENT '订单号',
+    user_id     BIGINT       NOT NULL COMMENT '用户ID',
+    total_amount DECIMAL(10,2) NOT NULL DEFAULT 0.00 COMMENT '总金额',
+    status      TINYINT      NOT NULL DEFAULT 0 COMMENT '状态: 0-待支付, 1-已支付, 2-已发货, 3-已完成',
+    created_at  DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at  DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY uk_order_no (order_no),
+    INDEX idx_user_id (user_id),
+    INDEX idx_status_created (status, created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='订单表';
+
+-- 查询用户最近30天订单统计
+SELECT
+    u.username,
+    COUNT(o.id) AS order_count,
+    SUM(o.total_amount) AS total_spent
+FROM t_user u
+LEFT JOIN t_order o ON u.id = o.user_id
+    AND o.created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)
+GROUP BY u.id, u.username
+HAVING order_count > 0
+ORDER BY total_spent DESC
+LIMIT 20;
+----
+
+== 告警/提示块
+
+NOTE: 这是一条普通提示信息。使用 `NOTE` 来提供补充说明或背景信息。
+
+TIP: 这是一条技巧提示。建议在编写代码前先运行 `./gradlew dependencies` 检查依赖冲突。
+
+WARNING: 这是一条警告信息。在生产环境中切勿使用默认密码，请务必修改 `application.yml` 中的数据库凭证。
+
+CAUTION: 这是一条注意事项。此操作会清除所有本地数据，执行前请确保已备份重要文件。
+
+IMPORTANT: 这是一条重要提醒。从 v3.0 开始，API 接口发生了不兼容变更，升级前请仔细阅读迁移指南。
+
+=== 复合告警块
+
+[NOTE]
+====
+这是一个复合提示块，可以包含多种内容：
+
+* 列表项一
+* 列表项二
+
+以及代码片段：
+
+[source,bash]
+----
+echo "Hello from NOTE block"
+----
+====
+
+[WARNING]
+====
+*数据丢失风险*
+
+执行以下命令前请确认：
+
+. 已备份数据库
+. 已通知相关团队成员
+. 已在测试环境验证通过
+
+[source,bash]
+----
+DROP DATABASE production_db;
+----
+====
+
+== 图表
+
+=== PlantUML 类图
+
+以下使用 Kroki 渲染 PlantUML 类图：
+
+[plantuml]
+....
+@startuml
+class User {
+  +String name
+  +String email
+  +login()
+}
+class Order {
+  +int id
+  +Date date
+  +process()
+}
+User "1" -- "*" Order
+@enduml
+....
+
+=== Mermaid 流程图
+
+以下使用 Kroki 渲染 Mermaid 流程图：
+
+[mermaid]
+....
+graph TD
+    A[开始] --> B{判断条件}
+    B -->|是| C[执行操作A]
+    B -->|否| D[执行操作B]
+    C --> E[结束]
+    D --> E
+....
+
+=== Mermaid 时序图
+
+[mermaid]
+....
+sequenceDiagram
+    participant C as 客户端
+    participant G as 网关
+    participant S as 服务
+    participant D as 数据库
+
+    C->>G: HTTP 请求
+    G->>G: 鉴权校验
+    G->>S: 转发请求
+    S->>D: 查询数据
+    D-->>S: 返回结果
+    S-->>G: 响应数据
+    G-->>C: HTTP 响应
+....
+
+== 键盘快捷键
+
+AsciiDoc 支持使用 `kbd:[]` 宏来显示键盘快捷键：
+
+* 复制：kbd:[Ctrl+C]
+* 粘贴：kbd:[Ctrl+V]
+* 剪切：kbd:[Ctrl+X]
+* 撤销：kbd:[Ctrl+Z]
+* 全选：kbd:[Ctrl+A]
+* 关闭窗口：kbd:[Alt+F4]
+* 命令面板（VS Code）：kbd:[Ctrl+Shift+P]
+* 命令面板（macOS）：kbd:[Cmd+Shift+P]
+* 保存文件：kbd:[Ctrl+S]
+* 切换终端：kbd:[Ctrl+`]
+
+== 按钮和菜单
+
+=== 按钮
+
+* 点击 btn:[确定] 保存更改
+* 点击 btn:[取消] 放弃修改
+* 点击 btn:[提交] 发起审批流程
+
+=== 菜单操作
+
+* 创建新项目：menu:文件[新建 > 项目]
+* 打开设置：menu:编辑[首选项 > 设置]
+* 查看 Git 历史：menu:视图[源代码管理 > 历史记录]
+* 运行调试：menu:运行[启动调试 > Java]
+
+== 链接和锚点
+
+=== 外部链接
+
+* https://docs.asciidoctor.org[AsciiDoctor 官方文档]
+* https://antora.org[Antora 官方网站]
+* https://github.com[GitHub^] — 使用 `^` 表示在新窗口打开
+
+=== 页面内引用（xref）
+
+* 参见 xref:index.adoc[首页] 了解项目概况
+* 详细内容请参考 <<_代码块,代码块章节>>
+* 跳转到 <<custom-anchor,自定义锚点位置>>
+
+=== 自定义锚点
+
+[[custom-anchor]]
+这是一个自定义锚点位置，可以从页面其他地方跳转到这里。
+
+== 图片
+
+=== 块级图片
+
+image::https://via.placeholder.com/600x200.png?text=示例架构图[示例架构图,width=600,align=center]
+
+=== 行内图片
+
+这是一段包含行内图标 image:https://via.placeholder.com/16x16.png[勾选,16,16] 的文本。
+
+NOTE: 以上图片使用外部占位符。实际使用时将图片文件放在 `modules/ROOT/assets/images/` 目录下，然后用 `image::filename.png[]` 引用。
+
+== 引用块
+
+=== 简单引用
+
+[quote,Linus Torvalds]
+Talk is cheap. Show me the code.
+
+=== 带来源的引用
+
+[quote,Martin Fowler,《重构：改善既有代码的设计》]
+____
+任何一个傻瓜都能写出计算机可以理解的代码。唯有优秀的程序员能写出人类可以理解的代码。
+____
+
+=== 缩写引用
+
+> 过早优化是万恶之源。
+> -- Donald Knuth
+
+== 侧边栏
+
+.关于本项目
+****
+本项目是一个 AsciiDoc 语法展示项目，使用 Antora 构建文档站点。
+
+主要技术栈：
+
+* Antora 3.x
+* AsciiDoctor
+* Kroki（图表渲染）
+* Node.js
+
+项目仓库：https://github.com/btpka3/btpka3.github.com
+****
+
+== 示例块
+
+.API 调用示例
+====
+以下是调用订单创建接口的完整示例：
+
+请求方式:: POST
+请求路径:: `/api/v1/orders`
+Content-Type:: `application/json`
+
+请求体：
+
+[source,json]
+----
+{
+  "userId": 12345,
+  "items": [
+    {"productId": "P001", "quantity": 2, "price": 99.00},
+    {"productId": "P002", "quantity": 1, "price": 199.00}
+  ],
+  "couponCode": "SAVE20"
+}
+----
+
+响应示例：
+
+[source,json]
+----
+{
+  "code": 200,
+  "data": {
+    "orderId": "ORD20260518001",
+    "status": "PENDING",
+    "totalAmount": 377.00
+  }
+}
+----
+====
+
+== 字面块
+
+=== 使用缩进（4个空格）
+
+    这是字面块内容，保留原始格式。
+    所有空格和换行都会被原样保留。
+        包括缩进。
+    适合展示纯文本输出。
+
+=== 使用分隔符
+
+....
+这也是字面块。
+使用四个点号作为分隔符。
+$ ls -la
+total 128
+drwxr-xr-x  12 user  staff   384  5 18 10:00 .
+drwxr-xr-x   8 user  staff   256  5 17 09:00 ..
+-rw-r--r--   1 user  staff  2048  5 18 10:00 README.md
+-rw-r--r--   1 user  staff  4096  5 18 09:30 build.gradle
+....
+
+== 脚注
+
+AsciiDoc 支持页面脚注功能。例如：
+
+AsciiDoctor footnote:[AsciiDoctor 是 AsciiDoc 的 Ruby 实现，也是目前最流行的 AsciiDoc 处理器。] 是最常用的 AsciiDoc 处理器。
+
+Antora footnote:[Antora 是一个多仓库文档站点生成器，专为 AsciiDoc 设计。支持从多个 Git 仓库聚合文档内容。] 用于构建文档站点。
+
+Kroki footnote:[Kroki 提供统一的 API 来渲染多种图表格式，包括 PlantUML、Mermaid、Graphviz 等。] 提供图表渲染服务。
+
+== ID 和锚点
+
+[[section-id-demo]]
+=== 带自定义 ID 的章节
+
+本章节的 ID 为 `section-id-demo`，可以通过 `<<section-id-demo>>` 引用。
+
+=== 行内锚点示例
+
+这段文字中有一个 [[inline-anchor-1]]行内锚点，可以在其他位置通过 `<<inline-anchor-1>>` 引用到这里。
+
+另一个 [[inline-anchor-2,重要概念]]带标签的行内锚点，引用时会显示为 <<inline-anchor-2>>。
+
+== Include 指令
+
+`include` 指令用于将其他文件的内容包含到当前文档中。
+
+=== 基本用法
+
+[source,asciidoc]
+----
+\include::partial$common-header.adoc[]
+----
+
+=== 包含部分内容（按标签）
+
+在被包含的文件中使用标签标记：
+
+[source,java]
+----
+// tag::service-method[]
+public void processOrder(Order order) {
+    validate(order);
+    save(order);
+    notify(order);
+}
+// end::service-method[]
+----
+
+然后在文档中只包含该标签的内容：
+
+[source,asciidoc]
+----
+\include::example$OrderService.java[tag=service-method]
+----
+
+=== 包含指定行范围
+
+[source,asciidoc]
+----
+\include::example$config.yaml[lines=5..15]
+----
+
+NOTE: 在 Antora 中，`include` 路径使用资源 ID 格式，如 `partial$`、`example$` 等前缀来指定文件所在的目录。
+
+== 条件处理
+
+AsciiDoc 支持条件指令，根据属性是否定义来包含或排除内容。
+
+=== ifdef / endif
+
+[source,asciidoc]
+----
+\ifdef::env-production[]
+本内容仅在 `env-production` 属性被设置时显示。
+\endif::[]
+----
+
+=== ifndef / endif
+
+[source,asciidoc]
+----
+\ifndef::skip-tests[]
+本内容在 `skip-tests` 属性 *未* 被设置时显示。
+\ifndef::[]
+----
+
+=== ifeval
+
+[source,asciidoc]
+----
+\ifeval::["{backend}" == "html5"]
+本内容仅在输出格式为 HTML5 时显示。
+\endif::[]
+----
+
+TIP: 条件处理在多版本文档、多环境配置场景中非常有用。例如可以根据 `env-dev` 或 `env-prod` 属性来决定是否显示调试信息。
+
+== 视频和音频
+
+=== 视频嵌入
+
+[source,asciidoc]
+----
+video::dQw4w9WgXcQ[youtube,width=640,height=360]
+----
+
+也支持本地视频文件：
+
+[source,asciidoc]
+----
+video::demo-recording.mp4[width=640,opts="autoplay,loop"]
+----
+
+=== 音频嵌入
+
+[source,asciidoc]
+----
+audio::podcast-episode-01.mp3[options="controls"]
+----
+
+NOTE: 视频和音频功能取决于输出格式的支持情况。HTML 输出完整支持，PDF 等格式可能有限制。
+
+== 段落与换行
+
+=== 硬换行
+
+在段落中使用 `{plus}` 或行尾空格加 `+` 进行硬换行：
+
+第一行 +
+第二行 +
+第三行
+
+=== 使用 hardbreaks 属性
+
+[%hardbreaks]
+这个段落中
+每一行
+都会单独显示
+不需要额外的换行标记
+
+=== 主题分隔线
+
+上方内容
+
+'''
+
+下方内容 — 上面是一条主题分隔线（thematic break）。
+
+---
+
+另一种分隔线写法。
+
+== 行内代码与属性替换
+
+=== 属性引用
+
+文档定义的自定义属性值为：「{my-custom-attr}」
+
+AsciiDoctor 内置属性示例：
+
+* 作者：{author}
+* 日期：{revdate}
+
+=== 常用文字替换
+
+AsciiDoc 会自动处理以下替换：
+
+* 版权符号：(C)
+* 注册商标：(R)
+* 商标符号：(TM)
+* 省略号：...
+* 破折号：--
+* 右箭头：->
+* 左箭头：<-
+* 双右箭头：=>
+
+=== 阻止替换
+
+使用反斜杠可以阻止替换：\(C) 不会被转换。
+
+使用直通（passthrough）宏：pass:[<strong>直接输出 HTML</strong>]
+
+=== 行内直通
+
+* `+文本不做任何处理+` — 加号包裹的内容原样输出
+* pass:[*这不是粗体*] — pass 宏内容不做 AsciiDoc 处理
+
+== 开放块和直通块
+
+=== 开放块（作为容器）
+
+[sidebar]
+--
+这是一个使用开放块实现的侧边栏效果。
+
+开放块 (`--`) 可以搭配不同的块角色来实现不同的显示效果。
+--
+
+=== 直通块
+
+++++
+<div style="padding: 1em; background: #f0f0f0; border-radius: 4px;">
+  <p>这是直接传递的 HTML 内容，不经过 AsciiDoc 处理。</p>
+  <p>适合需要精确控制 HTML 输出的场景。</p>
+</div>
+++++
+
+== 索引术语
+
+本文档涉及的主要技术：
+indexterm:[AsciiDoc]
+indexterm:[Antora]
+indexterm:[Kroki]
+
+行内索引示例：((AsciiDoc)) 是一种轻量级标记语言。
+
+== 总结
+
+本页面展示了 AsciiDoc 的以下核心特性：
+
+[cols="1,2",options="header"]
+|===
+| 特性分类 | 包含内容
+
+| 文本格式
+| 粗体、斜体、等宽、高亮、上标、下标、删除线
+
+| 列表
+| 有序、无序、嵌套、描述列表、待办事项
+
+| 表格
+| 简单表格、标题表格、合并单元格、CSV 表格
+
+| 代码块
+| 多语言高亮、行号、callout 注释
+
+| 告警块
+| NOTE、TIP、WARNING、CAUTION、IMPORTANT
+
+| 图表
+| PlantUML 类图、Mermaid 流程图和时序图
+
+| 交互元素
+| 键盘快捷键、按钮、菜单
+
+| 链接引用
+| 外部链接、页内引用、锚点
+
+| 文档结构
+| Include、条件处理、属性替换、脚注
+|===

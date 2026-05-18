@@ -1,0 +1,5 @@
+name: docs
+title: 文档示例 (旧版)
+version: '1.0'
+nav:
+  - modules/ROOT/nav.adoc

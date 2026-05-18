@@ -1,0 +1,36 @@
+site:
+  title: Antora AsciiDoc 示例站点
+  url: https://example.com/docs
+  start_page: docs::index.adoc
+
+content:
+  sources:
+    - url: ../../..
+      branches: HEAD
+      start_path: js/docusaurus/antora-asciidoc-demo/docs
+    - url: ../../..
+      branches: HEAD
+      start_path: js/docusaurus/antora-asciidoc-demo/docs-v1
+    - url: ../../..
+      branches: HEAD
+      start_path: js/docusaurus/antora-asciidoc-demo/docs-en
+
+ui:
+  bundle:
+    url: https://github.com/spring-io/antora-ui-spring/releases/download/latest/ui-bundle.zip
+    snapshot: true
+  supplemental_files: ./supplemental-ui
+
+asciidoc:
+  attributes:
+    source-highlighter: highlight.js
+    source-linenums-option: ''
+  extensions:
+    - asciidoctor-kroki
+
+antora:
+  extensions:
+    - require: '@antora/lunr-extension'
+      languages:
+        - en
+        - zh

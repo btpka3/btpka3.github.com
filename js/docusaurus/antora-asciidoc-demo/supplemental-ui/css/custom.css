@@ -1,0 +1,40 @@
+/* Widescreen optimization for antora-ui-spring */
+/* Reduces whitespace on displays >= 1920px */
+
+@media screen and (min-width: 1920px) {
+  .body {
+    max-width: none;
+  }
+  .doc {
+    max-width: none;
+  }
+  .nav-container {
+    width: 280px;
+  }
+  .main {
+    max-width: none;
+  }
+  .content {
+    max-width: none;
+  }
+  /* Increase article width */
+  .doc .content {
+    max-width: 1200px;
+  }
+}
+
+@media screen and (min-width: 2560px) {
+  .doc .content {
+    max-width: 1600px;
+  }
+  .nav-container {
+    width: 320px;
+  }
+  /* Code blocks should also be wider */
+  .doc pre {
+    max-width: 100%;
+  }
+  .doc table {
+    max-width: 100%;
+  }
+}

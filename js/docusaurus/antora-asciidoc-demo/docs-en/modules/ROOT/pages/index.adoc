@@ -1,0 +1,10 @@
+= Antora AsciiDoc Demo
+
+Welcome to the Antora AsciiDoc Demo. This is the English version of the documentation.
+
+== Features
+
+* **AsciiDoc Showcase** -- Demonstrates various AsciiDoc syntax elements including admonitions, tables, code blocks, and diagrams.
+* **Multi-version Support** -- Multiple documentation versions managed via Antora content sources.
+* **Full-text Search** -- Powered by the Antora Lunr extension with support for both English and Chinese.
+* **Diagram Rendering** -- Integrates with Kroki for PlantUML, Mermaid, and other diagram types.

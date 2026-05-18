@@ -1,0 +1,5 @@
+name: docs-en
+title: Documentation (EN)
+version: '2.0'
+nav:
+  - modules/ROOT/nav.adoc
