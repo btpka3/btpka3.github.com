@@ -1,0 +1,49 @@
+= 简介
+:doctype: article
+:toc: left
+:toc-title: 目录
+
+[.lead]
+这是一个使用 Docusaurus + AsciiDoc 构建静态文档站点的示例工程。
+
+== 什么是 AsciiDoc?
+
+AsciiDoc 是一种轻量级标记语言，适合编写技术文档、书籍和网页内容。相比 Markdown，它提供了更多结构化特性：
+
+* 多级标题支持
+* 表格和列表
+* 代码块语法高亮
+* 交叉引用
+* 脚注
+* 内联宏
+
+== 为什么选择 Docusaurus?
+
+Docusaurus 是一个现代化的静态站点生成器，专为文档网站设计：
+
+. 内置版本管理和国际化支持
+. 支持 Markdown 和 AsciiDoc 混用
+. 提供搜索、导航和主题定制
+. 支持 React 组件扩展
+
+== 项目结构
+
+[source]
+----
+docusaurus-asciidos-demo/
+├── docs/                  # AsciiDoc 文档目录
+│   ├── intro.adoc         # 简介
+│   ├── getting-started.adoc # 快速开始
+│   └── features.adoc      # 功能特性
+├── src/                   # 自定义源码
+│   └── css/               # 自定义样式
+├── static/                # 静态资源
+│   └── img/               # 图片
+├── docusaurus.config.js   # Docusaurus 配置
+├── sidebars.js            # 侧边栏配置
+└── package.json           # 项目依赖
+----
+
+== 快速开始
+
+参阅 link:getting-started[快速开始指南] 了解如何构建和运行本项目。

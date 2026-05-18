@@ -1,0 +1,82 @@
+= 快速开始
+:doctype: article
+:toc: left
+
+== 环境要求
+
+* Node.js >= 18
+* npm >= 9
+
+== 安装依赖
+
+[source,bash]
+----
+npm install
+----
+
+== 启动开发服务器
+
+[source,bash]
+----
+npm start
+----
+
+启动后访问 http://localhost:3000 查看站点。
+
+== 构建生产版本
+
+[source,bash]
+----
+npm run build
+----
+
+构建产物输出到 `build/` 目录。
+
+== 本地预览构建结果
+
+[source,bash]
+----
+npm run serve
+----
+
+== 常用命令
+
+.常用命令一览
+|===
+| 命令 | 说明
+
+| `npm start`
+| 启动开发服务器
+
+| `npm run build`
+| 构建生产版本
+
+| `npm run serve`
+| 本地预览构建结果
+
+| `npm run clear`
+| 清除缓存
+|===
+
+== 添加新的 AsciiDoc 文档
+
+. 在 `docs/` 目录下创建 `.adoc` 文件
+. 文件头部添加 AsciiDoc 文档标题
+. 在 `sidebars.js` 中添加导航项
+. 重启开发服务器查看效果
+
+== 故障排查
+
+=== 构建失败
+
+检查以下几点：
+
+* 确保 AsciiDoc 文件语法正确
+* 确认 `docusaurus.config.js` 中插件配置正确
+* 查看终端输出的错误信息
+
+=== AsciiDoc 未渲染
+
+* 确认文件扩展名为 `.adoc`
+* 确认 `@asciidoc-js/docusaurus-asciidoc` 已正确安装
+* 检查插件配置中的 `include` 模式是否匹配

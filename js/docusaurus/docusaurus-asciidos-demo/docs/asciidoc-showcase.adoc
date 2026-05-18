@@ -1,0 +1,754 @@
+= AsciiDoc 特性全览
+:doctype: article
+:toc: left
+:toc-title: 目录
+:icons: font
+:source-highlighter: highlight.js
+:experimental:
+
+[.lead]
+本页面尽可能全面地展示 AsciiDoc 的各种语法特性和高级功能。
+
+== 文本格式化
+
+=== 基本格式
+
+*粗体文本* 和 _斜体文本_ 以及 *_粗斜体_* 文本。
+
+`等宽字体` 用于内联代码，如 `System.out.println()`。
+
+[.underline]#下划线文本# 和 [.line-through]#删除线文本#。
+
+上标: E=mc^2^，下标: H~2~O。
+
+=== 高亮与引用
+
+#高亮标记文本#
+
+[quote, Albert Einstein]
+____
+想象力比知识更重要。知识是有限的，想象力则环绕着整个世界。
+____
+
+[verse, 李白, 静夜思]
+____
+床前明月光，
+疑是地上霜。
+举头望明月，
+低头思故乡。
+____
+
+== 列表
+
+=== 无序列表（嵌套）
+
+* 水果
+** 苹果
+*** 红富士
+*** 青苹果
+** 香蕉
+** 橘子
+* 蔬菜
+** 番茄
+** 黄瓜
+
+=== 有序列表（嵌套）
+
+. 准备环境
+.. 安装 Node.js
+.. 安装 npm
+. 创建项目
+.. 初始化目录
+.. 安装依赖
+. 开始开发
+.. 编写文档
+.. 本地预览
+. 构建部署
+
+=== 描述列表
+
+Docusaurus:: 一个现代化的静态站点生成器，由 Meta 开发维护。
+AsciiDoc:: 一种轻量级标记语言，语法能力远超 Markdown。
+PlantUML:: 一个开源的 UML 图表绘制工具，使用文本描述生成图形。
+Mermaid:: 基于 JavaScript 的图表绘制工具，可在浏览器中渲染。
+
+=== 检查列表
+
+* [*] 安装 Node.js
+* [*] 初始化项目
+* [*] 编写 AsciiDoc 文档
+* [ ] 配置 CI/CD
+* [ ] 部署到生产环境
+
+== 链接与锚点
+
+=== 外部链接
+
+* https://asciidoc.org[AsciiDoc 官方网站]
+* https://docs.asciidoctor.org[Asciidoctor 文档]
+* https://docusaurus.io[Docusaurus 官网]
+
+=== 内部链接
+
+* link:intro[简介页面]
+* link:features[功能特性页面]
+
+=== 锚点引用
+
+参见 <<_表格>> 章节了解表格用法。
+
+== 图片
+
+=== 内联图片
+
+这是一个内联 Logo image:/img/logo.svg[Logo,20,20]，嵌入在段落中。
+
+=== 块级图片
+
+.Docusaurus Logo
+image::/img/logo.svg[Docusaurus Logo, 120, 120, align="center"]
+
+== 表格
+
+=== 基本表格
+
+.开发工具对比
+|===
+| 工具 | 语言 | 用途 | 许可证
+
+| Docusaurus
+| JavaScript/React
+| 文档站点生成
+| MIT
+
+| Hugo
+| Go
+| 静态站点生成
+| Apache 2.0
+
+| Sphinx
+| Python
+| 技术文档
+| BSD
+
+| MkDocs
+| Python
+| 项目文档
+| BSD
+|===
+
+=== 带列宽控制的表格
+
+[cols="1,2,3"]
+|===
+| 短列 | 中等长度列 | 较长的说明列
+
+| A
+| 类型 A
+| 这是对类型 A 的详细说明，展示列宽比例控制功能
+
+| B
+| 类型 B
+| 这是对类型 B 的详细说明
+
+| C
+| 类型 C
+| 这是对类型 C 的详细说明
+|===
+
+=== CSV 数据表格
+
+[%header,format=csv]
+|===
+名称,版本,下载量
+React,18.3,45M
+Vue,3.4,12M
+Angular,17.0,8M
+Svelte,4.2,3M
+|===
+
+=== 单元格合并
+
+[cols="3*"]
+|===
+| 行 1，列 1 | 行 1，列 2 | 行 1，列 3
+
+3+| 此单元格跨越三列
+
+| 行 3，列 1
+2+| 此单元格跨越两列
+|===
+
+== 代码块
+
+=== 带行号的代码
+
+[source,java,linenums]
+----
+package com.example;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class StreamExample {
+    public static void main(String[] args) {
+        List<String> names = List.of("Alice", "Bob", "Charlie", "David");
+
+        List<String> filtered = names.stream()
+            .filter(name -> name.length() > 3)
+            .map(String::toUpperCase)
+            .collect(Collectors.toList());
+
+        filtered.forEach(System.out::println);
+    }
+}
+----
+
+=== 带标注的代码
+
+[source,javascript]
+----
+const express = require('express'); // <1>
+const app = express(); // <2>
+
+app.get('/', (req, res) => { // <3>
+  res.send('Hello World!');
+});
+
+app.listen(3000, () => { // <4>
+  console.log('Server running on port 3000');
+});
+----
+<1> 导入 Express 框架
+<2> 创建应用实例
+<3> 定义路由处理器
+<4> 启动服务器监听
+
+=== 多种语言示例
+
+[source,python]
+----
+def fibonacci(n: int) -> list[int]:
+    """生成斐波那契数列"""
+    fib = [0, 1]
+    for i in range(2, n):
+        fib.append(fib[i-1] + fib[i-2])
+    return fib[:n]
+
+print(fibonacci(10))
+----
+
+[source,go]
+----
+package main
+
+import "fmt"
+
+func fibonacci(n int) []int {
+    fib := make([]int, n)
+    fib[0], fib[1] = 0, 1
+    for i := 2; i < n; i++ {
+        fib[i] = fib[i-1] + fib[i-2]
+    }
+    return fib
+}
+
+func main() {
+    fmt.Println(fibonacci(10))
+}
+----
+
+[source,rust]
+----
+fn fibonacci(n: usize) -> Vec<u64> {
+    let mut fib = vec![0, 1];
+    for i in 2..n {
+        let next = fib[i - 1] + fib[i - 2];
+        fib.push(next);
+    }
+    fib.truncate(n);
+    fib
+}
+
+fn main() {
+    println!("{:?}", fibonacci(10));
+}
+----
+
+=== 命令行会话
+
+[source,console]
+----
+$ npm install
+added 1326 packages in 45s
+
+$ npm run build
+[SUCCESS] Generated static files in "build".
+
+$ npm run serve
+Serving "build" directory at: http://localhost:3000/
+----
+
+== 警告块 (Admonitions)
+
+[NOTE]
+====
+这是一个**提示**信息块。用于提供补充说明或背景信息。
+
+支持包含多段内容和格式化。
+====
+
+[TIP]
+====
+使用 `npm run clear` 可以清除 Docusaurus 缓存，解决许多构建问题。
+====
+
+[IMPORTANT]
+====
+在 `package.json` 中必须包含 `overrides` 字段来锁定 webpack 版本，否则可能出现构建失败。
+====
+
+[WARNING]
+====
+不要在生产环境直接使用 `npm start`，它仅用于开发。生产环境应该使用 `npm run build` 后通过静态服务器部署。
+====
+
+[CAUTION]
+====
+修改 `docusaurus.config.mjs` 后需要重启开发服务器才能生效。热更新不会自动加载配置变更。
+====
+
+== 侧边栏与面板
+
+=== Sidebar 面板
+
+****
+这是一个 sidebar（侧边栏面板），常用于展示旁注信息或补充说明。
+它与正文内容在视觉上有所区隔。
+****
+
+=== Example 面板
+
+.AsciiDoc 文件结构示例
+====
+一个标准的 AsciiDoc 文件通常包含：
+
+. 文档头（标题、作者、版本）
+. 文档属性设置
+. 正文内容
+. 附录（可选）
+
+`intro.adoc` 就是一个典型的示例。
+====
+
+== UML 图表（PlantUML 文本表示）
+
+以下展示 PlantUML 语法的各种 UML 图表。在支持 PlantUML 的环境中，这些文本会渲染为图形。
+
+=== 时序图 (Sequence Diagram)
+
+[source,plantuml]
+----
+@startuml
+actor 用户
+participant "浏览器" as Browser
+participant "Docusaurus\n开发服务器" as Server
+participant "Webpack" as Webpack
+database "文件系统" as FS
+
+用户 -> Browser: 访问 localhost:3000
+Browser -> Server: HTTP GET /docs/intro
+Server -> Webpack: 编译请求
+Webpack -> FS: 读取 intro.adoc
+FS --> Webpack: AsciiDoc 源码
+Webpack -> Webpack: AsciiDoc → mdast → MDX
+Webpack --> Server: 编译后的 React 组件
+Server --> Browser: HTML + JS Bundle
+Browser --> 用户: 渲染页面
+@enduml
+----
+
+=== 类图 (Class Diagram)
+
+[source,plantuml]
+----
+@startuml
+abstract class Document {
+  - title: String
+  - content: String
+  + render(): HTML
+}
+
+class AsciiDocDocument extends Document {
+  - attributes: Map<String, String>
+  - sections: List<Section>
+  + parse(source: String): void
+  + toMdast(): MdastNode
+}
+
+class MarkdownDocument extends Document {
+  - frontMatter: Map<String, Object>
+  + parse(source: String): void
+}
+
+interface Plugin {
+  + name(): String
+  + configureWebpack(config): WebpackConfig
+}
+
+class AsciidocPlugin implements Plugin {
+  - registry: Map<String, MdastTree>
+  + configureWebpack(config): WebpackConfig
+  + remarkPlugin(): Function
+}
+
+Document "1" *-- "many" Section
+AsciidocPlugin ..> AsciiDocDocument: creates
+@enduml
+----
+
+=== 组件图 (Component Diagram)
+
+[source,plantuml]
+----
+@startuml
+package "Docusaurus Core" {
+  [MDX Loader]
+  [Webpack]
+  [SSR Engine]
+}
+
+package "@asciidoc-js/docusaurus-asciidoc" {
+  [AsciiDoc Loader]
+  [Remark Plugin]
+  [Registry]
+}
+
+package "AsciiDoc Processing" {
+  [adast-util-from-asciidoc]
+  [adast-util-to-mdast]
+  [@asciidoctor/core]
+}
+
+[.adoc Files] --> [AsciiDoc Loader]
+[AsciiDoc Loader] --> [adast-util-from-asciidoc]
+[adast-util-from-asciidoc] --> [@asciidoctor/core]
+[AsciiDoc Loader] --> [adast-util-to-mdast]
+[AsciiDoc Loader] --> [Registry]: 存储 mdast
+[Registry] --> [Remark Plugin]: 读取 mdast
+[Remark Plugin] --> [MDX Loader]: 注入 mdast 树
+[MDX Loader] --> [Webpack]
+[Webpack] --> [SSR Engine]
+@enduml
+----
+
+=== 活动图 (Activity Diagram)
+
+[source,plantuml]
+----
+@startuml
+start
+:用户执行 npm run build;
+
+:Docusaurus 初始化;
+:加载 docusaurus.config.mjs;
+:发现所有插件;
+
+fork
+  :编译 Client Bundle;
+fork again
+  :编译 Server Bundle;
+end fork
+
+:执行 SSR 生成静态 HTML;
+
+if (链接检查通过?) then (是)
+  :输出到 build/ 目录;
+  #palegreen:构建成功;
+  stop
+else (否)
+  #pink:构建失败;
+  :输出错误的链接列表;
+  stop
+endif
+@enduml
+----
+
+=== 状态图 (State Diagram)
+
+[source,plantuml]
+----
+@startuml
+[*] --> 待处理
+
+待处理 --> 开发中: 开始开发
+开发中 --> 代码审查: 提交 PR
+代码审查 --> 开发中: 需要修改
+代码审查 --> 测试中: 审查通过
+测试中 --> 开发中: 测试失败
+测试中 --> 待发布: 测试通过
+待发布 --> 已发布: 部署
+已发布 --> [*]
+
+开发中: entry/ 编写代码
+开发中: do/ 本地测试
+代码审查: do/ 检视代码
+测试中: do/ 回归测试
+@enduml
+----
+
+=== 用例图 (Use Case Diagram)
+
+[source,plantuml]
+----
+@startuml
+left to right direction
+
+actor "文档作者" as author
+actor "读者" as reader
+actor "CI/CD" as ci
+
+rectangle "Docusaurus AsciiDoc 站点" {
+  usecase "编写 AsciiDoc 文档" as UC1
+  usecase "本地预览" as UC2
+  usecase "构建静态站点" as UC3
+  usecase "部署到 GitHub Pages" as UC4
+  usecase "浏览文档" as UC5
+  usecase "搜索文档" as UC6
+  usecase "切换暗黑模式" as UC7
+}
+
+author --> UC1
+author --> UC2
+author --> UC3
+ci --> UC3
+ci --> UC4
+reader --> UC5
+reader --> UC6
+reader --> UC7
+
+UC3 ..> UC4: <<include>>
+@enduml
+----
+
+=== ER 图 (Entity Relationship)
+
+[source,plantuml]
+----
+@startuml
+entity "Document" as doc {
+  * id : UUID <<PK>>
+  --
+  * title : VARCHAR(255)
+  * slug : VARCHAR(100)
+  * content : TEXT
+  * format : ENUM('adoc', 'md', 'mdx')
+  created_at : TIMESTAMP
+  updated_at : TIMESTAMP
+}
+
+entity "Category" as cat {
+  * id : UUID <<PK>>
+  --
+  * name : VARCHAR(100)
+  * label : VARCHAR(100)
+  position : INT
+}
+
+entity "Version" as ver {
+  * id : UUID <<PK>>
+  --
+  * name : VARCHAR(50)
+  * path : VARCHAR(200)
+  is_current : BOOLEAN
+}
+
+doc }|--|| cat : belongs to
+doc }|--|| ver : versioned by
+@enduml
+----
+
+== Mermaid 图表（文本表示）
+
+=== 流程图
+
+[source,mermaid]
+----
+graph TD
+    A[开始] --> B{是否安装 Node.js?}
+    B -->|是| C[npm install]
+    B -->|否| D[安装 Node.js]
+    D --> C
+    C --> E[npm run build]
+    E --> F{构建成功?}
+    F -->|是| G[npm run serve]
+    F -->|否| H[检查错误日志]
+    H --> C
+    G --> I[浏览器访问]
+    I --> J[结束]
+----
+
+=== Git 分支图
+
+[source,mermaid]
+----
+gitGraph
+    commit id: "init"
+    commit id: "add docs"
+    branch feature/asciidoc
+    commit id: "add plugin"
+    commit id: "add adoc files"
+    checkout main
+    commit id: "update config"
+    merge feature/asciidoc id: "merge PR"
+    commit id: "deploy"
+----
+
+== 文档属性与变量替换
+
+:project-name: docusaurus-asciidos-demo
+:node-version: 20
+:docusaurus-version: 3.7.0
+
+当前项目名称为 **{project-name}**，要求 Node.js >= {node-version}，使用 Docusaurus {docusaurus-version}。
+
+== Include 指令（概念展示）
+
+AsciiDoc 支持通过 `include` 指令引入外部文件内容：
+
+[source,asciidoc]
+----
+\include::shared/header.adoc[]
+
+\include::examples/code-sample.java[tags=main]
+
+\include::data/config.yaml[lines=5..15]
+----
+
+这使得大型文档可以模块化管理，支持按标签和行号精确引入。
+
+== 脚注
+
+AsciiDoc 是由 Stuart Rackham 于 2002 年创建的标记语言。footnote:[最初设计目标是成为 DocBook XML 的轻量级替代方案。]
+
+Docusaurus 由 Meta (前 Facebook) 开发维护。footnote:[最初用于 React Native 和 Jest 的文档站点。]
+
+== 键盘快捷键与菜单
+
+按下 kbd:[Ctrl+Shift+P] 打开命令面板。
+
+选择菜单 menu:File[New > AsciiDoc Document] 创建新文档。
+
+点击 btn:[Build] 按钮开始构建。
+
+== 文字替换与符号
+
+AsciiDoc 支持自动文字替换：
+
+* (C) 变为版权符号
+* (R) 变为注册商标
+* (TM) 变为商标
+* -> 变为箭头
+* => 变为双箭头
+* -- 变为破折号
+
+== 条件内容（概念展示）
+
+AsciiDoc 支持条件包含/排除内容：
+
+[source,asciidoc]
+----
+\ifdef::env-github[]
+此内容仅在 GitHub 渲染时显示。
+\endif::[]
+
+\ifndef::env-github[]
+此内容在非 GitHub 环境中显示。
+\endif::[]
+
+\ifeval::["{backend}" == "html5"]
+此内容仅在 HTML5 输出时包含。
+\endif::[]
+----
+
+== 开放块与透传块
+
+=== 开放块（可指定角色）
+
+[.text-center]
+--
+这段内容居中显示。
+
+可以包含任意 AsciiDoc 内容。
+--
+
+=== 透传块（原样输出 HTML）
+
+++++
+<div style="padding: 1rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 8px; text-align: center;">
+  <h3 style="margin: 0;">自定义 HTML 内容</h3>
+  <p style="margin: 0.5rem 0 0;">AsciiDoc 透传块允许直接嵌入 HTML</p>
+</div>
+++++
+
+== 索引术语（概念展示）
+
+AsciiDoc 支持为文档生成索引：
+
+[source,asciidoc]
+----
+((AsciiDoc)) 是一种标记语言。
+(((标记语言, AsciiDoc)))
+(((文档工具, 静态站点生成器, Docusaurus)))
+----
+
+== 总结
+
+本页面展示了 AsciiDoc 的以下特性：
+
+[cols="2,3"]
+|===
+| 类别 | 包含特性
+
+| 文本格式化
+| 粗体、斜体、等宽、下划线、删除线、上标、下标、高亮
+
+| 引用块
+| 引用（quote）、诗文（verse）
+
+| 列表
+| 无序、有序、描述、检查列表、嵌套
+
+| 链接与锚点
+| 外部链接、内部链接、锚点引用
+
+| 图片
+| 内联图片、块级图片
+
+| 表格
+| 基本表格、列宽控制、CSV 数据、单元格合并
+
+| 代码块
+| 多语言高亮、行号、标注
+
+| 警告块
+| NOTE、TIP、IMPORTANT、WARNING、CAUTION
+
+| 面板
+| Sidebar、Example
+
+| UML 图表
+| 时序图、类图、组件图、活动图、状态图、用例图、ER 图
+
+| Mermaid 图表
+| 流程图、Git 分支图
+
+| 文档属性
+| 变量定义与替换
+
+| Include 指令
+| 文件引入、按标签/行号引入
+
+| 其他
+| 脚注、键盘快捷键、菜单路径、条件内容、透传块、索引
+|===

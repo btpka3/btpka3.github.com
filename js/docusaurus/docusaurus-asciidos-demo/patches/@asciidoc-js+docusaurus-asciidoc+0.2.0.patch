@@ -1,0 +1,18 @@
+diff --git a/node_modules/@asciidoc-js/docusaurus-asciidoc/src/remark-plugin.js b/node_modules/@asciidoc-js/docusaurus-asciidoc/src/remark-plugin.js
+index 0d693cb..50e7682 100644
+--- a/node_modules/@asciidoc-js/docusaurus-asciidoc/src/remark-plugin.js
++++ b/node_modules/@asciidoc-js/docusaurus-asciidoc/src/remark-plugin.js
+@@ -32,11 +32,8 @@ export default function remarkAsciidocInject() {
+     // Extract mdast from stored object (or handle legacy single-tree format)
+     const mdastTree = stored.mdastTree ?? stored;
+ 
+-    // Replace the tree content in-place
+-    tree.children = mdastTree.children;
+-
+-    // Clean up the registry entry
+-    mdastRegistry.delete(filePath);
++    // Replace the tree content in-place (deep copy to avoid mutation across compilations)
++    tree.children = JSON.parse(JSON.stringify(mdastTree.children));
+ 
+     // Convert raw-HTML nodes (from passthrough blocks) into MDX JSX elements
+     // so the MDX compiler does not choke on unknown `raw` hast nodes.
