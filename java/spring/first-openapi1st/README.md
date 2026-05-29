@@ -8,8 +8,12 @@
 ## 测试
 
 ```shell
-mvn spring-boot:run
+# 编译、启动
+mvn clean install -DskipTests
+mvn -pl first-openapi1st-web spring-boot:run
 
+
+# 测试
 
 # 1. 根据 ID 查询宠物
 curl -s http://localhost:8080/pet/1 | jq
@@ -28,7 +32,10 @@ curl -s -X POST http://localhost:8080/pet \
   -d '{"id":10,"name":"fido","status":"available","photoUrls":["url1"]}' \
   -w "\nHTTP_STATUS: %{http_code}\n"
 
-# 5. 删除宠物（未实现，预期 501）
+# 5. 删除宠物（未实现，预期 500）
 curl -s -X DELETE http://localhost:8080/pet/1 \
   -w "\nHTTP_STATUS: %{http_code}\n"
+  
+# Protobuf 验证  
+grpcurl -plaintext -d '{"pet_id":42}' localhost:9090 petstore.PetService/GetPetById 
 ```

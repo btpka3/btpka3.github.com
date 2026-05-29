@@ -12,12 +12,20 @@
 
     <artifactId>first-openapi1st-web</artifactId>
     <name>first-openapi1st-web</name>
-    <description>Service implementation module</description>
+    <description>REST + gRPC dual protocol application</description>
 
     <dependencies>
         <dependency>
             <groupId>com.github.btpka3</groupId>
             <artifactId>first-openapi1st-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.btpka3</groupId>
+            <artifactId>first-openapi1st-service</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.btpka3</groupId>
+            <artifactId>first-openapi1st-grpc</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -26,11 +34,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.swagger.core.v3</groupId>
-            <artifactId>swagger-annotations-jakarta</artifactId>
-            <version>${swagger-annotations.version}</version>
         </dependency>
 
         <dependency>

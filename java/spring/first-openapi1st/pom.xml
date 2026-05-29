@@ -16,10 +16,13 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>first-openapi1st</name>
-    <description>Demo: OpenAPI spec-first code generation with Spring MVC</description>
+    <description>Demo: OpenAPI spec-first with REST + gRPC dual protocol</description>
 
     <modules>
         <module>first-openapi1st-api</module>
+        <module>first-openapi1st-proto</module>
+        <module>first-openapi1st-service</module>
+        <module>first-openapi1st-grpc</module>
         <module>first-openapi1st-web</module>
     </modules>
 
@@ -27,6 +30,10 @@
         <java.version>21</java.version>
         <openapi-generator.version>7.22.0</openapi-generator.version>
         <swagger-annotations.version>2.2.50</swagger-annotations.version>
+        <grpc.version>1.81.0</grpc.version>
+        <protobuf.version>4.35.0</protobuf.version>
+        <grpc-spring-boot-starter.version>3.1.0.RELEASE</grpc-spring-boot-starter.version>
+        <protobuf-maven-plugin.version>0.6.1</protobuf-maven-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -35,6 +42,35 @@
                 <groupId>com.github.btpka3</groupId>
                 <artifactId>first-openapi1st-api</artifactId>
                 <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.btpka3</groupId>
+                <artifactId>first-openapi1st-proto</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.btpka3</groupId>
+                <artifactId>first-openapi1st-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.btpka3</groupId>
+                <artifactId>first-openapi1st-grpc</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-bom</artifactId>
+                <version>${grpc.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.google.protobuf</groupId>
+                <artifactId>protobuf-bom</artifactId>
+                <version>${protobuf.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>

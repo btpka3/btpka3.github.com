@@ -6,13 +6,22 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="first-openapi1st" />
+        <module name="first-openapi1st-api" />
+        <module name="first-openapi1st-web" />
+        <module name="first-openapi1st-grpc" />
+        <module name="first-openapi1st-proto" />
+        <module name="first-openapi1st-service" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="first-openapi1st" options="-parameters" />
+      <module name="first-openapi1st" options="" />
+      <module name="first-openapi1st-api" options="-parameters" />
+      <module name="first-openapi1st-grpc" options="-parameters" />
+      <module name="first-openapi1st-proto" options="-parameters" />
+      <module name="first-openapi1st-service" options="-parameters" />
+      <module name="first-openapi1st-web" options="-parameters" />
     </option>
   </component>
 </project>
