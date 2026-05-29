@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: first-springdoc
+  config:
+    import: classpath:springdoc-api-groups.yml
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: false

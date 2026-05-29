@@ -1,0 +1,6 @@
+springdoc:
+  group-configs:
+    - group: user-api
+      paths-to-match: /api/users/**
+    - group: order-api
+      paths-to-match: /api/orders/**

@@ -7,13 +7,20 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="first-springdoc" />
+        <module name="first-springdoc-api" />
+        <module name="first-springdoc-web" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="first-springdoc-service" target="21" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="first-springdoc" options="-parameters" />
+      <module name="first-springdoc" options="" />
+      <module name="first-springdoc-api" options="-parameters" />
+      <module name="first-springdoc-service" options="-parameters" />
+      <module name="first-springdoc-web" options="-parameters" />
     </option>
   </component>
 </project>
