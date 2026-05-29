@@ -1,109 +1,88 @@
+# first-openapi1st
 
-演示使用 spec first 基于已有的 openAPI json/yaml 生成 使用 spring mvc 的 java 后端的 http api
+演示 **OpenAPI Spec-First**（API First）方式：基于 AI 生成的 OpenAPI YAML，自动生成 Java 接口 + Model，手写 Controller 实现。
 
-要求：创建maven项目，使用 https://petstore.swagger.io/v2/swagger.json 这个openAPI json文件。
+## 核心理念
 
+1. **Spec 由 AI 全量生成**：需求描述 + 交互图 → AI 生成域级 OpenAPI YAML
+2. **按业务域拆分 Spec**：降低并行开发冲突（pet / user / store 各自独立文件）
+3. **Spec 作为 Maven 子模块**：`first-openapi1st-spec` 产出 bundled YAML artifact
+4. **接口代码自动生成**：`openapi-generator-maven-plugin` 消费 spec 产出 Java 接口
 
 ## 项目结构
 
 ```
 first-openapi1st/
-├── first-openapi1st-api/      # OpenAPI → Java 接口 + Model（openapi-generator, spring 生成器）
-├── first-openapi1st-proto/    # 手写 .proto → gRPC Java Stub（protobuf-maven-plugin）
-├── first-openapi1st-service/  # PetService 业务逻辑（REST 和 gRPC 共享）
-├── first-openapi1st-grpc/     # @GrpcService 实现 + Model↔Protobuf 转换
-└── first-openapi1st-web/      # @RestController + Spring Boot 主类（双端口：REST :8080 + gRPC :9090）
+├── first-openapi1st-spec/     # OpenAPI spec 模块（域级拆分 + 预打包的完整 YAML）
+├── first-openapi1st-api/      # 从 spec 生成 Java 接口 + Model（openapi-generator）
+├── first-openapi1st-service/  # 业务逻辑层（使用生成的 Model 类型）
+└── first-openapi1st-web/      # @RestController + Spring Boot 主类（HTTP :8080）
 ```
 
-## 测试
+### Spec 模块结构
+
+```
+first-openapi1st-spec/
+├── dist/openapi-full.yaml     # 预打包的完整 spec（所有 $ref 已解析，无需 Node.js）
+├── domains/                   # 按业务域拆分的源文件（开发时 AI 生成到这里）
+│   ├── pet/
+│   ├── user/
+│   └── store/
+├── components/                # 跨域共享的 schema/parameters
+├── prompts/                   # AI 生成 spec 的 prompt 模板
+└── scripts/                   # bundle/validate/publish 脚本（CI 使用）
+```
+
+## 构建和运行
 
 ```shell
-# 编译、启动
+# Step 1: 先将 spec 模块 install 到本地 Maven 仓库（独立模块，不在 reactor 内）
+cd first-openapi1st-spec
+mvn clean install
+cd ..
+
+# Step 2: 编译主项目（api 模块从本地 Maven 仓库拉取 spec yaml）
 mvn clean install -DskipTests
+
+# Step 3: 启动 HTTP 服务
 mvn -pl first-openapi1st-web spring-boot:run
+```
 
+> **注意**：`first-openapi1st-spec` 是独立的 Maven 模块，模拟实际场景中的独立 spec 仓库。
+> 修改 spec 后需重新 `mvn install` 到本地仓库，主项目才能获取到最新版本。
 
-# REST 测试
+## REST 测试
 
-# 1. 根据 ID 查询宠物
-curl -s http://localhost:8080/pet/1 | jq
-
-# 2. 根据状态查询宠物
-curl -s "http://localhost:8080/pet/findByStatus?status=available" | jq
-
-# 3. 查询不存在的宠物（验证默认返回）
-curl -s http://localhost:8080/pet/999 | jq
-
-# 4. 添加宠物（未实现，预期 500 UnsupportedOperationException）
-curl -s -X POST http://localhost:8080/pet \
-  -H "Content-Type: application/json" \
-  -d '{"id":10,"name":"fido","status":"available","photoUrls":["url1"]}' \
-  -w "\nHTTP_STATUS: %{http_code}\n"
-
-# 5. 删除宠物（未实现，预期 500 UnsupportedOperationException）
-curl -s -X DELETE http://localhost:8080/pet/1 \
-  -w "\nHTTP_STATUS: %{http_code}\n"
-
-
-# gRPC 测试
-
-# 列出所有 gRPC 服务
-grpcurl -plaintext localhost:9090 list
+```shell
+# 查询宠物列表（带分页）
+curl -s "http://localhost:8080/pets?pageNum=1&pageSize=10" | jq
 
 # 根据 ID 查询宠物
-grpcurl -plaintext -d '{"pet_id":42}' localhost:9090 petstore.PetService/GetPetById
+curl -s http://localhost:8080/pets/1 | jq
 
-# 根据状态查询宠物
-grpcurl -plaintext -d '{"status":["available"]}' localhost:9090 petstore.PetService/FindPetsByStatus
+# 根据状态过滤
+curl -s "http://localhost:8080/pets?status=available" | jq
 ```
 
+## 关联项目
 
-## OpenAPI → .proto 自动生成工具调研
+gRPC proto-first 演示已独立为 [`first-grpc-proto1st`](../first-grpc-proto1st/)：
+- 以 `.proto` 文件为 API 契约
+- 服务层直接使用 proto 生成的类型（无 Model 转换）
+- gRPC Server 运行在 port 9090
 
-本项目的 .proto 文件（`first-openapi1st-proto/src/main/proto/petstore.proto`）是手写的，提交在 git 仓库中。
-以下是对"能否从 OpenAPI spec 自动生成 .proto"这一问题的调研结论。
+## Spec 同步工作流（设计方案）
 
-### 可选工具对比
+详见 `first-openapi1st-spec/README.md`，核心流程：
 
-| 工具 | 维护者 | 方向 | 现状 |
-|------|--------|------|------|
-| [openapi-generator `protobuf-schema`](https://openapi-generator.tech/docs/generators/protobuf-schema) | OpenAPI Generator 社区 | OpenAPI → .proto | Beta，有功能性 bug（见下文） |
-| [gnostic](https://github.com/google/gnostic) + gnostic-grpc | Google | OpenAPI → protobuf 描述 | 核心库活跃，但 gnostic-grpc 子项目实验性质，更新很少 |
-| [openapi2proto](https://github.com/NYTimes/openapi2proto) | NYTimes | OpenAPI → .proto | 基本停更（最后实质性提交 ~2020 年） |
-| [protoc-gen-openapi](https://github.com/google/gnostic/tree/main/cmd/protoc-gen-openapi) | Google | .proto → OpenAPI | 活跃，但方向相反 |
-| [gRPC-Gateway](https://github.com/grpc-ecosystem/grpc-gateway) | 社区 | .proto → REST proxy + OpenAPI | 活跃，但方向相反 |
-
-### openapi-generator `protobuf-schema` 生成器实测
-
-使用 openapi-generator 7.22.0 的 `protobuf-schema` 生成器对 Petstore swagger.json 进行了实测。
-
-**配置：**
-```json
-{
-  "startEnumsWithUnspecified": true,
-  "numberedFieldNumberList": true
-}
+```
+需求 + 交互图 → AI 生成域 spec → bundle + lint → 发布 Maven artifact
+                                                      ↓
+                              后端 pom.xml 引用 spec 版本 → 生成 Java 接口 → 实现
 ```
 
-**可用的部分：**
-- Service 定义完整（8 个 RPC 方法全部生成）
-- Request message 结构合理（路径参数、查询参数正确映射为字段）
-- 字段编号顺序正确（需开启 `numberedFieldNumberList`，否则字段编号是 hash 值）
-- 枚举有 UNSPECIFIED 零值（需开启 `startEnumsWithUnspecified`）
+### 多需求并行开发
 
-**存在的问题：**
-
-| 问题 | 具体表现 | 严重程度 |
-|------|---------|---------|
-| 列表响应丢失 `repeated` | `FindPetsByStatusResponse` 中 `Pet pet_200 = 1` 应为 `repeated Pet`，丢失列表语义 | 功能性 bug |
-| 枚举字段未使用枚举类型 | `Pet.status` 定义了 `Status` 枚举但字段类型是 `string` | 类型安全缺失 |
-| Response 用 oneof 包装错误码 | `oneof response { Pet pet_200 = 1; Empty empty_400 = 2; }` | 不符合 gRPC 惯例（应使用 `google.rpc.Status`） |
-| 不支持 schema 组合 | `allOf`/`anyOf`/`oneOf`/`not` 均不支持 | 复杂 spec 无法使用 |
-
-### 结论
-
-**目前没有生产级的、持续维护的 OpenAPI → .proto 自动生成工具。**
-
-根本原因是 OpenAPI（REST 语义：HTTP method + path + query/header params）和 gRPC（RPC 语义：service + method + request/response message）之间的映射不是自然的 1:1 关系。行业实际做法通常是**反方向**：以 .proto 为源，通过 gRPC-Gateway 或 protoc-gen-openapi 生成 OpenAPI spec。
-
-**本项目采用的方案：** 手写 .proto，提交 git，OpenAPI spec 变更时手动同步并 diff 审查。这是当前最可靠的做法。
+- 不同域的变更：改不同文件，git merge 无冲突
+- 同域冲突：先合先赢，第二个需求 rebase 后让 AI 重生成
+- 火车发布：feature 分支合入 release 分支 → CI bundle → 预发验证 → 合入 main

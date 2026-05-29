@@ -1,0 +1,25 @@
+PageRequest:
+  type: object
+  properties:
+    pageNum:
+      type: integer
+      minimum: 1
+      default: 1
+    pageSize:
+      type: integer
+      minimum: 1
+      maximum: 100
+      default: 20
+
+PageMeta:
+  type: object
+  properties:
+    pageNum:
+      type: integer
+    pageSize:
+      type: integer
+    totalCount:
+      type: integer
+      format: int64
+    totalPages:
+      type: integer

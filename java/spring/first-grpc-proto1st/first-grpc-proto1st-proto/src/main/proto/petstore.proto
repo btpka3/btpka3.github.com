@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package petstore;
+
+option java_package = "com.github.btpka3.firstgrpcproto1st.proto";
+option java_multiple_files = true;
+option java_outer_classname = "PetstoreProto";
+
+message Category {
+  int64 id = 1;
+  string name = 2;
+}
+
+message Tag {
+  int64 id = 1;
+  string name = 2;
+}
+
+enum PetStatus {
+  PET_STATUS_UNSPECIFIED = 0;
+  PET_STATUS_AVAILABLE = 1;
+  PET_STATUS_PENDING = 2;
+  PET_STATUS_SOLD = 3;
+}
+
+message Pet {
+  int64 id = 1;
+  Category category = 2;
+  string name = 3;
+  repeated string photo_urls = 4;
+  repeated Tag tags = 5;
+  PetStatus status = 6;
+}
+
+message GetPetByIdRequest {
+  int64 pet_id = 1;
+}
+
+message FindPetsByStatusRequest {
+  repeated string status = 1;
+}
+
+message FindPetsByStatusResponse {
+  repeated Pet pets = 1;
+}
+
+service PetService {
+  rpc GetPetById (GetPetByIdRequest) returns (Pet);
+  rpc FindPetsByStatus (FindPetsByStatusRequest) returns (FindPetsByStatusResponse);
+}

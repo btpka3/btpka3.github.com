@@ -1,0 +1,51 @@
+OrderStatus:
+  type: string
+  enum:
+    - placed
+    - approved
+    - delivered
+    - cancelled
+
+Order:
+  type: object
+  required:
+    - petId
+    - quantity
+  properties:
+    id:
+      $ref: '../../components/schemas/common.yaml#/ResourceId'
+    petId:
+      $ref: '../../components/schemas/common.yaml#/ResourceId'
+    userId:
+      $ref: '../../components/schemas/common.yaml#/ResourceId'
+    quantity:
+      type: integer
+      minimum: 1
+    status:
+      $ref: '#/OrderStatus'
+    shipDate:
+      $ref: '../../components/schemas/common.yaml#/Timestamp'
+    createdAt:
+      $ref: '../../components/schemas/common.yaml#/Timestamp'
+
+OrderListResponse:
+  type: object
+  properties:
+    data:
+      type: array
+      items:
+        $ref: '#/Order'
+    page:
+      $ref: '../../components/schemas/pagination.yaml#/PageMeta'
+
+PlaceOrderRequest:
+  type: object
+  required:
+    - petId
+    - quantity
+  properties:
+    petId:
+      $ref: '../../components/schemas/common.yaml#/ResourceId'
+    quantity:
+      type: integer
+      minimum: 1

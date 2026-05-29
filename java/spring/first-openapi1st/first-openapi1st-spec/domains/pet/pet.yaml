@@ -1,0 +1,128 @@
+paths:
+  /pets:
+    get:
+      operationId: listPets
+      summary: List pets with pagination and filtering
+      tags: [pet]
+      parameters:
+        - $ref: '../../components/parameters/common-params.yaml#/PageNum'
+        - $ref: '../../components/parameters/common-params.yaml#/PageSize'
+        - name: status
+          in: query
+          required: false
+          schema:
+            $ref: './models.yaml#/PetStatus'
+        - name: categoryId
+          in: query
+          required: false
+          schema:
+            $ref: '../../components/schemas/common.yaml#/ResourceId'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: './models.yaml#/PetListResponse'
+        '400':
+          description: Invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '../../components/schemas/error.yaml#/ErrorResponse'
+    post:
+      operationId: createPet
+      summary: Create a new pet
+      tags: [pet]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: './models.yaml#/CreatePetRequest'
+      responses:
+        '201':
+          description: Pet created
+          content:
+            application/json:
+              schema:
+                $ref: './models.yaml#/Pet'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '../../components/schemas/error.yaml#/ErrorResponse'
+
+  /pets/{petId}:
+    get:
+      operationId: getPetById
+      summary: Get a pet by ID
+      tags: [pet]
+      parameters:
+        - name: petId
+          in: path
+          required: true
+          schema:
+            $ref: '../../components/schemas/common.yaml#/ResourceId'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: './models.yaml#/Pet'
+        '404':
+          description: Pet not found
+          content:
+            application/json:
+              schema:
+                $ref: '../../components/schemas/error.yaml#/ErrorResponse'
+    put:
+      operationId: updatePet
+      summary: Update an existing pet
+      tags: [pet]
+      parameters:
+        - name: petId
+          in: path
+          required: true
+          schema:
+            $ref: '../../components/schemas/common.yaml#/ResourceId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: './models.yaml#/UpdatePetRequest'
+      responses:
+        '200':
+          description: Pet updated
+          content:
+            application/json:
+              schema:
+                $ref: './models.yaml#/Pet'
+        '404':
+          description: Pet not found
+          content:
+            application/json:
+              schema:
+                $ref: '../../components/schemas/error.yaml#/ErrorResponse'
+    delete:
+      operationId: deletePet
+      summary: Delete a pet
+      tags: [pet]
+      parameters:
+        - name: petId
+          in: path
+          required: true
+          schema:
+            $ref: '../../components/schemas/common.yaml#/ResourceId'
+      responses:
+        '204':
+          description: Pet deleted
+        '404':
+          description: Pet not found
+          content:
+            application/json:
+              schema:
+                $ref: '../../components/schemas/error.yaml#/ErrorResponse'

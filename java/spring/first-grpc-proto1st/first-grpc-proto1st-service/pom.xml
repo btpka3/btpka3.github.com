@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.github.btpka3</groupId>
+        <artifactId>first-grpc-proto1st</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>first-grpc-proto1st-service</artifactId>
+    <name>first-grpc-proto1st-service</name>
+    <description>Service layer — uses proto-generated types directly as domain model</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.github.btpka3</groupId>
+            <artifactId>first-grpc-proto1st-proto</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+</project>

@@ -1,0 +1,57 @@
+UserStatus:
+  type: string
+  enum:
+    - active
+    - inactive
+    - banned
+
+User:
+  type: object
+  required:
+    - username
+    - email
+  properties:
+    id:
+      $ref: '../../components/schemas/common.yaml#/ResourceId'
+    username:
+      type: string
+      minLength: 3
+      maxLength: 50
+      example: "zhangsan"
+    email:
+      type: string
+      format: email
+    phone:
+      type: string
+      example: "13800138000"
+    status:
+      $ref: '#/UserStatus'
+    createdAt:
+      $ref: '../../components/schemas/common.yaml#/Timestamp'
+
+UserListResponse:
+  type: object
+  properties:
+    data:
+      type: array
+      items:
+        $ref: '#/User'
+    page:
+      $ref: '../../components/schemas/pagination.yaml#/PageMeta'
+
+CreateUserRequest:
+  type: object
+  required:
+    - username
+    - email
+    - phone
+  properties:
+    username:
+      type: string
+      minLength: 3
+      maxLength: 50
+    email:
+      type: string
+      format: email
+    phone:
+      type: string

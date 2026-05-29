@@ -1,13 +1,13 @@
 package com.github.btpka3.firstopenapi1st.controller;
 
 import com.github.btpka3.firstopenapi1st.api.PetApi;
-import com.github.btpka3.firstopenapi1st.model.ModelApiResponse;
+import com.github.btpka3.firstopenapi1st.model.CreatePetRequest;
 import com.github.btpka3.firstopenapi1st.model.Pet;
+import com.github.btpka3.firstopenapi1st.model.PetListResponse;
+import com.github.btpka3.firstopenapi1st.model.PetStatus;
+import com.github.btpka3.firstopenapi1st.model.UpdatePetRequest;
 import com.github.btpka3.firstopenapi1st.service.PetService;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 @RestController
 public class PetController implements PetApi {
@@ -24,37 +24,22 @@ public class PetController implements PetApi {
     }
 
     @Override
-    public List<Pet> findPetsByStatus(List<String> status) {
-        return petService.findPetsByStatus(status);
+    public PetListResponse listPets(Integer pageNum, Integer pageSize, PetStatus status, Long categoryId) {
+        return petService.listPets(pageNum, pageSize, status, categoryId);
     }
 
     @Override
-    public void addPet(Pet body) {
+    public Pet createPet(CreatePetRequest createPetRequest) {
         throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override
-    public void deletePet(Long petId, String apiKey) {
+    public Pet updatePet(Long petId, UpdatePetRequest updatePetRequest) {
         throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override
-    public List<Pet> findPetsByTags(List<String> tags) {
-        throw new UnsupportedOperationException("Not implemented");
-    }
-
-    @Override
-    public void updatePet(Pet body) {
-        throw new UnsupportedOperationException("Not implemented");
-    }
-
-    @Override
-    public void updatePetWithForm(Long petId, String name, String status) {
-        throw new UnsupportedOperationException("Not implemented");
-    }
-
-    @Override
-    public ModelApiResponse uploadFile(Long petId, String additionalMetadata, MultipartFile file) {
+    public void deletePet(Long petId) {
         throw new UnsupportedOperationException("Not implemented");
     }
 }

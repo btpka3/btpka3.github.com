@@ -6,32 +6,28 @@
 
     <parent>
         <groupId>com.github.btpka3</groupId>
-        <artifactId>first-openapi1st</artifactId>
+        <artifactId>first-grpc-proto1st</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>first-openapi1st-web</artifactId>
-    <name>first-openapi1st-web</name>
-    <description>OpenAPI spec-first REST application</description>
+    <artifactId>first-grpc-proto1st-web</artifactId>
+    <name>first-grpc-proto1st-web</name>
+    <description>Spring Boot application — gRPC server only (no HTTP servlet)</description>
 
     <dependencies>
         <dependency>
             <groupId>com.github.btpka3</groupId>
-            <artifactId>first-openapi1st-api</artifactId>
+            <artifactId>first-grpc-proto1st-service</artifactId>
         </dependency>
         <dependency>
             <groupId>com.github.btpka3</groupId>
-            <artifactId>first-openapi1st-service</artifactId>
+            <artifactId>first-grpc-proto1st-proto</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>net.devh</groupId>
+            <artifactId>grpc-server-spring-boot-starter</artifactId>
+            <version>${grpc-spring-boot-starter.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-validation</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>

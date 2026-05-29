@@ -1,0 +1,46 @@
+# This is the entry point for bundling.
+# It references openapi-base.yaml and all domain specs via $ref.
+# CI runs `redocly bundle` to resolve all $ref into a single dist/openapi-full.yaml.
+
+openapi: 3.1.0
+
+info:
+  $ref: './openapi-base.yaml#/info'
+
+servers:
+  - $ref: './openapi-base.yaml#/servers/0'
+  - $ref: './openapi-base.yaml#/servers/1'
+
+tags:
+  - $ref: './openapi-base.yaml#/tags/0'
+  - $ref: './openapi-base.yaml#/tags/1'
+  - $ref: './openapi-base.yaml#/tags/2'
+
+paths:
+  # --- Pet domain ---
+  /pets:
+    $ref: './domains/pet/pet.yaml#/paths/~1pets'
+  /pets/{petId}:
+    $ref: './domains/pet/pet.yaml#/paths/~1pets~1%7BpetId%7D'
+
+  # --- User domain ---
+  /users:
+    $ref: './domains/user/user.yaml#/paths/~1users'
+  /users/{userId}:
+    $ref: './domains/user/user.yaml#/paths/~1users~1%7BuserId%7D'
+
+  # --- Store domain ---
+  /store/orders:
+    $ref: './domains/store/store.yaml#/paths/~1store~1orders'
+  /store/orders/{orderId}:
+    $ref: './domains/store/store.yaml#/paths/~1store~1orders~1%7BorderId%7D'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      $ref: './components/security-schemes.yaml#/bearerAuth'
+    apiKey:
+      $ref: './components/security-schemes.yaml#/apiKey'
+
+security:
+  - bearerAuth: []

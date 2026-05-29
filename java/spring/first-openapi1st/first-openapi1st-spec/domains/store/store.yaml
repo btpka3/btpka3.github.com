@@ -1,0 +1,69 @@
+paths:
+  /store/orders:
+    get:
+      operationId: listOrders
+      summary: List orders for current user
+      tags: [store]
+      parameters:
+        - $ref: '../../components/parameters/common-params.yaml#/PageNum'
+        - $ref: '../../components/parameters/common-params.yaml#/PageSize'
+        - name: status
+          in: query
+          required: false
+          schema:
+            $ref: './models.yaml#/OrderStatus'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: './models.yaml#/OrderListResponse'
+    post:
+      operationId: placeOrder
+      summary: Place a new order
+      tags: [store]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: './models.yaml#/PlaceOrderRequest'
+      responses:
+        '201':
+          description: Order placed
+          content:
+            application/json:
+              schema:
+                $ref: './models.yaml#/Order'
+        '400':
+          description: Invalid order (pet not available, etc.)
+          content:
+            application/json:
+              schema:
+                $ref: '../../components/schemas/error.yaml#/ErrorResponse'
+
+  /store/orders/{orderId}:
+    get:
+      operationId: getOrderById
+      summary: Get order by ID
+      tags: [store]
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            $ref: '../../components/schemas/common.yaml#/ResourceId'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: './models.yaml#/Order'
+        '404':
+          description: Order not found
+          content:
+            application/json:
+              schema:
+                $ref: '../../components/schemas/error.yaml#/ErrorResponse'

@@ -1,0 +1,30 @@
+ErrorResponse:
+  type: object
+  required:
+    - code
+    - message
+  properties:
+    code:
+      type: string
+      description: Business error code
+      example: "PET_NOT_FOUND"
+    message:
+      type: string
+      example: "Pet with id 123 not found"
+    traceId:
+      type: string
+      format: uuid
+    fieldErrors:
+      type: array
+      items:
+        $ref: '#/FieldError'
+
+FieldError:
+  type: object
+  properties:
+    field:
+      type: string
+      example: "name"
+    message:
+      type: string
+      example: "must not be blank"

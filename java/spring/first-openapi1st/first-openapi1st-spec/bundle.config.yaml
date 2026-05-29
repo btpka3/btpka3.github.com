@@ -1,0 +1,17 @@
+# Redocly bundle configuration
+# Usage: redocly bundle openapi-full.yaml -o dist/openapi-full.yaml
+
+apis:
+  main:
+    root: openapi-full.yaml
+
+rules:
+  no-unresolved-refs: error
+  no-unused-components: warn
+  operation-operationId-unique: error
+  operation-operationId: error
+  path-not-include-query: error
+  tag-description: warn
+
+theme:
+  openapi: {}
