@@ -2,12 +2,16 @@ package me.test;
 
 import org.apache.curator.framework.CuratorFramework;
 import org.junit.jupiter.api.Test;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.zookeeper.ZookeeperProperties;
 import org.springframework.cloud.zookeeper.discovery.dependency.ZookeeperDependencies;
 import org.springframework.cloud.zookeeper.discovery.watcher.DependencyWatcherListener;
 import org.springframework.cloud.zookeeper.serviceregistry.ServiceInstanceRegistration;
 import org.springframework.cloud.zookeeper.serviceregistry.ZookeeperRegistration;
 import org.springframework.cloud.zookeeper.serviceregistry.ZookeeperServiceRegistry;
+
+import java.util.List;
 
 /**
  *
@@ -21,7 +25,7 @@ public class Aaa {
 
     public CuratorFramework curatorFramework() {
         CuratorFramework curator = null;
-        curator.addAuthInfo("digest", "user:password".getBytes());
+        //curator.addAuthInfo("digest", "user:password".getBytes());
 
 
         return curator;
@@ -40,5 +44,10 @@ public class Aaa {
 
         ZookeeperServiceRegistry reg = null;
         reg.register(registration);
+    }
+
+    public void x() {
+        DiscoveryClient discoveryClient = null;
+        List<ServiceInstance> list = discoveryClient.getInstances("STORES");
     }
 }

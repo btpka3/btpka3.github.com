@@ -3,6 +3,9 @@ package me.test.first.nacos;
 import com.alibaba.nacos.api.NacosFactory;
 import com.alibaba.nacos.api.PropertyKeyConst;
 import com.alibaba.nacos.api.config.ConfigService;
+import com.alibaba.nacos.api.naming.NamingFactory;
+import com.alibaba.nacos.api.naming.NamingService;
+import com.alibaba.nacos.api.naming.pojo.Instance;
 import com.alibaba.nacos.common.remote.PayloadRegistry;
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -18,8 +21,8 @@ import java.util.Properties;
  */
 public class ConfigService01 {
 
-        String SERVER_ADDR = "127.0.0.1:8848";
-//    String SERVER_ADDR = "http://nacos.default.svc.cluster.local:8848";
+    String SERVER_ADDR = "127.0.0.1:8848";
+    //    String SERVER_ADDR = "http://nacos.default.svc.cluster.local:8848";
 //    String SERVER_ADDR = "http://11.167.75.235:8848";
     String USERNAME = "";
     String PASSWORD = "";
@@ -61,5 +64,25 @@ public class ConfigService01 {
     public void init() {
         PayloadRegistry.init();
         System.out.println("PayloadRegistry.init() : done.");
+    }
+
+    /**
+     * @see org.springframework.cloud.client.discovery.DiscoveryClient
+     * @see org.springframework.cloud.client.ServiceInstance
+     */
+    @SneakyThrows
+    public void service() {
+        NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
+        // 以下注销请求所造成的结果均一致, 注销分组名为`DEFAULT_GROUP`, 服务名为`nacos.test.service`的实例，实例的ip为`127.0.0.1`, port为`8848`, clusterName为`DEFAULT`.
+        naming.deregisterInstance("nacos.test.service", "127.0.0.1", 8848);
+        naming.deregisterInstance("nacos.test.service", "DEFAULT_GROUP", "127.0.0.1", 8848);
+        naming.deregisterInstance("nacos.test.service", "127.0.0.1", 8848, "DEFAULT");
+        naming.deregisterInstance("nacos.test.service", "DEFAULT_GROUP", "127.0.0.1", 8848, "DEFAULT");
+        Instance instance = new Instance();
+        instance.setIp("127.0.0.1");
+        instance.setPort(8848);
+        instance.setClusterName("DEFAULT");
+        naming.deregisterInstance("nacos.test.service", instance);
+        naming.deregisterInstance("nacos.test.service", "DEFAULT_GROUP", instance);
     }
 }

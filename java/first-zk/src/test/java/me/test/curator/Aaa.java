@@ -5,8 +5,11 @@ import org.apache.curator.CuratorZookeeperClient;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.RetryNTimes;
+import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.ZooKeeper;
 import org.apache.zookeeper.client.ZKClientConfig;
+
+import java.nio.charset.StandardCharsets;
 
 /**
  *
@@ -28,6 +31,13 @@ public class Aaa {
                 // etc. etc.
                 .build();
         curator.start();
+
+        byte[] bytes = "Hello world".getBytes(StandardCharsets.UTF_8);
+        curator
+                .create()
+                .creatingParentsIfNeeded()
+                .withMode(CreateMode.EPHEMERAL)
+                .forPath("/aaa/bbb", bytes);
 
         System.out.println("====== CuratorFramework 启动柱状态 = " + curator.getState().name());
         // CuratorFramework => zooKeeper

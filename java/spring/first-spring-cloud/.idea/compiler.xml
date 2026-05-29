@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="17">
+    <bytecodeTargetLevel target="21">
       <module name="first-spring-cloud.sc-config-zk" target="21" />
       <module name="first-spring-cloud.sc-config-zk.main" target="21" />
       <module name="first-spring-cloud.sc-config-zk.test" target="21" />
-      <module name="first-spring-cloud.sc-zookeeper" target="21" />
-      <module name="first-spring-cloud.sc-zookeeper.main" target="21" />
-      <module name="first-spring-cloud.sc-zookeeper.test" target="21" />
       <module name="sc-config-client_main" target="1.8" />
       <module name="sc-config-client_test" target="1.8" />
       <module name="sc-config-consul_main" target="1.8" />

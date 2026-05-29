@@ -32,9 +32,16 @@ dependencies {
     // 了解spring loader 的相关类型
     testImplementation 'org.springframework.boot:spring-boot-loader'
 
+    implementation platform("org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}")
+
 //    api platform(project(":platform"))
     // implementation(project(":lib"))
     implementation 'org.apache.commons:commons-text:1.12.0'
+
+    implementation 'org.springframework.cloud:spring-cloud-starter-config'
+    implementation("com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:2023.0.3.3")
+    implementation("com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:2023.0.3.3")
+    implementation 'com.alibaba.nacos:nacos-spring-context:2.1.1'
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-tomcat'

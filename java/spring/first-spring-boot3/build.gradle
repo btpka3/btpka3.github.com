@@ -36,6 +36,11 @@ dependencies {
     implementation platform("org.springframework.shell:spring-shell-dependencies:${springShellVersion}")
     implementation platform("org.a2aproject.sdk:a2a-java-sdk-bom:1.0.0.Beta1")
     implementation platform('com.github.docker-java:docker-java-bom:3.7.1')
+    implementation platform('org.springdoc:springdoc-openapi-bom:2.8.17')
+
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-api'
+    implementation 'org.springdoc:springdoc-openapi-starter-webflux-api'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui'
 
     //implementation "org.springframework.experimental.ai:spring-ai-openai-spring-boot-starter:${springAiVersion}"
     //implementation "com.alibaba.cloud.ai:spring-ai-alibaba-starter:${springAiAlibabaVersion}"
