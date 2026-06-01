@@ -18,17 +18,7 @@ bin
 *.ipr
 *.iws
 *.swp
-# .idea
-**/.idea/shelf/
-**/.idea/workspace.xml
-**/.idea/httpRequests/
-**/.idea/dataSources/
-**/.idea/dataSources.local.xml
-**/.idea/a.*
-**/.idea/b.*
-**/.idea/c.*
-**/.idea/sonarlint/
-**/.idea/libraries/
+.idea
 
 .DS_Store
 target-eclipse
