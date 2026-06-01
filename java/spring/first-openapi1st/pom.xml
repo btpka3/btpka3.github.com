@@ -16,18 +16,16 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>first-openapi1st</name>
-    <description>Demo: OpenAPI spec-first with REST + gRPC dual protocol</description>
+    <description>Demo: OpenAPI spec-first REST application</description>
 
     <modules>
-        <module>first-openapi1st-api</module>
         <module>first-openapi1st-service</module>
         <module>first-openapi1st-web</module>
     </modules>
 
     <properties>
         <java.version>21</java.version>
-        <openapi-generator.version>7.22.0</openapi-generator.version>
-        <swagger-annotations.version>2.2.50</swagger-annotations.version>
+        <first-openapi1st-api.version>0.0.1-SNAPSHOT</first-openapi1st-api.version>
     </properties>
 
     <dependencyManagement>
@@ -35,7 +33,7 @@
             <dependency>
                 <groupId>com.github.btpka3</groupId>
                 <artifactId>first-openapi1st-api</artifactId>
-                <version>${project.version}</version>
+                <version>${first-openapi1st-api.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.github.btpka3</groupId>

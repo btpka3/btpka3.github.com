@@ -5,20 +5,20 @@ paths:
       summary: List orders for current user
       tags: [store]
       parameters:
-        - $ref: '../../components/parameters/common-params.yaml#/PageNum'
-        - $ref: '../../components/parameters/common-params.yaml#/PageSize'
+        - $ref: '../../openapi-full.yaml#/components/parameters/PageNum'
+        - $ref: '../../openapi-full.yaml#/components/parameters/PageSize'
         - name: status
           in: query
           required: false
           schema:
-            $ref: './models.yaml#/OrderStatus'
+            $ref: '../../openapi-full.yaml#/components/schemas/OrderStatus'
       responses:
         '200':
           description: Successful response
           content:
             application/json:
               schema:
-                $ref: './models.yaml#/OrderListResponse'
+                $ref: '../../openapi-full.yaml#/components/schemas/OrderListResponse'
     post:
       operationId: placeOrder
       summary: Place a new order
@@ -28,20 +28,20 @@ paths:
         content:
           application/json:
             schema:
-              $ref: './models.yaml#/PlaceOrderRequest'
+              $ref: '../../openapi-full.yaml#/components/schemas/PlaceOrderRequest'
       responses:
         '201':
           description: Order placed
           content:
             application/json:
               schema:
-                $ref: './models.yaml#/Order'
+                $ref: '../../openapi-full.yaml#/components/schemas/Order'
         '400':
-          description: Invalid order (pet not available, etc.)
+          description: Invalid order
           content:
             application/json:
               schema:
-                $ref: '../../components/schemas/error.yaml#/ErrorResponse'
+                $ref: '../../openapi-full.yaml#/components/schemas/ErrorResponse'
 
   /store/orders/{orderId}:
     get:
@@ -53,17 +53,17 @@ paths:
           in: path
           required: true
           schema:
-            $ref: '../../components/schemas/common.yaml#/ResourceId'
+            $ref: '../../openapi-full.yaml#/components/schemas/ResourceId'
       responses:
         '200':
           description: Successful response
           content:
             application/json:
               schema:
-                $ref: './models.yaml#/Order'
+                $ref: '../../openapi-full.yaml#/components/schemas/Order'
         '404':
           description: Order not found
           content:
             application/json:
               schema:
-                $ref: '../../components/schemas/error.yaml#/ErrorResponse'
+                $ref: '../../openapi-full.yaml#/components/schemas/ErrorResponse'

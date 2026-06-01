@@ -5,31 +5,31 @@ paths:
       summary: List pets with pagination and filtering
       tags: [pet]
       parameters:
-        - $ref: '../../components/parameters/common-params.yaml#/PageNum'
-        - $ref: '../../components/parameters/common-params.yaml#/PageSize'
+        - $ref: '../../openapi-full.yaml#/components/parameters/PageNum'
+        - $ref: '../../openapi-full.yaml#/components/parameters/PageSize'
         - name: status
           in: query
           required: false
           schema:
-            $ref: './models.yaml#/PetStatus'
+            $ref: '../../openapi-full.yaml#/components/schemas/PetStatus'
         - name: categoryId
           in: query
           required: false
           schema:
-            $ref: '../../components/schemas/common.yaml#/ResourceId'
+            $ref: '../../openapi-full.yaml#/components/schemas/ResourceId'
       responses:
         '200':
           description: Successful response
           content:
             application/json:
               schema:
-                $ref: './models.yaml#/PetListResponse'
+                $ref: '../../openapi-full.yaml#/components/schemas/PetListResponse'
         '400':
           description: Invalid parameters
           content:
             application/json:
               schema:
-                $ref: '../../components/schemas/error.yaml#/ErrorResponse'
+                $ref: '../../openapi-full.yaml#/components/schemas/ErrorResponse'
     post:
       operationId: createPet
       summary: Create a new pet
@@ -39,20 +39,20 @@ paths:
         content:
           application/json:
             schema:
-              $ref: './models.yaml#/CreatePetRequest'
+              $ref: '../../openapi-full.yaml#/components/schemas/CreatePetRequest'
       responses:
         '201':
           description: Pet created
           content:
             application/json:
               schema:
-                $ref: './models.yaml#/Pet'
+                $ref: '../../openapi-full.yaml#/components/schemas/Pet'
         '422':
           description: Validation error
           content:
             application/json:
               schema:
-                $ref: '../../components/schemas/error.yaml#/ErrorResponse'
+                $ref: '../../openapi-full.yaml#/components/schemas/ErrorResponse'
 
   /pets/{petId}:
     get:
@@ -64,20 +64,20 @@ paths:
           in: path
           required: true
           schema:
-            $ref: '../../components/schemas/common.yaml#/ResourceId'
+            $ref: '../../openapi-full.yaml#/components/schemas/ResourceId'
       responses:
         '200':
           description: Successful response
           content:
             application/json:
               schema:
-                $ref: './models.yaml#/Pet'
+                $ref: '../../openapi-full.yaml#/components/schemas/Pet'
         '404':
           description: Pet not found
           content:
             application/json:
               schema:
-                $ref: '../../components/schemas/error.yaml#/ErrorResponse'
+                $ref: '../../openapi-full.yaml#/components/schemas/ErrorResponse'
     put:
       operationId: updatePet
       summary: Update an existing pet
@@ -87,26 +87,26 @@ paths:
           in: path
           required: true
           schema:
-            $ref: '../../components/schemas/common.yaml#/ResourceId'
+            $ref: '../../openapi-full.yaml#/components/schemas/ResourceId'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: './models.yaml#/UpdatePetRequest'
+              $ref: '../../openapi-full.yaml#/components/schemas/UpdatePetRequest'
       responses:
         '200':
           description: Pet updated
           content:
             application/json:
               schema:
-                $ref: './models.yaml#/Pet'
+                $ref: '../../openapi-full.yaml#/components/schemas/Pet'
         '404':
           description: Pet not found
           content:
             application/json:
               schema:
-                $ref: '../../components/schemas/error.yaml#/ErrorResponse'
+                $ref: '../../openapi-full.yaml#/components/schemas/ErrorResponse'
     delete:
       operationId: deletePet
       summary: Delete a pet
@@ -116,7 +116,7 @@ paths:
           in: path
           required: true
           schema:
-            $ref: '../../components/schemas/common.yaml#/ResourceId'
+            $ref: '../../openapi-full.yaml#/components/schemas/ResourceId'
       responses:
         '204':
           description: Pet deleted
@@ -125,4 +125,4 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '../../components/schemas/error.yaml#/ErrorResponse'
+                $ref: '../../openapi-full.yaml#/components/schemas/ErrorResponse'

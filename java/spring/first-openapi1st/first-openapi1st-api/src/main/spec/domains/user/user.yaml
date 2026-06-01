@@ -5,20 +5,20 @@ paths:
       summary: List users with pagination
       tags: [user]
       parameters:
-        - $ref: '../../components/parameters/common-params.yaml#/PageNum'
-        - $ref: '../../components/parameters/common-params.yaml#/PageSize'
+        - $ref: '../../openapi-full.yaml#/components/parameters/PageNum'
+        - $ref: '../../openapi-full.yaml#/components/parameters/PageSize'
         - name: status
           in: query
           required: false
           schema:
-            $ref: './models.yaml#/UserStatus'
+            $ref: '../../openapi-full.yaml#/components/schemas/UserStatus'
       responses:
         '200':
           description: Successful response
           content:
             application/json:
               schema:
-                $ref: './models.yaml#/UserListResponse'
+                $ref: '../../openapi-full.yaml#/components/schemas/UserListResponse'
     post:
       operationId: createUser
       summary: Create a new user
@@ -28,20 +28,20 @@ paths:
         content:
           application/json:
             schema:
-              $ref: './models.yaml#/CreateUserRequest'
+              $ref: '../../openapi-full.yaml#/components/schemas/CreateUserRequest'
       responses:
         '201':
           description: User created
           content:
             application/json:
               schema:
-                $ref: './models.yaml#/User'
+                $ref: '../../openapi-full.yaml#/components/schemas/User'
         '409':
           description: Username or email already exists
           content:
             application/json:
               schema:
-                $ref: '../../components/schemas/error.yaml#/ErrorResponse'
+                $ref: '../../openapi-full.yaml#/components/schemas/ErrorResponse'
 
   /users/{userId}:
     get:
@@ -53,17 +53,17 @@ paths:
           in: path
           required: true
           schema:
-            $ref: '../../components/schemas/common.yaml#/ResourceId'
+            $ref: '../../openapi-full.yaml#/components/schemas/ResourceId'
       responses:
         '200':
           description: Successful response
           content:
             application/json:
               schema:
-                $ref: './models.yaml#/User'
+                $ref: '../../openapi-full.yaml#/components/schemas/User'
         '404':
           description: User not found
           content:
             application/json:
               schema:
-                $ref: '../../components/schemas/error.yaml#/ErrorResponse'
+                $ref: '../../openapi-full.yaml#/components/schemas/ErrorResponse'

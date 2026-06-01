@@ -1,0 +1,108 @@
+openapi: 3.1.0
+
+info:
+  title: Petstore API
+  description: Spec-first demo — AI-generated, domain-split OpenAPI spec
+  version: 1.0.0
+  contact:
+    name: API Team
+
+servers:
+  - url: https://api.example.com/v1
+    description: Production
+  - url: https://api-staging.example.com/v1
+    description: Staging
+
+security:
+  - bearerAuth: []
+
+tags:
+  - name: pet
+    description: Pet domain
+  - name: user
+    description: User domain
+  - name: store
+    description: Store/Order domain
+
+paths:
+  # --- Pet domain ---
+  /pets:
+    $ref: './domains/pet/pet.yaml#/paths/~1pets'
+  /pets/{petId}:
+    $ref: './domains/pet/pet.yaml#/paths/~1pets~1%7BpetId%7D'
+
+  # --- User domain ---
+  /users:
+    $ref: './domains/user/user.yaml#/paths/~1users'
+  /users/{userId}:
+    $ref: './domains/user/user.yaml#/paths/~1users~1%7BuserId%7D'
+
+  # --- Store domain ---
+  /store/orders:
+    $ref: './domains/store/store.yaml#/paths/~1store~1orders'
+  /store/orders/{orderId}:
+    $ref: './domains/store/store.yaml#/paths/~1store~1orders~1%7BorderId%7D'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      $ref: './components/security-schemes.yaml#/bearerAuth'
+    apiKey:
+      $ref: './components/security-schemes.yaml#/apiKey'
+
+  parameters:
+    PageNum:
+      $ref: './components/parameters/common-params.yaml#/PageNum'
+    PageSize:
+      $ref: './components/parameters/common-params.yaml#/PageSize'
+
+  schemas:
+    # --- Shared schemas ---
+    ResourceId:
+      $ref: './components/schemas/common.yaml#/ResourceId'
+    Timestamp:
+      $ref: './components/schemas/common.yaml#/Timestamp'
+    SortOrder:
+      $ref: './components/schemas/common.yaml#/SortOrder'
+    PageMeta:
+      $ref: './components/schemas/pagination.yaml#/PageMeta'
+    ErrorResponse:
+      $ref: './components/schemas/error.yaml#/ErrorResponse'
+    FieldError:
+      $ref: './components/schemas/error.yaml#/FieldError'
+
+    # --- Pet domain schemas ---
+    PetStatus:
+      $ref: './domains/pet/models.yaml#/PetStatus'
+    Category:
+      $ref: './domains/pet/models.yaml#/Category'
+    Tag:
+      $ref: './domains/pet/models.yaml#/Tag'
+    Pet:
+      $ref: './domains/pet/models.yaml#/Pet'
+    PetListResponse:
+      $ref: './domains/pet/models.yaml#/PetListResponse'
+    CreatePetRequest:
+      $ref: './domains/pet/models.yaml#/CreatePetRequest'
+    UpdatePetRequest:
+      $ref: './domains/pet/models.yaml#/UpdatePetRequest'
+
+    # --- User domain schemas ---
+    UserStatus:
+      $ref: './domains/user/models.yaml#/UserStatus'
+    User:
+      $ref: './domains/user/models.yaml#/User'
+    UserListResponse:
+      $ref: './domains/user/models.yaml#/UserListResponse'
+    CreateUserRequest:
+      $ref: './domains/user/models.yaml#/CreateUserRequest'
+
+    # --- Store domain schemas ---
+    OrderStatus:
+      $ref: './domains/store/models.yaml#/OrderStatus'
+    Order:
+      $ref: './domains/store/models.yaml#/Order'
+    OrderListResponse:
+      $ref: './domains/store/models.yaml#/OrderListResponse'
+    PlaceOrderRequest:
+      $ref: './domains/store/models.yaml#/PlaceOrderRequest'

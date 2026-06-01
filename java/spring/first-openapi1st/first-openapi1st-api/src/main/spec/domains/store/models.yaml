@@ -1,0 +1,51 @@
+OrderStatus:
+  type: string
+  enum:
+    - placed
+    - approved
+    - delivered
+    - cancelled
+
+Order:
+  type: object
+  required:
+    - petId
+    - quantity
+  properties:
+    id:
+      $ref: '../../openapi-full.yaml#/components/schemas/ResourceId'
+    petId:
+      $ref: '../../openapi-full.yaml#/components/schemas/ResourceId'
+    userId:
+      $ref: '../../openapi-full.yaml#/components/schemas/ResourceId'
+    quantity:
+      type: integer
+      minimum: 1
+    status:
+      $ref: '../../openapi-full.yaml#/components/schemas/OrderStatus'
+    shipDate:
+      $ref: '../../openapi-full.yaml#/components/schemas/Timestamp'
+    createdAt:
+      $ref: '../../openapi-full.yaml#/components/schemas/Timestamp'
+
+OrderListResponse:
+  type: object
+  properties:
+    data:
+      type: array
+      items:
+        $ref: '../../openapi-full.yaml#/components/schemas/Order'
+    page:
+      $ref: '../../openapi-full.yaml#/components/schemas/PageMeta'
+
+PlaceOrderRequest:
+  type: object
+  required:
+    - petId
+    - quantity
+  properties:
+    petId:
+      $ref: '../../openapi-full.yaml#/components/schemas/ResourceId'
+    quantity:
+      type: integer
+      minimum: 1

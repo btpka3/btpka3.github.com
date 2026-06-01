@@ -13,18 +13,18 @@
 
 ```
 first-openapi1st/
-├── first-openapi1st-spec/     # OpenAPI spec 模块（域级拆分 + 预打包的完整 YAML）
-├── first-openapi1st-api/      # 从 spec 生成 Java 接口 + Model（openapi-generator）
+├── first-openapi1st-api/      # 独立 Maven 项目：OpenAPI spec + 生成的 Java 接口（发布双 artifact）
 ├── first-openapi1st-service/  # 业务逻辑层（使用生成的 Model 类型）
 └── first-openapi1st-web/      # @RestController + Spring Boot 主类（HTTP :8080）
 ```
 
-### Spec 模块结构
+### first-openapi1st-api（独立项目，不在 reactor 内）
 
 ```
-first-openapi1st-spec/
-├── dist/openapi-full.yaml     # 预打包的完整 spec（所有 $ref 已解析，无需 Node.js）
-├── domains/                   # 按业务域拆分的源文件（开发时 AI 生成到这里）
+first-openapi1st-api/
+├── pom.xml                    # 独立 Maven 项目，packaging=jar
+├── dist/openapi-full.yaml     # 预打包的完整 spec（所有 $ref 已解析）
+├── domains/                   # 按业务域拆分的源文件（AI 生成到这里）
 │   ├── pet/
 │   ├── user/
 │   └── store/
@@ -33,23 +33,29 @@ first-openapi1st-spec/
 └── scripts/                   # bundle/validate/publish 脚本（CI 使用）
 ```
 
+发布两个 Maven artifact：
+- **JAR**（主 artifact）：生成的 Java 接口 + Model，后端直接依赖
+- **YAML**（`classifier=openapi`）：完整 OpenAPI spec，前端/其他语言消费
+
 ## 构建和运行
 
 ```shell
-# Step 1: 先将 spec 模块 install 到本地 Maven 仓库（独立模块，不在 reactor 内）
-cd first-openapi1st-spec
+# Step 1: 构建 api 项目并 install 到本地 Maven 仓库（需要 Node.js）
+cd first-openapi1st-api
 mvn clean install
 cd ..
 
-# Step 2: 编译主项目（api 模块从本地 Maven 仓库拉取 spec yaml）
+# Step 2: 编译并启动主项目
 mvn clean install -DskipTests
-
-# Step 3: 启动 HTTP 服务
 mvn -pl first-openapi1st-web spring-boot:run
 ```
 
-> **注意**：`first-openapi1st-spec` 是独立的 Maven 模块，模拟实际场景中的独立 spec 仓库。
-> 修改 spec 后需重新 `mvn install` 到本地仓库，主项目才能获取到最新版本。
+> **前置条件**：构建 `first-openapi1st-api` 需要 Node.js 环境（用于 `npx @redocly/cli bundle`）。
+> 
+> **注意**：`first-openapi1st-api` 是独立的 Maven 项目（模拟独立 Git 仓库发布），
+> 修改 spec 后需重新 `mvn install`，主项目才能获取到最新版本。
+> 
+> 生成的接口方法带 `default` 实现（返回 HTTP 501），后端服务只需 override 要实现的方法。
 
 ## REST 测试
 

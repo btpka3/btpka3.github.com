@@ -9,19 +9,17 @@ Category:
   type: object
   properties:
     id:
-      $ref: '../../components/schemas/common.yaml#/ResourceId'
+      $ref: '../../openapi-full.yaml#/components/schemas/ResourceId'
     name:
       type: string
-      example: "Dogs"
 
 Tag:
   type: object
   properties:
     id:
-      $ref: '../../components/schemas/common.yaml#/ResourceId'
+      $ref: '../../openapi-full.yaml#/components/schemas/ResourceId'
     name:
       type: string
-      example: "friendly"
 
 Pet:
   type: object
@@ -30,27 +28,26 @@ Pet:
     - status
   properties:
     id:
-      $ref: '../../components/schemas/common.yaml#/ResourceId'
+      $ref: '../../openapi-full.yaml#/components/schemas/ResourceId'
     name:
       type: string
-      example: "Buddy"
     status:
-      $ref: '#/PetStatus'
+      $ref: '../../openapi-full.yaml#/components/schemas/PetStatus'
     category:
-      $ref: '#/Category'
+      $ref: '../../openapi-full.yaml#/components/schemas/Category'
     tags:
       type: array
       items:
-        $ref: '#/Tag'
+        $ref: '../../openapi-full.yaml#/components/schemas/Tag'
     photoUrls:
       type: array
       items:
         type: string
         format: uri
     createdAt:
-      $ref: '../../components/schemas/common.yaml#/Timestamp'
+      $ref: '../../openapi-full.yaml#/components/schemas/Timestamp'
     updatedAt:
-      $ref: '../../components/schemas/common.yaml#/Timestamp'
+      $ref: '../../openapi-full.yaml#/components/schemas/Timestamp'
 
 PetListResponse:
   type: object
@@ -58,9 +55,9 @@ PetListResponse:
     data:
       type: array
       items:
-        $ref: '#/Pet'
+        $ref: '../../openapi-full.yaml#/components/schemas/Pet'
     page:
-      $ref: '../../components/schemas/pagination.yaml#/PageMeta'
+      $ref: '../../openapi-full.yaml#/components/schemas/PageMeta'
 
 CreatePetRequest:
   type: object
@@ -73,13 +70,13 @@ CreatePetRequest:
       minLength: 1
       maxLength: 100
     status:
-      $ref: '#/PetStatus'
+      $ref: '../../openapi-full.yaml#/components/schemas/PetStatus'
     categoryId:
-      $ref: '../../components/schemas/common.yaml#/ResourceId'
+      $ref: '../../openapi-full.yaml#/components/schemas/ResourceId'
     tagIds:
       type: array
       items:
-        $ref: '../../components/schemas/common.yaml#/ResourceId'
+        $ref: '../../openapi-full.yaml#/components/schemas/ResourceId'
     photoUrls:
       type: array
       items:
@@ -94,13 +91,13 @@ UpdatePetRequest:
       minLength: 1
       maxLength: 100
     status:
-      $ref: '#/PetStatus'
+      $ref: '../../openapi-full.yaml#/components/schemas/PetStatus'
     categoryId:
-      $ref: '../../components/schemas/common.yaml#/ResourceId'
+      $ref: '../../openapi-full.yaml#/components/schemas/ResourceId'
     tagIds:
       type: array
       items:
-        $ref: '../../components/schemas/common.yaml#/ResourceId'
+        $ref: '../../openapi-full.yaml#/components/schemas/ResourceId'
     photoUrls:
       type: array
       items:

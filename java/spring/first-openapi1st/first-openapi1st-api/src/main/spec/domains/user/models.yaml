@@ -12,22 +12,20 @@ User:
     - email
   properties:
     id:
-      $ref: '../../components/schemas/common.yaml#/ResourceId'
+      $ref: '../../openapi-full.yaml#/components/schemas/ResourceId'
     username:
       type: string
       minLength: 3
       maxLength: 50
-      example: "zhangsan"
     email:
       type: string
       format: email
     phone:
       type: string
-      example: "13800138000"
     status:
-      $ref: '#/UserStatus'
+      $ref: '../../openapi-full.yaml#/components/schemas/UserStatus'
     createdAt:
-      $ref: '../../components/schemas/common.yaml#/Timestamp'
+      $ref: '../../openapi-full.yaml#/components/schemas/Timestamp'
 
 UserListResponse:
   type: object
@@ -35,9 +33,9 @@ UserListResponse:
     data:
       type: array
       items:
-        $ref: '#/User'
+        $ref: '../../openapi-full.yaml#/components/schemas/User'
     page:
-      $ref: '../../components/schemas/pagination.yaml#/PageMeta'
+      $ref: '../../openapi-full.yaml#/components/schemas/PageMeta'
 
 CreateUserRequest:
   type: object

@@ -5,17 +5,25 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.github.btpka3</groupId>
-        <artifactId>first-openapi1st</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.5.14</version>
+        <relativePath/>
     </parent>
 
+    <groupId>com.github.btpka3</groupId>
     <artifactId>first-openapi1st-api</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
     <name>first-openapi1st-api</name>
-    <description>API contract module - generated interfaces and models from OpenAPI spec</description>
+    <description>OpenAPI spec + generated Java interfaces. Publishes JAR (generated code) + YAML (bundled spec).</description>
 
     <properties>
-        <api-spec.version>0.0.1-SNAPSHOT</api-spec.version>
+        <java.version>21</java.version>
+        <openapi-generator.version>7.22.0</openapi-generator.version>
+        <spec.source>${project.basedir}/src/main/spec/openapi-full.yaml</spec.source>
+        <spec.bundled>${project.build.directory}/dist/openapi-full.yaml</spec.bundled>
     </properties>
 
     <dependencies>
@@ -33,35 +41,33 @@
 
     <build>
         <plugins>
-            <!-- Step 1: Download spec from local Maven repo -->
+            <!-- Step 1: Bundle multi-file spec into single YAML (requires Node.js) -->
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.5.0</version>
                 <executions>
                     <execution>
-                        <id>download-api-spec</id>
+                        <id>bundle-openapi</id>
                         <phase>initialize</phase>
                         <goals>
-                            <goal>copy</goal>
+                            <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>com.github.btpka3</groupId>
-                                    <artifactId>first-openapi1st-spec</artifactId>
-                                    <version>${api-spec.version}</version>
-                                    <type>yaml</type>
-                                    <classifier>openapi</classifier>
-                                    <outputDirectory>${project.build.directory}/specs</outputDirectory>
-                                    <destFileName>openapi-full.yaml</destFileName>
-                                </artifactItem>
-                            </artifactItems>
+                            <executable>npx</executable>
+                            <arguments>
+                                <argument>@redocly/cli</argument>
+                                <argument>bundle</argument>
+                                <argument>${spec.source}</argument>
+                                <argument>-o</argument>
+                                <argument>${spec.bundled}</argument>
+                            </arguments>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
 
-            <!-- Step 2: Generate Java interfaces + models from downloaded spec -->
+            <!-- Step 2: Generate Java interfaces + models from bundled spec -->
             <plugin>
                 <groupId>org.openapitools</groupId>
                 <artifactId>openapi-generator-maven-plugin</artifactId>
@@ -73,7 +79,7 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <inputSpec>${project.build.directory}/specs/openapi-full.yaml</inputSpec>
+                            <inputSpec>${spec.bundled}</inputSpec>
                             <generatorName>spring</generatorName>
                             <apiPackage>com.github.btpka3.firstopenapi1st.api</apiPackage>
                             <modelPackage>com.github.btpka3.firstopenapi1st.model</modelPackage>
@@ -83,9 +89,34 @@
                                 <useTags>true</useTags>
                                 <useResponseEntity>false</useResponseEntity>
                                 <openApiNullable>false</openApiNullable>
-                                <skipDefaultInterface>true</skipDefaultInterface>
+                                <skipDefaultInterface>false</skipDefaultInterface>
                                 <documentationProvider>none</documentationProvider>
                             </configOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Step 3: Attach bundled YAML as additional artifact -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.6.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-spec</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>attach-artifact</goal>
+                        </goals>
+                        <configuration>
+                            <artifacts>
+                                <artifact>
+                                    <file>${spec.bundled}</file>
+                                    <type>yaml</type>
+                                    <classifier>openapi</classifier>
+                                </artifact>
+                            </artifacts>
                         </configuration>
                     </execution>
                 </executions>
