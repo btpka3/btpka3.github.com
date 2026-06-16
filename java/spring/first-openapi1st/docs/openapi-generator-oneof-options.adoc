@@ -1,0 +1,167 @@
+= openapi-generator java 生成器：oneOf 三兄弟配置详解
+:author: 当千
+:revdate: 2026-06-16
+:toc: left
+:toclevels: 2
+:source-highlighter: highlight.js
+
+== 背景
+
+OpenAPI spec 中的 `oneOf` 用于描述"一个字段可以是多种 schema 之一"的多态场景。
+例如：
+
+[source,yaml]
+----
+Payment:
+  oneOf:
+    - $ref: '#/components/schemas/CreditCard'
+    - $ref: '#/components/schemas/BankTransfer'
+----
+
+openapi-generator 的 `generatorName=java` 提供了三个配置选项来控制 `oneOf` 的 Java 代码生成方式。
+
+== 三个选项
+
+=== useOneOfInterfaces
+
+[cols="1,3"]
+|===
+|默认值
+|`false`
+
+|作用
+|为 `oneOf` schema 生成 Java interface，各变体类实现该接口
+|===
+
+启用后，生成器会为 `Payment` 创建一个 interface，`CreditCard` 和 `BankTransfer` 各自实现它：
+
+[source,java]
+----
+public interface Payment {}
+
+public class CreditCard implements Payment {
+    private String cardNumber;
+    private String expiryDate;
+    // ...
+}
+
+public class BankTransfer implements Payment {
+    private String bankCode;
+    private String accountNumber;
+    // ...
+}
+----
+
+不启用时，`Payment` 会被生成一个"大杂烩"类，把所有变体的字段揉在一起。
+
+=== useSealedOneOfInterfaces
+
+[cols="1,3"]
+|===
+|默认值
+|`false`
+
+|前置条件
+|`useOneOfInterfaces=true`，且 Java 版本 >= 17
+
+|作用
+|将 oneOf interface 生成为 Java 17+ 的 `sealed interface`，限定实现类只能是 spec 中声明的那几个
+|===
+
+[source,java]
+----
+public sealed interface Payment permits CreditCard, BankTransfer {}
+
+public final class CreditCard implements Payment { ... }
+public final class BankTransfer implements Payment { ... }
+----
+
+[NOTE]
+====
+Sealed interface 的优势：
+
+* 编译期保证穷举——新增变体时，所有未处理的 `switch` 分支会编译报错
+* 配合 Java 21+ 的 Pattern Matching for switch，可以写出类型安全的分支逻辑：
+
+[source,java]
+----
+String describe(Payment p) {
+    return switch (p) {
+        case CreditCard c  -> "Card: " + c.getCardNumber();
+        case BankTransfer b -> "Bank: " + b.getBankCode();
+    };  // 无需 default 分支，编译器已知穷举
+}
+----
+====
+
+=== useDeductionForOneOfInterfaces
+
+[cols="1,3"]
+|===
+|默认值
+|`false`
+
+|前置条件
+|`useOneOfInterfaces=true`
+
+|作用
+|在 oneOf interface 上添加 `@JsonTypeInfo(use = Id.DEDUCTION)` 注解，让 Jackson 在无 discriminator 字段时，根据 JSON 中的字段组合自动推断具体类型
+|===
+
+生成的代码：
+
+[source,java]
+----
+@JsonTypeInfo(use = JsonTypeInfo.Id.DEDUCTION)
+@JsonSubTypes({
+    @JsonSubTypes.Type(CreditCard.class),
+    @JsonSubTypes.Type(BankTransfer.class)
+})
+public sealed interface Payment permits CreditCard, BankTransfer {}
+----
+
+反序列化行为：
+
+[source,json]
+----
+{ "cardNumber": "4111...", "expiryDate": "12/25" }
+----
+
+Jackson 看到 `cardNumber` 字段，推断这是 `CreditCard` 类型，自动反序列化为 `CreditCard` 实例。
+
+[WARNING]
+====
+Deduction 依赖各变体的字段集合互不重叠。如果两个变体有完全相同的字段，Jackson 无法区分，会退化为选择第一个匹配的变体。
+对于有明确 discriminator 的场景（spec 中定义了 `discriminator.propertyName`），应优先使用 `useOneOfDiscriminatorLookup=true`，比 deduction 更可靠。
+====
+
+== 组合建议
+
+[cols="1,1,1,3"]
+|===
+|oneOf 场景 |useOneOf |useSealed |useDeduction |说明
+
+|无 oneOf
+|—
+|—
+|—
+|spec 中没有多态 schema，三个都保持默认 false
+
+|有 oneOf，无 discriminator
+|true
+|true (Java 17+)
+|true
+|三件套全开，sealed + deduction 组合
+
+|有 oneOf，有 discriminator
+|true
+|true (Java 17+)
+|false
+|用 `useOneOfDiscriminatorLookup=true` 替代 deduction
+
+|Java < 17
+|true
+|false
+|true 或 false
+|sealed interface 需要 17+，其他正常配置
+|===

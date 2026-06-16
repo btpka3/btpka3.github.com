@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.5.14</version>
+        <relativePath/>
+    </parent>
+
+    <groupId>com.github.btpka3</groupId>
+    <artifactId>first-openapi1st-client-api</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>first-openapi1st-client-api</name>
+    <description>
+        OpenAPI client SDK: generated API classes (PetApi/StoreApi/UserApi) + models + ApiClient infrastructure.
+        Uses JDK 11+ java.net.http.HttpClient (library=native). Zero third-party HTTP dependencies.
+    </description>
+
+    <properties>
+        <java.version>21</java.version>
+        <openapi-generator.version>7.22.0</openapi-generator.version>
+        <spec.source>${project.basedir}/../../first-openapi1st-api/src/main/spec/openapi-full.yaml</spec.source>
+        <spec.bundled>${project.build.directory}/dist/openapi-full.yaml</spec.bundled>
+    </properties>
+
+    <dependencies>
+        <!-- Jackson for JSON serialization (used by generated ApiClient + model classes) -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+        </dependency>
+
+        <!-- @Generated annotation on generated classes -->
+        <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>javax.annotation-api</artifactId>
+            <version>1.3.2</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- @Nullable / @Nonnull used by generated code -->
+        <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>jsr305</artifactId>
+            <version>3.0.2</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Test -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Step 1: Bundle multi-file spec into single YAML (requires Node.js + @redocly/cli) -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.5.0</version>
+                <executions>
+                    <execution>
+                        <id>bundle-openapi</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>npx</executable>
+                            <arguments>
+                                <argument>@redocly/cli</argument>
+                                <argument>bundle</argument>
+                                <argument>${spec.source}</argument>
+                                <argument>-o</argument>
+                                <argument>${spec.bundled}</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!--
+                Step 2: Generate Java client SDK from bundled spec.
+                - generatorName=java: produces concrete API classes (PetApi, StoreApi, UserApi)
+                - library=native: uses JDK 11+ java.net.http.HttpClient, zero third-party HTTP deps
+                Note: interfaceOnly=true has no effect for generatorName=java (unlike spring generator).
+                The generated code is the full client: API classes + models + ApiClient infrastructure.
+            -->
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>${openapi-generator.version}</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${spec.bundled}</inputSpec>
+                            <generatorName>java</generatorName>
+                            <library>native</library>
+                            <apiPackage>com.github.btpka3.firstopenapi1st.client.api</apiPackage>
+                            <modelPackage>com.github.btpka3.firstopenapi1st.client.model</modelPackage>
+                            <invokerPackage>com.github.btpka3.firstopenapi1st.client</invokerPackage>
+                            <!-- Skip generated test stubs at plugin level -->
+                            <generateApiTests>false</generateApiTests>
+                            <generateModelTests>false</generateModelTests>
+                            <configOptions>
+                                <javaVersion>11</javaVersion>
+                                <useRuntimeException>true</useRuntimeException>
+                                <openApiNullable>false</openApiNullable>
+                                <documentationProvider>none</documentationProvider>
+                                <dateLibrary>java8</dateLibrary>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Step 3: Attach bundled YAML as additional artifact -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.6.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-spec</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>attach-artifact</goal>
+                        </goals>
+                        <configuration>
+                            <artifacts>
+                                <artifact>
+                                    <file>${spec.bundled}</file>
+                                    <type>yaml</type>
+                                    <classifier>openapi</classifier>
+                                </artifact>
+                            </artifacts>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
