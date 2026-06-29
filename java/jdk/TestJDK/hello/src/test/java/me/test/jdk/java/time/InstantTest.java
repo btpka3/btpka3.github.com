@@ -1,7 +1,5 @@
 package me.test.jdk.java.time;
 
-import static java.time.temporal.ChronoUnit.DAYS;
-
 import java.time.Clock;
 import java.time.Instant;
 import java.time.OffsetDateTime;
@@ -10,6 +8,8 @@ import java.util.Date;
 import java.util.TimeZone;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.junit.jupiter.api.Test;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 /**
  * @author dangqian.zll
@@ -73,5 +73,13 @@ public class InstantTest {
         System.out.println(yesterdayInstant);
         Date date = Date.from(yesterdayInstant);
         System.out.println(DateFormatUtils.format(date, "yyyy-MM-dd HH:mm:ss"));
+    }
+
+    @Test
+    public void x() {
+        // 2026-06-25T12:56:43.368933Z
+        System.out.println("==============:" + Instant.now().toString());
+        // 2026-06-25T20:59:08.180042+08:00
+        System.out.println("==============:" + OffsetDateTime.now().toString());
     }
 }
