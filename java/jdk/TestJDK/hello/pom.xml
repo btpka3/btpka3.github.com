@@ -53,6 +53,19 @@
             <groupId>com.github.albfernandez</groupId>
             <artifactId>juniversalchardet</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.ibm.icu</groupId>
+            <artifactId>icu4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.ibm.icu</groupId>
+            <artifactId>icu4j-charset</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.ibm.icu</groupId>
+            <artifactId>icu4j-localespi</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.slf4j</groupId>
