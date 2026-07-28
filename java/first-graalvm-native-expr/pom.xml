@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>me.btpka3</groupId>
+    <artifactId>first-graalvm-native-expr</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+
+    <description>
+        对比 native image 下各类"用户动态脚本/表达式"载体的可行性与性能：
+        GraalJS(Truffle) / Espresso(Truffle, Java 语法) / MVEL / QLExpress / Aviator / 纯Java基线。
+    </description>
+
+    <properties>
+        <maven.compiler.release>25</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <graalvm.polyglot.version>25.0.3</graalvm.polyglot.version>
+        <espresso.version>25.0.3</espresso.version>
+        <exec.mainClass>me.btpka3.nativeexpr.Main</exec.mainClass>
+        <!-- native-image 所在 GraalVM 家目录；其它机器可用 -Dgraalvm.home=... 覆盖 -->
+        <graalvm.home>/Users/zll/.sdkman/candidates/java/25.0.3-graal</graalvm.home>
+    </properties>
+
+    <dependencies>
+        <!-- GraalJS via Truffle (polyglot embedding). js 为 pom 聚合，运行期拉齐 truffle/regex/icu 等 -->
+        <dependency>
+            <groupId>org.graalvm.polyglot</groupId>
+            <artifactId>polyglot</artifactId>
+            <version>${graalvm.polyglot.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.graalvm.polyglot</groupId>
+            <artifactId>js</artifactId>
+            <version>${graalvm.polyglot.version}</version>
+            <type>pom</type>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- Espresso：在 Truffle 上以 guest 身份运行 Java 字节码（用户写 Java 语法）。
+             java 为 pom 聚合，运行期拉齐 espresso-language / Espresso JDK 模块 / jdk25 运行时资源。
+             guest 字节码不打进 native image，运行期经 -Djava.Classpath 由 Espresso 动态加载。 -->
+        <dependency>
+            <groupId>org.graalvm.espresso</groupId>
+            <artifactId>java</artifactId>
+            <version>${espresso.version}</version>
+            <type>pom</type>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- MVEL -->
+        <dependency>
+            <groupId>org.mvel</groupId>
+            <artifactId>mvel2</artifactId>
+            <version>2.5.2.Final</version>
+        </dependency>
+
+        <!-- QLExpress -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>QLExpress</artifactId>
+            <version>3.3.4</version>
+        </dependency>
+
+        <!-- Aviator -->
+        <dependency>
+            <groupId>com.googlecode.aviator</groupId>
+            <artifactId>aviator</artifactId>
+            <version>5.4.3</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>expr-bench</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+            </plugin>
+
+            <!-- 设置 Main-Class；不打 fat-jar（shade 会破坏 Truffle 的 Multi-Release jar） -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.4.2</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>me.btpka3.nativeexpr.Main</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+
+            <!-- 把依赖原样拷到 target/lib，运行/构建 native 时用显式 classpath，
+                 完整保留各 jar 的 Multi-Release 结构（Truffle 必需）。 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.7.0</version>
+                <executions>
+                    <execution>
+                        <id>copy-deps</id>
+                        <phase>package</phase>
+                        <goals><goal>copy-dependencies</goal></goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                            <includeScope>runtime</includeScope>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <!-- mvn -Pnative package 生成原生可执行文件 target/expr-bench -->
+        <profile>
+            <id>native</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.graalvm.buildtools</groupId>
+                        <artifactId>native-maven-plugin</artifactId>
+                        <version>0.10.6</version>
+                        <extensions>true</extensions>
+                        <executions>
+                            <execution>
+                                <id>build-native</id>
+                                <goals><goal>compile-no-fork</goal></goals>
+                                <phase>package</phase>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <graalvmHome>${graalvm.home}</graalvmHome>
+                            <imageName>expr-bench</imageName>
+                            <mainClass>me.btpka3.nativeexpr.Main</mainClass>
+                            <buildArgs>
+                                <buildArg>--no-fallback</buildArg>
+                                <buildArg>-O2</buildArg>
+                                <buildArg>-H:+ReportExceptionStackTraces</buildArg>
+                            </buildArgs>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>

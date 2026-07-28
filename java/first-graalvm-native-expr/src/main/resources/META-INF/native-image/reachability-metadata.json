@@ -1,0 +1,1609 @@
+{
+  "reflection": [
+    {
+      "type": "java.util.ArrayList",
+      "methods": [
+        { "name": "contains", "parameterTypes": ["java.lang.Object"] },
+        { "name": "size", "parameterTypes": [] },
+        { "name": "get", "parameterTypes": ["int"] }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077692_0",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077696_1",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077696_2",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077697_3",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077704_4",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077707_5",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077709_10",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077709_6",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077709_7",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077709_8",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077709_9",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077710_11",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077711_12",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077712_13",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077713_14",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077713_15",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077714_16",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077714_17",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077714_18",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077715_19",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077715_20",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077716_21",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077717_22",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077717_23",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077718_24",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077718_25",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077719_26",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077719_27",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077720_28",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077721_29",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077721_30",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077721_31",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077721_32",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077721_33",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077722_34",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077722_35",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077724_36",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077724_37",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077724_38",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077725_39",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077725_40",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077725_41",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077725_42",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077726_43",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077727_44",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077728_45",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077728_46",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077728_47",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077728_48",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077729_49",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077729_50",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077729_51",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077730_52",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077731_53",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077731_54",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077732_55",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077732_56",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "AviatorScript_1785141077732_57",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "com.googlecode.aviator.AviatorEvaluatorInstance",
+            "java.util.List",
+            "com.googlecode.aviator.lexer.SymbolTable"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "android.os.Build"
+    },
+    {
+      "type": "boolean[]"
+    },
+    {
+      "type": "byte[]"
+    },
+    {
+      "type": "char[]"
+    },
+    {
+      "type": "city.equals"
+    },
+    {
+      "type": "com.googlecode.aviator.runtime.module.IoModule",
+      "methods": [
+        {
+          "name": "close",
+          "parameterTypes": [
+            "java.io.Closeable"
+          ]
+        },
+        {
+          "name": "delete",
+          "parameterTypes": [
+            "java.io.File"
+          ]
+        },
+        {
+          "name": "exists",
+          "parameterTypes": [
+            "java.io.File"
+          ]
+        },
+        {
+          "name": "file",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        },
+        {
+          "name": "files",
+          "parameterTypes": [
+            "java.io.File"
+          ]
+        },
+        {
+          "name": "outputStream",
+          "parameterTypes": [
+            "java.io.File"
+          ]
+        },
+        {
+          "name": "resource",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "com.googlecode.aviator.runtime.type.AviatorNil"
+    },
+    {
+      "type": "com.googlecode.aviator.runtime.type.AviatorObject"
+    },
+    {
+      "type": "com.ql.util.express.config.QLExpressRunStrategy"
+    },
+    {
+      "type": "com.ql.util.express.instruction.BlockInstructionFactory",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.ql.util.express.instruction.CallFunctionInstructionFactory",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.ql.util.express.instruction.ConstDataInstructionFactory",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.ql.util.express.instruction.FieldCallInstructionFactory",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.ql.util.express.instruction.FunctionInstructionFactory",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.ql.util.express.instruction.IfInstructionFactory",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.ql.util.express.instruction.LoadAttrInstructionFactory",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.ql.util.express.instruction.MethodCallInstructionFactory",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.ql.util.express.instruction.OperatorInstructionFactory",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "double[]"
+    },
+    {
+      "type": "fact"
+    },
+    {
+      "type": "fact$age"
+    },
+    {
+      "type": "fact$amount"
+    },
+    {
+      "type": "fact$city"
+    },
+    {
+      "type": "fact$deviceScore"
+    },
+    {
+      "type": "fact$history"
+    },
+    {
+      "type": "fact$history$count"
+    },
+    {
+      "type": "fact$history$totalAmount"
+    },
+    {
+      "type": "fact$tags"
+    },
+    {
+      "type": "fact$userId"
+    },
+    {
+      "type": "fact.age"
+    },
+    {
+      "type": "fact.amount"
+    },
+    {
+      "type": "fact.city"
+    },
+    {
+      "type": "fact.city.equals"
+    },
+    {
+      "type": "fact.deviceScore"
+    },
+    {
+      "type": "fact.history"
+    },
+    {
+      "type": "fact.history$count"
+    },
+    {
+      "type": "fact.history$totalAmount"
+    },
+    {
+      "type": "fact.history.count"
+    },
+    {
+      "type": "fact.history.totalAmount"
+    },
+    {
+      "type": "fact.riskFactor"
+    },
+    {
+      "type": "fact.tags"
+    },
+    {
+      "type": "fact.userId"
+    },
+    {
+      "type": "fact.userId.startsWith"
+    },
+    {
+      "type": "float[]"
+    },
+    {
+      "type": "history.count"
+    },
+    {
+      "type": "history.totalAmount"
+    },
+    {
+      "type": "int[]"
+    },
+    {
+      "type": "java.beans.PropertyVetoException"
+    },
+    {
+      "type": "java.io.File[]"
+    },
+    {
+      "type": "java.io.Serializable"
+    },
+    {
+      "type": "java.lang.Boolean",
+      "jniAccessible": true,
+      "methods": [
+        {
+          "name": "getBoolean",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "java.lang.Boolean[]"
+    },
+    {
+      "type": "java.lang.Byte[]"
+    },
+    {
+      "type": "java.lang.CharSequence"
+    },
+    {
+      "type": "java.lang.Character[]"
+    },
+    {
+      "type": "java.lang.Class",
+      "jniAccessible": true,
+      "methods": [
+        {
+          "name": "getClassLoader",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "java.lang.ClassLoader",
+      "jniAccessible": true,
+      "fields": [
+        {
+          "name": "classLoaderValueMap"
+        }
+      ],
+      "methods": [
+        {
+          "name": "loadClass",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "java.lang.Class[]"
+    },
+    {
+      "type": "java.lang.Comparable"
+    },
+    {
+      "type": "java.lang.Double[]"
+    },
+    {
+      "type": "java.lang.Float[]"
+    },
+    {
+      "type": "java.lang.Integer[]"
+    },
+    {
+      "type": "java.lang.Long[]"
+    },
+    {
+      "type": "java.lang.Object",
+      "methods": [
+        {
+          "name": "equals",
+          "parameterTypes": [
+            "java.lang.Object"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "java.lang.Object$)"
+    },
+    {
+      "type": "java.lang.Object$age"
+    },
+    {
+      "type": "java.lang.Object$amount"
+    },
+    {
+      "type": "java.lang.Object$city"
+    },
+    {
+      "type": "java.lang.Object$count"
+    },
+    {
+      "type": "java.lang.Object$deviceScore"
+    },
+    {
+      "type": "java.lang.Object$history"
+    },
+    {
+      "type": "java.lang.Object$tags"
+    },
+    {
+      "type": "java.lang.Object$totalAmount"
+    },
+    {
+      "type": "java.lang.Object$userId"
+    },
+    {
+      "type": "java.lang.ObjectBeanInfo"
+    },
+    {
+      "type": "java.lang.ObjectCustomizer"
+    },
+    {
+      "type": "java.lang.Short[]"
+    },
+    {
+      "type": "java.lang.String",
+      "methods": [
+        {
+          "name": "equals",
+          "parameterTypes": [
+            "java.lang.Object"
+          ]
+        },
+        {
+          "name": "startsWith",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "java.lang.String[]"
+    },
+    {
+      "type": "java.lang.Throwable"
+    },
+    {
+      "type": "java.lang.a"
+    },
+    {
+      "type": "java.lang.age"
+    },
+    {
+      "type": "java.lang.amount"
+    },
+    {
+      "type": "java.lang.b"
+    },
+    {
+      "type": "java.lang.city"
+    },
+    {
+      "type": "java.lang.constant.Constable"
+    },
+    {
+      "type": "java.lang.constant.ConstantDesc"
+    },
+    {
+      "type": "java.lang.contains"
+    },
+    {
+      "type": "java.lang.count"
+    },
+    {
+      "type": "java.lang.deviceScore"
+    },
+    {
+      "type": "java.lang.equals"
+    },
+    {
+      "type": "java.lang.fact"
+    },
+    {
+      "type": "java.lang.history"
+    },
+    {
+      "type": "java.lang.riskFactor"
+    },
+    {
+      "type": "java.lang.score"
+    },
+    {
+      "type": "java.lang.startsWith"
+    },
+    {
+      "type": "java.lang.tags"
+    },
+    {
+      "type": "java.lang.totalAmount"
+    },
+    {
+      "type": "java.lang.userId"
+    },
+    {
+      "type": "java.math.BigDecimal[]"
+    },
+    {
+      "type": "java.math.BigInteger[]"
+    },
+    {
+      "type": "java.net.URL[]"
+    },
+    {
+      "type": "java.sql.Date[]"
+    },
+    {
+      "type": "java.sql.Time[]"
+    },
+    {
+      "type": "java.sql.Timestamp[]"
+    },
+    {
+      "type": "java.util.Calendar[]"
+    },
+    {
+      "type": "java.util.Date[]"
+    },
+    {
+      "type": "java.util.a"
+    },
+    {
+      "type": "java.util.age"
+    },
+    {
+      "type": "java.util.amount"
+    },
+    {
+      "type": "java.util.b"
+    },
+    {
+      "type": "java.util.city"
+    },
+    {
+      "type": "java.util.contains"
+    },
+    {
+      "type": "java.util.count"
+    },
+    {
+      "type": "java.util.deviceScore"
+    },
+    {
+      "type": "java.util.equals"
+    },
+    {
+      "type": "java.util.fact"
+    },
+    {
+      "type": "java.util.history"
+    },
+    {
+      "type": "java.util.riskFactor"
+    },
+    {
+      "type": "java.util.score"
+    },
+    {
+      "type": "java.util.startsWith"
+    },
+    {
+      "type": "java.util.stream.a"
+    },
+    {
+      "type": "java.util.stream.age"
+    },
+    {
+      "type": "java.util.stream.amount"
+    },
+    {
+      "type": "java.util.stream.b"
+    },
+    {
+      "type": "java.util.stream.city"
+    },
+    {
+      "type": "java.util.stream.contains"
+    },
+    {
+      "type": "java.util.stream.count"
+    },
+    {
+      "type": "java.util.stream.deviceScore"
+    },
+    {
+      "type": "java.util.stream.equals"
+    },
+    {
+      "type": "java.util.stream.fact"
+    },
+    {
+      "type": "java.util.stream.history"
+    },
+    {
+      "type": "java.util.stream.riskFactor"
+    },
+    {
+      "type": "java.util.stream.score"
+    },
+    {
+      "type": "java.util.stream.startsWith"
+    },
+    {
+      "type": "java.util.stream.tags"
+    },
+    {
+      "type": "java.util.stream.totalAmount"
+    },
+    {
+      "type": "java.util.stream.userId"
+    },
+    {
+      "type": "java.util.tags"
+    },
+    {
+      "type": "java.util.totalAmount"
+    },
+    {
+      "type": "java.util.userId"
+    },
+    {
+      "type": "jdk.internal.jrtfs.JrtFileSystemProvider"
+    },
+    {
+      "type": "jdk.internal.loader.ClassLoaders$AppClassLoader"
+    },
+    {
+      "type": "jdk.internal.misc.Unsafe"
+    },
+    {
+      "type": "long[]"
+    },
+    {
+      "type": "me.btpka3.nativeexpr.Fact",
+      "fields": [
+        {
+          "name": "age"
+        },
+        {
+          "name": "amount"
+        },
+        {
+          "name": "city"
+        },
+        {
+          "name": "deviceScore"
+        },
+        {
+          "name": "history"
+        },
+        {
+          "name": "tags"
+        },
+        {
+          "name": "userId"
+        }
+      ],
+      "methods": [
+        {
+          "name": "getAge",
+          "parameterTypes": []
+        },
+        {
+          "name": "getAmount",
+          "parameterTypes": []
+        },
+        {
+          "name": "getCity",
+          "parameterTypes": []
+        },
+        {
+          "name": "getDeviceScore",
+          "parameterTypes": []
+        },
+        {
+          "name": "getHistory",
+          "parameterTypes": []
+        },
+        {
+          "name": "getTags",
+          "parameterTypes": []
+        },
+        {
+          "name": "getUserId",
+          "parameterTypes": []
+        },
+        {
+          "name": "riskFactor",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "me.btpka3.nativeexpr.Fact$History",
+      "fields": [
+        {
+          "name": "count"
+        },
+        {
+          "name": "totalAmount"
+        }
+      ],
+      "methods": [
+        {
+          "name": "getCount",
+          "parameterTypes": []
+        },
+        {
+          "name": "getTotalAmount",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "me.btpka3.nativeexpr.Fact$HistoryBeanInfo"
+    },
+    {
+      "type": "me.btpka3.nativeexpr.Fact$HistoryCustomizer"
+    },
+    {
+      "type": "me.btpka3.nativeexpr.FactBeanInfo"
+    },
+    {
+      "type": "me.btpka3.nativeexpr.FactCustomizer"
+    },
+    {
+      "type": "org.apache.commons.logging.LogFactory"
+    },
+    {
+      "type": "org.apache.commons.logging.impl.Jdk14Logger",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "org.apache.commons.logging.impl.Log4JLogger"
+    },
+    {
+      "type": "org.apache.commons.logging.impl.LogFactoryImpl",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "org.apache.commons.logging.impl.WeakHashtable",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "org.graalvm.home.impl.DefaultHomeFinder"
+    },
+    {
+      "type": "org.graalvm.polyglot.io.IOHelper",
+      "fields": [
+        {
+          "name": "ACCESS"
+        }
+      ]
+    },
+    {
+      "type": "org.graalvm.polyglot.management.Management",
+      "fields": [
+        {
+          "name": "ACCESS"
+        }
+      ]
+    },
+    {
+      "type": "org.mvel2.asm.ClassWriter"
+    },
+    {
+      "type": "org.mvel2.optimizers.impl.refl.ReflectiveAccessorOptimizer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "short[]"
+    },
+    {
+      "type": "sun.misc.Unsafe",
+      "fields": [
+        {
+          "name": "theUnsafe"
+        }
+      ],
+      "methods": [
+        {
+          "name": "defineAnonymousClass",
+          "parameterTypes": [
+            "java.lang.Class",
+            "byte[]",
+            "java.lang.Object[]"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "userId.startsWith"
+    }
+  ],
+  "resources": [
+    {
+      "glob": "META-INF/graalvm/org.graalvm.polyglot/version"
+    },
+    {
+      "glob": "META-INF/graalvm/org.graalvm.truffle/version"
+    },
+    {
+      "glob": "META-INF/maven/com.googlecode.aviator/aviator/pom.properties"
+    },
+    {
+      "glob": "META-INF/resources/engine/libtruffleattach/darwin/aarch64/sha256"
+    },
+    {
+      "glob": "META-INF/services/com.oracle.truffle.api.TruffleRuntimeAccess"
+    },
+    {
+      "glob": "META-INF/services/com.oracle.truffle.api.impl.TruffleLocator"
+    },
+    {
+      "glob": "META-INF/services/com.oracle.truffle.api.instrumentation.provider.TruffleInstrumentProvider"
+    },
+    {
+      "glob": "META-INF/services/com.oracle.truffle.api.library.provider.DefaultExportProvider"
+    },
+    {
+      "glob": "META-INF/services/com.oracle.truffle.api.provider.InternalResourceProvider"
+    },
+    {
+      "glob": "META-INF/services/com.oracle.truffle.api.provider.TruffleLanguageProvider"
+    },
+    {
+      "glob": "META-INF/services/com.oracle.truffle.js.runtime.Evaluator"
+    },
+    {
+      "glob": "META-INF/services/com.oracle.truffle.runtime.EngineCacheSupport"
+    },
+    {
+      "glob": "META-INF/services/com.oracle.truffle.runtime.FloodControlHandler"
+    },
+    {
+      "glob": "META-INF/services/com.oracle.truffle.runtime.LoopNodeFactory"
+    },
+    {
+      "glob": "META-INF/services/com.oracle.truffle.runtime.TruffleTypes"
+    },
+    {
+      "glob": "META-INF/services/com.oracle.truffle.runtime.jfr.EventFactory$Provider"
+    },
+    {
+      "glob": "META-INF/services/java.nio.file.spi.FileSystemProvider"
+    },
+    {
+      "glob": "META-INF/services/org.apache.commons.logging.LogFactory"
+    },
+    {
+      "glob": "META-INF/services/org.graalvm.home.HomeFinder"
+    },
+    {
+      "glob": "META-INF/services/org.graalvm.polyglot.impl.AbstractPolyglotImpl"
+    },
+    {
+      "glob": "aviator.av"
+    },
+    {
+      "glob": "aviator_functions.config"
+    },
+    {
+      "glob": "commons-logging.properties"
+    },
+    {
+      "module": "jdk.jfr",
+      "glob": "jdk/jfr/internal/types/metadata.bin"
+    }
+  ]
+}
