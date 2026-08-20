@@ -6,7 +6,7 @@
   "dependencies": {
     "chrome-remote-interface": "^0.23.2",
     "egg": "^1.4.0",
-    "minimist": "^1.2.0"
+    "minimist": "^1.2.3"
   },
   "devDependencies": {
     "autod": "^2.8.0",
