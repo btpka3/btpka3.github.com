@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: first-embabel
+  ai:
+    openai:
+      api-key: ${LLM_API_KEY:${OPENAI_API_KEY:}}
+      chat:
+        options:
+          temperature: 0.3
+          max-tokens: 2000
+
+embabel:
+  agent:
+    logging:
+      personality: none
+
+first-embabel:
+  llm:
+    provider: openai
+    temperature: 0.3
+    max-tokens: 2000
+  skills:
+    paths: []
+  memory:
+    file: ./.tmp/memory/intent-tool-mappings.yaml
+  mcp:
+    config: ./.tmp/mcp-servers.json
+  commands:
+    whitelist: []

@@ -1,0 +1,7 @@
+# 本地环境配置与运行时数据（endpoint / 密钥 / MCP / 记忆等），不入库
+.tmp/
+
+target/
+.idea/
+*.iml
+.DS_Store

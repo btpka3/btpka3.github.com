@@ -1,4 +1,4 @@
-package com.github.btpka3.first.spring.boot4.ai;
+package com.github.btpka3.first.spring.boot4.ai.spring;
 
 import org.springframework.ai.embedding.EmbeddingResponse;
 import org.springframework.ai.embedding.EmbeddingResponseMetadata;

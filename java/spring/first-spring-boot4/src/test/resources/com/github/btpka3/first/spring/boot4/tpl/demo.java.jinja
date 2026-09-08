@@ -1,0 +1,7 @@
+package {{ xxxClass.pkg }};
+public class {{ xxxClass.name }} {
+{% for f in xxxClass.fieldList %}    private {{ f.type }} {{ f.name }};
+{% endfor %}{% for f in xxxClass.fieldList %}    public {{ f.type }} get{{ f.capitalizedName }}(){
+        {{ f.getterLogic }}
+    }
+{% endfor %}}

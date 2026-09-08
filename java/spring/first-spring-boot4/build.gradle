@@ -122,20 +122,26 @@ dependencies {
     implementation 'org.springframework.ai:spring-ai-pdf-document-reader'
     implementation 'org.springframework.ai:spring-ai-starter-model-openai'
     implementation 'org.springframework.ai:spring-ai-advisors-vector-store'
-    implementation 'org.springframework.ai:spring-ai-starter-vector-store-hana'
+    //implementation 'org.springframework.ai:spring-ai-starter-vector-store-hana'
     implementation 'org.springframework.ai:spring-ai-starter-vector-store-chroma'
-}
+    implementation "com.embabel.agent:embabel-agent-starter:${embabelAgentVersion}"
+    implementation "com.embabel.agent:embabel-agent-starter-shell:${embabelAgentVersion}"
+    implementation "com.embabel.agent:embabel-agent-starter-mcpserver:${embabelAgentVersion}"
+    implementation "com.embabel.agent:embabel-agent-mcp-security:${embabelAgentVersion}"
+    implementation "com.embabel.agent:embabel-agent-starter-observability:${embabelAgentVersion}"
+    testImplementation "com.embabel.agent:embabel-agent-test:${embabelAgentVersion}"
+    implementation 'org.antlr:ST4:4.3.4'
+    implementation 'com.hubspot.jinjava:jinjava:2.7.2'
 
-//dependencyManagement {
-//    imports {
-//        //implementation(platform("org.springframework.shell:spring-shell-dependencies:4.0.1"))
-//        mavenBom("org.springframework.shell:spring-shell-dependencies:4.0.1")
-//        mavenBom "org.springframework.modulith:spring-modulith-bom:${springModulithVersion}"
-//        mavenBom "org.springframework.grpc:spring-grpc-dependencies:${springGrpcVersion}"
-//        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-//        mavenBom "org.springframework.ai:spring-ai-bom:${springAiVersion}"
-//    }
-//}
+
+    implementation(platform("com.alibaba.opensandbox:sandbox-bom:${openSandboxVersion}"))
+    implementation("com.alibaba.opensandbox:sandbox")
+    implementation("com.alibaba.opensandbox:code-interpreter")
+
+    implementation "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+}
 
 jte {
     generate()

@@ -1,4 +1,4 @@
-package com.github.btpka3.first.spring.boot4.ai.openai;
+package com.github.btpka3.first.spring.boot4.ai.spring;
 
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;

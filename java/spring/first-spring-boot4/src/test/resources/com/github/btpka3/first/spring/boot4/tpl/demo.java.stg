@@ -1,0 +1,13 @@
+a(xxxClass, ob, cb, nl) ::= <<
+package <xxxClass.pkg>;
+public class <xxxClass.name> <ob>
+<xxxClass.fieldList:{f |     private <f.type> <f.name>;}; separator=nl>
+<xxxClass.fieldList:{f |<oneGetter(f, ob, cb)>}; separator=nl>
+<cb>
+>>
+
+oneGetter(f, ob, cb) ::= <<
+    public <f.type> get<f.capitalizedName>()<ob>
+        <f.getterLogic>
+    <cb>
+>>

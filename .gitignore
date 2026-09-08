@@ -33,6 +33,7 @@ build
 .gradle
 _site
 .jekyll-metadata
+java/spring/first-spring-boot4/jte-classes/
 *.xpi
 gradle/my-gradle/data
 js/my-ts/dist

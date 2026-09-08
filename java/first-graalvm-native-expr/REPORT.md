@@ -16,7 +16,7 @@
 
 4. **MVEL（reflective 优化器）与 QLExpress 可在 native 下以解释器方式工作**，但吞吐明显低于 GraalJS：MVEL 约 2–11M、QLExpress 约 0.6–2M ops/s。MVEL 还有内联 `def` 函数复用 vars map 时重复注册的坑（需每次求值新建 vars）。
 
-5. **Espresso（Java 作为 guest 语言）已在 native 下打通并实测可用**：用户写一个普通 Java 单类（每用例一个 static 方法），编译成字节码但**不**进 native image，运行期由 Espresso 动态加载并 JIT。10 个用例全部正确，稳态 1.3–8.5M ops/s（介于 MVEL 与 QLExpress 之间，低于 GraalJS）。两个硬约束：(a) **JVM 模式在 darwin-arm64 不可用**（Espresso 核心 JDK 的 LLVM bitcode 官方仅发布 linux-amd64 / darwin-amd64），native 模式与架构无关、aarch64 可用；(b) guest 不能直接引用宿主应用类（guest/host 类身份隔离），须经 `com.oracle.truffle.espresso.polyglot.Interop` 读字段/调方法，且该 Interop 类必须挂到 guest **boot** classpath（`java.BootClasspathAppend`）才会被 Espresso 内化。代价是启动与内存偏高：native 下 Espresso 上下文初始化约 129ms（GraalJS 约 25ms），单跑 esp 峰值 RSS 约 550MB（含整套 guest JDK）。
+5. **Espresso（Java 作为 guest 语言）已在 native 下打通并实测可用**：用户写一个普通 Java 单类（每用例一个 static 方法），编译成字节码但**不**进 native image，运行期由 Espresso 动态加载并 JIT。10 个用例全部正确，native 稳态 1.3–8.5M ops/s（介于 MVEL 与 QLExpress 之间，低于 GraalJS）。JVM 模式在 darwin-arm64 不可用，但在 **linux-amd64** CloudCLI 上补齐了 JVM 三方对比（java/js/esp）：Espresso JVM 0.75–4.7M ops/s，约为 GraalJS JVM 的 7–30%、PureJava JVM 的 3–14%。两个硬约束：(a) **JVM 模式仅 linux-amd64 / darwin-amd64**（Espresso 核心 JDK 的 LLVM bitcode 官方仅发布这两个平台），native 模式与架构无关、aarch64 可用；(b) guest 不能直接引用宿主应用类（guest/host 类身份隔离），须经 `com.oracle.truffle.espresso.polyglot.Interop` 读字段/调方法，且该 Interop 类必须挂到 guest **boot** classpath（`java.BootClasspathAppend`）才会被 Espresso 内化。代价是启动与内存偏高：native 下 Espresso 上下文初始化约 129ms（GraalJS 约 25ms），单跑 esp 峰值 RSS 约 550MB（含整套 guest JDK）。
 
 6. **启动与内存是 native 的强项**：进程启动到首次求值完成，native 约 4ms（纯 Java）/ 25ms（含 GraalJS 上下文），JVM 约 163ms / 583ms；峰值 RSS native 全套约 213MB，JVM 仅 Java 引擎就约 452MB。代价是二进制体积与构建时间——加入 Espresso 后二进制从 143MB 增至约 389MB（内含 guest JDK 字节码）。
 
@@ -72,20 +72,20 @@ GraalVM Native Image 是**封闭世界（closed-world）AOT**：构建期必须�
 
 ### 4.1 JVM（HotSpot JIT 峰值）
 
-| 用例 | java | js | mvel | aviator | ql | esp |
+| 用例 | java | js | mvel | aviator | ql | esp † |
 |---|---:|---:|---:|---:|---:|---:|
-| arith_cmp | 91.7M | 42.2M | 15.8M | 6.2M | 2.7M | — |
-| bool_and | 86.5M | 44.0M | 12.3M | 3.8M | 1.9M | — |
-| bool_mix | 91.2M | 44.2M | 9.7M | 3.1M | 1.6M | — |
-| string_op | 84.0M | 27.6M | 10.3M | 3.9M | 1.5M | — |
-| weighted_score | 67.2M | 25.1M | 9.6M | 3.0M | 1.6M | — |
-| nested | 84.5M | 25.1M | 10.1M | 2.9M | 1.4M | — |
-| coll_contains | 63.0M | 25.1M | 12.5M | 5.3M | 3.0M | — |
-| ternary | 57.3M | 25.9M | 12.1M | 4.9M | 2.7M | — |
-| func_def | 57.5M | 26.1M | 3.2M | 1.9M | 1.3M | — |
-| method_call | 53.3M | 26.7M | 18.9M | 9.3M | 3.5M | — |
+| arith_cmp | 91.7M | 42.2M | 15.8M | 6.2M | 2.7M | 4.7M |
+| bool_and | 86.5M | 44.0M | 12.3M | 3.8M | 1.9M | 4.1M |
+| bool_mix | 91.2M | 44.2M | 9.7M | 3.1M | 1.6M | 1.8M |
+| string_op | 84.0M | 27.6M | 10.3M | 3.9M | 1.5M | 1.4M |
+| weighted_score | 67.2M | 25.1M | 9.6M | 3.0M | 1.6M | 0.88M |
+| nested | 84.5M | 25.1M | 10.1M | 2.9M | 1.4M | 0.75M |
+| coll_contains | 63.0M | 25.1M | 12.5M | 5.3M | 3.0M | 0.88M |
+| ternary | 57.3M | 25.9M | 12.1M | 4.9M | 2.7M | 0.78M |
+| func_def | 57.5M | 26.1M | 3.2M | 1.9M | 1.3M | 0.83M |
+| method_call | 53.3M | 26.7M | 18.9M | 9.3M | 3.5M | 1.3M |
 
-> esp 列在 JVM 模式全为 — ：Espresso 核心 JDK 的 LLVM bitcode 官方仅发布 linux-amd64 / darwin-amd64，本机 darwin-arm64 构造即失败（`Unexpected fallback symbol: Java_java_lang_System_registerNatives`），引擎容错记 UNSUPPORTED。
+> † esp 列在 JVM 模式的数据来自 **linux-amd64**（CloudCLI 容器，Oracle GraalVM 25.0.3）：本机 darwin-arm64 的 Espresso JVM 模式不可用（核心 JDK LLVM bitcode 仅发布 linux-amd64 / darwin-amd64）。其他引擎列的数据仍来自 darwin-arm64，因此 esp 列的绝对值与同表其他列不可直接对比——跨平台 CPU 算力差异显著。三方 JVM 同平台对比见 4.4。
 
 ### 4.2 Native Image
 
@@ -112,7 +112,7 @@ GraalVM Native Image 是**封闭世界（closed-world）AOT**：构建期必须�
 | js | 0.45 – 0.63 | Truffle 运行期 JIT 在 native 仍生效，但比 JVM 峰值低约一半 |
 | mvel | 0.60 – 0.72 | 反射解释，native 略低于 JVM |
 | ql | 0.40 – 0.73 | 指令集解释，基数小、波动相对大 |
-| esp | n/a | JVM 模式在本机 arm64 不可用，无比值；native 绝对值见 4.2 |
+| esp | n/a | JVM 模式在本机 arm64 不可用；linux-amd64 同平台三方对比见 4.4 |
 
 关键观察：
 
@@ -120,6 +120,31 @@ GraalVM Native Image 是**封闭世界（closed-world）AOT**：构建期必须�
 - **js native 仍达 12–28M ops/s**，且预热曲线平稳（如 native js/arith_cmp 预热即 25–28M），说明 Truffle 在 native 内确实在做运行期编译，而非纯解释——这是 GraalJS 相对 MVEL/QL 的最大优势来源。
 - **func_def 用例**：GraalJS 在 native 下 13.1M ops/s 且正确，证明「用户自定义函数」这一 mtee3 刚需在 native 下可行；MVEL/QL 虽也支持但吞吐低一个量级。
 - **esp native 1.3–8.5M ops/s，且「读宿主字段越多的用例越慢」**（arith_cmp 单次 readMember 8.5M，weighted_score/nested 多次 readMember 降到 1.3–1.5M）——瓶颈在 guest↔host 的 Interop 边界穿越，而非 guest 计算本身（纯 guest 的 func_def 也因两次 readMember 落在 1.5M）。这说明 Espresso 的吞吐主要受宿主互操作密度限制；若把一批字段一次性传入 guest、减少跨界次数，可显著提速。即便如此，其量级已高于 QLExpress、与 MVEL 相当，对旁路/预处理场景足够。
+
+### 4.4 JVM 三方同平台对比（linux-amd64，CloudCLI）
+
+为补齐 Espresso 在 JVM 模式的数据，在 linux-amd64 CloudCLI 容器（Oracle GraalVM 25.0.3）上跑 java / js / esp 三引擎的 JVM 基准，同一平台、同一 CPU 下直接对比：
+
+| 用例 | java (PureJava) | js (GraalJS) | esp (Espresso) | esp/js 比值 | esp/java 比值 |
+|---|---:|---:|---:|---:|---:|
+| arith_cmp | 34.5M | 15.6M | 4.7M | 0.30 | 0.14 |
+| bool_and | 35.4M | 14.5M | 4.1M | 0.28 | 0.12 |
+| bool_mix | 34.6M | 14.2M | 1.8M | 0.13 | 0.05 |
+| string_op | 30.3M | 10.9M | 1.4M | 0.13 | 0.05 |
+| weighted_score | 34.4M | 10.0M | 0.88M | 0.09 | 0.03 |
+| nested | 30.0M | 9.6M | 0.75M | 0.08 | 0.03 |
+| coll_contains | 24.4M | 9.9M | 0.88M | 0.09 | 0.04 |
+| ternary | 28.1M | 10.5M | 0.78M | 0.07 | 0.03 |
+| func_def | 24.2M | 9.7M | 0.83M | 0.09 | 0.03 |
+| method_call | 23.6M | 11.1M | 1.3M | 0.12 | 0.06 |
+
+> 完整数据：`results/bench-jvm-linux.csv`。CloudCLI 容器 CPU 算力低于本机 darwin-arm64，绝对值不可与 4.1 表横向对比，但三引擎**同平台比值**有参考价值。
+
+关键观察：
+
+- **Espresso JVM 吞吐约为 GraalJS 的 7–30%，约为 PureJava 的 3–14%**。差距主要来自 guest↔host 的 Interop 边界穿越——简单算术（arith_cmp 单次 readMember）esp 能到 4.7M（js 的 30%），多次 readMember 的 nested/weighted_score/ternary 掉到 0.75–0.88M（js 的 7–9%）。
+- **GraalJS 在 JVM 模式下仍比 Espresso 快 3–12 倍**：GraalJS 通过 Polyglot API 直接访问宿主对象（无需 Interop 序列化），而 Espresso 每次字段访问都要经过 Interop 边界。这是架构级差距，不是优化能弥补的。
+- **Espresso 的价值不在吞吐，而在「用户写 Java」的零学习成本**：对于 mtee3 场景二（vbs 预处理），用户无需改写存量 Java 逻辑，0.75–4.7M ops/s 对旁路/低频预处理足够；若吞吐是瓶颈，应选 GraalJS 并让用户改写为 JS。
 
 ---
 
@@ -177,6 +202,14 @@ mtee3 两类动态脚本场景与本次结论的对应：
 ```bash
 # JVM 基准
 ./run.sh jvm        # 写 results/bench-jvm.csv（esp 在 arm64 记 UNSUPPORTED）
+
+# JVM 三方对比（java/js/esp）—— 需 linux-amd64 或 darwin-amd64（Espresso JVM 模式平台要求）
+java --enable-native-access=ALL-UNNAMED \
+  -Despresso.guest=target/guest.jar \
+  -Despresso.polyglot=target/guest-lib/espresso-polyglot.jar \
+  -cp 'target/classes:target/lib/*' \
+  me.btpka3.nativeexpr.Main --bench --mode jvm \
+  --engines java,js,esp --out results/bench-jvm-linux.csv
 
 # 生成/更新 native-image 反射元数据（tracing agent）
 ./run.sh agent

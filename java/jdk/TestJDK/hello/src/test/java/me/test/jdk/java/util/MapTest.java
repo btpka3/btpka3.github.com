@@ -1,10 +1,9 @@
 package me.test.jdk.java.util;
 
-import static java.util.Map.entry;
-
 import com.alibaba.fastjson.JSON;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -13,6 +12,10 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;
+
+import static java.util.Map.entry;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 /**
  * @author dangqian.zll
@@ -44,8 +47,8 @@ public class MapTest {
         m.put("a", "aaa");
         m.put("buyerIdentityNo", null);
         String idNo = m.getOrDefault("buyerIdentityNo", "").toString();
-        Assertions.assertEquals("", idNo);
-        Assertions.assertEquals("{\"a\":\"aaa\"}", JSON.toJSONString(m));
+        assertEquals("", idNo);
+        assertEquals("{\"a\":\"aaa\"}", JSON.toJSONString(m));
     }
 
     @Test
@@ -72,7 +75,7 @@ public class MapTest {
         // HashMap.Node<K,V>[] table;
         Object[] table = (Object[]) ReflectionTestUtils.getField(map, "table");
 
-        Assertions.assertEquals(512, table.length);
+        assertEquals(512, table.length);
         int nodeNonNullCount = 0;
 
         Map<Integer, AtomicInteger> nodeLinkLengthMap = new HashMap<>();
@@ -94,7 +97,7 @@ public class MapTest {
         int count = nodeLinkLengthMap.entrySet().stream()
                 .mapToInt(entry -> entry.getKey() * entry.getValue().get())
                 .sum();
-        Assertions.assertEquals(itemCount, count);
+        assertEquals(itemCount, count);
     }
 
     protected int findNodeLinkLength(@Nonnull Object hashMapNode) {
@@ -106,4 +109,49 @@ public class MapTest {
         }
         return i;
     }
+
+    @Test
+    public void testHashMapSameKeyHashCode() {
+        // "Aa" 和 "BB" 的 hashCode 都是 2112
+        String key1 = "Aa";
+        String key2 = "BB";
+
+        // 验证前提
+        assertEquals(key1.hashCode(), key2.hashCode()); // 2112 == 2112
+        assertFalse(key1.equals(key2));                 // "Aa" != "BB"
+
+        Map<String, String> map = new HashMap<>();
+        map.put(key1, "Value Aa");
+        map.put(key2, "Value BB");
+
+        // 验证能否分别获取
+        assertEquals("Value Aa", map.get("Aa"));
+        assertEquals("Value BB", map.get("BB"));
+
+        assertEquals(2, map.size());
+    }
+
+
+    @Test
+    public void testLinkedHashMapSameKeyHashCode() {
+        // "Aa" 和 "BB" 的 hashCode 都是 2112
+        String key1 = "Aa";
+        String key2 = "BB";
+
+        // 验证前提
+        assertEquals(key1.hashCode(), key2.hashCode()); // 2112 == 2112
+        assertFalse(key1.equals(key2));                 // "Aa" != "BB"
+
+        Map<String, String> map = new LinkedHashMap<>();
+        map.put(key1, "Value Aa");
+        map.put(key2, "Value BB");
+
+        // 验证能否分别获取
+        assertEquals("Value Aa", map.get("Aa"));
+        assertEquals("Value BB", map.get("BB"));
+
+        assertEquals(2, map.size());
+    }
+
+
 }
